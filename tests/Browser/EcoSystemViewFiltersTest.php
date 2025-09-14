@@ -3,15 +3,15 @@
 namespace Tests\Browser;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class EcoSystemViewFiltersTest extends DuskTestCase
 {
-    public function testPerimeter() {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+    public function test_perimeter()
+    {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.ecosystem'));
@@ -33,22 +33,23 @@ class EcoSystemViewFiltersTest extends DuskTestCase
         });
     }
 
-    public function testEntityType() {
+    public function test_entity_type()
+    {
 
-        $entity = \App\Entity::where('name','Acme corp.')->first();
-        $this->assertTrue($entity!=null);
-        $this->assertEquals('Producer',$entity->entity_type);
+        $entity = \App\Models\Entity::where('name', 'Acme corp.')->first();
+        $this->assertTrue($entity != null);
+        $this->assertEquals('Producer', $entity->entity_type);
 
-        $entity = \App\Entity::where('name','MegaNet System')->first();
-        $this->assertTrue($entity!=null);
-        $this->assertEquals('Producer',$entity->entity_type);
+        $entity = \App\Models\Entity::where('name', 'MegaNet System')->first();
+        $this->assertTrue($entity != null);
+        $this->assertEquals('Producer', $entity->entity_type);
 
-        $entity = \App\Entity::where('name','World company')->first();
-        $this->assertTrue($entity!=null);
-        $this->assertEquals('Producer',$entity->entity_type);
+        $entity = \App\Models\Entity::where('name', 'World company')->first();
+        $this->assertTrue($entity != null);
+        $this->assertEquals('Producer', $entity->entity_type);
 
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.ecosystem'));
@@ -74,13 +75,14 @@ class EcoSystemViewFiltersTest extends DuskTestCase
                 $browser->assertDontSee('Acme corp.');
                 $browser->assertDontSee('MegaNet System');
                 $browser->assertDontSee('World company');
-                });
             });
-        }
+        });
+    }
 
-    public function testEntityFilterOnType() {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+    public function test_entity_filter_on_type()
+    {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.ecosystem'));
@@ -91,21 +93,22 @@ class EcoSystemViewFiltersTest extends DuskTestCase
 
                 $browser->assertSelected('entity_type', 'All');
 
-
                 $allEntities = DB::table('entities');
-                $allTypes = $allEntities->groupBy('entity_type')->pluck('entity_type','entity_type');
-                foreach($allTypes as $entity_type){
-                    if ($entity_type ==null ) continue;
+                $allTypes = $allEntities->groupBy('entity_type')->pluck('entity_type', 'entity_type');
+                foreach ($allTypes as $entity_type) {
+                    if ($entity_type == null) {
+                        continue;
+                    }
 
                     $browser->select('entity_type', $entity_type);
 
                     $browser->assertSee('Mercator');
                     $browser->assertSelected('perimeter', 'All');
-                    $browser->with('#graph', function ($elt) use($entity_type){
-                        foreach (DB::table('entities')->whereNull('deleted_at')->get() as $entity){
-                            if ($entity->entity_type == $entity_type){
+                    $browser->with('#graph', function ($elt) use ($entity_type) {
+                        foreach (DB::table('entities')->whereNull('deleted_at')->get() as $entity) {
+                            if ($entity->entity_type == $entity_type) {
                                 $elt->assertSee($entity->name);
-                            } else{
+                            } else {
                                 $elt->assertDontSee($entity->name);
                             }
                         }
@@ -114,8 +117,9 @@ class EcoSystemViewFiltersTest extends DuskTestCase
                 $browser->select('entity_type', 'All');
 
                 $browser->assertSee('Mercator');
-                foreach (DB::table('entities')->whereNull('deleted_at')->get() as $entity)
+                foreach (DB::table('entities')->whereNull('deleted_at')->get() as $entity) {
                     $browser->assertSee($entity->name);
+                }
             });
         });
     }

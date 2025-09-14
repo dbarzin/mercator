@@ -1,7 +1,7 @@
 <?php
-use App\Permission;
-use App\Role;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,27 +24,27 @@ return new class extends Migration
         });
 
         // if not initial migration -> add permissions
-        if (Permission::count()>0) {
+        if (Permission::count() > 0) {
             // create new permissions
             $permissions = [
                 [
-                    'id'    => '296',
+                    'id' => '296',
                     'title' => 'graph_create',
                 ],
                 [
-                    'id'    => '297',
+                    'id' => '297',
                     'title' => 'graph_edit',
                 ],
                 [
-                    'id'    => '298',
+                    'id' => '298',
                     'title' => 'graph_show',
                 ],
                 [
-                    'id'    => '299',
+                    'id' => '299',
                     'title' => 'graph_delete',
                 ],
                 [
-                    'id'    => '300',
+                    'id' => '300',
                     'title' => 'graph_access',
                 ],
             ];
@@ -52,11 +52,11 @@ return new class extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([296,297,298,299,300], false);
+            Role::findOrFail(1)->permissions()->sync([296, 297, 298, 299, 300], false);
             // User
-            Role::findOrFail(2)->permissions()->sync([296,297,298,299,300], false);
+            Role::findOrFail(2)->permissions()->sync([296, 297, 298, 299, 300], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([298,300], false);
+            Role::findOrFail(3)->permissions()->sync([298, 300], false);
         }
 
     }

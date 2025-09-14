@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalLinkRequest;
 use App\Http\Requests\StorePhysicalLinkRequest;
 use App\Http\Resources\Admin\PhysicalLinkResource;
-use App\PhysicalLink;
+use App\Models\PhysicalLink;
 use Gate;
 use Illuminate\Http\Response;
 

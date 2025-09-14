@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyVlanRequest;
 use App\Http\Requests\StoreVlanRequest;
 use App\Http\Requests\UpdateVlanRequest;
 use App\Http\Resources\Admin\VlanResource;
-use App\Vlan;
+use App\Models\Vlan;
 use Gate;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -40,13 +40,6 @@ class VlanController extends Controller
         return response()->json($vlan, 201);
     }
 
-    public function show(Vlan $vlan)
-    {
-        abort_if(Gate::denies('vlan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return new VlanResource($vlan);
-    }
-
     public function update(UpdateVlanRequest $request, Vlan $vlan)
     {
         abort_if(Gate::denies('vlan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -62,6 +55,13 @@ class VlanController extends Controller
             ->update(['vlan_id' => $vlan->id]);
 
         return response()->json();
+    }
+
+    public function show(Vlan $vlan)
+    {
+        abort_if(Gate::denies('vlan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return new VlanResource($vlan);
     }
 
     public function destroy(Vlan $vlan)

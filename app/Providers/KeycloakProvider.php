@@ -17,6 +17,7 @@ class KeycloakProvider extends ServiceProvider
     {
         Socialite::extend('keycloak', function ($app) {
             $config = $app['config']['services.keycloak'];
+
             return Socialite::buildProvider(KeycloakSocialiteProvider::class, $config);
         });
     }

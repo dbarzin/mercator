@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\ApplicationBlock;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
 use App\Http\Resources\Admin\ApplicationBlockResource;
-use App\MApplication;
+use App\Models\ApplicationBlock;
+use App\Models\MApplication;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -2,16 +2,15 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class ViewsTest extends DuskTestCase
 {
-    public function testViewEcosystem()
+    public function test_view_ecosystem()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.ecosystem'));
@@ -22,24 +21,24 @@ class ViewsTest extends DuskTestCase
         });
     }
 
-    public function testViewInformationSystem()
+    public function test_view_information_system()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.informaton-system'));
                 $browser->assertRouteIs('admin.report.view.informaton-system');
                 $browser->assertSee('Mercator');
                 $browser->assertDontSee('ErrorException');
-                });
+            });
         });
     }
 
-    public function testViewAdministration()
+    public function test_view_administration()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.administration'));
@@ -50,10 +49,10 @@ class ViewsTest extends DuskTestCase
         });
     }
 
-    public function testViewApplications()
+    public function test_view_applications()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.applications'));
@@ -64,10 +63,10 @@ class ViewsTest extends DuskTestCase
         });
     }
 
-    public function testViewApplicationFlows()
+    public function test_view_application_flows()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.application-flows'));
@@ -78,10 +77,10 @@ class ViewsTest extends DuskTestCase
         });
     }
 
-    public function testViewLogicalInfrastructure()
+    public function test_view_logical_infrastructure()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.logical-infrastructure'));
@@ -92,10 +91,10 @@ class ViewsTest extends DuskTestCase
         });
     }
 
-    public function testViewPhysicalInfrastructure()
+    public function test_view_physical_infrastructure()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.view.physical-infrastructure'));
@@ -105,5 +104,4 @@ class ViewsTest extends DuskTestCase
             });
         });
     }
-
 }

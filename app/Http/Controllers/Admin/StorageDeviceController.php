@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyStorageDeviceRequest;
 use App\Http\Requests\StoreStorageDeviceRequest;
 use App\Http\Requests\UpdateStorageDeviceRequest;
-use App\Site;
-use App\StorageDevice;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\Site;
+use App\Models\StorageDevice;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

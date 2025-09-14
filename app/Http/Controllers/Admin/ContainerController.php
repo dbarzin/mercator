@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Container;
-use App\Database;
-use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyContainerRequest;
 use App\Http\Requests\StoreContainerRequest;
 use App\Http\Requests\UpdateContainerRequest;
-use App\LogicalServer;
-use App\MApplication;
+use App\Models\Container;
+use App\Models\Database;
+use App\Models\Document;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -50,7 +50,7 @@ class ContainerController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -95,7 +95,7 @@ class ContainerController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Annuaire;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Requests\StoreAnnuaireRequest;
 use App\Http\Requests\UpdateAnnuaireRequest;
-use App\ZoneAdmin;
+use App\Models\Annuaire;
+use App\Models\ZoneAdmin;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,6 +22,13 @@ class AnnuaireController extends Controller
         return view('admin.annuaires.index', compact('annuaires'));
     }
 
+    public function store(StoreAnnuaireRequest $request)
+    {
+        Annuaire::create($request->all());
+
+        return redirect()->route('admin.annuaires.index');
+    }
+
     public function create()
     {
         abort_if(Gate::denies('annuaire_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -29,13 +36,6 @@ class AnnuaireController extends Controller
         $zone_admins = ZoneAdmin::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.annuaires.create', compact('zone_admins'));
-    }
-
-    public function store(StoreAnnuaireRequest $request)
-    {
-        Annuaire::create($request->all());
-
-        return redirect()->route('admin.annuaires.index');
     }
 
     public function edit(Annuaire $annuaire)

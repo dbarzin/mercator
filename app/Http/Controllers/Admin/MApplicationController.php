@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Activity;
-use App\AdminUser;
-use App\ApplicationBlock;
-use App\ApplicationService;
-use App\Database;
-use App\Document;
-use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMApplicationRequest;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
-use App\LogicalServer;
-use App\MApplication;
-use App\Process;
+use App\Models\Activity;
+use App\Models\AdminUser;
+use App\Models\ApplicationBlock;
+use App\Models\ApplicationService;
+use App\Models\Database;
+use App\Models\Document;
+use App\Models\Entity;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
+use App\Models\Process;
 // use App\Services\CartographerService;
-use App\User;
+use App\Models\User;
 // CoreUI Gates
 use Gate;
 // Laravel Gate
@@ -57,7 +57,7 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
-        $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // lists
@@ -143,7 +143,7 @@ class MApplicationController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -195,7 +195,7 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
-        $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // rto-rpo
@@ -285,7 +285,7 @@ class MApplicationController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

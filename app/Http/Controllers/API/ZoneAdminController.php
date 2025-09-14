@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyZoneAdminRequest;
 use App\Http\Requests\StoreZoneAdminRequest;
 use App\Http\Requests\UpdateZoneAdminRequest;
 use App\Http\Resources\Admin\ZoneAdminResource;
-use App\ZoneAdmin;
+use App\Models\ZoneAdmin;
 use Gate;
 use Illuminate\Http\Response;
 

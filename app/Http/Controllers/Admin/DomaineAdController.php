@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\DomaineAd;
-use App\ForestAd;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
-use App\LogicalServer;
+use App\Models\DomaineAd;
+use App\Models\ForestAd;
+use App\Models\LogicalServer;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

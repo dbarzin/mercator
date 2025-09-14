@@ -1,7 +1,7 @@
 <?php
 
-use App\Permission;
-use App\Role;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,16 +15,16 @@ return new class extends Migration
     {
 
         Schema::create('containers', function (Blueprint $table) {
-	        $table->increments('id');
+            $table->increments('id');
             $table->string('name');
             $table->string('type')->nullable();
             $table->longText('description')->nullable();
 
             $table->unsignedInteger('icon_id')->nullable()->index('document_id_fk_43948593');
-            $table->foreign('icon_id','document_id_fk_434833774')->references('id')->on('documents')->onUpdate('NO ACTION');
+            $table->foreign('icon_id', 'document_id_fk_434833774')->references('id')->on('documents')->onUpdate('NO ACTION');
 
             $table->timestamps();
-	        $table->softDeletes();
+            $table->softDeletes();
             $table->unique(['name', 'deleted_at'], 'container_name_unique');
         });
 
@@ -45,27 +45,27 @@ return new class extends Migration
         });
 
         // if not initial migration -> add permissions
-        if (Permission::All()->count()>0) {
+        if (Permission::All()->count() > 0) {
             // create new permissions
             $permissions = [
                 [
-                    'id'    => '301',
+                    'id' => '301',
                     'title' => 'container_create',
                 ],
                 [
-                    'id'    => '302',
+                    'id' => '302',
                     'title' => 'container_edit',
                 ],
                 [
-                    'id'    => '303',
+                    'id' => '303',
                     'title' => 'container_show',
                 ],
                 [
-                    'id'    => '304',
+                    'id' => '304',
                     'title' => 'container_delete',
                 ],
                 [
-                    'id'    => '305',
+                    'id' => '305',
                     'title' => 'container_access',
                 ],
             ];
@@ -73,11 +73,11 @@ return new class extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([301,302,303,304,305], false);
+            Role::findOrFail(1)->permissions()->sync([301, 302, 303, 304, 305], false);
             // User
-            Role::findOrFail(2)->permissions()->sync([301,302,303,304,305], false);
+            Role::findOrFail(2)->permissions()->sync([301, 302, 303, 304, 305], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([303,305], false);
+            Role::findOrFail(3)->permissions()->sync([303, 305], false);
 
         }
 
@@ -92,8 +92,8 @@ return new class extends Migration
         Schema::dropIfExists('container_logical_server');
         Schema::dropIfExists('container_m_application');
         Schema::dropIfExists('containers');
-        if (Permission::All()->count()>0) {
-            DB::delete("delete from permissions where id in (301, 302, 303, 304, 305)");
+        if (Permission::All()->count() > 0) {
+            DB::delete('delete from permissions where id in (301, 302, 303, 304, 305)');
         }
     }
 };

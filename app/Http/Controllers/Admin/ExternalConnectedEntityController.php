@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Entity;
-use App\ExternalConnectedEntity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
-use App\Network;
+use App\Models\Entity;
+use App\Models\ExternalConnectedEntity;
+use App\Models\Network;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

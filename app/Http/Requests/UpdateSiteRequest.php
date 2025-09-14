@@ -27,7 +27,7 @@ class UpdateSiteRequest extends FormRequest
                     ->ignore($this->route('site')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
-            'iconFile' => ['nullable','file','mimes:png','max:65535'],
+            'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
         ];
     }
 }

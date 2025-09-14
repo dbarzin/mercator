@@ -7,14 +7,14 @@ use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
 // Models
-use App\LogicalFlow;
-use App\LogicalServer;
-use App\Peripheral;
-use App\PhysicalSecurityDevice;
-use App\PhysicalServer;
-use App\Router;
-use App\StorageDevice;
-use App\Workstation;
+use App\Models\LogicalFlow;
+use App\Models\LogicalServer;
+use App\Models\Peripheral;
+use App\Models\PhysicalSecurityDevice;
+use App\Models\PhysicalServer;
+use App\Models\Router;
+use App\Models\StorageDevice;
+use App\Models\Workstation;
 // Framework
 use Gate;
 use Illuminate\Support\Collection;
@@ -26,24 +26,23 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalFlows = LogicalFlow::
-            with(
-                'router',
-                'logicalServerSource',
-                'peripheralSource',
-                'physicalServerSource',
-                'storageDeviceSource',
-                'workstationSource',
-                'physicalSecurityDeviceSource',
-                'logicalServerDest',
-                'peripheralDest',
-                'physicalServerDest',
-                'storageDeviceDest',
-                'workstationDest',
-                'physicalSecurityDeviceDest'
-            )
-                ->orderby('name')
-                ->get();
+        $logicalFlows = LogicalFlow::with(
+            'router',
+            'logicalServerSource',
+            'peripheralSource',
+            'physicalServerSource',
+            'storageDeviceSource',
+            'workstationSource',
+            'physicalSecurityDeviceSource',
+            'logicalServerDest',
+            'peripheralDest',
+            'physicalServerDest',
+            'storageDeviceDest',
+            'workstationDest',
+            'physicalSecurityDeviceDest'
+        )
+            ->orderby('name')
+            ->get();
 
         return view('admin.logicalFlows.index', compact('logicalFlows'));
     }
@@ -65,22 +64,22 @@ class LogicalFlowController extends Controller
         // Build device list
         $devices = Collection::make();
         foreach ($logicalServers as $key => $value) {
-            $devices->put('LSERVER_' . $key, $value);
+            $devices->put('LSERVER_'.$key, $value);
         }
         foreach ($peripherals as $key => $value) {
-            $devices->put('PERIF_' . $key, $value);
+            $devices->put('PERIF_'.$key, $value);
         }
         foreach ($physicalServers as $key => $value) {
-            $devices->put('PSERVER_' . $key, $value);
+            $devices->put('PSERVER_'.$key, $value);
         }
         foreach ($storageDevices as $key => $value) {
-            $devices->put('STORAGE_' . $key, $value);
+            $devices->put('STORAGE_'.$key, $value);
         }
         foreach ($workstations as $key => $value) {
-            $devices->put('WORK_' . $key, $value);
+            $devices->put('WORK_'.$key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
-            $devices->put('SECURITY_' . $key, $value);
+            $devices->put('SECURITY_'.$key, $value);
         }
 
         // Lists
@@ -147,22 +146,22 @@ class LogicalFlowController extends Controller
         // Build device list
         $devices = Collection::make();
         foreach ($logicalServers as $key => $value) {
-            $devices->put('LSERVER_' . $key, $value);
+            $devices->put('LSERVER_'.$key, $value);
         }
         foreach ($peripherals as $key => $value) {
-            $devices->put('PERIF_' . $key, $value);
+            $devices->put('PERIF_'.$key, $value);
         }
         foreach ($physicalServers as $key => $value) {
-            $devices->put('PSERVER_' . $key, $value);
+            $devices->put('PSERVER_'.$key, $value);
         }
         foreach ($storageDevices as $key => $value) {
-            $devices->put('STORAGE_' . $key, $value);
+            $devices->put('STORAGE_'.$key, $value);
         }
         foreach ($workstations as $key => $value) {
-            $devices->put('WORK_' . $key, $value);
+            $devices->put('WORK_'.$key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
-            $devices->put('SECURITY_' . $key, $value);
+            $devices->put('SECURITY_'.$key, $value);
         }
 
         // Lists

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ApplicationBlock;
-use App\ApplicationService;
-use App\Database;
-use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMApplicationRequest;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
-use App\LogicalServer;
-use App\MApplication;
-use App\Process;
-use App\User;
+use App\Models\ApplicationBlock;
+use App\Models\ApplicationService;
+use App\Models\Database;
+use App\Models\Entity;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
+use App\Models\Process;
+use App\Models\User;
 // CoreUI Gates
 use Gate;
 // Laravel Gate

@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
 use App\Http\Resources\Admin\RouterResource;
-use App\Router;
+use App\Models\Router;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -1,13 +1,11 @@
 <?php
 
-use App\Role;
-use App\Permission;
-
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCertificatesTable extends Migration
 {
@@ -39,27 +37,27 @@ class CreateCertificatesTable extends Migration
         });
 
         // if not initial migration -> add permissions
-        if (Permission::All()->count()>0) {
+        if (Permission::All()->count() > 0) {
             // create new permissions
             $permissions = [
                 [
-                    'id'    => '257',
+                    'id' => '257',
                     'title' => 'certificate_create',
                 ],
                 [
-                    'id'    => '258',
+                    'id' => '258',
                     'title' => 'certificate_edit',
                 ],
                 [
-                    'id'    => '259',
+                    'id' => '259',
                     'title' => 'certificate_show',
                 ],
                 [
-                    'id'    => '260',
+                    'id' => '260',
                     'title' => 'certificate_delete',
                 ],
                 [
-                    'id'    => '261',
+                    'id' => '261',
                     'title' => 'certificate_access',
                 ],
             ];
@@ -67,11 +65,11 @@ class CreateCertificatesTable extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([257,258,259,260,261], false);
+            Role::findOrFail(1)->permissions()->sync([257, 258, 259, 260, 261], false);
             // User
-            Role::findOrFail(2)->permissions()->sync([257,258,259,260,261], false);
+            Role::findOrFail(2)->permissions()->sync([257, 258, 259, 260, 261], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([259,261], false);
+            Role::findOrFail(3)->permissions()->sync([259, 261], false);
         }
     }
 
@@ -84,8 +82,8 @@ class CreateCertificatesTable extends Migration
     {
         Schema::dropIfExists('certificate_logical_server');
         Schema::dropIfExists('certificates');
-        if (Permission::All()->count()>0) {
-            DB::delete("delete from permissions where id in (257, 258, 259, 260, 261)");
+        if (Permission::All()->count() > 0) {
+            DB::delete('delete from permissions where id in (257, 258, 259, 260, 261)');
         }
     }
 }

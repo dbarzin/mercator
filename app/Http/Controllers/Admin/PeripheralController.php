@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
-use App\Building;
-use App\Document;
-use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
-use App\MApplication;
-use App\Peripheral;
-use App\Site;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\Document;
+use App\Models\Entity;
+use App\Models\MApplication;
+use App\Models\Peripheral;
+use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -111,7 +111,7 @@ class PeripheralController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -179,7 +179,7 @@ class PeripheralController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

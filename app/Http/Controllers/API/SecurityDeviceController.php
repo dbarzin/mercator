@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroySecurityDeviceRequest;
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
 use App\Http\Resources\Admin\SecurityDeviceResource;
-use App\SecurityDevice;
+use App\Models\SecurityDevice;
 use Gate;
 use Illuminate\Http\Response;
 

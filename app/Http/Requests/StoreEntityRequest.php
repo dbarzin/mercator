@@ -25,7 +25,7 @@ class StoreEntityRequest extends FormRequest
                 'required',
                 Rule::unique('entities')->whereNull('deleted_at'),
             ],
-            'iconFile' => ['nullable','file','mimes:png','max:65535'],
+            'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'seurity_level' => [
                 'nullable',
                 'integer',

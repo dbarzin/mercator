@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ApplicationModule;
-use App\ApplicationService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationServiceRequest;
 use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
-use App\MApplication;
+use App\Models\ApplicationModule;
+use App\Models\ApplicationService;
+use App\Models\MApplication;
 use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

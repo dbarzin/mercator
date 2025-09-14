@@ -54,7 +54,7 @@
                                 {{ $log->subject_type }}
                             </td>
                             <td>
-                                <a href="{{ \App\AuditLog::subjectURL($log->subject_type) }}/{{ $log->subject_id }}">
+                                <a href="{{ \App\Models\AuditLog::subjectURL($log->subject_type) }}/{{ $log->subject_id }}">
                                     {{ $log->subject_id }}
                                 </a>
                             </td>

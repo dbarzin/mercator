@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Bay;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
 use App\Http\Resources\Admin\BayResource;
+use App\Models\Bay;
 use Gate;
 use Illuminate\Http\Response;
 

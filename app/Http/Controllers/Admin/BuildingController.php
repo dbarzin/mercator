@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
-use App\Site;
+use App\Models\Building;
+use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -122,6 +122,7 @@ class BuildingController extends Controller
             }
         }
         sort($res);
+
         return array_unique($res);
     }
 }

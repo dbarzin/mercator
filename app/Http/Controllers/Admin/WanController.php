@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWanRequest;
 use App\Http\Requests\StoreWanRequest;
 use App\Http\Requests\UpdateWanRequest;
-use App\Lan;
-use App\Man;
-use App\Wan;
+use App\Models\Lan;
+use App\Models\Man;
+use App\Models\Wan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +23,15 @@ class WanController extends Controller
         return view('admin.wans.index', compact('wans'));
     }
 
+    public function store(StoreWanRequest $request)
+    {
+        $wan = Wan::create($request->all());
+        $wan->mans()->sync($request->input('mans', []));
+        $wan->lans()->sync($request->input('lans', []));
+
+        return redirect()->route('admin.wans.index');
+    }
+
     public function create()
     {
         abort_if(Gate::denies('wan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -32,15 +41,6 @@ class WanController extends Controller
         $lans = Lan::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.wans.create', compact('mans', 'lans'));
-    }
-
-    public function store(StoreWanRequest $request)
-    {
-        $wan = Wan::create($request->all());
-        $wan->mans()->sync($request->input('mans', []));
-        $wan->lans()->sync($request->input('lans', []));
-
-        return redirect()->route('admin.wans.index');
     }
 
     public function edit(Wan $wan)

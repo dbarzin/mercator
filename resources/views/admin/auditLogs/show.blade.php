@@ -34,7 +34,7 @@
                         {{ trans('cruds.auditLog.fields.subject_id') }}
                     </th>
                     <td>
-                        <a href="{{ \App\AuditLog::subjectURL($auditLog->subject_type) }}/{{ $auditLog->subject_id }}">
+                        <a href="{{ \App\Models\AuditLog::subjectURL($auditLog->subject_type) }}/{{ $auditLog->subject_id }}">
                             {{ $auditLog->subject_id }}
                         </a>
                     </td>

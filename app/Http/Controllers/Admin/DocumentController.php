@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Document;
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -16,7 +16,7 @@ class DocumentController extends Controller
         abort_if($document === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // Get the path to the file
-        $path = storage_path('docs/' . $id);
+        $path = storage_path('docs/'.$id);
 
         // Check file exists
         abort_if(! file_exists($path), Response::HTTP_NOT_FOUND, '404 Not Found');
@@ -30,7 +30,7 @@ class DocumentController extends Controller
             ->header('Content-Description', 'File Transfer')
             ->header('Content-Type', $document->mimetype)
             ->header('Content-length', strlen($file_contents))
-            ->header('Content-Disposition', 'attachment; filename="' . $document->filename .'"')
+            ->header('Content-Disposition', 'attachment; filename="'.$document->filename.'"')
             ->header('Content-Transfer-Encoding', 'binary');
     }
 
@@ -40,6 +40,7 @@ class DocumentController extends Controller
 
         if (! $file) {
             \Log::error('DocumentController.store : File not received');
+
             return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
         }
 
@@ -53,11 +54,12 @@ class DocumentController extends Controller
 
         if (! $file->isValid()) {
             \Log::error('DocumentController.store : Invalid file');
+
             return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
         }
 
         // Create a new document
-        $document = new Document();
+        $document = new Document;
         $document->filename = $file->getClientOriginalName();
         $document->mimetype = $file->getClientMimeType();
         $document->size = $file->getSize();

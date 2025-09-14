@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\MApplication;
-use App\Role;
-use App\User;
+use App\Models\MApplication;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -26,10 +26,6 @@ class CartographerService
 
     /**
      * Permet de retirer de la collection les applications où l'utilisateur connecté n'est pas cartographe, si souhaité
-     *
-     * @param Collection $applications
-     *
-     * @return Collection
      */
     public function filterOnCartographers(Collection $applications): Collection
     {
@@ -45,16 +41,13 @@ class CartographerService
                 $applications->forget($key);
             }
         }
+
         return $applications->sortBy('name')->pluck('name', 'id');
     }
 
     /**
      * Permet d'attribuer le rôle de cartographe à ceux de l'application passée en paramètre,
      * si ce rôle existe au sein de l'application
-     *
-     * @param MApplication $application
-     *
-     * @return void
      */
     public function attributeCartographerRole(MApplication $application): void
     {

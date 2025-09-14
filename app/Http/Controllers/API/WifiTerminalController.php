@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyWifiTerminalRequest;
 use App\Http\Requests\StoreWifiTerminalRequest;
 use App\Http\Requests\UpdateWifiTerminalRequest;
 use App\Http\Resources\Admin\WifiTerminalResource;
-use App\WifiTerminal;
+use App\Models\WifiTerminal;
 use Gate;
 use Illuminate\Http\Response;
 

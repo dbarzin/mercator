@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Activity;
-use App\Document;
-use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
-use App\Information;
-use App\MacroProcessus;
-use App\MApplication;
-use App\Process;
+use App\Models\Activity;
+use App\Models\Document;
+use App\Models\Entity;
+use App\Models\Information;
+use App\Models\MacroProcessus;
+use App\Models\MApplication;
+use App\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -60,7 +60,7 @@ class ProcessController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -119,7 +119,7 @@ class ProcessController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

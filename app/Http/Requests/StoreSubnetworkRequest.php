@@ -28,7 +28,7 @@ class StoreSubnetworkRequest extends FormRequest
             ],
             'address' => [
                 'nullable',
-                new Cidr(),
+                new Cidr,
             ],
             'default_gateway' => [
                 'nullable',

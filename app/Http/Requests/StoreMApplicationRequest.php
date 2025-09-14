@@ -12,6 +12,7 @@ class StoreMApplicationRequest extends FormRequest
     public function authorize()
     {
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return true;
     }
 
@@ -24,7 +25,7 @@ class StoreMApplicationRequest extends FormRequest
                 'required',
                 Rule::unique('m_applications')->whereNull('deleted_at'),
             ],
-            'iconFile' => ['nullable','file','mimes:png','max:65535'],
+            'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'entities.*' => [
                 'integer',
             ],
@@ -69,8 +70,8 @@ class StoreMApplicationRequest extends FormRequest
             'update_date' => [
                 'date',
                 'nullable',
-            // TODO : fixme
-            // 'after:install_date',
+                // TODO : fixme
+                // 'after:install_date',
             ],
         ];
     }

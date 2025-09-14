@@ -23,7 +23,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/dusk": "^8.2",
-        "laravel/pint": "^1.13",
+        "laravel/pint": "^1.24",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",

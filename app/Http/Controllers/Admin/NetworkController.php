@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
-use App\Network;
-use App\Subnetwork;
+use App\Models\Network;
+use App\Models\Subnetwork;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

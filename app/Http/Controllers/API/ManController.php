@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\StoreManRequest;
 use App\Http\Requests\UpdateManRequest;
 use App\Http\Resources\Admin\ManResource;
-use App\Man;
+use App\Models\Man;
 use Gate;
 use Illuminate\Http\Response;
 

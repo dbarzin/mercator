@@ -7,8 +7,8 @@ use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
 use App\Http\Resources\Admin\MacroProcessusResource;
-use App\MacroProcessus;
-use App\Process;
+use App\Models\MacroProcessus;
+use App\Models\Process;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\ApplicationModule;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
 use App\Http\Resources\Admin\ApplicationModuleResource;
+use App\Models\ApplicationModule;
 use Gate;
 use Illuminate\Http\Response;
 

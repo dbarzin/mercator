@@ -11,7 +11,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
     public function user()
     {
         if ($this->hasInvalidState()) {
-            throw new InvalidStateException();
+            throw new InvalidStateException;
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
@@ -26,27 +26,28 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
             'expires_in' => Arr::get($response, 'expires_in'),
         ]);
     }
+
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
-            config('services.keycloak.base_url') . '/realms/daara/protocol/openid-connect/auth',
+            config('services.keycloak.base_url').'/realms/daara/protocol/openid-connect/auth',
             $state
         );
     }
 
     protected function getTokenUrl()
     {
-        return config('services.keycloak.base_url') . '/realms/daara/protocol/openid-connect/token';
+        return config('services.keycloak.base_url').'/realms/daara/protocol/openid-connect/token';
     }
 
     protected function getUserByToken($token)
     {
         $response = $this->getHttpClient()->get(
-            config('services.keycloak.base_url') . '/realms/daara/protocol/openid-connect/userinfo',
+            config('services.keycloak.base_url').'/realms/daara/protocol/openid-connect/userinfo',
             [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $token,
+                    'Authorization' => 'Bearer '.$token,
                 ],
             ]
         );

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
-use App\NetworkSwitch;
-use App\PhysicalSwitch;
+use App\Models\NetworkSwitch;
+use App\Models\PhysicalSwitch;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Activity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use App\Http\Resources\Admin\ActivityResource;
+use App\Models\Activity;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
-use App\Building;
-use App\Cluster;
-use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\Cluster;
+use App\Models\Document;
 // Laravel
-use App\LogicalServer;
-use App\MApplication;
-use App\PhysicalServer;
-use App\Site;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
+use App\Models\PhysicalServer;
+use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -117,7 +117,7 @@ class PhysicalServerController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -189,7 +189,7 @@ class PhysicalServerController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

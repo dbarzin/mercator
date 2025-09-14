@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Hash;
@@ -41,7 +41,8 @@ class ForgotPasswordController extends Controller
         // check users exists
         if (! DB::table('users')->whereNull('deleted_at')->where('email', $request->email)->exists()) {
             // Log incident
-            Log::warning('Unknown reset email used : ' . $request->email);
+            Log::warning('Unknown reset email used : '.$request->email);
+
             // return with same message
             return back()->with('message', 'We have e-mailed your password reset link!');
         }
@@ -56,7 +57,8 @@ class ForgotPasswordController extends Controller
             // Max one mail per 15 minutes
             if (Carbon::now()->diffInMinutes($previousTokenCreationDate->created_at) < 15) {
                 // Log incident
-                Log::warning('Request reset email already sent to : ' . $request->email);
+                Log::warning('Request reset email already sent to : '.$request->email);
+
                 // return with same message
                 return back()->with('message', 'We have e-mailed your password reset link!');
             }
@@ -93,10 +95,10 @@ class ForgotPasswordController extends Controller
             $mail->isHTML(true);                            // Set email format to HTML
             $mail->Subject = 'Mercator - Reset password';
             $mail->Body =
-                '<html><body>' .
-                '<h1>Forget Password Email</h1>' .
-                'You can reset your password from the link:' .
-                "<a href='" . route('reset.password.get', $token) . "'>Reset Password</a>" .
+                '<html><body>'.
+                '<h1>Forget Password Email</h1>'.
+                'You can reset your password from the link:'.
+                "<a href='".route('reset.password.get', $token)."'>Reset Password</a>".
                 '</body></html>';
 
             // Optional: Add DKIM signing
@@ -112,6 +114,7 @@ class ForgotPasswordController extends Controller
             Log::info("Message has been sent to {$request->email}");
         } catch (Exception $e) {
             Log::error("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+
             return back()->withErrors(['mail' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"]);
         }
 

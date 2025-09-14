@@ -4,62 +4,62 @@ namespace App\Http\Controllers\Admin;
 
 // GDPR
 // ecosystem
-use App\Activity;
-use App\ActivityImpact;
-// information system
-use App\Actor;
-use App\AdminUser;
-use App\Annuaire;
-use App\ApplicationBlock;
-use App\ApplicationModule;
-use App\ApplicationService;
-// Application
-use App\Bay;
-use App\Building;
-use App\Certificate;
-use App\Cluster;
-use App\Container;
-use App\Database;
-use App\DataProcessing;
-use App\DhcpServer;
-use App\Dnsserver;
-use App\DomaineAd;
-use App\Entity;
-use App\ExternalConnectedEntity;
-// Administration
-use App\Flux;
-use App\ForestAd;
-use App\Gateway;
 use App\Http\Controllers\Controller;
-use App\Information;
-use App\LogicalServer;
+use App\Models\Activity;
+// information system
+use App\Models\ActivityImpact;
+use App\Models\Actor;
+use App\Models\AdminUser;
+use App\Models\Annuaire;
+use App\Models\MApplication;
+use App\Models\ApplicationBlock;
+// Application
+use App\Models\ApplicationModule;
+use App\Models\ApplicationService;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\Certificate;
+use App\Models\Cluster;
+use App\Models\Container;
+use App\Models\Database;
+use App\Models\DataProcessing;
+use App\Models\DhcpServer;
+use App\Models\Dnsserver;
+use App\Models\DomaineAd;
+// Administration
+use App\Models\Entity;
+use App\Models\ExternalConnectedEntity;
+use App\Models\Flux;
+use App\Models\ForestAd;
+use App\Models\Gateway;
+use App\Models\Information;
 // Logique
-use App\MacroProcessus;
-use App\MApplication;
-use App\Network;
-use App\NetworkSwitch;
-use App\Operation;
-use App\Peripheral;
-use App\Phone;
+use App\Models\LogicalServer;
+use App\Models\MacroProcessus;
+use App\Models\Network;
+use App\Models\NetworkSwitch;
+use App\Models\Operation;
+use App\Models\Peripheral;
+use App\Models\Phone;
 // Physique
-use App\PhysicalLink;
-use App\PhysicalRouter;
-use App\PhysicalSecurityDevice;
-use App\PhysicalServer;
-use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
-use App\Router;
-use App\SecurityDevice;
-use App\Site;
-use App\StorageDevice;
-use App\Subnetwork;
-use App\Task;
-use App\Vlan;
-use App\WifiTerminal;
-use App\Workstation;
+use App\Models\PhysicalLink;
+use App\Models\PhysicalRouter;
+use App\Models\PhysicalSecurityDevice;
+use App\Models\PhysicalServer;
+use App\Models\PhysicalSwitch;
+use App\Models\Process;
+use App\Models\Relation;
+use App\Models\Router;
+use App\Models\SecurityDevice;
+use App\Models\Site;
+use App\Models\StorageDevice;
+use App\Models\Subnetwork;
+use App\Models\Task;
+use App\Models\Vlan;
+use App\Models\WifiTerminal;
+use App\Models\Workstation;
 // Laravel
-use App\ZoneAdmin;
+use App\Models\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,14 +71,14 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\Element\Section;
+use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Element\Table;
-
 
 class ReportController extends Controller
 {
-    public const ALLOWED_PERIMETERS = ['All','Internes','Externes'];
+    public const ALLOWED_PERIMETERS = ['All', 'Internes', 'Externes'];
+
     public const SANITIZED_PERIMETER = 'All';
 
     /*
@@ -123,9 +123,8 @@ class ReportController extends Controller
             ->get();
 
         if ($macroprocess !== null) {
-            $macroProcessuses = MacroProcessus::
-                where('id', $macroprocess)
-                    ->get();
+            $macroProcessuses = MacroProcessus::where('id', $macroprocess)
+                ->get();
 
             $all_process = Process::orderBy('name')
                 ->where('macroprocess_id', $macroprocess)
@@ -200,8 +199,7 @@ class ReportController extends Controller
         }
 
         // Select applications
-        $applications = MApplication
-            ::join('data_processing_m_application', 'm_application_id', 'm_applications.id')
+        $applications = MApplication::join('data_processing_m_application', 'm_application_id', 'm_applications.id')
             ->wherein('data_processing_id', $dataProcessings->pluck('id')->all())->get();
 
         return view('admin/reports/gdpr')
@@ -225,7 +223,7 @@ class ReportController extends Controller
         $entitiesGroups = Entity::All()->groupBy('entity_type');
         $entities = collect([]);
         $entityTypes = collect([]);
-        $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités*/
+        $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités */
         foreach ($entitiesGroups as $entity_type => $entOfGroup) {
             $entities = $entities->concat($entOfGroup);
             if ($entity_type !== null) {
@@ -266,6 +264,7 @@ class ReportController extends Controller
 
         $request->session()->put('perimeter', $perimeter);
         $request->session()->put('entity_type', $typefilter);
+
         return view('admin/reports/ecosystem')
             ->with('entityTypes', $entityTypes)
             ->with('entities', $entities)
@@ -316,6 +315,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -329,6 +329,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -342,6 +343,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -355,6 +357,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -368,6 +371,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -381,6 +385,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -394,6 +399,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
         } else {
@@ -458,6 +464,7 @@ class ReportController extends Controller
                     if ($application !== null) {
                         return $item->id === $application;
                     }
+
                     return $item->application_block_id = $applicationBlock;
                 });
 
@@ -471,6 +478,7 @@ class ReportController extends Controller
                     if ($application === null) {
                         return $item->application_block_id === $applicationBlock;
                     }
+
                     return $item->id === $application;
                 });
 
@@ -483,6 +491,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -495,6 +504,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -507,6 +517,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -537,6 +548,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
         } else {
@@ -548,6 +560,7 @@ class ReportController extends Controller
             $fluxes = Flux::All()->sortBy('name');
             $all_applications = null;
         }
+
         return view('admin/reports/applications')
             ->with('all_applicationBlocks', $all_applicationBlocks)
             ->with('all_applications', $all_applications)
@@ -556,8 +569,7 @@ class ReportController extends Controller
             ->with('applicationServices', $applicationServices)
             ->with('applicationModules', $applicationModules)
             ->with('databases', $databases)
-            ->with('fluxes', $fluxes)
-        ;
+            ->with('fluxes', $fluxes);
     }
 
     public function applicationFlows(Request $request)
@@ -726,8 +738,7 @@ class ReportController extends Controller
             ->with('applicationServices', $applicationServices)
             ->with('applicationModules', $applicationModules)
             ->with('databases', $databases)
-            ->with('flows', $flows)
-        ;
+            ->with('flows', $flows);
     }
 
     public function logicalInfrastructure(Request $request)
@@ -787,6 +798,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -800,6 +812,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -813,6 +826,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -826,6 +840,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -839,6 +854,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -852,6 +868,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -865,6 +882,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -878,6 +896,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -891,6 +910,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -904,6 +924,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -917,6 +938,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -928,8 +950,9 @@ class ReportController extends Controller
                         if ($subnetwork->contains($item->address_ip)) {
                             return true;
                         }
-                        //}
+                        // }
                     }
+
                     return false;
                 });
 
@@ -945,6 +968,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -958,6 +982,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -971,6 +996,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1081,6 +1107,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1102,6 +1129,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1115,6 +1143,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1138,6 +1167,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1161,6 +1191,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1174,6 +1205,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1197,6 +1229,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1220,6 +1253,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1233,6 +1267,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1256,6 +1291,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
         } else {
@@ -1288,8 +1324,7 @@ class ReportController extends Controller
             ->with('physicalSwitches', $physicalSwitches)
             ->with('physicalRouters', $physicalRouters)
             ->with('wifiTerminals', $wifiTerminals)
-            ->with('physicalSecurityDevices', $physicalSecurityDevices)
-        ;
+            ->with('physicalSecurityDevices', $physicalSecurityDevices);
     }
 
     public function networkInfrastructure(Request $request)
@@ -1325,7 +1360,7 @@ class ReportController extends Controller
 
             $all_buildings = Building::All()->sortBy('name')
                 ->where('site_id', '=', $site)->pluck('name', 'id');
-            if ($buildings === null || (sizeof($buildings) === 0)) {
+            if ($buildings === null || (count($buildings) === 0)) {
                 $buildings = Building::All()
                     ->sortBy('name')
                     ->where('site_id', '=', $site);
@@ -1340,6 +1375,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1361,6 +1397,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1374,6 +1411,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1397,6 +1435,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1420,6 +1459,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1443,6 +1483,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1456,6 +1497,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1479,6 +1521,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1492,6 +1535,7 @@ class ReportController extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
@@ -1515,6 +1559,7 @@ class ReportController extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -1730,6 +1775,7 @@ class ReportController extends Controller
                             return false;
                         }
                     }
+
                     return true;
                 });
         } else {
@@ -1797,7 +1843,7 @@ class ReportController extends Controller
             trans('cruds.entity.fields.applications_resp'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -1814,7 +1860,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -1837,11 +1883,11 @@ class ReportController extends Controller
             $row++;
         }
 
-        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/entities-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -1851,7 +1897,7 @@ class ReportController extends Controller
     public function activityReport()
     {
         // get template
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new \PhpOffice\PhpWord\PhpWord;
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);
@@ -1938,7 +1984,7 @@ class ReportController extends Controller
             $section->addTitle(trans('cruds.dataProcessing.fields.processes'), 2);
             $txt = '<ul>';
             foreach ($dataProcessing->processes as $p) {
-                $txt .= '<li>' . $p->name . '</li>';
+                $txt .= '<li>'.$p->name.'</li>';
             }
             $txt .= '</ul>';
             $this->addText($section, $txt);
@@ -1947,7 +1993,7 @@ class ReportController extends Controller
             $section->addTitle(trans('cruds.dataProcessing.fields.applications'), 2);
             $txt = '<ul>';
             foreach ($dataProcessing->applications as $ap) {
-                $txt .= '<li>' . $ap->name . '</li>';
+                $txt .= '<li>'.$ap->name.'</li>';
             }
             $txt .= '</ul>';
             $this->addText($section, $txt);
@@ -1956,7 +2002,7 @@ class ReportController extends Controller
             $section->addTitle(trans('cruds.dataProcessing.fields.information'), 2);
             $txt = '<ul>';
             foreach ($dataProcessing->informations as $inf) {
-                $txt .= '<li>' . $inf->name . '</li>';
+                $txt .= '<li>'.$inf->name.'</li>';
             }
             $txt .= '</ul>';
             $this->addText($section, $txt);
@@ -1978,14 +2024,14 @@ class ReportController extends Controller
             $allControls->unique();
             $txt = '<ul>';
             foreach ($allControls as $control) {
-                $txt .= '<li>' . $control . '</li>';
+                $txt .= '<li>'.$control.'</li>';
             }
             $txt .= '</ul>';
             $this->addText($section, $txt);
         }
 
         // Finename
-        $filepath = storage_path('app/reports/register-'. Carbon::today()->format('Ymd') .'.docx');
+        $filepath = storage_path('app/reports/register-'.Carbon::today()->format('Ymd').'.docx');
 
         // Saving the document as Word2007 file.
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -2016,7 +2062,7 @@ class ReportController extends Controller
             trans('cruds.dataProcessing.fields.security_controls'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -2044,7 +2090,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('N')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate
         $row = 2;
@@ -2112,11 +2158,11 @@ class ReportController extends Controller
             $row++;
         }
 
-        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/register-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -2165,7 +2211,7 @@ class ReportController extends Controller
             trans('cruds.database.title'),
         );
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -2211,50 +2257,50 @@ class ReportController extends Controller
         $sheet->getStyle('1')->getFont()->setBold(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the sheet
         $row = 2;
         foreach ($applicationBlocks as $applicationBlock) {
             foreach ($applicationBlock->applications as $application) {
                 $i = 0;
-                $sheet->setCellValue(self::col($i++) . $row, $applicationBlock->name);
-                $sheet->setCellValue(self::col($i++) . $row, $application->name);
-                $sheet->setCellValue(self::col($i++) . $row, $html->toRichTextObject($application->description));
-                $sheet->setCellValue(self::col($i++) . $row, $application->vendor . ':' . $application->product . ':' . $application->version);
-                $sheet->setCellValue(self::col($i++) . $row, $application->entity_resp ? $application->entity_resp->name : '');
-                $sheet->setCellValue(self::col($i++) . $row, $application->entities->implode('name', ', '));
-                $sheet->setCellValue(self::col($i++) . $row, $application->responsible);
-                $sheet->setCellValue(self::col($i++) . $row, $application->processes->implode('name', ', '));
-                $sheet->setCellValue(self::col($i++) . $row, $application->activities->implode('name', ', '));
-                $sheet->setCellValue(self::col($i++) . $row, $application->editor);
-                $sheet->setCellValue(self::col($i++) . $row, $application->technology);
-                $sheet->setCellValue(self::col($i++) . $row, $application->type);
-                $sheet->setCellValue(self::col($i++) . $row, $application->users);
-                $sheet->setCellValue(self::col($i++) . $row, $application->external);
+                $sheet->setCellValue(self::col($i++).$row, $applicationBlock->name);
+                $sheet->setCellValue(self::col($i++).$row, $application->name);
+                $sheet->setCellValue(self::col($i++).$row, $html->toRichTextObject($application->description));
+                $sheet->setCellValue(self::col($i++).$row, $application->vendor.':'.$application->product.':'.$application->version);
+                $sheet->setCellValue(self::col($i++).$row, $application->entity_resp ? $application->entity_resp->name : '');
+                $sheet->setCellValue(self::col($i++).$row, $application->entities->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++).$row, $application->responsible);
+                $sheet->setCellValue(self::col($i++).$row, $application->processes->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++).$row, $application->activities->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++).$row, $application->editor);
+                $sheet->setCellValue(self::col($i++).$row, $application->technology);
+                $sheet->setCellValue(self::col($i++).$row, $application->type);
+                $sheet->setCellValue(self::col($i++).$row, $application->users);
+                $sheet->setCellValue(self::col($i++).$row, $application->external);
 
-                $sheet->setCellValue(self::col($i) . $row, $application->security_need_c);
-                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_c);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_c);
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_c);
 
-                $sheet->setCellValue(self::col($i) . $row, $application->security_need_i);
-                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_i);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_i);
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_i);
 
-                $sheet->setCellValue(self::col($i) . $row, $application->security_need_a);
-                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_a);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_a);
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_a);
 
-                $sheet->setCellValue(self::col($i) . $row, $application->security_need_t);
-                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_t);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_t);
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_t);
 
                 if (config('mercator-config.parameters.security_need_auth')) {
-                    $sheet->setCellValue(self::col($i) . $row, $application->security_need_auth);
-                    $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_auth);
+                    $sheet->setCellValue(self::col($i).$row, $application->security_need_auth);
+                    $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_auth);
                 }
 
-                $sheet->setCellValue(self::col($i++) . $row, $application->rto);
-                $sheet->setCellValue(self::col($i++) . $row, $application->rpo);
+                $sheet->setCellValue(self::col($i++).$row, $application->rto);
+                $sheet->setCellValue(self::col($i++).$row, $application->rpo);
 
-                $sheet->setCellValue(self::col($i++) . $row, $application->documentation);
-                $sheet->setCellValue(self::col($i++) . $row, $application->logicalServers->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++).$row, $application->documentation);
+                $sheet->setCellValue(self::col($i++).$row, $application->logicalServers->implode('name', ', '));
                 $res = null;
 
                 // Done: request improved
@@ -2306,7 +2352,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/applications-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -2327,55 +2373,55 @@ class ReportController extends Controller
                     ->orWhere('m_applications.security_need_t', '>=', 3)
                     ->orWhere('m_applications.security_need_auth', '>=', 3);
             })
-            ->whereNull('m_applications.deleted_at')
-            ->leftJoin('entities', function ($join) {
-               $join->on(function ($on) {
+                ->whereNull('m_applications.deleted_at')
+                ->leftJoin('entities', function ($join) {
+                    $join->on(function ($on) {
                         $on->on('m_applications.entity_resp_id', '=', 'entities.id');
                     })
-                    ->whereNull('entities.deleted_at');
-            })
-            ->whereNull('entities.deleted_at')
-            ->leftJoin('relations', function ($join) use ($today) {
-                /*
+                        ->whereNull('entities.deleted_at');
+                })
+                ->whereNull('entities.deleted_at')
+                ->leftJoin('relations', function ($join) use ($today) {
+                    /*
                $join->on(function ($on) {
                         $on->on('entities.id', '=', 'relations.source_id')
                            ->orOn('entities.id', '=', 'relations.destination_id');
                     })
                 */
-               $join->on('entities.id', '=', 'relations.source_id')
-                    ->where('relations.active', '=', 1)
-                    ->where('relations.start_date', '<=', $today)
-                    ->where('relations.end_date', '>=', $today)
-                    ->whereNull('relations.deleted_at');
-            })
-            ->select(
-                'm_applications.id as application_id',
-                'm_applications.name',
-                'm_applications.description',
-                'm_applications.responsible',
-                'm_applications.security_need_c',
-                'm_applications.security_need_i',
-                'm_applications.security_need_a',
-                'm_applications.security_need_t',
-                'm_applications.rto',
-                'm_applications.rpo',
+                    $join->on('entities.id', '=', 'relations.source_id')
+                        ->where('relations.active', '=', 1)
+                        ->where('relations.start_date', '<=', $today)
+                        ->where('relations.end_date', '>=', $today)
+                        ->whereNull('relations.deleted_at');
+                })
+                ->select(
+                    'm_applications.id as application_id',
+                    'm_applications.name',
+                    'm_applications.description',
+                    'm_applications.responsible',
+                    'm_applications.security_need_c',
+                    'm_applications.security_need_i',
+                    'm_applications.security_need_a',
+                    'm_applications.security_need_t',
+                    'm_applications.rto',
+                    'm_applications.rpo',
 
-                'entities.name as entity_name',
-                'entities.description as entity_description',
-                'entities.contact_point as entity_contact_point',
+                    'entities.name as entity_name',
+                    'entities.description as entity_description',
+                    'entities.contact_point as entity_contact_point',
 
-                'relations.name as relation_name',
-                'relations.type as relation_type',
-                'relations.description as relation_description',
-                'relations.importance as relation_importance',
-                'relations.start_date as relation_start_date',
-                'relations.end_date as relation_end_date'
+                    'relations.name as relation_name',
+                    'relations.type as relation_type',
+                    'relations.description as relation_description',
+                    'relations.importance as relation_importance',
+                    'relations.start_date as relation_start_date',
+                    'relations.end_date as relation_end_date'
 
-            )
-            ->get();
+                )
+                ->get();
 
         // --- Styles de base
-        $phpWord = new PhpWord();
+        $phpWord = new PhpWord;
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true); // !!!!
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);
@@ -2383,22 +2429,22 @@ class ReportController extends Controller
         $phpWord->addTitleStyle(1, ['size' => 20, 'bold' => true]);
         $phpWord->addTitleStyle(2, ['size' => 16, 'bold' => true]);
         $labelStyle = ['bold' => true];
-        $textStyle  = [];
+        $textStyle = [];
 
         $tableKVStyle = [
             'borderColor' => 'cccccc',
-            'borderSize'  => 6,
-            'cellMargin'  => 80,
-            'width'       => 100 * 50, // 100% (fiftieths of a percent)
+            'borderSize' => 6,
+            'cellMargin' => 80,
+            'width' => 100 * 50, // 100% (fiftieths of a percent)
         ];
         $tableKVFirstCol = ['bgColor' => 'f3f3f3', 'valign' => 'center', 'width' => 40 * 50];
         $tableKVSecondCol = ['valign' => 'center', 'width' => 60 * 50];
 
         $tableListStyle = [
             'borderColor' => 'cccccc',
-            'borderSize'  => 6,
-            'cellMargin'  => 80,
-            'width'       => 100 * 50,
+            'borderSize' => 6,
+            'cellMargin' => 80,
+            'width' => 100 * 50,
         ];
         $tableHeaderCell = ['bgColor' => 'eaeaea'];
         $paraTight = ['spaceAfter' => 60];
@@ -2462,10 +2508,10 @@ class ReportController extends Controller
                 'breakType' => 'continuous',
                 'pageSizeW' => 11906,
                 'pageSizeH' => 16838,
-                'marginTop'    => 1000,
+                'marginTop' => 1000,
                 'marginBottom' => 1000,
-                'marginLeft'   => 1000,
-                'marginRight'  => 1000,
+                'marginLeft' => 1000,
+                'marginRight' => 1000,
             ]);
 
             // Titre page
@@ -2474,17 +2520,17 @@ class ReportController extends Controller
             // =========================
             // Section 1: Application
             // =========================
-            $section->addTitle("Application", 2);
+            $section->addTitle('Application', 2);
 
             $t1 = $section->addTable($tableKVStyle);
             $this->addHTMLRow($t1, trans('cruds.application.fields.description'), $first->description);
             $this->addTextRow($t1, 'Processus', $this->getApplicationProcessesNames($first->application_id));
             $this->addTextRow($t1, 'Responsable', $first->responsible);
             $this->addTextRow($t1, 'C-I-A-T', (
-                    $first->security_need_c . " - " .
-                    $first->security_need_i . " - " .
-                    $first->security_need_a . " - " .
-                    $first->security_need_t));
+                $first->security_need_c.' - '.
+                $first->security_need_i.' - '.
+                $first->security_need_a.' - '.
+                $first->security_need_t));
             $this->addTextRow($t1, 'RTO', (MApplication::formatDelay($first->rto)));
             $this->addTextRow($t1, 'RPO', (MApplication::formatDelay($first->rpo)));
 
@@ -2493,7 +2539,7 @@ class ReportController extends Controller
             // =========================
             // Section 2: Entité responsable
             // =========================
-            $section->addTitle("Entité responsable", 2);
+            $section->addTitle('Entité responsable', 2);
             $t2 = $section->addTable($tableKVStyle);
             $this->addTextRow($t2, 'Nom', ($first->entity_name));
             $this->addHTMLRow($t2, 'Point de contact', ($first->entity_contact_point));
@@ -2504,7 +2550,7 @@ class ReportController extends Controller
             // =========================
             // Section 3: Relations actives à la date du jour
             // =========================
-            $section->addTitle("Relations", 2);
+            $section->addTitle('Relations', 2);
             $t3 = $section->addTable($tableListStyle);
             // En-têtes
             $t3h = $t3->addRow();
@@ -2520,8 +2566,8 @@ class ReportController extends Controller
                     $hasRelation = true;
                 }
                 $r = $t3->addRow();
-                $r->addCell()->addText(str_replace('&',' ',$row->relation_name), [], $paraTight);
-                $r->addCell()->addText(str_replace('&',' ',$row->relation_type), [], $paraTight);
+                $r->addCell()->addText(str_replace('&', ' ', $row->relation_name), [], $paraTight);
+                $r->addCell()->addText(str_replace('&', ' ', $row->relation_type), [], $paraTight);
                 $r->addCell()->addText(($row->relation_importance), [], $paraTight);
                 $r->addCell()->addText((optional($row->relation_start_date)->format('Y-m-d') ?? $row->relation_start_date), [], $paraTight);
                 $r->addCell()->addText((optional($row->relation_end_date)->format('Y-m-d') ?? $row->relation_end_date), [], $paraTight);
@@ -2540,7 +2586,7 @@ class ReportController extends Controller
 
         // --- Sauvegarde du fichier
         // Finename
-        $filepath = storage_path('app/reports/directory-'. Carbon::today()->format('Ymd') .'.docx');
+        $filepath = storage_path('app/reports/directory-'.Carbon::today()->format('Ymd').'.docx');
 
         // Saving the document as Word2007 file.
         $writer = IOFactory::createWriter($phpWord, 'Word2007');
@@ -2571,13 +2617,15 @@ class ReportController extends Controller
             ]
         );
         $table->addRow();
-        if ($title!==null)
+        if ($title !== null) {
             $table->addCell(8000, ['gridSpan' => 2])
                 ->addText(
                     $title,
                     CartographyController::FANCYTABLETITLESTYLE,
                     CartographyController::NOSPACE
                 );
+        }
+
         return $table;
     }
 
@@ -2595,7 +2643,7 @@ class ReportController extends Controller
         try {
             \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
         } catch (\Exception $e) {
-            Log::error('CartographyController - Invalid HTML ' . $value);
+            Log::error('CartographyController - Invalid HTML '.$value);
         }
     }
 
@@ -2617,7 +2665,7 @@ class ReportController extends Controller
             trans('cruds.applicationBlock.fields.responsible'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -2673,7 +2721,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/logicalServers-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -2700,7 +2748,7 @@ class ReportController extends Controller
             trans('cruds.externalConnectedEntity.fields.dest'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -2722,7 +2770,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('L')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -2747,13 +2795,12 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/externalAccess-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
         return response()->download($path);
 
-        return;
     }
 
     public function logicalServerConfigs()
@@ -2779,7 +2826,7 @@ class ReportController extends Controller
             trans('cruds.logicalServer.fields.servers'),            // O
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -2809,7 +2856,7 @@ class ReportController extends Controller
         $sheet->getStyle('H')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -2838,7 +2885,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/logicalServers-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -2905,7 +2952,7 @@ class ReportController extends Controller
             array_push($header, trans('global.authenticity_short'));
         }
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -3038,7 +3085,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/securityNeeds-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -3077,7 +3124,7 @@ class ReportController extends Controller
             'Description',
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -3094,7 +3141,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -3116,7 +3163,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/physicalInventory-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -3142,7 +3189,7 @@ class ReportController extends Controller
             'Building',
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -3163,7 +3210,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('K')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -3198,7 +3245,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/physicalInventory-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -3227,7 +3274,7 @@ class ReportController extends Controller
             'Workstations',
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -3252,7 +3299,7 @@ class ReportController extends Controller
         $sheet->getStyle('I')->getAlignment()->setWrapText(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -3334,11 +3381,11 @@ class ReportController extends Controller
             $row++;
         }
 
-        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/vlans-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 
@@ -3365,14 +3412,14 @@ class ReportController extends Controller
         $centered = ['alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]];
 
         // 3. Créer une nouvelle feuille Excel
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         // 4. Écrire l'en-tête (ligne 1)
         $sheet->setCellValue('A1', 'Activité');
         $sheet->getStyle('A1')->applyFromArray($boldFont);
         foreach ($impactTypes as $index => $type) {
-            $cell = chr(66 + $index) . '1';
+            $cell = chr(66 + $index).'1';
             $sheet->setCellValue($cell, ucfirst($type));
             $sheet->getStyle($cell)->applyFromArray($boldFont);
             $sheet->getStyle($cell)->applyFromArray($centered);
@@ -3381,7 +3428,7 @@ class ReportController extends Controller
         // 5. Remplir les lignes
         foreach ($activities as $rowIndex => $activity) {
             $row = $rowIndex + 2;
-            $sheet->setCellValue('A' . $row, $activity->name);
+            $sheet->setCellValue('A'.$row, $activity->name);
 
             foreach ($impactTypes as $colIndex => $type) {
                 $severity = $activity->impacts
@@ -3390,7 +3437,7 @@ class ReportController extends Controller
 
                 if ($severity !== null) {
                     $col = chr(66 + $colIndex);
-                    $cell = $col . $row;
+                    $cell = $col.$row;
                     $sheet->setCellValue($cell, $severity);
                     $this->addSecurityNeedColor($sheet, $cell, (int) $severity);
                     $sheet->getStyle($cell)->applyFromArray($centered);
@@ -3400,7 +3447,7 @@ class ReportController extends Controller
 
         // 6. Générer le fichier Excel en téléchargement
         $writer = new Xlsx($spreadsheet);
-        $filename = 'impacts-' .Carbon::today()->format('Ymd') .'.xlsx';
+        $filename = 'impacts-'.Carbon::today()->format('Ymd').'.xlsx';
 
         // 7. Envoyer en réponse HTTP
         return response()->streamDownload(function () use ($writer) {
@@ -3423,24 +3470,24 @@ class ReportController extends Controller
                     'application' => $app->name,
                     'activity' => $activity->name,
                     'maximum_tolerable_downtime' => implode(' ', array_filter([
-                        ($d = intdiv($activity->maximum_tolerable_downtime, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
-                        ($h = intdiv($activity->maximum_tolerable_downtime, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
-                        ($m = $activity->maximum_tolerable_downtime % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,
+                        ($d = intdiv($activity->maximum_tolerable_downtime, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
+                        ($h = intdiv($activity->maximum_tolerable_downtime, 60) % 24) ? $h.' '.trans('global.'.($h > 1 ? 'hours' : 'hour')) : null,
+                        ($m = $activity->maximum_tolerable_downtime % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
                     ])),
                     'recovery_time_objective' => implode(' ', array_filter([
-                        ($d = intdiv($activity->recovery_time_objective, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
-                        ($h = intdiv($activity->recovery_time_objective, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
-                        ($m = $activity->recovery_time_objective % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,
+                        ($d = intdiv($activity->recovery_time_objective, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
+                        ($h = intdiv($activity->recovery_time_objective, 60) % 24) ? $h.' '.trans('global.'.($h > 1 ? 'hours' : 'hour')) : null,
+                        ($m = $activity->recovery_time_objective % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
                     ])),
                     'maximum_tolerable_data_loss' => implode(' ', array_filter([
-                        ($d = intdiv($activity->maximum_tolerable_data_loss, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
-                        ($h = intdiv($activity->maximum_tolerable_data_loss, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
-                        ($m = $activity->maximum_tolerable_data_loss % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,
+                        ($d = intdiv($activity->maximum_tolerable_data_loss, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
+                        ($h = intdiv($activity->maximum_tolerable_data_loss, 60) % 24) ? $h.' '.trans('global.'.($h > 1 ? 'hours' : 'hour')) : null,
+                        ($m = $activity->maximum_tolerable_data_loss % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
                     ])),
                     'recovery_point_objective' => implode(' ', array_filter([
-                        ($d = intdiv($activity->recovery_point_objective, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
-                        ($h = intdiv($activity->recovery_point_objective, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
-                        ($m = $activity->recovery_point_objective % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,
+                        ($d = intdiv($activity->recovery_point_objective, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
+                        ($h = intdiv($activity->recovery_point_objective, 60) % 24) ? $h.' '.trans('global.'.($h > 1 ? 'hours' : 'hour')) : null,
+                        ($m = $activity->recovery_point_objective % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
                     ])),
                 ];
             }
@@ -3455,7 +3502,7 @@ class ReportController extends Controller
         });
 
         // Création Excel
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         $headers = [
@@ -3469,7 +3516,7 @@ class ReportController extends Controller
 
         // Écrire l'en-tête
         foreach ($headers as $colIndex => $title) {
-            $cell = chr(65 + $colIndex) . '1';
+            $cell = chr(65 + $colIndex).'1';
             $sheet->setCellValue($cell, $title);
             $sheet->getStyle($cell)->getFont()->setBold(true);
             $sheet->getStyle($cell)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
@@ -3509,7 +3556,7 @@ class ReportController extends Controller
             \PhpOffice\PhpWord\Shared\Html::addHtml($section, str_replace('<br>', '<br/>', $value));
         } catch (\Exception $e) {
             $section->addText('Invalid text');
-            Log::error('CartographyController - Invalid HTML ' . $value);
+            Log::error('CartographyController - Invalid HTML '.$value);
         }
     }
 
@@ -3744,9 +3791,9 @@ class ReportController extends Controller
         }
     }
 
-    private function addSecurityNeedColor(Worksheet $sheet, string $cell, int|null $i)
+    private function addSecurityNeedColor(Worksheet $sheet, string $cell, ?int $i)
     {
-        static $colors = [-1 => 'FFFFFF', 0 => 'FFFFFF',1 => '8CD17D',2 => 'F1CE63',3 => 'F28E2B',4 => 'E15759'];
+        static $colors = [-1 => 'FFFFFF', 0 => 'FFFFFF', 1 => '8CD17D', 2 => 'F1CE63', 3 => 'F28E2B', 4 => 'E15759'];
         $sheet->getStyle($cell)
             ->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
@@ -3755,117 +3802,117 @@ class ReportController extends Controller
     }
 
     private function addLine(
-        Worksheet $sheet,
-        int $row,
+        Worksheet      $sheet,
+        int            $row,
         MacroProcessus $macroprocess,
-        ?Process $process = null,
-        ?MApplication $application = null,
-        ?Database $database = null,
-        ?Information $information = null
+        ?Process       $process = null,
+        ?MApplication  $application = null,
+        ?Database      $database = null,
+        ?Information   $information = null
     ) {
         // Macroprocessus
         $i = 0;
-        $sheet->setCellValue(self::col($i++). $row, $macroprocess->name);
+        $sheet->setCellValue(self::col($i++).$row, $macroprocess->name);
 
-        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_c >= 0 ? $macroprocess->security_need_c : '');
-        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_c);
+        $sheet->setCellValue(self::col($i).$row, $macroprocess->security_need_c >= 0 ? $macroprocess->security_need_c : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $macroprocess->security_need_c);
 
-        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_i >= 0 ? $macroprocess->security_need_i : '');
-        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_i);
+        $sheet->setCellValue(self::col($i).$row, $macroprocess->security_need_i >= 0 ? $macroprocess->security_need_i : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $macroprocess->security_need_i);
 
-        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_a >= 0 ? $macroprocess->security_need_a : '');
-        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_a);
+        $sheet->setCellValue(self::col($i).$row, $macroprocess->security_need_a >= 0 ? $macroprocess->security_need_a : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $macroprocess->security_need_a);
 
-        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_t >= 0 ? $macroprocess->security_need_t : '');
-        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_t);
+        $sheet->setCellValue(self::col($i).$row, $macroprocess->security_need_t >= 0 ? $macroprocess->security_need_t : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $macroprocess->security_need_t);
 
         if (config('mercator-config.parameters.security_need_auth')) {
-            $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_auth >= 0 ? $macroprocess->security_need_auth : '');
-            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_auth);
+            $sheet->setCellValue(self::col($i).$row, $macroprocess->security_need_auth >= 0 ? $macroprocess->security_need_auth : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++).$row, $macroprocess->security_need_auth);
         }
 
         if ($process !== null) {
             // Processus
-            $sheet->setCellValue(self::col($i++). $row, $process->name);
+            $sheet->setCellValue(self::col($i++).$row, $process->name);
 
-            $sheet->setCellValue(self::col($i). $row, $process->security_need_c >= 0 ? $process->security_need_c : '');
-            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_c);
+            $sheet->setCellValue(self::col($i).$row, $process->security_need_c >= 0 ? $process->security_need_c : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++).$row, $process->security_need_c);
 
-            $sheet->setCellValue(self::col($i). $row, $process->security_need_i >= 0 ? $process->security_need_i : '');
-            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_i);
+            $sheet->setCellValue(self::col($i).$row, $process->security_need_i >= 0 ? $process->security_need_i : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++).$row, $process->security_need_i);
 
-            $sheet->setCellValue(self::col($i). $row, $process->security_need_a >= 0 ? $process->security_need_a : '');
-            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_a);
+            $sheet->setCellValue(self::col($i).$row, $process->security_need_a >= 0 ? $process->security_need_a : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++).$row, $process->security_need_a);
 
-            $sheet->setCellValue(self::col($i). $row, $process->security_need_t >= 0 ? $process->security_need_t : '');
-            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_t);
+            $sheet->setCellValue(self::col($i).$row, $process->security_need_t >= 0 ? $process->security_need_t : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++).$row, $process->security_need_t);
 
             if (config('mercator-config.parameters.security_need_auth')) {
-                $sheet->setCellValue(self::col($i). $row, $process->security_need_auth >= 0 ? $process->security_need_auth : '');
-                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_auth);
+                $sheet->setCellValue(self::col($i).$row, $process->security_need_auth >= 0 ? $process->security_need_auth : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $process->security_need_auth);
             }
 
             if ($application !== null) {
                 // Application
-                $sheet->setCellValue(self::col($i++). $row, $application->name);
+                $sheet->setCellValue(self::col($i++).$row, $application->name);
 
-                $sheet->setCellValue(self::col($i). $row, $application->security_need_c >= 0 ? $application->security_need_c : '');
-                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_c);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_c >= 0 ? $application->security_need_c : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_c);
 
-                $sheet->setCellValue(self::col($i). $row, $application->security_need_i >= 0 ? $application->security_need_i : '');
-                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_i);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_i >= 0 ? $application->security_need_i : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_i);
 
-                $sheet->setCellValue(self::col($i). $row, $application->security_need_a >= 0 ? $application->security_need_a : '');
-                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_a);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_a >= 0 ? $application->security_need_a : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_a);
 
-                $sheet->setCellValue(self::col($i). $row, $application->security_need_t >= 0 ? $application->security_need_t : '');
-                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_t);
+                $sheet->setCellValue(self::col($i).$row, $application->security_need_t >= 0 ? $application->security_need_t : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_t);
 
                 if (config('mercator-config.parameters.security_need_auth')) {
-                    $sheet->setCellValue(self::col($i). $row, $application->security_need_auth >= 0 ? $application->security_need_auth : '');
-                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_auth);
+                    $sheet->setCellValue(self::col($i).$row, $application->security_need_auth >= 0 ? $application->security_need_auth : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_auth);
                 }
 
                 if ($database !== null) {
                     // Database
-                    $sheet->setCellValue(self::col($i++). $row, $database->name);
+                    $sheet->setCellValue(self::col($i++).$row, $database->name);
 
-                    $sheet->setCellValue(self::col($i). $row, $database->security_need_c >= 0 ? $database->security_need_c : '');
-                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_c);
+                    $sheet->setCellValue(self::col($i).$row, $database->security_need_c >= 0 ? $database->security_need_c : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++).$row, $database->security_need_c);
 
-                    $sheet->setCellValue(self::col($i). $row, $database->security_need_i >= 0 ? $database->security_need_i : '');
-                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_i);
+                    $sheet->setCellValue(self::col($i).$row, $database->security_need_i >= 0 ? $database->security_need_i : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++).$row, $database->security_need_i);
 
-                    $sheet->setCellValue(self::col($i). $row, $database->security_need_a >= 0 ? $database->security_need_a : '');
-                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_a);
+                    $sheet->setCellValue(self::col($i).$row, $database->security_need_a >= 0 ? $database->security_need_a : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++).$row, $database->security_need_a);
 
-                    $sheet->setCellValue(self::col($i). $row, $database->security_need_t >= 0 ? $database->security_need_t : '');
-                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_t);
+                    $sheet->setCellValue(self::col($i).$row, $database->security_need_t >= 0 ? $database->security_need_t : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++).$row, $database->security_need_t);
 
                     if (config('mercator-config.parameters.security_need_auth')) {
-                        $sheet->setCellValue(self::col($i). $row, $database->security_need_auth >= 0 ? $database->security_need_auth : '');
-                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_auth);
+                        $sheet->setCellValue(self::col($i).$row, $database->security_need_auth >= 0 ? $database->security_need_auth : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $database->security_need_auth);
                     }
 
                     if ($information !== null) {
                         // Information
-                        $sheet->setCellValue(self::col($i++). $row, $information->name);
+                        $sheet->setCellValue(self::col($i++).$row, $information->name);
 
-                        $sheet->setCellValue(self::col($i). $row, $information->security_need_c >= 0 ? $information->security_need_c : '');
-                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_c);
+                        $sheet->setCellValue(self::col($i).$row, $information->security_need_c >= 0 ? $information->security_need_c : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $information->security_need_c);
 
-                        $sheet->setCellValue(self::col($i). $row, $information->security_need_i >= 0 ? $information->security_need_i : '');
-                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_i);
+                        $sheet->setCellValue(self::col($i).$row, $information->security_need_i >= 0 ? $information->security_need_i : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $information->security_need_i);
 
-                        $sheet->setCellValue(self::col($i). $row, $information->security_need_a >= 0 ? $information->security_need_a : '');
-                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_a);
+                        $sheet->setCellValue(self::col($i).$row, $information->security_need_a >= 0 ? $information->security_need_a : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $information->security_need_a);
 
-                        $sheet->setCellValue(self::col($i). $row, $information->security_need_t >= 0 ? $information->security_need_t : '');
-                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_t);
+                        $sheet->setCellValue(self::col($i).$row, $information->security_need_t >= 0 ? $information->security_need_t : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++).$row, $information->security_need_t);
 
                         if (config('mercator-config.parameters.security_need_auth')) {
-                            $sheet->setCellValue(self::col($i). $row, $information->security_need_auth >= 0 ? $information->security_need_auth : '');
-                            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_auth);
+                            $sheet->setCellValue(self::col($i).$row, $information->security_need_auth >= 0 ? $information->security_need_auth : '');
+                            $this->addSecurityNeedColor($sheet, self::col($i++).$row, $information->security_need_auth);
                         }
                     }
                 }
@@ -3879,6 +3926,7 @@ class ReportController extends Controller
         if ($i < 26) {
             return chr(ord('A') + $i);
         }
-        return 'A' . chr(ord('A') + $i - 26);
+
+        return 'A'.chr(ord('A') + $i - 26);
     }
 }

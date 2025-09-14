@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 // Models
 use App\Http\Controllers\Controller;
-use App\LogicalFlow;
-use App\PhysicalLink;
-use App\Router;
+use App\Models\LogicalFlow;
+use App\Models\PhysicalLink;
+use App\Models\Router;
 // Framework
-use App\Subnetwork;
+use App\Models\Subnetwork;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -711,25 +711,25 @@ class ExplorerController extends Controller
         $fluxes = DB::table('fluxes')->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
             if ($flux->application_source_id !== null) {
-                $src_id = 'APP_' . $flux->application_source_id;
+                $src_id = 'APP_'.$flux->application_source_id;
             } elseif ($flux->service_source_id !== null) {
-                $src_id = 'SERV_' . $flux->service_source_id;
+                $src_id = 'SERV_'.$flux->service_source_id;
             } elseif ($flux->module_source_id !== null) {
-                $src_id = 'MOD_' . $flux->module_source_id;
+                $src_id = 'MOD_'.$flux->module_source_id;
             } elseif ($flux->database_source_id !== null) {
-                $src_id = 'DATABASE_' . $flux->database_source_id;
+                $src_id = 'DATABASE_'.$flux->database_source_id;
             } else {
                 continue;
             }
 
             if ($flux->application_dest_id !== null) {
-                $dest_id = 'APP_' . $flux->application_dest_id;
+                $dest_id = 'APP_'.$flux->application_dest_id;
             } elseif ($flux->service_dest_id !== null) {
-                $dest_id = 'SERV_' . $flux->service_dest_id;
+                $dest_id = 'SERV_'.$flux->service_dest_id;
             } elseif ($flux->module_dest_id !== null) {
-                $dest_id = 'MOD_' . $flux->module_dest_id;
+                $dest_id = 'MOD_'.$flux->module_dest_id;
             } elseif ($flux->database_dest_id !== null) {
-                $dest_id = 'DATABASE_' . $flux->database_dest_id;
+                $dest_id = 'DATABASE_'.$flux->database_dest_id;
             } else {
                 continue;
             }
@@ -862,7 +862,7 @@ class ExplorerController extends Controller
 
     private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null)
     {
-        $data = [ 'vue' => $vue, 'id' => $id,  'label' => $label, 'image' => $image, 'type' => $type];
+        $data = ['vue' => $vue, 'id' => $id,  'label' => $label, 'image' => $image, 'type' => $type];
         if ($title !== null) {
             $data['title'] = $title;
         }
@@ -887,15 +887,16 @@ class ExplorerController extends Controller
     private function addEdge(&$edges, $name, $bidir, $from, $to, $type)
     {
         if ($from !== null && $to !== null) {
-            array_push($edges, [ 'name' => $name, 'bidirectional' => $bidir, 'from' => $from, 'to' => $to, 'type' => $type ]);
+            array_push($edges, ['name' => $name, 'bidirectional' => $bidir, 'from' => $from, 'to' => $to, 'type' => $type]);
         }
     }
 
     private function formatId($prefix, $id)
     {
         if ($id !== null) {
-            return $prefix . $id;
+            return $prefix.$id;
         }
+
         return null;
     }
 }

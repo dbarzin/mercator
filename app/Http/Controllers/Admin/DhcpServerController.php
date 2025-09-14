@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\DhcpServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDhcpServerRequest;
 use App\Http\Requests\StoreDhcpServerRequest;
 use App\Http\Requests\UpdateDhcpServerRequest;
+use App\Models\DhcpServer;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

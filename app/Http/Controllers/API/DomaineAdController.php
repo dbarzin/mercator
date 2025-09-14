@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\DomaineAd;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
 use App\Http\Resources\Admin\DomaineAdResource;
+use App\Models\DomaineAd;
 use Gate;
 use Illuminate\Http\Response;
 

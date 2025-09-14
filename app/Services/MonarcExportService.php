@@ -1,4 +1,5 @@
 <?php
+
 // app/Services/MonarcExportService.php
 
 namespace App\Services;
@@ -7,13 +8,11 @@ use Illuminate\Support\Str;
 
 class MonarcExportService
 {
-    public function __construct(private MospService $mosp)
-    {
-    }
+    public function __construct(private MospService $mosp) {}
 
     /**
-     * @param array $referentialSlugs  ex: ["iso27002"]
-     * @param array $assets            tableau d’assets Mercator (id,title,type,parent_id)
+     * @param  array  $referentialSlugs  ex: ["iso27002"]
+     * @param  array  $assets  tableau d’assets Mercator (id,title,type,parent_id)
      */
     public function buildAnalysis(
         string $name,
@@ -114,7 +113,7 @@ class MonarcExportService
             'vuln_uuid' => $vulnUuid,
             'assessments' => [
                 'likelihood' => 0,
-                'impact' => ['c' => 0,'i' => 0,'a' => 0],
+                'impact' => ['c' => 0, 'i' => 0, 'a' => 0],
             ],
             'measures' => array_map(fn ($u) => [
                 'recommendation_uuid' => $u,

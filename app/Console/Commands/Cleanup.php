@@ -39,7 +39,7 @@ class Cleanup extends Command
     {
         // clean reports
         $folder = storage_path('app/reports');
-        $files = glob($folder . '/*.docx');
+        $files = glob($folder.'/*.docx');
         $cnt = 0;
         foreach ($files as $file) {
             if (is_file($file)) {
@@ -47,7 +47,7 @@ class Cleanup extends Command
                 $cnt++;
             }
         }
-        $this->info('Removed ' . $cnt . ' files from ' . $folder);
+        $this->info('Removed '.$cnt.' files from '.$folder);
 
         // clean laravel.log
         // unlink(storage_path('logs').'/laravel.log');

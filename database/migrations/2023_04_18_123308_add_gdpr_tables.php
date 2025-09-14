@@ -1,8 +1,7 @@
 <?php
 
-use App\Permission;
-use App\Role;
-
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -122,7 +121,6 @@ class AddGdprTables extends Migration
                     'title' => 'security_controls_access',
                 ],
 
-
                 [
                     'id' => '274',
                     'title' => 'data_processing_register_create',
@@ -163,8 +161,9 @@ class AddGdprTables extends Migration
     public function down()
     {
         // delete access rights
-        if (Permission::count() > 0)
-            DB::delete("delete from permissions where id in (268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278)");
+        if (Permission::count() > 0) {
+            DB::delete('delete from permissions where id in (268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278)');
+        }
 
         // delete tables
         Schema::dropIfExists('data_processing_document');

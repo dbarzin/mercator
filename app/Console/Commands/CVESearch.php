@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\MApplication;
+use App\Models\MApplication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
@@ -16,12 +16,11 @@ use Throwable;
 class CVESearch extends Command
 {
     protected $signature = 'mercator:cve-search {--nowait : Whether the job should not wait before start}';
+
     protected $description = 'Search for CVE';
 
-    /** @var string */
     protected string $provider;
 
-    /** @var string */
     protected string $appVersion;
 
     /** @var int days */
@@ -47,6 +46,7 @@ class CVESearch extends Command
         $dbInfo = $this->fetchJson('/api/dbInfo');
         if ($dbInfo === null) {
             Log::warning('CVESearch - provider unreachable', ['provider' => $this->provider]);
+
             return self::FAILURE;
         }
 
@@ -68,6 +68,7 @@ class CVESearch extends Command
 
         if ($names->isEmpty()) {
             Log::info('CVESearch - no application names found, aborting.');
+
             return self::SUCCESS;
         }
 
@@ -75,6 +76,7 @@ class CVESearch extends Command
         $cves = $this->fetchJson('/api/last');
         if (! is_array($cves)) {
             Log::warning('CVESearch - invalid /api/last payload');
+
             return self::FAILURE;
         }
 
@@ -93,7 +95,7 @@ class CVESearch extends Command
                     $hitName = $this->firstContained($desc, $names);
                     if ($hitName !== null) {
                         $cveId = (string) data_get($cve, 'cveMetadata.cveId', 'CVE-?');
-                        $url = rtrim($this->provider, '/') . '/vuln/' . $cveId;
+                        $url = rtrim($this->provider, '/').'/vuln/'.$cveId;
                         $lines[] = sprintf(
                             '<a href="%s">%s</a> - <b>%s</b> : <b>%s</b> - %s',
                             e($url),
@@ -105,6 +107,7 @@ class CVESearch extends Command
                         $cveCount++;
                     }
                 }
+
                 continue;
             }
 
@@ -124,6 +127,7 @@ class CVESearch extends Command
                         $cveCount++;
                     }
                 }
+
                 continue;
             }
 
@@ -138,6 +142,7 @@ class CVESearch extends Command
                         $cveCount++;
                     }
                 }
+
                 continue;
             }
 
@@ -151,6 +156,7 @@ class CVESearch extends Command
                         break; // une occurrence suffit
                     }
                 }
+
                 continue;
             }
 
@@ -161,15 +167,17 @@ class CVESearch extends Command
         if ($cveCount <= 0) {
             Log::info('CVESearch - No CVE matched.');
             Log::info('CVESearch - DONE.');
+
             return self::SUCCESS;
         }
 
-        $message = '<html><body>' . implode('<br>', $lines) . '</body></html>';
+        $message = '<html><body>'.implode('<br>', $lines).'</body></html>';
         Log::info('CVESearch - Matches found', ['count' => $cveCount]);
 
         $this->sendEmail($message);
 
         Log::info('CVESearch - DONE.');
+
         return self::SUCCESS;
     }
 
@@ -228,14 +236,17 @@ class CVESearch extends Command
             $json = $resp->json();
             if (! is_array($json)) {
                 Log::warning('CVESearch - Non-array JSON payload', ['path' => $path]);
+
                 return null;
             }
+
             return $json;
         } catch (Throwable $e) {
             Log::error('CVESearch - HTTP error', [
                 'path' => $path,
                 'message' => $e->getMessage(),
             ]);
+
             return null;
         }
     }
@@ -251,6 +262,7 @@ class CVESearch extends Command
                 return $nameLower;
             }
         }
+
         return null;
     }
 

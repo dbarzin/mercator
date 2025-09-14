@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
+use App\Models\Bay;
+use App\Models\Building;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

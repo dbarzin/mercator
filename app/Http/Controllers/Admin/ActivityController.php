@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Activity;
-use App\ActivityImpact;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-use App\MApplication;
-use App\Operation;
-use App\Process;
+use App\Models\Activity;
+use App\Models\ActivityImpact;
+use App\Models\MApplication;
+use App\Models\Operation;
+use App\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -69,7 +69,7 @@ class ActivityController extends Controller
 
         if ($impact_types !== null) {
             for ($i = 0; $i < count($impact_types); $i++) {
-                $activityImpact = new ActivityImpact();
+                $activityImpact = new ActivityImpact;
                 $activityImpact->activity_id = $activity->id;
                 $activityImpact->impact_type = $impact_types[$i];
                 $activityImpact->severity = $severities[$i];
@@ -142,13 +142,14 @@ class ActivityController extends Controller
 
         if ($impact_types !== null) {
             for ($i = 0; $i < count($impact_types); $i++) {
-                $activityImpact = new ActivityImpact();
+                $activityImpact = new ActivityImpact;
                 $activityImpact->activity_id = $activity->id;
                 $activityImpact->impact_type = $impact_types[$i];
                 $activityImpact->severity = $severities[$i];
                 $activityImpact->save();
             }
         }
+
         return redirect()->route('admin.activities.index');
     }
 

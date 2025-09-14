@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
 use App\Http\Resources\Admin\OperationResource;
-use App\Operation;
+use App\Models\Operation;
 use Gate;
 use Illuminate\Http\Response;
 

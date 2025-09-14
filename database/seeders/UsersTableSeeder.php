@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -15,12 +15,12 @@ class UsersTableSeeder extends Seeder
             [
                 // No ID for PostgrSQL
                 // 'id'             => 1,
-                'name'           => 'Admin',
-                'email'          => 'admin@admin.com',
-                'password'       => '$2y$10$6KNtUi7G9Hsnt74LijQBtuQen1RbLzO71NpHsrSxrHmIUgDRhICQm',
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'password' => '$2y$10$6KNtUi7G9Hsnt74LijQBtuQen1RbLzO71NpHsrSxrHmIUgDRhICQm',
                 'remember_token' => null,
-                'granularity'    => 3,
-                'language'       => 'fr'
+                'granularity' => 3,
+                'language' => 'fr',
             ],
         ];
         User::insert($users);

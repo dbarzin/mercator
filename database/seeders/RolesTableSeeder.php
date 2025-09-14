@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Role;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
@@ -23,8 +23,8 @@ class RolesTableSeeder extends Seeder
                 'title' => 'Auditor',
             ],
             [
-                'title' => 'Cartographer'
-            ]
+                'title' => 'Cartographer',
+            ],
         ];
 
         Role::insert($roles);

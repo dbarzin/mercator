@@ -27,8 +27,8 @@ class StoreActivityRequest extends FormRequest
                     ->ignore($this->route('activity')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
-            'operations.*' => [ 'integer' ],
-            'operations' => [ 'array' ],
+            'operations.*' => ['integer'],
+            'operations' => ['array'],
 
             'recovery_time_objective' => ['nullable', 'regex:/^\d{1,3}:[0-5]\d$/'],
             'maximum_tolerable_downtime' => [

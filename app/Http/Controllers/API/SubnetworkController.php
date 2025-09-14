@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroySubnetworkRequest;
 use App\Http\Requests\StoreSubnetworkRequest;
 use App\Http\Requests\UpdateSubnetworkRequest;
 use App\Http\Resources\Admin\SubnetworkResource;
-use App\Subnetwork;
+use App\Models\Subnetwork;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -19,7 +19,7 @@ class AuditController extends HomeController
     {
         $levels = $this->computeMaturity();
 
-        $path = storage_path('app/levels-' . Carbon::today()->format('Ymd') . '.xlsx');
+        $path = storage_path('app/levels-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $header = [
             'Object',
@@ -34,7 +34,7 @@ class AuditController extends HomeController
             'Maturity 3',
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -122,18 +122,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 7) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 7) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B'.($row + 1).':B'.($row + 7).')');
+        $sheet->setCellValue("C{$row}", '=sum(C'.($row + 1).':C'.($row + 7).')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 7) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 7) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E'.($row + 1).':E'.($row + 7).')');
+        $sheet->setCellValue("F{$row}", '=sum(F'.($row + 1).':F'.($row + 7).')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 7) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 7) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H'.($row + 1).':H'.($row + 7).')');
+        $sheet->setCellValue("I{$row}", '=sum(I'.($row + 1).':I'.($row + 7).')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -236,18 +236,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 6) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 6) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B'.($row + 1).':B'.($row + 6).')');
+        $sheet->setCellValue("C{$row}", '=sum(C'.($row + 1).':C'.($row + 6).')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 6) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 6) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E'.($row + 1).':E'.($row + 6).')');
+        $sheet->setCellValue("F{$row}", '=sum(F'.($row + 1).':F'.($row + 6).')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 6) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 6) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H'.($row + 1).':H'.($row + 6).')');
+        $sheet->setCellValue("I{$row}", '=sum(I'.($row + 1).':I'.($row + 6).')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -337,18 +337,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 4) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 4) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B'.($row + 1).':B'.($row + 4).')');
+        $sheet->setCellValue("C{$row}", '=sum(C'.($row + 1).':C'.($row + 4).')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 4) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 4) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E'.($row + 1).':E'.($row + 4).')');
+        $sheet->setCellValue("F{$row}", '=sum(F'.($row + 1).':F'.($row + 4).')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 4) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 4) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H'.($row + 1).':H'.($row + 4).')');
+        $sheet->setCellValue("I{$row}", '=sum(I'.($row + 1).':I'.($row + 4).')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -412,18 +412,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 11) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 11) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B'.($row + 1).':B'.($row + 11).')');
+        $sheet->setCellValue("C{$row}", '=sum(C'.($row + 1).':C'.($row + 11).')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 11) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 11) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E'.($row + 1).':E'.($row + 11).')');
+        $sheet->setCellValue("F{$row}", '=sum(F'.($row + 1).':F'.($row + 11).')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 11) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 11) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H'.($row + 1).':H'.($row + 11).')');
+        $sheet->setCellValue("I{$row}", '=sum(I'.($row + 1).':I'.($row + 11).')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -603,18 +603,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 11) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 11) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B'.($row + 1).':B'.($row + 11).')');
+        $sheet->setCellValue("C{$row}", '=sum(C'.($row + 1).':C'.($row + 11).')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 11) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 11) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E'.($row + 1).':E'.($row + 11).')');
+        $sheet->setCellValue("F{$row}", '=sum(F'.($row + 1).':F'.($row + 11).')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 11) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 11) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H'.($row + 1).':H'.($row + 11).')');
+        $sheet->setCellValue("I{$row}", '=sum(I'.($row + 1).':I'.($row + 11).')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -772,7 +772,7 @@ class AuditController extends HomeController
 
     public function changes()
     {
-        $path = storage_path('app/changes-' . Carbon::today()->format('Ymd') . '.xlsx');
+        $path = storage_path('app/changes-'.Carbon::today()->format('Ymd').'.xlsx');
 
         /*
         select subject_type, description, YEAR(created_at) as year, MONTH(created_at) as month, count(*) as count
@@ -805,7 +805,7 @@ class AuditController extends HomeController
             Carbon::now()->startOfMonth()->format('m/Y'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
         // freeze top rows
@@ -835,65 +835,65 @@ class AuditController extends HomeController
         // App\xxx -> index, title
         $rows = [
             'GDPR' => ['index' => 2, 'title' => trans('cruds.menu.gdpr.title_short')],
-            'App\\DataProcessing' => ['index' => 3, 'title' => trans('cruds.dataProcessing.title')],
-            'App\\SecurityControl' => ['index' => 6, 'title' => trans('cruds.securityControl.title')],
+            'App\\Models\\DataProcessing' => ['index' => 3, 'title' => trans('cruds.dataProcessing.title')],
+            'App\\Models\\SecurityControl' => ['index' => 6, 'title' => trans('cruds.securityControl.title')],
 
             'Ecosystem' => ['index' => 9, 'title' => trans('cruds.menu.ecosystem.title_short')],
-            'App\\Entity' => ['index' => 10, 'title' => trans('cruds.entity.title')],
-            'App\\Relation' => ['index' => 13, 'title' => trans('cruds.relation.title')],
+            'App\\Models\\Entity' => ['index' => 10, 'title' => trans('cruds.entity.title')],
+            'App\\Models\\Relation' => ['index' => 13, 'title' => trans('cruds.relation.title')],
 
             'Metier' => ['index' => 16, 'title' => trans('cruds.menu.metier.title_short')],
-            'App\\MacroProcessus' => ['index' => 17, 'title' => trans('cruds.macroProcessus.title')],
-            'App\\Process' => ['index' => 20, 'title' => trans('cruds.process.title')],
-            'App\\Activity' => ['index' => 23, 'title' => trans('cruds.activity.title')],
-            'App\\Operation' => ['index' => 26, 'title' => trans('cruds.operation.title')],
-            'App\\Task' => ['index' => 29, 'title' => trans('cruds.task.title')],
-            'App\\Actor' => ['index' => 32, 'title' => trans('cruds.actor.title')],
-            'App\\Information' => ['index' => 35, 'title' => trans('cruds.information.title')],
+            'App\\Models\\MacroProcessus' => ['index' => 17, 'title' => trans('cruds.macroProcessus.title')],
+            'App\\Models\\Process' => ['index' => 20, 'title' => trans('cruds.process.title')],
+            'App\\Models\\Activity' => ['index' => 23, 'title' => trans('cruds.activity.title')],
+            'App\\Models\\Operation' => ['index' => 26, 'title' => trans('cruds.operation.title')],
+            'App\\Models\\Task' => ['index' => 29, 'title' => trans('cruds.task.title')],
+            'App\\Models\\Actor' => ['index' => 32, 'title' => trans('cruds.actor.title')],
+            'App\\Models\\Information' => ['index' => 35, 'title' => trans('cruds.information.title')],
 
             'Applications' => ['index' => 38, 'title' => trans('cruds.menu.application.title_short')],
-            'App\\ApplicationBlock' => ['index' => 39, 'title' => trans('cruds.applicationBlock.title')],
-            'App\\MApplication' => ['index' => 42, 'title' => trans('cruds.application.title')],
-            'App\\ApplicationService' => ['index' => 45, 'title' => trans('cruds.applicationService.title')],
-            'App\\ApplicationModule' => ['index' => 48, 'title' => trans('cruds.applicationModule.title')],
-            'App\\Database' => ['index' => 51, 'title' => trans('cruds.database.title')],
-            'App\\Flux' => ['index' => 54, 'title' => trans('cruds.flux.title')],
+            'App\\Models\\ApplicationBlock' => ['index' => 39, 'title' => trans('cruds.applicationBlock.title')],
+            'App\\Models\\MApplication' => ['index' => 42, 'title' => trans('cruds.application.title')],
+            'App\\Models\\ApplicationService' => ['index' => 45, 'title' => trans('cruds.applicationService.title')],
+            'App\\Models\\ApplicationModule' => ['index' => 48, 'title' => trans('cruds.applicationModule.title')],
+            'App\\Models\\Database' => ['index' => 51, 'title' => trans('cruds.database.title')],
+            'App\\Models\\Flux' => ['index' => 54, 'title' => trans('cruds.flux.title')],
 
             'Administration' => ['index' => 57, 'title' => trans('cruds.menu.administration.title_short')],
-            'App\\ZoneAdmin' => ['index' => 58, 'title' => trans('cruds.zoneAdmin.title')],
-            'App\\Annuaire' => ['index' => 61, 'title' => trans('cruds.annuaire.title')],
-            'App\\ForestAd' => ['index' => 64, 'title' => trans('cruds.forestAd.title')],
-            'App\\DomaineAd' => ['index' => 67, 'title' => trans('cruds.domaineAd.title')],
+            'App\\Models\\ZoneAdmin' => ['index' => 58, 'title' => trans('cruds.zoneAdmin.title')],
+            'App\\Models\\Annuaire' => ['index' => 61, 'title' => trans('cruds.annuaire.title')],
+            'App\\Models\\ForestAd' => ['index' => 64, 'title' => trans('cruds.forestAd.title')],
+            'App\\Models\\DomaineAd' => ['index' => 67, 'title' => trans('cruds.domaineAd.title')],
 
             'LogicalInfrastructure' => ['index' => 70, 'title' => trans('cruds.menu.logical_infrastructure.title_short')],
-            'App\\Network' => ['index' => 71, 'title' => trans('cruds.network.title')],
-            'App\\Subnetwork' => ['index' => 74, 'title' => trans('cruds.subnetwork.title')],
-            'App\\Gateway' => ['index' => 77, 'title' => trans('cruds.gateway.title')],
-            'App\\ExternalConnectedEntity' => ['index' => 80, 'title' => trans('cruds.externalConnectedEntity.title')],
-            'App\\NetworkSwitch' => ['index' => 83, 'title' => trans('cruds.networkSwitch.title')],
-            'App\\Router' => ['index' => 86, 'title' => trans('cruds.router.title')],
-            'App\\SecurityDevice' => ['index' => 89, 'title' => trans('cruds.securityDevice.title')],
-            'App\\DhcpServer' => ['index' => 92, 'title' => trans('cruds.dhcpServer.title')],
-            'App\\LogicalServer' => ['index' => 95, 'title' => trans('cruds.logicalServer.title')],
-            'App\\Certificate' => ['index' => 98, 'title' => trans('cruds.certificate.title')],
+            'App\\Models\\Network' => ['index' => 71, 'title' => trans('cruds.network.title')],
+            'App\\Models\\Subnetwork' => ['index' => 74, 'title' => trans('cruds.subnetwork.title')],
+            'App\\Models\\Gateway' => ['index' => 77, 'title' => trans('cruds.gateway.title')],
+            'App\\Models\\ExternalConnectedEntity' => ['index' => 80, 'title' => trans('cruds.externalConnectedEntity.title')],
+            'App\\Models\\NetworkSwitch' => ['index' => 83, 'title' => trans('cruds.networkSwitch.title')],
+            'App\\Models\\Router' => ['index' => 86, 'title' => trans('cruds.router.title')],
+            'App\\Models\\SecurityDevice' => ['index' => 89, 'title' => trans('cruds.securityDevice.title')],
+            'App\\Models\\DhcpServer' => ['index' => 92, 'title' => trans('cruds.dhcpServer.title')],
+            'App\\Models\\LogicalServer' => ['index' => 95, 'title' => trans('cruds.logicalServer.title')],
+            'App\\Models\\Certificate' => ['index' => 98, 'title' => trans('cruds.certificate.title')],
 
             'PhysicalInfrastructure' => ['index' => 101, 'title' => trans('cruds.menu.physical_infrastructure.title_short')],
-            'App\\Site' => ['index' => 102, 'title' => trans('cruds.site.title')],
-            'App\\Building' => ['index' => 105, 'title' => trans('cruds.building.title')],
-            'App\\Bay' => ['index' => 108, 'title' => trans('cruds.bay.title')],
-            'App\\PhysicalServer' => ['index' => 111, 'title' => trans('cruds.physicalServer.title')],
-            'App\\Workstation' => ['index' => 114, 'title' => trans('cruds.workstation.title')],
-            'App\\StorageDevice' => ['index' => 117, 'title' => trans('cruds.storageDevice.title')],
-            'App\\Peripheral' => ['index' => 120, 'title' => trans('cruds.peripheral.title')],
-            'App\\Phone' => ['index' => 123, 'title' => trans('cruds.phone.title')],
-            'App\\PhysicalRouter' => ['index' => 126, 'title' => trans('cruds.physicalRouter.title')],
-            'App\\PhysicalSwitch' => ['index' => 129, 'title' => trans('cruds.physicalSwitch.title')],
-            'App\\WifiTerminal' => ['index' => 132, 'title' => trans('cruds.wifiTerminal.title')],
-            'App\\PhysicalSecurityDevice' => ['index' => 135, 'title' => trans('cruds.physicalSecurityDevice.title')],
-            'App\\Wan' => ['index' => 138, 'title' => trans('cruds.wan.title')],
-            'App\\Man' => ['index' => 141, 'title' => trans('cruds.man.title')],
-            'App\\Lan' => ['index' => 144, 'title' => trans('cruds.lan.title')],
-            'App\\Vlan' => ['index' => 147, 'title' => trans('cruds.vlan.title')],
+            'App\\Models\\Site' => ['index' => 102, 'title' => trans('cruds.site.title')],
+            'App\\Models\\Building' => ['index' => 105, 'title' => trans('cruds.building.title')],
+            'App\\Models\\Bay' => ['index' => 108, 'title' => trans('cruds.bay.title')],
+            'App\\Models\\PhysicalServer' => ['index' => 111, 'title' => trans('cruds.physicalServer.title')],
+            'App\\Models\\Workstation' => ['index' => 114, 'title' => trans('cruds.workstation.title')],
+            'App\\Models\\StorageDevice' => ['index' => 117, 'title' => trans('cruds.storageDevice.title')],
+            'App\\Models\\Peripheral' => ['index' => 120, 'title' => trans('cruds.peripheral.title')],
+            'App\\Models\\Phone' => ['index' => 123, 'title' => trans('cruds.phone.title')],
+            'App\\Models\\PhysicalRouter' => ['index' => 126, 'title' => trans('cruds.physicalRouter.title')],
+            'App\\Models\\PhysicalSwitch' => ['index' => 129, 'title' => trans('cruds.physicalSwitch.title')],
+            'App\\Models\\WifiTerminal' => ['index' => 132, 'title' => trans('cruds.wifiTerminal.title')],
+            'App\\Models\\PhysicalSecurityDevice' => ['index' => 135, 'title' => trans('cruds.physicalSecurityDevice.title')],
+            'App\\Models\\Wan' => ['index' => 138, 'title' => trans('cruds.wan.title')],
+            'App\\Models\\Man' => ['index' => 141, 'title' => trans('cruds.man.title')],
+            'App\\Models\\Lan' => ['index' => 144, 'title' => trans('cruds.lan.title')],
+            'App\\Models\\Vlan' => ['index' => 147, 'title' => trans('cruds.vlan.title')],
         ];
 
         // Fill sheet

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ApplicationBlock;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
-use App\MApplication;
+use App\Models\ApplicationBlock;
+use App\Models\MApplication;
 use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Database;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
 use App\Http\Resources\Admin\DatabaseResource;
+use App\Models\Database;
 use Gate;
 use Illuminate\Http\Response;
 

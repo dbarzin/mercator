@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
 use App\Http\Resources\Admin\PhysicalRouterResource;
-use App\PhysicalRouter;
+use App\Models\PhysicalRouter;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\LogicalServer;
+use App\Models\LogicalServer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LogicalServerFactory extends Factory

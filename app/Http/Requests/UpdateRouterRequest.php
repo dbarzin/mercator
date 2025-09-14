@@ -30,7 +30,7 @@ class UpdateRouterRequest extends FormRequest
             ],
             'ip_addresses' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

@@ -27,7 +27,7 @@ class UpdateEntityRequest extends FormRequest
                     ->ignore($this->route('entity')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
-            'iconFile' => ['nullable','file','mimes:png','max:65535'],
+            'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'seurity_level' => [
                 'nullable',
                 'integer',

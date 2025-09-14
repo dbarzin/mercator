@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
 use App\Http\Resources\Admin\ApplicationResource;
-use App\MApplication;
+use App\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,7 +16,7 @@ class ApplicationController extends Controller
 {
     public function index(Request $request)
     {
-        $applications = QueryBuilder::for(\App\MApplication::query(), $request)
+        $applications = QueryBuilder::for(\App\Models\MApplication::query(), $request)
             ->allowedFilters([
                 'name',
                 'application_block_id',

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Certificate;
+use App\Models\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -34,24 +34,23 @@ class CertificateExpiracy extends Command
     {
         Log::debug('CertificateExpiracy - Start.');
 
-        Log::debug('CertificateExpiracy - day '. Carbon::now()->day);
+        Log::debug('CertificateExpiracy - day '.Carbon::now()->day);
 
         // if (true) {
         if ($this->needCheck()) {
             // Check for old certificates
             Log::debug('CertificateExpiracy - check');
 
-            $certificates = Certificate
-                ::where('status', 0)
-                    ->where('end_validity', '<=', Carbon::now()
-                        ->addDays(intval(config('mercator-config.cert.expire-delay')))->toDateString())
-                    ->orderBy('end_validity')
-                    ->get();
+            $certificates = Certificate::where('status', 0)
+                ->where('end_validity', '<=', Carbon::now()
+                    ->addDays(intval(config('mercator-config.cert.expire-delay')))->toDateString())
+                ->orderBy('end_validity')
+                ->get();
 
             Log::debug(
-                $certificates->count() .
+                $certificates->count().
                 ' certificate(s) will expire within '.
-                config('mercator-config.cert.expire-delay') .
+                config('mercator-config.cert.expire-delay').
                 ' days.'
             );
 
@@ -62,20 +61,20 @@ class CertificateExpiracy extends Command
                 foreach ($certificates as $key => $cert) {
                     if ($cert->last_notification === null) {
                         // never notified
-                        Log::debug('CertificateExpiracy - ' . $cert->name . ' never notified.');
+                        Log::debug('CertificateExpiracy - '.$cert->name.' never notified.');
                         $cert->last_notification = now();
                         $cert->save();
                     } elseif (
-                        Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $cert->last_notification)
+                        Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $cert->last_notification)
                             ->greaterThan(
                                 now()->addDays(-intval(config('mercator-config.cert.expire-delay')))
                             )
                     ) {
-                        Log::debug('CertificateExpiracy - ' . $cert->name . ' already notified on ' . $cert->last_notification);
+                        Log::debug('CertificateExpiracy - '.$cert->name.' already notified on '.$cert->last_notification);
                         $certificates->forget($key);
                     } else {
                         // must be notified
-                        Log::debug('CertificateExpiracy - ' . $cert->name . ' kept.');
+                        Log::debug('CertificateExpiracy - '.$cert->name.' kept.');
                         $cert->last_notification = now();
                         $cert->save();
                     }
@@ -130,7 +129,7 @@ class CertificateExpiracy extends Command
                         $mail->Subject = $subject;
                         $message = '<html><body>These certificates are about to exipre :<br><br>';
                         foreach ($certificates as $cert) {
-                            $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
+                            $message .= $cert->end_validity.' - '.$cert->name.' - '.$cert->type.'<br>';
                         }
                         $message .= '</body></html>';
 
@@ -143,7 +142,7 @@ class CertificateExpiracy extends Command
                         Log::debug("Mail sent to {$to_email}");
                     } else {
                         foreach ($certificates as $cert) {
-                            $mail->Subject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
+                            $mail->Subject = $subject.' - '.$cert->end_validity.' - '.$cert->name;
                             $message = $cert->description;
 
                             // Send mail

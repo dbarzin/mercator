@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Cluster;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
-use App\LogicalServer;
-use App\PhysicalServer;
+use App\Models\Cluster;
+use App\Models\LogicalServer;
+use App\Models\PhysicalServer;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

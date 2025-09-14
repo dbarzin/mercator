@@ -8,8 +8,8 @@ use App\Http\Requests\MassDestroySecurityDeviceRequest;
 // Framework
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
-use App\PhysicalSecurityDevice;
-use App\SecurityDevice;
+use App\Models\PhysicalSecurityDevice;
+use App\Models\SecurityDevice;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

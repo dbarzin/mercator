@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
 use App\Http\Resources\Admin\LogicalServerResource;
-use App\LogicalServer;
+use App\Models\LogicalServer;
 use Gate;
 use Illuminate\Http\Response;
 

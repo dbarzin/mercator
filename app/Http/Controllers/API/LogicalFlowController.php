@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
 use App\Http\Resources\Admin\logicalFlowResource;
-use App\LogicalFlow;
+use App\Models\LogicalFlow;
 use Gate;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -30,8 +30,8 @@ class LogicalFlowController extends Controller
         abort_if(Gate::denies('logical_flow_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalFlow = logicalFlow::create($request->all());
-        #$logicalFlow->servers()->sync($request->input('servers', []));
-        #$logicalFlow->applications()->sync($request->input('applications', []));
+        // $logicalFlow->servers()->sync($request->input('servers', []));
+        // $logicalFlow->applications()->sync($request->input('applications', []));
 
         Log::Debug('LogicalFlowController:store Done');
 

@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Requests\StorePhoneRequest;
 use App\Http\Requests\UpdatePhoneRequest;
 use App\Http\Resources\Admin\PhoneResource;
-use App\Phone;
+use App\Models\Phone;
 use Gate;
 use Illuminate\Http\Response;
 

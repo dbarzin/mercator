@@ -27,7 +27,7 @@ class UpdateMApplicationRequest extends FormRequest
                     ->ignore($this->route('application')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
-            'iconFile' => ['nullable','file','mimes:png','max:65535'],
+            'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'entities.*' => [
                 'integer',
             ],
@@ -74,8 +74,8 @@ class UpdateMApplicationRequest extends FormRequest
             'update_date' => [
                 'date',
                 'nullable',
-            // TODO : fixme
-            // 'after:install_date',
+                // TODO : fixme
+                // 'after:install_date',
             ],
         ];
     }

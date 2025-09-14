@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Gateway;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySubnetworkRequest;
 use App\Http\Requests\StoreSubnetworkRequest;
 use App\Http\Requests\UpdateSubnetworkRequest;
-use App\Network;
-use App\Subnetwork;
-use App\Vlan;
+use App\Models\Gateway;
+use App\Models\Network;
+use App\Models\Subnetwork;
+use App\Models\Vlan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,6 +22,13 @@ class SubnetworkController extends Controller
         $subnetworks = Subnetwork::all()->sortBy('name');
 
         return view('admin.subnetworks.index', compact('subnetworks'));
+    }
+
+    public function store(StoreSubnetworkRequest $request)
+    {
+        Subnetwork::create($request->all());
+
+        return redirect()->route('admin.subnetworks.index');
     }
 
     public function create()
@@ -53,13 +60,6 @@ class SubnetworkController extends Controller
                 'zone_list'
             )
         );
-    }
-
-    public function store(StoreSubnetworkRequest $request)
-    {
-        Subnetwork::create($request->all());
-
-        return redirect()->route('admin.subnetworks.index');
     }
 
     public function edit(Subnetwork $subnetwork)

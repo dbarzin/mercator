@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
 use App\Http\Resources\Admin\SecurityControlResource;
-use App\SecurityControl;
+use App\Models\SecurityControl;
 use Gate;
 use Illuminate\Http\Response;
 

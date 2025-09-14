@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
 use App\Http\Resources\Admin\NetworkResource;
-use App\Network;
+use App\Models\Network;
 use Gate;
 use Illuminate\Http\Response;
 
