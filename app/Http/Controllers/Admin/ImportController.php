@@ -80,6 +80,21 @@ class ImportController extends Controller
         return Excel::download(new GenericExport($data, $header), $modelName.'-'.Carbon::today()->format('Ymd').'.xlsx');
     }
 
+    private static function permission($modelName, $action)
+    {
+        return Str::snake($modelName, '_').'_'.$action;
+    }
+
+    private function resolveModelClass($modelName)
+    {
+        $modelClass = 'App\\Models\\'.$modelName;
+        if (! class_exists($modelClass)) {
+            abort(404, "Modèle [{$modelName}] introuvable.");
+        }
+
+        return $modelClass;
+    }
+
     public function import(Request $request)
     {
         $request->validate([
@@ -199,21 +214,6 @@ class ImportController extends Controller
 
             return back()->withInput()->withErrors(['msg' => $e->getMessage()]);
         }
-    }
-
-    private function resolveModelClass($modelName)
-    {
-        $modelClass = 'App\\'.$modelName;
-        if (! class_exists($modelClass)) {
-            abort(404, "Modèle [{$modelName}] introuvable.");
-        }
-
-        return $modelClass;
-    }
-
-    private static function permission($modelName, $action)
-    {
-        return Str::snake($modelName, '_').'_'.$action;
     }
 }
 
