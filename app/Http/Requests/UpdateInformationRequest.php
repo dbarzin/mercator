@@ -21,7 +21,7 @@ class UpdateInformationRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('information')
                     ->ignore($this->route('information')->id ?? $this->id)
