@@ -2340,9 +2340,9 @@ class ReportController extends Controller
                     ->get()
                     ->implode('name', ', ');
 
-                $sheet->setCellValue("V{$row}", $res);
-                $sheet->setCellValue("W{$row}", $application->workstations->implode('name', ', '));
-                $sheet->setCellValue("X{$row}", $application->databases->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++).$row, $res);
+                $sheet->setCellValue(self::col($i++).$row, $application->workstations->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++).$row, $application->databases->implode('name', ', '));
 
                 $row++;
             }
