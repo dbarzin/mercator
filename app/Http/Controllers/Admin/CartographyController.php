@@ -10,10 +10,9 @@ use App\Models\Activity;
 // information system
 use App\Models\Actor;
 use App\Models\Annuaire;
-use App\Models\MApplication;
 use App\Models\ApplicationBlock;
-// Applications
 use App\Models\ApplicationModule;
+// Applications
 use App\Models\ApplicationService;
 use App\Models\Bay;
 use App\Models\Building;
@@ -22,12 +21,12 @@ use App\Models\Cluster;
 use App\Models\Container;
 use App\Models\Database;
 use App\Models\DhcpServer;
-// Administration
 use App\Models\Dnsserver;
+// Administration
 use App\Models\DomaineAd;
 use App\Models\Entity;
-// Logique
 use App\Models\ExternalConnectedEntity;
+// Logique
 use App\Models\Flux;
 use App\Models\ForestAd;
 use App\Models\Gateway;
@@ -36,6 +35,7 @@ use App\Models\Lan;
 use App\Models\LogicalServer;
 use App\Models\MacroProcessus;
 use App\Models\Man;
+use App\Models\MApplication;
 // Physique
 use App\Models\Network;
 use App\Models\NetworkSwitch;

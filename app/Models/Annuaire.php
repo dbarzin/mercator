@@ -15,15 +15,15 @@ class Annuaire extends Model
 {
     use Auditable, HasFactory, SoftDeletes;
 
-    public $table = 'annuaires';
-
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'solution',
     ];
 
-    protected $dates = [
+    public $table = 'annuaires';
+
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

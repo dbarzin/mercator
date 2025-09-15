@@ -15,14 +15,14 @@ class Actor extends Model
 {
     use Auditable, HasFactory, SoftDeletes;
 
-    public $table = 'actors';
-
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'nature',
     ];
 
-    protected $dates = [
+    public $table = 'actors';
+
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

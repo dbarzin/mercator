@@ -11,10 +11,9 @@ use App\Models\ActivityImpact;
 use App\Models\Actor;
 use App\Models\AdminUser;
 use App\Models\Annuaire;
-use App\Models\MApplication;
 use App\Models\ApplicationBlock;
-// Application
 use App\Models\ApplicationModule;
+// Application
 use App\Models\ApplicationService;
 use App\Models\Bay;
 use App\Models\Building;
@@ -26,16 +25,17 @@ use App\Models\DataProcessing;
 use App\Models\DhcpServer;
 use App\Models\Dnsserver;
 use App\Models\DomaineAd;
-// Administration
 use App\Models\Entity;
+// Administration
 use App\Models\ExternalConnectedEntity;
 use App\Models\Flux;
 use App\Models\ForestAd;
 use App\Models\Gateway;
 use App\Models\Information;
-// Logique
 use App\Models\LogicalServer;
+// Logique
 use App\Models\MacroProcessus;
+use App\Models\MApplication;
 use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
@@ -3802,13 +3802,13 @@ class ReportController extends Controller
     }
 
     private function addLine(
-        Worksheet      $sheet,
-        int            $row,
+        Worksheet $sheet,
+        int $row,
         MacroProcessus $macroprocess,
-        ?Process       $process = null,
-        ?MApplication  $application = null,
-        ?Database      $database = null,
-        ?Information   $information = null
+        ?Process $process = null,
+        ?MApplication $application = null,
+        ?Database $database = null,
+        ?Information $information = null
     ) {
         // Macroprocessus
         $i = 0;

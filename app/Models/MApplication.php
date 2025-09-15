@@ -14,7 +14,7 @@ class MApplication extends Model
 {
     use Auditable, HasFactory, SoftDeletes;
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'vendor',
@@ -26,7 +26,7 @@ class MApplication extends Model
 
     public $table = 'm_applications';
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -66,14 +66,10 @@ class MApplication extends Model
     ];
 
     /*
-    * format $delay in minute to string in formet "a days b hours c ninutes"
+    * format $delay in minute to string in format "a days b hours c minutes"
     */
     public static function formatDelay(int $delay): string
     {
-        if ($delay === null) {
-            return '';
-        }
-
         $days = intdiv($delay, 60 * 24);
         $hours = intdiv($delay, 60) % 24;
         $minutes = $delay % 60;

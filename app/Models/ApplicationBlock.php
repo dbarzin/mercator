@@ -15,15 +15,15 @@ class ApplicationBlock extends Model
 {
     use Auditable, HasFactory, SoftDeletes;
 
-    public $table = 'application_blocks';
-
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'responsible',
     ];
 
-    protected $dates = [
+    public $table = 'application_blocks';
+
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
