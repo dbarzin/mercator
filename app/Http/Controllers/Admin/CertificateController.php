@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Certificate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCertificateRequest;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
-use App\LogicalServer;
-use App\MApplication;
+use App\Models\Certificate;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

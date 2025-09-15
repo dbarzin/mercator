@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
 use App\Http\Resources\Admin\NetworkSwitchResource;
-use App\NetworkSwitch;
+use App\Models\NetworkSwitch;
 use Gate;
 use Illuminate\Http\Response;
 

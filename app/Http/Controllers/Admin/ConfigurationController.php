@@ -70,7 +70,7 @@ class ConfigurationController extends Controller
                 config(['mercator-config.cert.repeat-notification' => $repeat_notification]);
 
                 // Save configuration
-                $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
+                $text = '<?php return '.var_export(config('mercator-config'), true).';';
                 file_put_contents(config_path('mercator-config.php'), $text);
 
                 // Return
@@ -120,6 +120,7 @@ class ConfigurationController extends Controller
             default:
                 $msg = 'no actions made.';
         }
+
         return view(
             'admin.config.cert',
             compact(
@@ -180,7 +181,7 @@ class ConfigurationController extends Controller
                 config(['mercator-config.cve.provider' => $provider]);
 
                 // Save configuration
-                $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
+                $text = '<?php return '.var_export(config('mercator-config'), true).';';
                 file_put_contents(config_path('mercator-config.php'), $text);
 
                 // Return
@@ -228,7 +229,7 @@ class ConfigurationController extends Controller
 
                 break;
             case 'test_provider':
-                $client = curl_init($provider . '/api/dbInfo');
+                $client = curl_init($provider.'/api/dbInfo');
                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($client);
                 if ($response === false) {
@@ -238,8 +239,8 @@ class ConfigurationController extends Controller
                     if ($json === null) {
                         $msg = 'Could not connect to provider';
                     } else {
-                        //dd($json);
-                        $msg = 'Last NVD update :' . $json->last_updates->nvd . ' Total db size = ' . $json->db_sizes->total;
+                        // dd($json);
+                        $msg = 'Last NVD update :'.$json->last_updates->nvd.' Total db size = '.$json->db_sizes->total;
                     }
                 }
                 break;
@@ -247,6 +248,7 @@ class ConfigurationController extends Controller
             default:
                 $msg = 'no actions made.';
         }
+
         return view(
             'admin.config.cve',
             compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'provider')
@@ -285,7 +287,7 @@ class ConfigurationController extends Controller
         config(['mercator-config.parameters.security_need_auth' => $security_need_auth]);
 
         // Save configuration
-        $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
+        $text = '<?php return '.var_export(config('mercator-config'), true).';';
         file_put_contents(config_path('mercator-config.php'), $text);
 
         // Return

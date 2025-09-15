@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
 use App\Http\Resources\Admin\WorkstationResource;
-use App\Workstation;
+use App\Models\Workstation;
 use Gate;
 use Illuminate\Http\Response;
 

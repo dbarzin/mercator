@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
 use App\Http\Resources\Admin\PhysicalServerResource;
-use App\PhysicalServer;
+use App\Models\PhysicalServer;
 use Gate;
 use Illuminate\Http\Response;
 
@@ -30,7 +30,7 @@ class PhysicalServerController extends Controller
         if ($request->has('applications')) {
             $physicalserver->applications()->sync($request->input('applications', []));
         }
-        
+
         // Support for logical servers association via API
         if ($request->has('logicalServers')) {
             $logicalServerIds = $request->input('logicalServers', []);
@@ -53,15 +53,15 @@ class PhysicalServerController extends Controller
 
         // Update all fields except logicalServers (handled separately)
         $physicalServer->update($request->except('logicalServers'));
-        
+
         if ($request->has('applications')) {
             $physicalServer->applications()->sync($request->input('applications', []));
         }
-        
+
         // Handle logical servers association via API
         if ($request->has('logicalServers')) {
             $logicalServerIds = $request->input('logicalServers', []);
-            \Log::info("Physical server {$physicalServer->name} - syncing logical servers: " . json_encode($logicalServerIds));
+            \Log::info("Physical server {$physicalServer->name} - syncing logical servers: ".json_encode($logicalServerIds));
             $physicalServer->logicalServers()->sync($logicalServerIds);
         }
 

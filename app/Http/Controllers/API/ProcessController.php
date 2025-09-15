@@ -7,8 +7,8 @@ use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
 use App\Http\Resources\Admin\ProcessResource;
-use App\Operation;
-use App\Process;
+use App\Models\Operation;
+use App\Models\Process;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\StoreManRequest;
 use App\Http\Requests\UpdateManRequest;
-use App\Lan;
-use App\Man;
+use App\Models\Lan;
+use App\Models\Man;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

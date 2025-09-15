@@ -18,7 +18,7 @@ class StoreFluxRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['min:3','max:64','required'],
+            'name' => ['min:3', 'max:64', 'required'],
         ];
     }
 }

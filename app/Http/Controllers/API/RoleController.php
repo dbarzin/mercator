@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Http\Resources\Admin\RoleResource;
-use App\Role;
+use App\Models\Role;
 use Gate;
 use Illuminate\Http\Response;
 

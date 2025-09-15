@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AdminUser;
-use App\DomaineAd;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAdminUserRequest;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
+use App\Models\AdminUser;
+use App\Models\DomaineAd;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

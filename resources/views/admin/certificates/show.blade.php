@@ -1,45 +1,46 @@
 @extends('layouts.admin')
 @section('content')
-<div class="form-group">
-    <a class="btn btn-default" href="{{ route('admin.certificates.index') }}">
-        {{ trans('global.back_to_list') }}
-    </a>
-
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=CERT_{{$certificate->id}}">
-        {{ trans('global.explore') }}
-    </a>
-
-    @can('certificate_edit')
-        <a class="btn btn-info" href="{{ route('admin.certificates.edit', $certificate->id) }}">
-            {{ trans('global.edit') }}
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.certificates.index') }}">
+            {{ trans('global.back_to_list') }}
         </a>
-    @endcan
 
-    @can('audit_log_show')
-    <a class="btn btn-secondary" href="{{ route('admin.history',
-            ['type' => 'App\Certificate', 'id' => $certificate->id]) }}">
-        {{ trans('global.history') }}
-    </a>
-    @endcan
+        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=CERT_{{$certificate->id}}">
+            {{ trans('global.explore') }}
+        </a>
 
-    @can('certificate_delete')
-        <form action="{{ route('admin.certificates.destroy', $certificate->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
-        </form>
-    @endcan
-</div>
+        @can('certificate_edit')
+            <a class="btn btn-info" href="{{ route('admin.certificates.edit', $certificate->id) }}">
+                {{ trans('global.edit') }}
+            </a>
+        @endcan
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.certificate.title') }}
+        @can('audit_log_show')
+            <a class="btn btn-secondary" href="{{ route('admin.history',
+            ['type' => 'App\Models\Certificate', 'id' => $certificate->id]) }}">
+                {{ trans('global.history') }}
+            </a>
+        @endcan
+
+        @can('certificate_delete')
+            <form action="{{ route('admin.certificates.destroy', $certificate->id) }}" method="POST"
+                  onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+            </form>
+        @endcan
     </div>
 
-    <div class="card-body">
-        <div class="form-group">
-            <table class="table table-bordered table-striped">
-                <tbody>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.show') }} {{ trans('cruds.certificate.title') }}
+        </div>
+
+        <div class="card-body">
+            <div class="form-group">
+                <table class="table table-bordered table-striped">
+                    <tbody>
                     <tr>
                         <th width="10%">
                             {{ trans('cruds.certificate.fields.name') }}
@@ -100,7 +101,7 @@
                                     {{ $server->name }}
                                 </a>
                                 @if(!$loop->last)
-                                ,
+                                    ,
                                 @endif
                             @endforeach
                         </td>
@@ -115,23 +116,24 @@
                                     {{ $application->name }}
                                 </a>
                                 @if(!$loop->last)
-                                ,
+                                    ,
                                 @endif
                             @endforeach
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            {{ trans('global.created_at') }} {{ $certificate->created_at ? $certificate->created_at->format(trans('global.timestamp')) : '' }}
+            |
+            {{ trans('global.updated_at') }} {{ $certificate->updated_at ? $certificate->updated_at->format(trans('global.timestamp')) : '' }}
         </div>
     </div>
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $certificate->created_at ? $certificate->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $certificate->updated_at ? $certificate->updated_at->format(trans('global.timestamp')) : '' }}
+    <div class="form-group">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.certificates.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
     </div>
-</div>
-<div class="form-group">
-    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.certificates.index') }}">
-        {{ trans('global.back_to_list') }}
-    </a>
-</div>
 @endsection

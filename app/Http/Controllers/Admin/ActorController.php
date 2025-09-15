@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActorRequest;
 use App\Http\Requests\StoreActorRequest;
 use App\Http\Requests\UpdateActorRequest;
+use App\Models\Actor;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

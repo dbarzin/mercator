@@ -2,7 +2,6 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
@@ -13,11 +12,10 @@ class ReportingTest extends DuskTestCase
      *
      * @return void
      */
-
-    public function testMaturityLevels()
+    public function test_maturity_levels()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
 
@@ -41,10 +39,10 @@ class ReportingTest extends DuskTestCase
         });
     }
 
-    public function testReports()
+    public function test_reports()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
 
@@ -70,10 +68,10 @@ class ReportingTest extends DuskTestCase
         });
     }
 
-    public function testCartographyReport()
+    public function test_cartography_report()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.report.cartography'));
@@ -82,10 +80,10 @@ class ReportingTest extends DuskTestCase
         });
     }
 
-    public function testAuditReports()
+    public function test_audit_reports()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
+        $admin = \App\Models\User::find(1);
+        retry($times = 5, function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.audit.maturity'));

@@ -5,61 +5,61 @@ namespace App\Http\Controllers\Admin;
 // RGPD
 
 // ecosystem
-use App\Activity;
-use App\Actor;
-// information system
-use App\Annuaire;
-use App\ApplicationBlock;
-use App\ApplicationModule;
-use App\ApplicationService;
-// Applications
-use App\Bay;
-use App\Building;
-use App\Certificate;
-use App\Cluster;
-use App\Container;
-use App\Database;
-use App\DhcpServer;
-use App\Dnsserver;
-use App\DomaineAd;
-// Administration
-use App\Entity;
-use App\ExternalConnectedEntity;
-use App\Flux;
-// Logique
-use App\ForestAd;
-use App\Gateway;
 use App\Http\Controllers\Controller;
-use App\Information;
-use App\Lan;
-use App\LogicalServer;
-use App\MacroProcessus;
-use App\Man;
-use App\MApplication;
+use App\Models\Activity;
+// information system
+use App\Models\Actor;
+use App\Models\Annuaire;
+use App\Models\ApplicationBlock;
+use App\Models\ApplicationModule;
+// Applications
+use App\Models\ApplicationService;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\Certificate;
+use App\Models\Cluster;
+use App\Models\Container;
+use App\Models\Database;
+use App\Models\DhcpServer;
+use App\Models\Dnsserver;
+// Administration
+use App\Models\DomaineAd;
+use App\Models\Entity;
+use App\Models\ExternalConnectedEntity;
+// Logique
+use App\Models\Flux;
+use App\Models\ForestAd;
+use App\Models\Gateway;
+use App\Models\Information;
+use App\Models\Lan;
+use App\Models\LogicalServer;
+use App\Models\MacroProcessus;
+use App\Models\Man;
+use App\Models\MApplication;
 // Physique
-use App\Network;
-use App\NetworkSwitch;
-use App\Operation;
-use App\Peripheral;
-use App\Phone;
-use App\PhysicalRouter;
-use App\PhysicalSecurityDevice;
-use App\PhysicalServer;
-use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
-use App\Router;
-use App\SecurityDevice;
-use App\Site;
-use App\StorageDevice;
-use App\Subnetwork;
-use App\Task;
-use App\Vlan;
-use App\Wan;
-use App\WifiTerminal;
+use App\Models\Network;
+use App\Models\NetworkSwitch;
+use App\Models\Operation;
+use App\Models\Peripheral;
+use App\Models\Phone;
+use App\Models\PhysicalRouter;
+use App\Models\PhysicalSecurityDevice;
+use App\Models\PhysicalServer;
+use App\Models\PhysicalSwitch;
+use App\Models\Process;
+use App\Models\Relation;
+use App\Models\Router;
+use App\Models\SecurityDevice;
+use App\Models\Site;
+use App\Models\StorageDevice;
+use App\Models\Subnetwork;
+use App\Models\Task;
+use App\Models\Vlan;
+use App\Models\Wan;
+use App\Models\WifiTerminal;
 // PhpOffice
-use App\Workstation;
-use App\ZoneAdmin;
+use App\Models\Workstation;
+use App\Models\ZoneAdmin;
 use Auth;
 // Laravel
 use Carbon\Carbon;
@@ -73,9 +73,13 @@ class CartographyController extends Controller
 {
     // Cell style
     public const FANCYTABLETITLESTYLE = ['bold' => true, 'color' => '006699'];
+
     public const FANCYLEFTTABLECELLSTYLE = ['bold' => true, 'color' => '000000'];
+
     public const FANCYRIGHTTABLECELLSTYLE = ['bold' => false, 'color' => '000000'];
+
     public const FANCYLINKSTYLE = ['color' => '006699'];
+
     public const NOSPACE = [
         'spaceBefore' => 30,
         'spaceAfter' => 30,
@@ -91,7 +95,7 @@ class CartographyController extends Controller
         $vues = $request->input('vues', []);
 
         // get template
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new \PhpOffice\PhpWord\PhpWord;
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);
@@ -167,16 +171,16 @@ class CartographyController extends Controller
                 $graph .= 'edge [fontname = "FreeSans"];';
 
                 foreach ($entities as $entity) {
-                    $graph .= 'E'. $entity->id . $this->dotImage('/images/entity.png', $entity->name);
+                    $graph .= 'E'.$entity->id.$this->dotImage('/images/entity.png', $entity->name);
                 }
                 foreach ($relations as $relation) {
-                    $graph .= 'E'.$relation->source_id .' -> E'. $relation->destination_id .'[label="'. $relation->name .'"]';
+                    $graph .= 'E'.$relation->source_id.' -> E'.$relation->destination_id.'[label="'.$relation->name.'"]';
                 }
                 $graph .= '}';
 
                 // IMAGE
                 $image_paths[] = $image_path = $this->generateGraphImage($graph);
-                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'.min(600, getimagesize($image_path)[0] / 2).'"/></td></tr></table>');
                 $section->addTextBreak(1);
             }
 
@@ -249,7 +253,7 @@ class CartographyController extends Controller
                         trans('cruds.relation.fields.importance'),
                         $relation->importance === null ?
                             '-' :
-                        ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$relation->importance] ?? '')
+                        ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$relation->importance] ?? '')
                     );
                 }
                 $textRun = $this->addTextRunRow($table, trans('cruds.relation.fields.link'));
@@ -282,63 +286,63 @@ class CartographyController extends Controller
                 $graph = 'digraph  {';
                 if ($granularity >= 2) {
                     foreach ($macroProcessuses as $macroProcess) {
-                        $graph .= ' MP' . $macroProcess->id . $this->dotImage('/images/macroprocess.png', $macroProcess->name);
+                        $graph .= ' MP'.$macroProcess->id.$this->dotImage('/images/macroprocess.png', $macroProcess->name);
                         foreach ($macroProcess->processes as $process) {
-                            $graph .= ' MP' . $macroProcess->id .'->P' . $process->id;
+                            $graph .= ' MP'.$macroProcess->id.'->P'.$process->id;
                         }
                     }
                 }
 
                 foreach ($processes as $process) {
-                    $graph .= ' P'.$process->id . $this->dotImage('/images/process.png', $process->name);
+                    $graph .= ' P'.$process->id.$this->dotImage('/images/process.png', $process->name);
                     if ($granularity === 3) {
                         foreach ($process->activities as $activity) {
-                            $graph .= ' P'.$process->id . '->A'. $activity->id;
+                            $graph .= ' P'.$process->id.'->A'.$activity->id;
                         }
                     }
                     foreach ($process->information as $information) {
-                        $graph .= ' P'. $process->id .'->I'. $information->id;
+                        $graph .= ' P'.$process->id.'->I'.$information->id;
                     }
                 }
                 if ($granularity === 3) {
                     foreach ($activities as $activity) {
-                        $graph .= ' A' . $activity->id . $this->dotImage('/images/activity.png', $activity->name);
+                        $graph .= ' A'.$activity->id.$this->dotImage('/images/activity.png', $activity->name);
                         foreach ($activity->operations as $operation) {
-                            $graph .= ' A'. $activity->id .'->O'.$operation->id;
+                            $graph .= ' A'.$activity->id.'->O'.$operation->id;
                         }
                     }
                 }
                 foreach ($operations as $operation) {
-                    $graph .= ' O'. $operation->id . $this->dotImage('/images/operation.png', $operation->name);
+                    $graph .= ' O'.$operation->id.$this->dotImage('/images/operation.png', $operation->name);
                     if ($granularity === 3) {
                         foreach ($operation->tasks as $task) {
-                            $graph .= ' O' . $operation->id . '->T'. $task->id;
+                            $graph .= ' O'.$operation->id.'->T'.$task->id;
                         }
                     }
                     if ($granularity >= 2) {
                         foreach ($operation->actors as $actor) {
-                            $graph .= ' O'. $operation->id . '->ACT'. $actor->id;
+                            $graph .= ' O'.$operation->id.'->ACT'.$actor->id;
                         }
                     }
                 }
                 if ($granularity === 3) {
                     foreach ($tasks as $task) {
-                        $graph .= ' T'. $task->id . $this->dotImage('/images/task.png', $task->name);
+                        $graph .= ' T'.$task->id.$this->dotImage('/images/task.png', $task->name);
                     }
                 }
                 if ($granularity >= 2) {
                     foreach ($actors as $actor) {
-                        $graph .= ' ACT'. $actor->id . $this->dotImage('/images/actor.png', $actor->name);
+                        $graph .= ' ACT'.$actor->id.$this->dotImage('/images/actor.png', $actor->name);
                     }
                 }
                 foreach ($informations as $information) {
-                    $graph .= ' I'. $information->id . $this->dotImage('/images/information.png', $information->name);
+                    $graph .= ' I'.$information->id.$this->dotImage('/images/information.png', $information->name);
                 }
                 $graph .= '}';
 
                 // IMAGE
                 $image_paths[] = $image_path = $this->generateGraphImage($graph);
-                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'.min(600, getimagesize($image_path)[0] / 2).'"/></td></tr></table>');
                 $section->addTextBreak(1);
             }
 
@@ -359,31 +363,31 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.macroProcessus.fields.security_need'),
                         '<p>'.
-                            trans('global.confidentiality') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_c] ?? '') .
-                            '<br>' .
-                            trans('global.integrity') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_i] ?? '') .
-                            '<br>' .
-                            trans('global.availability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_a] ?? '') .
-                            '<br>' .
-                            trans('global.tracability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_t] ?? '') .
+                            trans('global.confidentiality').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$macroProcess->security_need_c] ?? '').
+                            '<br>'.
+                            trans('global.integrity').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$macroProcess->security_need_i] ?? '').
+                            '<br>'.
+                            trans('global.availability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$macroProcess->security_need_a] ?? '').
+                            '<br>'.
+                            trans('global.tracability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$macroProcess->security_need_t] ?? '').
                             (config('mercator-config.parameters.security_need_auth') ?
-                                    ('<br>' .
-                                    trans('global.authenticity') .
-                                    ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_auth] ?? ''))
+                                    ('<br>'.
+                                    trans('global.authenticity').
+                                    ' : '.
+                                    ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$macroProcess->security_need_auth] ?? ''))
                                 :
-                                    '') .
+                                    '').
                             '</p>'
                     );
-                    //---
+                    // ---
                     if ($granularity >= 3) {
                         $this->addTextRow($table, trans('cruds.macroProcessus.fields.owner'), $macroProcess->owner);
                     }
@@ -435,28 +439,28 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.process.fields.security_need'),
                         '<p>'.
-                            trans('global.confidentiality') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_c] ?? '') .
-                            '<br>' .
-                            trans('global.integrity') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_i] ?? '') .
-                            '<br>' .
-                            trans('global.availability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_a] ?? '') .
-                            '<br>' .
-                            trans('global.tracability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_t] ?? '') .
+                            trans('global.confidentiality').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$process->security_need_c] ?? '').
+                            '<br>'.
+                            trans('global.integrity').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$process->security_need_i] ?? '').
+                            '<br>'.
+                            trans('global.availability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$process->security_need_a] ?? '').
+                            '<br>'.
+                            trans('global.tracability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$process->security_need_t] ?? '').
                             (config('mercator-config.parameters.security_need_auth') ?
-                                    ('<br>' .
-                                    trans('global.authenticity') .
-                                    ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_auth] ?? ''))
+                                    ('<br>'.
+                                    trans('global.authenticity').
+                                    ' : '.
+                                    ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$process->security_need_auth] ?? ''))
                                 :
-                                    '') .
+                                    '').
                             '</p>'
                     );
                     // Owner
@@ -594,28 +598,28 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.information.fields.security_need'),
                         '<p>'.
-                            trans('global.confidentiality') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_c] ?? '') .
-                            '<br>' .
-                            trans('global.integrity') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_i] ?? '') .
-                            '<br>' .
-                            trans('global.availability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_a] ?? '') .
-                            '<br>' .
-                            trans('global.tracability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_t] ?? '') .
+                            trans('global.confidentiality').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$information->security_need_c] ?? '').
+                            '<br>'.
+                            trans('global.integrity').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$information->security_need_i] ?? '').
+                            '<br>'.
+                            trans('global.availability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$information->security_need_a] ?? '').
+                            '<br>'.
+                            trans('global.tracability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$information->security_need_t] ?? '').
                             (config('mercator-config.parameters.security_need_auth') ?
-                                    ('<br>' .
-                                    trans('global.authenticity') .
-                                    ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_auth] ?? ''))
+                                    ('<br>'.
+                                    trans('global.authenticity').
+                                    ' : '.
+                                    ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$information->security_need_auth] ?? ''))
                                 :
-                                    '') .
+                                    '').
                             '</p>'
                     );
 
@@ -652,41 +656,41 @@ class CartographyController extends Controller
                 $graph = 'digraph  {';
 
                 foreach ($applicationBlocks as $ab) {
-                    $graph .= ' AB' . $ab->id . $this->dotImage('/images/applicationblock.png', $ab->name);
+                    $graph .= ' AB'.$ab->id.$this->dotImage('/images/applicationblock.png', $ab->name);
                 }
 
                 foreach ($applications as $application) {
-                    $graph .= ' A' . $application->id . $this->dotImage('/images/application.png', $application->name);
+                    $graph .= ' A'.$application->id.$this->dotImage('/images/application.png', $application->name);
                     foreach ($application->services as $service) {
-                        $graph .= ' A' . $application->id .'->AS' . $service->id;
+                        $graph .= ' A'.$application->id.'->AS'.$service->id;
                     }
                     foreach ($application->databases as $database) {
-                        $graph .= ' A' . $application->id .'->DB' . $database->id;
+                        $graph .= ' A'.$application->id.'->DB'.$database->id;
                     }
                     if ($application->application_block_id !== null) {
-                        $graph .= ' AB' . $application->application_block_id . '->A' .  $application->id;
+                        $graph .= ' AB'.$application->application_block_id.'->A'.$application->id;
                     }
                 }
                 foreach ($applicationServices as $service) {
-                    $graph .= ' AS' . $service->id . $this->dotImage('/images/applicationservice.png', $service->name);
+                    $graph .= ' AS'.$service->id.$this->dotImage('/images/applicationservice.png', $service->name);
                     foreach ($service->modules as $module) {
-                        $graph .= ' AS' . $service->id . '->M' . $module->id;
+                        $graph .= ' AS'.$service->id.'->M'.$module->id;
                     }
                 }
 
                 foreach ($applicationModules as $module) {
-                    $graph .= ' M' . $module->id . $this->dotImage('/images/applicationmodule.png', $module->name);
+                    $graph .= ' M'.$module->id.$this->dotImage('/images/applicationmodule.png', $module->name);
                 }
 
                 foreach ($databases as $database) {
-                    $graph .= ' DB' . $database->id . $this->dotImage('/images/database.png', $database->name);
+                    $graph .= ' DB'.$database->id.$this->dotImage('/images/database.png', $database->name);
                 }
 
                 $graph .= '}';
 
                 // IMAGE
                 $image_paths[] = $image_path = $this->generateGraphImage($graph);
-                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'.min(600, getimagesize($image_path)[0] / 2).'"/></td></tr></table>');
                 $section->addTextBreak(1);
             }
 
@@ -745,7 +749,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans('cruds.application.fields.documentation'), $application->documentation);
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.flux'));
-                    $textRun->addText(trans('cruds.flux.fields.source') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($application->applicationSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($application->applicationSourceFluxes->last() !== $flux) {
@@ -753,7 +757,7 @@ class CartographyController extends Controller
                         }
                     }
                     $textRun->addTextBreak(1);
-                    $textRun->addText(trans('cruds.flux.fields.destination') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($application->applicationDestFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($application->applicationDestFluxes->last() !== $flux) {
@@ -769,28 +773,28 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.application.fields.security_need'),
                         '<p>'.
-                            trans('global.confidentiality') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_c] ?? '') .
-                            '<br>' .
-                            trans('global.integrity') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_i] ?? '') .
-                            '<br>' .
-                            trans('global.availability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_a] ?? '') .
-                            '<br>' .
-                            trans('global.tracability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_t] ?? '') .
+                            trans('global.confidentiality').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$application->security_need_c] ?? '').
+                            '<br>'.
+                            trans('global.integrity').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$application->security_need_i] ?? '').
+                            '<br>'.
+                            trans('global.availability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$application->security_need_a] ?? '').
+                            '<br>'.
+                            trans('global.tracability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$application->security_need_t] ?? '').
                             (config('mercator-config.parameters.security_need_auth') ?
-                                    ('<br>' .
-                                    trans('global.authenticity') .
-                                    ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_auth] ?? ''))
+                                    ('<br>'.
+                                    trans('global.authenticity').
+                                    ' : '.
+                                    ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$application->security_need_auth] ?? ''))
                                 :
-                                    '') .
+                                    '').
                             '</p>'
                     );
 
@@ -799,14 +803,14 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.application.fields.RTO'),
                         (intdiv($application->rto, 60 * 24) > 0 ?
-                            (strval(intdiv($application->rto, 60 * 24)) . ' ' .
-                                (intdiv($application->rto, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '') .
+                            (strval(intdiv($application->rto, 60 * 24)).' '.
+                                (intdiv($application->rto, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '').
                         (intdiv($application->rto, 60) % 24 > 0 ?
-                            (strval(intdiv($application->rto, 60) % 24)) . ' ' .
+                            (strval(intdiv($application->rto, 60) % 24)).' '.
                                 (intdiv($application->rto, 60) % 24 > 1 ? trans('global.hours') : trans('global.hour'))
-                            : '') .
+                            : '').
                         ($application->rto % 60 > 0 ?
-                            (strval($application->rto % 60)) . ' ' .
+                            (strval($application->rto % 60)).' '.
                                 ($application->rto % 60 > 1 ? trans('global.hours') : trans('global.hour'))
                             : '')
                     );
@@ -816,14 +820,14 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.application.fields.RPO'),
                         (intdiv($application->rpo, 60 * 24) > 0 ?
-                            (strval(intdiv($application->rpo, 60 * 24)) . ' ' .
-                                (intdiv($application->rpo, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '') .
+                            (strval(intdiv($application->rpo, 60 * 24)).' '.
+                                (intdiv($application->rpo, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '').
                         (intdiv($application->rpo, 60) % 24 > 0 ?
-                            (strval(intdiv($application->rpo, 60) % 24)) . ' ' .
+                            (strval(intdiv($application->rpo, 60) % 24)).' '.
                                 (intdiv($application->rpo, 60) % 24 > 1 ? trans('global.hours') : trans('global.hour'))
-                            : '') .
+                            : '').
                         ($application->rpo % 60 > 0 ?
-                            (strval($application->rpo % 60)) . ' ' .
+                            (strval($application->rpo % 60)).' '.
                                 ($application->rpo % 60 > 1 ? trans('global.hours') : trans('global.hour'))
                             : '')
                     );
@@ -901,7 +905,7 @@ class CartographyController extends Controller
 
                     // Flux
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationService.fields.flux'));
-                    $textRun->addText(trans('cruds.flux.fields.source') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($applicationService->serviceSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($applicationService->serviceSourceFluxes->last() !== $flux) {
@@ -909,7 +913,7 @@ class CartographyController extends Controller
                         }
                     }
                     $textRun->addTextBreak(1);
-                    $textRun->addText(trans('cruds.flux.fields.destination') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($applicationService->serviceDestFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($applicationService->serviceDestFluxes->last() !== $flux) {
@@ -953,7 +957,7 @@ class CartographyController extends Controller
 
                     // Flux
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationModule.fields.flux'));
-                    $textRun->addText(trans('cruds.flux.fields.source') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($applicationModule->moduleSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($applicationModule->moduleSourceFluxes->last() !== $flux) {
@@ -961,7 +965,7 @@ class CartographyController extends Controller
                         }
                     }
                     $textRun->addTextBreak(1);
-                    $textRun->addText(trans('cruds.flux.fields.destination') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($applicationModule->moduleDestFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($applicationModule->moduleDestFluxes->last() !== $flux) {
@@ -1003,7 +1007,7 @@ class CartographyController extends Controller
 
                     // flows
                     $textRun = $this->addTextRunRow($table, trans('cruds.database.fields.flux'));
-                    $textRun->addText(trans('cruds.flux.fields.source') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($database->databaseSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($database->databaseSourceFluxes->last() !== $flux) {
@@ -1011,7 +1015,7 @@ class CartographyController extends Controller
                         }
                     }
                     $textRun->addTextBreak(1);
-                    $textRun->addText(trans('cruds.flux.fields.destination') . ' : ');
+                    $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($database->databaseDestFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($database->databaseDestFluxes->last() !== $flux) {
@@ -1033,28 +1037,28 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.database.fields.security_need'),
                         '<p>'.
-                            trans('global.confidentiality') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_c] ?? '') .
-                            '<br>' .
-                            trans('global.integrity') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_i] ?? '') .
-                            '<br>' .
-                            trans('global.availability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_a] ?? '') .
-                            '<br>' .
-                            trans('global.tracability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_t] ?? '') .
+                            trans('global.confidentiality').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$database->security_need_c] ?? '').
+                            '<br>'.
+                            trans('global.integrity').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$database->security_need_i] ?? '').
+                            '<br>'.
+                            trans('global.availability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$database->security_need_a] ?? '').
+                            '<br>'.
+                            trans('global.tracability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$database->security_need_t] ?? '').
                             (config('mercator-config.parameters.security_need_auth') ?
-                                    ('<br>' .
-                                    trans('global.authenticity') .
-                                    ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_auth] ?? ''))
+                                    ('<br>'.
+                                    trans('global.authenticity').
+                                    ' : '.
+                                    ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$database->security_need_auth] ?? ''))
                                 :
-                                    '') .
+                                    '').
                             '</p>'
                     );
 
@@ -1141,31 +1145,31 @@ class CartographyController extends Controller
             if ($request->has('graph')) {
                 $graph = 'digraph  {';
                 foreach ($zones as $zone) {
-                    $graph .= ' Z'. $zone->id . $this->dotImage('/images/zoneadmin.png', $zone->name);
+                    $graph .= ' Z'.$zone->id.$this->dotImage('/images/zoneadmin.png', $zone->name);
                     foreach ($zone->annuaires as $annuaire) {
-                        $graph .= ' Z'. $zone->id . '->A' . $annuaire->id;
+                        $graph .= ' Z'.$zone->id.'->A'.$annuaire->id;
                     }
                     foreach ($zone->forestAds as $forest) {
-                        $graph .= ' Z' . $zone->id . '->F' . $forest->id;
+                        $graph .= ' Z'.$zone->id.'->F'.$forest->id;
                     }
                 }
                 foreach ($annuaires as $annuaire) {
-                    $graph .= ' A'. $annuaire->id . $this->dotImage('/images/annuaire.png', $annuaire->name);
+                    $graph .= ' A'.$annuaire->id.$this->dotImage('/images/annuaire.png', $annuaire->name);
                 }
                 foreach ($forests as $forest) {
-                    $graph .= ' F' . $forest->id . $this->dotImage('/images/ldap.png', $forest->name);
+                    $graph .= ' F'.$forest->id.$this->dotImage('/images/ldap.png', $forest->name);
                     foreach ($forest->domaines as $domain) {
-                        $graph .= ' F' . $forest->id . '->D' . $domain->id;
+                        $graph .= ' F'.$forest->id.'->D'.$domain->id;
                     }
                 }
                 foreach ($domains as $domain) {
-                    $graph .= ' D' . $domain->id . $this->dotImage('/images/domain.png', $domain->name);
+                    $graph .= ' D'.$domain->id.$this->dotImage('/images/domain.png', $domain->name);
                 }
                 $graph .= '}';
 
                 // IMAGE
                 $image_paths[] = $image_path = $this->generateGraphImage($graph);
-                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'.min(600, getimagesize($image_path)[0] / 2).'"/></td></tr></table>');
                 $section->addTextBreak(1);
             }
 
@@ -1311,38 +1315,38 @@ class CartographyController extends Controller
             if ($request->has('graph')) {
                 $graph = 'digraph  {';
                 foreach ($networks as $network) {
-                    $graph .= ' NET' . $network->id . $this->dotImage('/images/cloud.png', $network->name);
+                    $graph .= ' NET'.$network->id.$this->dotImage('/images/cloud.png', $network->name);
                 }
                 foreach ($gateways as $gateway) {
-                    $graph .= ' GATEWAY' . $gateway->id . $this->dotImage('/images/gateway.png', $gateway->name);
+                    $graph .= ' GATEWAY'.$gateway->id.$this->dotImage('/images/gateway.png', $gateway->name);
                 }
                 foreach ($subnetworks as $subnetwork) {
-                    $graph .= ' SUBNET' . $subnetwork->id . $this->dotImage('/images/network.png', $subnetwork->name);
+                    $graph .= ' SUBNET'.$subnetwork->id.$this->dotImage('/images/network.png', $subnetwork->name);
                     if ($subnetwork->vlan_id !== null) {
-                        $graph .= ' SUBNET' . $subnetwork->id . '->VLAN' . $subnetwork->vlan_id;
+                        $graph .= ' SUBNET'.$subnetwork->id.'->VLAN'.$subnetwork->vlan_id;
                     }
                     if ($subnetwork->network_id !== null) {
-                        $graph .= ' NET' . $subnetwork->network->id . '->SUBNET' . $subnetwork->id;
+                        $graph .= ' NET'.$subnetwork->network->id.'->SUBNET'.$subnetwork->id;
                     }
                     if ($subnetwork->gateway_id !== null) {
-                        $graph .= ' SUBNET' . $subnetwork->id . '->GATEWAY' . $subnetwork->gateway_id;
+                        $graph .= ' SUBNET'.$subnetwork->id.'->GATEWAY'.$subnetwork->gateway_id;
                     }
                 }
 
                 foreach ($externalConnectedEntities as $entity) {
-                    $graph .= ' E' . $entity->id . $this->dotImage('/images/entity.png', $entity->name);
+                    $graph .= ' E'.$entity->id.$this->dotImage('/images/entity.png', $entity->name);
                     if ($entity->network !== null) {
-                        $graph .= ' NET' . $entity->network->id . '->E' . $entity->id;
+                        $graph .= ' NET'.$entity->network->id.'->E'.$entity->id;
                     }
                 }
 
                 foreach ($logicalServers as $logicalServer) {
-                    $graph .= ' LOGICAL_SERVER' . $logicalServer->id . $this->dotImage('/images/server.png', $logicalServer->name);
+                    $graph .= ' LOGICAL_SERVER'.$logicalServer->id.$this->dotImage('/images/server.png', $logicalServer->name);
                     if ($logicalServer->address_ip !== null) {
                         foreach ($subnetworks as $subnetwork) {
                             foreach (explode(',', $logicalServer->address_ip) as $address) {
                                 if ($subnetwork->contains($address)) {
-                                    $graph .= ' SUBNET' . $subnetwork->id . '->LOGICAL_SERVER' . $logicalServer->id;
+                                    $graph .= ' SUBNET'.$subnetwork->id.'->LOGICAL_SERVER'.$logicalServer->id;
                                 }
                             }
                         }
@@ -1350,22 +1354,22 @@ class CartographyController extends Controller
                 }
 
                 foreach ($dhcpServers as $dhcpServer) {
-                    $graph .= ' DHCP_SERVER' . $dhcpServer->id . $this->dotImage('/images/server.png', $dhcpServer->name);
+                    $graph .= ' DHCP_SERVER'.$dhcpServer->id.$this->dotImage('/images/server.png', $dhcpServer->name);
                     if ($dhcpServer->address_ip !== null) {
                         foreach ($subnetworks as $subnetwork) {
                             if ($subnetwork->contains($dhcpServer->address_ip)) {
-                                $graph .= ' SUBNET' . $subnetwork->id . '->DHCP_SERVER' . $dhcpServer->id;
+                                $graph .= ' SUBNET'.$subnetwork->id.'->DHCP_SERVER'.$dhcpServer->id;
                             }
                         }
                     }
                 }
 
                 foreach ($dnsservers as $dnsserver) {
-                    $graph .= ' DNS_SERVER' . $dnsserver->id . $this->dotImage('/images/server.png', $dnsserver->name);
+                    $graph .= ' DNS_SERVER'.$dnsserver->id.$this->dotImage('/images/server.png', $dnsserver->name);
                     if ($dnsserver->address_ip !== null) {
                         foreach ($subnetworks as $subnetwork) {
                             if ($subnetwork->contains($dnsserver->address_ip)) {
-                                $graph .= ' SUBNET' . $subnetwork->id . '->DNS_SERVER' . $dnsserver->id;
+                                $graph .= ' SUBNET'.$subnetwork->id.'->DNS_SERVER'.$dnsserver->id;
                             }
                         }
                     }
@@ -1373,20 +1377,20 @@ class CartographyController extends Controller
 
                 foreach ($certificates as $certificate) {
                     if ($certificate->logical_servers->count() > 0) {
-                        $graph .= ' CERT' . $certificate->id . $this->dotImage('/images/certificate.png', $certificate->name);
+                        $graph .= ' CERT'.$certificate->id.$this->dotImage('/images/certificate.png', $certificate->name);
                     }
                     foreach ($certificate->logical_servers as $logical_server) {
-                        $graph .= ' LOGICAL_SERVER' . $logical_server->id . '->CERT'. $certificate->id;
+                        $graph .= ' LOGICAL_SERVER'.$logical_server->id.'->CERT'.$certificate->id;
                     }
                 }
 
                 foreach ($routers as $router) {
-                    $graph .= ' R'. $router->id . $this->dotImage('/images/router.png', $router->name);
+                    $graph .= ' R'.$router->id.$this->dotImage('/images/router.png', $router->name);
                     foreach ($subnetworks as $subnetwork) {
                         if (($router->ip_addresses !== null) && ($subnetwork->address !== null)) {
                             foreach (explode(',', $router->ip_addresses) as $address) {
                                 if ($subnetwork->contains($address)) {
-                                    $graph .= ' SUBNET' . $subnetwork->id . '->R' . $router->id;
+                                    $graph .= ' SUBNET'.$subnetwork->id.'->R'.$router->id;
                                 }
                             }
                         }
@@ -1394,14 +1398,14 @@ class CartographyController extends Controller
                 }
 
                 foreach ($vlans as $vlan) {
-                    $graph .= ' VLAN' . $vlan->id . $this->dotImage('/images/vlan.png', $vlan->name);
+                    $graph .= ' VLAN'.$vlan->id.$this->dotImage('/images/vlan.png', $vlan->name);
                 }
 
                 $graph .= '}';
 
                 // IMAGE
                 $image_paths[] = $image_path = $this->generateGraphImage($graph);
-                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'.min(600, getimagesize($image_path)[0] / 2).'"/></td></tr></table>');
                 $section->addTextBreak(1);
             }
 
@@ -1425,31 +1429,31 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.network.fields.security_need'),
                         '<p>'.
-                            trans('global.confidentiality') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_c] ?? '') .
-                            '<br>' .
-                            trans('global.integrity') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_i] ?? '') .
-                            '<br>' .
-                            trans('global.availability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_a] ?? '') .
-                            '<br>' .
-                            trans('global.tracability') .
-                            ' : ' .
-                            ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_t] ?? '') .
+                            trans('global.confidentiality').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$network->security_need_c] ?? '').
+                            '<br>'.
+                            trans('global.integrity').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$network->security_need_i] ?? '').
+                            '<br>'.
+                            trans('global.availability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$network->security_need_a] ?? '').
+                            '<br>'.
+                            trans('global.tracability').
+                            ' : '.
+                            ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$network->security_need_t] ?? '').
                             (config('mercator-config.parameters.security_need_auth') ?
-                                    ('<br>' .
-                                    trans('global.authenticity') .
-                                    ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_auth] ?? ''))
+                                    ('<br>'.
+                                    trans('global.authenticity').
+                                    ' : '.
+                                    ([1 => trans('global.low'), 2 => trans('global.medium'), 3 => trans('global.strong'), 4 => trans('global.very_strong')][$network->security_need_auth] ?? ''))
                                 :
-                                    '') .
+                                    '').
                             '</p>'
                     );
-                    //----
+                    // ----
 
                     // subnetworks
                     $textRun = $this->addTextRunRow($table, trans('cruds.network.fields.subnetworks'));
@@ -1482,7 +1486,7 @@ class CartographyController extends Controller
                     $section->addBookmark('SUBNET'.$subnetwork->id);
                     $table = $this->addTable($section, $subnetwork->name);
                     $this->addHTMLRow($table, trans('cruds.subnetwork.fields.description'), $subnetwork->description);
-                    $this->addTextRow($table, trans('cruds.subnetwork.fields.address'), $subnetwork->address . ' ( ' . $subnetwork->ipRange() . ' )');
+                    $this->addTextRow($table, trans('cruds.subnetwork.fields.address'), $subnetwork->address.' ( '.$subnetwork->ipRange().' )');
                     $this->addTextRow($table, trans('cruds.subnetwork.fields.default_gateway'), $subnetwork->default_gateway);
                     $this->addTextRow($table, trans('cruds.subnetwork.fields.zone'), $subnetwork->zone);
                     $this->addTextRow($table, trans('cruds.subnetwork.fields.ip_allocation_type'), $subnetwork->ip_allocation_type);
@@ -1604,8 +1608,8 @@ class CartographyController extends Controller
                     if ($entity->network !== null) {
                         $textRun->addLink('NETWORK'.$entity->network->id, $entity->network->name, CartographyController::FANCYLINKSTYLE, null, true);
                     }
-                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src_desc . ' '  . $entity->src);
-                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.dest'), $entity->dest_desc . ' '  . $entity->dest);
+                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src_desc.' '.$entity->src);
+                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.dest'), $entity->dest_desc.' '.$entity->dest);
 
                     $section->addTextBreak(1);
                 }
@@ -1858,97 +1862,97 @@ class CartographyController extends Controller
             if ($request->has('graph')) {
                 $graph = 'digraph  {';
                 foreach ($sites as $site) {
-                    $graph .= ' S' . $site->id . $this->dotImage('/images/site.png', $site->name);
+                    $graph .= ' S'.$site->id.$this->dotImage('/images/site.png', $site->name);
                 }
                 foreach ($buildings as $building) {
-                    $graph .= ' B'. $building->id . $this->dotImage('/images/building.png', $building->name);
-                    $graph .= ' S'. $building->site_id . '->B' . $building->id;
+                    $graph .= ' B'.$building->id.$this->dotImage('/images/building.png', $building->name);
+                    $graph .= ' S'.$building->site_id.'->B'.$building->id;
                     foreach ($building->roomBays as $bay) {
-                        $graph .= ' B'. $building->id . '->BAY' . $bay->id;
+                        $graph .= ' B'.$building->id.'->BAY'.$bay->id;
                     }
                 }
                 foreach ($bays as $bay) {
-                    $graph .= ' BAY' . $bay->id . $this->dotImage('/images/bay.png', $bay->name);
+                    $graph .= ' BAY'.$bay->id.$this->dotImage('/images/bay.png', $bay->name);
                 }
                 foreach ($physicalServers as $pServer) {
-                    $graph .= ' PSERVER' . $pServer->id . $this->dotImage('/images/server.png', $pServer->name);
+                    $graph .= ' PSERVER'.$pServer->id.$this->dotImage('/images/server.png', $pServer->name);
                     if ($pServer->bay !== null) {
-                        $graph .= ' BAY' . $pServer->bay->id . '->PSERVER' . $pServer->id;
+                        $graph .= ' BAY'.$pServer->bay->id.'->PSERVER'.$pServer->id;
                     } elseif ($pServer->building !== null) {
-                        $graph .= ' B' . $pServer->building->id . '->PSERVER' . $pServer->id;
+                        $graph .= ' B'.$pServer->building->id.'->PSERVER'.$pServer->id;
                     } elseif ($pServer->site !== null) {
-                        $graph .= ' S' . $pServer->site->id .'->PSERVER' . $pServer->id;
+                        $graph .= ' S'.$pServer->site->id.'->PSERVER'.$pServer->id;
                     }
                 }
                 foreach ($workstations as $workstation) {
-                    $graph .= ' W' . $workstation->id . $this->dotImage('/images/workstation.png', $workstation->name);
+                    $graph .= ' W'.$workstation->id.$this->dotImage('/images/workstation.png', $workstation->name);
                     if ($workstation->building !== null) {
-                        $graph .= ' B' . $workstation->building->id . '->W' . $workstation->id;
+                        $graph .= ' B'.$workstation->building->id.'->W'.$workstation->id;
                     } elseif ($workstation->site !== null) {
-                        $graph .= ' S' . $workstation->site->id . '->W' . $workstation->id;
+                        $graph .= ' S'.$workstation->site->id.'->W'.$workstation->id;
                     }
                 }
                 foreach ($storageDevices as $storageDevice) {
-                    $graph .= ' SD' . $storageDevice->id .$this->dotImage('/images/storage.png', $storageDevice->name);
+                    $graph .= ' SD'.$storageDevice->id.$this->dotImage('/images/storage.png', $storageDevice->name);
                     if ($storageDevice->bay !== null) {
-                        $graph .= ' BAY' . $storageDevice->bay->id . '->SD' . $storageDevice->id;
+                        $graph .= ' BAY'.$storageDevice->bay->id.'->SD'.$storageDevice->id;
                     } elseif ($storageDevice->building !== null) {
-                        $graph .= ' B' . $storageDevice->building->id . '->SD' . $storageDevice->id;
+                        $graph .= ' B'.$storageDevice->building->id.'->SD'.$storageDevice->id;
                     } elseif ($storageDevice->site !== null) {
-                        $graph .= ' S' . $storageDevice->site->id . '->SD' . $storageDevice->id;
+                        $graph .= ' S'.$storageDevice->site->id.'->SD'.$storageDevice->id;
                     }
                 }
                 foreach ($peripherals as $peripheral) {
-                    $graph .= ' PER' . $peripheral->id . $this->dotImage('/images/peripheral.png', $peripheral->name);
+                    $graph .= ' PER'.$peripheral->id.$this->dotImage('/images/peripheral.png', $peripheral->name);
                     if ($peripheral->bay !== null) {
-                        $graph .= ' BAY' . $peripheral->bay->id .'->PER' . $peripheral->id;
+                        $graph .= ' BAY'.$peripheral->bay->id.'->PER'.$peripheral->id;
                     } elseif ($peripheral->building !== null) {
-                        $graph .= ' B'. $peripheral->building->id . '->PER' . $peripheral->id;
+                        $graph .= ' B'.$peripheral->building->id.'->PER'.$peripheral->id;
                     } elseif ($peripheral->site !== null) {
-                        $graph .= ' S' . $peripheral->site->id . '->PER' . $peripheral->id;
+                        $graph .= ' S'.$peripheral->site->id.'->PER'.$peripheral->id;
                     }
                 }
                 foreach ($phones as $phone) {
-                    $graph .= ' PHONE' . $phone->id . $this->dotImage('/images/phone.png', $phone->name);
+                    $graph .= ' PHONE'.$phone->id.$this->dotImage('/images/phone.png', $phone->name);
                     if ($phone->building !== null) {
-                        $graph .= ' B' . $phone->building->id .'->PHONE' . $phone->id;
+                        $graph .= ' B'.$phone->building->id.'->PHONE'.$phone->id;
                     } elseif ($phone->site !== null) {
-                        $graph .= ' S' . $phone->site->id . '->PHONE' . $phone->id;
+                        $graph .= ' S'.$phone->site->id.'->PHONE'.$phone->id;
                     }
                 }
                 foreach ($physicalSwitches as $switch) {
-                    $graph .= ' SWITCH' . $switch->id . $this->dotImage('/images/switch.png', $switch->name);
+                    $graph .= ' SWITCH'.$switch->id.$this->dotImage('/images/switch.png', $switch->name);
                     if ($switch->bay !== null) {
-                        $graph .= ' BAY' . $switch->bay->id . '->SWITCH' . $switch->id;
+                        $graph .= ' BAY'.$switch->bay->id.'->SWITCH'.$switch->id;
                     } elseif ($switch->building !== null) {
-                        $graph .= ' B' . $switch->building->id . '->SWITCH'. $switch->id;
+                        $graph .= ' B'.$switch->building->id.'->SWITCH'.$switch->id;
                     } elseif ($switch->site !== null) {
-                        $graph .= ' S' . $switch->site->id . '->SWITCH' . $switch->id;
+                        $graph .= ' S'.$switch->site->id.'->SWITCH'.$switch->id;
                     }
                 }
                 foreach ($physicalRouters as $router) {
-                    $graph .= ' ROUTER' . $router->id . $this->dotImage('/images/router.png', $router->name);
+                    $graph .= ' ROUTER'.$router->id.$this->dotImage('/images/router.png', $router->name);
                     if ($router->bay !== null) {
-                        $graph .= ' BAY' . $router->bay->id . '->ROUTER' . $router->id;
+                        $graph .= ' BAY'.$router->bay->id.'->ROUTER'.$router->id;
                     } elseif ($router->building !== null) {
-                        $graph .= ' B' . $router->building->id . '->ROUTER' . $router->id;
+                        $graph .= ' B'.$router->building->id.'->ROUTER'.$router->id;
                     } elseif ($router->site !== null) {
-                        $graph .= ' S' . $router->site->id . '->ROUTER' . $router->id;
+                        $graph .= ' S'.$router->site->id.'->ROUTER'.$router->id;
                     }
                 }
                 foreach ($wifiTerminals as $wifiTerminal) {
-                    $graph .= ' WIFI' . $wifiTerminal->id . $this->dotImage('/images/wifi.png', $wifiTerminal->name);
+                    $graph .= ' WIFI'.$wifiTerminal->id.$this->dotImage('/images/wifi.png', $wifiTerminal->name);
                     if ($wifiTerminal->building !== null) {
-                        $graph .= ' B' . $wifiTerminal->building->id . '->WIFI' . $wifiTerminal->id;
+                        $graph .= ' B'.$wifiTerminal->building->id.'->WIFI'.$wifiTerminal->id;
                     } elseif ($wifiTerminal->site !== null) {
-                        $graph .= ' S' . $wifiTerminal->site->id . '->WIFI' . $wifiTerminal->id;
+                        $graph .= ' S'.$wifiTerminal->site->id.'->WIFI'.$wifiTerminal->id;
                     }
                 }
                 $graph .= '}';
 
                 // IMAGE
                 $image_paths[] = $image_path = $this->generateGraphImage($graph);
-                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'.min(600, getimagesize($image_path)[0] / 2).'"/></td></tr></table>');
                 $section->addTextBreak(1);
             }
 
@@ -2450,7 +2454,7 @@ class CartographyController extends Controller
         }
 
         // Finename
-        $filepath = storage_path('app/reports/cartographie-'. Carbon::today()->format('Ymd') .'.docx');
+        $filepath = storage_path('app/reports/cartographie-'.Carbon::today()->format('Ymd').'.docx');
 
         // Saving the document as Word2007 file.
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -2482,6 +2486,7 @@ class CartographyController extends Controller
                 CartographyController::FANCYTABLETITLESTYLE,
                 CartographyController::NOSPACE
             );
+
         return $table;
     }
 
@@ -2499,7 +2504,7 @@ class CartographyController extends Controller
         try {
             \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
         } catch (\Exception $e) {
-            Log::error('CartographyController - Invalid HTML ' . $value);
+            Log::error('CartographyController - Invalid HTML '.$value);
         }
     }
 
@@ -2508,6 +2513,7 @@ class CartographyController extends Controller
         $table->addRow();
         $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
         $cell = $table->addCell(6000);
+
         return $cell->addTextRun(CartographyController::FANCYRIGHTTABLECELLSTYLE);
     }
 
@@ -2566,8 +2572,8 @@ class CartographyController extends Controller
     {
         return '[shape=none label=<'.
               '<TABLE border="0" cellborder="0" cellspacing="0">'.
-              '<TR><TD><IMG SRC="' . public_path($imagePath) . '"/></TD></TR>'.
-              '<TR><TD>' . $name . '</TD></TR>'.
+              '<TR><TD><IMG SRC="'.public_path($imagePath).'"/></TD></TR>'.
+              '<TR><TD>'.$name.'</TD></TR>'.
               '</TABLE> >]';
     }
 

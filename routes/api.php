@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes

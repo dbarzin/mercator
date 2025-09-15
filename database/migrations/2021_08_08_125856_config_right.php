@@ -1,12 +1,8 @@
 <?php
 
-use App\Permission;
-use App\Role;
-use Illuminate\Database\Seeder;
-
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class ConfigRight extends Migration
 {
@@ -18,11 +14,11 @@ class ConfigRight extends Migration
     public function up()
     {
         // if not initial migration -> add permissions
-        if (Permission::count()>0) {
+        if (Permission::count() > 0) {
 
             $permissions = [
                 [
-                    'id'    => '262',
+                    'id' => '262',
                     'title' => 'configure',
                 ],
             ];
@@ -32,7 +28,7 @@ class ConfigRight extends Migration
 
             // Add permissions in role admin:
             Role::findOrFail(1)->permissions()->sync([262], false);
-            
+
         }
     }
 

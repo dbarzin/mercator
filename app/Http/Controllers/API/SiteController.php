@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Http\Resources\Admin\SiteResource;
-use App\Site;
+use App\Models\Site;
 use Gate;
 use Illuminate\Http\Response;
 

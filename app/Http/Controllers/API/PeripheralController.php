@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
 use App\Http\Resources\Admin\PeripheralResource;
-use App\Peripheral;
+use App\Models\Peripheral;
 use Gate;
 use Illuminate\Http\Response;
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Http\Resources\Admin\BuildingResource;
+use App\Models\Building;
 use Gate;
 use Illuminate\Http\Response;
 

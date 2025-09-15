@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard'     => 'web',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -37,12 +37,12 @@ return [
 
     'guards' => [
         'web' => [
-            'driver'   => 'session',
+            'driver' => 'session',
             'provider' => 'users',
         ],
 
         'api' => [
-            'driver'   => 'passport',
+            'driver' => 'passport',
             'provider' => 'users',
             // 'hash'     => false,
         ],
@@ -71,10 +71,10 @@ return [
             'driver' => 'ldap',
             'model' => App\Ldap\LdapUser::class,
             'rules' => [
-                App\Ldap\Rules\OnlySpecificUsers::class
+                App\Ldap\Rules\OnlySpecificUsers::class,
             ],
             'database' => [
-                'model' => App\User::class,
+                'model' => \App\Models\User::class,
                 'sync_passwords' => true,
                 'sync_attributes' => [
                     'email' => 'mail',
@@ -109,8 +109,8 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table'    => 'password_resets',
-            'expire'   => 60,
+            'table' => 'password_resets',
+            'expire' => 60,
         ],
     ],
 

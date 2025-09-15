@@ -7,9 +7,9 @@ use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\Admin\UserResource;
-use App\User;
+use App\Models\User;
 use Gate;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {

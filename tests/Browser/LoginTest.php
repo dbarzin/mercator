@@ -2,11 +2,8 @@
 
 namespace Tests\Browser;
 
-use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Laravel\Dusk\Chrome;
+use App\Models\User;
 use Tests\DuskTestCase;
-
 
 class LoginTest extends DuskTestCase
 {
@@ -15,22 +12,22 @@ class LoginTest extends DuskTestCase
      *
      * @return void
      */
-    public function testLogin()
+    public function test_login()
     {
         $user = User::factory()->create([
             'email' => 'admin@admin.com',
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
         ]);
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit('/login')
-                    ->type('email', $user->email)
-                    ->type('password', 'password')
-                    ->scrollIntoView('@login-button')
-                    ->pause(500)
-                    ->click('@login-button')
-                    ->waitForLocation('/admin')
-                    ->assertSee('Mercator');
+                ->type('email', $user->email)
+                ->type('password', 'password')
+                ->scrollIntoView('@login-button')
+                ->pause(500)
+                ->click('@login-button')
+                ->waitForLocation('/admin')
+                ->assertSee('Mercator');
         });
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Rules;
 
-use Closure;
 use const FILTER_FLAG_IPV4;
 use const FILTER_FLAG_IPV6;
 use const FILTER_VALIDATE_INT;
 use const FILTER_VALIDATE_IP;
+
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class Cidr implements ValidationRule
@@ -15,10 +16,10 @@ class Cidr implements ValidationRule
     private bool $has_bits;
 
     /**
-     * @param int|null $ipv4minbits The minimum number of bits allowed in an IPv4 network
-     * @param int|null $ipv4maxbits The maximum number of bits allowed in an IPv4 network
-     * @param int|null $ipv6minbits The minimum number of bits allowed in an IPv6 network
-     * @param int|null $ipv6maxbits The maximum number of bits allowed in an IPv6 network
+     * @param  int|null  $ipv4minbits  The minimum number of bits allowed in an IPv4 network
+     * @param  int|null  $ipv4maxbits  The maximum number of bits allowed in an IPv4 network
+     * @param  int|null  $ipv6minbits  The minimum number of bits allowed in an IPv6 network
+     * @param  int|null  $ipv6maxbits  The maximum number of bits allowed in an IPv6 network
      */
     public function __construct(
         public ?int $ipv4minbits = null,
@@ -30,11 +31,9 @@ class Cidr implements ValidationRule
     }
 
     /**
-     * @param string $attribute The attribute being validated
-     * @param mixed $value The current value of the attribute
-     * @param Closure $fail Closure to be run in case of failure
-     *
-     * @return void
+     * @param  string  $attribute  The attribute being validated
+     * @param  mixed  $value  The current value of the attribute
+     * @param  Closure  $fail  Closure to be run in case of failure
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

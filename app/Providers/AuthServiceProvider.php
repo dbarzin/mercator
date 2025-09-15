@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Ldap\LdapUser;
 use App\Ldap\Scopes\OnlyOrgUnitUser;
-use App\MApplication;
-use App\User;
+use App\Models\MApplication;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -29,14 +29,14 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        //if (! app()->runningInConsole()) {
+        // if (! app()->runningInConsole()) {
         //    Passport::routes();
-        //}
+        // }
 
         // if LDAP activated
         if (env('LDAP_DOMAIN')) {
             // LDAP Restrictions on connection
-            LDAPuser::addGlobalScope(new OnlyOrgUnitUser());
+            LDAPuser::addGlobalScope(new OnlyOrgUnitUser);
 
             // Token expires after 4 hours
             Passport::tokensExpireIn(now()->addHours(4));
@@ -51,6 +51,7 @@ class AuthServiceProvider extends ServiceProvider
             if (! config('app.cartographers', false) || $user->isAdmin()) {
                 return true;
             }
+
             return $application->hasCartographer($user);
         });
     }

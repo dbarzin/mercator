@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\LogicalServer;
-use App\MApplication;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Support\Facades\DB;
@@ -70,11 +70,11 @@ class PatchingController extends Controller
         if ($attributes_filter !== null) {
             foreach ($attributes_filter as $a) {
                 if (str_starts_with($a, '-')) {
-                    $servers->where('attributes', 'not like', '%' . substr($a, 1) . '%');
-                    $applications->where('attributes', 'not like', '%' . substr($a, 1) . '%');
+                    $servers->where('attributes', 'not like', '%'.substr($a, 1).'%');
+                    $applications->where('attributes', 'not like', '%'.substr($a, 1).'%');
                 } else {
-                    $servers->where('attributes', 'like', '%' . $a . '%');
-                    $applications->where('attributes', 'like', '%' . $a . '%');
+                    $servers->where('attributes', 'like', '%'.$a.'%');
+                    $applications->where('attributes', 'like', '%'.$a.'%');
                 }
             }
         } else {
@@ -82,6 +82,7 @@ class PatchingController extends Controller
         }
         // Union
         $patches = $servers->union($applications)->orderBy('name')->get();
+
         return view('admin.patching.index', compact('patches', 'attributes_list', 'attributes_filter'));
     }
 
@@ -232,11 +233,11 @@ class PatchingController extends Controller
         if ($attributes_filter !== null) {
             foreach ($attributes_filter as $a) {
                 if (str_starts_with($a, '-')) {
-                    $servers->where('attributes', 'not like', '%' . substr($a, 1) . '%');
-                    $applications->where('attributes', 'not like', '%' . substr($a, 1) . '%');
+                    $servers->where('attributes', 'not like', '%'.substr($a, 1).'%');
+                    $applications->where('attributes', 'not like', '%'.substr($a, 1).'%');
                 } else {
-                    $servers->where('attributes', 'like', '%' . $a . '%');
-                    $applications->where('attributes', 'like', '%' . $a . '%');
+                    $servers->where('attributes', 'like', '%'.$a.'%');
+                    $applications->where('attributes', 'like', '%'.$a.'%');
                 }
             }
         }
@@ -266,6 +267,7 @@ class PatchingController extends Controller
             )
         );
     }
+
     private function getAttributes(): array
     {
         // Get Attributes
@@ -293,6 +295,7 @@ class PatchingController extends Controller
             }
         }
         sort($res);
+
         return array_unique($res);
     }
 }

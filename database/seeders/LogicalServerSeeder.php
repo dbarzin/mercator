@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\LogicalServer;
 use Illuminate\Database\Seeder;
-use App\LogicalServer;
 
 // Logical Server Seeder
 // Usage :

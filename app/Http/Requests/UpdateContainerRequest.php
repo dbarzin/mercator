@@ -27,7 +27,7 @@ class UpdateContainerRequest extends FormRequest
                     ->ignore($this->route('container')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
-            'iconFile' => ['nullable','file','mimes:png','max:65535'],
+            'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
         ];
     }
 }

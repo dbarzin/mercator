@@ -1,4 +1,5 @@
 <?php
+
 // app/Services/MospService.php
 
 namespace App\Services;
@@ -20,8 +21,9 @@ class MospService
     public function getIndex(): array
     {
         return Cache::remember('mosp:index', $this->ttl, function () {
-            $resp = Http::timeout(30)->get($this->base /* .'/index.json'*/);
+            $resp = Http::timeout(30)->get($this->base /* .'/index.json' */);
             $resp->throw();
+
             return $resp->json();
         });
     }
@@ -36,6 +38,7 @@ class MospService
         foreach ($refs as &$r) {
             $r['threats_count'] = $this->getThreatsCountForReferential($r);
         }
+
         return $refs;
     }
 
@@ -43,9 +46,11 @@ class MospService
     public function getReferential(string $slug): array
     {
         $key = "mosp:ref:{$slug}";
+
         return Cache::remember($key, $this->ttl, function () use ($slug) {
             $resp = Http::timeout(30)->get($this->base."/referentials/{$slug}.json");
             $resp->throw();
+
             return $resp->json();
         });
     }
@@ -54,6 +59,7 @@ class MospService
     public function getThreatsCountForReferential(string $slug): int
     {
         dd($r['json_object']);
+
         return 0;
     }
 }

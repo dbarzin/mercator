@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWifiTerminalRequest;
 use App\Http\Requests\StoreWifiTerminalRequest;
 use App\Http\Requests\UpdateWifiTerminalRequest;
-use App\Site;
-use App\WifiTerminal;
+use App\Models\Building;
+use App\Models\Site;
+use App\Models\WifiTerminal;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

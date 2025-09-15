@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\DataProcessing;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
 use App\Http\Resources\Admin\DataProcessingResource;
+use App\Models\DataProcessing;
 use Gate;
 use Illuminate\Http\Response;
 

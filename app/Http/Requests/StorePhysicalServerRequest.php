@@ -28,7 +28,7 @@ class StorePhysicalServerRequest extends FormRequest
             ],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

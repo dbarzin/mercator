@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ApplicationModule;
-use App\ApplicationService;
-use App\Database;
-use App\Flux;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyFluxRequest;
 use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
-use App\MApplication;
+use App\Models\ApplicationModule;
+use App\Models\ApplicationService;
+use App\Models\Database;
+use App\Models\Flux;
+use App\Models\MApplication;
 use App\Services\CartographerService;
 use Gate;
 use Illuminate\Support\Collection;
@@ -53,16 +53,16 @@ class FluxController extends Controller
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
-            $items->put('APP_' . $key, $value);
+            $items->put('APP_'.$key, $value);
         }
         foreach ($services as $key => $value) {
-            $items->put('SRV_' . $key, $value);
+            $items->put('SRV_'.$key, $value);
         }
         foreach ($modules as $key => $value) {
-            $items->put('MOD_' . $key, $value);
+            $items->put('MOD_'.$key, $value);
         }
         foreach ($databases as $key => $value) {
-            $items->put('DB_' . $key, $value);
+            $items->put('DB_'.$key, $value);
         }
 
         return view('admin.fluxes.create', compact('items', 'nature_list'));
@@ -70,7 +70,7 @@ class FluxController extends Controller
 
     public function store(StoreFluxRequest $request)
     {
-        $flux = new Flux();
+        $flux = new Flux;
         $flux->name = $request->name;
         $flux->nature = $request->nature;
         $flux->description = $request->description;
@@ -146,16 +146,16 @@ class FluxController extends Controller
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
-            $items->put('APP_' . $key, $value);
+            $items->put('APP_'.$key, $value);
         }
         foreach ($services as $key => $value) {
-            $items->put('SRV_' . $key, $value);
+            $items->put('SRV_'.$key, $value);
         }
         foreach ($modules as $key => $value) {
-            $items->put('MOD_' . $key, $value);
+            $items->put('MOD_'.$key, $value);
         }
         foreach ($databases as $key => $value) {
-            $items->put('DB_' . $key, $value);
+            $items->put('DB_'.$key, $value);
         }
 
         // Source item

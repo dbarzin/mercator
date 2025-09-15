@@ -74,13 +74,13 @@ class GlobalSearchController extends Controller
         }
 
         foreach ($this->models as $model => $translation) {
-            $modelClass = 'App\\' . $model;
+            $modelClass = 'App\\Models\\'.$model;
             $query = $modelClass::query();
 
             $fields = $modelClass::$searchable;
 
             foreach ($fields as $field) {
-                $query->orWhere($field, 'LIKE', '%' . $term . '%');
+                $query->orWhere($field, 'LIKE', '%'.$term.'%');
             }
 
             $results = $query->take(100)->get();
@@ -99,9 +99,9 @@ class GlobalSearchController extends Controller
                 $parsedData['fields_formated'] = $formattedFields;
 
                 // TODO: Fix me please (XXXX)
-                $parsedData['url'] = '/admin/' .
-                    ($model === 'MApplication' ? 'applications' : Str::plural(Str::snake($model, '-'))) .
-                    '/' . $result->id;
+                $parsedData['url'] = '/admin/'.
+                    ($model === 'MApplication' ? 'applications' : Str::plural(Str::snake($model, '-'))).
+                    '/'.$result->id;
                 // to got to edit : . '/edit'
 
                 $searchableData[] = $parsedData;

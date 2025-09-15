@@ -1,8 +1,7 @@
 <?php
 
-use App\Role;
-use App\Permission;
-
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -87,8 +86,9 @@ return new class extends Migration
         });
 
         // delete access rights
-        if (Permission::count() > 0)
-            DB::delete("delete from permissions where id in (279, 280)");
+        if (Permission::count() > 0) {
+            DB::delete('delete from permissions where id in (279, 280)');
+        }
 
     }
 };

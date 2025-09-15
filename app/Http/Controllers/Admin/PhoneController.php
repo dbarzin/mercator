@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Requests\StorePhoneRequest;
 use App\Http\Requests\UpdatePhoneRequest;
-use App\Phone;
-use App\Site;
+use App\Models\Building;
+use App\Models\Phone;
+use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,7 +83,7 @@ class PhoneController extends Controller
 
         return view(
             'admin.phones.edit',
-            compact('sites', 'buildings', 'type_list', 'phone', )
+            compact('sites', 'buildings', 'type_list', 'phone')
         );
     }
 

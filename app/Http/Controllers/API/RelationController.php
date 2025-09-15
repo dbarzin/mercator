@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Resources\Admin\RelationResource;
-use App\Relation;
+use App\Models\Relation;
 use Gate;
 use Illuminate\Http\Response;
 

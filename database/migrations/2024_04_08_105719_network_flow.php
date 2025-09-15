@@ -1,7 +1,7 @@
 <?php
-use App\Permission;
-use App\Role;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -31,28 +31,28 @@ return new class extends Migration
         });
 
         // if not initial migration -> add permissions
-        if (Permission::count()>0) {
+        if (Permission::count() > 0) {
 
             // create new permissions
             $permissions = [
                 [
-                    'id'    => '286',
+                    'id' => '286',
                     'title' => 'logical_flow_create',
                 ],
                 [
-                    'id'    => '287',
+                    'id' => '287',
                     'title' => 'logical_flow_edit',
                 ],
                 [
-                    'id'    => '288',
+                    'id' => '288',
                     'title' => 'logical_flow_show',
                 ],
                 [
-                    'id'    => '289',
+                    'id' => '289',
                     'title' => 'logical_flow_delete',
                 ],
                 [
-                    'id'    => '290',
+                    'id' => '290',
                     'title' => 'logical_flow_access',
                 ],
             ];
@@ -60,11 +60,11 @@ return new class extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([286,287,288,289,290], false);
+            Role::findOrFail(1)->permissions()->sync([286, 287, 288, 289, 290], false);
             // User
-            Role::findOrFail(2)->permissions()->sync([286,287,288,289,290], false);
+            Role::findOrFail(2)->permissions()->sync([286, 287, 288, 289, 290], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([288,290], false);
+            Role::findOrFail(3)->permissions()->sync([288, 290], false);
         }
     }
 

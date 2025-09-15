@@ -26,10 +26,10 @@ class StorePeripheralRequest extends FormRequest
                 'required',
                 Rule::unique('peripherals')->whereNull('deleted_at'),
             ],
-            'iconFile' => ['nullable','file','mimes:png','max:65535'],
+            'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

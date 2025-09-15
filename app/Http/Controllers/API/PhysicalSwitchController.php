@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
 use App\Http\Resources\Admin\PhysicalSwitchResource;
-use App\PhysicalSwitch;
+use App\Models\PhysicalSwitch;
 use Gate;
 use Illuminate\Http\Response;
 

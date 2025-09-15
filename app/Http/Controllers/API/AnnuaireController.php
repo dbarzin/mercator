@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Annuaire;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Requests\StoreAnnuaireRequest;
 use App\Http\Requests\UpdateAnnuaireRequest;
 use App\Http\Resources\Admin\AnnuaireResource;
+use App\Models\Annuaire;
 use Gate;
 use Illuminate\Http\Response;
 

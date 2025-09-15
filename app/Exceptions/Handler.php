@@ -29,7 +29,6 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable $exception
      *
      * @return void
      *
@@ -44,7 +43,7 @@ class Handler extends ExceptionHandler
                 'line' => $exception->getLine(),
             ]);
         } catch (\Throwable $loggingError) {
-            error_log('Error trying to log an exception : ' . $loggingError->getMessage());
+            error_log('Error trying to log an exception : '.$loggingError->getMessage());
         }
         parent::report($exception);
     }
@@ -52,9 +51,7 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Throwable               $exception
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable

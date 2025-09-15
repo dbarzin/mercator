@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
 use App\Http\Resources\Admin\PhysicalSecurityDeviceResource;
-use App\PhysicalSecurityDevice;
+use App\Models\PhysicalSecurityDevice;
 use Gate;
 use Illuminate\Http\Response;
 

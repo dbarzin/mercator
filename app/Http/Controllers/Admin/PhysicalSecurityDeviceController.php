@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 // Models
-use App\Bay;
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
-// Framework
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-use App\PhysicalSecurityDevice;
-use App\SecurityDevice;
-use App\Site;
+// Framework
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\PhysicalSecurityDevice;
+use App\Models\SecurityDevice;
+use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

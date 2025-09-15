@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\ApplicationService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationServiceRequest;
 use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
 use App\Http\Resources\Admin\ApplicationServiceResource;
+use App\Models\ApplicationService;
 use Gate;
 use Illuminate\Http\Response;
 

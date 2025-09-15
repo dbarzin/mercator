@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Building;
-use App\Entity;
 use App\Http\Controllers\Controller;
-use App\Information;
-use App\MApplication;
-use App\Process;
+use App\Models\Building;
+use App\Models\Entity;
+use App\Models\Information;
+use App\Models\MApplication;
+use App\Models\Process;
+use App\Models\Site;
 use App\Services\MonarcExportService;
 use App\Services\MospService;
-use App\Site;
 
 class MonarcController extends Controller
 {
     public function __construct(
         private MospService $mosp,
         private MonarcExportService $exporter,
-    ) {
-    }
+    ) {}
 
     public function index()
     {
@@ -91,8 +90,9 @@ class MonarcController extends Controller
 
         // Vérification des erreurs
         if ($response === false) {
-            echo 'Erreur cURL : ' . curl_error($ch);
+            echo 'Erreur cURL : '.curl_error($ch);
             curl_close($ch);
+
             return;
         }
 
@@ -106,6 +106,7 @@ class MonarcController extends Controller
         // Vérification de la structure de la réponse
         if (! is_array($data)) {
             echo 'Réponse invalide ou non JSON.';
+
             return null;
         }
 
@@ -121,6 +122,7 @@ class MonarcController extends Controller
             }
         }
         dd($names);
+
         return $names;
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Graph;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGraphRequest;
+use App\Models\Graph;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -84,7 +84,7 @@ class GraphController extends Controller
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        //dd("Not implemented");
+        // dd("Not implemented");
 
         return redirect()->route('admin.graphs.index');
     }

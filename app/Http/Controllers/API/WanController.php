@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyWanRequest;
 use App\Http\Requests\StoreWanRequest;
 use App\Http\Requests\UpdateWanRequest;
 use App\Http\Resources\Admin\WanResource;
-use App\Wan;
+use App\Models\Wan;
 use Gate;
 use Illuminate\Http\Response;
 

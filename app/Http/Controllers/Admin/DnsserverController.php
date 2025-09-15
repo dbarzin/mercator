@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dnsserver;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDnsserverRequest;
 use App\Http\Requests\StoreDnsserverRequest;
 use App\Http\Requests\UpdateDnsserverRequest;
+use App\Models\Dnsserver;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

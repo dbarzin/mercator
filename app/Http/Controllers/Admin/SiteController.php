@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
-use App\Site;
+use App\Models\Document;
+use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,7 +59,7 @@ class SiteController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -97,7 +97,7 @@ class SiteController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

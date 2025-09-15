@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 @section('content')
-<div class="form-group">
-    <a class="btn btn-default" href="{{ route('admin.audit-logs.index') }}">
-        {{ trans('global.back_to_list') }}
-    </a>
-</div>
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.auditLog.title') }}
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.audit-logs.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
     </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.show') }} {{ trans('cruds.auditLog.title') }}
+        </div>
 
-    <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <tbody>
                 <tr>
                     <th>
                         id
@@ -34,7 +34,7 @@
                         {{ trans('cruds.auditLog.fields.subject_id') }}
                     </th>
                     <td>
-                        <a href="{{ \App\AuditLog::subject_url($auditLog->subject_type) }}/{{ $auditLog->subject_id }}">
+                        <a href="{{ \App\Models\AuditLog::subjectURL($auditLog->subject_type) }}/{{ $auditLog->subject_id }}">
                             {{ $auditLog->subject_id }}
                         </a>
                     </td>
@@ -52,9 +52,9 @@
                         {{ trans('cruds.auditLog.fields.user_id') }}
                     </th>
                     <td>
-                    <a href="{{ route('admin.users.show', $auditLog->user_id) }}">
-                        {{ $auditLog->user->name }}
-                    </a>
+                        <a href="{{ route('admin.users.show', $auditLog->user_id) }}">
+                            {{ $auditLog->user->name }}
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -81,13 +81,13 @@
                         {{ $auditLog->created_at }}
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-<div class="form-group">
-    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.audit-logs.index') }}">
-        {{ trans('global.back_to_list') }}
-    </a>
-</div>
+    <div class="form-group">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.audit-logs.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
+    </div>
 @endsection

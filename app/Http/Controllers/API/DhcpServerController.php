@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\DhcpServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDhcpServerRequest;
 use App\Http\Requests\StoreDhcpServerRequest;
 use App\Http\Requests\UpdateDhcpServerRequest;
 use App\Http\Resources\Admin\DhcpServerResource;
+use App\Models\DhcpServer;
 use Gate;
 use Illuminate\Http\Response;
 

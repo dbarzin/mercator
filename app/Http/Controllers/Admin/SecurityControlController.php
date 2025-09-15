@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
-use App\MApplication;
-use App\Process;
-use App\SecurityControl;
+use App\Models\MApplication;
+use App\Models\Process;
+use App\Models\SecurityControl;
 use Gate;
 use Illuminate\Http\Request;
-use  Illuminate\Support\Collection;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControlController extends Controller
@@ -70,11 +70,11 @@ class SecurityControlController extends Controller
         // Create items
         $apps = Collection::make();
         foreach ($applications as $key => $value) {
-            $apps->put('APP_' . $key, $value);
+            $apps->put('APP_'.$key, $value);
         }
         $procs = Collection::make();
         foreach ($processes as $key => $value) {
-            $procs->put('PR_' . $key, $value);
+            $procs->put('PR_'.$key, $value);
         }
 
         // Get all security controls
@@ -111,7 +111,7 @@ class SecurityControlController extends Controller
     {
         abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        //http://127.0.0.1:8000/admin/security-controls-list?id=APP_2
+        // http://127.0.0.1:8000/admin/security-controls-list?id=APP_2
 
         // Get control list of object base on the ID
         if (str_starts_with($request->id, 'APP_')) {
@@ -126,7 +126,7 @@ class SecurityControlController extends Controller
         // Construct the control list
         $controls = [];
         foreach ($list as $item) {
-            array_push($controls, 'CTRL_' . $item->id);
+            array_push($controls, 'CTRL_'.$item->id);
         }
 
         // return JSON

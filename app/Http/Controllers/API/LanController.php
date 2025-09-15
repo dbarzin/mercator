@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyLanRequest;
 use App\Http\Requests\StoreLanRequest;
 use App\Http\Requests\UpdateLanRequest;
 use App\Http\Resources\Admin\LanResource;
-use App\Lan;
+use App\Models\Lan;
 use Gate;
 use Illuminate\Http\Response;
 

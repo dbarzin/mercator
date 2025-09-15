@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\CPEProduct;
-use App\CPEVendor;
-use App\CPEVersion;
 use App\Http\Controllers\Controller;
+use App\Models\CPEProduct;
+use App\Models\CPEVendor;
+use App\Models\CPEVersion;
 use Symfony\Component\HttpFoundation\Request;
 
 class CPEController extends Controller
@@ -21,7 +21,7 @@ class CPEController extends Controller
 
         $search = $request->query('search');
         if ($search) {
-            $query->where('name', 'LIKE', $search . '%');
+            $query->where('name', 'LIKE', $search.'%');
         }
 
         $vendors = $query->get();
@@ -42,10 +42,11 @@ class CPEController extends Controller
 
         $search = $request->query('search');
         if ($search) {
-            $query->where('cpe_products.name', 'LIKE', $search . '%');
+            $query->where('cpe_products.name', 'LIKE', $search.'%');
         }
 
         $products = $query->get();
+
         return response()->json($products);
     }
 
@@ -64,9 +65,10 @@ class CPEController extends Controller
 
         $search = $request->query('search');
         if ($search) {
-            $query->where('cpe_versions.name', 'LIKE', $search . '%');
+            $query->where('cpe_versions.name', 'LIKE', $search.'%');
         }
         $versions = $query->get();
+
         return response()->json($versions);
     }
 
@@ -74,11 +76,10 @@ class CPEController extends Controller
     {
         $search = $request->query('search');
 
-        $query = CPEVendor
-            ::select('cpe_vendors.name as vendor_name', 'cpe_products.name as product_name')
-                ->join('cpe_products', 'cpe_vendor_id', '=', 'cpe_vendors.id')
-                ->where('cpe_products.name', 'like', '%' . $search . '%')
-                ->limit(100);
+        $query = CPEVendor::select('cpe_vendors.name as vendor_name', 'cpe_products.name as product_name')
+            ->join('cpe_products', 'cpe_vendor_id', '=', 'cpe_vendors.id')
+            ->where('cpe_products.name', 'like', '%'.$search.'%')
+            ->limit(100);
 
         $result = $query->get();
 

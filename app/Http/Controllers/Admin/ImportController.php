@@ -77,7 +77,7 @@ class ImportController extends Controller
         // Get header
         $header = array_keys($data[0] ?? []);
 
-        return Excel::download(new GenericExport($data, $header), $modelName . '-'. Carbon::today()->format('Ymd') . '.xlsx');
+        return Excel::download(new GenericExport($data, $header), $modelName.'-'.Carbon::today()->format('Ymd').'.xlsx');
     }
 
     public function import(Request $request)
@@ -91,13 +91,13 @@ class ImportController extends Controller
         $modelClass = $this->resolveModelClass($modelName);
 
         // Get store validation rules
-        $storeRequestClass = '\\App\\Http\\Requests\\Store' . $modelName . 'Request';
-        $storeRequestInstance = new $storeRequestClass();
+        $storeRequestClass = '\\App\\Http\\Requests\\Store'.$modelName.'Request';
+        $storeRequestInstance = new $storeRequestClass;
         $storeRules = $storeRequestInstance->rules();
 
         // Get update validation rules
-        $updateRequestClass = '\\App\\Http\\Requests\\Update' . $modelName . 'Request';
-        $updateRequestInstance = new $updateRequestClass();
+        $updateRequestClass = '\\App\\Http\\Requests\\Update'.$modelName.'Request';
+        $updateRequestInstance = new $updateRequestClass;
 
         abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -126,7 +126,7 @@ class ImportController extends Controller
                         }
 
                         try {
-                            $relationInstance = (new $modelClass())->{$key}();
+                            $relationInstance = (new $modelClass)->{$key}();
                             if ($relationInstance instanceof BelongsToMany) {
                                 $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
                                 $attributes->forget($key);
@@ -177,8 +177,8 @@ class ImportController extends Controller
                         }
                     }
                 } catch (\Throwable $e) {
-                    $simulatedErrors[] = 'Ligne ' . ($index + 2) . ': ' . $e->getMessage();
-                    if (sizeof($simulatedErrors) >= 10) {
+                    $simulatedErrors[] = 'Ligne '.($index + 2).': '.$e->getMessage();
+                    if (count($simulatedErrors) >= 10) {
                         break;
                     }
                 }
@@ -186,40 +186,44 @@ class ImportController extends Controller
 
             if (count($simulatedErrors)) {
                 DB::rollBack();
+
                 return back()->withInput()->withErrors($simulatedErrors);
             }
 
             DB::commit();
+
             return back()->withInput()
                 ->withMessage("Success : {$insertCount} inserted, {$updateCount} updated, {$deleteCount} deleted");
         } catch (\Throwable $e) {
             DB::rollBack();
+
             return back()->withInput()->withErrors(['msg' => $e->getMessage()]);
         }
     }
 
     private function resolveModelClass($modelName)
     {
-        $modelClass = 'App\\' . $modelName;
+        $modelClass = 'App\\'.$modelName;
         if (! class_exists($modelClass)) {
             abort(404, "Modèle [{$modelName}] introuvable.");
         }
+
         return $modelClass;
     }
 
     private static function permission($modelName, $action)
     {
-        return Str::snake($modelName, '_') . '_'. $action;
+        return Str::snake($modelName, '_').'_'.$action;
     }
 }
 
 /**
  * Classe d'export Excel générique.
  */
-
 class GenericExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
+
     protected $headers;
 
     public function __construct(array $data, array $headers)
@@ -242,7 +246,7 @@ class GenericExport implements FromArray, WithHeadings, WithStyles
     {
         $columnCount = count($this->headers);
         $endColumn = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($columnCount);
-        $headerRange = 'A1:' . $endColumn . '1';
+        $headerRange = 'A1:'.$endColumn.'1';
 
         return [
             $headerRange => [

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyZoneAdminRequest;
 use App\Http\Requests\StoreZoneAdminRequest;
 use App\Http\Requests\UpdateZoneAdminRequest;
-use App\ZoneAdmin;
+use App\Models\ZoneAdmin;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

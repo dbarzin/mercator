@@ -2,19 +2,22 @@
 
 namespace App\Console\Commands;
 
-use App\CPEProduct;
-use App\CPEVendor;
-use App\CPEVersion;
+use App\Models\CPEProduct;
+use App\Models\CPEVendor;
+use App\Models\CPEVersion;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class CPEImport extends Command
 {
     protected $signature = 'mercator:cpe-import {cpe-dictionary-file}';
+
     protected $description = 'Import CPE dictionary file';
 
     protected array $vendors = [];
+
     protected array $products = [];
+
     protected array $versions = [];
 
     public function handle()
@@ -25,6 +28,7 @@ class CPEImport extends Command
         $file = $this->argument('cpe-dictionary-file');
         if (! file_exists($file)) {
             $this->error("File not found: {$file}");
+
             return;
         }
 
@@ -39,9 +43,10 @@ class CPEImport extends Command
         $this->versions = [];
 
         // Init lecteur XML
-        $reader = new \XMLReader();
+        $reader = new \XMLReader;
         if (! $reader->open($file)) {
             $this->error('Could not open XML file');
+
             return;
         }
 

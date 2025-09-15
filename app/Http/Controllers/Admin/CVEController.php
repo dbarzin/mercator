@@ -24,7 +24,7 @@ class CVEController extends Controller
         try {
             $cves = $this->getCVEs($provider, $cpe);
         } catch (\Throwable $e) {
-            return back()->withErrors('CVE search failed: ' . $e->getMessage());
+            return back()->withErrors('CVE search failed: '.$e->getMessage());
         }
 
         return view('admin.cve.show', compact('cpe', 'cves'));
@@ -58,7 +58,7 @@ class CVEController extends Controller
             'CVE Published',
         ];
 
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -84,7 +84,7 @@ class CVEController extends Controller
         $row = 2;
 
         foreach ($applications as $app) {
-            Log::debug('CVEReport - app->name ' . $app->name);
+            Log::debug('CVEReport - app->name '.$app->name);
 
             // Cas incomplet : on consigne et on passe
             if (empty($app->vendor) || empty($app->product)) {
@@ -94,6 +94,7 @@ class CVEController extends Controller
                 $sheet->setCellValue("D{$row}", $app->version);
                 $sheet->setCellValue("E{$row}", 'unknown');
                 $row++;
+
                 continue;
             }
 
@@ -116,10 +117,11 @@ class CVEController extends Controller
                 $sheet->setCellValue("C{$row}", $app->product);
                 $sheet->setCellValue("D{$row}", $version);
                 $sheet->setCellValue("E{$row}", 'error');
-                $sheet->setCellValue("F{$row}", 'CVE search failed: ' . $e->getMessage());
+                $sheet->setCellValue("F{$row}", 'CVE search failed: '.$e->getMessage());
                 $row++;
                 // petite pause
                 usleep(20000); // 20 ms
+
                 continue;
             }
 
@@ -132,6 +134,7 @@ class CVEController extends Controller
                 $sheet->setCellValue("E{$row}", 'none');
                 $row++;
                 usleep(20000);
+
                 continue;
             }
 
@@ -148,8 +151,8 @@ class CVEController extends Controller
 
                 // Références : on concatène nom + URL si dispo
                 $ref = trim(
-                    ($cve->name ?? '') .
-                    (isset($cve->url) && $cve->url ? " \n" . $cve->url : '')
+                    ($cve->name ?? '').
+                    (isset($cve->url) && $cve->url ? " \n".$cve->url : '')
                 );
                 $sheet->setCellValue("H{$row}", $ref);
 
@@ -165,23 +168,24 @@ class CVEController extends Controller
         }
 
         $writer = new Xlsx($spreadsheet);
-        $path = storage_path('app/cve-' . Carbon::today()->format('Ymd') . '.xlsx');
+        $path = storage_path('app/cve-'.Carbon::today()->format('Ymd').'.xlsx');
         $writer->save($path);
 
         Log::debug('CVEReport - Done.');
+
         return response()->download($path)->deleteFileAfterSend(true);
     }
 
     /**
-     * @return array<int,object>  // liste d'objets CVE normalisés
+     * @return array<int,object> // liste d'objets CVE normalisés
      *
-     * @throws \RuntimeException  // en cas d'erreur
+     * @throws \RuntimeException // en cas d'erreur
      */
     protected function getCVEs(string $provider, string $cpe): array
     {
         // Construit l’URL proprement et encode le CPE en segment d’URL
         $base = rtrim($provider, '/');
-        $url = $base . '/api/vulnerability/cpesearch/' . rawurlencode($cpe);
+        $url = $base.'/api/vulnerability/cpesearch/'.rawurlencode($cpe);
 
         $appVersion = trim(file_get_contents(base_path('version.txt')));
 
@@ -233,7 +237,7 @@ class CVEController extends Controller
             $cveVersion = Arr::get($cveArr, 'containers.cna.affected.0.versions.0.version', '');
 
             // Apply filter
-            //if (($cpeVersion!==null) && !$this->isVersionGreater($cveVersion, $cpeVersion))
+            // if (($cpeVersion!==null) && !$this->isVersionGreater($cveVersion, $cpeVersion))
             //    continue;
 
             // Scores (essaie CNA V3.0, V3.1, puis ADP)
@@ -260,7 +264,8 @@ class CVEController extends Controller
                 'baseSeverity' => $baseSeverity,
             ];
         }
-        //dd($out);
+
+        // dd($out);
         return $out;
     }
 
@@ -270,6 +275,7 @@ class CVEController extends Controller
 
         if (count($parts) >= 5) {
             $version = $parts[5];
+
             return $version !== '*' ? $version : null;
         }
 
@@ -293,6 +299,7 @@ class CVEController extends Controller
                 return false;
             }
         }
+
         return false; // égales
     }
 }

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRoleRequest;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
-use App\Permission;
-use App\Role;
+use App\Models\Permission;
+use App\Models\Role;
 use Gate;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +18,7 @@ class RolesController extends Controller
     /**
      * Triage des permissions pour un meilleur affichage dans la vue Blade
      *
-     * @param Collection $permissions Tableau des permissions sur lesquelles le triage sera effectué
-     *
+     * @param  Collection  $permissions  Tableau des permissions sur lesquelles le triage sera effectué
      * @return array Tableau avec les permissions triées
      */
     public function getSortedPerms(Collection $permissions): array

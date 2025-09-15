@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyInformationRequest;
 use App\Http\Requests\StoreInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
 use App\Http\Resources\Admin\InformationResource;
-use App\Information;
+use App\Models\Information;
 use Gate;
 use Illuminate\Http\Response;
 

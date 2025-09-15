@@ -28,7 +28,7 @@ class StorePhoneRequest extends FormRequest
             ],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

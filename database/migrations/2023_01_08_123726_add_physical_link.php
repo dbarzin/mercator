@@ -1,8 +1,7 @@
 <?php
 
-use App\Role;
-use App\Permission;
-
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -101,27 +100,27 @@ class AddPhysicalLink extends Migration
         // Access rights
 
         // if not initial migration -> add permissions
-        if (Permission::count()>0) {
+        if (Permission::count() > 0) {
             // create new permissions
             $permissions = [
                 [
-                    'id'    => '263',
+                    'id' => '263',
                     'title' => 'physical_link_create',
                 ],
                 [
-                    'id'    => '264',
+                    'id' => '264',
                     'title' => 'physical_link_edit',
                 ],
                 [
-                    'id'    => '265',
+                    'id' => '265',
                     'title' => 'physical_link_show',
                 ],
                 [
-                    'id'    => '266',
+                    'id' => '266',
                     'title' => 'physical_link_delete',
                 ],
                 [
-                    'id'    => '267',
+                    'id' => '267',
                     'title' => 'physical_link_access',
                 ],
             ];
@@ -129,11 +128,11 @@ class AddPhysicalLink extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([263,264,265,266,267], false);
+            Role::findOrFail(1)->permissions()->sync([263, 264, 265, 266, 267], false);
             // User
-            Role::findOrFail(2)->permissions()->sync([263,264,265,266,267], false);
+            Role::findOrFail(2)->permissions()->sync([263, 264, 265, 266, 267], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([265,267], false);
+            Role::findOrFail(3)->permissions()->sync([265, 267], false);
         }
 
     }

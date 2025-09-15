@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Database;
-use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
-use App\Information;
-use App\LogicalServer;
-use App\MApplication;
+use App\Models\Database;
+use App\Models\Entity;
+use App\Models\Information;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

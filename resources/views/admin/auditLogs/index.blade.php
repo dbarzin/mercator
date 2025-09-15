@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.auditLog.title_singular') }} {{ trans('global.list') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.auditLog.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <th width="10">
                     </th>
                     <th>
@@ -35,69 +35,69 @@
                     </th>
                     <th>
                     </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($logs as $log)
-                <tr data-entry-id="{{ $log->id }}">
-                    <td>
-                    </td>
-                    <td>
-                        <a href="{{ route('admin.audit-logs.show', $log->id) }}">
-                        {{ $log->id }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ $log->description }}
-                    </td>
-                    <td>
-                        {{ $log->subject_type }}
-                    </td>
-                    <td>
-                        <a href="{{ \App\AuditLog::subject_url($log->subject_type) }}/{{ $log->subject_id }}">
-                            {{ $log->subject_id }}
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{ route('admin.users.show', $log->user_id) }}">
-                        {{ $log->name }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ $log->host }}
-                    </td>
-                    <td>
-                        {{ $log->created_at }}
-                    </td>
-                    <td nowrap>
-                        <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
-                            {{ trans('global.view') }}
-                        </a>
-                        <a class="btn btn-xs btn-secondary" href="{{ route('admin.history',
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($logs as $log)
+                        <tr data-entry-id="{{ $log->id }}">
+                            <td>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.audit-logs.show', $log->id) }}">
+                                    {{ $log->id }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ $log->description }}
+                            </td>
+                            <td>
+                                {{ $log->subject_type }}
+                            </td>
+                            <td>
+                                <a href="{{ \App\Models\AuditLog::subjectURL($log->subject_type) }}/{{ $log->subject_id }}">
+                                    {{ $log->subject_id }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.users.show', $log->user_id) }}">
+                                    {{ $log->name }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ $log->host }}
+                            </td>
+                            <td>
+                                {{ $log->created_at }}
+                            </td>
+                            <td nowrap>
+                                <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
+                                    {{ trans('global.view') }}
+                                </a>
+                                <a class="btn btn-xs btn-secondary" href="{{ route('admin.history',
                                 ['type' => $log->subject_type, 'id' => $log->subject_id]) }}">
-                            {{ trans('global.history') }}
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <p>
-        {{ $logs->links() }}
-        </p>
-    </div>
-</div>
-@endsection
+                                    {{ trans('global.history') }}
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                <p>
+                    {{ $logs->links() }}
+                </p>
+            </div>
+        </div>
+        @endsection
 
-@section('scripts')
-@parent
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.site.title_singular"),
-    'URL' => route('admin.sites.massDestroy'),
-    'canDelete' => false,
-    'order' => "[7, 'desc']"
-));
-</script>
+        @section('scripts')
+            @parent
+            <script>
+                @include('partials.datatable', array(
+                    'id' => '#dataTable',
+                    'title' => trans("cruds.site.title_singular"),
+                    'URL' => route('admin.sites.massDestroy'),
+                    'canDelete' => false,
+                    'order' => "[7, 'desc']"
+                ));
+            </script>
 @endsection

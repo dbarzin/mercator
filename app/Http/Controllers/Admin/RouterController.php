@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
-use App\NetworkSwitch;
-use App\PhysicalRouter;
-use App\Router;
+use App\Models\NetworkSwitch;
+use App\Models\PhysicalRouter;
+use App\Models\Router;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

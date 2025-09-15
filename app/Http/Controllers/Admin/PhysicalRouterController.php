@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
-use App\PhysicalRouter;
-use App\Router;
-use App\Site;
-use App\Vlan;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\PhysicalRouter;
+use App\Models\Router;
+use App\Models\Site;
+use App\Models\Vlan;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

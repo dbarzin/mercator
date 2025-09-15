@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEntityRequest;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
 use App\Http\Resources\Admin\EntityResource;
+use App\Models\Entity;
 use Gate;
 use Illuminate\Http\Response;
 

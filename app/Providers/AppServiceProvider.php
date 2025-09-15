@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //Ignore default migration from here
+        // Ignore default migration from here
         // Sanctum::ignoreMigrations();
     }
 
@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         if (env('APP_DEBUG')) {
             \DB::listen(function ($query) {
-                \Log::info($query->time . ':' . $query->sql);
+                \Log::info($query->time.':'.$query->sql);
             });
         }
 

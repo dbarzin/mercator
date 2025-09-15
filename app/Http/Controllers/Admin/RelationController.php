@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
-use App\Relation;
-use App\RelationValue;
+use App\Models\Relation;
+use App\Models\RelationValue;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +27,7 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sources = DB::table('entities')->select(['id','name'])->whereNull('deleted_at')->orderBy('name')->get();
+        $sources = DB::table('entities')->select(['id', 'name'])->whereNull('deleted_at')->orderBy('name')->get();
         $destinations = $sources;
 
         // lists
@@ -69,7 +69,7 @@ class RelationController extends Controller
         $values = $request['values'];
         if ($dates !== null) {
             for ($i = 0; $i < count($dates); $i++) {
-                $relationValue = new RelationValue();
+                $relationValue = new RelationValue;
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->setDatePriceAttribute($dates[$i]);
@@ -84,7 +84,7 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sources = DB::table('entities')->select(['id','name'])->whereNull('deleted_at')->orderBy('name')->get();
+        $sources = DB::table('entities')->select(['id', 'name'])->whereNull('deleted_at')->orderBy('name')->get();
         $destinations = $sources;
 
         // lists
@@ -108,7 +108,7 @@ class RelationController extends Controller
         }
         session()->put('documents', $documents);
 
-        $values = DB::table('relation_values')->select(['date_price','price'])->where('relation_id', '=', $relation->id)->orderBy('date_price')->get();
+        $values = DB::table('relation_values')->select(['date_price', 'price'])->where('relation_id', '=', $relation->id)->orderBy('date_price')->get();
 
         return view(
             'admin.relations.edit',
@@ -135,7 +135,7 @@ class RelationController extends Controller
         $values = $request['values'];
         if ($dates !== null) {
             for ($i = 0; $i < count($dates); $i++) {
-                $relationValue = new RelationValue();
+                $relationValue = new RelationValue;
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->setDatePriceAttribute($dates[$i]);
@@ -186,6 +186,7 @@ class RelationController extends Controller
             }
         }
         sort($res);
+
         return array_unique($res);
     }
 }

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyVlanRequest;
 use App\Http\Requests\StoreVlanRequest;
 use App\Http\Requests\UpdateVlanRequest;
-use App\Subnetwork;
-use App\Vlan;
+use App\Models\Subnetwork;
+use App\Models\Vlan;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,15 +22,6 @@ class VlanController extends Controller
         $vlans = Vlan::with('subnetworks')->orderBy('name')->get();
 
         return view('admin.vlans.index', compact('vlans'));
-    }
-
-    public function create(Request $request)
-    {
-        abort_if(Gate::denies('vlan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
-
-        return view('admin.vlans.create', compact('subnetworks'));
     }
 
     public function clone(Request $request)
@@ -67,15 +58,13 @@ class VlanController extends Controller
         return redirect()->route('admin.vlans.index');
     }
 
-    public function edit(Vlan $vlan)
+    public function create(Request $request)
     {
-        abort_if(Gate::denies('vlan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $vlan->load('subnetworks');
+        abort_if(Gate::denies('vlan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.vlans.edit', compact('vlan', 'subnetworks'));
+        return view('admin.vlans.create', compact('subnetworks'));
     }
 
     public function update(UpdateVlanRequest $request, Vlan $vlan)
@@ -91,6 +80,17 @@ class VlanController extends Controller
             ->update(['vlan_id' => $vlan->id]);
 
         return redirect()->route('admin.vlans.index');
+    }
+
+    public function edit(Vlan $vlan)
+    {
+        abort_if(Gate::denies('vlan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $vlan->load('subnetworks');
+
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.vlans.edit', compact('vlan', 'subnetworks'));
     }
 
     public function show(Vlan $vlan)

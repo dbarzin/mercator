@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
 use App\Http\Resources\Admin\PermissionResource;
-use App\Permission;
+use App\Models\Permission;
 use Gate;
 use Illuminate\Http\Response;
 

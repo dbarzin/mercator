@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyStorageDeviceRequest;
 use App\Http\Requests\StoreStorageDeviceRequest;
 use App\Http\Requests\UpdateStorageDeviceRequest;
 use App\Http\Resources\Admin\StorageDeviceResource;
-use App\StorageDevice;
+use App\Models\StorageDevice;
 use Gate;
 use Illuminate\Http\Response;
 

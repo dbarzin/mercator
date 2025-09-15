@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
-use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
-use App\NetworkSwitch;
-use App\PhysicalSwitch;
-use App\Site;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\NetworkSwitch;
+use App\Models\PhysicalSwitch;
+use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

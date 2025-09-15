@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Cluster;
-use App\Database;
-use App\Document;
-use App\DomaineAd;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
-use App\LogicalServer;
-use App\MApplication;
-use App\PhysicalServer;
+use App\Models\Cluster;
+use App\Models\Database;
+use App\Models\Document;
+use App\Models\DomaineAd;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
+use App\Models\PhysicalServer;
 use App\Services\CartographerService;
 use Gate;
 use Illuminate\Support\Facades\DB;
@@ -37,6 +37,7 @@ class LogicalServerController extends Controller
     public function getData(Request $request)
     {
         $logicalServers = LogicalServer::select('id', 'name', 'type', 'attributes', 'description')->get();
+
         return DataTables::of($logicalServers)->make(true);
     }
 
@@ -135,6 +136,7 @@ class LogicalServerController extends Controller
         // Code v2
         $logicalServers = $result->groupBy('id')->map(function ($items) {
             $logicalServer = $items->first();
+
             return (object) [
                 'id' => $logicalServer->id,
                 'name' => $logicalServer->name,
@@ -214,7 +216,7 @@ class LogicalServerController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -292,7 +294,7 @@ class LogicalServerController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -360,6 +362,7 @@ class LogicalServerController extends Controller
             }
         }
         sort($res);
+
         return array_unique($res);
     }
 }

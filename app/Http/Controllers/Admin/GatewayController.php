@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Gateway;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGatewayRequest;
 use App\Http\Requests\StoreGatewayRequest;
 use App\Http\Requests\UpdateGatewayRequest;
-use App\Subnetwork;
+use App\Models\Gateway;
+use App\Models\Subnetwork;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
