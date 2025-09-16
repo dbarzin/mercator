@@ -972,7 +972,7 @@ digraph  {
             @endforeach
 
             @foreach($building->buildingPhysicalRouters as $router)
-                @if ($switch->bay_id===null)
+                @if ($router->bay_id===null)
                     ROUTER{{ $router->id }} [label="{{ $router->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="#ROUTER{{$router->id}}"]
                 @endif
             @endforeach
