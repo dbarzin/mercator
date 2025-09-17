@@ -27,10 +27,8 @@ class CertificateExpiracy extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): mixed
     {
         Log::debug('CertificateExpiracy - Start.');
 
@@ -168,10 +166,8 @@ class CertificateExpiracy extends Command
 
     /**
      * return true if check is needed
-     *
-     * @return bool
      */
-    private function needCheck()
+    private function needCheck(): bool
     {
         return true;
         $check_frequency = config('mercator-config.cert.check-frequency');

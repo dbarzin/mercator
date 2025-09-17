@@ -20,7 +20,7 @@ class CPEImport extends Command
 
     protected array $versions = [];
 
-    public function handle()
+    public function handle(): void
     {
         $this->info('CPEImport - Start.');
         $start = microtime(true);
@@ -74,14 +74,14 @@ class CPEImport extends Command
 
         $reader->close();
 
-        // Prograss done
+        // Progress done
         $this->output->progressFinish();
 
         $time = number_format(microtime(true) - $start, 2);
         $this->info("CPEImport - DONE in {$time} seconds. Total items: {$counter}");
     }
 
-    protected function processItem(string $name)
+    protected function processItem(string $name): void
     {
         $this->output->progressAdvance();
 

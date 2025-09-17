@@ -1,51 +1,48 @@
-import {
-    Graph,
-    GraphDataModel,
-    InternalEvent,
-    ModelXmlSerializer,
-} from '@maxgraph/core';
+import {Graph, GraphDataModel, InternalEvent, ModelXmlSerializer,} from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
 // Import des plugins
-const plugins: GraphPluginConstructor[] = [ ];
+const plugins: GraphPluginConstructor[] = [];
 
 // Initialiser un graphique de base
 const container = document.getElementById('graph-container');
-const graph = new Graph(container, new GraphDataModel(), plugins);
+const graph = new Graph(container,
+    new GraphDataModel(),
+    plugins);
 const model = graph.getDataModel();
 
 //-----------------------------------------------------------------------
 
 // Interface pour une arête (edge)
 interface Edge {
-  attachedNodeId: string;
-  name: string,
-  edgeType: string;
-  edgeDirection: string;
-  bidirectional: boolean;
+    attachedNodeId: string;
+    name: string,
+    edgeType: string;
+    edgeDirection: string;
+    bidirectional: boolean;
 }
 
 // Interface pour un nœud (node)
 interface Node {
-  id: string;
-  vue: string;
-  label: string;
-  image: string;
-  type: string;
-  edges: Edge[];
+    id: string;
+    vue: string;
+    label: string;
+    image: string;
+    type: string;
+    edges: Edge[];
 }
 
 // Map contenant les nœuds
 type NodeMap = Map<string, Node>;
 
-declare const _nodes : NodeMap;
+declare const _nodes: NodeMap;
 
 //-----------------------------------------------------------------------
 const defaultVertexStyle = graph.getStylesheet().getDefaultVertexStyle();
 defaultVertexStyle.cursor = 'pointer'; // Définit le curseur en main
 
 // reset expanded image
-graph.options.expandedImage=null;
+graph.options.expandedImage = null;
 
 //-----------------------------------------------------------------------
 // Style des liens
@@ -99,25 +96,25 @@ export function loadGraph(xml: string) {
 //-------------------------------------------------------------------------
 // Fonction de téléchargement
 function downloadSVG() {
-  embedImagesInSVG(svgElement);
+    embedImagesInSVG(svgElement);
 
-  setTimeout(() => {
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgElement);
+    setTimeout(() => {
+        const serializer = new XMLSerializer();
+        const svgString = serializer.serializeToString(svgElement);
 
-    // Créer un blob pour le fichier SVG
-    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
+        // Créer un blob pour le fichier SVG
+        const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
+        const url = URL.createObjectURL(blob);
 
-    // Créer un lien pour télécharger
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'graph_with_images.svg';
-    link.click();
+        // Créer un lien pour télécharger
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'graph_with_images.svg';
+        link.click();
 
-    // Nettoyage
-    URL.revokeObjectURL(url);
-  }, 1000); // Attendre la conversion des images
+        // Nettoyage
+        URL.revokeObjectURL(url);
+    }, 1000); // Attendre la conversion des images
 }
 
 //--------------------------------------------------------------------------
@@ -130,20 +127,20 @@ graph.addListener(InternalEvent.CLICK, (sender, evt) => {
         // Ajoutez ici le code pour gérer le clic sur le vertex
         const node = _nodes.get(cell.id);
         // deleted ?
-        if (node==null)
+        if (node == null)
             return;
         const id = cell.id.split("_").pop();
-        window.location.href = "/admin/"+node.type+"/"+id;
+        window.location.href = "/admin/" + node.type + "/" + id;
     }
 });
 
 //-----------------------------------------------------------------
-// Change le pointeur lorsque l'on est sur un Vexter
+// Change le pointeur lorsque l'on est sur un Vertex
 graph.addMouseListener({
     currentState: null,
     mouseMove(sender, me) {
         const cell = me.getCell();
-        if (cell && cell.isVertex() && (cell.style.image!=null)) {
+        if (cell && cell.isVertex() && (cell.style.image != null)) {
             // Si la souris est sur un Vertex
             graph.container.style.cursor = 'pointer';
             this.currentState = graph.view.getState(cell);
@@ -153,6 +150,8 @@ graph.addMouseListener({
             this.currentState = null;
         }
     },
-    mouseDown(sender, me) {},
-    mouseUp(sender, me) {},
+    mouseDown(sender, me) {
+    },
+    mouseUp(sender, me) {
+    },
 });
