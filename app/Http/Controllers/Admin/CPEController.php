@@ -18,6 +18,7 @@ class CPEController extends Controller
         if ($part !== null) {
             $query->where('part', '=', $part);
         }
+        \Log::info('CPEController vendors part = '.$part);
 
         $search = $request->query('search');
         if ($search) {
@@ -33,6 +34,8 @@ class CPEController extends Controller
     {
         $part = $request->query('part');
         $vendor = $request->query('vendor');
+
+        \Log::info('CPEController products part = '.$part);
 
         $query = CPEProduct::limit(100)
             ->select('cpe_products.name')

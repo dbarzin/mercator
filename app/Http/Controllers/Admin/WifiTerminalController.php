@@ -89,8 +89,8 @@ class WifiTerminalController extends Controller
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)
     {
-        if (! $request.has('type')) {
-            $request['type'] = '';
+        if (! $request->has('type')) {
+            $request->merge(['type' => '']);
         }
 
         $wifiTerminal->update($request->all());
