@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths: 
-      - '_helm_chart/chart/**'
+    paths:
+      - 'docs/_helm_chart/chart/**'
 jobs:
   release:
     name: Release Helm Charts
