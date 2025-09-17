@@ -89,6 +89,10 @@ class WifiTerminalController extends Controller
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)
     {
+        if (! $request.has('type')) {
+            $request['type'] = '';
+        }
+
         $wifiTerminal->update($request->all());
 
         return redirect()->route('admin.wifi-terminals.index');
