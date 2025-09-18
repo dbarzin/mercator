@@ -14,13 +14,12 @@ class CPEController extends Controller
     {
         $query = CPEVendor::limit(100);
 
-        $part = $request->query('part');
+        $part = $request['part'];
         if ($part !== null) {
             $query->where('part', '=', $part);
         }
-        \Log::info('CPEController vendors part = '.$part);
 
-        $search = $request->query('search');
+        $search = $request['search'];
         if ($search) {
             $query->where('name', 'LIKE', $search.'%');
         }
@@ -32,10 +31,8 @@ class CPEController extends Controller
 
     public function products(Request $request)
     {
-        $part = $request->query('part');
-        $vendor = $request->query('vendor');
-
-        \Log::info('CPEController products part = '.$part);
+        $part = $request['part'];
+        $vendor = $request['vendor'];
 
         $query = CPEProduct::limit(100)
             ->select('cpe_products.name')
@@ -43,7 +40,7 @@ class CPEController extends Controller
             ->where('cpe_vendors.part', '=', $part)
             ->where('cpe_vendors.name', '=', $vendor);
 
-        $search = $request->query('search');
+        $search = $request['search'];
         if ($search) {
             $query->where('cpe_products.name', 'LIKE', $search.'%');
         }
@@ -55,9 +52,9 @@ class CPEController extends Controller
 
     public function versions(Request $request)
     {
-        $part = $request->query('part');
-        $vendor = $request->query('vendor');
-        $product = $request->query('product');
+        $part = $request['part'];
+        $vendor = $request['vendor'];
+        $product = $request['product'];
 
         $query = CPEVersion::select('cpe_versions.name')
             ->join('cpe_products', 'cpe_products.id', '=', 'cpe_product_id')
@@ -66,7 +63,7 @@ class CPEController extends Controller
             ->where('cpe_vendors.part', '=', $part)
             ->where('cpe_vendors.name', '=', $vendor);
 
-        $search = $request->query('search');
+        $search = $request['search'];
         if ($search) {
             $query->where('cpe_versions.name', 'LIKE', $search.'%');
         }
@@ -77,7 +74,7 @@ class CPEController extends Controller
 
     public function guess(Request $request)
     {
-        $search = $request->query('search');
+        $search = $request['search'];
 
         $query = CPEVendor::select('cpe_vendors.name as vendor_name', 'cpe_products.name as product_name')
             ->join('cpe_products', 'cpe_vendor_id', '=', 'cpe_vendors.id')
