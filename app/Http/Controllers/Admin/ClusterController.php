@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateClusterRequest;
 use App\Models\Cluster;
 use App\Models\LogicalServer;
 use App\Models\PhysicalServer;
+use App\Models\Router;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,13 +30,14 @@ class ClusterController extends Controller
 
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $physical_servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
         // List
         $type_list = Cluster::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.clusters.create',
-            compact('logical_servers', 'physical_servers', 'type_list')
+            compact('logical_servers', 'physical_servers', 'type_list', 'routers')
         );
     }
 
@@ -45,6 +47,10 @@ class ClusterController extends Controller
 
         // update logical servers
         LogicalServer::whereIn('id', $request->input('logical_servers', []))
+            ->update(['cluster_id' => $cluster->id]);
+
+        // update logical routers
+        Router::whereIn('id', $request->input('routers', []))
             ->update(['cluster_id' => $cluster->id]);
 
         // update physical servers
@@ -60,13 +66,14 @@ class ClusterController extends Controller
 
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $physical_servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
         // List
         $type_list = Cluster::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.clusters.edit',
-            compact('cluster', 'logical_servers', 'physical_servers', 'type_list')
+            compact('cluster', 'logical_servers', 'physical_servers', 'type_list', 'routers')
         );
     }
 
@@ -79,6 +86,13 @@ class ClusterController extends Controller
             ->update(['cluster_id' => null]);
 
         LogicalServer::whereIn('id', $request->input('logical_servers', []))
+            ->update(['cluster_id' => $cluster->id]);
+
+        // update logical routers
+        Router::where('cluster_id', $cluster->id)
+            ->update(['cluster_id' => null]);
+
+        Router::whereIn('id', $request->input('routers', []))
             ->update(['cluster_id' => $cluster->id]);
 
         // update physical servers

@@ -6,11 +6,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\LogicalFlow;
 use App\Models\PhysicalLink;
-use App\Models\Router;
-// Framework
 use App\Models\Subnetwork;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
+
+// Framework
 
 class ExplorerController extends Controller
 {
@@ -362,18 +362,22 @@ class ExplorerController extends Controller
         }
 
         // Logical Routers
-        $logicalRouters = Router::All();
+        $logicalRouters = DB::table('routers')->select('id', 'name', 'ip_addresses', 'cluster_id')->get();
         foreach ($logicalRouters as $logicalRouter) {
             $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers');
-            if ($logicalRouter->getAttribute('ip_addresses') !== null) {
+            if ($logicalRouter->ip_addresses !== null) {
                 foreach ($subnetworks as $subnetwork) {
-                    foreach (explode(',', $logicalRouter->getAttribute('ip_addresses')) as $address) {
+                    foreach (explode(',', $logicalRouter->ip_addresses) as $address) {
                         if ($subnetwork->contains($address)) {
                             $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('ROUTER_', $logicalRouter->id));
                             break;
                         }
                     }
                 }
+            }
+
+            if ($logicalRouter->cluster_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('ROUTER_', $logicalRouter->id), $this->formatId('CLUSTER_', $logicalRouter->cluster_id));
             }
         }
 

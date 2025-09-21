@@ -42,7 +42,7 @@ $('#product-selector').select2({
         delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function (params) {
             return {
-                part: "a",
+                part: window.cpePart,
                 vendor: $("#vendor-selector").val(),
                 search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
             };
@@ -72,7 +72,7 @@ $('#version-selector').select2({
         delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function (params) {
             return {
-                part: "a",
+                part: window.cpePart,
                 vendor: $("#vendor-selector").val(),
                 product: $("#product-selector").val(),
                 search: params.term || '' // Ajoute une gestion des cas où params.term est undefined

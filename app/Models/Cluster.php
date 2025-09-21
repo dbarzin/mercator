@@ -17,13 +17,13 @@ class Cluster extends Model
 
     public $table = 'clusters';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'type',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -42,6 +42,11 @@ class Cluster extends Model
     public function logicalServers(): HasMany
     {
         return $this->hasMany(LogicalServer::class, 'cluster_id')->orderBy('name');
+    }
+
+    public function routers(): HasMany
+    {
+        return $this->hasMany(Router::class, 'cluster_id')->orderBy('name');
     }
 
     public function physicalServers(): HasMany

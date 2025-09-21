@@ -562,17 +562,19 @@
                                 <tr>
                                     <td>
                                         <span class="help-block">{{ trans('global.days') }}</span>
-                                        <input type="number" class="form-control" id="rpo" name="rpo_days" min="0"
+                                        <input type="number" class="form-control" id="rpo_days" name="rpo_days" min="0"
                                                max="365" value="{{ old('rpo_days', $application->rpo_days) }}">
                                     </td>
                                     <td>
                                         <span class="help-block">{{ trans('global.hours') }}</span>
-                                        <input type="number" class="form-control" id="rpo" name="rpo_hours" min="0"
+                                        <input type="number" class="form-control" id="rpo_hours" name="rpo_hours"
+                                               min="0"
                                                max="24" value="{{ old('rpo_hours', $application->rpo_hours) }}">
                                     </td>
                                     <td>
                                         <span class="help-block">{{ trans('global.minutes') }}</span>
-                                        <input type="number" class="form-control" id="rpo" name="rpo_minutes" min="0"
+                                        <input type="number" class="form-control" id="rpo_minutes" name="rpo_minutes"
+                                               min="0"
                                                max="60" value="{{ old('rpo_minutes', $application->rpo_minutes) }}">
                                     </td>
                                 </tr>
@@ -749,7 +751,7 @@
             /* CPE Search
             */
             window.cpePart = 'a';
-            
+
             /**
              * Contruction de la liste des évènements
              * @returns {string}

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,13 +18,13 @@ class Router extends Model
 
     public $table = 'routers';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'type',
         'description',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -34,6 +35,7 @@ class Router extends Model
         'type',
         'description',
         'rules',
+        'cluster_id',
         'ip_addresses',
         'created_at',
         'updated_at',
@@ -43,6 +45,11 @@ class Router extends Model
     public function physicalRouters(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
+    }
+
+    public function cluster(): BelongsTo
+    {
+        return $this->belongsTo(Cluster::class, 'cluster_id');
     }
 
     /*
