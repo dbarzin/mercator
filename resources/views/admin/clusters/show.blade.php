@@ -1,37 +1,38 @@
 @extends('layouts.admin')
 @section('content')
-<div class="form-group">
-    <a class="btn btn-default" href="{{ route('admin.clusters.index') }}">
-        {{ trans('global.back_to_list') }}
-    </a>
-
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=CLUSTER_{{$cluster->id}}">
-        {{ trans('global.explore') }}
-    </a>
-
-    @can('cluster_edit')
-        <a class="btn btn-info" href="{{ route('admin.clusters.edit', $cluster->id) }}">
-            {{ trans('global.edit') }}
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.clusters.index') }}">
+            {{ trans('global.back_to_list') }}
         </a>
-    @endcan
 
-    @can('cluster_delete')
-        <form action="{{ route('admin.clusters.destroy', $cluster->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
-        </form>
-    @endcan
-</div>
+        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=CLUSTER_{{$cluster->id}}">
+            {{ trans('global.explore') }}
+        </a>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.cluster.title') }}
+        @can('cluster_edit')
+            <a class="btn btn-info" href="{{ route('admin.clusters.edit', $cluster->id) }}">
+                {{ trans('global.edit') }}
+            </a>
+        @endcan
+
+        @can('cluster_delete')
+            <form action="{{ route('admin.clusters.destroy', $cluster->id) }}" method="POST"
+                  onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+            </form>
+        @endcan
     </div>
 
-    <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.show') }} {{ trans('cruds.cluster.title') }}
+        </div>
+
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <tbody>
                 <tr>
                     <th width="10%">
                         {{ trans('cruds.cluster.fields.name') }}
@@ -66,15 +67,21 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.cluster.fields.logical_servers') }}
+                        {{ trans('cruds.cluster.fields.logical_servers') }} / {{ 'Routers' }}
                     </th>
                     <td>
                         @foreach($cluster->logicalServers as $server)
                             <a href="{{ route('admin.logical-servers.show', $server->id) }}">
                                 {{ $server->name }}
                             </a>
-                            @if(!$loop->last)
                             <br>
+                        @endforeach
+                        @foreach($cluster->routers as $router)
+                            <a href="{{ route('admin.routers.show', $router->id) }}">
+                                {{ $router->name }}
+                            </a>
+                            @if(!$loop->last)
+                                <br>
                             @endif
                         @endforeach
                     </td>
@@ -89,23 +96,24 @@
                                 {{ $server->name }}
                             </a>
                             @if(!$loop->last)
-                            <br>
+                                <br>
                             @endif
                         @endforeach
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            {{ trans('global.created_at') }} {{ $cluster->created_at ? $cluster->created_at->format(trans('global.timestamp')) : '' }}
+            |
+            {{ trans('global.updated_at') }} {{ $cluster->updated_at ? $cluster->updated_at->format(trans('global.timestamp')) : '' }}
+        </div>
     </div>
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $cluster->created_at ? $cluster->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $cluster->updated_at ? $cluster->updated_at->format(trans('global.timestamp')) : '' }}
+    <div class="form-group">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.clusters.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
     </div>
-</div>
-<div class="form-group">
-    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.clusters.index') }}">
-        {{ trans('global.back_to_list') }}
-    </a>
-</div>
 
 @endsection

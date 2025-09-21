@@ -6,14 +6,12 @@ namespace App\Http\Controllers\Admin;
 // ecosystem
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
-// information system
 use App\Models\ActivityImpact;
 use App\Models\Actor;
 use App\Models\AdminUser;
 use App\Models\Annuaire;
 use App\Models\ApplicationBlock;
 use App\Models\ApplicationModule;
-// Application
 use App\Models\ApplicationService;
 use App\Models\Bay;
 use App\Models\Building;
@@ -26,14 +24,12 @@ use App\Models\DhcpServer;
 use App\Models\Dnsserver;
 use App\Models\DomaineAd;
 use App\Models\Entity;
-// Administration
 use App\Models\ExternalConnectedEntity;
 use App\Models\Flux;
 use App\Models\ForestAd;
 use App\Models\Gateway;
 use App\Models\Information;
 use App\Models\LogicalServer;
-// Logique
 use App\Models\MacroProcessus;
 use App\Models\MApplication;
 use App\Models\Network;
@@ -41,7 +37,6 @@ use App\Models\NetworkSwitch;
 use App\Models\Operation;
 use App\Models\Peripheral;
 use App\Models\Phone;
-// Physique
 use App\Models\PhysicalLink;
 use App\Models\PhysicalRouter;
 use App\Models\PhysicalSecurityDevice;
@@ -58,14 +53,11 @@ use App\Models\Task;
 use App\Models\Vlan;
 use App\Models\WifiTerminal;
 use App\Models\Workstation;
-// Laravel
 use App\Models\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-// PhpOffice
-// see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -74,6 +66,15 @@ use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+
+// information system
+// Application
+// Administration
+// Logique
+// Physique
+// Laravel
+// PhpOffice
+// see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 
 class ReportController extends Controller
 {
@@ -3468,6 +3469,17 @@ class ReportController extends Controller
             foreach ($app->activities as $activity) {
                 $rows[] = [
                     'application' => $app->name,
+                    'rto' => implode(' ', array_filter([
+                        ($d = intdiv($app->rto, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
+                        ($h = intdiv($app->rto, 60) % 24) ? $h.' '.trans('global.'.($h > 1 ? 'hours' : 'hour')) : null,
+                        ($m = $app->rto % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
+                    ])),
+                    'rpo' => implode(' ', array_filter([
+                        ($d = intdiv($app->ro, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
+                        ($h = intdiv($app->rto, 60) % 24) ? $h.' '.trans('global.'.($h > 1 ? 'hours' : 'hour')) : null,
+                        ($m = $app->rto % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
+                    ])),
+
                     'activity' => $activity->name,
                     'maximum_tolerable_downtime' => implode(' ', array_filter([
                         ($d = intdiv($activity->maximum_tolerable_downtime, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
@@ -3507,6 +3519,8 @@ class ReportController extends Controller
 
         $headers = [
             trans('cruds.application.title'),
+            'RTO',
+            'RPO',
             trans('cruds.activity.title'),
             trans('cruds.activity.fields.maximum_tolerable_downtime_short'),
             trans('cruds.activity.fields.recovery_time_objective_short'),
@@ -3526,13 +3540,15 @@ class ReportController extends Controller
         $rowNum = 2;
         foreach ($rows as $data) {
             $sheet->setCellValue("A{$rowNum}", $data['application']);
-            $sheet->setCellValue("B{$rowNum}", $data['activity']);
-            $sheet->setCellValue("C{$rowNum}", $data['maximum_tolerable_downtime']);
-            $sheet->setCellValue("D{$rowNum}", $data['recovery_time_objective']);
-            $sheet->setCellValue("E{$rowNum}", $data['maximum_tolerable_data_loss']);
-            $sheet->setCellValue("F{$rowNum}", $data['recovery_point_objective']);
+            $sheet->setCellValue("B{$rowNum}", $data['rto']);
+            $sheet->setCellValue("C{$rowNum}", $data['rpo']);
+            $sheet->setCellValue("D{$rowNum}", $data['activity']);
+            $sheet->setCellValue("E{$rowNum}", $data['maximum_tolerable_downtime']);
+            $sheet->setCellValue("F{$rowNum}", $data['recovery_time_objective']);
+            $sheet->setCellValue("G{$rowNum}", $data['maximum_tolerable_data_loss']);
+            $sheet->setCellValue("H{$rowNum}", $data['recovery_point_objective']);
 
-            foreach (range('A', 'F') as $col) {
+            foreach (range('A', 'H') as $col) {
                 $sheet->getStyle("{$col}{$rowNum}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             }
 
