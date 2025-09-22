@@ -322,7 +322,7 @@ return [
             'type_helper' => 'Cluster type',
             'description' => 'Description',
             'description_helper' => 'Cluster description',
-            'address_ip' => 'IP Adresses',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'physical_servers' => 'Physical servers',
             'physical_servers_helper' => 'Group of physical servers',
@@ -494,7 +494,7 @@ return [
     'dhcpServer' => [
         'description' => 'Physical or virtual equipment allowing the management of the IP addresses of a network.',
         'fields' => [
-            'address_ip' => 'IP adresses',
+            'address_ip' => 'IP address',
             'address_ip_helper' => 'Filter: IPv4|IPv6',
             'description' => 'Description',
             'description_helper' => 'Technical characteristics: model, OS and version',
@@ -507,7 +507,7 @@ return [
     'dnsserver' => [
         'description' => 'Domain Name System (Domain Name System) - Physical or virtual equipment allowing the conversion of a domain name into an IP address.',
         'fields' => [
-            'address_ip' => 'IP adress',
+            'address_ip' => 'IP address',
             'address_ip_helper' => 'Filter: IPv4|IPv6',
             'description' => 'Description',
             'description_helper' => 'Technical characteristics: model, OS and version',
@@ -766,7 +766,7 @@ return [
         'fields' => [
             'active' => 'Active',
             'active' => 'The logical server is still active',
-            'address_ip' => 'IP address (es)',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter: (IPv4|IPv6), ...',
             'applications' => 'Applications',
             'applications_helper' => 'Installed apps',
@@ -884,7 +884,6 @@ return [
             'title_short' => 'Physical infrastructure',
         ],
         'network_schema' => [
-            // TODO : add a description here
             'description' => 'Network schema',
             'title' => 'Network schema',
             'title_short' => 'Network schema',
@@ -921,8 +920,8 @@ return [
         'fields' => [
             'description' => 'Description',
             'description_helper' => 'Technical characteristics',
-            'ip' => 'IP adress',
-            'ip_helper' => '',
+            'ip' => 'IP address',
+            'ip_helper' => 'Filter : IPv4|IPv6',
             'name' => 'Name',
             'name_helper' => '',
             'physical_switches' => 'Physical switches',
@@ -956,7 +955,7 @@ return [
     'peripheral' => [
         'description' => 'Physical component connected to a workstation in order to add new functionalities (eg: keyboard, mouse, printer, scanner, etc.).',
         'fields' => [
-            'address_ip' => 'IP Adress',
+            'address_ip' => 'IP address',
             'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'applications' => 'Applications',
             'applications_helper' => 'Installed applications',
@@ -998,7 +997,7 @@ return [
     'phone' => [
         'description' => 'Fixed or mobile phone belonging to the organization.',
         'fields' => [
-            'address_ip' => 'IP Adresses',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'building' => 'Building / Room',
             'building_helper' => 'Building / Room in which the telephone is located',
@@ -1057,7 +1056,7 @@ return [
     'physicalSecurityDevice' => [
         'description' => 'Component allowing network supervision, incident detection, equipment protection or having a function of securing the information system.',
         'fields' => [
-            'address_ip' => 'IP Adresses',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'bay' => 'Bay',
             'bay_helper' => '',
@@ -1083,7 +1082,7 @@ return [
         'fields' => [
             'applications' => 'Applications',
             'applications_helper' => 'Applications installed on this server',
-            'address_ip' => 'IP Adresse(s)',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter : (IPv4|IPv6), ...',
             'bay' => 'Bay',
             'bay_helper' => 'Bay in which the server is located',
@@ -1308,7 +1307,7 @@ return [
         'fields' => [
             'description' => 'Description',
             'description_helper' => 'Technical characteristics',
-            'ip_addresses' => 'Router IP addresses',
+            'ip_addresses' => 'IP addresses',
             'ip_addresses_helper' => 'Filter: (IPv4|IPv6), ...',
             'name' => 'Name',
             'name_helper' => '',
@@ -1364,7 +1363,7 @@ return [
     'storageDevice' => [
         'description' => 'Physical medium or data storage network: network storage server (NAS), storage network (SAN), hard drive, etc.',
         'fields' => [
-            'address_ip' => 'IP Adresses',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'bay' => 'Bay',
             'bay_helper' => '',
@@ -1506,7 +1505,7 @@ return [
             'site_helper' => 'Site where the wifi terminal is located',
             'type' => 'Type',
             'type_helper' => '',
-            'address_ip' => 'Adresse(s) IP',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
         ],
         'title' => 'Wifi terminals',
@@ -1530,7 +1529,7 @@ return [
             'memory_helper' => 'Quantité de mémoire allouée (GB)',
             'operating_system' => 'Système d\'exploitation',
             'operating_system_helper' => "Nom et version de l'OS",
-            'address_ip' => 'IP address(es)',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter: (IPv4|IPv6), ...',
             'site' => 'Site',
             'site_helper' => 'Site where the workstation is located',
