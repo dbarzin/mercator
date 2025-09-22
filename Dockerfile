@@ -14,7 +14,7 @@ RUN apk add --no-cache \
     mariadb-client mariadb-connector-c-dev \
     openldap-dev libzip-dev \
     libpng libpng-dev \
-    nginx gettext supervisor 
+    nginx gettext supervisor
 
 # Update font cache
 RUN fc-cache -f
