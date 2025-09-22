@@ -18,13 +18,13 @@ class Activity extends Model
 
     public $table = 'activities';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'drp',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
