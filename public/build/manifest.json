@@ -88,6 +88,12 @@
       "_chart-BctVBgzL.js"
     ]
   },
+  "resources/js/cpe.js": {
+    "file": "assets/cpe-9OwY8Z9Z.js",
+    "name": "cpe",
+    "src": "resources/js/cpe.js",
+    "isEntry": true
+  },
   "resources/js/d3-viz.js": {
     "file": "assets/d3-viz-C0el4PAb.js",
     "name": "d3-viz",
