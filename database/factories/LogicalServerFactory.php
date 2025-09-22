@@ -9,7 +9,7 @@ class LogicalServerFactory extends Factory
 {
     protected $model = LogicalServer::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->word,
