@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import fs from 'fs';
 
@@ -20,6 +20,8 @@ export default defineConfig({
                 'resources/js/chart-maturity.js',
                 'resources/js/chart-relation.js',
                 'resources/js/chart-patching.js',
+                // CPE
+                'resources/js/cpe.js',
                 // Mapping TypeScript and styles
                 'resources/js/chart-relation.js',
                 'resources/js/map.show.ts',
