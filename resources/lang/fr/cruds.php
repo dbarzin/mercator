@@ -1443,6 +1443,8 @@ return [
     ],
     'user' => [
         'fields' => [
+            'login' => 'Login',
+            'login_helper' => '',
             'email' => 'Email',
             'email_helper' => '',
             'email_verified_at' => 'Email vérifié à',

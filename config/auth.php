@@ -44,7 +44,7 @@ return [
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
-            // 'hash'     => false,
+            'hash' => true,
         ],
     ],
 
@@ -66,28 +66,9 @@ return [
     */
 
     'providers' => [
-
         'users' => [
-            'driver' => 'ldap',
-            'model' => App\Ldap\LdapUser::class,
-            'rules' => [
-                App\Ldap\Rules\OnlySpecificUsers::class,
-            ],
-            'database' => [
-                'model' => \App\Models\User::class,
-                'sync_passwords' => true,
-                'sync_attributes' => [
-                    'email' => 'mail',
-                    'name' => 'cn',
-                ],
-                'sync_existing' => [
-                    'email' => [
-                        'attribute' => 'mail',
-                        'operator' => 'like',
-                    ],
-                ],
-                'password_column' => 'password',
-            ],
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
         ],
     ],
 
@@ -111,7 +92,21 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
+            'throttle' => 60,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Password Confirmation Timeout
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the amount of seconds before a password confirmation
+    | times out and the user is prompted to re-enter their password via the
+    | confirmation screen. By default, the timeout lasts for three hours.
+    |
+    */
+
+    'password_timeout' => 10800,
 
 ];

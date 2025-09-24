@@ -1432,6 +1432,8 @@ return [
     ],
     'user' => [
         'fields' => [
+            'login' => 'Login',
+            'login_helper' => '',
             'email' => 'e-mail',
             'email_helper' => '',
             'email_verified_at' => 'Email verified to',
