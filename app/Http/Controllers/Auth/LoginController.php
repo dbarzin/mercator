@@ -48,6 +48,11 @@ class LoginController extends Controller
                 $query->in($base);
             }
 
+            $group = trim((string) config('app.ldap_group'));
+            if ($group !== '') {
+                $query->where('memberOf', $group);
+            }
+
             // Attributs de login à tester côté LDAP (uid, sAMAccountName, etc.)
             $attrs = array_values(array_filter(array_map('trim', explode(',', (string) config('app.ldap_login_attributes')))));
             if (empty($attrs)) {

@@ -79,7 +79,6 @@ Modifier les paramètres de connexion à la base de données dans le fichier .en
     DB_USERNAME=mercator_user
     DB_PASSWORD=s3cr3t
 
-
 ## Créer la base de données
 
 Exécuter les migrations
@@ -171,7 +170,8 @@ Vous pouvez également configurer DKIM :
     MAIL_DKIM_SELECTOR = 'default'; // Match your DKIM DNS selector
     MAIL_DKIM_PASSPHRASE = '';      // Only if your key has a passphrase
 
-N'oubliez pas de [configurer](https://dbarzin.github.io/deming/config.fr/#notifications) le contenu et la fréquence d'envoi des mails.
+N'oubliez pas de [configurer](https://dbarzin.github.io/deming/config.fr/#notifications) le contenu et la fréquence
+d'envoi des mails.
 
 ## Sheduler
 
@@ -183,49 +183,91 @@ ajouter cette ligne dans le crontab
 
     * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
 
-## Configuration de la connexion LDAP
+Voici la traduction en français de la documentation :
 
-Si vous souhaitez connecter Mercator avec un Active Diretory ou un serveur LDAP,
-dans le fichier .env, mettez les paramètres de connexion en décommentant les lignes :
+---
 
-    # Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer, Custom
-    LDAP_TYPE="AD"
-    # If true, LDAP actions will be written to the application's default log file
-    LDAP_LOGGING=true
-    LDAP_CONNECTION=default
-    LDAP_HOST=127.0.0.1
-    # Identifiers of the user who will connect to the LDAP in order to perform queries
-    LDAP_USERNAME="cn=user,dc=local,dc=com"
-    LDAP_PASSWORD=secret
-    LDAP_PORT=389
-    LDAP_BASE_DN="dc=local,dc=com"
-    LDAP_TIMEOUT=5
-    LDAP_SSL=false
-    LDAP_TLS=false
-    # Allows you to restrict access to a tree structure
-    LDAP_SCOPE="ou=Accounting,ou=Groups,dc=planetexpress,dc=com"
-    # Allows you to restrict access to groups
-    LDAP_GROUPS="Delivering,Help Desk"
+## Configuration LDAP / LDAPRecord (optionnelle)
 
-Retrouvez une documentation plus complète sur la configuration de [LdapRecord](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+Cette section permet d’activer l’authentification LDAP dans **Deming** en utilisant **LDAPRecord v2**.
+Elle fonctionne avec **Active Directory** *et* **OpenLDAP**, et peut coexister avec l’authentification locale (base de
+données).
 
-Si vous choisissez le type Custom, vous devez fournir une classe LdapUserCustom dans le fichier `app/Ldap/LdapUserCustom.php`, par exemple :
+### Prérequis
 
-```php
-<?php
+L’extension PHP LDAP doit être installée et activée.
 
-namespace App\Ldap;
-
-use LdapRecord\Models\OpenLDAP\User as OpenLdapUser;
-use LdapRecord\Models as Models;
-
-class LdapUserCustom extends OpenLdapUser
-{
-        public function groups(): Models\Relations\HasMany {
-                return $this->hasMany(Models\OpenLDAP\Group::class, 'memberUid', 'uid');
-        }
-}
+```bash
+sudo apt-get install php-ldap
+sudo systemctl restart apache2
 ```
+
+### Variables d’environnement
+
+Ajoutez ou ajustez les variables suivantes :
+
+```dotenv
+# Activer LDAP dans Deming (mode hybride)
+LDAP_ENABLED=true                 # Active l’authentification LDAP
+LDAP_FALLBACK_LOCAL=true          # Si LDAP échoue, on tente l’auth DB locale
+LDAP_AUTO_PROVISION=false         # Création automatique de l’utilisateur local après un bind LDAP réussi
+
+# Connexion au serveur LDAP
+LDAP_HOST=ldap.example.org
+LDAP_PORT=389                     # 389 (StartTLS) ou 636 (LDAPS)
+LDAP_BASE_DN=dc=example,dc=org
+LDAP_USERNAME=cn=admin,dc=example,dc=org   # Compte de service utilisé pour les recherches
+LDAP_PASSWORD=********
+LDAP_TLS=true                     # StartTLS (recommandé avec le port 389)
+LDAP_SSL=false                    # true si vous utilisez ldaps:// sur le port 636
+LDAP_TIMEOUT=5                    # (optionnel)
+
+# Attributs candidats pour identifier l’utilisateur saisi dans le formulaire
+# L’ordre est important : le premier qui correspond est utilisé.
+# OpenLDAP : uid, cn, mail
+# Active Directory : sAMAccountName, userPrincipalName, mail
+LDAP_LOGIN_ATTRIBUTES=uid,cn,mail,sAMAccountName,userPrincipalName
+```
+
+# L’utilisateur doit être membre de ce groupe LDAP
+
+LDAP_GROUP=Mercator
+
+---
+
+### Exemples
+
+* **OpenLDAP** (DN typique d’un utilisateur : `uid=jdupont,ou=people,dc=example,dc=org`) :
+
+  ```dotenv
+  LDAP_TLS=true
+  LDAP_SSL=false
+  LDAP_LOGIN_ATTRIBUTES=uid,cn,mail
+  LDAP_GROUP=Mercator
+  ```
+
+* **Active Directory** (UPN : `jdupont@example.org`, sAMAccountName : `jdupont`) :
+
+  ```dotenv
+  LDAP_TLS=true
+  LDAP_SSL=false
+  LDAP_LOGIN_ATTRIBUTES=sAMAccountName,userPrincipalName,mail,cn
+  LDAP_USERNAME=EXAMPLE\svc_ldap   # ou le DN complet du compte de service
+  ```
+
+---
+
+Après modification du fichier `.env` :
+
+```bash
+php artisan config:clear
+php artisan optimize:clear
+```
+
+---
+
+Veux-tu que je te prépare aussi une version **commentée directement en français** du bloc `.env` (avec des explications
+ligne par ligne) pour l’intégrer dans ta doc interne ?
 
 ## Configuration de Keycloak (optionel)
 
@@ -245,13 +287,16 @@ KEYCLOAK_AUTO_PROVISIONNING= # active/désactive la création automatique d'util
 KEYCLOAK_BTN_LABEL= # défini le libellé du bouton de connexion Keycloak ('Keycloak' par défaut)
 ```
 
-Après avoir défini KEYCLOAK sur enable, un bouton apparaîtra sur la page de connexion, permettant aux utilisateurs de se connecter via Keycloak.
+Après avoir défini KEYCLOAK sur enable, un bouton apparaîtra sur la page de connexion, permettant aux utilisateurs de se
+connecter via Keycloak.
 
-Pour une documentation plus complète sur la configuration de Keycloak, consultez la documentation officielle de Keycloak.
+Pour une documentation plus complète sur la configuration de Keycloak, consultez la documentation officielle de
+Keycloak.
 
 ## Apache
 
-Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au répertoire de stockage avec la commande suivante
+Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au
+répertoire de stockage avec la commande suivante
 
     sudo chown -R www-data:www-data /var/www/mercator
     sudo chmod -R 775 /var/www/mercator/storage
@@ -263,25 +308,27 @@ Ensuite, créez un nouveau fichier de configuration d'hôte virtuel Apache pour 
 Ajouter les lignes suivantes :
 
 ```xml
+
 <VirtualHost *:80>
-    ServerName mercator.local
-    ServerAdmin admin@example.com
-    DocumentRoot /var/www/mercator/public
-    <Directory /var/www/mercator>
+        ServerName mercator.local
+        ServerAdmin admin@example.com
+        DocumentRoot /var/www/mercator/public
+<Directory /var/www/mercator>
         AllowOverride All
-    </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        </VirtualHost>
 ```
 
-Enregistrez et fermez le fichier lorsque vous avez terminé. Ensuite, activez l'hôte virtuel Apache et le module de réécriture avec la commande suivante :
+Enregistrez et fermez le fichier lorsque vous avez terminé. Ensuite, activez l'hôte virtuel Apache et le module de
+réécriture avec la commande suivante:
 
     sudo a2enmod rewrite
     sudo a2dissite 000-default.conf
     sudo a2ensite mercator.conf
 
-Enfin, redémarrez le service Apache pour activer les modifications :
+Enfin, redémarrez le service Apache pour activer les modifications:
 
     sudo systemctl restart apache2
 
@@ -294,32 +341,33 @@ Activer le module SSL d'Apache
 Voici le fichier de configuration pour HTTPS
 
 ```xml
+
 <VirtualHost *:443>
-    ServerName carto.XXXXXXXX
-    ServerAdmin
-    DocumentRoot /var/www/mercator/public
-    SSLEngine on
-    SSLProtocol all -SSLv2 -SSLv3
-    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
-    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
-    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
-    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
-    <Directory /var/www/mercator/public>
+        ServerName carto.XXXXXXXX
+        ServerAdmin
+        DocumentRoot /var/www/mercator/public
+        SSLEngine on
+        SSLProtocol all -SSLv2 -SSLv3
+        SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+        SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+        SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+        SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+<Directory /var/www/mercator/public>
         AllowOverride All
-    </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
-    CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
-</VirtualHost>
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
+        CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
+        </VirtualHost>
 ```
 
 Pour forcer le redirection en HTTPS, il faut mettre ce paramètre dans le fichier .env :
 
     APP_ENV=production
 
-
 ### Variante PHP-FPM avec Apache
 
-Cette méthode permet de faire tourner Mercator avec PHP-FPM (FastCGI Process Manager) et le module `mpm_event` d’Apache, pour de meilleures performances que l’utilisation classique avec `mod_php`.
+Cette méthode permet de faire tourner Mercator avec PHP-FPM (FastCGI Process Manager) et le module `mpm_event` d’Apache,
+pour de meilleures performances que l’utilisation classique avec `mod_php`.
 
 #### 1. Installer PHP-FPM
 
@@ -345,7 +393,8 @@ sudo a2enmod proxy_fcgi mpm_event
 
 #### 3. Vérifier ou ajuster la configuration du module `mpm_event`
 
-Édite le fichier `/etc/apache2/mods-enabled/mpm_event.conf` pour ajuster les paramètres selon la charge de ton serveur. Consulte la documentation officielle pour les détails :  
+Édite le fichier `/etc/apache2/mods-enabled/mpm_event.conf` pour ajuster les paramètres selon la charge de ton serveur.
+Consulte la documentation officielle pour les détails :  
 <https://httpd.apache.org/docs/current/fr/mod/event.html>
 
 #### 4. Exemple de VirtualHost HTTP
@@ -404,8 +453,8 @@ sudo a2enmod proxy_fcgi mpm_event
 
 > **Remarques :**
 > - Adapte les chemins des certificats SSL à ton environnement.
-> - Vérifie que le socket PHP-FPM correspond bien au chemin `/run/php/php-fpm.sock` (à adapter selon ta version de PHP, ex. `/run/php/php8.2-fpm.sock`).
-
+> - Vérifie que le socket PHP-FPM correspond bien au chemin `/run/php/php-fpm.sock` (à adapter selon ta version de PHP,
+    ex. `/run/php/php8.2-fpm.sock`).
 
 ## Problèmes
 
@@ -415,7 +464,8 @@ sudo a2enmod proxy_fcgi mpm_event
 
 ### PHP Memory
 
-Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans /etc/php/8.x/apache2/php.ini
+Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans
+/etc/php/8.x/apache2/php.ini
 
     memory_limit = 512M
 
