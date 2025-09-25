@@ -81,7 +81,6 @@ Put the connection parameters to the database :
     DB_USERNAME=mercator_user
     DB_PASSWORD=s3cr3t
 
-
 ## Create the database
 
 Execute the migrations
@@ -134,8 +133,8 @@ or to access the application there from another server
     php artisan serve --host 0.0.0.0 --port 8000
 
 The application is accessible at the URL [http://127.0.0.1:8000]
-    user : admin@admin.com
-    password : password
+user : admin@admin.com
+password : password
 
 ## Passport configuration
 
@@ -172,7 +171,8 @@ You may also configure DKIM :
     MAIL_DKIM_SELECTOR = 'default'; // Match your DKIM DNS selector
     MAIL_DKIM_PASSPHRASE = '';      // Only if your key has a passphrase
 
-Don't forget to [configure](https://dbarzin.github.io/deming/config/#notifications) the content and frequency of your emails.
+Don't forget to [configure](https://dbarzin.github.io/deming/config/#notifications) the content and frequency of your
+emails.
 
 ## Scheduler
 
@@ -184,49 +184,76 @@ add this line in the crontab
 
     * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
 
-## LDAP Configuration
+## LDAP / LDAPRecord configuration (optional)
 
-Modify .env file, and uncomment LDAP configuration :
+This section lets you enable LDAP authentication in Deming using **LDAPRecord v2**. It works with **Active Directory**
+*and* **OpenLDAP**, and can coexist with local (database) authentication.
 
-    # Several possible types: AD, OpenLDAP, FreeIPA, DirectoryServer, Custom
-    LDAP_TYPE="AD"
-    # If true, LDAP's actions will be log into
-    LDAP_LOGGING=true
-    LDAP_CONNECTION=default
-    LDAP_HOST=127.0.0.1
-    # Identifiants de l'utilisateur qui se connectera au LDAP afin d'effectuer les requêtes
-    LDAP_USERNAME="cn=user,dc=local,dc=com"
-    LDAP_PASSWORD=secret
-    LDAP_PORT=389
-    LDAP_BASE_DN="dc=local,dc=com"
-    LDAP_TIMEOUT=5
-    LDAP_SSL=false
-    LDAP_TLS=false
-    # Permet de restreindre l'accès à une arborescence
-    LDAP_SCOPE="ou=Accounting,ou=Groups,dc=planetexpress,dc=com"
-    # Permet de restreindre l'accès à des groupes
-    LDAP_GROUPS="Delivering,Help Desk"
+### Prerequisites
 
-Find more complete documentation on LDAP configuration [here](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+The PHP LDAP extension must be installed and enabled.
 
-If you choose Custom, you have to provide a LdapUserCustom class in  `app/Ldap/LdapUserCustom.php` file, ie :
-
-```php
-<?php
-
-namespace App\Ldap;
-
-use LdapRecord\Models\OpenLDAP\User as OpenLdapUser;
-use LdapRecord\Models as Models;
-
-class LdapUserCustom extends OpenLdapUser
-{
-        public function groups(): Models\Relations\HasMany {
-                return $this->hasMany(Models\OpenLDAP\Group::class, 'memberUid', 'uid');
-        }
-}
+```bash
+sudo apt-get install php-ldap
+sudo systemctl restart apache2
 ```
 
+### Environment
+
+Add / adjust the following variables:
+
+```dotenv
+# Enable LDAP in Deming (hybrid mode)
+LDAP_ENABLED=true                 # Turn LDAP authentication on
+LDAP_FALLBACK_LOCAL=true          # If LDAP fails, try local DB auth
+LDAP_AUTO_PROVISION=false         # Auto-create the local user after a successful LDAP bind
+
+# LDAP server connection
+LDAP_HOST=ldap.example.org
+LDAP_PORT=389                     # 389 (StartTLS) or 636 (LDAPS)
+LDAP_BASE_DN=dc=example,dc=org
+LDAP_USERNAME=cn=admin,dc=example,dc=org   # Service account used for searches
+LDAP_PASSWORD=********
+LDAP_TLS=true                     # StartTLS (recommended when using port 389)
+LDAP_SSL=false                    # true if you use ldaps:// on port 636
+LDAP_TIMEOUT=5                    # (optional)
+
+# Candidate attributes to identify the username entered in the form
+# Order matters: the first match wins.
+# OpenLDAP: uid, cn, mail ; AD: sAMAccountName, userPrincipalName, mail
+LDAP_LOGIN_ATTRIBUTES=uid,cn,mail,sAMAccountName,userPrincipalName
+```
+
+# User must be member of this LDAP group
+
+LDAP_GROUP=Mercator
+
+**Examples**
+
+* OpenLDAP (typical user DN: `uid=jdupont,ou=people,dc=example,dc=org`):
+
+  ```dotenv
+  LDAP_TLS=true
+  LDAP_SSL=false
+  LDAP_LOGIN_ATTRIBUTES=uid,cn,mail
+  LDAP_GROUP=Merator
+  ```
+
+* Active Directory (UPN: `jdupont@example.org`, sAM: `jdupont`):
+
+  ```dotenv
+  LDAP_TLS=true
+  LDAP_SSL=false
+  LDAP_LOGIN_ATTRIBUTES=sAMAccountName,userPrincipalName,mail,cn
+  LDAP_USERNAME=EXAMPLE\svc_ldap   # or the full DN of the service account
+  ```
+
+After changing `.env`:
+
+```bash
+php artisan config:clear
+php artisan optimize:clear
+```
 
 ## KeyCloak Configuration (optional)
 
@@ -252,7 +279,8 @@ Find more complete documentation on Keycloak configuration [here](https://www.ke
 
 ## Apache
 
-To configure Apache, change the properties of the mercator directory and grant the appropriate permissions to the hive with the following command:
+To configure Apache, change the properties of the mercator directory and grant the appropriate permissions to the hive
+with the following command:
 
     sudo chown -R www-data:www-data /var/www/mercator
     sudo chmod -R 775 /var/www/mercator/storage
@@ -264,19 +292,21 @@ Next, create a new Apache virtual host configuration file to serve the Mercator 
 Add the following lines:
 
 ```xml
+
 <VirtualHost *:80>
-    ServerName mercator.local
-    ServerAdmin admin@example.com
-    DocumentRoot /var/www/mercator/public
-    <Directory /var/www/mercator>
+        ServerName mercator.local
+        ServerAdmin admin@example.com
+        DocumentRoot /var/www/mercator/public
+<Directory /var/www/mercator>
         AllowOverride All
-    </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        </VirtualHost>
 ```
 
-Save and close the file when you are done. Next, enable the Apache virtual host and the rewrite module with the following command:
+Save and close the file when you are done. Next, enable the Apache virtual host and the rewrite module with the
+following command:
 
     sudo a2enmod rewrite
     sudo a2dissite 000-default.conf
@@ -295,32 +325,33 @@ Activate Apache SSL module
 Here is the configuration file for HTTPS
 
 ```xml
+
 <VirtualHost *:443>
-    ServerName carto.XXXXXXXX
-    ServerAdmin
-    DocumentRoot /var/www/mercator/public
-    SSLEngine on
-    SSLProtocol all -SSLv2 -SSLv3
-    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
-    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
-    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
-    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
-    <Directory /var/www/mercator/public>
+        ServerName carto.XXXXXXXX
+        ServerAdmin
+        DocumentRoot /var/www/mercator/public
+        SSLEngine on
+        SSLProtocol all -SSLv2 -SSLv3
+        SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+        SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+        SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+        SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+<Directory /var/www/mercator/public>
         AllowOverride All
-    </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
-    CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
-</VirtualHost>
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
+        CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
+        </VirtualHost>
 ```
 
 To force HTTPS redirection you have to set this parameter in .env
 
     APP_ENV=production
 
-
 ### PHP-FPM Variant with Apache
 
-This method allows you to run Mercator with PHP-FPM (FastCGI Process Manager) and Apache's `mpm_event` module, offering better performance than the classic `mod_php` setup.
+This method allows you to run Mercator with PHP-FPM (FastCGI Process Manager) and Apache's `mpm_event` module, offering
+better performance than the classic `mod_php` setup.
 
 #### 1. Install PHP-FPM
 
@@ -346,7 +377,8 @@ sudo a2enmod proxy_fcgi mpm_event
 
 #### 3. Review the `mpm_event` Configuration
 
-Edit the `/etc/apache2/mods-enabled/mpm_event.conf` file to adjust settings based on your server’s load. See the official documentation for details:  
+Edit the `/etc/apache2/mods-enabled/mpm_event.conf` file to adjust settings based on your server’s load. See the
+official documentation for details:  
 <https://httpd.apache.org/docs/current/mod/event.html>
 
 #### 4. Example HTTP VirtualHost
@@ -405,8 +437,8 @@ Edit the `/etc/apache2/mods-enabled/mpm_event.conf` file to adjust settings base
 
 > **Notes:**
 > - Adjust the SSL certificate paths to match your environment.
-> - Make sure the PHP-FPM socket path is correct (e.g., `/run/php/php-fpm.sock` or `/run/php/php8.2-fpm.sock`, depending on your PHP version).
-
+> - Make sure the PHP-FPM socket path is correct (e.g., `/run/php/php-fpm.sock` or `/run/php/php8.2-fpm.sock`, depending
+    on your PHP version).
 
 ## Problems
 

@@ -39,16 +39,12 @@ class User extends Authenticatable implements LdapAuthenticatable
     ];
 
     protected $fillable = [
+        'login',
         'name',
         'email',
-        'email_verified_at',
         'password',
-        'remember_token',
         'granularity',
         'language',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     // Add some caching for roles
