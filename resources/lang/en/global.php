@@ -1,4 +1,5 @@
 <?php
+
 return [
     'action' => 'Action',
     'apply' => 'Apply',
@@ -285,13 +286,13 @@ return [
     'authenticity_short' => 'Auth',
     'authenticity' => 'Authenticity',
     'confidentiality' => 'Confidentiality',
-    'confidentiality_short' => 'Conf',
+    'confidentiality_short' => 'C',
     'integrity' => 'Integrity',
-    'integrity_short' => 'Int',
+    'integrity_short' => 'I',
     'availability' => 'Availability',
-    'availability_short' => 'Av',
+    'availability_short' => 'A',
     'tracability' => 'Traceability',
-    'tracability_short' => 'Tra',
+    'tracability_short' => 'T',
     'old' => 'Old',
     'active' => 'Active',
 ];
