@@ -112,6 +112,8 @@ return [
         'fields' => [
             'application_block' => 'Application block',
             'application_block_helper' => 'Application block of which this application is part',
+            'administrators' => 'Administrators',
+            'administrators_helper' => "Application's administrators",
             'cartographers' => 'Cartographer(s)',
             'cartographers_helper' => "Application's Cartographer(s)",
             'databases' => 'Data base',
