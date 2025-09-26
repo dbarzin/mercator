@@ -13,6 +13,7 @@ pour installer l'API dans Mercator, il est nécessaire d'installer Passport en l
 ```bash
 php artisan passport:install
 ```
+
 - l'environnement Docker prend en charge cette fonctionnalité nativement, via le l'entrypoint.
 
 ### Les APIs
@@ -98,13 +99,13 @@ __Vue de l'infrastructure physique__
 
 Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
-| Requête   | URI                | Action 	
-|-----------|--------------------|--------------------------------|      
-| GET       | /api/objets        | renvoie la liste des objets    |
-| GET       | /api/objets/{id}   | renvoie l'objet {id}           |
-| POST 	    | /api/objets 	     | sauve un nouvel objet          |
-| PUT/PATCH | /api/objets/{id}   | met à jour l'objet {id}        |
-| DELETE 	| /api/objets/{id}   | supprime l'objet {id}         |
+| Requête   | URI              | Action 	                    
+|-----------|------------------|-----------------------------|      
+| GET       | /api/objets      | renvoie la liste des objets |
+| GET       | /api/objets/{id} | renvoie l'objet {id}        |
+| POST 	    | /api/objets 	    | sauve un nouvel objet       |
+| PUT/PATCH | /api/objets/{id} | met à jour l'objet {id}     |
+| DELETE 	  | /api/objets/{id} | supprime l'objet {id}       |
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
@@ -119,7 +120,9 @@ l'entête "Authorization" de la requête de l'API.
 
 ### Liaison entre les objets
 
-Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier une processus à une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :
+Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier une processus à
+une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire,
+nous suivons ces étapes :
 
 - Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.
 
@@ -136,7 +139,9 @@ Les objets de la cartographie peuvent faire référence à d'autres objets. Par 
 }
 ```
 
-- Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :
+- Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons
+  ajouter :
+
 ```
 {
   "id": 101,
@@ -145,7 +150,8 @@ Les objets de la cartographie peuvent faire référence à d'autres objets. Par 
 }
 ```
 
-Les noms de tous les champs supplémentaires sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].
+Les noms de tous les champs supplémentaires
+sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].
 
 ### Exemples
 
@@ -165,7 +171,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => http_build_query(
-            array("email" => "admin@admin.com",
+            array("login" => "admin@admin.com",
                   "password" => "password")),
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
@@ -273,7 +279,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
         CURLOPT_POSTFIELDS => http_build_query(
             array(
                 'name' => 'Henri',
-                'email' => 'henri@test.fr',
+                'login' => 'henri@test.fr',
                 'language' => 'fr',
                 'roles[0]' => 1,
                 'roles[1]' => 3,
@@ -310,7 +316,7 @@ vheaders['cache-control'] = 'no-cache'
 print("Login")
 response = requests.post("http://127.0.0.1:8000/api/login",
     headers=vheaders,
-    data= {'email':'admin@admin.com', 'password':'password'} )
+    data= {'login':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
 vheaders['Authorization'] = "Bearer " + response.json()['access_token']
@@ -325,7 +331,9 @@ print(response.status_code)
 
 ### bash
 
-Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html) et [JQ](https://stedolan.github.io/jq/)
+Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html)
+et [JQ](https://stedolan.github.io/jq/)
+
 ```
 #!/usr/bin/bash
 
@@ -335,7 +343,7 @@ OBJECT_ID=45
 
 # valid login and password
 
-data='{"email":"admin@admin.com","password":"password"}'
+data='{"login":"admin@admin.com","password":"password"}'
 
 # Get a token after correct login
 
@@ -373,7 +381,8 @@ echo "Objet mis à jour: ${UPDATED_OBJECT}"
 
 ### Powershell
 
-Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs logiques.
+Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs
+logiques.
 
 #### Étape 1 — Authentification et obtention du jeton d’accès
 
@@ -381,7 +390,7 @@ Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’A
 # Définir l’URL d’authentification et les identifiants
 $loginUri = "http://127.0.0.1:8000/api/login"
 $loginBody = @{
-    email = "admin@admin.com"
+    login = "admin@admin.com"
     password = "password"
 }
 

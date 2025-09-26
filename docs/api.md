@@ -99,13 +99,13 @@ _Physical infrastructure view_
 
 Requests and URIs for each api are shown in the table below.
 
-| Request | URI | Action    
-|-----------|--------------------|--------------------------------|      
-| GET | /api/objects | returns the list of objects |
+| Request              | URI                 | Action                      
+|----------------------|---------------------|-----------------------------|      
+| GET                  | /api/objects        | returns the list of objects |
 | GET /api/objets/{id} | returns object {id} |
-| POST | /api/objects | save new object |
-| PUT/PATCH | /api/objets/{id} | update object {id} |
-| DELETE | /api/objets/{id} | delete object {id} |
+| POST                 | /api/objects        | save new object             |
+| PUT/PATCH            | /api/objets/{id}    | update object {id}          |
+| DELETE               | /api/objets/{id}    | delete object {id}          |
 
 The fields to be supplied are those described in the [data model](/mercator/model/).
 
@@ -120,7 +120,8 @@ header of the API request.
 
 ### Linking objects
 
-Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a ‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:
+Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a
+‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:
 
 - Step 1: Ensure you have the application_id for the applications you want to link.
 
@@ -138,6 +139,7 @@ Mapping objects can refer to other objects. For example, we can link a process t
 ```
 
 - Step 2: Link the process to the applications. Either with an update or a store, we can add:
+
 ```
 {
   "id": 101,
@@ -146,7 +148,8 @@ Mapping objects can refer to other objects. For example, we can link a process t
 }
 ```
 
-The names of all extra fields are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']
+The names of all extra fields
+are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']
 
 ### PHP
 
@@ -166,7 +169,7 @@ Here are a few examples of how to use the API with PHP:
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => http_build_query(
-            array("email" => "admin@admin.com",
+            array("login" => "admin@admin.com",
                   "password" => "password")),
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
@@ -274,7 +277,7 @@ Here are a few examples of how to use the API with PHP:
         CURLOPT_POSTFIELDS => http_build_query(
             array(
                 'name' => 'Henri',
-                'email' => 'henri@test.fr',
+                'login' => 'henri@test.fr',
                 'language' => 'fr',
                 'roles[0]' => 1,
                 'roles[1]' => 3,
@@ -311,7 +314,7 @@ vheaders['cache-control'] = 'no-cache'
 print("Login")
 response = requests.post("http://127.0.0.1:8000/api/login",
     headers=vheaders,
-    data= {'email':'admin@admin.com', 'password':'password'} )
+    data= {'login':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
 vheaders['Authorization'] = "Bearer " + response.json()['access_token']
@@ -325,7 +328,8 @@ print(response.status_code)
 
 ### Bash
 
-Here's an example of using the API on the command line with [CURL](https://curl.se/docs/manpage.html) and [JQ](https://stedolan.github.io/jq/)
+Here's an example of using the API on the command line with [CURL](https://curl.se/docs/manpage.html)
+and [JQ](https://stedolan.github.io/jq/)
 
 ```
 # valid login and password
@@ -348,7 +352,7 @@ API_URL=http://127.0.0.1:8000/api
 
 # valid login and password
 
-data='{"email":"admin@admin.com","password":"password"}'
+data='{"login":"admin@admin.com","password":"password"}'
 
 # Get a token after correct login
 
@@ -388,7 +392,8 @@ echo "Objet mis à jour: ${UPDATED_OBJECT}"
 
 ### PowerShell
 
-The following **PowerShell** script demonstrates how to authenticate with the API and retrieve the list of logical servers.
+The following **PowerShell** script demonstrates how to authenticate with the API and retrieve the list of logical
+servers.
 
 #### Step 1 — Authenticate and obtain an access token
 
