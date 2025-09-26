@@ -465,7 +465,7 @@ print(response.status_code)
 <p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a>
 and <a href="https://stedolan.github.io/jq/">JQ</a></p>
 <pre><code># valid login and password
-data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
+data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
 # get a token after correct login
 token=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; http://localhost:8000/api/login | jq -r .access_token)
@@ -525,7 +525,7 @@ servers.</p>
 <pre><code class="language-powershell"># Define the login endpoint and credentials
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
 $loginBody = @{
-    email = &quot;admin@admin.com&quot;
+    login = &quot;admin@admin.com&quot;
     password = &quot;password&quot;
 }
 
