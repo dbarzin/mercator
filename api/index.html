@@ -277,7 +277,8 @@ objects accessed via the API.</p>
 <p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
 header of the API request.</p>
 <h3 id="linking-objects">Linking objects</h3>
-<p>Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a ‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:</p>
+<p>Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a
+‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:</p>
 <ul>
 <li>Step 1: Ensure you have the application_id for the applications you want to link.</li>
 </ul>
@@ -301,7 +302,8 @@ header of the API request.</p>
   &quot;applications[]&quot;: [201, 202]
 }
 </code></pre>
-<p>The names of all extra fields are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']</p>
+<p>The names of all extra fields
+are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']</p>
 <h3 id="php">PHP</h3>
 <p>Here are a few examples of how to use the API with PHP:</p>
 <h5 id="authentification">Authentification</h5>
@@ -316,7 +318,7 @@ header of the API request.</p>
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST =&gt; &quot;POST&quot;,
         CURLOPT_POSTFIELDS =&gt; http_build_query(
-            array(&quot;email&quot; =&gt; &quot;admin@admin.com&quot;,
+            array(&quot;login&quot; =&gt; &quot;admin@admin.com&quot;,
                   &quot;password&quot; =&gt; &quot;password&quot;)),
         CURLOPT_HTTPHEADER =&gt; array(
             &quot;accept: application/json&quot;,
@@ -415,7 +417,7 @@ header of the API request.</p>
         CURLOPT_POSTFIELDS =&gt; http_build_query(
             array(
                 'name' =&gt; 'Henri',
-                'email' =&gt; 'henri@test.fr',
+                'login' =&gt; 'henri@test.fr',
                 'language' =&gt; 'fr',
                 'roles[0]' =&gt; 1,
                 'roles[1]' =&gt; 3,
@@ -448,7 +450,7 @@ vheaders['cache-control'] = 'no-cache'
 print(&quot;Login&quot;)
 response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;,
     headers=vheaders,
-    data= {'email':'admin@admin.com', 'password':'password'} )
+    data= {'login':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
 vheaders['Authorization'] = &quot;Bearer &quot; + response.json()['access_token']
@@ -460,7 +462,8 @@ print(response.status_code)
 
 </code></pre>
 <h3 id="bash">Bash</h3>
-<p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a> and <a href="https://stedolan.github.io/jq/">JQ</a></p>
+<p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a>
+and <a href="https://stedolan.github.io/jq/">JQ</a></p>
 <pre><code># valid login and password
 data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
@@ -478,7 +481,7 @@ API_URL=http://127.0.0.1:8000/api
 
 # valid login and password
 
-data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
+data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
 # Get a token after correct login
 
@@ -516,7 +519,8 @@ UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&qu
 echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
 </code></pre>
 <h3 id="powershell">PowerShell</h3>
-<p>The following <strong>PowerShell</strong> script demonstrates how to authenticate with the API and retrieve the list of logical servers.</p>
+<p>The following <strong>PowerShell</strong> script demonstrates how to authenticate with the API and retrieve the list of logical
+servers.</p>
 <h4 id="step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</h4>
 <pre><code class="language-powershell"># Define the login endpoint and credentials
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;

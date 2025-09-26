@@ -277,7 +277,9 @@ accédés par l'API.</p>
 <p>Lorsque l'authentification réussit, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.</p>
 <h3 id="liaison-entre-les-objets">Liaison entre les objets</h3>
-<p>Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier une processus à une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :</p>
+<p>Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier une processus à
+une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire,
+nous suivons ces étapes :</p>
 <ul>
 <li>Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</li>
 </ul>
@@ -293,7 +295,8 @@ l'entête "Authorization" de la requête de l'API.</p>
 }
 </code></pre>
 <ul>
-<li>Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :</li>
+<li>Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons
+  ajouter :</li>
 </ul>
 <pre><code>{
   &quot;id&quot;: 101,
@@ -301,7 +304,8 @@ l'entête "Authorization" de la requête de l'API.</p>
   &quot;application_id[]&quot;: [201, 202]
 }
 </code></pre>
-<p>Les noms de tous les champs supplémentaires sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].</p>
+<p>Les noms de tous les champs supplémentaires
+sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].</p>
 <h3 id="exemples">Exemples</h3>
 <p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
 <h4 id="authentification">Authentification</h4>
@@ -316,7 +320,7 @@ l'entête "Authorization" de la requête de l'API.</p>
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST =&gt; &quot;POST&quot;,
         CURLOPT_POSTFIELDS =&gt; http_build_query(
-            array(&quot;email&quot; =&gt; &quot;admin@admin.com&quot;,
+            array(&quot;login&quot; =&gt; &quot;admin@admin.com&quot;,
                   &quot;password&quot; =&gt; &quot;password&quot;)),
         CURLOPT_HTTPHEADER =&gt; array(
             &quot;accept: application/json&quot;,
@@ -415,7 +419,7 @@ l'entête "Authorization" de la requête de l'API.</p>
         CURLOPT_POSTFIELDS =&gt; http_build_query(
             array(
                 'name' =&gt; 'Henri',
-                'email' =&gt; 'henri@test.fr',
+                'login' =&gt; 'henri@test.fr',
                 'language' =&gt; 'fr',
                 'roles[0]' =&gt; 1,
                 'roles[1]' =&gt; 3,
@@ -448,7 +452,7 @@ vheaders['cache-control'] = 'no-cache'
 print(&quot;Login&quot;)
 response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;,
     headers=vheaders,
-    data= {'email':'admin@admin.com', 'password':'password'} )
+    data= {'login':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
 vheaders['Authorization'] = &quot;Bearer &quot; + response.json()['access_token']
@@ -461,7 +465,8 @@ print(response.status_code)
 
 </code></pre>
 <h3 id="bash">bash</h3>
-<p>Voici un exemple d'utilisation de l'API en ligne de commande avec <a href="https://curl.se/docs/manpage.html">CURL</a> et <a href="https://stedolan.github.io/jq/">JQ</a></p>
+<p>Voici un exemple d'utilisation de l'API en ligne de commande avec <a href="https://curl.se/docs/manpage.html">CURL</a>
+et <a href="https://stedolan.github.io/jq/">JQ</a></p>
 <pre><code>#!/usr/bin/bash
 
 API_URL=http://127.0.0.1:8000/api
@@ -470,7 +475,7 @@ OBJECT_ID=45
 
 # valid login and password
 
-data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
+data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
 # Get a token after correct login
 
@@ -506,12 +511,13 @@ echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
 
 </code></pre>
 <h3 id="powershell">Powershell</h3>
-<p>Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs logiques.</p>
+<p>Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs
+logiques.</p>
 <h4 id="etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</h4>
 <pre><code class="language-powershell"># Définir l’URL d’authentification et les identifiants
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
 $loginBody = @{
-    email = &quot;admin@admin.com&quot;
+    login = &quot;admin@admin.com&quot;
     password = &quot;password&quot;
 }
 
