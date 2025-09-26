@@ -10,12 +10,14 @@ class AuthController extends Controller
     public function credentials(Request $request)
     {
         return [
-            'mail' => $request->email,
+            'login' => $request->login,
             'password' => $request->password,
+            /*
             'fallback' => [
-                'email' => $request->email,
+                'login' => $request->login,
                 'password' => $request->password,
             ],
+            */
         ];
     }
 
@@ -24,7 +26,7 @@ class AuthController extends Controller
         // error_log('LOGIN');
         // $loginData =
         $request->validate([
-            'email' => 'email|required',
+            'login' => 'required',
             'password' => 'required',
         ]);
 
@@ -34,7 +36,7 @@ class AuthController extends Controller
         }
         // error_log('LOGIN - User: '. json_encode(auth()->user()));
 
-        $accessToken = auth()->user()->createToken(auth()->user()->email.' authToken '.now())->accessToken;
+        $accessToken = auth()->user()->createToken(auth()->user()->login.' authToken '.now())->accessToken;
         // error_log('LOGIN - Token: '.$accessToken);
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
