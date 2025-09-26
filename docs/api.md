@@ -333,7 +333,7 @@ and [JQ](https://stedolan.github.io/jq/)
 
 ```
 # valid login and password
-data='{"email":"admin@admin.com","password":"password"}'
+data='{"login":"admin@admin.com","password":"password"}'
 
 # get a token after correct login
 token=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:8000/api/login | jq -r .access_token)
@@ -401,7 +401,7 @@ servers.
 # Define the login endpoint and credentials
 $loginUri = "http://127.0.0.1:8000/api/login"
 $loginBody = @{
-    email = "admin@admin.com"
+    login = "admin@admin.com"
     password = "password"
 }
 
