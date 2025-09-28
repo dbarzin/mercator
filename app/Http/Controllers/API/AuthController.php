@@ -12,32 +12,21 @@ class AuthController extends Controller
         return [
             'login' => $request->login,
             'password' => $request->password,
-            /*
-            'fallback' => [
-                'login' => $request->login,
-                'password' => $request->password,
-            ],
-            */
         ];
     }
 
     public function login(Request $request)
     {
-        // error_log('LOGIN');
-        // $loginData =
         $request->validate([
             'login' => 'required',
             'password' => 'required',
         ]);
 
-        // if (! auth()->attempt($loginData)) {
         if (! auth()->attempt($this->credentials($request))) {
             return response(['message' => 'This user does not exist, check your details'], 400);
         }
-        // error_log('LOGIN - User: '. json_encode(auth()->user()));
 
         $accessToken = auth()->user()->createToken(auth()->user()->login.' authToken '.now())->accessToken;
-        // error_log('LOGIN - Token: '.$accessToken);
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
