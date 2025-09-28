@@ -33,6 +33,7 @@ npm run build
 
 git add public/build/assets/*
 git commit -a -m "npm build"
+git push
 
 echo "[✔] Frontend built with APP_VERSION=$VERSION"
 
