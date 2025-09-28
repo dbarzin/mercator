@@ -99,25 +99,28 @@ Pour importer la base de données de test (facultatif)
 
     sudo mysql mercator < data/mercator_data_fr.sql
 
-## Importer/mettre à jour la base de données des CPE (optionel)
+## Base de données CPE (facultatif)
 
-Télécharger la base depuis NIST.gov
+Une commande Artisan **`cpe:sync`** **synchronise les CPE (Common Platform Enumeration)** depuis la NVD (National
+Vulnerability Database) et alimente les tables
+`cpe_vendors`, `cpe_products` et `cpe_versions`.
 
-```sh
-cd /var/www/mercator
-wget https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.3.xml.gz
-```
+### Planification
 
-La décompresser :
+La commande est **planifiée quotidiennement à 3h30** via le planificateur de Laravel.
+➡️ Si votre **planificateur Laravel est déjà configuré** (exécution de `php artisan schedule:run` par cron), **aucune
+action n'est requise**. La synchronisation se fera automatiquement.
 
-```sh
-gzip -d official-cpe-dictionary_v2.3.xml.gz
-```
+### Configuration
 
-Importer dans Merator :
+Ajoutez les paramètres suivants à votre fichier `.env`:
 
-```sh
-php artisan mercator:cpe-import ./official-cpe-dictionary_v2.3.xml
+```dotenv
+# Point de terminaison de l'API NVD CPE 2.0
+CPE_API_URL=https://services.nvd.nist.gov/rest/json/cpes/2.0
+
+# (Facultatif mais recommandé) Clé API NVD pour bénéficier de quotas de requêtes plus élevés
+NVD_API_KEY=
 ```
 
 ## Démarrage
