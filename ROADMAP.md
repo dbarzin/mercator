@@ -9,11 +9,12 @@ Changements prévus en 2025 et plus :
 - [x] Outil de dessin de la cartographie
 - [x] Import de données sur base de fichier Excel ou CSV
 - [x] Générer un annuaire de crise
+- [x] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
 - [ ] Dessin de processus avec BPMN v2.0 (https://github.com/process-analytics)
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Généraliser la notion de cartographe à tous les objets (cf.: https://laravel.com/docs/10.x/authorization)
-- [ ] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
+- [ ] Langage de requête pour générer des listes ou des graphes
 - [ ] Purge de la DB : https://github.com/dbarzin/mercator/discussions/1525
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Utiliser un modèle de document pour les rapports
@@ -30,8 +31,8 @@ Changements prévus en 2025 et plus :
 - [ ] Restaurer les objets supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 - [ ] Intégration des données de la cartographie dans syslog
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](
-https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
-
+  https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/)
+  identifier le nombre de périphériques par sous-réseau.
 
 ## Petites évolutions
 
@@ -42,7 +43,8 @@ Changements réalisés en 2024 :
 
 ## Evolutions majeures
 
-- [x] Améliorer la recherche des CVE en assignat un CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la cartographie.
+- [x] Améliorer la recherche des CVE en assignat un
+  CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la cartographie.
 - [x] Pouvoir changer les images des objets
 - [x] Upgrade to [Bootstrap 5.3](https://getbootstrap.com/)
 - [x] Exploiter les logs - recherche et afficher tout les changements d'un objet
@@ -53,8 +55,10 @@ Changements réalisés en 2024 :
 - [x] Ajouter des objets logiques : https://github.com/dbarzin/mercator/discussions/733
 - [x] Remplacer le champ libre éditeur par un lien vers la table entités et migrer la base de données
 - [x] Dessiner un nouveau jeu d'icônes compatible GLPv3
-- [x] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange : par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
-- [x] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
+- [x] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange : par exemple "
+  saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
+- [x] Renseigner les ports utilisables lors de la définition d'un
+  équipement (https://github.com/dbarzin/mercator/issues/410)
 - [x] Ajout des clusters
 - [x] Ajout des flux logiques
 - [x] Afficher l'historique des changements d'un objet
@@ -83,7 +87,7 @@ Changements réalisés en 2024 :
 - [x] Lien entre bases de données et serveurs logiques
 - [x] Publier une VM Docker sur [GitHub](https://ghcr.io)
 - [x] Ajouter l'objet cluster de serveurs logiques
-- [x] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue  
+- [x] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue
 
 # Changements réalisés en 2022 :
 
@@ -96,6 +100,7 @@ Changements réalisés en 2024 :
 - [x] Ajouter des fonctions de manipulation des graphes d'objets dans l'explorateur
 
 ## Evolutions mineurs
+
 - [x] Améliorer la page des logs (nom de l'utilisateur / action / lien vers l'objet concerné)
 - [x] Revoir les pages de gestion des droits d'accès
 - [x] Ajouter un lien entre application et poste de travail
