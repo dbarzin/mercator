@@ -1,4 +1,5 @@
 <?php
+
 return [
     'level_1' => [
         'description' => 'Minimum level 1 granularity: essential information.',
@@ -39,9 +40,9 @@ return [
         'schema' => 'Data model',
         'tools' => 'Tools',
         'patching' => 'Patching',
+        'views' => 'Views',
     ],
     'repartition' => 'Breakdown by domain',
     'site_title' => 'Mercator',
     'treemap' => 'Global proportional map',
-    'views' => 'Views',
 ];
