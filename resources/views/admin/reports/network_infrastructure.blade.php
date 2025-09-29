@@ -44,26 +44,34 @@
                         <div id="graph-container">
                             <div id="graph" class="graphviz"></div>
                         </div>
-                        <div class="col-6">
+                        <div class="row p-1">
+                            <div class="col-4">
 
-                            @php($engines=["circo", "dot", "fdp", "sfdp", "neato", "osage", "patchwork", "twopi"])
-                            @php($engine = request()->get('engine', 'dot'))
+                                @php($engines=["dot", "fdp",  "osage", "circo" ])
+                                @php($engine = request()->get('engine', 'dot'))
 
-                            <label class="inline-flex items-center gap-2">
-                                Moteur Graphviz :
-                            </label>
-                            @foreach($engines as $value)
-                                <label class="inline-flex items-center gap-2">
-                                    <input
-                                            type="radio"
-                                            name="engine"
-                                            value="{{ $value }}"
-                                            @checked($engine === $value)
-                                            onchange="this.form.submit();"
-                                    >
-                                    <span>{{ $value }}</span>
+                                <label class="inline-flex items-center ps-1 pe-1">
+                                    <a href="#" id="downloadSvg"><i class="bi bi-download"></i></a>
                                 </label>
-                            @endforeach
+
+                                <label class="inline-flex items-center">
+                                    Rendu :
+                                </label>
+                                @foreach($engines as $value)
+                                    <label class="inline-flex items-center ps-1">
+                                        <input
+                                                type="radio"
+                                                name="engine"
+                                                value="{{ $value }}"
+                                                @checked($engine === $value)
+                                                onchange="this.form.submit();"
+                                        >
+                                        <span>{{ $value }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                            <div class="col-2">
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -1179,17 +1187,83 @@ digraph  {
                 .addImage("/images/router.png", "64px", "64px")
                 .addImage("/images/wifi.png", "64px", "64px")
                 .addImage("/images/security.png", "64px", "64px")
-                // .engine('dot') // OK
-                // .engine("circo") // NO
-                // .engine("neato") // OK
-                // .engine("fdp") // OK
-                // .engine("sfdp") // OK
-                // .engine("osage") // OK
-                // .engine("patchwork") // NO
-                // .engine("twopi") // NO
                 .engine("{{ $engine }}")
                 .renderDot(dotSrc);
         });
+
+        // ======================================================================
+        document.getElementById("downloadSvg").onclick = async function (e) {
+            e.preventDefault();
+
+            const svg = document.querySelector("#graph svg");
+            if (!svg) {
+                alert("Aucun graphe trouvé dans #graph");
+                return;
+            }
+
+            // --- Clone pour travailler hors DOM
+            const svgClone = svg.cloneNode(true);
+
+            // --- Namespaces requis
+            svgClone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            svgClone.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+
+            // --- Embarque toutes les <image> en data URL
+            const xlinkNS = "http://www.w3.org/1999/xlink";
+            const images = Array.from(svgClone.querySelectorAll("image"));
+
+            async function urlToDataURL(url) {
+                const abs = new URL(url, window.location.href).href;
+                const res = await fetch(abs, {credentials: "same-origin"});
+                if (!res.ok) throw new Error(`Fetch image failed: ${abs}`);
+                const blob = await res.blob();
+                return await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.readAsDataURL(blob);
+                });
+            }
+
+            await Promise.all(images.map(async (img) => {
+                const href = img.getAttribute("href") ||
+                    img.getAttributeNS(xlinkNS, "href") ||
+                    img.getAttribute("xlink:href");
+                if (!href || href.startsWith("data:")) return;
+
+                try {
+                    const dataUrl = await urlToDataURL(href);
+                    img.setAttribute("href", dataUrl);
+                    img.setAttributeNS(xlinkNS, "xlink:href", dataUrl);
+                } catch (err) {
+                    console.warn("Impossible d’embarquer l’image:", href, err);
+                }
+            }));
+
+            // --- Supprime les liens (variante 1)
+            const links = svgClone.querySelectorAll("a");
+            links.forEach(link => {
+                link.removeAttribute("href");
+                link.removeAttribute("xlink:href");
+                link.removeAttributeNS(xlinkNS, "href");
+            });
+
+            // --- Sérialisation propre
+            const serializer = new XMLSerializer();
+            let source = serializer.serializeToString(svgClone);
+            source = source.replace(/<\?\s*xml[^>]*\?>\s*/i, "");
+            source = '<\?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' + source;
+
+            // --- Téléchargement
+            const blob = new Blob([source], {type: "image/svg+xml;charset=utf-8"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "graph.svg";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        };
     </script>
     @parent
 @endsection
