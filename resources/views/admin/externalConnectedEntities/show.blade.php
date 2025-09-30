@@ -106,7 +106,7 @@
                     </th>
                     <td width="40%">
                         @foreach($externalConnectedEntity->subnetworks as $subnetwork)
-                            <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">{{ $subnetwork->name }}</a>
+                            <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">{{ $subnetwork->name }} {{ $subnetwork->address!==null ? ('(' . $subnetwork->address . ')') : "" }}</a>
                             @if(!$loop->last)
                                 ,
                             @endif
