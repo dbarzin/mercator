@@ -619,7 +619,7 @@ return [
             'src_desc' => 'Description de la source',
             'dest_desc' => 'Description de la destination',
             'documents' => 'Documents',
-            'documents_helper' => 'List of security documents',
+            'documents_helper' => 'Liste des documents de sécurité',
         ],
         'title' => 'Entités extérieures connectées',
         'title_short' => 'Entités',
