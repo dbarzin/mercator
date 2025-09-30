@@ -41,7 +41,13 @@
                             {{ trans('cruds.externalConnectedEntity.fields.subnetworks') }}
                         </th>
                         <th>
+                            {{ trans('cruds.externalConnectedEntity.fields.src_desc') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.externalConnectedEntity.fields.src') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.externalConnectedEntity.fields.dest_desc') }}
                         </th>
                         <th>
                             {{ trans('cruds.externalConnectedEntity.fields.dest') }}
@@ -84,7 +90,7 @@
                             </td>
                             <td>
                                 @foreach($externalConnectedEntity->subnetworks as $subnetwork)
-                                    <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">{{ $subnetwork->name }}</a>
+                                    <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">{{ $subnetwork->name }} {{ $subnetwork->address!==null ? ('(' . $subnetwork->address . ')') : "" }}</a>
                                     @if(!$loop->last)
                                         ,
                                     @endif
@@ -92,15 +98,17 @@
                             </td>
                             <td>
                                 {{ $externalConnectedEntity->src_desc }}
-                                <br>
+                            </td>
+                            <td>
                                 {{ $externalConnectedEntity->src }}
                             </td>
                             <td>
                                 {{ $externalConnectedEntity->dest_desc }}
-                                <br>
+                            </td>
+                            <td>
                                 {{ $externalConnectedEntity->dest }}
                             </td>
-                            <td nowrao>
+                            <td nowrap>
                                 @can('external_connected_entity_show')
                                     <a class="btn btn-xs btn-primary"
                                        href="{{ route('admin.external-connected-entities.show', $externalConnectedEntity->id) }}">

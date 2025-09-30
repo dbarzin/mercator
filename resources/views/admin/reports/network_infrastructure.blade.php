@@ -1192,6 +1192,8 @@ digraph  {
         });
 
         // ======================================================================
+        // Download Graph as SVG
+        // ======================================================================
         document.getElementById("downloadSvg").onclick = async function (e) {
             e.preventDefault();
 
