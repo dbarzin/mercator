@@ -123,7 +123,6 @@ class DataProcessingController extends Controller
         $dataProcessing->informations()->sync($request->input('informations', []));
 
         $dataProcessing->documents()->sync(session()->get('documents'));
-
         session()->forget('documents');
 
         return redirect()->route('admin.data-processings.index');
