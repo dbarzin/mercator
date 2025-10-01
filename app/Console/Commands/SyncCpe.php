@@ -125,7 +125,7 @@ class SyncCpe extends Command
         $client = Http::timeout(120)
             ->retry(5, 1000, fn () => true) // retry on transient errors
             ->withHeaders([
-                'User-Agent' => 'Mercator/1.0 (+https://sourcentis.com)',
+                'User-Agent' => 'mercator',
             ]);
 
         if ($apiKey) {

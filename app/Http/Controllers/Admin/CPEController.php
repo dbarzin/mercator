@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CPEProduct;
 use App\Models\CPEVendor;
 use App\Models\CPEVersion;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class CPEController extends Controller
 {
@@ -85,4 +85,90 @@ class CPEController extends Controller
 
         return response()->json($result);
     }
+
+    /* TODO : please test me
+    public function guess(Request $request)
+    {
+        \Log::debug($request->search);
+
+        // 1) Entrée & nettoyage
+        $raw = (string) $request->input('search', '');
+        if ($raw === '') {
+            return response()->json(['error' => 'Missing "search" parameter'], 422);
+        }
+
+        // Découpe simple en mots (on retire la ponctuation superflue)
+        $keywords = collect(preg_split('/\s+/', Str::of($raw)->lower()->toString()))
+            ->filter(fn ($w) => $w !== '')
+            ->values()
+            ->all();
+
+        // 2) Configuration
+        $baseUrl = rtrim(config('services.cpe_guesser.url', env('CPE_GUESSER_URL', 'https://cpe-guesser.cve-search.org')), '/');
+        $endpoint = config('services.cpe_guesser.endpoint', env('CPE_GUESSER_ENDPOINT', 'search')); // "search" ou "unique"
+        $timeout = (int) config('services.cpe_guesser.timeout', env('CPE_GUESSER_TIMEOUT', 6));    // secondes
+
+        // 3) Appel API
+        try {
+            $response = Http::timeout($timeout)
+                ->retry(5, 500, fn () => true) // retry on transient errors
+                ->acceptJson()
+                ->withHeaders([
+                    'User-Agent' => 'mercator',
+                ])
+                ->asJson()
+                ->post("{$baseUrl}/{$endpoint}", [
+                    'query' => $keywords,
+                ]);
+            \Log::debug($response->json());
+
+            if (! $response->successful()) {
+                return response()->json([
+                    'error' => 'CPE Guesser API error',
+                    'status' => $response->status(),
+                    'body' => $response->json() ?? $response->body(),
+                ], 502);
+            }
+
+            $payload = $response->json();
+
+            // 4) Normalisation de la sortie
+            // - /search renvoie: [[<id>, "<cpe23>"], ...]
+            // - /unique renvoie: "<cpe23>" (string) ou null
+            if ($endpoint === 'unique') {
+                $result = $payload
+                    ? [['cpe_id' => null, 'cpe23' => (string) $payload]]
+                    : [];
+            } else {
+                $result = collect($payload)
+                    ->map(function ($row) {
+                        // chaque $row est [id, "cpe:2.3:..."]
+                        return [
+                            'cpe_id' => $row[0] ?? null,
+                            'cpe23' => $row[1] ?? null,
+                        ];
+                    })
+                    ->values()
+                    ->all();
+            }
+
+            $result = response()->json([
+                'query' => $keywords,
+                'source' => 'cpe-guesser',
+                'count' => count($result),
+                'items' => $result,
+            ]);
+
+            \Log::debug($result['items']);
+
+            return $result;
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => 'Failed to reach CPE Guesser',
+                'message' => $e->getMessage(),
+            ], 502);
+        }
+    }
+    */
 }
