@@ -3,47 +3,48 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
-                    {{ trans('cruds.menu.gdpr.title') }}
-                </div>
+                <form action="/admin/report/gdpr">
+                    <div class="card-header">
+                        {{ trans('cruds.menu.gdpr.title') }}
+                    </div>
 
-                <div class="card-body">
-                    <form action="/admin/report/gdpr">
+                    <div class="card-body">
                         @if(session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
                             </div>
                         @endif
 
-                        @if (auth()->user()->granularity>=2)
-                            <div class="col-sm-5">
-                                <table class="table table-bordered table-striped">
-                                    <tr>
-                                        <td>
-                                            {{ trans('cruds.macroProcessus.title') }} :
-                                            <select name="macroprocess"
-                                                    onchange="this.form.process.value='';this.form.submit()">
-                                                <option value="">-- All --</option>
-                                                @foreach ($all_macroprocess as $macroprocess)
-                                                    <option value="{{$macroprocess->id}}" {{ Session::get('macroprocess')==$macroprocess->id ? "selected" : "" }}>{{ $macroprocess->name }}</option>
+                        <div class="col-sm-6" style="max-width: 800px;">
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td>
+                                        {{ trans('cruds.macroProcessus.title') }} :
+                                        <select name="macroprocess"
+                                                onchange="this.form.process.value='';this.form.submit()"
+                                                class="form-control select2">
+                                            <option value="">-- All --</option>
+                                            @foreach ($all_macroprocess as $macroprocess)
+                                                <option value="{{$macroprocess->id}}" {{ Session::get('macroprocess')==$macroprocess->id ? "selected" : "" }}>{{ $macroprocess->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        {{ trans('cruds.process.title') }} :
+                                        <select name="process" onchange="this.form.submit()"
+                                                class="form-control select2">
+                                            <option value="">-- All --</option>
+                                            @if ($all_process!=null)
+                                                @foreach ($all_process as $process)
+                                                    <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->name }}</option>
                                                 @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            {{ trans('cruds.process.title') }} :
-                                            <select name="process" onchange="this.form.submit()">
-                                                <option value="">-- All --</option>
-                                                @if ($all_process!=null)
-                                                    @foreach ($all_process as $process)
-                                                        <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->name }}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        @endif
+                                            @endif
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
                         <div id="graph-container">
                             <div class="graphviz" id="graph"></div>
                         </div>
@@ -73,11 +74,9 @@
                                     </label>
                                 @endforeach
                             </div>
-                            <div class="col-2">
-                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <br>
 
@@ -266,84 +265,6 @@ digraph  {
                 .addImage("/images/application.png", "64px", "64px")
                 .engine("{{ $engine }}")
                 .renderDot(dotSrc);
-
-
-            // ======================================================================
-            // Download Graph as SVG
-            // ======================================================================
-            document.getElementById("downloadSvg").onclick = async function (e) {
-                e.preventDefault();
-
-                const svg = document.querySelector("#graph svg");
-                if (!svg) {
-                    alert("Aucun graphe trouvé dans #graph");
-                    return;
-                }
-
-                // --- Clone pour travailler hors DOM
-                const svgClone = svg.cloneNode(true);
-
-                // --- Namespaces requis
-                svgClone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-                svgClone.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-
-                // --- Embarque toutes les <image> en data URL
-                const xlinkNS = "http://www.w3.org/1999/xlink";
-                const images = Array.from(svgClone.querySelectorAll("image"));
-
-                async function urlToDataURL(url) {
-                    const abs = new URL(url, window.location.href).href;
-                    const res = await fetch(abs, {credentials: "same-origin"});
-                    if (!res.ok) throw new Error(`Fetch image failed: ${abs}`);
-                    const blob = await res.blob();
-                    return await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result);
-                        reader.readAsDataURL(blob);
-                    });
-                }
-
-                await Promise.all(images.map(async (img) => {
-                    const href = img.getAttribute("href") ||
-                        img.getAttributeNS(xlinkNS, "href") ||
-                        img.getAttribute("xlink:href");
-                    if (!href || href.startsWith("data:")) return;
-
-                    try {
-                        const dataUrl = await urlToDataURL(href);
-                        img.setAttribute("href", dataUrl);
-                        img.setAttributeNS(xlinkNS, "xlink:href", dataUrl);
-                    } catch (err) {
-                        console.warn("Impossible d’embarquer l’image:", href, err);
-                    }
-                }));
-
-                // --- Supprime les liens (variante 1)
-                const links = svgClone.querySelectorAll("a");
-                links.forEach(link => {
-                    link.removeAttribute("href");
-                    link.removeAttribute("xlink:href");
-                    link.removeAttributeNS(xlinkNS, "href");
-                });
-
-                // --- Sérialisation propre
-                const serializer = new XMLSerializer();
-                let source = serializer.serializeToString(svgClone);
-                source = source.replace(/<\?\s*xml[^>]*\?>\s*/i, "");
-                source = '<\?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' + source;
-
-                // --- Téléchargement
-                const blob = new Blob([source], {type: "image/svg+xml;charset=utf-8"});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "graph.svg";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                URL.revokeObjectURL(url);
-            };
-
         });
     </script>
     @parent

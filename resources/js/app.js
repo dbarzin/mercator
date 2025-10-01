@@ -7,7 +7,6 @@ import select2 from 'select2';
 /* Datatables from : https://datatables.net/download/#bs5/jszip-3.10.1/pdfmake-0.2.7/dt-2.1.8/af-2.7.0/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/kt-2.12.1/r-3.0.3/rg-1.5.1/rr-1.5.0/sc-2.4.3/sb-1.8.1/sp-2.3.3/sl-2.1.0/sr-1.4.1 */
 import jszip from 'jszip';
 import pdfmake from 'pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import DataTable from 'datatables.net-bs5';
 import 'datatables.net-autofill-bs5';
 import 'datatables.net-buttons-bs5';
@@ -15,7 +14,6 @@ import 'datatables.net-buttons/js/buttons.colVis.mjs';
 import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-buttons/js/buttons.print.mjs';
 import 'datatables.net-colreorder-bs5';
-import DateTime from 'datatables.net-datetime';
 import 'datatables.net-fixedcolumns-bs5';
 import 'datatables.net-fixedheader-bs5';
 import 'datatables.net-keytable-bs5';
@@ -48,8 +46,8 @@ window.$ = window.jQuery = $;
 
 // Permet d'utiliser DynamicSelect dans la Blade
 window.DynamicSelect = DynamicSelect;
-window.Swal=Swal;
-window.moment=moment;
+window.Swal = Swal;
+window.moment = moment;
 window.DataTable = DataTable;
 window.select2 = select2;
 window.Dropzone = Dropzone;
@@ -71,112 +69,113 @@ document.addEventListener("DOMContentLoaded", function () {
     // Shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'n') {
-          e.preventDefault();
-          document.getElementById('btn-new').click();
+            e.preventDefault();
+            document.getElementById('btn-new').click();
         }
         if (e.ctrlKey && e.key === 's') {
-          e.preventDefault();
-          document.getElementById('btn-save').click();
+            e.preventDefault();
+            document.getElementById('btn-save').click();
         }
         if (e.ctrlKey && e.key === 'd') {
-          e.preventDefault();
-          document.getElementById('btn-duplicate').click();
+            e.preventDefault();
+            document.getElementById('btn-duplicate').click();
         }
         if (e.key === 'Escape') {
-          document.getElementById('btn-cancel').click();
+            document.getElementById('btn-cancel').click();
         }
     });
 
     // CKEditor
     var allEditors = document.querySelectorAll('.ckeditor');
     for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-        allEditors[i], {
-            removePlugins: ['Table', 'TableToolbar', 'EasyImage','ImageUpload','MediaEmbed'],
-            toolbar: {
-                  items: [ 'undo', 'redo', '|','bold', 'italic', '|', 'link', '|', 'numberedList', 'bulletedList' ],
-    	          shouldNotGroupWhenFull: true
-              }
-        }
-    )
-    .then(editor => {
-        document.querySelector('.ckeditor').style.visibility = 'visible';
-    })
-    .catch(error => console.error(error));;
+        ClassicEditor.create(
+            allEditors[i], {
+                removePlugins: ['Table', 'TableToolbar', 'EasyImage', 'ImageUpload', 'MediaEmbed'],
+                toolbar: {
+                    items: ['undo', 'redo', '|', 'bold', 'italic', '|', 'link', '|', 'numberedList', 'bulletedList'],
+                    shouldNotGroupWhenFull: true
+                }
+            }
+        )
+            .then(editor => {
+                document.querySelector('.ckeditor').style.visibility = 'visible';
+            })
+            .catch(error => console.error(error));
+        ;
     }
 
-  // Select2
-    $('.select2').each(function() {
+    // Select2
+    $('.select2').each(function () {
         // skip already initialised select2
         // used by CPE search
-        if (this.id!='')
+        if (this.id != '')
             $(this).select2({
                 placeholder: '...',
                 allowClear: true
             });
     });
 
-  $(".select2-free").select2({
+    $(".select2-free").select2({
         placeholder: "...",
         allowClear: true,
         tags: true
     });
 
-  $('.select-all').click(function () {
-    let $select2 = $(this).parent().siblings('.select2')
-    $select2.find('option').prop('selected', 'selected')
-    $select2.trigger('change')
-  })
-  $('.deselect-all').click(function () {
-    let $select2 = $(this).parent().siblings('.select2')
-    $select2.find('option').prop('selected', '')
-    $select2.trigger('change')
-  })
-
-  // Risk style on select2 options
-  $('.risk').select2({
-    templateSelection: function(data) {
-        const riskClasses = {
-            4: 'highRisk',
-            3: 'mediumRisk',
-            2: 'lowRisk',
-            1: 'veryLowRisk'
-        };
-
-        const riskClass = riskClasses[data.id];
-        return riskClass ? `<span class="${riskClass}">${data.text}</span>` : data.text;
-    },
-    escapeMarkup: function(markup) {
-        return markup;
-    }
-  });
-
-  $('.treeview').each(function () {
-    var shouldExpand = false
-    $(this).find('li').each(function () {
-      if ($(this).hasClass('active')) {
-        shouldExpand = true
-      }
+    $('.select-all').click(function () {
+        let $select2 = $(this).parent().siblings('.select2')
+        $select2.find('option').prop('selected', 'selected')
+        $select2.trigger('change')
     })
-    if (shouldExpand) {
-      $(this).addClass('active')
-    }
-  })
+    $('.deselect-all').click(function () {
+        let $select2 = $(this).parent().siblings('.select2')
+        $select2.find('option').prop('selected', '')
+        $select2.trigger('change')
+    })
 
-  // ====================================================================
-  // Sidebar
+    // Risk style on select2 options
+    $('.risk').select2({
+        templateSelection: function (data) {
+            const riskClasses = {
+                4: 'highRisk',
+                3: 'mediumRisk',
+                2: 'lowRisk',
+                1: 'veryLowRisk'
+            };
 
-  $('button.sidebar-toggler').click(function () {
-      setTimeout(function() {
-        $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-      }, 275);
-  })
+            const riskClass = riskClasses[data.id];
+            return riskClass ? `<span class="${riskClass}">${data.text}</span>` : data.text;
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+
+    $('.treeview').each(function () {
+        var shouldExpand = false
+        $(this).find('li').each(function () {
+            if ($(this).hasClass('active')) {
+                shouldExpand = true
+            }
+        })
+        if (shouldExpand) {
+            $(this).addClass('active')
+        }
+    })
+
+    // ====================================================================
+    // Sidebar
+
+    $('button.sidebar-toggler').click(function () {
+        setTimeout(function () {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        }, 275);
+    })
 
     let sidebar = document.querySelector(".sidebar");
     let dropdowns = document.querySelectorAll(".sidebar .dropdown-toggle");
 
     dropdowns.forEach(dropdown => {
-        dropdown.addEventListener("click", function() {
+        dropdown.addEventListener("click", function () {
             // Ferme les autres menus
             document.querySelectorAll(".sidebar .collapse.show").forEach(openMenu => {
                 if (openMenu !== this.nextElementSibling) {
@@ -206,22 +205,98 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300);
     }
 
-  // Accordion JS toggle
-  $('.accordion').click(function () {
-      $(this).toggleClass('active');
-      $(this).next('.panel').toggleClass('active');
-  })
+    // Accordion JS toggle
+    $('.accordion').click(function () {
+        $(this).toggleClass('active');
+        $(this).next('.panel').toggleClass('active');
+    })
 
-  $('.check-all-wrapper input').click(function (e) {
-      console.log("check-all-wrapper");
-      e.preventDefault();
-      $('input[data-check='+$(this).prop('id')+']:not(:checked)').each(function (){
-         $(this).prop('checked', true);
-      });
-  });
+    $('.check-all-wrapper input').click(function (e) {
+        console.log("check-all-wrapper");
+        e.preventDefault();
+        $('input[data-check=' + $(this).prop('id') + ']:not(:checked)').each(function () {
+            $(this).prop('checked', true);
+        });
+    });
 
-  // =====================================================================
-  // Dynamic Select (image upload and select)
-  document.querySelectorAll('[data-dynamic-select]').forEach(select => new DynamicSelect(select));
+    // =====================================================================
+    // Dynamic Select (image upload and select)
+    document.querySelectorAll('[data-dynamic-select]').forEach(select => new DynamicSelect(select));
+
+    // ======================================================================
+    // Download Graph as SVG
+    // ======================================================================
+    document.getElementById("downloadSvg").onclick = async function (e) {
+        e.preventDefault();
+
+        const svg = document.querySelector("#graph svg");
+        if (!svg) {
+            alert("Aucun graphe trouvé dans #graph");
+            return;
+        }
+
+        // --- Clone pour travailler hors DOM
+        const svgClone = svg.cloneNode(true);
+
+        // --- Namespaces requis
+        svgClone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        svgClone.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+
+        // --- Embarque toutes les <image> en data URL
+        const xlinkNS = "http://www.w3.org/1999/xlink";
+        const images = Array.from(svgClone.querySelectorAll("image"));
+
+        async function urlToDataURL(url) {
+            const abs = new URL(url, window.location.href).href;
+            const res = await fetch(abs, {credentials: "same-origin"});
+            if (!res.ok) throw new Error(`Fetch image failed: ${abs}`);
+            const blob = await res.blob();
+            return await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        await Promise.all(images.map(async (img) => {
+            const href = img.getAttribute("href") ||
+                img.getAttributeNS(xlinkNS, "href") ||
+                img.getAttribute("xlink:href");
+            if (!href || href.startsWith("data:")) return;
+
+            try {
+                const dataUrl = await urlToDataURL(href);
+                img.setAttribute("href", dataUrl);
+                img.setAttributeNS(xlinkNS, "xlink:href", dataUrl);
+            } catch (err) {
+                console.warn("Impossible d’embarquer l’image:", href, err);
+            }
+        }));
+
+        // --- Supprime les liens (variante 1)
+        const links = svgClone.querySelectorAll("a");
+        links.forEach(link => {
+            link.removeAttribute("href");
+            link.removeAttribute("xlink:href");
+            link.removeAttributeNS(xlinkNS, "href");
+        });
+
+        // --- Sérialisation propre
+        const serializer = new XMLSerializer();
+        let source = serializer.serializeToString(svgClone);
+        source = source.replace(/<\?\s*xml[^>]*\?>\s*/i, "");
+        source = '<\?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' + source;
+
+        // --- Téléchargement
+        const blob = new Blob([source], {type: "image/svg+xml;charset=utf-8"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "graph.svg";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    };
 
 });
