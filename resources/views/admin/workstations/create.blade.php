@@ -114,7 +114,7 @@
                         <option> {{ old('model') }}</option>'
                     @endif
                     @foreach($model_list as $model)
-                        <option {{ old('model') == $manufacturer ? 'selected' : '' }}>{{$model}}</option>
+                        <option {{ old('model') == $model ? 'selected' : '' }}>{{$model}}</option>
                     @endforeach
                 </select>
                 @if($errors->has('model'))
