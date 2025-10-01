@@ -5,7 +5,7 @@ on:
     branches:
       - master
   pull_request:
-    branches: [master, develop]
+    branches: [ master, develop ]
 
 jobs:
 
@@ -30,8 +30,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-            php-version: '8.2'
-            extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
+          php-version: '8.2'
+          extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
 
       - name: Install dependencies
         run: composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
@@ -64,7 +64,7 @@ jobs:
 
       - name: Insert test data
         run: |
-          mysql mercator --host 127.0.0.1 --port 3306 -uroot < data/mercator_data_en.sql
+          mysql mercator --host 127.0.0.1 --port 3306 -uroot < database/data/mercator_data_en.sql
 
 # SKIP Test on GitHub
 #

@@ -1,15 +1,15 @@
 # Mercator Data
 
-This repository contains test data for the [Mercator](https://github.com/dbarzin/mercator) application,
+This folder contains test data for the [Mercator](https://github.com/dbarzin/mercator) application,
 along with utility scripts for database backup and translation of data content between languages.
 
 ## 📁 Contents
 
-| File / Pattern        | Description |
-|------------------------|-------------|
-| `backup.sh`            | Dumps the Mercator database to a file named `mercator_data.sql`. |
-| `translateSQL.py`      | Translates the content of `mercator_data.sql` into English, producing `mercator_data_translated.sql`. |
-| `*.sql`                | SQL files with sample/test data for development and demonstrations. |
+| File / Pattern    | Description                                                                                           |
+|-------------------|-------------------------------------------------------------------------------------------------------|
+| `backup.sh`       | Dumps the Mercator database to a file named `mercator_data.sql`.                                      |
+| `translateSQL.py` | Translates the content of `mercator_data.sql` into English, producing `mercator_data_translated.sql`. |
+| `*.sql`           | SQL files with sample/test data for development and demonstrations.                                   |
 
 ## 🛠 Requirements
 
