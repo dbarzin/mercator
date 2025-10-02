@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class PermissionsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -17,2144 +16,932 @@ class PermissionsTableSeeder extends Seeder
 
         \DB::table('permissions')->delete();
 
-        \DB::table('permissions')->insert(array (
-            0 =>
-            array (
+        \DB::table('permissions')->insert([
+            0 => [
                 'title' => 'user_management_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            1 =>
-            array (
+            ],
+            1 => [
                 'title' => 'permission_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            2 =>
-            array (
+            ],
+            2 => [
                 'title' => 'permission_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            3 =>
-            array (
+            ],
+            3 => [
                 'title' => 'permission_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            4 =>
-            array (
+            ],
+            4 => [
                 'title' => 'permission_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            5 =>
-            array (
+            ],
+            5 => [
                 'title' => 'permission_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            6 =>
-            array (
+            ],
+            6 => [
                 'title' => 'role_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            7 =>
-            array (
+            ],
+            7 => [
                 'title' => 'role_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            8 =>
-            array (
+            ],
+            8 => [
                 'title' => 'role_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            9 =>
-            array (
+            ],
+            9 => [
                 'title' => 'role_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            10 =>
-            array (
+            ],
+            10 => [
                 'title' => 'role_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            11 =>
-            array (
+            ],
+            11 => [
                 'title' => 'user_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            12 =>
-            array (
+            ],
+            12 => [
                 'title' => 'user_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            13 =>
-            array (
+            ],
+            13 => [
                 'title' => 'user_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            14 =>
-            array (
+            ],
+            14 => [
                 'title' => 'user_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            15 =>
-            array (
+            ],
+            15 => [
                 'title' => 'user_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            16 =>
-            array (
+            ],
+            16 => [
                 'title' => 'entity_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            17 =>
-            array (
+            ],
+            17 => [
                 'title' => 'entity_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            18 =>
-            array (
+            ],
+            18 => [
                 'title' => 'entity_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            19 =>
-            array (
+            ],
+            19 => [
                 'title' => 'entity_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            20 =>
-            array (
+            ],
+            20 => [
                 'title' => 'entity_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            21 =>
-            array (
+            ],
+            21 => [
                 'title' => 'ecosystem_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            22 =>
-            array (
+            ],
+            22 => [
                 'title' => 'relation_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            23 =>
-            array (
+            ],
+            23 => [
                 'title' => 'relation_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            24 =>
-            array (
+            ],
+            24 => [
                 'title' => 'relation_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            25 =>
-            array (
+            ],
+            25 => [
                 'title' => 'relation_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            26 =>
-            array (
+            ],
+            26 => [
                 'title' => 'relation_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            27 =>
-            array (
+            ],
+            27 => [
                 'title' => 'process_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            28 =>
-            array (
+            ],
+            28 => [
                 'title' => 'process_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            29 =>
-            array (
+            ],
+            29 => [
                 'title' => 'process_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            30 =>
-            array (
+            ],
+            30 => [
                 'title' => 'process_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            31 =>
-            array (
+            ],
+            31 => [
                 'title' => 'process_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            32 =>
-            array (
+            ],
+            32 => [
                 'title' => 'metier_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            33 =>
-            array (
+            ],
+            33 => [
                 'title' => 'operation_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            34 =>
-            array (
+            ],
+            34 => [
                 'title' => 'operation_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            35 =>
-            array (
+            ],
+            35 => [
                 'title' => 'operation_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            36 =>
-            array (
+            ],
+            36 => [
                 'title' => 'operation_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            37 =>
-            array (
+            ],
+            37 => [
                 'title' => 'operation_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            38 =>
-            array (
+            ],
+            38 => [
                 'title' => 'actor_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            39 =>
-            array (
+            ],
+            39 => [
                 'title' => 'actor_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            40 =>
-            array (
+            ],
+            40 => [
                 'title' => 'actor_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            41 =>
-            array (
+            ],
+            41 => [
                 'title' => 'actor_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            42 =>
-            array (
+            ],
+            42 => [
                 'title' => 'actor_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            43 =>
-            array (
+            ],
+            43 => [
                 'title' => 'activity_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            44 =>
-            array (
+            ],
+            44 => [
                 'title' => 'activity_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            45 =>
-            array (
+            ],
+            45 => [
                 'title' => 'activity_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            46 =>
-            array (
+            ],
+            46 => [
                 'title' => 'activity_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            47 =>
-            array (
+            ],
+            47 => [
                 'title' => 'activity_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            48 =>
-            array (
+            ],
+            48 => [
                 'title' => 'task_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            49 =>
-            array (
+            ],
+            49 => [
                 'title' => 'task_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            50 =>
-            array (
+            ],
+            50 => [
                 'title' => 'task_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            51 =>
-            array (
+            ],
+            51 => [
                 'title' => 'task_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            52 =>
-            array (
+            ],
+            52 => [
                 'title' => 'task_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            53 =>
-            array (
+            ],
+            53 => [
                 'title' => 'information_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            54 =>
-            array (
+            ],
+            54 => [
                 'title' => 'information_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            55 =>
-            array (
+            ],
+            55 => [
                 'title' => 'information_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            56 =>
-            array (
+            ],
+            56 => [
                 'title' => 'information_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            57 =>
-            array (
+            ],
+            57 => [
                 'title' => 'information_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            58 =>
-            array (
+            ],
+            58 => [
                 'title' => 'application_block_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            59 =>
-            array (
+            ],
+            59 => [
                 'title' => 'application_block_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            60 =>
-            array (
+            ],
+            60 => [
                 'title' => 'application_block_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            61 =>
-            array (
+            ],
+            61 => [
                 'title' => 'application_block_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            62 =>
-            array (
+            ],
+            62 => [
                 'title' => 'application_block_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            63 =>
-            array (
+            ],
+            63 => [
                 'title' => 'application_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            64 =>
-            array (
+            ],
+            64 => [
                 'title' => 'application_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            65 =>
-            array (
+            ],
+            65 => [
                 'title' => 'application_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            66 =>
-            array (
+            ],
+            66 => [
                 'title' => 'application_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            67 =>
-            array (
+            ],
+            67 => [
                 'title' => 'application_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            68 =>
-            array (
+            ],
+            68 => [
                 'title' => 'papplication_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            69 =>
-            array (
+            ],
+            69 => [
                 'title' => 'm_application_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            70 =>
-            array (
+            ],
+            70 => [
                 'title' => 'm_application_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            71 =>
-            array (
+            ],
+            71 => [
                 'title' => 'm_application_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            72 =>
-            array (
+            ],
+            72 => [
                 'title' => 'm_application_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            73 =>
-            array (
+            ],
+            73 => [
                 'title' => 'm_application_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            74 =>
-            array (
+            ],
+            74 => [
                 'title' => 'application_service_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            75 =>
-            array (
+            ],
+            75 => [
                 'title' => 'application_service_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            76 =>
-            array (
+            ],
+            76 => [
                 'title' => 'application_service_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            77 =>
-            array (
+            ],
+            77 => [
                 'title' => 'application_service_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            78 =>
-            array (
+            ],
+            78 => [
                 'title' => 'application_service_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            79 =>
-            array (
+            ],
+            79 => [
                 'title' => 'database_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            80 =>
-            array (
+            ],
+            80 => [
                 'title' => 'database_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            81 =>
-            array (
+            ],
+            81 => [
                 'title' => 'database_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            82 =>
-            array (
+            ],
+            82 => [
                 'title' => 'database_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            83 =>
-            array (
+            ],
+            83 => [
                 'title' => 'database_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            84 =>
-            array (
+            ],
+            84 => [
                 'title' => 'flux_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            85 =>
-            array (
+            ],
+            85 => [
                 'title' => 'flux_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            86 =>
-            array (
+            ],
+            86 => [
                 'title' => 'flux_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            87 =>
-            array (
+            ],
+            87 => [
                 'title' => 'flux_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            88 =>
-            array (
+            ],
+            88 => [
                 'title' => 'flux_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            89 =>
-            array (
+            ],
+            89 => [
                 'title' => 'zone_admin_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            90 =>
-            array (
+            ],
+            90 => [
                 'title' => 'zone_admin_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            91 =>
-            array (
+            ],
+            91 => [
                 'title' => 'zone_admin_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            92 =>
-            array (
+            ],
+            92 => [
                 'title' => 'zone_admin_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            93 =>
-            array (
+            ],
+            93 => [
                 'title' => 'zone_admin_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            94 =>
-            array (
+            ],
+            94 => [
                 'title' => 'administration_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            95 =>
-            array (
+            ],
+            95 => [
                 'title' => 'annuaire_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            96 =>
-            array (
+            ],
+            96 => [
                 'title' => 'annuaire_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            97 =>
-            array (
+            ],
+            97 => [
                 'title' => 'annuaire_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            98 =>
-            array (
+            ],
+            98 => [
                 'title' => 'annuaire_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            99 =>
-            array (
+            ],
+            99 => [
                 'title' => 'annuaire_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            100 =>
-            array (
+            ],
+            100 => [
                 'title' => 'forest_ad_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            101 =>
-            array (
+            ],
+            101 => [
                 'title' => 'forest_ad_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            102 =>
-            array (
+            ],
+            102 => [
                 'title' => 'forest_ad_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            103 =>
-            array (
+            ],
+            103 => [
                 'title' => 'forest_ad_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            104 =>
-            array (
+            ],
+            104 => [
                 'title' => 'forest_ad_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            105 =>
-            array (
+            ],
+            105 => [
                 'title' => 'domaine_ad_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            106 =>
-            array (
+            ],
+            106 => [
                 'title' => 'domaine_ad_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            107 =>
-            array (
+            ],
+            107 => [
                 'title' => 'domaine_ad_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            108 =>
-            array (
+            ],
+            108 => [
                 'title' => 'domaine_ad_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            109 =>
-            array (
+            ],
+            109 => [
                 'title' => 'domaine_ad_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            110 =>
-            array (
+            ],
+            110 => [
                 'title' => 'infrastructure_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            111 =>
-            array (
+            ],
+            111 => [
                 'title' => 'network_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            112 =>
-            array (
+            ],
+            112 => [
                 'title' => 'network_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            113 =>
-            array (
+            ],
+            113 => [
                 'title' => 'network_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            114 =>
-            array (
+            ],
+            114 => [
                 'title' => 'network_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            115 =>
-            array (
+            ],
+            115 => [
                 'title' => 'network_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            116 =>
-            array (
+            ],
+            116 => [
                 'title' => 'subnetwork_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            117 =>
-            array (
+            ],
+            117 => [
                 'title' => 'subnetwork_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            118 =>
-            array (
+            ],
+            118 => [
                 'title' => 'subnetwork_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            119 =>
-            array (
+            ],
+            119 => [
                 'title' => 'subnetwork_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            120 =>
-            array (
+            ],
+            120 => [
                 'title' => 'subnetwork_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            121 =>
-            array (
+            ],
+            121 => [
                 'title' => 'gateway_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            122 =>
-            array (
+            ],
+            122 => [
                 'title' => 'gateway_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            123 =>
-            array (
+            ],
+            123 => [
                 'title' => 'gateway_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            124 =>
-            array (
+            ],
+            124 => [
                 'title' => 'gateway_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            125 =>
-            array (
+            ],
+            125 => [
                 'title' => 'gateway_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            126 =>
-            array (
+            ],
+            126 => [
                 'title' => 'external_connected_entity_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            127 =>
-            array (
+            ],
+            127 => [
                 'title' => 'external_connected_entity_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            128 =>
-            array (
+            ],
+            128 => [
                 'title' => 'external_connected_entity_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            129 =>
-            array (
+            ],
+            129 => [
                 'title' => 'external_connected_entity_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            130 =>
-            array (
+            ],
+            130 => [
                 'title' => 'external_connected_entity_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            131 =>
-            array (
+            ],
+            131 => [
                 'title' => 'network_switch_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            132 =>
-            array (
+            ],
+            132 => [
                 'title' => 'network_switch_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            133 =>
-            array (
+            ],
+            133 => [
                 'title' => 'network_switch_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            134 =>
-            array (
+            ],
+            134 => [
                 'title' => 'network_switch_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            135 =>
-            array (
+            ],
+            135 => [
                 'title' => 'network_switch_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            136 =>
-            array (
+            ],
+            136 => [
                 'title' => 'router_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            137 =>
-            array (
+            ],
+            137 => [
                 'title' => 'router_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            138 =>
-            array (
+            ],
+            138 => [
                 'title' => 'router_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            139 =>
-            array (
+            ],
+            139 => [
                 'title' => 'router_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            140 =>
-            array (
+            ],
+            140 => [
                 'title' => 'router_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            141 =>
-            array (
+            ],
+            141 => [
                 'title' => 'security_device_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            142 =>
-            array (
+            ],
+            142 => [
                 'title' => 'security_device_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            143 =>
-            array (
+            ],
+            143 => [
                 'title' => 'security_device_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            144 =>
-            array (
+            ],
+            144 => [
                 'title' => 'security_device_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            145 =>
-            array (
+            ],
+            145 => [
                 'title' => 'security_device_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            146 =>
-            array (
+            ],
+            146 => [
                 'title' => 'dhcp_server_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            147 =>
-            array (
+            ],
+            147 => [
                 'title' => 'dhcp_server_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            148 =>
-            array (
+            ],
+            148 => [
                 'title' => 'dhcp_server_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            149 =>
-            array (
+            ],
+            149 => [
                 'title' => 'dhcp_server_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            150 =>
-            array (
+            ],
+            150 => [
                 'title' => 'dhcp_server_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            151 =>
-            array (
+            ],
+            151 => [
                 'title' => 'dnsserver_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            152 =>
-            array (
+            ],
+            152 => [
                 'title' => 'dnsserver_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            153 =>
-            array (
+            ],
+            153 => [
                 'title' => 'dnsserver_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            154 =>
-            array (
+            ],
+            154 => [
                 'title' => 'dnsserver_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            155 =>
-            array (
+            ],
+            155 => [
                 'title' => 'dnsserver_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            156 =>
-            array (
+            ],
+            156 => [
                 'title' => 'logical_server_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            157 =>
-            array (
+            ],
+            157 => [
                 'title' => 'logical_server_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            158 =>
-            array (
+            ],
+            158 => [
                 'title' => 'logical_server_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            159 =>
-            array (
+            ],
+            159 => [
                 'title' => 'logical_server_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            160 =>
-            array (
+            ],
+            160 => [
                 'title' => 'logical_server_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            161 =>
-            array (
+            ],
+            161 => [
                 'title' => 'physicalinfrastructure_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            162 =>
-            array (
+            ],
+            162 => [
                 'title' => 'site_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            163 =>
-            array (
+            ],
+            163 => [
                 'title' => 'site_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            164 =>
-            array (
+            ],
+            164 => [
                 'title' => 'site_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            165 =>
-            array (
+            ],
+            165 => [
                 'title' => 'site_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            166 =>
-            array (
+            ],
+            166 => [
                 'title' => 'site_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            167 =>
-            array (
+            ],
+            167 => [
                 'title' => 'building_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            168 =>
-            array (
+            ],
+            168 => [
                 'title' => 'building_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            169 =>
-            array (
+            ],
+            169 => [
                 'title' => 'building_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            170 =>
-            array (
+            ],
+            170 => [
                 'title' => 'building_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            171 =>
-            array (
+            ],
+            171 => [
                 'title' => 'building_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            172 =>
-            array (
+            ],
+            172 => [
                 'title' => 'bay_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            173 =>
-            array (
+            ],
+            173 => [
                 'title' => 'bay_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            174 =>
-            array (
+            ],
+            174 => [
                 'title' => 'bay_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            175 =>
-            array (
+            ],
+            175 => [
                 'title' => 'bay_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            176 =>
-            array (
+            ],
+            176 => [
                 'title' => 'bay_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            177 =>
-            array (
+            ],
+            177 => [
                 'title' => 'physical_server_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            178 =>
-            array (
+            ],
+            178 => [
                 'title' => 'physical_server_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            179 =>
-            array (
+            ],
+            179 => [
                 'title' => 'physical_server_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            180 =>
-            array (
+            ],
+            180 => [
                 'title' => 'physical_server_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            181 =>
-            array (
+            ],
+            181 => [
                 'title' => 'physical_server_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            182 =>
-            array (
+            ],
+            182 => [
                 'title' => 'workstation_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            183 =>
-            array (
+            ],
+            183 => [
                 'title' => 'workstation_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            184 =>
-            array (
+            ],
+            184 => [
                 'title' => 'workstation_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            185 =>
-            array (
+            ],
+            185 => [
                 'title' => 'workstation_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            186 =>
-            array (
+            ],
+            186 => [
                 'title' => 'workstation_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            187 =>
-            array (
+            ],
+            187 => [
                 'title' => 'storage_device_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            188 =>
-            array (
+            ],
+            188 => [
                 'title' => 'storage_device_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            189 =>
-            array (
+            ],
+            189 => [
                 'title' => 'storage_device_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            190 =>
-            array (
+            ],
+            190 => [
                 'title' => 'storage_device_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            191 =>
-            array (
+            ],
+            191 => [
                 'title' => 'storage_device_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            192 =>
-            array (
+            ],
+            192 => [
                 'title' => 'peripheral_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            193 =>
-            array (
+            ],
+            193 => [
                 'title' => 'peripheral_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            194 =>
-            array (
+            ],
+            194 => [
                 'title' => 'peripheral_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            195 =>
-            array (
+            ],
+            195 => [
                 'title' => 'peripheral_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            196 =>
-            array (
+            ],
+            196 => [
                 'title' => 'peripheral_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            197 =>
-            array (
+            ],
+            197 => [
                 'title' => 'phone_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            198 =>
-            array (
+            ],
+            198 => [
                 'title' => 'phone_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            199 =>
-            array (
+            ],
+            199 => [
                 'title' => 'phone_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            200 =>
-            array (
+            ],
+            200 => [
                 'title' => 'phone_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            201 =>
-            array (
+            ],
+            201 => [
                 'title' => 'phone_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            202 =>
-            array (
+            ],
+            202 => [
                 'title' => 'physical_switch_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            203 =>
-            array (
+            ],
+            203 => [
                 'title' => 'physical_switch_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            204 =>
-            array (
+            ],
+            204 => [
                 'title' => 'physical_switch_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            205 =>
-            array (
+            ],
+            205 => [
                 'title' => 'physical_switch_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            206 =>
-            array (
+            ],
+            206 => [
                 'title' => 'physical_switch_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            207 =>
-            array (
+            ],
+            207 => [
                 'title' => 'physical_router_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            208 =>
-            array (
+            ],
+            208 => [
                 'title' => 'physical_router_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            209 =>
-            array (
+            ],
+            209 => [
                 'title' => 'physical_router_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            210 =>
-            array (
+            ],
+            210 => [
                 'title' => 'physical_router_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            211 =>
-            array (
+            ],
+            211 => [
                 'title' => 'physical_router_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            212 =>
-            array (
+            ],
+            212 => [
                 'title' => 'wifi_terminal_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            213 =>
-            array (
+            ],
+            213 => [
                 'title' => 'wifi_terminal_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            214 =>
-            array (
+            ],
+            214 => [
                 'title' => 'wifi_terminal_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            215 =>
-            array (
+            ],
+            215 => [
                 'title' => 'wifi_terminal_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            216 =>
-            array (
+            ],
+            216 => [
                 'title' => 'wifi_terminal_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            217 =>
-            array (
+            ],
+            217 => [
                 'title' => 'physical_security_device_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            218 =>
-            array (
+            ],
+            218 => [
                 'title' => 'physical_security_device_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            219 =>
-            array (
+            ],
+            219 => [
                 'title' => 'physical_security_device_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            220 =>
-            array (
+            ],
+            220 => [
                 'title' => 'physical_security_device_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            221 =>
-            array (
+            ],
+            221 => [
                 'title' => 'physical_security_device_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            222 =>
-            array (
+            ],
+            222 => [
                 'title' => 'wan_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            223 =>
-            array (
+            ],
+            223 => [
                 'title' => 'wan_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            224 =>
-            array (
+            ],
+            224 => [
                 'title' => 'wan_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            225 =>
-            array (
+            ],
+            225 => [
                 'title' => 'wan_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            226 =>
-            array (
+            ],
+            226 => [
                 'title' => 'wan_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            227 =>
-            array (
+            ],
+            227 => [
                 'title' => 'man_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            228 =>
-            array (
+            ],
+            228 => [
                 'title' => 'man_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            229 =>
-            array (
+            ],
+            229 => [
                 'title' => 'man_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            230 =>
-            array (
+            ],
+            230 => [
                 'title' => 'man_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            231 =>
-            array (
+            ],
+            231 => [
                 'title' => 'man_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            232 =>
-            array (
+            ],
+            232 => [
                 'title' => 'lan_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            233 =>
-            array (
+            ],
+            233 => [
                 'title' => 'lan_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            234 =>
-            array (
+            ],
+            234 => [
                 'title' => 'lan_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            235 =>
-            array (
+            ],
+            235 => [
                 'title' => 'lan_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            236 =>
-            array (
+            ],
+            236 => [
                 'title' => 'lan_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            237 =>
-            array (
+            ],
+            237 => [
                 'title' => 'vlan_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            238 =>
-            array (
+            ],
+            238 => [
                 'title' => 'vlan_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            239 =>
-            array (
+            ],
+            239 => [
                 'title' => 'vlan_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            240 =>
-            array (
+            ],
+            240 => [
                 'title' => 'vlan_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            241 =>
-            array (
+            ],
+            241 => [
                 'title' => 'vlan_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            242 =>
-            array (
+            ],
+            242 => [
                 'title' => 'application_module_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            243 =>
-            array (
+            ],
+            243 => [
                 'title' => 'application_module_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            244 =>
-            array (
+            ],
+            244 => [
                 'title' => 'application_module_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            245 =>
-            array (
+            ],
+            245 => [
                 'title' => 'application_module_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            246 =>
-            array (
+            ],
+            246 => [
                 'title' => 'application_module_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            247 =>
-            array (
+            ],
+            247 => [
                 'title' => 'audit_log_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            248 =>
-            array (
+            ],
+            248 => [
                 'title' => 'audit_log_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            249 =>
-            array (
+            ],
+            249 => [
                 'title' => 'macro_processus_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            250 =>
-            array (
+            ],
+            250 => [
                 'title' => 'macro_processus_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            251 =>
-            array (
+            ],
+            251 => [
                 'title' => 'macro_processus_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            252 =>
-            array (
+            ],
+            252 => [
                 'title' => 'macro_processus_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            253 =>
-            array (
+            ],
+            253 => [
                 'title' => 'macro_processus_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            254 =>
-            array (
+            ],
+            254 => [
                 'title' => 'configuration_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            255 =>
-            array (
+            ],
+            255 => [
                 'title' => 'profile_password_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            256 =>
-            array (
+            ],
+            256 => [
                 'title' => 'certificate_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            257 =>
-            array (
+            ],
+            257 => [
                 'title' => 'certificate_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            258 =>
-            array (
+            ],
+            258 => [
                 'title' => 'certificate_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            259 =>
-            array (
+            ],
+            259 => [
                 'title' => 'certificate_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            260 =>
-            array (
+            ],
+            260 => [
                 'title' => 'certificate_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            261 =>
-            array (
+            ],
+            261 => [
                 'title' => 'configure',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            262 =>
-            array (
+            ],
+            262 => [
                 'title' => 'physical_link_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            263 =>
-            array (
+            ],
+            263 => [
                 'title' => 'physical_link_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            264 =>
-            array (
+            ],
+            264 => [
                 'title' => 'physical_link_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            265 =>
-            array (
+            ],
+            265 => [
                 'title' => 'physical_link_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            266 =>
-            array (
+            ],
+            266 => [
                 'title' => 'physical_link_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            267 =>
-            array (
+            ],
+            267 => [
                 'title' => 'gdpr_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            268 =>
-            array (
+            ],
+            268 => [
                 'title' => 'security_control_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            269 =>
-            array (
+            ],
+            269 => [
                 'title' => 'security_control_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            270 =>
-            array (
+            ],
+            270 => [
                 'title' => 'security_control_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            271 =>
-            array (
+            ],
+            271 => [
                 'title' => 'security_control_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            272 =>
-            array (
+            ],
+            272 => [
                 'title' => 'security_control_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            273 =>
-            array (
+            ],
+            273 => [
                 'title' => 'data_processing_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            274 =>
-            array (
+            ],
+            274 => [
                 'title' => 'data_processing_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            275 =>
-            array (
+            ],
+            275 => [
                 'title' => 'data_processing_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            276 =>
-            array (
+            ],
+            276 => [
                 'title' => 'data_processing_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            277 =>
-            array (
+            ],
+            277 => [
                 'title' => 'data_processing_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            278 =>
-            array (
+            ],
+            278 => [
                 'title' => 'patching_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            279 =>
-            array (
+            ],
+            279 => [
                 'title' => 'patching_make',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            280 =>
-            array (
+            ],
+            280 => [
                 'title' => 'cluster_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            281 =>
-            array (
+            ],
+            281 => [
                 'title' => 'cluster_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            282 =>
-            array (
+            ],
+            282 => [
                 'title' => 'cluster_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            283 =>
-            array (
+            ],
+            283 => [
                 'title' => 'cluster_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            284 =>
-            array (
+            ],
+            284 => [
                 'title' => 'cluster_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            285 =>
-            array (
+            ],
+            285 => [
                 'title' => 'logical_flow_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            286 =>
-            array (
+            ],
+            286 => [
                 'title' => 'logical_flow_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            287 =>
-            array (
+            ],
+            287 => [
                 'title' => 'logical_flow_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            288 =>
-            array (
+            ],
+            288 => [
                 'title' => 'logical_flow_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            289 =>
-            array (
+            ],
+            289 => [
                 'title' => 'logical_flow_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            290 =>
-            array (
+            ],
+            290 => [
                 'title' => 'admin_user_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            291 =>
-            array (
+            ],
+            291 => [
                 'title' => 'admin_user_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            292 =>
-            array (
+            ],
+            292 => [
                 'title' => 'admin_user_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            293 =>
-            array (
+            ],
+            293 => [
                 'title' => 'admin_user_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            294 =>
-            array (
+            ],
+            294 => [
                 'title' => 'admin_user_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            295 =>
-            array (
+            ],
+            295 => [
                 'title' => 'graph_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            296 =>
-            array (
+            ],
+            296 => [
                 'title' => 'graph_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            297 =>
-            array (
+            ],
+            297 => [
                 'title' => 'graph_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            298 =>
-            array (
+            ],
+            298 => [
                 'title' => 'graph_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            299 =>
-            array (
+            ],
+            299 => [
                 'title' => 'graph_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            300 =>
-            array (
+            ],
+            300 => [
                 'title' => 'container_create',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            301 =>
-            array (
+            ],
+            301 => [
                 'title' => 'container_edit',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            302 =>
-            array (
+            ],
+            302 => [
                 'title' => 'container_show',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            303 =>
-            array (
+            ],
+            303 => [
                 'title' => 'container_delete',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            304 =>
-            array (
+            ],
+            304 => [
                 'title' => 'container_access',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-        ));
-
+            ],
+            305 => [
+                'title' => 'tools_access',
+            ],
+            306 => [
+                'title' => 'explore_access',
+            ],
+            307 => [
+                'title' => 'reports_access',
+            ],
+        ]);
 
     }
 }

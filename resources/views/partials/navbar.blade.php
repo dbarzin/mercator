@@ -78,28 +78,34 @@
                         @endcan
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="menu3" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">{{ trans('panel.menu.tools') }}</a>
-                    <ul class="dropdown-menu" aria-labelledby="menu3">
-                        @can('graph_access')
-                            <li><a class="dropdown-item" href="/admin/graphs">
-                                    <i class="bi bi-map-fill"></i>{{ trans('cruds.graph.title') }}</a>
-                            </li>
-                        @endcan
-                        <li><a class="dropdown-item" href="/admin/report/explore">
-                                <i class="bi bi-globe2"></i>{{ trans('panel.menu.explore') }}</a>
-                        </li>
-                        @can('patching_access')
-                            <li><a class="dropdown-item" href="/admin/patching/index">
-                                    <i class="bi bi-tools"></i>{{ trans('panel.menu.patching') }}</a>
-                            </li>
-                        @endcan
-                        <li><a class="dropdown-item" href="/admin/doc/report">
-                                <i class="bi bi-file-earmark-fill"></i>{{ trans('panel.menu.reports') }}</a>
-                        </li>
-                    </ul>
-                </li>
+                @can('tools_access')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menu3" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">{{ trans('panel.menu.tools') }}</a>
+                        <ul class="dropdown-menu" aria-labelledby="menu3">
+                            @can('graph_access')
+                                <li><a class="dropdown-item" href="/admin/graphs">
+                                        <i class="bi bi-map-fill"></i>{{ trans('cruds.graph.title') }}</a>
+                                </li>
+                            @endcan
+                            @can('explore_access')
+                                <li><a class="dropdown-item" href="/admin/report/explore">
+                                        <i class="bi bi-globe2"></i>{{ trans('panel.menu.explore') }}</a>
+                                </li>
+                            @endcan
+                            @can('patching_access')
+                                <li><a class="dropdown-item" href="/admin/patching/index">
+                                        <i class="bi bi-tools"></i>{{ trans('panel.menu.patching') }}</a>
+                                </li>
+                            @endcan
+                            @can('reports_access')
+                                <li><a class="dropdown-item" href="/admin/doc/report">
+                                        <i class="bi bi-file-earmark-fill"></i>{{ trans('panel.menu.reports') }}</a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcan
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="menu4" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">{{ trans('panel.menu.help') }}</a>
