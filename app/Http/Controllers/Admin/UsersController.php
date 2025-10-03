@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Gate;
-use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -34,9 +33,6 @@ class UsersController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        // Hash password
-        $request['password'] = Hash::make($request['password']);
-
         $user = User::create($request->all());
 
         // Save roles
@@ -58,9 +54,6 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        // Hash password
-        $request['password'] = Hash::make($request['password']);
-
         $user->update($request->all());
 
         $user->roles()->sync($request->input('roles', []));
