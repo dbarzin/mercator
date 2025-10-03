@@ -158,7 +158,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label for="src">{{ trans('cruds.externalConnectedEntity.fields.src') }}</label>
+                            <label for="src">{{ trans('cruds.externalConnectedEntity.fields.src_desc') }}</label>
                             <input class="form-control {{ $errors->has('src_desc') ? 'is-invalid' : '' }}" type="text"
                                    name="src_desc" id="src_desc" value="{{ old('src_desc', '') }}">
                             @if($errors->has('src_desc'))
@@ -172,7 +172,7 @@
 
                     <div class="col-sm">
                         <div class="form-group">
-                            <label for="dest">{{ trans('cruds.externalConnectedEntity.fields.dest') }}</label>
+                            <label for="dest">{{ trans('cruds.externalConnectedEntity.fields.dest_desc') }}</label>
                             <input class="form-control {{ $errors->has('dest_desc') ? 'is-invalid' : '' }}" type="text"
                                    name="dest_desc" id="dest_desc" value="{{ old('dest_desc', '') }}">
                             @if($errors->has('dest'))
@@ -188,6 +188,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
+                            <label for="dest">{{ trans('cruds.externalConnectedEntity.fields.src') }}</label>
                             <input class="form-control {{ $errors->has('src') ? 'is-invalid' : '' }}" type="text"
                                    name="src" id="src" value="{{ old('src', '') }}">
                             @if($errors->has('src'))
@@ -201,8 +202,9 @@
 
                     <div class="col-sm">
                         <div class="form-group">
+                            <label for="dest">{{ trans('cruds.externalConnectedEntity.fields.dest') }}</label>
                             <input class="form-control {{ $errors->has('dest') ? 'is-invalid' : '' }}" type="text"
-                                   name="dest" id="dest" value="{{ old('src', '') }}">
+                                   name="dest" id="dest" value="{{ old('dest', '') }}">
                             @if($errors->has('dest'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('dest') }}
