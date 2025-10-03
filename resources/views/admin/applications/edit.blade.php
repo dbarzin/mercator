@@ -78,7 +78,15 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="iconSelect">{{ trans('global.icon_select') }}</label>
-                            <select id="iconSelect" name="iconSelect" class="form-control"></select>
+                            <select id="iconSelect"
+                                    name="iconSelect"
+                                    class="form-control js-icon-picker"
+                                    data-icons='@json($icons)'
+                                    data-selected="{{ $application->icon_id ?? '-1' }}"
+                                    data-default-img="{{ asset('images/application.png') }}"
+                                    data-url-template="{{ route('admin.documents.show', ':id') }}"
+                                    data-upload="#iconFile">
+                            </select>
                         </div>
                         <div class="form-group">
                             <input type="file" id="iconFile" name="iconFile" accept="image/png"/>
@@ -860,76 +868,6 @@
                 }
             });
 
-            // ---------------------------------------------------------------------
-            // Initialize imageSelect
-            imagesData =
-                [
-                    {
-                        value: '-1',
-                        img: '/images/application.png',
-                        imgWidth: '120px',
-                        imgHeight: '120px',
-                        selected: {{ $application->icon_id === null ? "true" : "false"}},
-                    },
-                        @foreach($icons as  $icon)
-                    {
-                        value: '{{ $icon }}',
-                        img: '{{ route('admin.documents.show', $icon) }}',
-                        imgWidth: '120px',
-                        imgHeight: '120px',
-                        selected: {{ $application->icon_id === $icon ? "true" : "false" }},
-                    },
-                    @endforeach
-                ];
-
-            // Initialize the Dynamic Selects
-            dynamicSelect = new DynamicSelect('#iconSelect', {
-                columns: 2,
-                height: '140px',
-                width: '160px',
-                dropdownWidth: '300px',
-                placeholder: 'Select an icon',
-                data: imagesData,
-            });
-
-            // Handle file upload and verification
-            $('#iconFile').on('change', function (e) {
-                const file = e.target.files[0];
-
-                if (file && file.type === 'image/png') {
-                    const img = new Image();
-                    img.src = URL.createObjectURL(file);
-
-                    img.onload = function () {
-                        // Check size
-                        if (img.size > 65535) {
-                            alert('Image size must be < 65kb');
-                            return;
-                        }
-                        if ((img.width > 255) || (img.height > 255)) {
-                            alert('Could not be more than 256x256 pixels.');
-                            return;
-                        }
-
-                        // Encode the image in base64
-                        const reader = new FileReader();
-                        reader.onload = function (event) {
-                            // Add the image to the select2 options
-                            imagesData.push(
-                                {
-                                    value: file.name,
-                                    img: event.target.result,
-                                    imgHeight: '100px',
-                                });
-                            // refresh
-                            dynamicSelect.refresh(imagesData, file.name);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                } else {
-                    alert('Select a PNG image.');
-                }
-            });
 
         });
     </script>

@@ -300,4 +300,173 @@ document.addEventListener("DOMContentLoaded", function () {
         URL.revokeObjectURL(url);
     });
 
+    // =======================================================
+    // Image Select
+    // =======================================================
+
+    (function ($) {
+        // Construit le dataset pour DynamicSelect à partir du <select> et de ses data-*
+        function buildImagesData($select) {
+            const ds = $select.data();
+            const icons = Array.isArray(ds.icons) ? ds.icons : [];
+            const selected = String(ds.selected ?? $select.val() ?? '-1');
+            const imgWidth = '120px';
+            const imgHeight = '120px';
+
+            const list = [];
+
+            // entrée "par défaut"
+            list.push({
+                value: '-1',
+                img: ds.defaultImg,
+                imgWidth,
+                imgHeight,
+                selected: (selected === '-1' || selected === ''),
+            });
+
+            // entrées depuis la liste d'IDs
+            icons.forEach((id) => {
+                const value = String(id);
+                list.push({
+                    value,
+                    img: String(ds.urlTemplate).replace(':id', value),
+                    imgWidth,
+                    imgHeight,
+                    selected: value === selected,
+                });
+            });
+
+            return {list, selected};
+        }
+
+        // Récupérer la valeur courante depuis le plugin (fallback si API différente)
+        function tryGetValue(dynamicSelect, fallback) {
+            if (dynamicSelect && typeof dynamicSelect.getValue === 'function') {
+                return dynamicSelect.getValue();
+            }
+            if (dynamicSelect && typeof dynamicSelect.value !== 'undefined') {
+                return dynamicSelect.value;
+            }
+            if (dynamicSelect && typeof dynamicSelect.selectedValue !== 'undefined') {
+                return dynamicSelect.selectedValue;
+            }
+            return fallback ?? '';
+        }
+
+        // Attacher la gestion d’upload (optionnelle)
+        function attachUploadHandler($select, dynamicSelect, imagesData) {
+            const uploadSelector = $select.data('upload');
+            if (!uploadSelector) return;
+
+            const $file = $(uploadSelector);
+            if (!$file.length) return;
+
+            $file.on('change', function (e) {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+
+                if (file.type !== 'image/png') {
+                    alert('Select a PNG image.');
+                    return;
+                }
+                // taille du fichier (utiliser file.size, pas img.size)
+                if (file.size > 65535) { // ~65 KB
+                    alert('Image size must be < 65KB');
+                    return;
+                }
+
+                const tmpUrl = URL.createObjectURL(file);
+                const probe = new Image();
+
+                probe.onload = function () {
+                    // borne stricte 256x256
+                    if (probe.width > 256 || probe.height > 256) {
+                        alert('Could not be more than 256x256 pixels.');
+                        URL.revokeObjectURL(tmpUrl);
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (ev) {
+                        const newValue = file.name; // adapte si besoin (id unique, etc.)
+
+                        // 1) Ajouter la nouvelle icône dans la liste
+                        imagesData.push({
+                            value: newValue,
+                            img: ev.target.result,  // base64 pour l’aperçu
+                            imgHeight: '100px',
+                        });
+
+                        // 2) Rafraîchir + sélectionner la nouvelle valeur
+                        if (typeof dynamicSelect.refresh === 'function') {
+                            dynamicSelect.refresh(imagesData, newValue);
+                        }
+                        // fallback si refresh n’applique pas la sélection
+                        if (typeof dynamicSelect.setValue === 'function') {
+                            dynamicSelect.setValue(newValue);
+                        }
+
+                        // 3) Synchroniser la valeur du <select> (ce qui sera posté)
+                        $select.val(newValue).trigger('change');
+                    };
+                    reader.readAsDataURL(file);
+
+                    URL.revokeObjectURL(tmpUrl);
+                };
+
+                probe.onerror = function () {
+                    URL.revokeObjectURL(tmpUrl);
+                    alert('Invalid image file.');
+                };
+
+                probe.src = tmpUrl;
+            });
+        }
+
+        // Initialisation d’un picker
+        function initImageSelect($select) {
+            if (!$select.length) return;
+            if (typeof window.DynamicSelect !== 'function') return;
+
+            const {list: imagesData, selected} = buildImagesData($select);
+
+            // s’assurer que le <select> a la bonne valeur initiale
+            $select.val(selected);
+
+            const dynamicSelect = new DynamicSelect('#' + $select.attr('id'), {
+                columns: 2,
+                height: '140px',
+                width: '160px',
+                dropdownWidth: '300px',
+                placeholder: 'Select an icon',
+                data: imagesData,
+                // callbacks si supportés par le plugin
+                onChange: function (value) {
+                    $select.val(value).trigger('change');
+                },
+                onSelect: function (value) {
+                    $select.val(value).trigger('change');
+                }
+            });
+
+            // stocker la ref si utile ailleurs
+            $select.data('dynamicSelect', dynamicSelect);
+
+            // synchroniser à l’init (filet de sécurité)
+            $select.val(tryGetValue(dynamicSelect, selected)).trigger('change');
+
+            // Attacher l’upload si présent
+            attachUploadHandler($select, dynamicSelect, imagesData);
+        }
+
+        // Auto-init sur toutes les pages
+        $(function () {
+            $('select.js-icon-picker[data-icons]').each(function () {
+                initImageSelect($(this));
+            });
+        });
+
+    })(jQuery);
+
+
 });
