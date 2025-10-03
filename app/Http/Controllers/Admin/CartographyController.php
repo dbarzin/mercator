@@ -7,12 +7,10 @@ namespace App\Http\Controllers\Admin;
 // ecosystem
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
-// information system
 use App\Models\Actor;
 use App\Models\Annuaire;
 use App\Models\ApplicationBlock;
 use App\Models\ApplicationModule;
-// Applications
 use App\Models\ApplicationService;
 use App\Models\Bay;
 use App\Models\Building;
@@ -22,11 +20,9 @@ use App\Models\Container;
 use App\Models\Database;
 use App\Models\DhcpServer;
 use App\Models\Dnsserver;
-// Administration
 use App\Models\DomaineAd;
 use App\Models\Entity;
 use App\Models\ExternalConnectedEntity;
-// Logique
 use App\Models\Flux;
 use App\Models\ForestAd;
 use App\Models\Gateway;
@@ -36,7 +32,6 @@ use App\Models\LogicalServer;
 use App\Models\MacroProcessus;
 use App\Models\Man;
 use App\Models\MApplication;
-// Physique
 use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
@@ -57,17 +52,25 @@ use App\Models\Task;
 use App\Models\Vlan;
 use App\Models\Wan;
 use App\Models\WifiTerminal;
-// PhpOffice
 use App\Models\Workstation;
 use App\Models\ZoneAdmin;
 use Auth;
-// Laravel
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Shared\Html;
+use Symfony\Component\HttpFoundation\Response;
+
+// information system
+// Applications
+// Administration
+// Logique
+// Physique
+// PhpOffice
+// Laravel
 
 class CartographyController extends Controller
 {
@@ -87,6 +90,8 @@ class CartographyController extends Controller
 
     public function cartography(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // Image paths
         $image_paths = [];
 

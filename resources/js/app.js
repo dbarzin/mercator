@@ -226,7 +226,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // ======================================================================
     // Download Graph as SVG
     // ======================================================================
-    document.getElementById("downloadSvg").onclick = async function (e) {
+    // document.getElementById("downloadSvg").onclick = async function (e) {
+    $("#downloadSvg").on("click", async function (e) {
         e.preventDefault();
 
         const svg = document.querySelector("#graph svg");
@@ -297,6 +298,6 @@ document.addEventListener("DOMContentLoaded", function () {
         a.click();
         a.remove();
         URL.revokeObjectURL(url);
-    };
+    });
 
 });

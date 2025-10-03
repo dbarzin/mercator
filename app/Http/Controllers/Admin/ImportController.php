@@ -80,7 +80,7 @@ class ImportController extends Controller
         return Excel::download(new GenericExport($data, $header), $modelName.'-'.Carbon::today()->format('Ymd').'.xlsx');
     }
 
-    private static function permission($modelName, $action)
+    public static function permission($modelName, $action)
     {
         return Str::snake($modelName, '_').'_'.$action;
     }
