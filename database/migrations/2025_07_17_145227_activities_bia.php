@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        
+
         Schema::table('activities', function (Blueprint $table) {
             // RTO / MTD : maximum acceptable downtime for an activity
             $table->time('recovery_time_objective')->nullable()->after('description');

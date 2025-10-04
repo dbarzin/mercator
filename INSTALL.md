@@ -99,7 +99,7 @@ Clear the cache
 
 To import the test database (optional)
 
-    sudo mysql mercator < data/mercator_data_en.sql
+    sudo mysql mercator < database/data/mercator_data_en.sql
 
 ## CPE Database (optional)
 

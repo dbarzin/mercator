@@ -50,6 +50,7 @@ class FluxController extends Controller
 
         // List
         $nature_list = Flux::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
+        $attributes_list = $this->getAttributes();
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
@@ -65,7 +66,8 @@ class FluxController extends Controller
             $items->put('DB_'.$key, $value);
         }
 
-        return view('admin.fluxes.create', compact('items', 'nature_list'));
+        return view('admin.fluxes.create',
+            compact('items', 'nature_list', 'attributes_list'));
     }
 
     public function store(StoreFluxRequest $request)
@@ -74,6 +76,7 @@ class FluxController extends Controller
         $flux->name = $request->name;
         $flux->nature = $request->nature;
         $flux->description = $request->description;
+        $flux->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Source item
         if (str_starts_with($request->src_id, 'APP_')) {
@@ -143,6 +146,7 @@ class FluxController extends Controller
 
         // List
         $nature_list = Flux::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
+        $attributes_list = $this->getAttributes();
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
@@ -180,7 +184,8 @@ class FluxController extends Controller
             $flux->dest_id = 'DB_'.$flux->database_dest_id;
         }
 
-        return view('admin.fluxes.edit', compact('items', 'nature_list', 'flux'));
+        return view('admin.fluxes.edit',
+            compact('items', 'nature_list', 'attributes_list', 'flux'));
     }
 
     public function update(UpdateFluxRequest $request, Flux $flux)
@@ -188,6 +193,7 @@ class FluxController extends Controller
         $flux->name = $request->get('name');
         $flux->nature = $request->nature;
         $flux->description = $request->get('description');
+        $flux->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Source item
         if (str_starts_with($request->src_id, 'APP_')) {
@@ -278,5 +284,24 @@ class FluxController extends Controller
         Flux::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Flux::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }
