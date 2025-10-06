@@ -55,6 +55,7 @@ use App\Models\WifiTerminal;
 use App\Models\Workstation;
 use App\Models\ZoneAdmin;
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -66,6 +67,7 @@ use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use Symfony\Component\HttpFoundation\Response;
 
 // information system
 // Application
@@ -87,6 +89,8 @@ class ReportController extends Controller
     */
     public function gdpr(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->macroprocess === null) {
             $request->session()->put('macroprocess', null);
             $macroprocess = null;
@@ -217,6 +221,8 @@ class ReportController extends Controller
     */
     public function ecosystem(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $perimeter = in_array($request->perimeter, $this::ALLOWED_PERIMETERS) ?
                    $request->perimeter : $this::SANITIZED_PERIMETER;
         $typefilter = $request->entity_type ??= 'All';
@@ -274,6 +280,8 @@ class ReportController extends Controller
 
     public function informationSystem(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->macroprocess === null) {
             $request->session()->put('macroprocess', null);
             $macroprocess = null;
@@ -428,6 +436,8 @@ class ReportController extends Controller
 
     public function applications(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->applicationBlock === null) {
             $request->session()->put('applicationBlock', null);
             $applicationBlock = null;
@@ -575,6 +585,8 @@ class ReportController extends Controller
 
     public function applicationFlows(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // Blocks
         if ($request->applicationBlocks === null) {
             $applicationBlocks = [];
@@ -744,6 +756,8 @@ class ReportController extends Controller
 
     public function logicalInfrastructure(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->network === null) {
             $request->session()->put('network', null);
             $network = null;
@@ -1063,6 +1077,8 @@ class ReportController extends Controller
 
     public function physicalInfrastructure(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->site === null) {
             $request->session()->put('site', null);
             $site = null;
@@ -1330,6 +1346,8 @@ class ReportController extends Controller
 
     public function networkInfrastructure(Request $request)
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->site === null) {
             $request->session()->put('site', null);
             $site = null;
@@ -1832,6 +1850,8 @@ class ReportController extends Controller
 
     public function entities()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $entities = Entity::All()->sortBy('name');
 
         $header = [
@@ -1897,6 +1917,8 @@ class ReportController extends Controller
 
     public function activityReport()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // get template
         $phpWord = new \PhpOffice\PhpWord\PhpWord;
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
@@ -2045,6 +2067,8 @@ class ReportController extends Controller
 
     public function activityList()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $register = DataProcessing::All()->sortBy('name');
 
         $header = [
@@ -2172,6 +2196,8 @@ class ReportController extends Controller
 
     public function applicationsByBlocks()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $applicationBlocks = ApplicationBlock::All()->sortBy('name');
         $applicationBlocks->load('applications');
 
@@ -2364,6 +2390,8 @@ class ReportController extends Controller
 
     public function directory()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $today = Carbon::today()->toDateString();
 
         $applications =
@@ -2652,6 +2680,8 @@ class ReportController extends Controller
 
     public function logicalServers()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'applications.applicationBlock');
 
@@ -2731,6 +2761,8 @@ class ReportController extends Controller
 
     public function externalAccess()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $accesses = ExternalConnectedEntity::All()->sortBy('name');
         $accesses->load('entity', 'network');
 
@@ -2806,6 +2838,8 @@ class ReportController extends Controller
 
     public function logicalServerConfigs()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'physicalServers');
 
@@ -2895,6 +2929,8 @@ class ReportController extends Controller
 
     public function securityNeeds()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // macroprocess - process - application - base de données - information
         $header = [];
         array_push(
@@ -3095,6 +3131,8 @@ class ReportController extends Controller
 
     public function physicalInventory()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $inventory = [];
 
         // for all sites
@@ -3173,6 +3211,8 @@ class ReportController extends Controller
 
     public function workstations()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $workstations = Workstation::All()->sortBy('name');
         $workstations->load('applications', 'site', 'building');
 
@@ -3255,6 +3295,8 @@ class ReportController extends Controller
 
     public function vlans()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vlans = Vlan::orderBy('vlans.name')->get();
         $vlans->load('subnetworks');
 
@@ -3395,6 +3437,8 @@ class ReportController extends Controller
 
     public function zones()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $subnetworks = Subnetwork::All()->sortBy('zone, address');
 
         return view('admin/reports/zones', compact('subnetworks'));
@@ -3460,6 +3504,8 @@ class ReportController extends Controller
 
     public function rto()
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $rows = [];
 
         // Charger les applications avec leurs activités

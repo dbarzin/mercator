@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-@can('external_connected_entity_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.external-connected-entities.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.externalConnectedEntity.title_singular') }}
-            </a>
+    @can('external_connected_entity_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a id="btn-new" class="btn btn-success" href="{{ route('admin.external-connected-entities.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.externalConnectedEntity.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.externalConnectedEntity.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.externalConnectedEntity.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <tr>
                         <th width="10">
 
@@ -38,7 +38,16 @@
                             {{ trans('cruds.externalConnectedEntity.fields.network') }}
                         </th>
                         <th>
+                            {{ trans('cruds.externalConnectedEntity.fields.subnetworks') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.externalConnectedEntity.fields.src_desc') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.externalConnectedEntity.fields.src') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.externalConnectedEntity.fields.dest_desc') }}
                         </th>
                         <th>
                             {{ trans('cruds.externalConnectedEntity.fields.dest') }}
@@ -47,8 +56,8 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @foreach($externalConnectedEntities as $key => $externalConnectedEntity)
                         <tr data-entry-id="{{ $externalConnectedEntity->id }}">
                             <td>
@@ -56,7 +65,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.external-connected-entities.show', $externalConnectedEntity->id) }}">
-                                {{ $externalConnectedEntity->name ?? '' }}
+                                    {{ $externalConnectedEntity->name ?? '' }}
                                 </a>
                             </td>
                             <td>
@@ -80,53 +89,68 @@
                                 @endif
                             </td>
                             <td>
-                                    {{ $externalConnectedEntity->src_desc }}
-                                    <br>
-                                    {{ $externalConnectedEntity->src }}
+                                @foreach($externalConnectedEntity->subnetworks as $subnetwork)
+                                    <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">{{ $subnetwork->name }} {{ $subnetwork->address!==null ? ('(' . $subnetwork->address . ')') : "" }}</a>
+                                    @if(!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
-                                    {{ $externalConnectedEntity->dest_desc }}
-                                    <br>
-                                    {{ $externalConnectedEntity->dest }}
+                                {{ $externalConnectedEntity->src_desc }}
                             </td>
-                            <td nowrao>
+                            <td>
+                                {{ $externalConnectedEntity->src }}
+                            </td>
+                            <td>
+                                {{ $externalConnectedEntity->dest_desc }}
+                            </td>
+                            <td>
+                                {{ $externalConnectedEntity->dest }}
+                            </td>
+                            <td nowrap>
                                 @can('external_connected_entity_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.external-connected-entities.show', $externalConnectedEntity->id) }}">
+                                    <a class="btn btn-xs btn-primary"
+                                       href="{{ route('admin.external-connected-entities.show', $externalConnectedEntity->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('external_connected_entity_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.external-connected-entities.edit', $externalConnectedEntity->id) }}">
+                                    <a class="btn btn-xs btn-info"
+                                       href="{{ route('admin.external-connected-entities.edit', $externalConnectedEntity->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('external_connected_entity_delete')
-                                    <form action="{{ route('admin.external-connected-entities.destroy', $externalConnectedEntity->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.external-connected-entities.destroy', $externalConnectedEntity->id) }}"
+                                          method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
-@parent
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.externalConnectedEntity.title_singular"),
-    'URL' => route('admin.external-connected-entities.massDestroy'),
-    'canDelete' => auth()->user()->can('external_connected_entity_delete') ? true : false
-));
-</script>
+    @parent
+    <script>
+        @include('partials.datatable', array(
+            'id' => '#dataTable',
+            'title' => trans("cruds.externalConnectedEntity.title_singular"),
+            'URL' => route('admin.external-connected-entities.massDestroy'),
+            'canDelete' => auth()->user()->can('external_connected_entity_delete') ? true : false
+        ));
+    </script>
 @endsection

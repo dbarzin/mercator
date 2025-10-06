@@ -16,13 +16,13 @@ use App\Models\Entity;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\Process;
-// use App\Services\CartographerService;
 use App\Models\User;
-// CoreUI Gates
 use Gate;
-// Laravel Gate
-use Illuminate\Support\Facades\Gate as LaravelGate;
 use Symfony\Component\HttpFoundation\Response;
+
+// use App\Services\CartographerService;
+// CoreUI Gates
+// Laravel Gate
 
 class MApplicationController extends Controller
 {
@@ -186,7 +186,7 @@ class MApplicationController extends Controller
         abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Check for cartographers
-        LaravelGate::authorize('is-cartographer-m-application', $application);
+        // LaravelGate::authorize('is-cartographer-m-application', $application);
 
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
@@ -336,7 +336,7 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // Check for cartographers
-        LaravelGate::authorize('is-cartographer-m-application', $application);
+        // LaravelGate::authorize('is-cartographer-m-application', $application);
 
         $application->delete();
 

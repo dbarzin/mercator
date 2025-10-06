@@ -1,4 +1,5 @@
 <?php
+
 return [
     'level_1' => [
         'description' => 'Granularité minimale de niveau 1 : informations indispensables.',
@@ -38,9 +39,9 @@ return [
         'schema' => 'Modèle de données',
         'tools' => 'Outils',
         'patching' => 'Correctifs',
+        'views' => 'Vues',
     ],
     'repartition' => 'Répartition par domaine',
     'site_title' => 'Mercator',
     'treemap' => 'Carte proportionnelle globale',
-    'views' => 'Vues',
 ];

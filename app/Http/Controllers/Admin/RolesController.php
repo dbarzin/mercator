@@ -115,8 +115,9 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Role is used
-        abort_if($role->users()->count() > 0, Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($role->users()->count() > 0) {
+            return back()->withErrors('This role is assigned to at least one user');
+        }
 
         $role->delete();
 

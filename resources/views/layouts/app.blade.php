@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ trans('panel.site_title') }}</title>
@@ -10,25 +11,16 @@
     @yield('styles')
 </head>
 <body class="d-flex flex-column justify-content-center align-items-center">
-    <div class="container">
-        @if(session('message'))
-            <div class="row mb-2">
-                <div class="col-lg-12">
-                    <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-                </div>
+<div class="container">
+    @if(session('message'))
+        <div class="row mb-2">
+            <div class="col-lg-12">
+                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
             </div>
-        @endif
-        @if($errors->count() > 0)
-            <div class="alert alert-danger">
-                <ul class="list-unstyled">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @yield("content")
-    </div>
-    @yield('scripts')
+        </div>
+    @endif
+    @yield("content")
+</div>
+@yield('scripts')
 </body>
 </html>

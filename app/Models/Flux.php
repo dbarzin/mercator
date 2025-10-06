@@ -17,12 +17,12 @@ class Flux extends Model
 
     public $table = 'fluxes';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -30,6 +30,7 @@ class Flux extends Model
 
     protected $fillable = [
         'name',
+        'attributes',
         'description',
         'application_source_id',
         'service_source_id',
@@ -42,9 +43,6 @@ class Flux extends Model
         'crypted',
         'bidirectional',
         'nature',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     public function source_id(): ?string

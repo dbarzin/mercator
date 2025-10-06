@@ -7,15 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Models\LogicalFlow;
 use App\Models\PhysicalLink;
 use App\Models\Subnetwork;
+use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
-
-// Framework
+use Symfony\Component\HttpFoundation\Response;
 
 class ExplorerController extends Controller
 {
     public function explore(Request $request)
     {
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         [$nodes, $edges] = $this->getData();
 
         return view('admin/reports/explore', compact('nodes', 'edges'));

@@ -125,6 +125,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | LDAP Parameters
+    |--------------------------------------------------------------------------
+    |
+    | read from .env files
+    |
+    */
+    'ldap_enabled' => (bool) env('LDAP_ENABLED', false),
+    'ldap_fallback_local' => (bool) env('LDAP_FALLBACK_LOCAL', true),
+    'ldap_auto_provision' => (bool) env('LDAP_AUTO_PROVISION', false),
+    'ldap_login_attributes' => env('LDAP_LOGIN_ATTRIBUTES', 'uid,cn,mail,sAMAccountName,userPrincipalName'),
+    'ldap_users_base_dn' => env('LDAP_USERS_BASE_DN'),
+    'ldap_scope' => env('LDAP_SCOPE', null),
+    'ldap_group' => env('LDAP_GROUP', null),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -229,13 +245,4 @@ return [
 
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom config
-    |--------------------------------------------------------------------------
-    */
-    'cartographers' => env('CARTOGRAPHERS', false),
-    'ldap_type' => env('LDAP_TYPE', 'AD'),
-    'ldap_scope' => env('LDAP_SCOPE', null),
-    'ldap_groups' => env('LDAP_GROUPS', null),
 ];

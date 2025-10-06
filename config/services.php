@@ -34,7 +34,18 @@ return [
         'client_id' => env('KEYCLOAK_CLIENT_ID'),
         'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
         'redirect' => env('KEYCLOAK_REDIRECT_URI'),
-        'base_url' => env('KEYCLOAK_BASE_URL'),  
-        'realms' => env('KEYCLOAK_REALM')   
-      ],
+        'base_url' => env('KEYCLOAK_BASE_URL'),
+        'realms' => env('KEYCLOAK_REALM'),
+    ],
+
+    'cpe' => [
+        'api_url' => env('CPE_API_URL', 'https://services.nvd.nist.gov/rest/json/cpes/2.0'),
+        'api_key' => env('NVD_API_KEY'), // optionnel
+    ],
+
+    'cpe_guesser' => [
+        'url' => env('CPE_GUESSER_URL', 'https://cpe-guesser.cve-search.org'),
+        'endpoint' => env('CPE_GUESSER_ENDPOINT', 'search'), // "search" ou "unique"
+        'timeout' => env('CPE_GUESSER_TIMEOUT', 6),
+    ],
 ];
