@@ -34,7 +34,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: check-db-ready
-          image: "bitnami/postgresql:17-debian-12"
+          image: "postgres:17"
           command: [ 'sh', '-c',
             'until pg_isready -h {{ .Values.postgresql.fullnameOverride }} -p 5432 -d {{ .Values.postgresql.auth.database }}  -U {{ .Values.postgresql.auth.username }} ;
           do echo waiting for database; sleep 10; done;' ]
