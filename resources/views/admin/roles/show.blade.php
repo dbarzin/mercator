@@ -2431,6 +2431,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-2">
+                    @php($permission = $permissions_sorted['explore'])
+                    <div class="form-switch form-switch-lg">
+                        <input class="form-check-input" type="checkbox" disabled name="permissions[]"
+                               data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][0][0] }}"
+                               value="{{ $permission['actions'][0][0] }}" {{ in_array($permission['actions'][0][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][0][0]) ? 'checked' : '' }}>
+                        <label>{{ trans('panel.menu.explore') }}</label>
+                    </div>
+                </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
@@ -2450,6 +2459,15 @@
                             <label class="form-check-label"
                                    for="for_{{ $permission['actions'][1][0] }}">{{ $permission['actions'][1][1] }}</label>
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @php($permission = $permissions_sorted['reports'])
+                    <div class="form-switch form-switch-lg">
+                        <input class="form-check-input" type="checkbox" disabled name="permissions[]"
+                               data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][0][0] }}"
+                               value="{{ $permission['actions'][0][0] }}" {{ in_array($permission['actions'][0][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][0][0]) ? 'checked' : '' }}>
+                        <label>{{ trans('panel.menu.reports') }}</label>
                     </div>
                 </div>
             </div>
