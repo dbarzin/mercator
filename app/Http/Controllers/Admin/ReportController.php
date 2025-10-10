@@ -1083,7 +1083,7 @@ class ReportController extends Controller
             $request->session()->put('site', null);
             $site = null;
             $request->session()->put('building', null);
-            $building = null;
+            $buildingId = null;
         } else {
             if ($request->site !== null) {
                 $site = intval($request->site);
@@ -1094,12 +1094,12 @@ class ReportController extends Controller
 
             if ($request->building === null) {
                 $request->session()->put('building', null);
-                $building = null;
+                $buildingId = null;
             } elseif ($request->building !== null) {
-                $building = intval($request->building);
-                $request->session()->put('building', $building);
+                $buildingId = intval($request->building);
+                $request->session()->put('building', $buildingId);
             } else {
-                $building = $request->session()->get('building');
+                $buildingId = $request->session()->get('building');
             }
         }
 
@@ -1110,10 +1110,37 @@ class ReportController extends Controller
 
             $all_buildings = Building::All()->sortBy('name')
                 ->where('site_id', '=', $site)->pluck('name', 'id');
-            if ($building === null) {
-                $buildings = Building::All()->sortBy('name')->where('site_id', '=', $site);
+            if ($buildingId === null) {
+                $buildings = Building::All()->where('site_id', '=', $site)->sortBy('name');
             } else {
-                $buildings = Building::All()->sortBy('name')->where('id', '=', $building);
+
+                $root = Building::find($buildingId);
+                if ($root != null) {
+                    $buildings = collect();
+                    // Get chidrends
+                    $frontier = collect([$root]);
+
+                    while ($frontier->isNotEmpty()) {
+                        $next = collect();
+
+                        foreach ($frontier as $node) {
+                            if (! $buildings->contains('id', $node->id)) {
+                                $buildings->push($node);
+                                $next = $next->merge($node->buildings);
+                            }
+                        }
+
+                        $frontier = $next;
+                    }
+                    // Get parents
+                    /*
+                    while ($root->building != null) {
+                        $buildings->push($root->building);
+                        $root = $root->building;
+                    }
+                    */
+                }
+
             }
 
             // Get all bays
@@ -1350,54 +1377,165 @@ class ReportController extends Controller
 
         if ($request->site === null) {
             $request->session()->put('site', null);
-            $site = null;
+            $siteId = null;
             $request->session()->put('building', null);
             $building = null;
         } else {
             if ($request->site !== null) {
-                $site = intval($request->site);
-                $request->session()->put('site', $site);
+                $siteId = intval($request->site);
+                $request->session()->put('site', $siteId);
             } else {
-                $site = $request->session()->get('site');
+                $siteId = $request->session()->get('site');
             }
 
             if ($request->buildings === null) {
                 $request->session()->put('buildings', null);
-                $buildings = null;
+                $buildingIds = null;
             } elseif ($request->buildings !== null) {
-                $buildings = $request->buildings;
-                $request->session()->put('buildings', $buildings);
+                $buildingIds = $request->buildings;
+                $request->session()->put('buildings', $buildingIds);
             } else {
-                $buildings = $request->session()->get('buildings');
+                $buildingIds = $request->session()->get('buildings');
             }
         }
 
         $all_sites = Site::All()->sortBy('name')->pluck('name', 'id');
 
-        if ($site !== null) {
-            $sites = Site::All()->sortBy('name')->where('id', '=', $site);
+        if ($siteId !== null) {
+            $sites = Site::where('id', '=', $siteId)->get();
+            $site = $sites->first();
 
-            $all_buildings = Building::All()->sortBy('name')
-                ->where('site_id', '=', $site)->pluck('name', 'id');
-            if ($buildings === null || (count($buildings) === 0)) {
-                $buildings = Building::All()
-                    ->sortBy('name')
-                    ->where('site_id', '=', $site);
+            $all_buildings = Building::query()
+                ->where('site_id',$siteId)
+                ->pluck('name', 'id');
+
+            if ($buildingIds === null || (count($buildingIds) === 0)) {
+                $buildings = Building::where('site_id', '=', $site->id)
+                    ->orderBy('name')->get();
             } else {
-                $buildings = Building::All()->sortBy('name')->whereIn('id', $buildings);
-            }
+                // ----------------------------------------------------
+                /*
+                $roots = Building::whereIn('id', $buildingIds)
+                    ->with('allChildren')
+                    ->get();
 
-            $bays = Bay::All()->sortBy('name')
-                ->filter(function ($item) use ($buildings) {
-                    foreach ($buildings as $building) {
-                        if ($item->room_id === $building->id) {
-                            return true;
+                $buildings = collect();
+                $seen = [];
+
+                $flatten = function ($node) use (&$flatten, &$buildings, &$seen) {
+                    if (isset($seen[$node->id])) {
+                        return;
+                    }
+                    $seen[$node->id] = true;
+                    $buildings->push($node);
+                    foreach ($node->allChildren as $child) {
+                        $flatten($child);
+                    }
+                };
+
+                foreach ($roots as $root) {
+                    $flatten($root);
+                }
+
+                $buildings = $buildings->unique('id')->values();
+                */
+
+                $buildings = collect();  // résultat final (Collection<Building>)
+                $seen = [];              // set d'IDs déjà vus (évite doublons)
+
+                $roots = Building::with('buildings')->findMany($buildingIds);
+
+// 2) Descendants (BFS) pour toutes les racines
+                $frontier = collect($roots);
+
+                while ($frontier->isNotEmpty()) {
+                    $next = collect();
+
+                    foreach ($frontier as $node) {
+                        if (!isset($seen[$node->id])) {
+                            $seen[$node->id] = true;
+                            $buildings->push($node);
+
+                            // enfants directs (relation hasMany 'buildings')
+                            // si tu as une relation récursive 'childrenRecursive', tu peux l'utiliser
+                            $next = $next->merge($node->buildings);
                         }
                     }
 
-                    return false;
-                });
+                    $frontier = $next;
+                }
 
+// 3) Parents (par paliers) jusqu'à ce que building_id soit null
+                $pending = $buildings
+                    ->pluck('building_id')   // parents directs des nœuds déjà collectés
+                    ->filter()
+                    ->unique()
+                    ->values();
+
+                while ($pending->isNotEmpty()) {
+                    // éviter de recharger des parents déjà vus
+                    $toFetch = $pending->reject(fn ($id) => isset($seen[$id]))->values();
+                    if ($toFetch->isEmpty()) {
+                        break;
+                    }
+
+                    // Charger en une requête les parents du palier courant
+                    $parents = Building::whereIn('id', $toFetch)->get();
+
+                    $nextIds = [];
+
+                    foreach ($parents as $parent) {
+                        if (!isset($seen[$parent->id])) {
+                            $seen[$parent->id] = true;
+                            $buildings->push($parent);
+
+                            if (!is_null($parent->building_id)) {
+                                $nextIds[] = $parent->building_id; // remonte d'un cran
+                            }
+                        }
+                    }
+
+                    $pending = collect($nextIds)->filter()->unique()->values();
+                }
+
+                $buildings = $buildings->values();
+
+                // ----------------------------------------------------
+            }
+
+            $buildingIds = $buildings->pluck('id');
+
+            $bays = Bay::query()
+                ->whereIn('room_id', $buildingIds)
+                ->orderBy('name')
+                ->get();
+            $bayIds = $bays->pluck('id');
+
+            /*
+            $bays = Bay::All()->sortBy('name')
+            ->filter(function ($item) use ($buildings) {
+                foreach ($buildings as $building) {
+                    if ($item->room_id === $building->id) {
+                        return true;
+                    }
+                }
+
+                return false;
+            });
+            */
+            $physicalServers = PhysicalServer::query()
+                ->where(function ($q) use ($buildingIds, $bayIds) {
+                    $q->where(function ($q) use ($buildingIds) {
+                        $q->whereNull('bay_id')
+                            ->whereIn('building_id', $buildingIds);
+                    });
+                    if ($bayIds->isNotEmpty()) {
+                        $q->orWhereIn('bay_id', $bayIds);
+                    }
+                })
+                ->orderBy('name')
+                ->get();
+            /*
             $physicalServers = PhysicalServer::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
                     if (($buildings === null) && ($item->site_id === $site)) {
@@ -1419,7 +1557,7 @@ class ReportController extends Controller
 
                     return false;
                 });
-
+            */
             $workstations = Workstation::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings) {
                     if (($item->building_id === null) && ($item->site_id === $site)) {

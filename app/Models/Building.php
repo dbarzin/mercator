@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Auditable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,12 +19,12 @@ class Building extends Model
 
     public $table = 'buildings';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -32,13 +33,11 @@ class Building extends Model
     protected $fillable = [
         'name',
         'description',
+        'type',
         'attributes',
         'site_id',
-        'camera',
-        'badge',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'building_id',
+        'icon_id',
     ];
 
     public function roomBays(): HasMany
@@ -95,4 +94,36 @@ class Building extends Model
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
+
+    public function building(): BelongsTo
+    {
+        return $this->belongsTo(Building::class, 'building_id');
+    }
+
+
+    public function allParents(): Collection
+    {
+        $res = collect();
+        $cur = $this->loadMissing('building')->building;
+
+        while ($cur) {
+            $res->push($cur);
+            $cur->loadMissing('building');
+            $cur = $cur->building;
+        }
+
+        return $res;
+    }
+
+    public function buildings(): HasMany
+    {
+        return $this->hasMany(Building::class, 'building_id', 'id')->orderBy('name');
+    }
+
+    public function allChildren(): HasMany
+    {
+        return $this->buildings()->with('allChildren');
+
+    }
+
 }
