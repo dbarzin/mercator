@@ -2,6 +2,7 @@
 
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Report;
 
 Route::redirect('/', '/login');
 
@@ -307,16 +308,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::put('config/parameters/save', [Admin\ConfigurationController::class, 'saveParameters'])->name('config.parameters.save');
 
     // Views
-    // TODO : create a new class ViewController to reduce size of ReportController
-    Route::get('report/gdpr', [Admin\ReportController::class, 'gdpr'])->name('report.gdpr');
-    Route::get('report/ecosystem', [Admin\ReportController::class, 'ecosystem'])->name('report.view.ecosystem');
-    Route::get('report/information_system', [Admin\ReportController::class, 'informationSystem'])->name('report.view.informaton-system');
-    Route::get('report/administration', [Admin\ReportController::class, 'administration'])->name('report.view.administration');
-    Route::get('report/applications', [Admin\ReportController::class, 'applications'])->name('report.view.applications');
-    Route::get('report/application_flows', [Admin\ReportController::class, 'applicationFlows'])->name('report.view.application-flows');
-    Route::get('report/logical_infrastructure', [Admin\ReportController::class, 'logicalInfrastructure'])->name('report.view.logical-infrastructure');
-    Route::get('report/physical_infrastructure', [Admin\ReportController::class, 'physicalInfrastructure'])->name('report.view.physical-infrastructure');
-    Route::get('report/network_infrastructure', [Admin\ReportController::class, 'networkInfrastructure'])->name('report.view.network-infrastructure');
+    Route::get('report/gdpr', [Report\GDPRView::class, 'generate'])->name('report.gdpr');
+    Route::get('report/ecosystem', [Report\EcosystemView::class, 'generate'])->name('report.view.ecosystem');
+    Route::get('report/information_system', [Report\InformationSystemView::class, 'generate'])->name('report.view.information-system');
+    Route::get('report/applications', [Report\ApplicationView::class, 'generate'])->name('report.view.applications');
+    Route::get('report/application_flows', [Report\ApplicationFlowView::class, 'generate'])->name('report.view.application-flows');
+    Route::get('report/logical_infrastructure', [Report\LogicalInfrastructureView::class, 'generate'])->name('report.view.logical-infrastructure');
+    Route::get('report/administration', [Report\AdministrationView::class, 'generate'])->name('report.view.administration');
+    Route::get('report/physical_infrastructure', [Report\PhysicalInfrastructureView::class, 'generate'])->name('report.view.physical-infrastructure');
+    Route::get('report/network_infrastructure', [Report\NetworkInfrastructureView::class, 'generate'])->name('report.view.network-infrastructure');
+
+
     Route::get('report/impacts', [Admin\ReportController::class, 'impacts'])->name('report.view.impacts');
     Route::get('report/rto', [Admin\ReportController::class, 'rto'])->name('report.view.rto');
 
@@ -344,9 +346,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Reporting
     Route::put('report/cartography', [Admin\CartographyController::class, 'cartography'])->name('report.cartography');
-    Route::get('report/entities', [Admin\ReportController::class, 'entities'])->name('report.entities');
-    Route::get('report/applicationsByBlocks', [Admin\ReportController::class, 'applicationsByBlocks'])->name('report.applicationsByBlocks');
-    Route::get('report/directory', [Admin\ReportController::class, 'directory'])->name('report.directory');
+    Route::get('report/entities', [Report\EntityList::class, 'generateExcel'])->name('report.entities');
+    Route::get('report/applicationsByBlocks', [Report\ApplicationList::class, 'generateExcel'])->name('report.applicationsByBlocks');
+    Route::get('report/directory', [Report\Directory::class, 'generateDocx'])->name('report.directory');
     Route::get('report/logicalServers', [Admin\ReportController::class, 'logicalServers'])->name('report.logicalServers');
     Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds'])->name('report.securityNeeds');
     Route::get('report/logicalServerConfigs', [Admin\ReportController::class, 'logicalServerConfigs'])->name('report.logicalServerConfigs');
@@ -357,8 +359,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/cve', [Admin\CVEController::class, 'list'])->name('report.view.cve');
 
     // GDPR
-    Route::get('report/activityList', [Admin\ReportController::class, 'activityList'])->name('report.activityList');
-    Route::get('report/activityReport', [Admin\ReportController::class, 'activityReport'])->name('report.activityReport');
+    Route::get('report/activityList', [Report\ActivityList::class, 'generateDocx'])->name('report.activityList');
+    Route::get('report/activityReport', [Report\ActivityReport::class, 'generateDocx'])->name('report.activityReport');
 
     // CPE
     Route::get('/cpe/search/vendors', [Admin\CPEController::class, 'vendors']);
