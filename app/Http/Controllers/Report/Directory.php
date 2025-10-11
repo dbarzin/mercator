@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Report;
 
-use App\Http\Controllers\Controller;
 use App\Models\MApplication;
 use Carbon\Carbon;
 use Gate;
@@ -11,7 +10,7 @@ use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use Symfony\Component\HttpFoundation\Response;
 
-class Directory extends Controller
+class Directory extends ReportController
 {
 
     public function generateDocx()

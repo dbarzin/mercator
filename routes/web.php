@@ -319,14 +319,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/network_infrastructure', [Report\NetworkInfrastructureView::class, 'generate'])->name('report.view.network-infrastructure');
 
 
-    Route::get('report/impacts', [Admin\ReportController::class, 'impacts'])->name('report.view.impacts');
-    Route::get('report/rto', [Admin\ReportController::class, 'rto'])->name('report.view.rto');
+    Route::get('report/impacts', [Report\ImpactList::class, 'generateExcel'])->name('report.view.impacts');
+    Route::get('report/rto', [Report\RTO::class, 'generateExcel'])->name('report.view.rto');
 
     // Experimental views
     Route::get('report/heatmap', [Admin\HeatmapController::class, 'index'])->name('report.view.heatmap');
     Route::get('report/heatmap2', [Admin\HeatmapController::class, 'index2'])->name('report.view.heatmap2');
     Route::get('report/heatmap/values', [Admin\HeatmapController::class, 'values']);
-    Route::get('report/zones', [Admin\ReportController::class, 'zones'])->name('report.view.zones');
+    Route::get('report/zones', [Report\ZoneList::class, 'generate'])->name('report.view.zones');
 
     // Graphs
     Route::resource('graphs', Admin\GraphController::class);
@@ -349,13 +349,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/entities', [Report\EntityList::class, 'generateExcel'])->name('report.entities');
     Route::get('report/applicationsByBlocks', [Report\ApplicationList::class, 'generateExcel'])->name('report.applicationsByBlocks');
     Route::get('report/directory', [Report\Directory::class, 'generateDocx'])->name('report.directory');
-    Route::get('report/logicalServers', [Admin\ReportController::class, 'logicalServers'])->name('report.logicalServers');
-    Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds'])->name('report.securityNeeds');
-    Route::get('report/logicalServerConfigs', [Admin\ReportController::class, 'logicalServerConfigs'])->name('report.logicalServerConfigs');
-    Route::get('report/externalAccess', [Admin\ReportController::class, 'externalAccess'])->name('report.externalAccess');
-    Route::get('report/physicalInventory', [Admin\ReportController::class, 'physicalInventory'])->name('report.physicalInventory');
-    Route::get('report/vlans', [Admin\ReportController::class, 'vlans'])->name('report.vlans');
-    Route::get('report/workstations', [Admin\ReportController::class, 'workstations'])->name('report.workstations');
+    Route::get('report/logicalServers', [Report\LogicalServers::class, 'generateExcel'])->name('report.logicalServers');
+    Route::get('report/securityNeeds', [Report\SecurityNeeds::class, 'generateExcel'])->name('report.securityNeeds');
+    Route::get('report/logicalServerConfigs', [Report\LogicalServerConfigs::class, 'generateExcel'])->name('report.logicalServerConfigs');
+    Route::get('report/externalAccess', [Report\ExternalAccess::class, 'generateExcel'])->name('report.externalAccess');
+    Route::get('report/physicalInventory', [Report\PhysicalInventory::class, 'generateExcel'])->name('report.physicalInventory');
+    Route::get('report/vlans', [Report\VLANList::class, 'generateExcel'])->name('report.vlans');
+    Route::get('report/workstations', [Report\WorkstationList::class, 'generateExcel'])->name('report.workstations');
     Route::get('report/cve', [Admin\CVEController::class, 'list'])->name('report.view.cve');
 
     // GDPR
