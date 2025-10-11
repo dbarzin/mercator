@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationView extends Controller
 {
-
     public function generate(Request $request)
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -164,5 +163,4 @@ class ApplicationView extends Controller
             ->with('databases', $databases)
             ->with('fluxes', $fluxes);
     }
-
 }

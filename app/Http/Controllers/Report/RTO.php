@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RTO extends Controller
 {
-
     public function generateExcel()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -71,7 +70,7 @@ class RTO extends Controller
         });
 
         // Création Excel
-        $spreadsheet = new Spreadsheet;
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $headers = [

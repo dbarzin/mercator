@@ -43,7 +43,7 @@ class CPEImport extends Command
         $this->versions = [];
 
         // Init lecteur XML
-        $reader = new \XMLReader;
+        $reader = new \XMLReader();
         if (! $reader->open($file)) {
             $this->error('Could not open XML file');
 

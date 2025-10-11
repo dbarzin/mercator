@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Admin\CartographyController;
 use App\Http\Controllers\Controller;
-use Gate;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpWord\Element\Section;
@@ -31,7 +30,7 @@ class ReportController extends Controller
             ->getStartColor()
             ->setRGB($colors[$i === null ? 0 : $i]);
     }
-    
+
     protected static function addTable(Section $section, ?string $title = null)
     {
         $table = $section->addTable(

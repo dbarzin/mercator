@@ -54,11 +54,13 @@ class ExplorerController extends Controller
         $buildings = DB::table('buildings')->select('id', 'name', 'building_id', 'site_id', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($buildings as $building) {
             $this->addNode(
-                $nodes, 6,
+                $nodes,
+                6,
                 $this->formatId('BUILDING_', $building->id),
                 $building->name,
                 $building->icon_id === null ? '/images/building.png' : "/admin/documents/{$building->icon_id}",
-                'buildings');
+                'buildings'
+            );
             if ($building->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('BUILDING_', $building->id), $this->formatId('BUILDING_', $building->building_id));
             } elseif ($building->site_id !== null) {

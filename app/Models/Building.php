@@ -100,7 +100,6 @@ class Building extends Model
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-
     public function allParents(): Collection
     {
         $res = collect();
@@ -123,7 +122,5 @@ class Building extends Model
     public function allChildren(): HasMany
     {
         return $this->buildings()->with('allChildren');
-
     }
-
 }

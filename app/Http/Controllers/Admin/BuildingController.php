@@ -36,8 +36,10 @@ class BuildingController extends Controller
         // Select icons
         $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        return view('admin.buildings.create',
-            compact('sites', 'buildings', 'icons', 'attributes_list', 'type_list'));
+        return view(
+            'admin.buildings.create',
+            compact('sites', 'buildings', 'icons', 'attributes_list', 'type_list')
+        );
     }
 
     public function clone(Request $request)
@@ -61,8 +63,10 @@ class BuildingController extends Controller
         $request->merge($building->only($building->getFillable()));
         $request->flash();
 
-        return view('admin.buildings.create',
-            compact('sites', 'buildings', 'icons', 'attributes_list', 'type_list'));
+        return view(
+            'admin.buildings.create',
+            compact('sites', 'buildings', 'icons', 'attributes_list', 'type_list')
+        );
     }
 
     public function store(StoreBuildingRequest $request)
@@ -74,7 +78,7 @@ class BuildingController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document;
+            $document = new Document();
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
@@ -114,8 +118,10 @@ class BuildingController extends Controller
 
         $building->load('site');
 
-        return view('admin.buildings.edit',
-            compact('building', 'sites', 'buildings', 'icons', 'attributes_list', 'type_list'));
+        return view(
+            'admin.buildings.edit',
+            compact('building', 'sites', 'buildings', 'icons', 'attributes_list', 'type_list')
+        );
     }
 
     public function update(UpdateBuildingRequest $request, Building $building)
@@ -131,7 +137,7 @@ class BuildingController extends Controller
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
             // Create a new document
-            $document = new Document;
+            $document = new Document();
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

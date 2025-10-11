@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EcosystemView extends Controller
 {
-
     public const ALLOWED_PERIMETERS = ['All', 'Internes', 'Externes'];
 
     public const SANITIZED_PERIMETER = 'All';
@@ -77,5 +76,4 @@ class EcosystemView extends Controller
             ->with('entities', $entities)
             ->with('relations', $relations);
     }
-
 }

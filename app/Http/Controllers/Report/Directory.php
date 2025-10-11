@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Directory extends ReportController
 {
-
     public function generateDocx()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -22,12 +21,12 @@ class Directory extends ReportController
         $applications =
             MApplication::query()
                 ->where(function ($query) {
-                $query->where('m_applications.security_need_c', '>=', 3)
-                    ->orWhere('m_applications.security_need_i', '>=', 3)
-                    ->orWhere('m_applications.security_need_a', '>=', 3)
-                    ->orWhere('m_applications.security_need_t', '>=', 3)
-                    ->orWhere('m_applications.security_need_auth', '>=', 3);
-            })
+                    $query->where('m_applications.security_need_c', '>=', 3)
+                        ->orWhere('m_applications.security_need_i', '>=', 3)
+                        ->orWhere('m_applications.security_need_a', '>=', 3)
+                        ->orWhere('m_applications.security_need_t', '>=', 3)
+                        ->orWhere('m_applications.security_need_auth', '>=', 3);
+                })
                 ->whereNull('m_applications.deleted_at')
                 ->leftJoin('entities', function ($join) {
                     $join->on(function ($on) {
@@ -39,9 +38,9 @@ class Directory extends ReportController
                 ->leftJoin('relations', function ($join) use ($today) {
                     /*
                $join->on(function ($on) {
-                        $on->on('entities.id', '=', 'relations.source_id')
-                           ->orOn('entities.id', '=', 'relations.destination_id');
-                    })
+                    $on->on('entities.id', '=', 'relations.source_id')
+                       ->orOn('entities.id', '=', 'relations.destination_id');
+                })
                 */
                     $join->on('entities.id', '=', 'relations.source_id')
                         ->where('relations.active', '=', 1)
@@ -60,23 +59,20 @@ class Directory extends ReportController
                     'm_applications.security_need_t',
                     'm_applications.rto',
                     'm_applications.rpo',
-
                     'entities.name as entity_name',
                     'entities.description as entity_description',
                     'entities.contact_point as entity_contact_point',
-
                     'relations.name as relation_name',
                     'relations.type as relation_type',
                     'relations.description as relation_description',
                     'relations.importance as relation_importance',
                     'relations.start_date as relation_start_date',
                     'relations.end_date as relation_end_date'
-
                 )
                 ->get();
 
         // --- Styles de base
-        $phpWord = new PhpWord;
+        $phpWord = new PhpWord();
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true); // !!!!
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);
@@ -93,7 +89,6 @@ class Directory extends ReportController
             'width' => 100 * 50, // 100% (fiftieths of a percent)
         ];
         $tableKVFirstCol = ['bgColor' => 'f3f3f3', 'valign' => 'center', 'width' => 40 * 50];
-        $tableKVSecondCol = ['valign' => 'center', 'width' => 60 * 50];
 
         $tableListStyle = [
             'borderColor' => 'cccccc',
@@ -181,13 +176,12 @@ class Directory extends ReportController
             $this->addHTMLRow($t1, trans('cruds.application.fields.description'), $first->description);
             $this->addTextRow($t1, 'Processus', $this->getApplicationProcessesNames($first->application_id));
             $this->addTextRow($t1, 'Responsable', $first->responsible);
-            $this->addTextRow($t1, 'C-I-A-T', (
-                $first->security_need_c.' - '.
+            $this->addTextRow($t1, 'C-I-A-T', ($first->security_need_c.' - '.
                 $first->security_need_i.' - '.
                 $first->security_need_a.' - '.
                 $first->security_need_t));
-            $this->addTextRow($t1, 'RTO', (MApplication::formatDelay($first->rto)));
-            $this->addTextRow($t1, 'RPO', (MApplication::formatDelay($first->rpo)));
+            $this->addTextRow($t1, 'RTO', MApplication::formatDelay($first->rto));
+            $this->addTextRow($t1, 'RPO', MApplication::formatDelay($first->rpo));
 
             $section->addTextBreak(1);
 
@@ -196,9 +190,9 @@ class Directory extends ReportController
             // =========================
             $section->addTitle('Entité responsable', 2);
             $t2 = $section->addTable($tableKVStyle);
-            $this->addTextRow($t2, 'Nom', ($first->entity_name));
-            $this->addHTMLRow($t2, 'Point de contact', ($first->entity_contact_point));
-            $this->addHTMLRow($t2, 'Description', ($first->entity_description));
+            $this->addTextRow($t2, 'Nom', $first->entity_name);
+            $this->addHTMLRow($t2, 'Point de contact', $first->entity_contact_point);
+            $this->addHTMLRow($t2, 'Description', $first->entity_description);
 
             $section->addTextBreak(1);
 
@@ -223,10 +217,10 @@ class Directory extends ReportController
                 $r = $t3->addRow();
                 $r->addCell()->addText(str_replace('&', ' ', $row->relation_name), [], $paraTight);
                 $r->addCell()->addText(str_replace('&', ' ', $row->relation_type), [], $paraTight);
-                $r->addCell()->addText(($row->relation_importance), [], $paraTight);
+                $r->addCell()->addText($row->relation_importance, [], $paraTight);
                 $r->addCell()->addText((optional($row->relation_start_date)->format('Y-m-d') ?? $row->relation_start_date), [], $paraTight);
                 $r->addCell()->addText((optional($row->relation_end_date)->format('Y-m-d') ?? $row->relation_end_date), [], $paraTight);
-                $this->addHTMLRow($t3, 'Description', ($first->relation_description));
+                $this->addHTMLRow($t3, 'Description', $first->relation_description);
             }
 
             if (! $hasRelation) {
@@ -260,5 +254,4 @@ class Directory extends ReportController
 
         return $names->implode(', ');
     }
-
 }

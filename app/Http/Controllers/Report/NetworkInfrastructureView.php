@@ -57,7 +57,7 @@ class NetworkInfrastructureView extends Controller
             $site = $sites->first();
 
             $all_buildings = Building::query()
-                ->where('site_id',$siteId)
+                ->where('site_id', $siteId)
                 ->pluck('name', 'id');
 
             if ($buildingIds === null || (count($buildingIds) === 0)) {
@@ -96,14 +96,14 @@ class NetworkInfrastructureView extends Controller
 
                 $roots = Building::with('buildings')->findMany($buildingIds);
 
-// 2) Descendants (BFS) pour toutes les racines
+                // 2) Descendants (BFS) pour toutes les racines
                 $frontier = collect($roots);
 
                 while ($frontier->isNotEmpty()) {
                     $next = collect();
 
                     foreach ($frontier as $node) {
-                        if (!isset($seen[$node->id])) {
+                        if (! isset($seen[$node->id])) {
                             $seen[$node->id] = true;
                             $buildings->push($node);
 
@@ -116,7 +116,7 @@ class NetworkInfrastructureView extends Controller
                     $frontier = $next;
                 }
 
-// 3) Parents (par paliers) jusqu'à ce que building_id soit null
+                // 3) Parents (par paliers) jusqu'à ce que building_id soit null
                 $pending = $buildings
                     ->pluck('building_id')   // parents directs des nœuds déjà collectés
                     ->filter()
@@ -136,11 +136,11 @@ class NetworkInfrastructureView extends Controller
                     $nextIds = [];
 
                     foreach ($parents as $parent) {
-                        if (!isset($seen[$parent->id])) {
+                        if (! isset($seen[$parent->id])) {
                             $seen[$parent->id] = true;
                             $buildings->push($parent);
 
-                            if (!is_null($parent->building_id)) {
+                            if (! is_null($parent->building_id)) {
                                 $nextIds[] = $parent->building_id; // remonte d'un cran
                             }
                         }
@@ -620,5 +620,4 @@ class NetworkInfrastructureView extends Controller
             ->with('physicalSecurityDevices', $physicalSecurityDevices)
             ->with('physicalLinks', $physicalLinks);
     }
-
 }

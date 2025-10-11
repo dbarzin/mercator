@@ -101,7 +101,7 @@ class PhysicalLinkController extends Controller
 
     public function store(StorePhysicalLinkRequest $request)
     {
-        $link = new PhysicalLink;
+        $link = new PhysicalLink();
 
         // Source device
         if (str_starts_with($request->src_id, 'PER_')) {

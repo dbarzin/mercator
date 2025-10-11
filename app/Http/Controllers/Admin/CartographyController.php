@@ -100,7 +100,7 @@ class CartographyController extends Controller
         $vues = $request->input('vues', []);
 
         // get template
-        $phpWord = new \PhpOffice\PhpWord\PhpWord;
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);

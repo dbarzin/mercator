@@ -152,5 +152,4 @@ class GDPRView extends Controller
             ->with('dataProcessings', $dataProcessings)
             ->with('applications', $applications);
     }
-
 }

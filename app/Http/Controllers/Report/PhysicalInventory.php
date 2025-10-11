@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalInventory extends Controller
 {
-
     public function generateExcel()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -60,7 +59,7 @@ class PhysicalInventory extends Controller
             'Description',
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -77,7 +76,7 @@ class PhysicalInventory extends Controller
         $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
         // Populate the Timesheet
         $row = 2;
@@ -310,5 +309,4 @@ class PhysicalInventory extends Controller
             ];
         }
     }
-
 }

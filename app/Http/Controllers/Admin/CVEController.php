@@ -58,7 +58,7 @@ class CVEController extends Controller
             'CVE Published',
         ];
 
-        $spreadsheet = new Spreadsheet;
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 

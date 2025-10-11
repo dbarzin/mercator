@@ -8,11 +8,9 @@ use App\Models\Annuaire;
 use App\Models\DomaineAd;
 use App\Models\ForestAd;
 use App\Models\ZoneAdmin;
-use Gate;
 
 class AdministrationView extends Controller
 {
-
     public function generate()
     {
         $zones = ZoneAdmin::All();
@@ -28,5 +26,4 @@ class AdministrationView extends Controller
             ->with('domains', $domains)
             ->with('adminUsers', $adminUsers);
     }
-
 }

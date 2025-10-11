@@ -47,13 +47,13 @@ class User extends Authenticatable implements LdapAuthenticatable
         'language',
     ];
 
+    // Add some caching for roles
+    private ?BelongsToMany $cachedRoles = null;
+
     public function setPasswordAttribute(string $value)
     {
         $this->attributes['password'] = bcrypt($value);
     }
-
-    // Add some caching for roles
-    private ?BelongsToMany $cachedRoles = null;
 
     /**
      * Check if the User has the 'Admin' role, which is the first role in the app

@@ -6,14 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\ActivityImpact;
 use Carbon\Carbon;
-use Gate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ImpactList extends Controller
 {
-
     public function generateExcel()
     {
         // 1. Récupérer toutes les activités et impacts
@@ -30,7 +28,7 @@ class ImpactList extends Controller
         $centered = ['alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]];
 
         // 3. Créer une nouvelle feuille Excel
-        $spreadsheet = new Spreadsheet;
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // 4. Écrire l'en-tête (ligne 1)
@@ -74,5 +72,4 @@ class ImpactList extends Controller
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ]);
     }
-
 }

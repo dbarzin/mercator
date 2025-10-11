@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LogicalInfrastructureView extends Controller
 {
-
     public function generate(Request $request)
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -350,5 +349,4 @@ class LogicalInfrastructureView extends Controller
             )
         );
     }
-
 }

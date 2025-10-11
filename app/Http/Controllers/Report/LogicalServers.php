@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServers extends Controller
 {
-
     public function generateExcel()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -29,7 +28,7 @@ class LogicalServers extends Controller
             trans('cruds.applicationBlock.fields.responsible'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -91,5 +90,4 @@ class LogicalServers extends Controller
 
         return response()->download($path)->deleteFileAfterSend(true);
     }
-
 }

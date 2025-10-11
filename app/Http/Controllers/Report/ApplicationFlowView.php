@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -185,5 +186,4 @@ class ApplicationFlowView extends Controller
             ->with('databases', $databases)
             ->with('flows', $flows);
     }
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityNeeds extends ReportController
 {
-
     public function generateExcel()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -77,7 +76,7 @@ class SecurityNeeds extends ReportController
             $header[] = trans('global.authenticity_short');
         }
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -335,5 +334,4 @@ class SecurityNeeds extends ReportController
             }
         }
     }
-
 }

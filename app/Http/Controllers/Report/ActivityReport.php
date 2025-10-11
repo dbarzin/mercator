@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Report;
 
-
 // GDPR
 // ecosystem
 use App\Models\DataProcessing;
@@ -26,7 +25,7 @@ class ActivityReport extends ReportController
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // get template
-        $phpWord = new \PhpOffice\PhpWord\PhpWord;
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);

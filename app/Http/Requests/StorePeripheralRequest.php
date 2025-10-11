@@ -29,7 +29,7 @@ class StorePeripheralRequest extends FormRequest
             'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'address_ip' => [
                 'nullable',
-                new IPList,
+                new IPList(),
             ],
         ];
     }

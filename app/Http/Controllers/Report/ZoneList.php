@@ -17,5 +17,4 @@ class ZoneList extends Controller
 
         return view('admin/reports/zones', compact('subnetworks'));
     }
-
 }

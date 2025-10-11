@@ -59,9 +59,8 @@ class PhysicalInfrastructureView extends Controller
             if ($buildingId === null) {
                 $buildings = Building::All()->where('site_id', '=', $site)->sortBy('name');
             } else {
-
                 $root = Building::find($buildingId);
-                if ($root != null) {
+                if ($root !== null) {
                     $buildings = collect();
                     // Get chidrends
                     $frontier = collect([$root]);
@@ -86,7 +85,6 @@ class PhysicalInfrastructureView extends Controller
                     }
                     */
                 }
-
             }
 
             // Get all bays
@@ -316,5 +314,4 @@ class PhysicalInfrastructureView extends Controller
             ->with('wifiTerminals', $wifiTerminals)
             ->with('physicalSecurityDevices', $physicalSecurityDevices);
     }
-
 }

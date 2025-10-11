@@ -11,7 +11,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
     public function user()
     {
         if ($this->hasInvalidState()) {
-            throw new InvalidStateException;
+            throw new InvalidStateException();
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
