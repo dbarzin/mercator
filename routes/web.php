@@ -154,7 +154,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('gateways', Admin\GatewayController::class);
     Route::delete('gateways-destroy', [Admin\GatewayController::class, 'massDestroy'])->name('gateways.massDestroy');
 
-    // External Connected Entities
+    // External-Connected Entities
     Route::resource('external-connected-entities', Admin\ExternalConnectedEntityController::class);
     Route::delete('external-connected-entities-destroy', [Admin\ExternalConnectedEntityController::class, 'massDestroy'])->name('external-connected-entities.massDestroy');
 
@@ -296,7 +296,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::put('config/cert/save', [Admin\ConfigurationController::class, 'saveCertConfig'])->name('config.cert.save');
 
     // CVE
-    Route::put('cve', [Admin\CVEController::class, 'show'])->name('cve.show');
+    // Route::put('cve', [Admin\CVEController::class, 'show'])->name('cve.show');
     Route::post('cve/search/{cpe}', [Admin\CVEController::class, 'search'])->name('cve.search');
 
     // CVE Configuration page
@@ -401,9 +401,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Doc
     Route::get('doc/schema', function () {
         return view('doc/schema');
-    });
-    Route::get('doc/maturity', function () {
-        return view('doc/maturity');
     });
     Route::get('doc/guide', function () {
         return view('doc/guide');

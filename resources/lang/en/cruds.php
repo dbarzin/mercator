@@ -1292,12 +1292,13 @@ return [
             'register_list_helper' => 'List of treatments, applications, databases and related information.',
             'vlans' => 'VLANs',
             'vlans_helper' => 'List of VLANs, subnets and devices',
-
             'bia' => 'Business Impact Assessment (BIA)',
             'continuity_needs' => 'Security needs',
             'continuity_needs_helper' => 'List of activities and applications with their security needs in terms of RTO and RPO',
             'impacts' => 'Impacts on business continuity',
             'impacts_helper' => 'Measuring the consequences of a service interruption',
+            'cve' => 'Find matching CVE',
+            'cve_helper' => "Search for CVE based on application's CPE",
         ],
         'explorer' => [
             'title' => 'Mapping explorer',
