@@ -66,13 +66,15 @@ class FluxController extends Controller
             $items->put('DB_'.$key, $value);
         }
 
-        return view('admin.fluxes.create',
-            compact('items', 'nature_list', 'attributes_list'));
+        return view(
+            'admin.fluxes.create',
+            compact('items', 'nature_list', 'attributes_list')
+        );
     }
 
     public function store(StoreFluxRequest $request)
     {
-        $flux = new Flux;
+        $flux = new Flux();
         $flux->name = $request->name;
         $flux->nature = $request->nature;
         $flux->description = $request->description;
@@ -184,8 +186,10 @@ class FluxController extends Controller
             $flux->dest_id = 'DB_'.$flux->database_dest_id;
         }
 
-        return view('admin.fluxes.edit',
-            compact('items', 'nature_list', 'attributes_list', 'flux'));
+        return view(
+            'admin.fluxes.edit',
+            compact('items', 'nature_list', 'attributes_list', 'flux')
+        );
     }
 
     public function update(UpdateFluxRequest $request, Flux $flux)

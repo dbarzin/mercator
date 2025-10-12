@@ -39,7 +39,7 @@ class SsoController extends Controller
                 return redirect()->route('login')->with('message', 'User "'.$keycloakUser->email.'" is not a valid Mercator user.');
             }
 
-            $existingUser = new User;
+            $existingUser = new User();
             $existingUser->name = $keycloakUser->name; // Supposons que Keycloak fournit le nom de l'utilisateur
             $existingUser->email = $keycloakUser->email;
             $existingUser->save();

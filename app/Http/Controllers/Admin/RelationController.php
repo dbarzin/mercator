@@ -69,7 +69,7 @@ class RelationController extends Controller
         $values = $request['values'];
         if ($dates !== null) {
             for ($i = 0; $i < count($dates); $i++) {
-                $relationValue = new RelationValue;
+                $relationValue = new RelationValue();
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->setDatePriceAttribute($dates[$i]);
@@ -135,7 +135,7 @@ class RelationController extends Controller
         $values = $request['values'];
         if ($dates !== null) {
             for ($i = 0; $i < count($dates); $i++) {
-                $relationValue = new RelationValue;
+                $relationValue = new RelationValue();
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->setDatePriceAttribute($dates[$i]);
