@@ -50,7 +50,7 @@ class User extends Authenticatable implements LdapAuthenticatable
     // Add some caching for roles
     private ?BelongsToMany $cachedRoles = null;
 
-    public function setPasswordAttribute(string $value)
+    public function setPasswordAttribute(?string $value): void
     {
         $this->attributes['password'] = bcrypt($value);
     }
