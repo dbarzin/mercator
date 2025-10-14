@@ -120,7 +120,6 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request): bool
     {
-
         $useLdap = (bool) config('app.ldap_enabled');
         $fallbackLocal = (bool) config('app.ldap_fallback_local');
         $autoProvision = (bool) config('app.ldap_auto_provision');

@@ -19,66 +19,6 @@ class SyncCpe extends Command
 
     protected $description = 'Synchronize the database with the CPE dictionary (vendors, products, versions) from NVD.';
 
-    /**
-     * Parse a CPE 2.3 URI, handling escaped characters (\:).
-     * Returns [part, vendor, product, version] or null if invalid.
-     */
-    protected function parseCpe23(string $uri): ?array
-    {
-        if (! Str::startsWith($uri, 'cpe:2.3:')) {
-            return null;
-        }
-
-        // Split ":" but respect "\:"
-        $segments = [];
-        $current = '';
-        $len = strlen($uri);
-        for ($i = 0; $i < $len; $i++) {
-            $ch = $uri[$i];
-            if ($ch === '\\' && $i + 1 < $len) {
-                $current .= $uri[$i + 1];
-                $i++;
-
-                continue;
-            }
-            if ($ch === ':') {
-                $segments[] = $current;
-                $current = '';
-
-                continue;
-            }
-            $current .= $ch;
-        }
-        $segments[] = $current;
-
-        if (count($segments) < 6) {
-            return null;
-        }
-
-        [$cpe, $ver, $part, $vendor, $product, $version] = array_pad($segments, 6, null);
-        if ($cpe !== 'cpe' || $ver !== '2.3') {
-            return null;
-        }
-
-        $normalize = function ($s) {
-            if ($s === null) {
-                return null;
-            }
-            if ($s === '*' || $s === '-') {
-                return null;
-            } // ANY/NA -> null
-
-            return $s;
-        };
-
-        return [
-            'part' => $normalize($part) ?: 'a', // default 'a' (applications)
-            'vendor' => $normalize($vendor) ?: 'unknown',
-            'product' => $normalize($product) ?: 'unknown',
-            'version' => $normalize($version),
-        ];
-    }
-
     public function handle(): int
     {
         // Optional random startup delay (0–15 minutes) unless --now is provided
@@ -261,5 +201,65 @@ class SyncCpe extends Command
         $this->info("Done. Processed: {$processed}. New => vendors: {$createdVendors}, products: {$createdProducts}, versions: {$createdVersions}");
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Parse a CPE 2.3 URI, handling escaped characters (\:).
+     * Returns [part, vendor, product, version] or null if invalid.
+     */
+    protected function parseCpe23(string $uri): ?array
+    {
+        if (! Str::startsWith($uri, 'cpe:2.3:')) {
+            return null;
+        }
+
+        // Split ":" but respect "\:"
+        $segments = [];
+        $current = '';
+        $len = strlen($uri);
+        for ($i = 0; $i < $len; $i++) {
+            $ch = $uri[$i];
+            if ($ch === '\\' && $i + 1 < $len) {
+                $current .= $uri[$i + 1];
+                $i++;
+
+                continue;
+            }
+            if ($ch === ':') {
+                $segments[] = $current;
+                $current = '';
+
+                continue;
+            }
+            $current .= $ch;
+        }
+        $segments[] = $current;
+
+        if (count($segments) < 6) {
+            return null;
+        }
+
+        [$cpe, $ver, $part, $vendor, $product, $version] = array_pad($segments, 6, null);
+        if ($cpe !== 'cpe' || $ver !== '2.3') {
+            return null;
+        }
+
+        $normalize = function ($s) {
+            if ($s === null) {
+                return null;
+            }
+            if ($s === '*' || $s === '-') {
+                return null;
+            } // ANY/NA -> null
+
+            return $s;
+        };
+
+        return [
+            'part' => $normalize($part) ?: 'a', // default 'a' (applications)
+            'vendor' => $normalize($vendor) ?: 'unknown',
+            'product' => $normalize($product) ?: 'unknown',
+            'version' => $normalize($version),
+        ];
     }
 }

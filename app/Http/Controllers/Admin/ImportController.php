@@ -85,16 +85,6 @@ class ImportController extends Controller
         return Str::snake($modelName, '_').'_'.$action;
     }
 
-    private function resolveModelClass($modelName)
-    {
-        $modelClass = 'App\\Models\\'.$modelName;
-        if (! class_exists($modelClass)) {
-            abort(404, "Modèle [{$modelName}] introuvable.");
-        }
-
-        return $modelClass;
-    }
-
     public function import(Request $request)
     {
         $request->validate([
@@ -107,12 +97,12 @@ class ImportController extends Controller
 
         // Get store validation rules
         $storeRequestClass = '\\App\\Http\\Requests\\Store'.$modelName.'Request';
-        $storeRequestInstance = new $storeRequestClass;
+        $storeRequestInstance = new $storeRequestClass();
         $storeRules = $storeRequestInstance->rules();
 
         // Get update validation rules
         $updateRequestClass = '\\App\\Http\\Requests\\Update'.$modelName.'Request';
-        $updateRequestInstance = new $updateRequestClass;
+        $updateRequestInstance = new $updateRequestClass();
 
         abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -141,7 +131,7 @@ class ImportController extends Controller
                         }
 
                         try {
-                            $relationInstance = (new $modelClass)->{$key}();
+                            $relationInstance = (new $modelClass())->{$key}();
                             if ($relationInstance instanceof BelongsToMany) {
                                 $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
                                 $attributes->forget($key);
@@ -214,6 +204,16 @@ class ImportController extends Controller
 
             return back()->withInput()->withErrors(['msg' => $e->getMessage()]);
         }
+    }
+
+    private function resolveModelClass($modelName)
+    {
+        $modelClass = 'App\\Models\\'.$modelName;
+        if (! class_exists($modelClass)) {
+            abort(404, "Modèle [{$modelName}] introuvable.");
+        }
+
+        return $modelClass;
     }
 }
 

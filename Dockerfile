@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine3.19
+FROM php:8.3-fpm-alpine3.22
 
 COPY version.txt ./version.txt
 

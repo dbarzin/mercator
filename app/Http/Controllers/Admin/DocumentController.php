@@ -59,7 +59,7 @@ class DocumentController extends Controller
         }
 
         // Create a new document
-        $document = new Document;
+        $document = new Document();
         $document->filename = $file->getClientOriginalName();
         $document->mimetype = $file->getClientMimeType();
         $document->size = $file->getSize();

@@ -33,8 +33,8 @@
                                 @if (!$type_list->contains(old('type')))
                                     <option> {{ old('type') }}</option>'
                                 @endif
-                                @foreach($type_list as $t)
-                                    <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
+                                @foreach($type_list as $type)
+                                    <option {{ old('type') == $type ? 'selected' : '' }}>{{ $type }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('type'))

@@ -34,7 +34,7 @@ class StoreRouterRequest extends FormRequest
             ],
             'ip_addresses' => [
                 'nullable',
-                new IPList,
+                new IPList(),
             ],
         ];
     }
