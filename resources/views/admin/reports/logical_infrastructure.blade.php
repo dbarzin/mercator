@@ -1421,7 +1421,7 @@ digraph  {
 
         @can('logical_server_access')
         @foreach($logicalServers as $logicalServer)
-        LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
+        LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $logicalServer->icon_id === null ? '/images/lserver.png' : route('admin.documents.show', $logicalServer->icon_id) }}" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
         @if ($logicalServer->address_ip!=null)
         @foreach($subnetworks as $subnetwork)
         @foreach(explode(',',$logicalServer->address_ip) as $address)
@@ -1492,7 +1492,7 @@ digraph  {
 
         @can('workstation_access')
         @foreach($workstations as $workstation)
-        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
+        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
         @foreach(explode(',',$workstation->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1544,7 +1544,7 @@ digraph  {
 
         @can('peripheral_access')
         @foreach($peripherals as $peripheral)
-        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
         @foreach(explode(',',$peripheral->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1562,19 +1562,6 @@ digraph  {
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
         SUBNET{{ $subnetwork->id }} -> STOR{{ $storageDevice->id }}
-        @endif
-        @endforeach
-        @endforeach
-        @endforeach
-        @endcan
-
-        @can('peripheral_access')
-        @foreach($peripherals as $peripheral)
-        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
-        @foreach(explode(',',$peripheral->address_ip) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> PER{{ $peripheral->id }}
         @endif
         @endforeach
         @endforeach
@@ -1637,6 +1624,21 @@ digraph  {
                 @foreach($containers as $container)
                 @if ($container->icon_id!==null)
                 .addImage("{{ route('admin.documents.show', $container->icon_id) }}", "64px", "64px")
+                @endif
+                @endforeach
+                @foreach($logicalServers as $logicalServer)
+                @if ($logicalServer->icon_id!==null)
+                .addImage("{{ route('admin.documents.show', $logicalServer->icon_id) }}", "64px", "64px")
+                @endif
+                @endforeach
+                @foreach($peripherals as $peripheral)
+                @if ($peripheral->icon_id!==null)
+                .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
+                @endif
+                @endforeach
+                @foreach($workstations as $workstation)
+                @if ($workstation->icon_id!==null)
+                .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
                 @endif
                 @endforeach
                 .engine("{{ $engine }}")
