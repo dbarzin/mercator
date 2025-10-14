@@ -22,7 +22,6 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     *
      * @return void
      */
     protected function schedule(Schedule $schedule)

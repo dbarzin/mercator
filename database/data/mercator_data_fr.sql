@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */
+/*M!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: mercator
@@ -21,16 +21,16 @@
 
 LOCK TABLES `activities` WRITE;
 /*!40000 ALTER TABLE `activities` DISABLE KEYS */;
-INSERT INTO `activities` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Activité 1','<p>Description de l\'activité 1</p>','2020-06-10 13:20:42','2020-06-22 06:12:06','2020-06-22 06:12:06'),
-(2,'Activité 2','<p>Description de l\'activité de test</p>','2020-06-10 15:44:26','2020-06-22 06:12:06','2020-06-22 06:12:06'),
-(3,'Activité 3','<p>Description de l\'activité 3</p>','2020-06-13 04:57:08','2020-06-22 06:12:06','2020-06-22 06:12:06'),
-(4,'Activité 4','<p>Description de l\'acivité 4</p>','2020-06-13 04:57:24','2020-06-22 06:12:06','2020-06-22 06:12:06'),
-(5,'Helpdesk','<p>Support aux utilisateurs</p>','2020-08-13 05:49:05','2020-08-13 05:49:05',NULL),
-(6,'Développement','<p>Développement d\'application</p>','2020-08-13 05:49:47','2020-08-13 05:49:47',NULL),
-(7,'Monitoring informatique','<p>Vérifier le bon fonctionnement des équipements informatique</p>','2020-08-13 05:52:47','2020-08-13 05:52:47',NULL),
-(8,'Monitoring applicatif','<p>Vérifier le bon fonctionnement des applications informatique</p>','2020-08-13 05:53:19','2020-08-13 05:53:19',NULL),
-(9,'Admission','<p>Admission des patients dans l\'hôpital</p>','2020-09-07 07:54:20','2024-10-14 08:01:04',NULL),
-(10,'Gestion des plaintes','<p>Processus de gestion de plaintes</p>','2023-04-12 07:39:25','2024-10-14 08:00:35',NULL);
+INSERT INTO `activities` (`id`, `name`, `description`, `recovery_time_objective`, `maximum_tolerable_downtime`, `recovery_point_objective`, `maximum_tolerable_data_loss`, `drp`, `drp_link`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Activité 1','<p>Description de l\'activité 1</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-06-10 13:20:42','2020-06-22 06:12:06','2020-06-22 06:12:06'),
+(2,'Activité 2','<p>Description de l\'activité de test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-06-10 15:44:26','2020-06-22 06:12:06','2020-06-22 06:12:06'),
+(3,'Activité 3','<p>Description de l\'activité 3</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-06-13 04:57:08','2020-06-22 06:12:06','2020-06-22 06:12:06'),
+(4,'Activité 4','<p>Description de l\'acivité 4</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-06-13 04:57:24','2020-06-22 06:12:06','2020-06-22 06:12:06'),
+(5,'Helpdesk','<p>Support aux utilisateurs</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-08-13 05:49:05','2020-08-13 05:49:05',NULL),
+(6,'Développement','<p>Développement d\'application</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-08-13 05:49:47','2020-08-13 05:49:47',NULL),
+(7,'Monitoring informatique','<p>Vérifier le bon fonctionnement des équipements informatique</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-08-13 05:52:47','2020-08-13 05:52:47',NULL),
+(8,'Monitoring applicatif','<p>Vérifier le bon fonctionnement des applications informatique</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-08-13 05:53:19','2020-08-13 05:53:19',NULL),
+(9,'Admission','<p>Admission des patients dans l\'hôpital</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2020-09-07 07:54:20','2024-10-14 08:01:04',NULL),
+(10,'Gestion des plaintes','<p>Processus de gestion de plaintes</p>',NULL,NULL,NULL,NULL,NULL,NULL,'2023-04-12 07:39:25','2024-10-14 08:00:35',NULL);
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -41,6 +41,15 @@ UNLOCK TABLES;
 LOCK TABLES `activity_document` WRITE;
 /*!40000 ALTER TABLE `activity_document` DISABLE KEYS */;
 /*!40000 ALTER TABLE `activity_document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `activity_impact`
+--
+
+LOCK TABLES `activity_impact` WRITE;
+/*!40000 ALTER TABLE `activity_impact` DISABLE KEYS */;
+/*!40000 ALTER TABLE `activity_impact` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -121,6 +130,15 @@ INSERT INTO `actors` (`id`, `name`, `nature`, `type`, `contact`, `created_at`, `
 (11,'Agent administratis','personne','interne','Néant','2025-06-10 17:30:41','2025-06-10 17:30:41',NULL),
 (12,'Recruteur','personne','interne','Néant','2025-06-10 17:31:12','2025-06-10 17:31:12',NULL);
 /*!40000 ALTER TABLE `actors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `admin_user_m_application`
+--
+
+LOCK TABLES `admin_user_m_application` WRITE;
+/*!40000 ALTER TABLE `admin_user_m_application` DISABLE KEYS */;
+/*!40000 ALTER TABLE `admin_user_m_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -213,9 +231,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `bays` WRITE;
 /*!40000 ALTER TABLE `bays` DISABLE KEYS */;
-INSERT INTO `bays` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`, `room_id`) VALUES (1,'R01','<p>Rack principal</p>','2025-06-10 08:46:55','2025-06-10 08:46:55',NULL,12),
-(2,'R02','<p>Rack Database / Backup</p>','2025-06-11 10:24:04','2025-06-11 10:24:04',NULL,12),
-(3,'R03','<p>Mainframe</p>','2025-06-12 17:57:32','2025-06-12 17:57:32',NULL,12);
+INSERT INTO `bays` (`id`, `name`, `description`, `room_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01','<p>Rack principal</p>',12,'2025-06-10 08:46:55','2025-06-10 08:46:55',NULL),
+(2,'R02','<p>Rack Database / Backup</p>',12,'2025-06-11 10:24:04','2025-06-11 10:24:04',NULL),
+(3,'R03','<p>Mainframe</p>',12,'2025-06-12 17:57:32','2025-06-12 17:57:32',NULL);
 /*!40000 ALTER TABLE `bays` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,21 +243,25 @@ UNLOCK TABLES;
 
 LOCK TABLES `buildings` WRITE;
 /*!40000 ALTER TABLE `buildings` DISABLE KEYS */;
-INSERT INTO `buildings` (`id`, `name`, `description`, `attributes`, `created_at`, `updated_at`, `deleted_at`, `site_id`) VALUES (1,'101','<p>Accueil patient</p>','Public','2025-06-10 08:33:42','2025-06-10 08:33:42',NULL,1),
-(2,'102','<p>Salle d\'attente</p>','Public','2025-06-10 08:34:36','2025-06-10 08:34:36',NULL,1),
-(3,'103','<p>Salle de Consultation 1</p>','Public Soins','2025-06-10 08:35:13','2025-06-10 08:40:25',NULL,1),
-(4,'104','<p>Salle de Consultation 2</p>','Public Soins','2025-06-10 08:35:34','2025-06-10 08:40:13',NULL,1),
-(5,'105','<p>Urgences</p>','Public Soins','2025-06-10 08:38:19','2025-06-10 08:39:03',NULL,1),
-(6,'201','<p>Laboratoire</p>','Restreint','2025-06-10 08:38:51','2025-06-10 08:38:51',NULL,1),
-(7,'202','<p>Pharmacie</p>','Restreint','2025-06-10 08:39:35','2025-06-10 08:39:35',NULL,1),
-(8,'205','<p>Imagerie Médicale</p>','Public','2025-06-10 08:42:11','2025-06-10 08:42:11',NULL,1),
-(9,'303','<p>Bloc opératoire</p>','Restreint Soins','2025-06-10 08:43:01','2025-06-10 08:43:01',NULL,1),
-(10,'304','<p>Soins intensifs</p>','Restreint Soins','2025-06-10 08:44:58','2025-06-10 08:44:58',NULL,1),
-(11,'401','<p>Administration</p>','Restreint','2025-06-10 08:45:20','2025-06-10 08:45:20',NULL,1),
-(12,'403','<p>Local technique</p>','Restreint','2025-06-10 08:45:44','2025-06-10 08:45:44',NULL,1),
-(13,'404','<p>Logistique</p>','Restreint','2025-06-10 08:46:05','2025-06-10 08:46:05',NULL,1),
-(14,'402','<p>Direction</p>','Restreint','2025-06-11 10:23:11','2025-06-11 10:23:11',NULL,1),
-(15,'302','<p>Local technique</p>','Restreint','2025-06-14 05:57:11','2025-06-14 05:57:11',NULL,1);
+INSERT INTO `buildings` (`id`, `name`, `type`, `description`, `attributes`, `site_id`, `building_id`, `icon_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'101','Hall','<p>Accueil patient</p>','Public',1,16,NULL,'2025-06-10 08:33:42','2025-10-08 13:44:41',NULL),
+(2,'102','Salle','<p>Salle d\'attente</p>','Public',1,16,NULL,'2025-06-10 08:34:36','2025-10-08 13:44:41',NULL),
+(3,'103','Salle','<p>Salle de Consultation 1</p>','Public Soins',1,16,NULL,'2025-06-10 08:35:13','2025-10-08 13:44:41',NULL),
+(4,'104','Salle','<p>Salle de Consultation 2</p>','Public Soins',1,16,NULL,'2025-06-10 08:35:34','2025-10-08 13:44:41',NULL),
+(5,'105','Hall','<p>Urgences</p>','Public Soins',1,16,NULL,'2025-06-10 08:38:19','2025-10-08 13:44:41',NULL),
+(6,'201','Labo','<p>Laboratoire</p>','Restreint',1,17,NULL,'2025-06-10 08:38:51','2025-10-08 13:42:53',NULL),
+(7,'202','Labo','<p>Pharmacie</p>','Restreint',1,17,NULL,'2025-06-10 08:39:35','2025-10-08 13:43:57',NULL),
+(8,'205','Salle','<p>Imagerie Médicale</p>','Public',1,17,NULL,'2025-06-10 08:42:11','2025-10-08 13:43:36',NULL),
+(9,'303','Salle','<p>Bloc opératoire</p>','Restreint Soins',1,18,NULL,'2025-06-10 08:43:01','2025-10-08 13:43:21',NULL),
+(10,'304','Salle','<p>Soins intensifs</p>','Restreint Soins',1,18,NULL,'2025-06-10 08:44:58','2025-10-08 13:44:04',NULL),
+(11,'401','Bureau','<p>Administration</p>','Restreint',1,19,NULL,'2025-06-10 08:45:20','2025-10-08 13:44:15',NULL),
+(12,'403','IT','<p>Local technique</p>','Restreint',1,19,NULL,'2025-06-10 08:45:44','2025-10-08 13:43:29',NULL),
+(13,'404','Bureau','<p>Logistique</p>','Restreint',1,19,NULL,'2025-06-10 08:46:05','2025-10-08 13:44:28',NULL),
+(14,'402','Bureau','<p>Direction</p>','Restreint',1,19,NULL,'2025-06-11 10:23:11','2025-10-08 13:44:21',NULL),
+(15,'302','IT','<p>Local technique</p>','Restreint',1,18,NULL,'2025-06-14 05:57:11','2025-10-08 13:43:07',NULL),
+(16,'ET1','Etage','<p>Premier étage</p>','Public',1,NULL,NULL,'2025-10-08 13:39:08','2025-10-08 13:44:41',NULL),
+(17,'ET2','Etage','<p>Etage numéro deux</p>','Public',1,NULL,NULL,'2025-10-08 13:40:44','2025-10-08 13:40:44',NULL),
+(18,'ET3','Etage','<p>Etage 3</p>','Restreint',1,NULL,NULL,'2025-10-08 13:41:07','2025-10-08 13:41:07',NULL),
+(19,'ET4','Etage','<p>Quatrième étage - Direction + IT</p>','Restreint',1,NULL,NULL,'2025-10-08 13:41:54','2025-10-08 13:41:54',NULL);
 /*!40000 ALTER TABLE `buildings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -532,10 +554,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `databases` WRITE;
 /*!40000 ALTER TABLE `databases` DISABLE KEYS */;
-INSERT INTO `databases` (`id`, `name`, `description`, `responsible`, `type`, `security_need_c`, `external`, `created_at`, `updated_at`, `deleted_at`, `entity_resp_id`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`) VALUES (1,'MEDIC','<p>Base de données médicale</p>','Paul','DB3',4,'Inerne','2025-06-10 10:06:13','2025-06-12 13:14:11',NULL,15,4,4,4,NULL),
-(2,'BIBLIO','<p>Base de données des publications médicales</p>','Paul','MySQL',1,'Inerne','2025-06-12 12:48:43','2025-06-12 13:02:56',NULL,9,1,1,1,NULL),
-(3,'COMPTA','<p>Base de données de la comptabilité</p>','Paul','SOP',4,'Inerne','2025-06-12 12:50:49','2025-06-14 05:55:03',NULL,3,4,4,4,NULL),
-(4,'ADN','<p>Base de données ADN</p>','Paul','MySQL',4,NULL,'2025-06-12 12:52:36','2025-06-12 12:53:05',NULL,2,4,4,4,NULL);
+INSERT INTO `databases` (`id`, `name`, `type`, `description`, `responsible`, `external`, `entity_resp_id`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'MEDIC','DB3','<p>Base de données médicale</p>','Paul','Inerne',15,4,4,4,4,NULL,'2025-06-10 10:06:13','2025-06-12 13:14:11',NULL),
+(2,'BIBLIO','MySQL','<p>Base de données des publications médicales</p>','Paul','Inerne',9,1,1,1,1,NULL,'2025-06-12 12:48:43','2025-06-12 13:02:56',NULL),
+(3,'COMPTA','SOP','<p>Base de données de la comptabilité</p>','Paul','Inerne',3,4,4,4,4,NULL,'2025-06-12 12:50:49','2025-06-14 05:55:03',NULL),
+(4,'ADN','MySQL','<p>Base de données ADN</p>','Paul',NULL,2,4,4,4,4,NULL,'2025-06-12 12:52:36','2025-06-12 12:53:05',NULL);
 /*!40000 ALTER TABLE `databases` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -555,6 +577,15 @@ UNLOCK TABLES;
 LOCK TABLES `dnsservers` WRITE;
 /*!40000 ALTER TABLE `dnsservers` DISABLE KEYS */;
 /*!40000 ALTER TABLE `dnsservers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `document_external_connected_entity`
+--
+
+LOCK TABLES `document_external_connected_entity` WRITE;
+/*!40000 ALTER TABLE `document_external_connected_entity` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document_external_connected_entity` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -610,23 +641,23 @@ UNLOCK TABLES;
 
 LOCK TABLES `entities` WRITE;
 /*!40000 ALTER TABLE `entities` DISABLE KEYS */;
-INSERT INTO `entities` (`id`, `name`, `icon_id`, `security_level`, `contact_point`, `description`, `is_external`, `created_at`, `updated_at`, `deleted_at`, `entity_type`, `attributes`, `reference`, `parent_entity_id`) VALUES (1,'Big Health Tech',NULL,'<p>ISO 27001 - HDS</p>','<p>Support Technique<br><a href=\"mailto:support@bighealthtech.com\">support@bighealthtech.com</a><br>---<br>John Borg&nbsp;<br>Sales Manager<br><a href=\"mailto:john@gibhealthtech.com\">john@gibhealthtech.com</a><br>+33 45 67 89 01<br>&nbsp;</p>','<p>Société éditrice de l\'o</p>',1,'2025-06-10 16:53:12','2025-06-10 16:54:20',NULL,'Fournisseur',NULL,NULL,NULL),
-(2,'OPENHOSP-IT',NULL,'<p>ISO 27001</p>','<p>Mail : helpdesks@openhop.net<br>Tel: 88 800</p>','<p>Département informatique de l\'Open Hospital</p>',0,'2025-06-12 12:16:17','2025-06-12 12:25:34',NULL,'Interne',NULL,NULL,3),
-(3,'OPENHOSP',NULL,'<p>CERT-Med+</p>','<p>Mail: <a href=\"mailto:contact@openhosp.net\">contact@openhosp.net</a><br>Tel: +33 44</p>','<p>The Open Hospital</p>',0,'2025-06-12 12:16:56','2025-06-14 05:55:03',NULL,'Interne',NULL,NULL,NULL),
-(4,'OPENHOSP-LAB',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:labo@opennosp.net\">labo@opennosp.net</a><br>Tel : 23 45</p><p>&nbsp;</p>','<p>Labaoratoire de l\'Open Hospital</p>',0,'2025-06-12 12:17:53','2025-06-12 12:18:43',NULL,'Interne',NULL,NULL,3),
-(5,'OPENHOSP-DIR',NULL,'<p>Néant</p>','<p>Mail: <a href=\"mailto:direction@openhosp.net\">direction@openhosp.net</a><br>Tel : 57 32</p>','<p>Direction de l\'open Hospital</p>',0,'2025-06-12 12:19:31','2025-06-12 12:20:24',NULL,'Interne',NULL,NULL,3),
-(6,'OPENHOSP-COM',NULL,'<p>Néant</p>','<p>mail: <a href=\"mailto:comminucation@openhosp.net\">comminucation@openhosp.net</a><br>Tel : 859 43</p>','<p>Cellule communication de l\'Open Hospital</p>',NULL,'2025-06-12 12:21:18','2025-06-12 12:21:18',NULL,'Interne',NULL,NULL,3),
-(7,'OPENHOSP-URG',NULL,'<p>Néant</p>','<p>Mail : <a href=\"mailto:urgences@openhosp.net\">urgences@openhosp.net</a><br>tel : 11 11</p>','<p>Service des urgence de l\'Open Hospital</p>',NULL,'2025-06-12 12:22:13','2025-06-12 12:22:13',NULL,'Interne',NULL,NULL,3),
-(8,'OPENHOSP-RX',NULL,'<p>Néant</p>','<p>Mail : <a href=\"mailto:radiologie@openhosp.net\">radiologie@openhosp.net</a><br>Tel : 57 43</p>','<p>Service de radiologie</p>',NULL,'2025-06-12 12:24:23','2025-06-12 12:24:23',NULL,'Interne',NULL,NULL,3),
-(9,'Medi+',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:Support@mediplus.com\">support@mediplus.com</a><br>Tel : 12 43 43</p>','<p>Editeur d\'applications médicales</p>',1,'2025-06-12 12:47:34','2025-06-12 13:02:56',NULL,'Fournisseur',NULL,NULL,NULL),
-(10,'General Sys',NULL,'<p>ISO 27001 - SYS/DSS 32</p>','<p>Mail : <a href=\"mailto:contact@general-sys.com\">contact@general-sys.com</a><br>Tel : 32 54 65</p>','<p>Société éditeur de logiciels</p>',1,'2025-06-12 12:56:14','2025-06-12 12:56:14',NULL,'Fournisseur',NULL,NULL,NULL),
-(11,'LTR',NULL,'<p>None</p>','<p>Paul Right&nbsp;<br>Tel : 32 54 32<br>Mail : paul@ltr.com</p>','<p>Little Things Right - Consulting</p>',1,'2025-06-12 12:57:43','2025-06-12 12:57:43',NULL,'Fournisseur',NULL,NULL,NULL),
-(12,'NONESoft',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:info@nonesoft.com\">info@nonesoft.com</a><br>Tel : 32 432 432</p>','<p>No more Software LTD</p>',1,'2025-06-12 13:01:26','2025-06-12 13:01:26',NULL,'Fournisseur',NULL,NULL,NULL),
-(13,'HAL',NULL,'<p>CSP+, ISO 27001, FDM, RRLF, FOSDEM</p>','<p>Mail : <a href=\"mailto:contact@hal.com\">contact@hal.com</a><br>Tel : 32 43 54</p>','<p>Big IT provider</p>',1,'2025-06-12 13:02:39','2025-06-12 13:02:39',NULL,'Fournisseur',NULL,NULL,NULL),
-(14,'BigBrainLab',NULL,'<p>ISO 27001</p>','<p>Mail : <a href=\"mailto:info@bigbrain.com\">info@bigbrain.com</a><br>Tel : 99 43 74</p>','<p>The Big Brain Laboratory</p>',1,'2025-06-12 13:04:14','2025-06-12 13:04:14',NULL,'Fournisseur',NULL,NULL,NULL),
-(15,'Tech24',NULL,'<p>ISO 27001 - HDS</p>','<p>Mail : <a href=\"mailto:tech@tech24.com\">tech@tech24.com</a><br>Phone : 21 45 32</p>','<p>The Tech 24 application provider</p>',1,'2025-06-12 13:14:11','2025-06-12 13:14:11',NULL,'Fournisseur',NULL,NULL,NULL),
-(16,'OHF',NULL,'<p>ISO 27001</p>','<p>Mail : <a href=\"mailto:contact@ohf.net\">contact@ohf.net</a><br>Tel : 32 54 23</p>','<p>Open Hospital Federation</p>',NULL,'2025-06-12 13:24:04','2025-06-12 13:24:04',NULL,'Fournisseur',NULL,NULL,NULL),
-(17,'OPENHOSP-RH',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:rh@openhosp.net\">rh@openhosp.net</a><br>Tel : 87 43 54</p>','<p>Service des ressources humaines</p>',NULL,'2025-06-12 17:04:31','2025-06-12 17:04:31',NULL,'Interne',NULL,NULL,3);
+INSERT INTO `entities` (`id`, `name`, `icon_id`, `security_level`, `contact_point`, `description`, `is_external`, `entity_type`, `attributes`, `reference`, `parent_entity_id`, `external_ref_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Big Health Tech',NULL,'<p>ISO 27001 - HDS</p>','<p>Support Technique<br><a href=\"mailto:support@bighealthtech.com\">support@bighealthtech.com</a><br>---<br>John Borg&nbsp;<br>Sales Manager<br><a href=\"mailto:john@gibhealthtech.com\">john@gibhealthtech.com</a><br>+33 45 67 89 01<br>&nbsp;</p>','<p>Société éditrice de l\'o</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-10 16:53:12','2025-06-10 16:54:20',NULL),
+(2,'OPENHOSP-IT',NULL,'<p>ISO 27001</p>','<p>Mail : helpdesks@openhop.net<br>Tel: 88 800</p>','<p>Département informatique de l\'Open Hospital</p>',0,'Interne',NULL,NULL,3,NULL,'2025-06-12 12:16:17','2025-06-12 12:25:34',NULL),
+(3,'OPENHOSP',NULL,'<p>CERT-Med+</p>','<p>Mail: <a href=\"mailto:contact@openhosp.net\">contact@openhosp.net</a><br>Tel: +33 44</p>','<p>The Open Hospital</p>',0,'Interne',NULL,NULL,NULL,NULL,'2025-06-12 12:16:56','2025-06-14 05:55:03',NULL),
+(4,'OPENHOSP-LAB',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:labo@opennosp.net\">labo@opennosp.net</a><br>Tel : 23 45</p><p>&nbsp;</p>','<p>Labaoratoire de l\'Open Hospital</p>',0,'Interne',NULL,NULL,3,NULL,'2025-06-12 12:17:53','2025-06-12 12:18:43',NULL),
+(5,'OPENHOSP-DIR',NULL,'<p>Néant</p>','<p>Mail: <a href=\"mailto:direction@openhosp.net\">direction@openhosp.net</a><br>Tel : 57 32</p>','<p>Direction de l\'open Hospital</p>',0,'Interne',NULL,NULL,3,NULL,'2025-06-12 12:19:31','2025-06-12 12:20:24',NULL),
+(6,'OPENHOSP-COM',NULL,'<p>Néant</p>','<p>mail: <a href=\"mailto:comminucation@openhosp.net\">comminucation@openhosp.net</a><br>Tel : 859 43</p>','<p>Cellule communication de l\'Open Hospital</p>',NULL,'Interne',NULL,NULL,3,NULL,'2025-06-12 12:21:18','2025-06-12 12:21:18',NULL),
+(7,'OPENHOSP-URG',NULL,'<p>Néant</p>','<p>Mail : <a href=\"mailto:urgences@openhosp.net\">urgences@openhosp.net</a><br>tel : 11 11</p>','<p>Service des urgence de l\'Open Hospital</p>',NULL,'Interne',NULL,NULL,3,NULL,'2025-06-12 12:22:13','2025-06-12 12:22:13',NULL),
+(8,'OPENHOSP-RX',NULL,'<p>Néant</p>','<p>Mail : <a href=\"mailto:radiologie@openhosp.net\">radiologie@openhosp.net</a><br>Tel : 57 43</p>','<p>Service de radiologie</p>',NULL,'Interne',NULL,NULL,3,NULL,'2025-06-12 12:24:23','2025-06-12 12:24:23',NULL),
+(9,'Medi+',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:Support@mediplus.com\">support@mediplus.com</a><br>Tel : 12 43 43</p>','<p>Editeur d\'applications médicales</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 12:47:34','2025-06-12 13:02:56',NULL),
+(10,'General Sys',NULL,'<p>ISO 27001 - SYS/DSS 32</p>','<p>Mail : <a href=\"mailto:contact@general-sys.com\">contact@general-sys.com</a><br>Tel : 32 54 65</p>','<p>Société éditeur de logiciels</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 12:56:14','2025-06-12 12:56:14',NULL),
+(11,'LTR',NULL,'<p>None</p>','<p>Paul Right&nbsp;<br>Tel : 32 54 32<br>Mail : paul@ltr.com</p>','<p>Little Things Right - Consulting</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 12:57:43','2025-06-12 12:57:43',NULL),
+(12,'NONESoft',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:info@nonesoft.com\">info@nonesoft.com</a><br>Tel : 32 432 432</p>','<p>No more Software LTD</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 13:01:26','2025-06-12 13:01:26',NULL),
+(13,'HAL',NULL,'<p>CSP+, ISO 27001, FDM, RRLF, FOSDEM</p>','<p>Mail : <a href=\"mailto:contact@hal.com\">contact@hal.com</a><br>Tel : 32 43 54</p>','<p>Big IT provider</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 13:02:39','2025-06-12 13:02:39',NULL),
+(14,'BigBrainLab',NULL,'<p>ISO 27001</p>','<p>Mail : <a href=\"mailto:info@bigbrain.com\">info@bigbrain.com</a><br>Tel : 99 43 74</p>','<p>The Big Brain Laboratory</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 13:04:14','2025-06-12 13:04:14',NULL),
+(15,'Tech24',NULL,'<p>ISO 27001 - HDS</p>','<p>Mail : <a href=\"mailto:tech@tech24.com\">tech@tech24.com</a><br>Phone : 21 45 32</p>','<p>The Tech 24 application provider</p>',1,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 13:14:11','2025-06-12 13:14:11',NULL),
+(16,'OHF',NULL,'<p>ISO 27001</p>','<p>Mail : <a href=\"mailto:contact@ohf.net\">contact@ohf.net</a><br>Tel : 32 54 23</p>','<p>Open Hospital Federation</p>',NULL,'Fournisseur',NULL,NULL,NULL,NULL,'2025-06-12 13:24:04','2025-06-12 13:24:04',NULL),
+(17,'OPENHOSP-RH',NULL,'<p>None</p>','<p>Mail : <a href=\"mailto:rh@openhosp.net\">rh@openhosp.net</a><br>Tel : 87 43 54</p>','<p>Service des ressources humaines</p>',NULL,'Interne',NULL,NULL,3,NULL,'2025-06-12 17:04:31','2025-06-12 17:04:31',NULL);
 /*!40000 ALTER TABLE `entities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -730,20 +761,29 @@ LOCK TABLES `external_connected_entities` WRITE;
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `external_connected_entity_subnetwork`
+--
+
+LOCK TABLES `external_connected_entity_subnetwork` WRITE;
+/*!40000 ALTER TABLE `external_connected_entity_subnetwork` DISABLE KEYS */;
+/*!40000 ALTER TABLE `external_connected_entity_subnetwork` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `fluxes`
 --
 
 LOCK TABLES `fluxes` WRITE;
 /*!40000 ALTER TABLE `fluxes` DISABLE KEYS */;
-INSERT INTO `fluxes` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`, `application_source_id`, `service_source_id`, `module_source_id`, `database_source_id`, `application_dest_id`, `service_dest_id`, `module_dest_id`, `database_dest_id`, `crypted`, `bidirectional`, `nature`) VALUES (1,'Facturation Médicale','<p>Envoie de la facturation aux patients</p>','2025-06-12 17:29:15','2025-06-12 17:29:15',NULL,1,NULL,NULL,NULL,2,NULL,NULL,NULL,0,0,'API'),
-(2,'Disponibilité','<p>Disponibilité des soignants</p>','2025-06-12 17:29:45','2025-06-12 17:29:45',NULL,4,NULL,NULL,NULL,1,NULL,NULL,NULL,0,0,'API'),
-(3,'Gardes','<p>Paiement des gardes</p>','2025-06-12 17:30:10','2025-06-12 17:30:17',NULL,4,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API'),
-(4,'Prestations Médicales','<p>Paiement des prestations</p>','2025-06-12 17:30:39','2025-06-12 17:30:39',NULL,1,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API'),
-(5,'Recrutement','<p>Gestion des recrutements</p>','2025-06-12 17:31:16','2025-06-12 17:31:16',NULL,12,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API'),
-(6,'Recrutement','<p>Gestion des nouveaux employés</p>','2025-06-12 17:34:20','2025-06-12 17:34:20',NULL,12,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API'),
-(7,'Synchronisation','<p>Ajout suppression des utilisateurs</p>','2025-06-12 17:45:07','2025-06-12 17:45:07',NULL,11,NULL,NULL,NULL,13,NULL,NULL,NULL,0,0,'API'),
-(8,'Images','<p>Ajouter des données dans le dossier médical</p>','2025-06-12 17:46:21','2025-06-12 17:46:21',NULL,9,NULL,NULL,NULL,1,NULL,NULL,NULL,0,0,'API'),
-(9,'Prescriptions','<p>Gestion des prescriptions medicales</p>','2025-06-12 17:47:42','2025-06-12 17:47:42',NULL,10,NULL,NULL,NULL,1,NULL,NULL,NULL,0,0,'API');
+INSERT INTO `fluxes` (`id`, `name`, `attributes`, `description`, `application_source_id`, `service_source_id`, `module_source_id`, `database_source_id`, `application_dest_id`, `service_dest_id`, `module_dest_id`, `database_dest_id`, `crypted`, `bidirectional`, `nature`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Facturation Médicale',NULL,'<p>Envoie de la facturation aux patients</p>',1,NULL,NULL,NULL,2,NULL,NULL,NULL,0,0,'API','2025-06-12 17:29:15','2025-06-12 17:29:15',NULL),
+(2,'Disponibilité',NULL,'<p>Disponibilité des soignants</p>',4,NULL,NULL,NULL,1,NULL,NULL,NULL,0,0,'API','2025-06-12 17:29:45','2025-06-12 17:29:45',NULL),
+(3,'Gardes',NULL,'<p>Paiement des gardes</p>',4,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API','2025-06-12 17:30:10','2025-06-12 17:30:17',NULL),
+(4,'Prestations Médicales',NULL,'<p>Paiement des prestations</p>',1,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API','2025-06-12 17:30:39','2025-06-12 17:30:39',NULL),
+(5,'Recrutement',NULL,'<p>Gestion des recrutements</p>',12,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API','2025-06-12 17:31:16','2025-06-12 17:31:16',NULL),
+(6,'Recrutement',NULL,'<p>Gestion des nouveaux employés</p>',12,NULL,NULL,NULL,11,NULL,NULL,NULL,0,0,'API','2025-06-12 17:34:20','2025-06-12 17:34:20',NULL),
+(7,'Synchronisation',NULL,'<p>Ajout suppression des utilisateurs</p>',11,NULL,NULL,NULL,13,NULL,NULL,NULL,0,0,'API','2025-06-12 17:45:07','2025-06-12 17:45:07',NULL),
+(8,'Images',NULL,'<p>Ajouter des données dans le dossier médical</p>',9,NULL,NULL,NULL,1,NULL,NULL,NULL,0,0,'API','2025-06-12 17:46:21','2025-06-12 17:46:21',NULL),
+(9,'Prescriptions',NULL,'<p>Gestion des prescriptions medicales</p>',10,NULL,NULL,NULL,1,NULL,NULL,NULL,0,0,'API','2025-06-12 17:47:42','2025-06-12 17:47:42',NULL);
 /*!40000 ALTER TABLE `fluxes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -753,7 +793,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `forest_ads` WRITE;
 /*!40000 ALTER TABLE `forest_ads` DISABLE KEYS */;
-INSERT INTO `forest_ads` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`, `zone_admin_id`) VALUES (1,'LDAP open source','<p>Forêt active Directory de l\'Open Hospital</p>','2025-06-12 11:23:11','2025-06-12 11:28:33',NULL,1);
+INSERT INTO `forest_ads` (`id`, `name`, `description`, `zone_admin_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'LDAP open source','<p>Forêt active Directory de l\'Open Hospital</p>',1,'2025-06-12 11:23:11','2025-06-12 11:28:33',NULL);
 /*!40000 ALTER TABLE `forest_ads` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -772,26 +812,26 @@ UNLOCK TABLES;
 
 LOCK TABLES `information` WRITE;
 /*!40000 ALTER TABLE `information` DISABLE KEYS */;
-INSERT INTO `information` (`id`, `name`, `description`, `owner`, `administrator`, `storage`, `security_need_c`, `sensitivity`, `constraints`, `retention`, `created_at`, `updated_at`, `deleted_at`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`) VALUES (1,'Information 1','<p>Description de l\'information 1</p>','Etablissement','Nom de l\'administrateur','Type de stockage',3,'Donnée à caractère personnel','<p>Description des contraintes règlementaires et normatives</p>',NULL,'2020-06-13 00:06:43','2020-06-22 06:12:26','2020-06-22 06:12:26',3,3,3,NULL),
-(2,'information 2','<p>Description de l\'information</p>',NULL,NULL,NULL,3,NULL,NULL,NULL,'2020-06-13 00:09:13','2020-06-22 06:12:26','2020-06-22 06:12:26',3,3,3,NULL),
-(3,'information 3','<p>Descripton de l\'information 3</p>','Proriétaire',NULL,NULL,3,NULL,NULL,NULL,'2020-06-13 00:10:07','2020-06-22 06:12:26','2020-06-22 06:12:26',3,3,3,NULL),
-(4,'Nom du patient','<p>Nom et prénom du patient</p>','Etablissement','Open-Hosp','sécurisé',3,'Donnée à caractère personnel','<p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0107/index.html\">Identification des personnes physiques (loi 2013)&nbsp;</a></p><p>Loi du 19 juin 2013 relative à l\'identification des personnes physiques, au registre national des personnes physiques, à la carte d\'identité, aux registres communaux des personnes physiques et portant modification de 1) l\'article 104 du Code civil; 2</p><p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0208/index.html\">Identification des personnes physiques - modalités d\'application (règlement grand-ducal 2013)&nbsp;</a></p><p>Règlement grand-ducal du 28 novembre 2013 fixant les modalités d\'application de la loi du 19 juin 2013 relative à l\'identification des personnes physiques. Modalités d\'application de la loi du 19 juin 2013 relative à l\'identification des personnes phy</p>',NULL,'2020-07-02 05:58:39','2021-05-19 05:42:48',NULL,3,3,3,NULL),
-(5,'Numéro de sécurité sociale','<p>Numéro d’identification national à 13 positions.</p>','Etablissement','Open-Hosp','sécurisé',3,'Donnée à caractère personnel','<p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0107/a107.pdf#page=2\">Loi du 19 juin 2013</a> relative à l\'identification des personnes physiques, au registre national des personnes physiques, à la carte d\'identité, aux registres communaux des personnes physiques</p><p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0208/a208.pdf#page=2\">Règlement grand-ducal du 28 novembre 2013</a> fixant les&nbsp; modalités d\'application de la loi du 19 juin 2013 relative à l\'identification des personnes physiques</p>',NULL,'2020-07-02 06:02:03','2021-05-19 05:45:06',NULL,3,3,3,NULL),
-(6,'Numéro de compte','<p>Coordonnées bancaire - code IBAN</p>','Etablissement','Open-Hosp','sécurisé',3,'Donnée à caractère personnel','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 10:48:21','2021-05-25 08:38:11',NULL,3,3,4,NULL),
-(7,'Adresse','<p>Adresse physique d\'une personne - lieu d\'habitation principal</p>','Etablissement','Open-Hosp','local',3,'Donnée à caractère personnel','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 10:49:11','2021-05-19 05:42:01',NULL,3,3,3,NULL),
-(8,'Diagnostic','<p>Identification de la nature d\'une situation, d\'un mal, d\'une difficulté, etc.</p><p>Raisonnement menant à l\'identification d\'une maladie.&nbsp;</p>','Professionel de santé','Open-Hosp','Sécurisé',3,'donnée médicale','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 11:42:36','2021-05-25 08:37:42',NULL,3,3,4,NULL),
-(9,'Prescription / ordonnance','<p>Acte par lequel le médecin, après un diagnostic, décrit le traitement que devra suivre le patient.</p>','Professionel de santé','Open-Hosp','sécurisé',3,'donnée médicale','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 11:42:56','2021-05-19 05:45:34',NULL,3,3,3,NULL),
-(10,'Adresse IP','<p>Numéro d\'identification qui est attribué de façon permanente ou provisoire à chaque périphérique relié à un réseau informatique qui utilise l\'Internet Protocol.</p>','Etablissement','Open-Hosp','local',2,'donnée technique','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-08 06:19:37','2021-05-25 08:37:26',NULL,3,2,2,NULL),
-(11,'Adresse électronique','<p>Chaîne de caractères permettant d\'aOpenHospiner du courrier électronique dans une boîte aux lettres informatique.&nbsp;</p>','Etablissement','Open-Hosp','local',3,'Donnée à caractère personnel','<p>Réglement général sur la protection des données à caractère personnel</p>',NULL,'2020-07-08 06:20:12','2021-05-19 05:43:22',NULL,3,3,3,NULL),
-(12,'Numéro de téléphone interne','<p>Suite de chiffres qui identifie de façon unique un terminal au sein d\'un réseau téléphonique.</p>','Etablissement','Open-Hosp','local',3,'donnée générale','<p>Néant</p>',NULL,'2020-07-08 06:21:13','2021-05-19 05:45:23',NULL,3,3,3,NULL),
-(13,'Nom du professionel de santé','<p>Nom et prénom d\'un professionnel de santé</p>','Etablissement','Open-Hosp','public',2,'Donnée à caractère personnel','<p>Néant</p>',NULL,'2020-07-08 06:21:44','2021-05-25 08:38:02',NULL,2,2,2,NULL),
-(14,'Données médicales','<p>Données générales médicales d\'un dossier patient</p>','Etablissement','Open-Hosp','Base de données',3,'Donnée médicale',NULL,NULL,'2020-09-04 12:45:08','2021-05-19 05:44:30',NULL,3,3,3,NULL),
-(15,'Données administratives patient','<p>Données administratives du patient et de ces séjours</p>','Etablissement','Open-Hosp','Base de données',3,'Donnée à caractère personnel',NULL,NULL,'2020-09-04 14:59:33','2021-05-19 05:43:43',NULL,3,3,3,NULL),
-(16,'Données facturation patient','<p>Données de facturation du patient et de ces séjours</p>','Etablissement','Open-Hosp','Base de données',3,'Donnée à caractère personnel',NULL,NULL,'2020-09-04 15:00:14','2021-05-19 05:44:20',NULL,3,3,3,NULL),
-(17,'Données comptables','<p>Données comptables</p>','Etablissement','Open-Hosp','Base de données',3,'Donnée à caractère personnel',NULL,NULL,'2020-10-22 09:52:29','2021-05-19 05:44:10',NULL,3,3,3,NULL),
-(18,'Données techniques','<p>Données techniques sur le fonctionnement interne du système d\'information</p>','Etablissement','Open-Hosp','sécurisé',3,'donnée technique',NULL,NULL,'2021-10-26 12:17:08','2021-10-26 12:17:08',NULL,3,3,3,NULL),
-(19,'Date de naissance','<p>Date de naissance d\'une personne physique</p>','Etablissement','Open-Hosp','local',3,'Donnée à caractère personnel',NULL,NULL,'2021-10-28 03:19:52','2021-10-28 03:20:16',NULL,3,3,3,NULL),
-(20,'Données de test','<p>Données utilisées pour des tests</p>','Etablissement','Open-Hosp','Base de données',1,'Données de test','<p>Ne peut pas contenir de données de production.</p>',NULL,'2023-04-27 07:57:24','2023-04-27 09:30:47',NULL,2,2,2,NULL);
+INSERT INTO `information` (`id`, `name`, `description`, `owner`, `administrator`, `storage`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `sensitivity`, `constraints`, `retention`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Information 1','<p>Description de l\'information 1</p>','Etablissement','Nom de l\'administrateur','Type de stockage',3,3,3,3,NULL,'Donnée à caractère personnel','<p>Description des contraintes règlementaires et normatives</p>',NULL,'2020-06-13 00:06:43','2020-06-22 06:12:26','2020-06-22 06:12:26'),
+(2,'information 2','<p>Description de l\'information</p>',NULL,NULL,NULL,3,3,3,3,NULL,NULL,NULL,NULL,'2020-06-13 00:09:13','2020-06-22 06:12:26','2020-06-22 06:12:26'),
+(3,'information 3','<p>Descripton de l\'information 3</p>','Proriétaire',NULL,NULL,3,3,3,3,NULL,NULL,NULL,NULL,'2020-06-13 00:10:07','2020-06-22 06:12:26','2020-06-22 06:12:26'),
+(4,'Nom du patient','<p>Nom et prénom du patient</p>','Etablissement','Open-Hosp','sécurisé',3,3,3,3,NULL,'Donnée à caractère personnel','<p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0107/index.html\">Identification des personnes physiques (loi 2013)&nbsp;</a></p><p>Loi du 19 juin 2013 relative à l\'identification des personnes physiques, au registre national des personnes physiques, à la carte d\'identité, aux registres communaux des personnes physiques et portant modification de 1) l\'article 104 du Code civil; 2</p><p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0208/index.html\">Identification des personnes physiques - modalités d\'application (règlement grand-ducal 2013)&nbsp;</a></p><p>Règlement grand-ducal du 28 novembre 2013 fixant les modalités d\'application de la loi du 19 juin 2013 relative à l\'identification des personnes physiques. Modalités d\'application de la loi du 19 juin 2013 relative à l\'identification des personnes phy</p>',NULL,'2020-07-02 05:58:39','2021-05-19 05:42:48',NULL),
+(5,'Numéro de sécurité sociale','<p>Numéro d’identification national à 13 positions.</p>','Etablissement','Open-Hosp','sécurisé',3,3,3,3,NULL,'Donnée à caractère personnel','<p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0107/a107.pdf#page=2\">Loi du 19 juin 2013</a> relative à l\'identification des personnes physiques, au registre national des personnes physiques, à la carte d\'identité, aux registres communaux des personnes physiques</p><p><a href=\"http://www.legilux.public.lu/leg/a/archives/2013/0208/a208.pdf#page=2\">Règlement grand-ducal du 28 novembre 2013</a> fixant les&nbsp; modalités d\'application de la loi du 19 juin 2013 relative à l\'identification des personnes physiques</p>',NULL,'2020-07-02 06:02:03','2021-05-19 05:45:06',NULL),
+(6,'Numéro de compte','<p>Coordonnées bancaire - code IBAN</p>','Etablissement','Open-Hosp','sécurisé',3,3,3,4,NULL,'Donnée à caractère personnel','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 10:48:21','2021-05-25 08:38:11',NULL),
+(7,'Adresse','<p>Adresse physique d\'une personne - lieu d\'habitation principal</p>','Etablissement','Open-Hosp','local',3,3,3,3,NULL,'Donnée à caractère personnel','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 10:49:11','2021-05-19 05:42:01',NULL),
+(8,'Diagnostic','<p>Identification de la nature d\'une situation, d\'un mal, d\'une difficulté, etc.</p><p>Raisonnement menant à l\'identification d\'une maladie.&nbsp;</p>','Professionel de santé','Open-Hosp','Sécurisé',3,3,3,4,NULL,'donnée médicale','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 11:42:36','2021-05-25 08:37:42',NULL),
+(9,'Prescription / ordonnance','<p>Acte par lequel le médecin, après un diagnostic, décrit le traitement que devra suivre le patient.</p>','Professionel de santé','Open-Hosp','sécurisé',3,3,3,3,NULL,'donnée médicale','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-07 11:42:56','2021-05-19 05:45:34',NULL),
+(10,'Adresse IP','<p>Numéro d\'identification qui est attribué de façon permanente ou provisoire à chaque périphérique relié à un réseau informatique qui utilise l\'Internet Protocol.</p>','Etablissement','Open-Hosp','local',2,3,2,2,NULL,'donnée technique','<p>Règlement général sur la protection des données à caractère personnel (RGPD)</p>',NULL,'2020-07-08 06:19:37','2021-05-25 08:37:26',NULL),
+(11,'Adresse électronique','<p>Chaîne de caractères permettant d\'aOpenHospiner du courrier électronique dans une boîte aux lettres informatique.&nbsp;</p>','Etablissement','Open-Hosp','local',3,3,3,3,NULL,'Donnée à caractère personnel','<p>Réglement général sur la protection des données à caractère personnel</p>',NULL,'2020-07-08 06:20:12','2021-05-19 05:43:22',NULL),
+(12,'Numéro de téléphone interne','<p>Suite de chiffres qui identifie de façon unique un terminal au sein d\'un réseau téléphonique.</p>','Etablissement','Open-Hosp','local',3,3,3,3,NULL,'donnée générale','<p>Néant</p>',NULL,'2020-07-08 06:21:13','2021-05-19 05:45:23',NULL),
+(13,'Nom du professionel de santé','<p>Nom et prénom d\'un professionnel de santé</p>','Etablissement','Open-Hosp','public',2,2,2,2,NULL,'Donnée à caractère personnel','<p>Néant</p>',NULL,'2020-07-08 06:21:44','2021-05-25 08:38:02',NULL),
+(14,'Données médicales','<p>Données générales médicales d\'un dossier patient</p>','Etablissement','Open-Hosp','Base de données',3,3,3,3,NULL,'Donnée médicale',NULL,NULL,'2020-09-04 12:45:08','2021-05-19 05:44:30',NULL),
+(15,'Données administratives patient','<p>Données administratives du patient et de ces séjours</p>','Etablissement','Open-Hosp','Base de données',3,3,3,3,NULL,'Donnée à caractère personnel',NULL,NULL,'2020-09-04 14:59:33','2021-05-19 05:43:43',NULL),
+(16,'Données facturation patient','<p>Données de facturation du patient et de ces séjours</p>','Etablissement','Open-Hosp','Base de données',3,3,3,3,NULL,'Donnée à caractère personnel',NULL,NULL,'2020-09-04 15:00:14','2021-05-19 05:44:20',NULL),
+(17,'Données comptables','<p>Données comptables</p>','Etablissement','Open-Hosp','Base de données',3,3,3,3,NULL,'Donnée à caractère personnel',NULL,NULL,'2020-10-22 09:52:29','2021-05-19 05:44:10',NULL),
+(18,'Données techniques','<p>Données techniques sur le fonctionnement interne du système d\'information</p>','Etablissement','Open-Hosp','sécurisé',3,3,3,3,NULL,'donnée technique',NULL,NULL,'2021-10-26 12:17:08','2021-10-26 12:17:08',NULL),
+(19,'Date de naissance','<p>Date de naissance d\'une personne physique</p>','Etablissement','Open-Hosp','local',3,3,3,3,NULL,'Donnée à caractère personnel',NULL,NULL,'2021-10-28 03:19:52','2021-10-28 03:20:16',NULL),
+(20,'Données de test','<p>Données utilisées pour des tests</p>','Etablissement','Open-Hosp','Base de données',1,2,2,2,NULL,'Données de test','<p>Ne peut pas contenir de données de production.</p>',NULL,'2023-04-27 07:57:24','2023-04-27 09:30:47',NULL);
 /*!40000 ALTER TABLE `information` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -989,13 +1029,13 @@ UNLOCK TABLES;
 
 LOCK TABLES `logical_servers` WRITE;
 /*!40000 ALTER TABLE `logical_servers` DISABLE KEYS */;
-INSERT INTO `logical_servers` (`id`, `name`, `icon_id`, `type`, `active`, `description`, `net_services`, `configuration`, `created_at`, `updated_at`, `deleted_at`, `operating_system`, `address_ip`, `cpu`, `memory`, `environment`, `disk`, `disk_used`, `install_date`, `update_date`, `attributes`, `patching_frequency`, `next_update`, `cluster_id`, `domain_id`) VALUES (1,'SRV01',NULL,'APP',1,'<p>Serveur01</p>','SSH',NULL,'2025-06-11 10:42:11','2025-06-18 08:33:37',NULL,'Linux','10.10.25.9','12','64','Prod',512,154,'2025-01-01',NULL,'',NULL,NULL,1,1),
-(2,'SRV02',NULL,'APP',1,'<p>Serveur applicatif</p>','SSH, HTTP, HTTPS',NULL,'2025-06-12 11:52:23','2025-06-18 08:33:37',NULL,'Linux','10.10.25.24','4','10','Prod',120,80,'2025-01-01',NULL,'',NULL,NULL,1,1),
-(3,'SRV03',NULL,'DEV',1,'<p>Development server</p>','SSH, HTTP, HTTPS',NULL,'2025-06-12 11:53:52','2025-06-18 08:33:37',NULL,'Linux','10.10.25.23','4','8','Dev',120,40,'2025-01-01',NULL,'',NULL,NULL,1,1),
-(4,'DB01',NULL,'DB',1,'<p>Database server 01</p>',NULL,NULL,'2025-06-12 13:07:22','2025-06-14 09:13:04',NULL,'Linux','10.10.25.4',NULL,NULL,'Prod',NULL,NULL,'2025-01-01',NULL,'',NULL,NULL,NULL,1),
-(5,'DB02',NULL,'DB',1,'<p>Databse server 02</p>',NULL,NULL,'2025-06-12 13:08:16','2025-06-14 09:13:13',NULL,'Linux','10.10.25.7','2','32',NULL,512,120,'2025-01-01',NULL,'',NULL,NULL,NULL,1),
-(6,'DB-TST',NULL,'DB',1,'<p>Test Database Server</p>','SSH, DB',NULL,'2025-06-12 13:09:20','2025-06-18 08:33:37',NULL,'Linux','10.10.25.3','2','10','TEST',1024,130,'2025-01-01',NULL,'',NULL,NULL,1,1),
-(7,'SRV-DEV',NULL,'DEV',1,'<p>Serveur de développement</p>','SSH',NULL,'2025-06-12 17:52:19','2025-06-18 08:33:37',NULL,'Linux','10.10.25.8','2','16','Dev',250,50,'2025-01-01',NULL,'',NULL,NULL,1,1);
+INSERT INTO `logical_servers` (`id`, `name`, `icon_id`, `type`, `active`, `description`, `net_services`, `configuration`, `operating_system`, `address_ip`, `cpu`, `memory`, `environment`, `disk`, `disk_used`, `install_date`, `update_date`, `attributes`, `patching_frequency`, `next_update`, `cluster_id`, `domain_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'SRV01',NULL,'APP',1,'<p>Serveur01</p>','SSH',NULL,'Linux','10.10.25.9','12','64','Prod',512,154,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-11 10:42:11','2025-06-18 08:33:37',NULL),
+(2,'SRV02',NULL,'APP',1,'<p>Serveur applicatif</p>','SSH, HTTP, HTTPS',NULL,'Linux','10.10.25.24','4','10','Prod',120,80,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 11:52:23','2025-06-18 08:33:37',NULL),
+(3,'SRV03',NULL,'DEV',1,'<p>Development server</p>','SSH, HTTP, HTTPS',NULL,'Linux','10.10.25.23','4','8','Dev',120,40,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 11:53:52','2025-06-18 08:33:37',NULL),
+(4,'DB01',NULL,'DB',1,'<p>Database server 01</p>',NULL,NULL,'Linux','10.10.25.4',NULL,NULL,'Prod',NULL,NULL,'2025-01-01',NULL,'',NULL,NULL,NULL,1,'2025-06-12 13:07:22','2025-06-14 09:13:04',NULL),
+(5,'DB02',NULL,'DB',1,'<p>Databse server 02</p>',NULL,NULL,'Linux','10.10.25.7','2','32',NULL,512,120,'2025-01-01',NULL,'',NULL,NULL,NULL,1,'2025-06-12 13:08:16','2025-06-14 09:13:13',NULL),
+(6,'DB-TST',NULL,'DB',1,'<p>Test Database Server</p>','SSH, DB',NULL,'Linux','10.10.25.3','2','10','TEST',1024,130,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 13:09:20','2025-06-18 08:33:37',NULL),
+(7,'SRV-DEV',NULL,'DEV',1,'<p>Serveur de développement</p>','SSH',NULL,'Linux','10.10.25.8','2','16','Dev',250,50,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 17:52:19','2025-06-18 08:33:37',NULL);
 /*!40000 ALTER TABLE `logical_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1107,21 +1147,21 @@ UNLOCK TABLES;
 
 LOCK TABLES `m_applications` WRITE;
 /*!40000 ALTER TABLE `m_applications` DISABLE KEYS */;
-INSERT INTO `m_applications` (`id`, `name`, `description`, `vendor`, `product`, `security_need_c`, `responsible`, `functional_referent`, `type`, `icon_id`, `technology`, `external`, `users`, `editor`, `created_at`, `updated_at`, `deleted_at`, `entity_resp_id`, `application_block_id`, `documentation`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `version`, `rto`, `rpo`, `install_date`, `update_date`, `attributes`, `patching_frequency`, `next_update`) VALUES (1,'Dossier Médical','<p>Logiciel de gestion des dossier médicaux</p>',NULL,NULL,4,'Pierre','Jean','Fat Client',NULL,'Web','Internal','> 100','Tech24','2025-06-10 10:05:14','2025-06-18 08:28:48',NULL,15,3,'//documentation/dossier_medical',4,4,4,NULL,NULL,60,240,'2025-01-01',NULL,'',NULL,NULL),
-(2,'Compta+','<p>Logiciel comptable</p>',NULL,NULL,3,'Sue','Pierre','Software',NULL,'Web','Internal','10',NULL,'2025-06-12 11:56:56','2025-06-12 13:05:59',NULL,13,4,'//Share/Documentation/Compta',3,3,3,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL),
-(3,'Biblio+','<p>Application de gestion des publications médicales</p>',NULL,NULL,1,'Marc','Marc','Internal',NULL,'Web',NULL,'10',NULL,'2025-06-12 12:46:36','2025-06-12 13:02:56',NULL,9,3,NULL,1,1,1,NULL,NULL,4320,1440,'2025-01-01',NULL,'',NULL,NULL),
-(4,'Guard','<p>Gestion des gardes hospitalières</p>',NULL,NULL,2,'David','Julien','Internal',NULL,'Web','Internal','> 100',NULL,'2025-06-12 13:16:32','2025-06-12 13:16:32',NULL,2,5,'//Share/Documentation/Guard',2,2,2,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL),
-(5,'MediLab','<p>Gestion des analyses de laboratoire</p>',NULL,NULL,0,'Sophie',NULL,'Internal',NULL,'Web','Internal','10',NULL,'2025-06-12 13:19:03','2025-06-12 13:19:03',NULL,2,2,'//Share/Documentation/MediLab',0,0,0,NULL,NULL,0,0,'2025-01-01',NULL,'',NULL,NULL),
-(6,'Apache','<p>Serveur Web Apache</p>',NULL,NULL,2,'Henri',NULL,'Logiciel',NULL,'Software','external','> 100','Apache Fundation','2025-06-12 13:44:03','2025-06-12 13:44:03',NULL,2,6,'/share/doc/website',2,2,2,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL),
-(7,'JDev','<p>Application de Développement Java</p>',NULL,NULL,1,'Nicolas','Nicolas','Fat Client',NULL,'Software','Internal','5','JDev','2025-06-12 13:50:59','2025-06-12 13:50:59',NULL,2,6,'//Share/Documentation/JDEV',1,1,1,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL),
-(8,'GITLab','<p>Gestion des sources IT</p>',NULL,NULL,1,'Nicolas','Nicolas','Logiciel',NULL,'Software','Internal','10','GITLab','2025-06-12 13:52:22','2025-06-18 08:29:34',NULL,2,6,'//Share/Documentation/GITLab',1,1,1,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL),
-(9,'RXMaker','<p>Application d\'imagerie médicale</p>',NULL,NULL,3,'Carole','Sylvie','Internal',NULL,'Software','Internal','10','BIG Elec','2025-06-12 13:54:46','2025-06-12 13:54:46',NULL,2,3,'//documentation/RX',3,3,3,NULL,NULL,120,120,'2025-01-01',NULL,'',NULL,NULL),
-(10,'PharamaMag','<p>Gestion de la pharmacie</p>',NULL,NULL,3,'Anne','Anne','Logiciel',NULL,'Fat Client','Internal','30','PharaMaker','2025-06-12 13:57:51','2025-06-12 13:57:51',NULL,2,3,NULL,3,3,3,NULL,NULL,120,120,'2025-01-01',NULL,'',NULL,NULL),
-(11,'SalaryPay','<p>Application de gestion de la paye</p>',NULL,NULL,3,'Véronique','Véronique','Internal dev',NULL,'Web','Internal','10','OPENHOSP','2025-06-12 15:28:22','2025-06-12 17:08:10',NULL,17,5,'//documentation/SalaryPay',3,2,3,NULL,NULL,2880,240,'2025-01-01',NULL,'',NULL,NULL),
-(12,'Jobs','<p>Application de gestion des recrutements</p>',NULL,NULL,3,'Véronique','Véronique','Logiciel',NULL,'Web','Internal','10','OPENHOSP','2025-06-12 17:03:00','2025-06-12 17:06:35',NULL,2,5,NULL,3,3,3,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL),
-(13,'SyncAD','<p>Synchronisation de l\'active directory</p>',NULL,NULL,3,'Marc','Julien','Internal dev',NULL,'Job','Internal','5','OPENHOSP','2025-06-12 17:33:13','2025-06-12 17:33:13',NULL,2,6,'//documentation/jobs',3,3,3,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL),
-(14,'LibreOffice','<p>Text</p>',NULL,NULL,1,'Carole','Marc',NULL,NULL,NULL,NULL,'> 100','Apache Fundation','2025-06-14 05:50:17','2025-06-14 05:50:17',NULL,2,1,NULL,1,1,1,NULL,NULL,1440,1440,NULL,NULL,'',NULL,NULL),
-(15,'LibreCalc','<p>Feuille de calcul</p>',NULL,NULL,1,'Carole','Marc',NULL,NULL,NULL,NULL,'> 100','Apache Fundation','2025-06-14 05:51:20','2025-06-14 05:51:20',NULL,2,1,NULL,1,1,1,NULL,NULL,1440,1440,NULL,NULL,'',NULL,NULL);
+INSERT INTO `m_applications` (`id`, `name`, `description`, `vendor`, `product`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `responsible`, `functional_referent`, `type`, `icon_id`, `technology`, `external`, `users`, `editor`, `entity_resp_id`, `application_block_id`, `documentation`, `version`, `rto`, `rpo`, `install_date`, `update_date`, `attributes`, `patching_frequency`, `next_update`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Dossier Médical','<p>Logiciel de gestion des dossier médicaux</p>',NULL,NULL,4,4,4,4,NULL,'Pierre','Jean','Fat Client',NULL,'Web','Internal','> 100','Tech24',15,3,'//documentation/dossier_medical',NULL,60,240,'2025-01-01',NULL,'',NULL,NULL,'2025-06-10 10:05:14','2025-06-18 08:28:48',NULL),
+(2,'Compta+','<p>Logiciel comptable</p>',NULL,NULL,3,3,3,3,NULL,'Sue','Pierre','Software',NULL,'Web','Internal','10',NULL,13,4,'//Share/Documentation/Compta',NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 11:56:56','2025-06-12 13:05:59',NULL),
+(3,'Biblio+','<p>Application de gestion des publications médicales</p>',NULL,NULL,1,1,1,1,NULL,'Marc','Marc','Internal',NULL,'Web',NULL,'10',NULL,9,3,NULL,NULL,4320,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 12:46:36','2025-06-12 13:02:56',NULL),
+(4,'Guard','<p>Gestion des gardes hospitalières</p>',NULL,NULL,2,2,2,2,NULL,'David','Julien','Internal',NULL,'Web','Internal','> 100',NULL,2,5,'//Share/Documentation/Guard',NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 13:16:32','2025-06-12 13:16:32',NULL),
+(5,'MediLab','<p>Gestion des analyses de laboratoire</p>',NULL,NULL,0,0,0,0,NULL,'Sophie',NULL,'Internal',NULL,'Web','Internal','10',NULL,2,2,'//Share/Documentation/MediLab',NULL,0,0,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 13:19:03','2025-06-12 13:19:03',NULL),
+(6,'Apache','<p>Serveur Web Apache</p>',NULL,NULL,2,2,2,2,NULL,'Henri',NULL,'Logiciel',NULL,'Software','external','> 100','Apache Fundation',2,6,'/share/doc/website',NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 13:44:03','2025-06-12 13:44:03',NULL),
+(7,'JDev','<p>Application de Développement Java</p>',NULL,NULL,1,1,1,1,NULL,'Nicolas','Nicolas','Fat Client',NULL,'Software','Internal','5','JDev',2,6,'//Share/Documentation/JDEV',NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 13:50:59','2025-06-12 13:50:59',NULL),
+(8,'GITLab','<p>Gestion des sources IT</p>',NULL,NULL,1,1,1,1,NULL,'Nicolas','Nicolas','Logiciel',NULL,'Software','Internal','10','GITLab',2,6,'//Share/Documentation/GITLab',NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 13:52:22','2025-06-18 08:29:34',NULL),
+(9,'RXMaker','<p>Application d\'imagerie médicale</p>',NULL,NULL,3,3,3,3,NULL,'Carole','Sylvie','Internal',NULL,'Software','Internal','10','BIG Elec',2,3,'//documentation/RX',NULL,120,120,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 13:54:46','2025-06-12 13:54:46',NULL),
+(10,'PharamaMag','<p>Gestion de la pharmacie</p>',NULL,NULL,3,3,3,3,NULL,'Anne','Anne','Logiciel',NULL,'Fat Client','Internal','30','PharaMaker',2,3,NULL,NULL,120,120,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 13:57:51','2025-06-12 13:57:51',NULL),
+(11,'SalaryPay','<p>Application de gestion de la paye</p>',NULL,NULL,3,3,2,3,NULL,'Véronique','Véronique','Internal dev',NULL,'Web','Internal','10','OPENHOSP',17,5,'//documentation/SalaryPay',NULL,2880,240,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 15:28:22','2025-06-12 17:08:10',NULL),
+(12,'Jobs','<p>Application de gestion des recrutements</p>',NULL,NULL,3,3,3,3,NULL,'Véronique','Véronique','Logiciel',NULL,'Web','Internal','10','OPENHOSP',2,5,NULL,NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 17:03:00','2025-06-12 17:06:35',NULL),
+(13,'SyncAD','<p>Synchronisation de l\'active directory</p>',NULL,NULL,3,3,3,3,NULL,'Marc','Julien','Internal dev',NULL,'Job','Internal','5','OPENHOSP',2,6,'//documentation/jobs',NULL,1440,1440,'2025-01-01',NULL,'',NULL,NULL,'2025-06-12 17:33:13','2025-06-12 17:33:13',NULL),
+(14,'LibreOffice','<p>Text</p>',NULL,NULL,1,1,1,1,NULL,'Carole','Marc',NULL,NULL,NULL,NULL,'> 100','Apache Fundation',2,1,NULL,NULL,1440,1440,NULL,NULL,'',NULL,NULL,'2025-06-14 05:50:17','2025-06-14 05:50:17',NULL),
+(15,'LibreCalc','<p>Feuille de calcul</p>',NULL,NULL,1,1,1,1,NULL,'Carole','Marc',NULL,NULL,NULL,NULL,'> 100','Apache Fundation',2,1,NULL,NULL,1440,1440,NULL,NULL,'',NULL,NULL,'2025-06-14 05:51:20','2025-06-14 05:51:20',NULL);
 /*!40000 ALTER TABLE `m_applications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1131,15 +1171,15 @@ UNLOCK TABLES;
 
 LOCK TABLES `macro_processuses` WRITE;
 /*!40000 ALTER TABLE `macro_processuses` DISABLE KEYS */;
-INSERT INTO `macro_processuses` (`id`, `name`, `description`, `io_elements`, `security_need_c`, `owner`, `created_at`, `updated_at`, `deleted_at`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`) VALUES (1,'Macro Processus 1','<p>Description du macro-processus de test<br>Test uniquement</p>','<ul><li>donnée 1</li><li>donnée 2</li><li>donnée 3</li></ul>',2,'propriétaire de test','2020-06-10 07:02:16','2020-06-22 06:07:55','2020-06-22 06:07:55',NULL,NULL,NULL,NULL),
-(2,'Maro-processus 2','<p>Description du macro-processus</p>',NULL,2,NULL,'2020-06-13 01:03:42','2020-06-22 06:07:55','2020-06-22 06:07:55',NULL,NULL,NULL,NULL),
-(3,'Soins',NULL,NULL,2,NULL,'2020-08-21 08:32:46','2020-08-21 08:44:59','2020-08-21 08:44:59',NULL,NULL,NULL,NULL),
-(4,'Ressources Humaines','<p>Ressources humaines</p>',NULL,2,NULL,'2020-08-21 08:34:19','2020-08-21 08:41:36','2020-08-21 08:41:36',NULL,NULL,NULL,NULL),
-(5,'Faire fonctionner l’hôpital','<p>Processus de support au soin et à la gestion : ensemble des processus qui contribuent au bon déroulement des autres processus, en leur fournissant les ressources nécessaires, aussi bien matérielles qu’immatérielles.</p>','<p>Entrant :<br>- besoins en ressources<br>Sortant :<br>- attribution de ressources<br>- reporting sur qualité des soins</p>',3,'Directeur administratif et financier','2020-08-21 08:38:01','2025-06-14 19:00:27',NULL,3,3,3,NULL),
-(6,'Diriger l\'hôpital','<p>Processus qui retranscrivent la stratégie, les objectifs et permettent de piloter la démarche qualité tout en assurant son amélioration continue.</p>','<p>Entrant :&nbsp;</p><ul><li>information sur le fonctionnement des processus</li></ul><p>Sortant :</p><ul><li>rapports</li><li>tableaux de bord</li></ul>',3,'Directeur administratif et financier','2020-08-21 08:43:31','2025-06-14 19:00:10',NULL,3,3,2,NULL),
-(7,'Traiter le patient','<p>Processus de prise en charge des patients en hospitalisation, en chirurgie, en ambulatoire et aux urgences</p>','<p>Entrant :</p><ul><li>Nom du patient</li><li>Numéro de sécurité sociale</li><li>Adresse du patient</li></ul><p>Sortant :</p><ul><li>Diagnostic</li><li>Prescription</li></ul>',3,'Directeur médical','2020-08-21 08:44:47','2025-06-14 19:00:15',NULL,3,3,3,NULL),
-(8,'Soigner le patient','<p>Ensemble des processus de support clinique : Hygiène hospitalière, laboratoire, circuit du médicament et stérilisation</p>','<p>Entrée:<br>- ordonance<br>- besoins médicaux<br>Sortie:<br>- soin prodigué<br>- médication<br>- Support aux soins</p>',3,'Directeur médical','2020-09-07 07:22:46','2025-06-14 19:00:21',NULL,3,3,3,NULL),
-(9,'Pilotage de l\'hôpital',NULL,NULL,2,NULL,'2020-09-07 07:28:46','2020-09-07 08:05:55','2020-09-07 08:05:55',NULL,NULL,NULL,NULL);
+INSERT INTO `macro_processuses` (`id`, `name`, `description`, `io_elements`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `owner`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Macro Processus 1','<p>Description du macro-processus de test<br>Test uniquement</p>','<ul><li>donnée 1</li><li>donnée 2</li><li>donnée 3</li></ul>',2,NULL,NULL,NULL,NULL,'propriétaire de test','2020-06-10 07:02:16','2020-06-22 06:07:55','2020-06-22 06:07:55'),
+(2,'Maro-processus 2','<p>Description du macro-processus</p>',NULL,2,NULL,NULL,NULL,NULL,NULL,'2020-06-13 01:03:42','2020-06-22 06:07:55','2020-06-22 06:07:55'),
+(3,'Soins',NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,'2020-08-21 08:32:46','2020-08-21 08:44:59','2020-08-21 08:44:59'),
+(4,'Ressources Humaines','<p>Ressources humaines</p>',NULL,2,NULL,NULL,NULL,NULL,NULL,'2020-08-21 08:34:19','2020-08-21 08:41:36','2020-08-21 08:41:36'),
+(5,'Faire fonctionner l’hôpital','<p>Processus de support au soin et à la gestion : ensemble des processus qui contribuent au bon déroulement des autres processus, en leur fournissant les ressources nécessaires, aussi bien matérielles qu’immatérielles.</p>','<p>Entrant :<br>- besoins en ressources<br>Sortant :<br>- attribution de ressources<br>- reporting sur qualité des soins</p>',3,3,3,3,NULL,'Directeur administratif et financier','2020-08-21 08:38:01','2025-06-14 19:00:27',NULL),
+(6,'Diriger l\'hôpital','<p>Processus qui retranscrivent la stratégie, les objectifs et permettent de piloter la démarche qualité tout en assurant son amélioration continue.</p>','<p>Entrant :&nbsp;</p><ul><li>information sur le fonctionnement des processus</li></ul><p>Sortant :</p><ul><li>rapports</li><li>tableaux de bord</li></ul>',3,3,3,2,NULL,'Directeur administratif et financier','2020-08-21 08:43:31','2025-06-14 19:00:10',NULL),
+(7,'Traiter le patient','<p>Processus de prise en charge des patients en hospitalisation, en chirurgie, en ambulatoire et aux urgences</p>','<p>Entrant :</p><ul><li>Nom du patient</li><li>Numéro de sécurité sociale</li><li>Adresse du patient</li></ul><p>Sortant :</p><ul><li>Diagnostic</li><li>Prescription</li></ul>',3,3,3,3,NULL,'Directeur médical','2020-08-21 08:44:47','2025-06-14 19:00:15',NULL),
+(8,'Soigner le patient','<p>Ensemble des processus de support clinique : Hygiène hospitalière, laboratoire, circuit du médicament et stérilisation</p>','<p>Entrée:<br>- ordonance<br>- besoins médicaux<br>Sortie:<br>- soin prodigué<br>- médication<br>- Support aux soins</p>',3,3,3,3,NULL,'Directeur médical','2020-09-07 07:22:46','2025-06-14 19:00:21',NULL),
+(9,'Pilotage de l\'hôpital',NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,'2020-09-07 07:28:46','2020-09-07 08:05:55','2020-09-07 08:05:55');
 /*!40000 ALTER TABLE `macro_processuses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1194,7 +1234,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `networks` WRITE;
 /*!40000 ALTER TABLE `networks` DISABLE KEYS */;
-INSERT INTO `networks` (`id`, `name`, `protocol_type`, `responsible`, `responsible_sec`, `security_need_c`, `description`, `created_at`, `updated_at`, `deleted_at`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`) VALUES (1,'OPENHOSP-INT','TCP/IP','Paul','Jean',3,'<p>Réseau interne de l\'hôpital</p>','2025-06-12 11:41:43','2025-06-12 11:42:02',NULL,3,3,3,NULL);
+INSERT INTO `networks` (`id`, `name`, `description`, `protocol_type`, `responsible`, `responsible_sec`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'OPENHOSP-INT','<p>Réseau interne de l\'hôpital</p>','TCP/IP','Paul','Jean',3,3,3,3,NULL,'2025-06-12 11:41:43','2025-06-12 11:42:02',NULL);
 /*!40000 ALTER TABLE `networks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1307,8 +1347,17 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_routers` WRITE;
 /*!40000 ALTER TABLE `physical_routers` DISABLE KEYS */;
-INSERT INTO `physical_routers` (`id`, `description`, `vendor`, `product`, `version`, `type`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`, `name`) VALUES (1,'<p>Main open router</p>',NULL,NULL,NULL,'Norel','2025-06-14 05:47:32','2025-06-14 05:47:32',NULL,1,12,1,'R01');
+INSERT INTO `physical_routers` (`id`, `name`, `description`, `vendor`, `product`, `version`, `type`, `site_id`, `building_id`, `bay_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01','<p>Main open router</p>',NULL,NULL,NULL,'Norel',1,12,1,'2025-06-14 05:47:32','2025-06-14 05:47:32',NULL);
 /*!40000 ALTER TABLE `physical_routers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `physical_security_device_security_device`
+--
+
+LOCK TABLES `physical_security_device_security_device` WRITE;
+/*!40000 ALTER TABLE `physical_security_device_security_device` DISABLE KEYS */;
+/*!40000 ALTER TABLE `physical_security_device_security_device` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1326,11 +1375,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_servers` WRITE;
 /*!40000 ALTER TABLE `physical_servers` DISABLE KEYS */;
-INSERT INTO `physical_servers` (`id`, `name`, `icon_id`, `description`, `vendor`, `product`, `version`, `responsible`, `configuration`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`, `physical_switch_id`, `type`, `address_ip`, `cpu`, `memory`, `disk`, `disk_used`, `operating_system`, `install_date`, `update_date`, `patching_group`, `paching_frequency`, `next_update`, `cluster_id`) VALUES (1,'Mainframe01',NULL,'<p>Super Server 01</p>',NULL,NULL,NULL,'John','<p>MAC: 123.456.789.065</p>','2025-06-11 10:25:20','2025-06-12 17:57:42',NULL,1,12,3,NULL,NULL,'10.10.1.1','12','4','1024','532','AS/300',NULL,NULL,NULL,NULL,NULL,NULL),
-(2,'BigCluster01',NULL,'<p>Big Cluster Master&nbsp;</p>',NULL,NULL,NULL,'Nestor',NULL,'2025-06-11 12:57:47','2025-06-18 08:33:37',NULL,1,12,1,NULL,'HAL','10.30.4.5','48','512','1024','304','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,1),
-(3,'DataStore',NULL,'<p>The database server</p>',NULL,NULL,NULL,'Paul',NULL,'2025-06-11 12:58:58','2025-06-11 12:58:58',NULL,1,12,2,NULL,'DB','10.50.3.1','4','64','3045','2025','DB23',NULL,NULL,NULL,NULL,NULL,NULL),
-(4,'Backup',NULL,'<p>The backup server</p>',NULL,NULL,NULL,'John',NULL,'2025-06-11 13:00:19','2025-06-14 18:27:34',NULL,1,12,2,NULL,'Storage','10.10.34.3','4','64','5673','2132','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(5,'BigCluster02',NULL,'<p>Big Cluster Slave</p>',NULL,NULL,NULL,NULL,NULL,'2025-06-12 17:54:40','2025-06-18 08:33:37',NULL,1,12,1,NULL,'HAL',NULL,'48','512','1024','394','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,1);
+INSERT INTO `physical_servers` (`id`, `name`, `type`, `icon_id`, `description`, `vendor`, `product`, `version`, `responsible`, `configuration`, `site_id`, `building_id`, `bay_id`, `physical_switch_id`, `address_ip`, `cpu`, `memory`, `disk`, `disk_used`, `operating_system`, `install_date`, `update_date`, `patching_group`, `paching_frequency`, `next_update`, `cluster_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Mainframe01',NULL,NULL,'<p>Super Server 01</p>',NULL,NULL,NULL,'John','<p>MAC: 123.456.789.065</p>',1,12,3,NULL,'10.10.1.1','12','4','1024','532','AS/300',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-11 10:25:20','2025-06-12 17:57:42',NULL),
+(2,'BigCluster01','HAL',NULL,'<p>Big Cluster Master&nbsp;</p>',NULL,NULL,NULL,'Nestor',NULL,1,12,1,NULL,'10.30.4.5','48','512','1024','304','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,1,'2025-06-11 12:57:47','2025-06-18 08:33:37',NULL),
+(3,'DataStore','DB',NULL,'<p>The database server</p>',NULL,NULL,NULL,'Paul',NULL,1,12,2,NULL,'10.50.3.1','4','64','3045','2025','DB23',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-11 12:58:58','2025-06-11 12:58:58',NULL),
+(4,'Backup','Storage',NULL,'<p>The backup server</p>',NULL,NULL,NULL,'John',NULL,1,12,2,NULL,'10.10.34.3','4','64','5673','2132','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,NULL,'2025-06-11 13:00:19','2025-06-14 18:27:34',NULL),
+(5,'BigCluster02','HAL',NULL,'<p>Big Cluster Slave</p>',NULL,NULL,NULL,NULL,NULL,1,12,1,NULL,NULL,'48','512','1024','394','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,1,'2025-06-12 17:54:40','2025-06-18 08:33:37',NULL);
 /*!40000 ALTER TABLE `physical_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1340,10 +1389,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_switches` WRITE;
 /*!40000 ALTER TABLE `physical_switches` DISABLE KEYS */;
-INSERT INTO `physical_switches` (`id`, `name`, `description`, `vendor`, `product`, `version`, `type`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`) VALUES (1,'SW01','<p>Switch 1er étage</p>',NULL,NULL,NULL,'Nortel','2025-06-14 05:56:03','2025-06-14 05:58:42',NULL,1,1,NULL),
-(2,'SW02','<p>Switch 2ème étage</p>',NULL,NULL,NULL,'Nortel','2025-06-14 05:56:19','2025-06-14 05:58:30',NULL,1,6,NULL),
-(3,'SW03','<p>Switch 3ème étage</p>',NULL,NULL,NULL,'Nortel','2025-06-14 05:57:18','2025-06-14 05:57:27',NULL,1,15,NULL),
-(4,'SW04','<p>Switch 4ème étage</p>',NULL,NULL,NULL,'Nortel','2025-06-14 05:58:16','2025-06-14 05:58:16',NULL,1,11,NULL);
+INSERT INTO `physical_switches` (`id`, `name`, `type`, `description`, `vendor`, `product`, `version`, `site_id`, `building_id`, `bay_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'SW01','Nortel','<p>Switch 1er étage</p>',NULL,NULL,NULL,1,1,NULL,'2025-06-14 05:56:03','2025-06-14 05:58:42',NULL),
+(2,'SW02','Nortel','<p>Switch 2ème étage</p>',NULL,NULL,NULL,1,6,NULL,'2025-06-14 05:56:19','2025-06-14 05:58:30',NULL),
+(3,'SW03','Nortel','<p>Switch 3ème étage</p>',NULL,NULL,NULL,1,15,NULL,'2025-06-14 05:57:18','2025-06-14 05:57:27',NULL),
+(4,'SW04','Nortel','<p>Switch 4ème étage</p>',NULL,NULL,NULL,1,11,NULL,'2025-06-14 05:58:16','2025-06-14 05:58:16',NULL);
 /*!40000 ALTER TABLE `physical_switches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1353,45 +1402,45 @@ UNLOCK TABLES;
 
 LOCK TABLES `processes` WRITE;
 /*!40000 ALTER TABLE `processes` DISABLE KEYS */;
-INSERT INTO `processes` (`id`, `name`, `icon_id`, `description`, `owner`, `security_need_c`, `in_out`, `created_at`, `updated_at`, `deleted_at`, `macroprocess_id`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`) VALUES (1,'Processus 1',NULL,'<p>Description du processus 1</p>','OpenHosp - Facturation',3,'<ul><li>pommes</li><li>poires</li><li>cerises</li></ul>','2020-06-17 14:36:24','2020-06-22 06:12:00','2020-06-22 06:12:00',NULL,3,3,3,NULL),
-(2,'Processus 2',NULL,'<p>Description du processus 2</p>','OpenHosp - Admission',3,NULL,'2020-06-17 14:36:58','2020-06-22 06:12:00','2020-06-22 06:12:00',NULL,3,3,3,NULL),
-(3,'Acceuil des visiteurs',NULL,NULL,NULL,3,NULL,'2020-06-22 13:49:28','2020-06-22 13:49:46','2020-06-22 13:49:46',NULL,3,3,3,NULL),
-(4,'Resources humaines',NULL,NULL,NULL,3,NULL,'2020-06-22 13:50:04','2020-08-21 08:34:48','2020-08-21 08:34:48',NULL,3,3,3,NULL),
-(5,'Urgences',NULL,'<p>Accueil et prise en charge des patients adressés aux urgences / qui se présentent aux urgences</p>','Directeur Médical',3,'<p>Entrée :&nbsp;<br>- patients</p><p>Sortie :<br>- soins prodigués</p>','2020-06-22 13:50:19','2025-06-14 19:00:15',NULL,7,3,3,3,NULL),
-(6,'Cellule Communication',NULL,'<p>Gestion de la communication interne et externe</p>','Direction Administrative et Financière',3,'<p>Entrée :<br>- besoin de communication<br>- contexte de l\'organisation<br>Sortie :<br>- communications<br>- reporting</p>','2020-06-22 14:43:24','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(7,'Organisation et performance',NULL,'<p>Cellule Qualité/Relations avec les patients</p><p>Contient également la le controlling</p>','Direction Administrative et Financière',3,'<p>Entrant :<br>- &nbsp;Données sur le fonctionnement de l\'hopital</p><p>Sortant :<br>- Statistiques<br>- Analyses de risques<br>- Rapports</p>','2020-06-22 14:50:06','2025-06-14 19:00:10',NULL,6,3,3,3,NULL),
-(8,'Soins',NULL,NULL,NULL,3,NULL,'2020-06-22 14:50:23','2020-08-21 08:46:12','2020-08-21 08:46:12',NULL,3,3,3,NULL),
-(9,'Informatique',NULL,'<p>Service informatique du OpenHosp</p>','CIO du OpenHosp',3,'<p>Entrée :&nbsp;<br>- besoins d\'utilisation des technologies de l\'information<br>Sortie :&nbsp;<br>- besoins couverts</p>','2020-06-24 06:20:23','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(10,'Sécurité',NULL,'<p>Sécurité physique et envirnmenttal de l\'hopital</p>','Direction Administrative et Financière',3,'<p>Entrée :&nbsp;<br>- besoins de sécurité physique et environmentale<br>Sortie :&nbsp;<br>- sécurité physique et environmentale appliquée</p>','2020-07-31 11:51:06','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(11,'Finances et Accueil Patients',NULL,'<p>Est responsable de :</p><ul><li>Comptabilité générale</li><li>Comptabilité fournisseurs</li><li>Facturation</li><li>Front office</li><li>Back office &amp; Téléphonie</li></ul>','Direction Administrative et Financière',3,'<p>IN :<br>- budgets<br>- facture<br>- offre validées<br>Out :<br>- reporting comptable</p>','2020-07-31 11:53:40','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(12,'Médico-technique',NULL,'<p>Gestion du matériel médical et de soins</p>','Direction Administrative et Financière',3,'<p>Entrée :<br>- besoins de matériel médical<br>Sortie :&nbsp;<br>- matériel géré</p>','2020-07-31 12:05:45','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(13,'Hôtellerie',NULL,'<p>Est responsable de &nbsp;:</p><ul><li>Restauration</li><li>Nettoyage</li></ul>','Direction Administrative et Financière',3,'<p>Entrée :<br>- besoins de services d\'hotelerie<br>Sortie :&nbsp;<br>- besoins d\'hotelerie couverts</p>','2020-07-31 12:06:49','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(14,'Pilotage de l\'hôpital',NULL,'<p><strong>Le processus</strong> de « <strong>pilotage</strong> » contribuent à la détermination de la stratégie d\'entreprise et au déploiement des objectifs dans l\'organisation.&nbsp;<br>Sous la responsabilité de la direction, ils permettent d\'orienter et d\'assurer la cohérence des <strong>processus</strong> de réalisation et de support.</p>','Direction Administrative et Financière',3,'<p>IN :<br>- données de l\'hopital (Datawarehouse)<br>OUT :<br>- Rapports de pilotage</p>','2020-08-03 07:32:25','2025-06-14 19:00:10',NULL,6,3,3,3,NULL),
-(15,'Recrutement',NULL,NULL,NULL,3,NULL,'2020-08-21 08:35:10','2020-08-21 08:41:20','2020-08-21 08:41:20',NULL,3,3,3,NULL),
-(16,'Admission',NULL,'<p>Admission et prise de rendez-vous</p>',NULL,3,NULL,'2020-08-21 08:47:46','2020-09-07 07:53:43','2020-09-07 07:53:43',NULL,3,3,3,NULL),
-(17,'Gestion des lits',NULL,NULL,NULL,3,NULL,'2020-08-21 08:48:30','2020-09-07 08:02:12','2020-09-07 08:02:12',NULL,3,3,3,NULL),
-(18,'Hospitalisation',NULL,'<p>Prise en charge des patients en hospitalisation</p>','Directeur Médical',3,'<p>Entrant :<br>- patients</p><p>Sortie<br>- soins prodigués</p>','2020-08-21 08:51:29','2025-06-14 19:00:15',NULL,7,3,3,3,NULL),
-(19,'Ambulatoire',NULL,'<p>Services de prise en charge des patients pour examens, thérapies, consultations, soins hors hospitalisation</p>','Directeur Médical',3,'<p>Entrant :<br>- patients<br>- pathologies<br>Sortie :<br>Soins prodigués</p>','2020-08-21 08:51:40','2025-06-14 19:00:15',NULL,7,3,3,3,NULL),
-(20,'Sécurité informatique',NULL,'<p>Sécurité de l\'informatique</p>','CIO du OpenHosp',3,NULL,'2020-08-21 08:54:25','2020-08-24 06:15:57','2020-08-24 06:15:57',NULL,3,3,3,NULL),
-(21,'Laboratoire',NULL,'<p>Gestion des prescriptions médicales, analyses et communications des résultats</p>','Directeur Médical',3,'<p>Entrant :&nbsp;<br>- prescriptions<br>Sortie :<br>- résultats d\'analyse</p>','2020-08-21 08:58:05','2025-06-14 19:00:21',NULL,8,3,3,3,NULL),
-(22,'Formation e-learning',NULL,NULL,NULL,3,NULL,'2020-08-21 09:01:30','2021-02-08 06:20:07','2021-02-08 06:20:07',5,3,3,3,NULL),
-(23,'Pharmacie',NULL,NULL,NULL,3,NULL,'2020-08-21 09:15:08','2020-09-07 08:08:45','2020-09-07 08:08:45',NULL,3,3,3,NULL),
-(24,'Information médicale',NULL,'<p>Département d\'information médicale</p>','Directeur Médical',3,'<p>Entrée :&nbsp;<br>- codification médicale<br>- actes médicaux prestés par le OpenHosp<br>Sortie :&nbsp;<br>- actes codifiés</p>','2020-08-21 09:16:07','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(25,'Cellule Juridique',NULL,NULL,'Direction Générale',3,NULL,'2020-08-21 09:17:32','2020-09-07 08:01:46','2020-09-07 08:01:46',NULL,3,3,3,NULL),
-(26,'Infrastructures et logistique',NULL,'<p>Est responsable de :</p><ul><li>Bâtiment</li><li>Maintenance préventive</li><li>Construction</li><li>Sécurité &amp; Environnement</li></ul>','Direction Administrative et Financière',3,'<p>Entrée :<br>- besoins d\'infrastructure et logistiques<br>Sortie :<br>- besoins couverts</p>','2020-08-21 10:22:58','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(27,'Logistique et restauration',NULL,'<p>Est responsable de :</p><ul><li>Transport Logistique et Patients</li><li>Achats et Magasin</li></ul>','Direction Administrative et Financière',3,'<p>Entrée :&nbsp;<br>- besoins de transport et restauration<br>Sortie :<br>- besoisn couverts</p>','2020-08-21 10:23:50','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(28,'Ressources Humaines',NULL,'<p>Gestion des ressources humaines du OpenHosp</p>','Direction des Ressources Humaines',3,'<p>IN :<br>- demande de recrutement<br>- ...<br>OUT :&nbsp;<br>- Gestion du temps<br>- personnel en poste<br>- fiches de salaire</p>','2020-08-21 10:30:24','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(29,'Protection des données',NULL,'<p>S’assurer du bon respect du Règlement Général pour la Protection des Données (RGPD) au OpenHosp.</p>','DPO',3,'<p>In:<br>- Contexte du OpenHosp</p><p>Out:<br>- recommandations de conformité</p><p>&nbsp;</p>','2020-08-24 06:16:37','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(30,'Stérilisation',NULL,'<p>Service de stérilisation</p>','Directeur Médical',3,'<p>Entrée :<br>- demandes de stérilisation<br>Sortié :<br>- matériel stérilisé</p>','2020-09-07 07:23:04','2025-06-14 19:00:21',NULL,8,3,3,3,NULL),
-(31,'Hygiène hospitalière',NULL,'<p>Hygiène hospitalière</p>','Directeur Médical',2,'<p>Entrée :&nbsp;<br>- besoins d\'hygiènes<br>Sortie :<br>- règles d\'hygiène appliquées</p>','2020-09-07 07:23:37','2025-06-14 19:00:21',NULL,8,2,2,3,NULL),
-(32,'Circuit des médicaments',NULL,'<p>Gestion des médicaments</p>','Directeur Médical',3,'<p>Entrant :&nbsp;<br>- ordinances<br>Sortie :<br>- médicaments<br>- reporting</p>','2020-09-07 07:23:48','2025-06-14 19:00:21',NULL,8,3,3,3,NULL),
-(33,'Construction',NULL,'<p>Département de construction du OpenHosp</p>','Direction Administrative et Financière',3,'<p>IN :<br>- Plan<br>- Changement<br>Out :<br>- Répalisation de travaux</p>','2020-09-07 08:04:54','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(34,'Infrastructure',NULL,'<p>Gestion de l\'infrastructure technique du OpenHosp</p>','Direction Administrative et Financière',3,'<p>Entrée :<br>- besoins techniques<br>- normes et standards à respecter<br>Sortie :<br>- installations techniques fonctionnelles</p>','2020-09-07 08:05:20','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(35,'Finances',NULL,NULL,NULL,3,NULL,'2020-09-07 08:05:32','2020-09-07 08:11:17','2020-09-07 08:11:17',5,3,3,3,NULL),
-(36,'Achats',NULL,'<p>Service des achats</p>','Direction Administrative et Financière',3,'<p>In:<br>- demande d\'achat</p><p>Out:<br>- factures d\'achat</p>','2020-09-07 08:05:45','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(37,'Nettoyage',NULL,'<p>Service de nettoyage du OpenHosp</p>','Direction Administrative et Financière',3,'<p>Entrée :<br>- besoins de nettoyage<br>Sortie :&nbsp;<br>- zones traitées</p>','2020-09-07 08:10:26','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(38,'Déchets',NULL,'<p>Gestion des déchets du centre hospitalier</p>','Directeur Médical',3,'<p>Entrée :&nbsp;<br>- déchets<br>Sortie :<br>- déchets recyclés/traités</p>','2020-09-07 08:30:29','2025-06-14 19:00:27',NULL,5,3,3,3,NULL),
-(39,'Gestion de l\'information',NULL,'<p>Gestion de l\'information médicale</p>','Direction Administrative et Financière',3,'<p>IN :<br>- normes internationales<br>- actes médicaux réalisés<br>Out :&nbsp;<br>- codification des actes médicaux</p>','2020-09-07 08:53:46','2025-06-14 19:00:10',NULL,6,3,3,3,NULL);
+INSERT INTO `processes` (`id`, `name`, `icon_id`, `description`, `owner`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `in_out`, `macroprocess_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Processus 1',NULL,'<p>Description du processus 1</p>','OpenHosp - Facturation',3,3,3,3,NULL,'<ul><li>pommes</li><li>poires</li><li>cerises</li></ul>',NULL,'2020-06-17 14:36:24','2020-06-22 06:12:00','2020-06-22 06:12:00'),
+(2,'Processus 2',NULL,'<p>Description du processus 2</p>','OpenHosp - Admission',3,3,3,3,NULL,NULL,NULL,'2020-06-17 14:36:58','2020-06-22 06:12:00','2020-06-22 06:12:00'),
+(3,'Acceuil des visiteurs',NULL,NULL,NULL,3,3,3,3,NULL,NULL,NULL,'2020-06-22 13:49:28','2020-06-22 13:49:46','2020-06-22 13:49:46'),
+(4,'Resources humaines',NULL,NULL,NULL,3,3,3,3,NULL,NULL,NULL,'2020-06-22 13:50:04','2020-08-21 08:34:48','2020-08-21 08:34:48'),
+(5,'Urgences',NULL,'<p>Accueil et prise en charge des patients adressés aux urgences / qui se présentent aux urgences</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrée :&nbsp;<br>- patients</p><p>Sortie :<br>- soins prodigués</p>',7,'2020-06-22 13:50:19','2025-06-14 19:00:15',NULL),
+(6,'Cellule Communication',NULL,'<p>Gestion de la communication interne et externe</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :<br>- besoin de communication<br>- contexte de l\'organisation<br>Sortie :<br>- communications<br>- reporting</p>',5,'2020-06-22 14:43:24','2025-06-14 19:00:27',NULL),
+(7,'Organisation et performance',NULL,'<p>Cellule Qualité/Relations avec les patients</p><p>Contient également la le controlling</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrant :<br>- &nbsp;Données sur le fonctionnement de l\'hopital</p><p>Sortant :<br>- Statistiques<br>- Analyses de risques<br>- Rapports</p>',6,'2020-06-22 14:50:06','2025-06-14 19:00:10',NULL),
+(8,'Soins',NULL,NULL,NULL,3,3,3,3,NULL,NULL,NULL,'2020-06-22 14:50:23','2020-08-21 08:46:12','2020-08-21 08:46:12'),
+(9,'Informatique',NULL,'<p>Service informatique du OpenHosp</p>','CIO du OpenHosp',3,3,3,3,NULL,'<p>Entrée :&nbsp;<br>- besoins d\'utilisation des technologies de l\'information<br>Sortie :&nbsp;<br>- besoins couverts</p>',5,'2020-06-24 06:20:23','2025-06-14 19:00:27',NULL),
+(10,'Sécurité',NULL,'<p>Sécurité physique et envirnmenttal de l\'hopital</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :&nbsp;<br>- besoins de sécurité physique et environmentale<br>Sortie :&nbsp;<br>- sécurité physique et environmentale appliquée</p>',5,'2020-07-31 11:51:06','2025-06-14 19:00:27',NULL),
+(11,'Finances et Accueil Patients',NULL,'<p>Est responsable de :</p><ul><li>Comptabilité générale</li><li>Comptabilité fournisseurs</li><li>Facturation</li><li>Front office</li><li>Back office &amp; Téléphonie</li></ul>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>IN :<br>- budgets<br>- facture<br>- offre validées<br>Out :<br>- reporting comptable</p>',5,'2020-07-31 11:53:40','2025-06-14 19:00:27',NULL),
+(12,'Médico-technique',NULL,'<p>Gestion du matériel médical et de soins</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :<br>- besoins de matériel médical<br>Sortie :&nbsp;<br>- matériel géré</p>',5,'2020-07-31 12:05:45','2025-06-14 19:00:27',NULL),
+(13,'Hôtellerie',NULL,'<p>Est responsable de &nbsp;:</p><ul><li>Restauration</li><li>Nettoyage</li></ul>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :<br>- besoins de services d\'hotelerie<br>Sortie :&nbsp;<br>- besoins d\'hotelerie couverts</p>',5,'2020-07-31 12:06:49','2025-06-14 19:00:27',NULL),
+(14,'Pilotage de l\'hôpital',NULL,'<p><strong>Le processus</strong> de « <strong>pilotage</strong> » contribuent à la détermination de la stratégie d\'entreprise et au déploiement des objectifs dans l\'organisation.&nbsp;<br>Sous la responsabilité de la direction, ils permettent d\'orienter et d\'assurer la cohérence des <strong>processus</strong> de réalisation et de support.</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>IN :<br>- données de l\'hopital (Datawarehouse)<br>OUT :<br>- Rapports de pilotage</p>',6,'2020-08-03 07:32:25','2025-06-14 19:00:10',NULL),
+(15,'Recrutement',NULL,NULL,NULL,3,3,3,3,NULL,NULL,NULL,'2020-08-21 08:35:10','2020-08-21 08:41:20','2020-08-21 08:41:20'),
+(16,'Admission',NULL,'<p>Admission et prise de rendez-vous</p>',NULL,3,3,3,3,NULL,NULL,NULL,'2020-08-21 08:47:46','2020-09-07 07:53:43','2020-09-07 07:53:43'),
+(17,'Gestion des lits',NULL,NULL,NULL,3,3,3,3,NULL,NULL,NULL,'2020-08-21 08:48:30','2020-09-07 08:02:12','2020-09-07 08:02:12'),
+(18,'Hospitalisation',NULL,'<p>Prise en charge des patients en hospitalisation</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrant :<br>- patients</p><p>Sortie<br>- soins prodigués</p>',7,'2020-08-21 08:51:29','2025-06-14 19:00:15',NULL),
+(19,'Ambulatoire',NULL,'<p>Services de prise en charge des patients pour examens, thérapies, consultations, soins hors hospitalisation</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrant :<br>- patients<br>- pathologies<br>Sortie :<br>Soins prodigués</p>',7,'2020-08-21 08:51:40','2025-06-14 19:00:15',NULL),
+(20,'Sécurité informatique',NULL,'<p>Sécurité de l\'informatique</p>','CIO du OpenHosp',3,3,3,3,NULL,NULL,NULL,'2020-08-21 08:54:25','2020-08-24 06:15:57','2020-08-24 06:15:57'),
+(21,'Laboratoire',NULL,'<p>Gestion des prescriptions médicales, analyses et communications des résultats</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrant :&nbsp;<br>- prescriptions<br>Sortie :<br>- résultats d\'analyse</p>',8,'2020-08-21 08:58:05','2025-06-14 19:00:21',NULL),
+(22,'Formation e-learning',NULL,NULL,NULL,3,3,3,3,NULL,NULL,5,'2020-08-21 09:01:30','2021-02-08 06:20:07','2021-02-08 06:20:07'),
+(23,'Pharmacie',NULL,NULL,NULL,3,3,3,3,NULL,NULL,NULL,'2020-08-21 09:15:08','2020-09-07 08:08:45','2020-09-07 08:08:45'),
+(24,'Information médicale',NULL,'<p>Département d\'information médicale</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrée :&nbsp;<br>- codification médicale<br>- actes médicaux prestés par le OpenHosp<br>Sortie :&nbsp;<br>- actes codifiés</p>',5,'2020-08-21 09:16:07','2025-06-14 19:00:27',NULL),
+(25,'Cellule Juridique',NULL,NULL,'Direction Générale',3,3,3,3,NULL,NULL,NULL,'2020-08-21 09:17:32','2020-09-07 08:01:46','2020-09-07 08:01:46'),
+(26,'Infrastructures et logistique',NULL,'<p>Est responsable de :</p><ul><li>Bâtiment</li><li>Maintenance préventive</li><li>Construction</li><li>Sécurité &amp; Environnement</li></ul>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :<br>- besoins d\'infrastructure et logistiques<br>Sortie :<br>- besoins couverts</p>',5,'2020-08-21 10:22:58','2025-06-14 19:00:27',NULL),
+(27,'Logistique et restauration',NULL,'<p>Est responsable de :</p><ul><li>Transport Logistique et Patients</li><li>Achats et Magasin</li></ul>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :&nbsp;<br>- besoins de transport et restauration<br>Sortie :<br>- besoisn couverts</p>',5,'2020-08-21 10:23:50','2025-06-14 19:00:27',NULL),
+(28,'Ressources Humaines',NULL,'<p>Gestion des ressources humaines du OpenHosp</p>','Direction des Ressources Humaines',3,3,3,3,NULL,'<p>IN :<br>- demande de recrutement<br>- ...<br>OUT :&nbsp;<br>- Gestion du temps<br>- personnel en poste<br>- fiches de salaire</p>',5,'2020-08-21 10:30:24','2025-06-14 19:00:27',NULL),
+(29,'Protection des données',NULL,'<p>S’assurer du bon respect du Règlement Général pour la Protection des Données (RGPD) au OpenHosp.</p>','DPO',3,3,3,3,NULL,'<p>In:<br>- Contexte du OpenHosp</p><p>Out:<br>- recommandations de conformité</p><p>&nbsp;</p>',5,'2020-08-24 06:16:37','2025-06-14 19:00:27',NULL),
+(30,'Stérilisation',NULL,'<p>Service de stérilisation</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrée :<br>- demandes de stérilisation<br>Sortié :<br>- matériel stérilisé</p>',8,'2020-09-07 07:23:04','2025-06-14 19:00:21',NULL),
+(31,'Hygiène hospitalière',NULL,'<p>Hygiène hospitalière</p>','Directeur Médical',2,2,2,3,NULL,'<p>Entrée :&nbsp;<br>- besoins d\'hygiènes<br>Sortie :<br>- règles d\'hygiène appliquées</p>',8,'2020-09-07 07:23:37','2025-06-14 19:00:21',NULL),
+(32,'Circuit des médicaments',NULL,'<p>Gestion des médicaments</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrant :&nbsp;<br>- ordinances<br>Sortie :<br>- médicaments<br>- reporting</p>',8,'2020-09-07 07:23:48','2025-06-14 19:00:21',NULL),
+(33,'Construction',NULL,'<p>Département de construction du OpenHosp</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>IN :<br>- Plan<br>- Changement<br>Out :<br>- Répalisation de travaux</p>',5,'2020-09-07 08:04:54','2025-06-14 19:00:27',NULL),
+(34,'Infrastructure',NULL,'<p>Gestion de l\'infrastructure technique du OpenHosp</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :<br>- besoins techniques<br>- normes et standards à respecter<br>Sortie :<br>- installations techniques fonctionnelles</p>',5,'2020-09-07 08:05:20','2025-06-14 19:00:27',NULL),
+(35,'Finances',NULL,NULL,NULL,3,3,3,3,NULL,NULL,5,'2020-09-07 08:05:32','2020-09-07 08:11:17','2020-09-07 08:11:17'),
+(36,'Achats',NULL,'<p>Service des achats</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>In:<br>- demande d\'achat</p><p>Out:<br>- factures d\'achat</p>',5,'2020-09-07 08:05:45','2025-06-14 19:00:27',NULL),
+(37,'Nettoyage',NULL,'<p>Service de nettoyage du OpenHosp</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>Entrée :<br>- besoins de nettoyage<br>Sortie :&nbsp;<br>- zones traitées</p>',5,'2020-09-07 08:10:26','2025-06-14 19:00:27',NULL),
+(38,'Déchets',NULL,'<p>Gestion des déchets du centre hospitalier</p>','Directeur Médical',3,3,3,3,NULL,'<p>Entrée :&nbsp;<br>- déchets<br>Sortie :<br>- déchets recyclés/traités</p>',5,'2020-09-07 08:30:29','2025-06-14 19:00:27',NULL),
+(39,'Gestion de l\'information',NULL,'<p>Gestion de l\'information médicale</p>','Direction Administrative et Financière',3,3,3,3,NULL,'<p>IN :<br>- normes internationales<br>- actes médicaux réalisés<br>Out :&nbsp;<br>- codification des actes médicaux</p>',6,'2020-09-07 08:53:46','2025-06-14 19:00:10',NULL);
 /*!40000 ALTER TABLE `processes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1418,15 +1467,15 @@ UNLOCK TABLES;
 
 LOCK TABLES `relations` WRITE;
 /*!40000 ALTER TABLE `relations` DISABLE KEYS */;
-INSERT INTO `relations` (`id`, `importance`, `name`, `type`, `description`, `created_at`, `updated_at`, `deleted_at`, `source_id`, `destination_id`, `attributes`, `reference`, `responsible`, `order_number`, `active`, `start_date`, `end_date`, `comments`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`) VALUES (1,2,'Licences Medi+','Fournisseur','<p>Foruniture des licens Medi+</p>','2025-06-14 18:30:24','2025-06-14 18:30:45',NULL,9,2,'Validé','1234567','Paul','1234567',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL),
-(2,3,'Suport RX','Fournisseur','<p>Support imagerie médical - 24x7</p>','2025-06-14 18:32:03','2025-06-14 18:32:03',NULL,10,17,'Validé','1235948453','Henri','432043284382',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL),
-(3,2,'Mission conseil LTR','Conseil','<p>Conseil IT</p>','2025-06-14 18:33:26','2025-06-14 18:33:26',NULL,11,2,'Validé','43943284320','Pierre','32443929432',1,'2025-01-01','2025-04-01',NULL,NULL,NULL,NULL,NULL,NULL),
-(4,3,'Support PharmaMan','Fournisseur','<p>Support Logiciel Pharmaman - 24x7</p>','2025-06-14 18:35:36','2025-06-14 18:35:36',NULL,1,4,'Validé','43943294329','Sophie','943294329432',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL),
-(5,3,'Logiel Comptable','Fournisseur','<p>Licence logiciel comptable</p>','2025-06-14 18:36:59','2025-06-14 18:36:59',NULL,12,3,'Validé','42343243232','Henri','443224432',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL),
-(6,3,'Suport Tech24','Fournisseur','<p>Support logiciel Dossier Médical 24x7</p>','2025-06-14 18:38:20','2025-06-14 18:38:20',NULL,15,3,'Validé','43294329432','Pierre','424329439',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL),
-(7,3,'Maintenance Mainframe','Maintenance','<p>Maintenance 24x7 du Mainrame</p>','2025-06-14 18:39:56','2025-06-14 18:39:56',NULL,13,2,'Validé','439432943','Paul','1044384833',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL),
-(8,3,'Analyse aboratoire','Partenariat','<p>Partrnariat Analyse laboratoire</p>','2025-06-14 18:44:20','2025-06-14 18:44:20',NULL,14,4,'Validé','5943548354','Julie','60545965945',1,'2025-04-01','2026-04-01',NULL,NULL,NULL,NULL,NULL,NULL),
-(9,3,'Filitation','Membre','<p>Membre de l\'Open Hospital Federation</p>','2025-06-14 18:45:24','2025-06-14 18:45:36',NULL,3,16,'','5439555453','Nathalie','06544569456',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `relations` (`id`, `importance`, `name`, `type`, `description`, `source_id`, `destination_id`, `attributes`, `reference`, `responsible`, `order_number`, `active`, `start_date`, `end_date`, `comments`, `security_need_c`, `security_need_i`, `security_need_a`, `security_need_t`, `security_need_auth`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,2,'Licences Medi+','Fournisseur','<p>Foruniture des licens Medi+</p>',9,2,'Validé','1234567','Paul','1234567',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:30:24','2025-06-14 18:30:45',NULL),
+(2,3,'Suport RX','Fournisseur','<p>Support imagerie médical - 24x7</p>',10,17,'Validé','1235948453','Henri','432043284382',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:32:03','2025-06-14 18:32:03',NULL),
+(3,2,'Mission conseil LTR','Conseil','<p>Conseil IT</p>',11,2,'Validé','43943284320','Pierre','32443929432',1,'2025-01-01','2025-04-01',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:33:26','2025-06-14 18:33:26',NULL),
+(4,3,'Support PharmaMan','Fournisseur','<p>Support Logiciel Pharmaman - 24x7</p>',1,4,'Validé','43943294329','Sophie','943294329432',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:35:36','2025-06-14 18:35:36',NULL),
+(5,3,'Logiel Comptable','Fournisseur','<p>Licence logiciel comptable</p>',12,3,'Validé','42343243232','Henri','443224432',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:36:59','2025-06-14 18:36:59',NULL),
+(6,3,'Suport Tech24','Fournisseur','<p>Support logiciel Dossier Médical 24x7</p>',15,3,'Validé','43294329432','Pierre','424329439',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:38:20','2025-06-14 18:38:20',NULL),
+(7,3,'Maintenance Mainframe','Maintenance','<p>Maintenance 24x7 du Mainrame</p>',13,2,'Validé','439432943','Paul','1044384833',1,'2025-01-01','2025-12-31',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:39:56','2025-06-14 18:39:56',NULL),
+(8,3,'Analyse aboratoire','Partenariat','<p>Partrnariat Analyse laboratoire</p>',14,4,'Validé','5943548354','Julie','60545965945',1,'2025-04-01','2026-04-01',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:44:20','2025-06-14 18:44:20',NULL),
+(9,3,'Filitation','Membre','<p>Membre de l\'Open Hospital Federation</p>',3,16,'','5439555453','Nathalie','06544569456',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 18:45:24','2025-06-14 18:45:36',NULL);
 /*!40000 ALTER TABLE `relations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1436,7 +1485,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `routers` WRITE;
 /*!40000 ALTER TABLE `routers` DISABLE KEYS */;
-INSERT INTO `routers` (`id`, `name`, `description`, `rules`, `created_at`, `updated_at`, `deleted_at`, `ip_addresses`, `type`) VALUES (1,'R01','<p>Roueur principal de l\'Open Hosital</p>',NULL,'2025-06-12 11:45:47','2025-06-14 09:16:07',NULL,'10.10.5.25',NULL);
+INSERT INTO `routers` (`id`, `name`, `type`, `description`, `rules`, `ip_addresses`, `cluster_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01',NULL,'<p>Roueur principal de l\'Open Hosital</p>',NULL,'10.10.5.25',NULL,'2025-06-12 11:45:47','2025-06-14 09:16:07',NULL);
 /*!40000 ALTER TABLE `routers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1528,7 +1577,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `storage_devices` WRITE;
 /*!40000 ALTER TABLE `storage_devices` DISABLE KEYS */;
-INSERT INTO `storage_devices` (`id`, `name`, `type`, `description`, `vendor`, `product`, `version`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`, `address_ip`) VALUES (1,'STORE01','HAL','<p>Big Disk storage</p>',NULL,NULL,NULL,'2025-06-14 05:46:40','2025-06-14 09:18:32',NULL,1,12,2,'10.10.25.25');
+INSERT INTO `storage_devices` (`id`, `name`, `type`, `description`, `vendor`, `product`, `version`, `site_id`, `building_id`, `bay_id`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'STORE01','HAL','<p>Big Disk storage</p>',NULL,NULL,NULL,1,12,2,'10.10.25.25','2025-06-14 05:46:40','2025-06-14 09:18:32',NULL);
 /*!40000 ALTER TABLE `storage_devices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1538,10 +1587,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `subnetworks` WRITE;
 /*!40000 ALTER TABLE `subnetworks` DISABLE KEYS */;
-INSERT INTO `subnetworks` (`id`, `description`, `address`, `ip_allocation_type`, `responsible_exp`, `dmz`, `wifi`, `name`, `created_at`, `updated_at`, `deleted_at`, `connected_subnets_id`, `gateway_id`, `zone`, `vlan_id`, `network_id`, `default_gateway`) VALUES (1,'<p>Zone démilitarisée de l\'hôpital</p>','10.10.25.0/24','Static','Paul','Oui','Non','OPENHOSP-DMZ','2025-06-12 11:43:52','2025-06-14 09:25:24',NULL,NULL,NULL,'ZONE2',4,1,'10.10.25.1'),
-(2,'<p>Zone réseau du laboratoire</p>','10.10.8.0/24','Static','Paul','Non','Non','OPENHOSP-LAB','2025-06-12 11:44:27','2025-06-14 09:24:53',NULL,NULL,NULL,'Non',1,1,'10.10.8.1'),
-(3,'<p>Réseau PC</p>','10.10.2.0/24','Static','Paul','Oui','Non','OPENHOSP-LAN','2025-06-14 08:57:49','2025-06-14 09:25:10',NULL,NULL,NULL,'ZONE1',3,1,'10.10.2.1'),
-(4,'<p>Administration sub network</p>','10.10.5.0/24','Dynamic','Paul','Oui','Non','OPENHOSP-ADIN','2025-06-14 09:05:42','2025-06-14 09:23:39',NULL,NULL,NULL,'DMZ',2,1,'10.10.5.1');
+INSERT INTO `subnetworks` (`id`, `name`, `description`, `address`, `ip_allocation_type`, `responsible_exp`, `dmz`, `wifi`, `connected_subnets_id`, `gateway_id`, `zone`, `vlan_id`, `network_id`, `default_gateway`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'OPENHOSP-DMZ','<p>Zone démilitarisée de l\'hôpital</p>','10.10.25.0/24','Static','Paul','Oui','Non',NULL,NULL,'ZONE2',4,1,'10.10.25.1','2025-06-12 11:43:52','2025-06-14 09:25:24',NULL),
+(2,'OPENHOSP-LAB','<p>Zone réseau du laboratoire</p>','10.10.8.0/24','Static','Paul','Non','Non',NULL,NULL,'Non',1,1,'10.10.8.1','2025-06-12 11:44:27','2025-06-14 09:24:53',NULL),
+(3,'OPENHOSP-LAN','<p>Réseau PC</p>','10.10.2.0/24','Static','Paul','Oui','Non',NULL,NULL,'ZONE1',3,1,'10.10.2.1','2025-06-14 08:57:49','2025-06-14 09:25:10',NULL),
+(4,'OPENHOSP-ADIN','<p>Administration sub network</p>','10.10.5.0/24','Dynamic','Paul','Oui','Non',NULL,NULL,'DMZ',2,1,'10.10.5.1','2025-06-14 09:05:42','2025-06-14 09:23:39',NULL);
 /*!40000 ALTER TABLE `subnetworks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1585,9 +1634,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `wifi_terminals` WRITE;
 /*!40000 ALTER TABLE `wifi_terminals` DISABLE KEYS */;
-INSERT INTO `wifi_terminals` (`id`, `name`, `description`, `vendor`, `product`, `version`, `type`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `address_ip`) VALUES (1,'WIFI-DIR','<p>Borne Wifi Direction</p>',NULL,NULL,NULL,'NOTEL','2025-06-12 12:31:17','2025-06-14 09:15:17',NULL,1,13,'10.10.5.11'),
-(2,'WIFI-LABO','<p>Borne Wifi laboratoire</p>',NULL,NULL,NULL,'NOTEL','2025-06-12 12:32:22','2025-06-14 09:15:39',NULL,1,6,'10.10.5.14'),
-(3,'WIFI-GUETS','<p>Borde Wifi patients</p>',NULL,NULL,NULL,'NOTEL','2025-06-12 12:33:16','2025-06-14 09:15:27',NULL,1,1,'10.10.5.13');
+INSERT INTO `wifi_terminals` (`id`, `name`, `type`, `description`, `vendor`, `product`, `version`, `site_id`, `building_id`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'WIFI-DIR','NOTEL','<p>Borne Wifi Direction</p>',NULL,NULL,NULL,1,13,'10.10.5.11','2025-06-12 12:31:17','2025-06-14 09:15:17',NULL),
+(2,'WIFI-LABO','NOTEL','<p>Borne Wifi laboratoire</p>',NULL,NULL,NULL,1,6,'10.10.5.14','2025-06-12 12:32:22','2025-06-14 09:15:39',NULL),
+(3,'WIFI-GUETS','NOTEL','<p>Borde Wifi patients</p>',NULL,NULL,NULL,1,1,'10.10.5.13','2025-06-12 12:33:16','2025-06-14 09:15:27',NULL);
 /*!40000 ALTER TABLE `wifi_terminals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1597,19 +1646,19 @@ UNLOCK TABLES;
 
 LOCK TABLES `workstations` WRITE;
 /*!40000 ALTER TABLE `workstations` DISABLE KEYS */;
-INSERT INTO `workstations` (`id`, `entity_id`, `name`, `description`, `vendor`, `product`, `version`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `physical_switch_id`, `type`, `icon_id`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`, `user_id`, `other_user`, `status`, `manufacturer`, `model`, `serial_number`, `last_inventory_date`, `warranty_end_date`, `domain_id`, `warranty`, `warranty_start_date`, `warranty_period`, `agent_version`, `update_source`, `network_id`, `network_port_type`, `mac_address`, `purchase_date`, `fin_value`) VALUES (1,NULL,'PC034','<p>PC acceuil</p>',NULL,NULL,NULL,'2025-06-14 05:35:44','2025-06-14 08:59:15',NULL,1,1,NULL,'Black',NULL,'Windows','10.10.2.35','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,'PC035','<p>PC Consultation</p>',NULL,NULL,NULL,'2025-06-14 05:36:26','2025-06-14 08:59:42',NULL,1,3,NULL,'Black',NULL,'Windows','10.10.2.36','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,NULL,'PC037','<p>PC Consultation</p>',NULL,NULL,NULL,'2025-06-14 05:37:02','2025-06-14 09:00:03',NULL,1,4,NULL,'Black',NULL,'Windows','10.10.2.37','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,'PC038','<p>PC Urgences</p>',NULL,NULL,NULL,'2025-06-14 05:37:37','2025-06-14 09:00:16',NULL,1,5,NULL,'Black',NULL,'Windows','10.10.2.38','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,NULL,'PC040','<p>PC Labo</p>',NULL,NULL,NULL,'2025-06-14 05:38:30','2025-06-14 09:00:33',NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.5','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,NULL,'PC041','<p>PC Labo</p>',NULL,NULL,NULL,'2025-06-14 05:39:24','2025-06-14 09:00:57',NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.6','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(7,NULL,'PC043','<p>PC Pharmacie</p>',NULL,NULL,NULL,'2025-06-14 05:40:04','2025-06-14 09:04:09',NULL,1,7,NULL,'Black',NULL,'Windows','10.10.8.7','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,'PC044','<p>PC RX</p>',NULL,NULL,NULL,'2025-06-14 05:40:43','2025-06-14 09:01:37',NULL,1,8,NULL,'Black',NULL,'Windows','10.10.2.40','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(9,NULL,'PC045','<p>PC Mediacal</p>',NULL,NULL,NULL,'2025-06-14 05:41:48','2025-06-14 09:02:06',NULL,1,9,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10,NULL,'PC046','<p>PC Medical</p>',NULL,NULL,NULL,'2025-06-14 05:42:30','2025-06-14 09:01:55',NULL,1,10,NULL,'Black',NULL,'Windows','10.10.2.41','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(11,NULL,'PC047','<p>PC Admin</p>',NULL,NULL,NULL,'2025-06-14 05:43:16','2025-06-14 09:02:17',NULL,1,11,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(12,NULL,'PC050','<p>PC Dir</p>',NULL,NULL,NULL,'2025-06-14 05:44:20','2025-06-14 09:11:48',NULL,1,14,NULL,'Banana',NULL,'Windows','10.10.2.45','M4','8',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(13,NULL,'PC049','<p>PC Technical</p>',NULL,NULL,NULL,'2025-06-14 05:45:51','2025-06-14 09:11:19',NULL,1,13,NULL,'Black',NULL,'Windows','10.10.5.12','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `workstations` (`id`, `entity_id`, `name`, `description`, `vendor`, `product`, `version`, `site_id`, `building_id`, `physical_switch_id`, `type`, `icon_id`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`, `user_id`, `other_user`, `status`, `manufacturer`, `model`, `serial_number`, `last_inventory_date`, `warranty_end_date`, `domain_id`, `warranty`, `warranty_start_date`, `warranty_period`, `agent_version`, `update_source`, `network_id`, `network_port_type`, `mac_address`, `purchase_date`, `fin_value`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,NULL,'PC034','<p>PC acceuil</p>',NULL,NULL,NULL,1,1,NULL,'Black',NULL,'Windows','10.10.2.35','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:35:44','2025-06-14 08:59:15',NULL),
+(2,NULL,'PC035','<p>PC Consultation</p>',NULL,NULL,NULL,1,3,NULL,'Black',NULL,'Windows','10.10.2.36','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:36:26','2025-06-14 08:59:42',NULL),
+(3,NULL,'PC037','<p>PC Consultation</p>',NULL,NULL,NULL,1,4,NULL,'Black',NULL,'Windows','10.10.2.37','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:37:02','2025-06-14 09:00:03',NULL),
+(4,NULL,'PC038','<p>PC Urgences</p>',NULL,NULL,NULL,1,5,NULL,'Black',NULL,'Windows','10.10.2.38','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:37:37','2025-06-14 09:00:16',NULL),
+(5,NULL,'PC040','<p>PC Labo</p>',NULL,NULL,NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.5','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:38:30','2025-06-14 09:00:33',NULL),
+(6,NULL,'PC041','<p>PC Labo</p>',NULL,NULL,NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.6','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:39:24','2025-06-14 09:00:57',NULL),
+(7,NULL,'PC043','<p>PC Pharmacie</p>',NULL,NULL,NULL,1,7,NULL,'Black',NULL,'Windows','10.10.8.7','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:40:04','2025-06-14 09:04:09',NULL),
+(8,NULL,'PC044','<p>PC RX</p>',NULL,NULL,NULL,1,8,NULL,'Black',NULL,'Windows','10.10.2.40','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:40:43','2025-06-14 09:01:37',NULL),
+(9,NULL,'PC045','<p>PC Mediacal</p>',NULL,NULL,NULL,1,9,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:41:48','2025-06-14 09:02:06',NULL),
+(10,NULL,'PC046','<p>PC Medical</p>',NULL,NULL,NULL,1,10,NULL,'Black',NULL,'Windows','10.10.2.41','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:42:30','2025-06-14 09:01:55',NULL),
+(11,NULL,'PC047','<p>PC Admin</p>',NULL,NULL,NULL,1,11,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:43:16','2025-06-14 09:02:17',NULL),
+(12,NULL,'PC050','<p>PC Dir</p>',NULL,NULL,NULL,1,14,NULL,'Banana',NULL,'Windows','10.10.2.45','M4','8',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:44:20','2025-06-14 09:11:48',NULL),
+(13,NULL,'PC049','<p>PC Technical</p>',NULL,NULL,NULL,1,13,NULL,'Black',NULL,'Windows','10.10.5.12','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-14 05:45:51','2025-06-14 09:11:19',NULL);
 /*!40000 ALTER TABLE `workstations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1631,4 +1680,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-01  7:37:34
+-- Dump completed on 2025-10-08 15:49:48

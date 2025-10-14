@@ -17,7 +17,8 @@ class MonarcController extends Controller
     public function __construct(
         private MospService $mosp,
         private MonarcExportService $exporter,
-    ) {}
+    ) {
+    }
 
     public function index()
     {

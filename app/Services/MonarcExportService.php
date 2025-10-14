@@ -8,7 +8,9 @@ use Illuminate\Support\Str;
 
 class MonarcExportService
 {
-    public function __construct(private MospService $mosp) {}
+    public function __construct(private MospService $mosp)
+    {
+    }
 
     /**
      * @param  array  $referentialSlugs  ex: ["iso27002"]
