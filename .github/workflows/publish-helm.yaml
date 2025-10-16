@@ -32,7 +32,8 @@ jobs:
 
       - name: Package Helm chart
         run: |
-          helm package docs/_helm_chart/chart -d docs/_helm_chart/index --dependency-update=false
+          helm dependency update docs/_helm_chart/chart
+          helm package docs/_helm_chart/chart -d docs/_helm_chart/index
 
       - name: Generate index.yaml
         run: |
