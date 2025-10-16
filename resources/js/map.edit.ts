@@ -1,53 +1,46 @@
 import {
-    Graph,
-    // BaseGraph,
     CellEditorHandler,
-    UndoManager,
-    SelectionCellsHandler,
-    SelectionHandler,
-    RubberBandHandler,
+    eventUtils,
+    FastOrganicLayout,
+    Graph,
     GraphDataModel,
-    // mxEvent,
-    PanningHandler,
     InternalEvent,
     ModelXmlSerializer,
-    HandleConfig,
-    VertexHandlerConfig,
+    Morphing,
+    PanningHandler,
+    RubberBandHandler,
+    SelectionCellsHandler,
+    SelectionHandler,
     styleUtils,
-    eventUtils,
-    EdgeStyle,
-    // ManhattanConnectorConfig,
-    // Codec,
-    // Layout
-    FastOrganicLayout,
-    Morphing
+    UndoManager,
+    VertexHandlerConfig
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
 
 // Interface pour une arête (edge)
 interface Edge {
-  attachedNodeId: string;
-  name: string,
-  edgeType: string;
-  edgeDirection: string;
-  bidirectional: boolean;
+    attachedNodeId: string;
+    name: string,
+    edgeType: string;
+    edgeDirection: string;
+    bidirectional: boolean;
 }
 
 // Interface pour un nœud (node)
 interface Node {
-  id: string;
-  vue: string;
-  label: string;
-  image: string;
-  type: string;
-  edges: Edge[];
+    id: string;
+    vue: string;
+    label: string;
+    image: string;
+    type: string;
+    edges: Edge[];
 }
 
 // Map contenant les nœuds
 type NodeMap = Map<string, Node>;
 
-declare const _nodes : NodeMap;
+declare const _nodes: NodeMap;
 
 //-----------------------------------------------------------------------
 // Import des plugins
@@ -96,7 +89,7 @@ VertexHandlerConfig.selectionStrokeWidth = 2;
 // wiring UndoManager
 const undoManager = new UndoManager();
 const listener = (_sender, evt) => {
-  undoManager.undoableEditHappened(evt.getProperty('edit'));
+    undoManager.undoableEditHappened(evt.getProperty('edit'));
 };
 model.addListener(InternalEvent.UNDO, listener);
 graph.getView().addListener(InternalEvent.UNDO, listener);
@@ -106,15 +99,15 @@ const undoButton = document.getElementById('undoButton') as HTMLButtonElement;
 const redoButton = document.getElementById('redoButton') as HTMLButtonElement;
 
 undoButton.addEventListener('click', () => {
-  if (undoManager.canUndo()) {
-    undoManager.undo();
-  }
+    if (undoManager.canUndo()) {
+        undoManager.undo();
+    }
 });
 
 redoButton.addEventListener('click', () => {
-  if (undoManager.canRedo()) {
-    undoManager.redo();
-  }
+    if (undoManager.canRedo()) {
+        undoManager.redo();
+    }
 });
 
 // Gestionnaire pour les raccourcis clavier
@@ -122,15 +115,14 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
     // Ctrl+Z pour Undo
     if (event.ctrlKey && event.key === 'z') {
         event.preventDefault();
-            if (undoManager.canUndo()) {
-                undoManager.undo();
-            }
-    // Ctrl+Y pour ReDo
-        } else if (event.ctrlKey && event.key === 'y')
-          {
-            event.preventDefault();
-            if (undoManager.canRedo()) {
-                undoManager.redo();
+        if (undoManager.canUndo()) {
+            undoManager.undo();
+        }
+        // Ctrl+Y pour ReDo
+    } else if (event.ctrlKey && event.key === 'y') {
+        event.preventDefault();
+        if (undoManager.canRedo()) {
+            undoManager.redo();
         }
     }
 });
@@ -155,83 +147,80 @@ let selectedEdge = null;
 graph.container.addEventListener('contextmenu', (event) => {
     event.preventDefault();
     const cell = graph.getCellAt(event.offsetX, event.offsetY);
-    if (cell==null)
+    if (cell == null)
         return;
 
     // console.log(cell);
 
     // Vérifier si l'élément cliqué est une arête
     if (cell.isEdge()) {
+        selectedEdge = cell;
+        // Obtenir la position de la souris lors du drop
+        const rect = container.getBoundingClientRect();
+        const x = (event.clientX - rect.left);
+        const y = (event.clientY - rect.top);
+
+        // Afficher le menu contextuel
+        edgeContextMenu.style.display = 'block';
+        edgeContextMenu.style.left = `${x + 75}px`;
+        edgeContextMenu.style.top = `${y + 100}px`;
+
+        // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
+        const currentStyle = graph.getCellStyle(cell);
+        edgeColorSelect.value = currentStyle.strokeColor || '#000000';
+        thicknessSelect.value = currentStyle.strokeWidth || '1';
+    } else if (cell.isVertex()) {
+
+        if ((cell.value != null) && (cell.value != "")) {
             selectedEdge = cell;
             // Obtenir la position de la souris lors du drop
             const rect = container.getBoundingClientRect();
-            const x = (event.clientX - rect.left) ;
-            const y = ( event.clientY - rect.top) ;
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            // Afficher le menu contextuel
+            textContextMenu.style.display = 'block';
+            textContextMenu.style.left = `${x + 75}px`;
+            textContextMenu.style.top = `${y + 100}px`;
+
+            // Pré-remplir les valeurs du menu avec les styles actuels du texte
+            const currentStyle = graph.getCellStyle(cell);
+            textColorSelect.value = currentStyle.fontColor || '#000000';
+            textFontSelect.value = currentStyle.fontFamily || 'Arial';
+            textSizeSelect.value = currentStyle.fontSize || '12';
+
+            if (selectedEdge.style.fontStyle & 1)
+                textBoldSelect.classList.add('selected');
+            else
+                textBoldSelect.classList.remove('selected');
+
+            if (selectedEdge.style.fontStyle & 2)
+                textItalicSelect.classList.add('selected');
+            else
+                textItalicSelect.classList.remove('selected');
+
+            if (selectedEdge.style.fontStyle & 4)
+                textUnderlineSelect.classList.add('selected');
+            else
+                textUnderlineSelect.classList.remove('selected');
+        } else if ((cell.style.image == null) && (cell.children.length == 0)) {
+            selectedEdge = cell;
+            // Obtenir la position de la souris lors du drop
+            const rect = container.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
 
             // Afficher le menu contextuel
             edgeContextMenu.style.display = 'block';
-            edgeContextMenu.style.left = `${x+75}px`;
-            edgeContextMenu.style.top = `${y+100}px`;
+            edgeContextMenu.style.left = `${x + 75}px`;
+            edgeContextMenu.style.top = `${y + 100}px`;
 
             // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
             const currentStyle = graph.getCellStyle(cell);
             edgeColorSelect.value = currentStyle.strokeColor || '#000000';
             thicknessSelect.value = currentStyle.strokeWidth || '1';
-    }
-    else if (cell.isVertex()) {
-
-        if ((cell.value!=null) && (cell.value != "")) {
-                selectedEdge = cell;
-                // Obtenir la position de la souris lors du drop
-                const rect = container.getBoundingClientRect();
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
-
-                // Afficher le menu contextuel
-                textContextMenu.style.display = 'block';
-                textContextMenu.style.left = `${x+75}px`;
-                textContextMenu.style.top = `${y+100}px`;
-
-                // Pré-remplir les valeurs du menu avec les styles actuels du texte
-                const currentStyle = graph.getCellStyle(cell);
-                textColorSelect.value = currentStyle.fontColor || '#000000';
-                textFontSelect.value = currentStyle.fontFamily || 'Arial';
-                textSizeSelect.value = currentStyle.fontSize || '12';
-
-                if (selectedEdge.style.fontStyle & 1)
-                    textBoldSelect.classList.add('selected');
-                else
-                    textBoldSelect.classList.remove('selected');
-
-                if (selectedEdge.style.fontStyle & 2)
-                    textItalicSelect.classList.add('selected');
-                else
-                    textItalicSelect.classList.remove('selected');
-
-                if (selectedEdge.style.fontStyle & 4)
-                    textUnderlineSelect.classList.add('selected');
-                else
-                    textUnderlineSelect.classList.remove('selected');
         }
-        else if ((cell.style.image==null)&&(cell.children.length==0)) {
-                selectedEdge = cell;
-                // Obtenir la position de la souris lors du drop
-                const rect = container.getBoundingClientRect();
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
-
-                // Afficher le menu contextuel
-                edgeContextMenu.style.display = 'block';
-                edgeContextMenu.style.left = `${x+75}px`;
-                edgeContextMenu.style.top = `${y+100}px`;
-
-                // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
-                const currentStyle = graph.getCellStyle(cell);
-                edgeColorSelect.value = currentStyle.strokeColor || '#000000';
-                thicknessSelect.value = currentStyle.strokeWidth || '1';
-        }
-    }
-    else {
+    } else {
         textContextMenu.style.display = 'none';
         edgeContextMenu.style.display = 'none';
     }
@@ -253,11 +242,10 @@ document.getElementById('apply-edge-style')?.addEventListener('click', (e) => {
             if (selectedEdge.isEdge()) {
                 selectedEdge.style.strokeColor = edgeColorSelect.value;
                 selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
-                }
-            else {
+            } else {
                 selectedEdge.style.fillColor = edgeColorSelect.value;
                 selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
-                }
+            }
 
             graph.refresh(selectedEdge);
         });
@@ -297,12 +285,12 @@ document.getElementById('apply-text-style')?.addEventListener('click', (e) => {
 // Sélectionnez tous les boutons
 document.querySelectorAll<HTMLButtonElement>('.button')
 
-// Ajoutez un écouteur d'événement à chaque bouton
-?.forEach(button => {
-    button.addEventListener('click', () => {
-        toggleSelection(button);
+    // Ajoutez un écouteur d'événement à chaque bouton
+    ?.forEach(button => {
+        button.addEventListener('click', () => {
+            toggleSelection(button);
+        });
     });
-});
 
 // Fonction pour basculer la sélection du bouton
 function toggleSelection(button: HTMLButtonElement) {
@@ -352,30 +340,30 @@ export function loadGraph(xml: string) {
 (window as any).loadGraph = loadGraph;
 
 async function saveGraphToDatabase(id: number, name: string, type: string, content: string): Promise<void> {
-  console.log('saveGraphToDatabase:' + id + ' name:' + name);
+    console.log('saveGraphToDatabase:' + id + ' name:' + name);
 
-  try {
-    const response = await fetch('/admin/graph/save', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
-      body: JSON.stringify({ id, name, type, content }),
-    });
+    try {
+        const response = await fetch('/admin/graph/save', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify({id, name, type, content}),
+        });
 
-    console.log('réponse :', response.status);
-    if (response.status != 200) {
-      const error = await response.json();
-      throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
+        console.log('réponse :', response.status);
+        if (response.status != 200) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
+        }
+
+        // const data = await response.json();
+        console.log('Graphe sauvegardé avec succès');
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde :', error);
+        alert('Erreur lors de la sauvegarde du graphe.');
     }
-
-    // const data = await response.json();
-    console.log('Graphe sauvegardé avec succès');
-  } catch (error) {
-    console.error('Erreur lors de la sauvegarde :', error);
-    alert('Erreur lors de la sauvegarde du graphe.');
-  }
 }
 
 // Fonction pour récupérer le Graph en XML
@@ -415,31 +403,32 @@ container.addEventListener('dragover', (event) => {
 graph.autoSizeCells = true; // maxGraph expose ce flag
 
 /*****************************************************************/
+
 // utilitaire robuste : clientX/clientY -> coordonnées graphe (scale, translate, pan, scroll)
 function getGraphPointFromEvent(graph: any, evt: MouseEvent | DragEvent) {
-  if (typeof graph.getPointForEvent === 'function') {
-    // ✅ maxGraph gère scale, translate, panDx/panDy, scroll
-    return graph.getPointForEvent(evt as any);
-  }
+    if (typeof graph.getPointForEvent === 'function') {
+        // ✅ maxGraph gère scale, translate, panDx/panDy, scroll
+        return graph.getPointForEvent(evt as any);
+    }
 
-  // Fallback manuel (au cas où)
-  const view = graph.view ?? graph.getView?.();
-  const pt = styleUtils.convertPoint(
-    graph.container,
-    eventUtils.getClientX(evt),
-    eventUtils.getClientY(evt)
-  );
-  const tr = view.translate ?? { x: 0, y: 0 };
-  const scale = view.scale ?? 1;
+    // Fallback manuel (au cas où)
+    const view = graph.view ?? graph.getView?.();
+    const pt = styleUtils.convertPoint(
+        graph.container,
+        eventUtils.getClientX(evt),
+        eventUtils.getClientY(evt)
+    );
+    const tr = view.translate ?? {x: 0, y: 0};
+    const scale = view.scale ?? 1;
 
-  // 🔧 intégrer le pan temporaire (sinon décalage quand on a panné)
-  const panDx = graph.panDx ?? 0;
-  const panDy = graph.panDy ?? 0;
+    // 🔧 intégrer le pan temporaire (sinon décalage quand on a panné)
+    const panDx = graph.panDx ?? 0;
+    const panDy = graph.panDy ?? 0;
 
-  return [
-    (pt.x - panDx) / scale - tr.x - 20,
-    (pt.y - panDy) / scale - tr.y - 20,
-  ];
+    return [
+        (pt.x - panDx) / scale - tr.x - 20,
+        (pt.y - panDy) / scale - tr.y - 20,
+    ];
 }
 
 /*****************************************************************/
@@ -449,7 +438,7 @@ graph.enterStopsCellEditing = true;  // Entrée valide le texte
 container.addEventListener('drop', (event) => {
     event.preventDefault();
 
-    if (event.dataTransfer.getData('node-type')=='text-node') {
+    if (event.dataTransfer.getData('node-type') == 'text-node') {
         // Gets drop location point for vertex
         const pt = getGraphPointFromEvent(graph, event);
 
@@ -492,7 +481,7 @@ container.addEventListener('dragover', (event) => {
 container.addEventListener('drop', (event) => {
     event.preventDefault();
 
-    if (event.dataTransfer.getData('node-type')=='square-node') {
+    if (event.dataTransfer.getData('node-type') == 'square-node') {
         // Gets drop location point for vertex
         const pt = getGraphPointFromEvent(graph, event);
 
@@ -502,13 +491,13 @@ container.addEventListener('drop', (event) => {
             // Ajouter le carré
             const parent = graph.getDefaultParent();
 
-            console.log([pt.x,pt.y]);
+            console.log([pt.x, pt.y]);
 
             const vertex = graph.insertVertex({
                 parent,
                 // id: "square", // TODO : générer unique ID
                 value: '', // Pas de texte pour le conteneur
-                position: [pt.x,pt.y], // Position du carré
+                position: [pt.x, pt.y], // Position du carré
                 size: [150, 120], // Taille du carré
                 style: {
                     fillColor: '#fffacd', // Fond jaune pâle
@@ -518,7 +507,7 @@ container.addEventListener('drop', (event) => {
                 },
             });
 
-           // Mettre en arrière plan
+            // Mettre en arrière plan
             graph.orderCells(true, [vertex]);
 
             // vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
@@ -542,9 +531,8 @@ container.addEventListener('dragover', (event) => {
 container.addEventListener('drop', (event) => {
     event.preventDefault();
 
-    if ((event.dataTransfer.getData('node-type')=='icon-node')
-        &&(nodeIcon.src!=''))
-        {
+    if ((event.dataTransfer.getData('node-type') == 'icon-node')
+        && (nodeIcon.src != '')) {
         // Obtenir la position de la souris lors du drop
         const pt = getGraphPointFromEvent(graph, event);
 
@@ -554,12 +542,11 @@ container.addEventListener('drop', (event) => {
 
             // Check cell already exists
             const cell = model.getCell(nodeSelector.value);
-            if (cell!=null) {
+            if (cell != null) {
                 // sélectionne la cell
                 graph.setSelectionCells(cell);
                 //graph.refresh(cell);
-            }
-            else {
+            } else {
                 const node = _nodes.get(nodeSelector.value);
                 const newNode = graph.insertVertex({
                     parent,
@@ -585,23 +572,24 @@ container.addEventListener('drop', (event) => {
                     // console.log(edge);
                     // Check target cell present
                     const targetNode = model.getCell(edge.attachedNodeId);
-                    if (targetNode!=null) {
+                    if (targetNode != null) {
                         // console.log("add edge to "+edge.attachedNodeId+" ");
                         // add edge
                         graph.insertEdge(
-                            { parent,
+                            {
+                                parent,
                                 value: '',
                                 source: newNode,
                                 target: targetNode,
                                 style: {
-                                editable: false, //  Ne pas autoriser de changer le label
+                                    editable: false, //  Ne pas autoriser de changer le label
                                     strokeColor: '#ff0000', // Edge color
                                     strokeWidth: 1,
-                                    startArrow : 'none', // pas de flèche
-                                    endArrow : 'none' // pas de flèche
+                                    startArrow: 'none', // pas de flèche
+                                    endArrow: 'none' // pas de flèche
                                 },
                             });
-                        }
+                    }
                 });
             }
         });
@@ -624,7 +612,7 @@ zoomOutButton.addEventListener('click', () => {
 //-------------------------------------------------------------------------
 // Activer la suppression avec la touche Delete
 document.addEventListener('keydown', (event) => {
-    if ((event.key === 'Delete')||(event.key === 'Backspace')) {
+    if ((event.key === 'Delete') || (event.key === 'Backspace')) {
         // Récupérer les objets sélectionnés
         const cells = graph.getSelectionCells();
 
@@ -638,15 +626,15 @@ document.addEventListener('keydown', (event) => {
 //-------------------------------------------------------------------------
 // Select all cells
 
-$('body').keydown(function(event){
+$('body').keydown(function (event) {
     // console.log(event);
     // CTRL-a
-    if(event.ctrlKey && (event.keyCode== 65)) {
+    if (event.ctrlKey && (event.keyCode == 65)) {
         event.preventDefault();
         event.stopPropagation();
         graph.selectAll();
     }
- });
+});
 
 //-------------------------------------------------------------------------
 // Empêcher les flèches de se déconnecter
@@ -708,8 +696,8 @@ groupButton.addEventListener('click', () => {
 
         // Déplacer les cellules sélectionnées dans le conteneur
         graph.groupCells(group, 5, cells);
-        }
-    });
+    }
+});
 
 ungroupButton.addEventListener('click', () => {
     // Obtenir les cellules sélectionnées
@@ -726,40 +714,40 @@ ungroupButton.addEventListener('click', () => {
 //---------------------------------------------------------------------------
 // Fonction pour déplacer une cellule
 function moveSelectedVertex(graph, dx, dy) {
-  const selectedCell = graph.getSelectionCell(); // Obtenir la cellule sélectionnée
-  if (selectedCell && selectedCell.isVertex()) {
-      graph.batchUpdate(() => {
-      const geo = selectedCell.getGeometry();
-      if (geo) {
-          // Déplace la cellule
-          geo.translate(dx, dy);
-          // Rafraîchit la vue
-          graph.refresh();
-        }
-    });
-  }
+    const selectedCell = graph.getSelectionCell(); // Obtenir la cellule sélectionnée
+    if (selectedCell && selectedCell.isVertex()) {
+        graph.batchUpdate(() => {
+            const geo = selectedCell.getGeometry();
+            if (geo) {
+                // Déplace la cellule
+                geo.translate(dx, dy);
+                // Rafraîchit la vue
+                graph.refresh();
+            }
+        });
+    }
 }
 
 // Écouteur pour les touches directionnelles
 document.addEventListener('keydown', (event) => {
-  const step = 1; // Déplacement de 1 pixel
-  // console.log('keydown='+event.key);
-  switch (event.key) {
-    case 'ArrowUp':
-      moveSelectedVertex(graph, 0, -step); // Déplacer vers le haut
-      break;
-    case 'ArrowDown':
-      moveSelectedVertex(graph, 0, step); // Déplacer vers le bas
-      break;
-    case 'ArrowLeft':
-      moveSelectedVertex(graph, -step, 0); // Déplacer vers la gauche
-      break;
-    case 'ArrowRight':
-      moveSelectedVertex(graph, step, 0); // Déplacer vers la droite
-      break;
-    default:
-      break;
-  }
+    const step = 1; // Déplacement de 1 pixel
+    // console.log('keydown='+event.key);
+    switch (event.key) {
+        case 'ArrowUp':
+            moveSelectedVertex(graph, 0, -step); // Déplacer vers le haut
+            break;
+        case 'ArrowDown':
+            moveSelectedVertex(graph, 0, step); // Déplacer vers le bas
+            break;
+        case 'ArrowLeft':
+            moveSelectedVertex(graph, -step, 0); // Déplacer vers la gauche
+            break;
+        case 'ArrowRight':
+            moveSelectedVertex(graph, step, 0); // Déplacer vers la droite
+            break;
+        default:
+            break;
+    }
 });
 
 //---------------------------------------------------------------------------
@@ -778,30 +766,30 @@ function placeObjectsOnCircle(center: Point, radius: number, numberOfObjects: nu
         const angle = i * angleStep; // Current angle
         const objectX = center.x + radius * Math.cos(angle); // X-coordinate
         const objectY = center.y + radius * Math.sin(angle); // Y-coordinate
-        points.push({ x: objectX, y: objectY });
+        points.push({x: objectX, y: objectY});
     }
 
     return points;
 }
 
 // Get filtered entries
-function getFilter(){
+function getFilter() {
     let filter = [];
     for (let option of document.getElementById('filters').options)
         if (option.selected)
-          filter.push(option.value);
+            filter.push(option.value);
     return filter
 }
 
 // Check edge already present
 // function hasEdge(src : Vertex, dest : Vertex, name: string) : boolean {
 function hasEdge(src: Cell | null, dest: Cell | null, name: string): boolean {
-    if ((src==null || dest == null))
+    if ((src == null || dest == null))
         return false;
     let found = false;
     const edges = graph.getEdges(src);
     edges.forEach(edge => {
-        if ((edge.target==dest)&&((name==null)||(edge.value==name))) {
+        if ((edge.target == dest) && ((name == null) || (edge.value == name))) {
             found = true;
             return;
         }
@@ -809,7 +797,7 @@ function hasEdge(src: Cell | null, dest: Cell | null, name: string): boolean {
     if (!found) {
         const edges = graph.getEdges(dest);
         edges.forEach(edge => {
-            if ((edge.target==src)&&((name==null)||(edge.value==name))) {
+            if ((edge.target == src) && ((name == null) || (edge.value == name))) {
                 found = true;
                 return;
             }
@@ -824,11 +812,11 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
     // Get the cell
     const cell = evt.getProperty('cell');
     // Check it is an image
-    if (cell && cell.isVertex() && (cell.style.shape=="image")) {
+    if (cell && cell.isVertex() && (cell.style.shape == "image")) {
         // get the node
         const node = _nodes.get(cell.id);
         // node deleted
-        if (node==null)
+        if (node == null)
             return;
         // console.log(node);
         // Batch Update
@@ -847,7 +835,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
                 if (targetNode != null) {
                     // Check node already present and not in the newEdges
                     const vertex = model.getCell(edge.attachedNodeId);
-                    if ((vertex==null) && !newEdges.some(e => e.attachedNodeId == edge.attachedNodeId)) {
+                    if ((vertex == null) && !newEdges.some(e => e.attachedNodeId == edge.attachedNodeId)) {
                         // apply filter on nodes
                         if (
                             ((filter.length == 0) || filter.includes(targetNode.vue))
@@ -859,32 +847,35 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
                             // add it to the new nodes
                             newEdges.push(edge);
                             // console.log("add: "+edge.attachedNodeId);
-                            }
-                    }
-                    else {
+                        }
+                    } else {
                         // check edge already present ?
                         if (!hasEdge(cell, vertex, edge.name)) {
                             // add edge
                             graph.insertEdge(
-                                {   parent,
+                                {
+                                    parent,
                                     value: edge.name,
                                     source: cell,
                                     target: vertex,
                                     style: {
-                                    editable: false, //  Ne pas autoriser de changer le label
+                                        editable: false, //  Ne pas autoriser de changer le label
                                         stroke: '#FF', // Edge color
                                         strokeWidth: 1,
-                                        startArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='FROM'))) ? 'classic' : 'none',
-                                        endArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='TO'))) ? 'classic' : 'none',
+                                        startArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'FROM'))) ? 'classic' : 'none',
+                                        endArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'TO'))) ? 'classic' : 'none',
                                     },
                                 });
-                            }
                         }
                     }
-                });
+                }
+            });
             // Compute new nodes positions
             const rect = container.getBoundingClientRect();
-            const positions = placeObjectsOnCircle({ x: cell.getGeometry().x, y: cell.getGeometry().y } , 80, newEdges.length);
+            const positions = placeObjectsOnCircle({
+                x: cell.getGeometry().x,
+                y: cell.getGeometry().y
+            }, 80, newEdges.length);
             // console.log(positions);
 
             // Place les objects
@@ -899,7 +890,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
                     parent,
                     id: newNode.id,
                     value: newNode.label,
-                    position: [ positions[i].x, positions[i].y ], // Position de l'image
+                    position: [positions[i].x, positions[i].y], // Position de l'image
                     size: [32, 32], // Taille du nœud
                     style: {
                         shape: 'image', // Définir le nœud comme une image
@@ -917,23 +908,24 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
 
                 // Insert edge with clicked one
                 graph.insertEdge(
-                    { parent,
+                    {
+                        parent,
                         value: newEdges[i].name,
                         source: cell,
                         target: vertex,
                         style: {
-                        editable: false, //  Ne pas autoriser de changer le label
+                            editable: false, //  Ne pas autoriser de changer le label
                             stroke: '#FF', // Edge color
                             strokeWidth: 1,
-                            startArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='FROM'))) ? 'classic' : 'none',
-                            endArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='TO'))) ? 'classic' : 'none',
+                            startArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'FROM'))) ? 'classic' : 'none',
+                            endArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'TO'))) ? 'classic' : 'none',
                         },
                     });
 
                 // Insert edge with other existing objects
                 // TODO.....
 
-                }
+            }
         });
     }
 });
@@ -950,20 +942,18 @@ document.getElementById('update-btn')?.addEventListener('click', () => {
             // Type of cell ?
             if (cell.isEdge()) {
                 // Not implemented yew
-            }
-            else if (cell.style.image!=null) {
+            } else if (cell.style.image != null) {
                 // Node
                 const node = _nodes.get(cell.id);
                 // console.log(cell);
-                if (node==null) {
+                if (node == null) {
                     // remove cell
                     graph.removeCells([cell], true);
-                }
-                else {
+                } else {
                     // update cell
                     cell.value = node.label;
                     // cell.style.image = node.image;
-                    styleUtils.setCellStyles(graph.getDataModel(), [cell], { shape: 'image', image: node.image });
+                    styleUtils.setCellStyles(graph.getDataModel(), [cell], {shape: 'image', image: node.image});
 
                 }
             }
@@ -979,45 +969,54 @@ document.getElementById('update-btn')?.addEventListener('click', () => {
 const svgElement = graph.container.querySelector('svg');
 
 function embedImagesInSVG(svgElement) {
-  const images = svgElement.querySelectorAll('image');
+    const images = svgElement.querySelectorAll('image');
 
-  images.forEach((img) => {
-    const href = img.getAttribute('xlink:href');
+    images.forEach((img) => {
+        const href = img.getAttribute('xlink:href');
 
-    // Charger l'image et convertir en base64
-    fetch(href)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          img.setAttribute('xlink:href', reader.result); // Intègre l'image base64
-        };
-        reader.readAsDataURL(blob);
-      });
-  });
+        // Charger l'image et convertir en base64
+        fetch(href)
+            .then((response) => response.blob())
+            .then((blob) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    img.setAttribute('xlink:href', reader.result); // Intègre l'image base64
+                };
+                reader.readAsDataURL(blob);
+            });
+    });
 }
 
 // Fonction de téléchargement
 function downloadSVG() {
-  embedImagesInSVG(svgElement);
+    embedImagesInSVG(svgElement);
 
-  setTimeout(() => {
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgElement);
+    setTimeout(() => {
+        const serializer = new XMLSerializer();
+        const svgString = serializer.serializeToString(svgElement);
 
-    // Créer un blob pour le fichier SVG
-    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
+        // Créer un blob pour le fichier SVG
+        const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
+        const url = URL.createObjectURL(blob);
 
-    // Créer un lien pour télécharger
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'graph_with_images.svg';
-    link.click();
+        // Créer un lien pour télécharger
+        const link = document.createElement('a');
+        link.href = url;
 
-    // Nettoyage
-    URL.revokeObjectURL(url);
-  }, 1000); // Attendre la conversion des images
+        // Ajout de la date et de l’heure au nom du fichier
+        const now = new Date();
+        const timestamp = now.getFullYear() +
+            String(now.getMonth() + 1).padStart(2, "0") +
+            String(now.getDate()).padStart(2, "0") +
+            String(now.getHours()).padStart(2, "0") +
+            String(now.getMinutes()).padStart(2, "0");
+
+        link.download = `graph-${timestamp}.svg`;
+        link.click();
+
+        // Nettoyage
+        URL.revokeObjectURL(url);
+    }, 1000); // Attendre la conversion des images
 }
 
 // Ajoutez un bouton pour déclencher l'exportation
@@ -1026,28 +1025,28 @@ document.getElementById('download-btn')?.addEventListener('click', downloadSVG);
 //-------------------------------------------------------------------------
 // Organic layout (force-directed)
 export function layout() {
-  // Repositionne les nœuds avec l'algorithme "Organic"
-  const parent = graph.getDefaultParent();
+    // Repositionne les nœuds avec l'algorithme "Organic"
+    const parent = graph.getDefaultParent();
 
-  // On ne travaille que sur les sommets (pas les arêtes)
-  const cells = graph.getChildVertices(parent);
-  if (!cells || cells.length === 0) return;
+    // On ne travaille que sur les sommets (pas les arêtes)
+    const cells = graph.getChildVertices(parent);
+    if (!cells || cells.length === 0) return;
 
-  const organic = new FastOrganicLayout(graph);
-  // Réglages possibles :
-  organic.forceConstant = 60;
-  organic.disableEdgeStyle = false;
+    const organic = new FastOrganicLayout(graph);
+    // Réglages possibles :
+    organic.forceConstant = 60;
+    organic.disableEdgeStyle = false;
 
-  graph.getDataModel().beginUpdate();
-  try {
-    // Calcule les nouvelles positions
-    organic.execute(parent, cells);
-  } finally {
-    // Animation fluide des déplacements
-    const morph = new Morphing(graph);
-    morph.addListener(InternalEvent.DONE, () => graph.getDataModel().endUpdate());
-    morph.startAnimation();
-  }
+    graph.getDataModel().beginUpdate();
+    try {
+        // Calcule les nouvelles positions
+        organic.execute(parent, cells);
+    } finally {
+        // Animation fluide des déplacements
+        const morph = new Morphing(graph);
+        morph.addListener(InternalEvent.DONE, () => graph.getDataModel().endUpdate());
+        morph.startAnimation();
+    }
 }
 
 document.getElementById('layout-btn')?.addEventListener('click', layout);
