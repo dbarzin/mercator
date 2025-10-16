@@ -293,7 +293,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "graph.svg";
+
+        // Ajout de la date et de l’heure au nom du fichier
+        const now = new Date();
+        const timestamp = now.getFullYear() +
+            String(now.getMonth() + 1).padStart(2, "0") +
+            String(now.getDate()).padStart(2, "0") +
+            String(now.getHours()).padStart(2, "0") +
+            String(now.getMinutes()).padStart(2, "0");
+
+        a.download = `graph-${timestamp}.svg`;
         document.body.appendChild(a);
         a.click();
         a.remove();
