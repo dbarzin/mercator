@@ -749,7 +749,7 @@ class ExplorerController extends Controller
                 continue;
             }
 
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $src_id, $dest_id);
+            $this->addFluxEdge($edges, $flux->nature, $flux->bidirectional, $src_id, $dest_id);
         }
 
         // ---------------------------------------------------
