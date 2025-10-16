@@ -1,0 +1,56 @@
+name: Publish Helm Chart
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'charts/**'
+      - '.github/workflows/publish-helm.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.14.4
+
+      - name: Ensure output directories exist
+        run: |
+          mkdir -p docs/_helm_chart/index
+
+      - name: Package Helm chart
+        run: |
+          helm package docs/_helm_chart/chart -d docs/_helm_chart/index
+
+      - name: Generate index.yaml
+        run: |
+          helm repo index docs/_helm_chart/index \
+            --url https://nw-tech.github.io/mercator/_helm_chart/index/
+
+      - name: Ensure .nojekyll exists
+        run: |
+          touch docs/.nojekyll
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/_helm_chart/index docs/.nojekyll
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "🔄 Update Helm chart and index.yaml [skip ci]"
+            git push
+          fi
