@@ -14,6 +14,7 @@ permissions:
 
 jobs:
   build-and-publish:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"  # ⛔ Ignore les commits automatiques
     runs-on: ubuntu-latest
 
     steps:
