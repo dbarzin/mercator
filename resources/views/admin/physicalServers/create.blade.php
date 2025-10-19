@@ -240,20 +240,19 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="site_id">{{ trans('cruds.physicalServer.fields.cluster') }}</label>
-                            <select class="form-control select2 {{ $errors->has('cluster') ? 'is-invalid' : '' }}"
-                                    name="cluster_id" id="cluster_id">
-                                <option></option>
-                                @foreach($clusters as $id => $cluster)
-                                    <option value="{{ $id }}" {{ old('cluster_id') == $id ? 'selected' : '' }}>{{ $cluster }}</option>
+                            <label for="clusters">{{ trans('cruds.physicalServer.fields.clusters') }}</label>
+                            <select class="form-control select2 {{ $errors->has('clusters') ? 'is-invalid' : '' }}"
+                                    name="clusters[]" id="clusters" multiple>
+                                @foreach($clusters as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('clusters', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('cluster'))
+                            @if($errors->has('clusters'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('cluster') }}
+                                    {{ $errors->first('clusters') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.physicalServer.fields.cluster_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.physicalServer.fields.clusters_helper') }}</span>
                         </div>
                     </div>
 
