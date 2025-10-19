@@ -160,20 +160,19 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="recommended"
-                                   for="cluster_id">{{ trans('cruds.logicalServer.fields.cluster') }}</label>
-                            <select class="form-control select2 {{ $errors->has('cluster') ? 'is-invalid' : '' }}"
-                                    name="cluster_id" id="cluster_id">
-                                <option></option>
-                                @foreach($clusters as $id => $cluster)
-                                    <option value="{{ $id }}" {{ ($logicalServer->cluster ? $logicalServer->cluster->id : old('cluster_id')) == $id ? 'selected' : '' }}>{{ $cluster }}</option>
+                                   for="databases">{{ trans('cruds.logicalServer.fields.clusters') }}</label>
+                            <select class="form-control select2 {{ $errors->has('clusters') ? 'is-invalid' : '' }}"
+                                    name="clusters[]" id="clusters" multiple>
+                                @foreach($clusters as $id => $name)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('clusters', [])) || $logicalServer->clusters->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('cluster'))
+                            @if($errors->has('clusters'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('cluster') }}
+                                    {{ $errors->first('clusters') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.logicalServer.fields.cluster_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.logicalServer.fields.clusters_helper') }}</span>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -325,12 +324,6 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="applications">{{ trans('cruds.logicalServer.fields.applications') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                                     name="applications[]" id="applications" multiple>
                                 @foreach($applications as $id => $applications)
@@ -350,12 +343,6 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="databases">{{ trans('cruds.logicalServer.fields.databases') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}"
                                     name="databases[]" id="databases" multiple>
                                 @foreach($databases as $id => $name)
