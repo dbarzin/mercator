@@ -31,6 +31,20 @@ The `translateSQL` script:
 * Uses Google Translate (via `deep-translator`) to translate French content to English.
 * Outputs a fully translated SQL file: `mercator_data_translated.sql`.
 
+Install deep_translator in a virtual environment:
+
+```bash
+python3 -m venv venv
+pip install deep-translator
+```
+
+To execute the translation, run the following commands:
+
+```bash
+source venv/bin/activate
+./translateSQL.sh
+```
+
 ## Import
 
 To import a test database use these commands, first, clear the database :
