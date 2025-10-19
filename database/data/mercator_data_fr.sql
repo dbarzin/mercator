@@ -302,12 +302,46 @@ LOCK TABLES `certificates` WRITE;
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `cluster_logical_server`
+--
+
+LOCK TABLES `cluster_logical_server` WRITE;
+/*!40000 ALTER TABLE `cluster_logical_server` DISABLE KEYS */;
+INSERT INTO `cluster_logical_server` (`cluster_id`, `logical_server_id`) VALUES (1,1),
+(1,2),
+(1,3),
+(1,6),
+(1,7);
+/*!40000 ALTER TABLE `cluster_logical_server` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `cluster_physical_server`
+--
+
+LOCK TABLES `cluster_physical_server` WRITE;
+/*!40000 ALTER TABLE `cluster_physical_server` DISABLE KEYS */;
+INSERT INTO `cluster_physical_server` (`cluster_id`, `physical_server_id`) VALUES (1,2),
+(1,5);
+/*!40000 ALTER TABLE `cluster_physical_server` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `cluster_router`
+--
+
+LOCK TABLES `cluster_router` WRITE;
+/*!40000 ALTER TABLE `cluster_router` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cluster_router` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `clusters`
 --
 
 LOCK TABLES `clusters` WRITE;
 /*!40000 ALTER TABLE `clusters` DISABLE KEYS */;
-INSERT INTO `clusters` (`id`, `name`, `type`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','XZWare','<p>Cluster principal.</p>','10.10.8.2','2025-06-12 11:51:05','2025-06-12 11:51:05',NULL);
+INSERT INTO `clusters` (`id`, `name`, `type`, `attributes`, `icon_id`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','XZWare',NULL,NULL,'<p>Cluster principal.</p>','10.10.8.2','2025-06-12 11:51:05','2025-06-12 11:51:05',NULL);
 /*!40000 ALTER TABLE `clusters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1029,13 +1063,13 @@ UNLOCK TABLES;
 
 LOCK TABLES `logical_servers` WRITE;
 /*!40000 ALTER TABLE `logical_servers` DISABLE KEYS */;
-INSERT INTO `logical_servers` (`id`, `name`, `icon_id`, `type`, `active`, `description`, `net_services`, `configuration`, `operating_system`, `address_ip`, `cpu`, `memory`, `environment`, `disk`, `disk_used`, `install_date`, `update_date`, `attributes`, `patching_frequency`, `next_update`, `cluster_id`, `domain_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'SRV01',NULL,'APP',1,'<p>Serveur01</p>','SSH',NULL,'Linux','10.10.25.9','12','64','Prod',512,154,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-11 10:42:11','2025-06-18 08:33:37',NULL),
-(2,'SRV02',NULL,'APP',1,'<p>Serveur applicatif</p>','SSH, HTTP, HTTPS',NULL,'Linux','10.10.25.24','4','10','Prod',120,80,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 11:52:23','2025-06-18 08:33:37',NULL),
-(3,'SRV03',NULL,'DEV',1,'<p>Development server</p>','SSH, HTTP, HTTPS',NULL,'Linux','10.10.25.23','4','8','Dev',120,40,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 11:53:52','2025-06-18 08:33:37',NULL),
-(4,'DB01',NULL,'DB',1,'<p>Database server 01</p>',NULL,NULL,'Linux','10.10.25.4',NULL,NULL,'Prod',NULL,NULL,'2025-01-01',NULL,'',NULL,NULL,NULL,1,'2025-06-12 13:07:22','2025-06-14 09:13:04',NULL),
-(5,'DB02',NULL,'DB',1,'<p>Databse server 02</p>',NULL,NULL,'Linux','10.10.25.7','2','32',NULL,512,120,'2025-01-01',NULL,'',NULL,NULL,NULL,1,'2025-06-12 13:08:16','2025-06-14 09:13:13',NULL),
-(6,'DB-TST',NULL,'DB',1,'<p>Test Database Server</p>','SSH, DB',NULL,'Linux','10.10.25.3','2','10','TEST',1024,130,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 13:09:20','2025-06-18 08:33:37',NULL),
-(7,'SRV-DEV',NULL,'DEV',1,'<p>Serveur de développement</p>','SSH',NULL,'Linux','10.10.25.8','2','16','Dev',250,50,'2025-01-01',NULL,'',NULL,NULL,1,1,'2025-06-12 17:52:19','2025-06-18 08:33:37',NULL);
+INSERT INTO `logical_servers` (`id`, `name`, `icon_id`, `type`, `active`, `description`, `net_services`, `configuration`, `operating_system`, `address_ip`, `cpu`, `memory`, `environment`, `disk`, `disk_used`, `install_date`, `update_date`, `attributes`, `patching_frequency`, `next_update`, `domain_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'SRV01',NULL,'APP',1,'<p>Serveur01</p>','SSH',NULL,'Linux','10.10.25.9','12','64','Prod',512,154,'2025-01-01',NULL,'',NULL,NULL,1,'2025-06-11 10:42:11','2025-06-18 08:33:37',NULL),
+(2,'SRV02',NULL,'APP',1,'<p>Serveur applicatif</p>','SSH, HTTP, HTTPS',NULL,'Linux','10.10.25.24','4','10','Prod',120,80,'2025-01-01',NULL,'',NULL,NULL,1,'2025-06-12 11:52:23','2025-06-18 08:33:37',NULL),
+(3,'SRV03',NULL,'DEV',1,'<p>Development server</p>','SSH, HTTP, HTTPS',NULL,'Linux','10.10.25.23','4','8','Dev',120,40,'2025-01-01',NULL,'',NULL,NULL,1,'2025-06-12 11:53:52','2025-06-18 08:33:37',NULL),
+(4,'DB01',NULL,'DB',1,'<p>Database server 01</p>',NULL,NULL,'Linux','10.10.25.4',NULL,NULL,'Prod',NULL,NULL,'2025-01-01',NULL,'',NULL,NULL,1,'2025-06-12 13:07:22','2025-06-14 09:13:04',NULL),
+(5,'DB02',NULL,'DB',1,'<p>Databse server 02</p>',NULL,NULL,'Linux','10.10.25.7','2','32',NULL,512,120,'2025-01-01',NULL,'',NULL,NULL,1,'2025-06-12 13:08:16','2025-06-14 09:13:13',NULL),
+(6,'DB-TST',NULL,'DB',1,'<p>Test Database Server</p>','SSH, DB',NULL,'Linux','10.10.25.3','2','10','TEST',1024,130,'2025-01-01',NULL,'',NULL,NULL,1,'2025-06-12 13:09:20','2025-06-18 08:33:37',NULL),
+(7,'SRV-DEV',NULL,'DEV',1,'<p>Serveur de développement</p>','SSH',NULL,'Linux','10.10.25.8','2','16','Dev',250,50,'2025-01-01',NULL,'',NULL,NULL,1,'2025-06-12 17:52:19','2025-06-18 08:33:37',NULL);
 /*!40000 ALTER TABLE `logical_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1375,11 +1409,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_servers` WRITE;
 /*!40000 ALTER TABLE `physical_servers` DISABLE KEYS */;
-INSERT INTO `physical_servers` (`id`, `name`, `type`, `icon_id`, `description`, `vendor`, `product`, `version`, `responsible`, `configuration`, `site_id`, `building_id`, `bay_id`, `physical_switch_id`, `address_ip`, `cpu`, `memory`, `disk`, `disk_used`, `operating_system`, `install_date`, `update_date`, `patching_group`, `paching_frequency`, `next_update`, `cluster_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Mainframe01',NULL,NULL,'<p>Super Server 01</p>',NULL,NULL,NULL,'John','<p>MAC: 123.456.789.065</p>',1,12,3,NULL,'10.10.1.1','12','4','1024','532','AS/300',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-11 10:25:20','2025-06-12 17:57:42',NULL),
-(2,'BigCluster01','HAL',NULL,'<p>Big Cluster Master&nbsp;</p>',NULL,NULL,NULL,'Nestor',NULL,1,12,1,NULL,'10.30.4.5','48','512','1024','304','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,1,'2025-06-11 12:57:47','2025-06-18 08:33:37',NULL),
-(3,'DataStore','DB',NULL,'<p>The database server</p>',NULL,NULL,NULL,'Paul',NULL,1,12,2,NULL,'10.50.3.1','4','64','3045','2025','DB23',NULL,NULL,NULL,NULL,NULL,NULL,'2025-06-11 12:58:58','2025-06-11 12:58:58',NULL),
-(4,'Backup','Storage',NULL,'<p>The backup server</p>',NULL,NULL,NULL,'John',NULL,1,12,2,NULL,'10.10.34.3','4','64','5673','2132','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,NULL,'2025-06-11 13:00:19','2025-06-14 18:27:34',NULL),
-(5,'BigCluster02','HAL',NULL,'<p>Big Cluster Slave</p>',NULL,NULL,NULL,NULL,NULL,1,12,1,NULL,NULL,'48','512','1024','394','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,1,'2025-06-12 17:54:40','2025-06-18 08:33:37',NULL);
+INSERT INTO `physical_servers` (`id`, `name`, `type`, `icon_id`, `description`, `vendor`, `product`, `version`, `responsible`, `configuration`, `site_id`, `building_id`, `bay_id`, `physical_switch_id`, `address_ip`, `cpu`, `memory`, `disk`, `disk_used`, `operating_system`, `install_date`, `update_date`, `patching_group`, `paching_frequency`, `next_update`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Mainframe01',NULL,NULL,'<p>Super Server 01</p>',NULL,NULL,NULL,'John','<p>MAC: 123.456.789.065</p>',1,12,3,NULL,'10.10.1.1','12','4','1024','532','AS/300',NULL,NULL,NULL,NULL,NULL,'2025-06-11 10:25:20','2025-06-12 17:57:42',NULL),
+(2,'BigCluster01','HAL',NULL,'<p>Big Cluster Master&nbsp;</p>',NULL,NULL,NULL,'Nestor',NULL,1,12,1,NULL,'10.30.4.5','48','512','1024','304','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,'2025-06-11 12:57:47','2025-06-18 08:33:37',NULL),
+(3,'DataStore','DB',NULL,'<p>The database server</p>',NULL,NULL,NULL,'Paul',NULL,1,12,2,NULL,'10.50.3.1','4','64','3045','2025','DB23',NULL,NULL,NULL,NULL,NULL,'2025-06-11 12:58:58','2025-06-11 12:58:58',NULL),
+(4,'Backup','Storage',NULL,'<p>The backup server</p>',NULL,NULL,NULL,'John',NULL,1,12,2,NULL,'10.10.34.3','4','64','5673','2132','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,'2025-06-11 13:00:19','2025-06-14 18:27:34',NULL),
+(5,'BigCluster02','HAL',NULL,'<p>Big Cluster Slave</p>',NULL,NULL,NULL,NULL,NULL,1,12,1,NULL,NULL,'48','512','1024','394','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,'2025-06-12 17:54:40','2025-06-18 08:33:37',NULL);
 /*!40000 ALTER TABLE `physical_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1485,7 +1519,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `routers` WRITE;
 /*!40000 ALTER TABLE `routers` DISABLE KEYS */;
-INSERT INTO `routers` (`id`, `name`, `type`, `description`, `rules`, `ip_addresses`, `cluster_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01',NULL,'<p>Roueur principal de l\'Open Hosital</p>',NULL,'10.10.5.25',NULL,'2025-06-12 11:45:47','2025-06-14 09:16:07',NULL);
+INSERT INTO `routers` (`id`, `name`, `type`, `description`, `rules`, `ip_addresses`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01',NULL,'<p>Roueur principal de l\'Open Hosital</p>',NULL,'10.10.5.25','2025-06-12 11:45:47','2025-06-14 09:16:07',NULL);
 /*!40000 ALTER TABLE `routers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1680,4 +1714,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-08 15:49:48
+-- Dump completed on 2025-10-18 18:51:45

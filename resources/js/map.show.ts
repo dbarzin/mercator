@@ -47,7 +47,7 @@ graph.options.expandedImage = null;
 //-----------------------------------------------------------------------
 // Style des liens
 
-var style = graph.getStylesheet().getDefaultEdgeStyle();
+const style = graph.getStylesheet().getDefaultEdgeStyle();
 style.labelBackgroundColor = '#FFFFFF';
 style.strokeWidth = 2;
 style.rounded = true;
