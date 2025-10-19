@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Admin\CartographyController;
@@ -11,7 +13,7 @@ use PhpOffice\PhpWord\Element\Table;
 
 class ReportController extends Controller
 {
-    protected static function addText(Section $section, ?string $value = null)
+    protected static function addText(Section $section, ?string $value = null): void
     {
         try {
             \PhpOffice\PhpWord\Shared\Html::addHtml($section, str_replace('<br>', '<br/>', $value));
@@ -21,7 +23,7 @@ class ReportController extends Controller
         }
     }
 
-    protected static function addSecurityNeedColor(Worksheet $sheet, string $cell, ?int $i)
+    protected static function addSecurityNeedColor(Worksheet $sheet, string $cell, ?int $i): void
     {
         static $colors = [-1 => 'FFFFFF', 0 => 'FFFFFF', 1 => '8CD17D', 2 => 'F1CE63', 3 => 'F28E2B', 4 => 'E15759'];
         $sheet->getStyle($cell)
@@ -54,14 +56,14 @@ class ReportController extends Controller
         return $table;
     }
 
-    protected static function addTextRow(Table $table, string $title, ?string $value = null)
+    protected static function addTextRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
         $table->addCell(2000, CartographyController::NOSPACE)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
         $table->addCell(6000, CartographyController::NOSPACE)->addText($value, CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
     }
 
-    protected static function addHTMLRow(Table $table, string $title, ?string $value = null)
+    protected static function addHTMLRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
         $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);

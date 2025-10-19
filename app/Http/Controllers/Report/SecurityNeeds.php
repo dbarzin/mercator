@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Report;
 
 use App\Models\Database;
@@ -224,7 +226,7 @@ class SecurityNeeds extends ReportController
         ?MApplication $application = null,
         ?Database $database = null,
         ?Information $information = null
-    ) {
+    ): void {
         // Macroprocessus
         $i = 0;
         $sheet->setCellValue(self::col($i++).$row, $macroprocess->name);

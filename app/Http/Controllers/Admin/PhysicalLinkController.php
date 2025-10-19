@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -165,7 +167,7 @@ class PhysicalLinkController extends Controller
         $validator = Validator::make($request->all(), []);
 
         // Validate
-        $validator->after(function ($validator) use ($link) {
+        $validator->after(function ($validator) use ($link): void {
             if (($link->src_port !== null) && (DB::table('physical_links')
                 ->where('id', '!=', $link->id)
                 ->where('src_port', $link->src_port)
@@ -526,7 +528,7 @@ class PhysicalLinkController extends Controller
         $validator = Validator::make($request->all(), []);
 
         // Validate
-        $validator->after(function ($validator) use ($link) {
+        $validator->after(function ($validator) use ($link): void {
             if (($link->src_port !== null) && (DB::table('physical_links')
                 ->where('id', '!=', $link->id)
                 ->where('src_port', $link->src_port)

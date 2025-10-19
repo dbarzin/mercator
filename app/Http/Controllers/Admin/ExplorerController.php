@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 // Models
@@ -450,7 +452,8 @@ class ExplorerController extends Controller
                 $this->formatId('CLUSTER_', $cluster->id),
                 $cluster->name,
                 $cluster->icon_id === null ? '/images/cluster.png' : "/admin/documents/{$cluster->icon_id}",
-                'clusters');
+                'clusters'
+            );
         }
 
         // Cluster - Logical Servers
@@ -889,7 +892,7 @@ class ExplorerController extends Controller
         return [$nodes, $edges];
     }
 
-    private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null)
+    private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null): void
     {
         $data = ['vue' => $vue, 'id' => $id,  'label' => $label, 'image' => $image, 'type' => $type];
         if ($title !== null) {
@@ -898,22 +901,22 @@ class ExplorerController extends Controller
         array_push($nodes, $data);
     }
 
-    private function addLinkEdge(&$edges, $from, $to)
+    private function addLinkEdge(&$edges, $from, $to): void
     {
         $this->addEdge($edges, null, false, $from, $to, 'LINK');
     }
 
-    private function addPhysicalLinkEdge(&$edges, $from, $to)
+    private function addPhysicalLinkEdge(&$edges, $from, $to): void
     {
         $this->addEdge($edges, null, false, $from, $to, 'CABLE');
     }
 
-    private function addFluxEdge(&$edges, $name, $bidir, $from, $to)
+    private function addFluxEdge(&$edges, $name, $bidir, $from, $to): void
     {
         $this->addEdge($edges, $name, $bidir, $from, $to, 'FLUX');
     }
 
-    private function addEdge(&$edges, $name, $bidir, $from, $to, $type)
+    private function addEdge(&$edges, $name, $bidir, $from, $to, $type): void
     {
         if ($from !== null && $to !== null) {
             array_push($edges, ['name' => $name, 'bidirectional' => $bidir, 'from' => $from, 'to' => $to, 'type' => $type]);

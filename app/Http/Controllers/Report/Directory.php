@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Report;
 
 use App\Models\MApplication;
@@ -20,7 +22,7 @@ class Directory extends ReportController
 
         $applications =
             MApplication::query()
-                ->where(function ($query) {
+                ->where(function ($query): void {
                     $query->where('m_applications.security_need_c', '>=', 3)
                         ->orWhere('m_applications.security_need_i', '>=', 3)
                         ->orWhere('m_applications.security_need_a', '>=', 3)
@@ -28,18 +30,18 @@ class Directory extends ReportController
                         ->orWhere('m_applications.security_need_auth', '>=', 3);
                 })
                 ->whereNull('m_applications.deleted_at')
-                ->leftJoin('entities', function ($join) {
-                    $join->on(function ($on) {
+                ->leftJoin('entities', function ($join): void {
+                    $join->on(function ($on): void {
                         $on->on('m_applications.entity_resp_id', '=', 'entities.id');
                     })
                         ->whereNull('entities.deleted_at');
                 })
                 ->whereNull('entities.deleted_at')
-                ->leftJoin('relations', function ($join) use ($today) {
+                ->leftJoin('relations', function ($join) use ($today): void {
                     /*
                $join->on(function ($on) {
-                    $on->on('entities.id', '=', 'relations.source_id')
-                       ->orOn('entities.id', '=', 'relations.destination_id');
+                $on->on('entities.id', '=', 'relations.source_id')
+                   ->orOn('entities.id', '=', 'relations.destination_id');
                 })
                 */
                     $join->on('entities.id', '=', 'relations.source_id')

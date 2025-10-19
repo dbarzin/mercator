@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -20,7 +22,7 @@ class Cluster extends Model
         'name',
         'description',
         'type',
-        'attributes'
+        'attributes',
     ];
 
     protected array $dates = [

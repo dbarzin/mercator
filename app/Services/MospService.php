@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // app/Services/MospService.php
 
 namespace App\Services;

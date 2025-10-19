@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\CPEProduct;
@@ -120,7 +122,7 @@ class CPEImport extends Command
         // VERSION
         $versionKey = "{$product->id}:{$versionName}";
         if (! isset($this->versions[$versionKey])) {
-            CPEVersion::withoutEvents(function () use ($product, $versionName) {
+            CPEVersion::withoutEvents(function () use ($product, $versionName): void {
                 CPEVersion::create(['cpe_product_id' => $product->id, 'name' => $versionName]);
             });
             $this->versions[$versionKey] = true;

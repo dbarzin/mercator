@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -66,7 +68,7 @@ class ImpactList extends Controller
         $filename = 'impacts-'.Carbon::today()->format('Ymd').'.xlsx';
 
         // 7. Envoyer en réponse HTTP
-        return response()->streamDownload(function () use ($writer) {
+        return response()->streamDownload(function () use ($writer): void {
             $writer->save('php://output');
         }, $filename, [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

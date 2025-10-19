@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Gate;
@@ -34,7 +36,7 @@ class StoreActivityRequest extends FormRequest
             'maximum_tolerable_downtime' => [
                 'nullable',
                 'regex:/^\d{1,3}:[0-5]\d$/',
-                function ($attribute, $value, $fail) {
+                function ($attribute, $value, $fail): void {
                     $rto = $this->input('recovery_time_objective');
                     $mtd = $value;
 
@@ -60,7 +62,7 @@ class StoreActivityRequest extends FormRequest
             'maximum_tolerable_data_loss' => [
                 'nullable',
                 'regex:/^\d{1,3}:[0-5]\d$/',
-                function ($attribute, $value, $fail) {
+                function ($attribute, $value, $fail): void {
                     $rpo = $this->input('recovery_point_objective');
                     $mtdl = $value;
 

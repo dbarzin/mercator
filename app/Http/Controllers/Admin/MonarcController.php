@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -58,7 +60,7 @@ class MonarcController extends Controller
         );
     }
 
-    private function getNames()
+    private function getNames(): void
     {
         $url = 'https://objects.monarc.lu/api/v2/object/';
 

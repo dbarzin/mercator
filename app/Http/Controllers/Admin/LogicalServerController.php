@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -65,17 +67,17 @@ class LogicalServerController extends Controller
                 'cl.name as cluster_name',
             )
             ->leftJoin('logical_server_m_application as lsma', 'ls.id', '=', 'lsma.logical_server_id')
-            ->leftJoin('m_applications as ma', function ($join) {
+            ->leftJoin('m_applications as ma', function ($join): void {
                 $join->on('lsma.m_application_id', '=', 'ma.id')
                     ->whereNull('ma.deleted_at');
             })
             ->leftJoin('logical_server_physical_server as lsps', 'ls.id', '=', 'lsps.logical_server_id')
             ->leftJoin('cluster_logical_server as cls', 'ls.id', '=', 'cls.logical_server_id')
-            ->leftJoin('clusters as cl', function ($join) {
+            ->leftJoin('clusters as cl', function ($join): void {
                 $join->on('cls.cluster_id', '=', 'cl.id')
                     ->whereNull('ma.deleted_at');
             })
-            ->leftJoin('physical_servers as ps', function ($join) {
+            ->leftJoin('physical_servers as ps', function ($join): void {
                 $join->on('lsps.physical_server_id', '=', 'ps.id')
                     ->whereNull('ps.deleted_at');
             })

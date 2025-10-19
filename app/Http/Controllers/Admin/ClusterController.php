@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -100,7 +102,7 @@ class ClusterController extends Controller
 
         return view(
             'admin.clusters.edit',
-            compact('cluster', 'logical_servers', 'physical_servers', 'type_list', 'attributes_list', 'routers','icons')
+            compact('cluster', 'logical_servers', 'physical_servers', 'type_list', 'attributes_list', 'routers', 'icons')
         );
     }
 

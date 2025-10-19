@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -175,8 +177,8 @@ class NetworkInfrastructureView extends Controller
             });
             */
             $physicalServers = PhysicalServer::query()
-                ->where(function ($q) use ($buildingIds, $bayIds) {
-                    $q->where(function ($q) use ($buildingIds) {
+                ->where(function ($q) use ($buildingIds, $bayIds): void {
+                    $q->where(function ($q) use ($buildingIds): void {
                         $q->whereNull('bay_id')
                             ->whereIn('building_id', $buildingIds);
                     });

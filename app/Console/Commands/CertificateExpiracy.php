@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Certificate;
@@ -13,17 +15,13 @@ class CertificateExpiracy extends Command
 {
     /**
      * The name and signature of the console command.
-     *
-     * @var string
      */
-    protected $signature = 'mercator:certificate-expiracy';
+    protected string $signature = 'mercator:certificate-expiracy';
 
     /**
      * The console command description.
-     *
-     * @var string
      */
-    protected $description = 'Check expired certificates';
+    protected string $description = 'Check expired certificates';
 
     /**
      * Execute the console command.

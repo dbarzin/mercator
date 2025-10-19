@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -9,19 +11,15 @@ class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.
-     *
-     * @var array
      */
-    protected $dontReport = [
+    protected array $dontReport = [
 
     ];
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
      */
-    protected $dontFlash = [
+    protected array $dontFlash = [
         'password',
         'password_confirmation',
     ];
@@ -29,11 +27,9 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @return void
-     *
      * @throws \Exception
      */
-    public function report(Throwable $exception)
+    public function report(Throwable $exception): void
     {
         try {
             \Log::error($exception->getMessage(), [
@@ -50,13 +46,9 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render(\Illuminate\Http\Request $request, Throwable $exception): \Symfony\Component\HttpFoundation\Response
     {
         return parent::render($request, $exception);
     }
