@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
 use App\Models\Cluster;
+use App\Models\Document;
 use App\Models\LogicalServer;
 use App\Models\PhysicalServer;
 use App\Models\Router;
@@ -19,7 +20,7 @@ class ClusterController extends Controller
     {
         abort_if(Gate::denies('cluster_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clusters = Cluster::with('physicalServers', 'logicalServers')->orderBy('name')->get();
+        $clusters = Cluster::query()->orderBy('name')->get();
 
         return view('admin.clusters.index', compact('clusters'));
     }
@@ -33,29 +34,51 @@ class ClusterController extends Controller
         $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
         // List
-        $type_list = Cluster::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Cluster::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        // Select icons
+        $icons = Cluster::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         return view(
             'admin.clusters.create',
-            compact('logical_servers', 'physical_servers', 'type_list', 'routers')
+            compact('logical_servers', 'physical_servers', 'type_list', 'attributes_list', 'routers', 'icons')
         );
     }
 
     public function store(StoreClusterRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $cluster = Cluster::create($request->all());
 
-        // update logical servers
-        LogicalServer::whereIn('id', $request->input('logical_servers', []))
-            ->update(['cluster_id' => $cluster->id]);
+        $cluster->logicalServers()->sync($request->input('logical_servers', []));
+        $cluster->physicalServers()->sync($request->input('physical_servers', []));
+        $cluster->routers()->sync($request->input('routers', []));
 
-        // update logical routers
-        Router::whereIn('id', $request->input('routers', []))
-            ->update(['cluster_id' => $cluster->id]);
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
 
-        // update physical servers
-        PhysicalServer::whereIn('id', $request->input('physical_servers', []))
-            ->update(['cluster_id' => $cluster->id]);
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $cluster->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $cluster->icon_id = intval($request->iconSelect);
+        } else {
+            $cluster->icon_id = null;
+        }
+        $cluster->save();
 
         return redirect()->route('admin.clusters.index');
     }
@@ -69,38 +92,50 @@ class ClusterController extends Controller
         $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
         // List
-        $type_list = Cluster::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Cluster::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        // Select icons
+        $icons = Cluster::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         return view(
             'admin.clusters.edit',
-            compact('cluster', 'logical_servers', 'physical_servers', 'type_list', 'routers')
+            compact('cluster', 'logical_servers', 'physical_servers', 'type_list', 'attributes_list', 'routers','icons')
         );
     }
 
     public function update(UpdateClusterRequest $request, Cluster $cluster)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $cluster->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $cluster->icon_id = intval($request->iconSelect);
+        } else {
+            $cluster->icon_id = null;
+        }
+
         $cluster->update($request->all());
 
-        // update logical servers
-        LogicalServer::where('cluster_id', $cluster->id)
-            ->update(['cluster_id' => null]);
-
-        LogicalServer::whereIn('id', $request->input('logical_servers', []))
-            ->update(['cluster_id' => $cluster->id]);
-
-        // update logical routers
-        Router::where('cluster_id', $cluster->id)
-            ->update(['cluster_id' => null]);
-
-        Router::whereIn('id', $request->input('routers', []))
-            ->update(['cluster_id' => $cluster->id]);
-
-        // update physical servers
-        PhysicalServer::where('cluster_id', $cluster->id)
-            ->update(['cluster_id' => null]);
-
-        PhysicalServer::whereIn('id', $request->input('physical_servers', []))
-            ->update(['cluster_id' => $cluster->id]);
+        $cluster->logicalServers()->sync($request->input('logical_servers', []));
+        $cluster->physicalServers()->sync($request->input('physical_servers', []));
+        $cluster->routers()->sync($request->input('routers', []));
 
         return redirect()->route('admin.clusters.index');
     }
@@ -126,5 +161,24 @@ class ClusterController extends Controller
         Cluster::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Cluster::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

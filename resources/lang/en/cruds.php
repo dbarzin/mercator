@@ -328,6 +328,8 @@ return [
             'name_helper' => 'Cluster name',
             'type' => 'Type',
             'type_helper' => 'Cluster type',
+            'attributes' => 'Attributes',
+            'attributes_helper' => 'Liste of cluster attributes',
             'description' => 'Description',
             'description_helper' => 'Cluster description',
             'address_ip' => 'IP addresses',

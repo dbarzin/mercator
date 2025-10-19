@@ -332,6 +332,8 @@ return [
             'name_helper' => 'Nom du cluster',
             'type' => 'Type',
             'type_helper' => 'Type de cluster',
+            'attributes' => 'Attributs',
+            'attributes_helper' => 'Liste des attributes du cluster',
             'description' => 'Description',
             'description_helper' => 'Description du cluster',
             'address_ip' => 'Adresse IP',

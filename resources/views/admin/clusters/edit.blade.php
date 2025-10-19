@@ -10,7 +10,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label class="required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
@@ -24,7 +24,7 @@
                             <span class="help-block">{{ trans('cruds.cluster.fields.name_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="form-group">
                             <label class="recommended" for="type">{{ trans('cruds.cluster.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
@@ -45,23 +45,63 @@
                             <span class="help-block">{{ trans('cruds.cluster.fields.type_helper') }}</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="recommended" for="description">{{ trans('cruds.cluster.fields.description') }}</label>
-                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                              name="description"
-                              id="description">{!! old('description', $cluster->description) !!}</textarea>
-                    @if($errors->has('description'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('description') }}
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="attributes">{{ trans('cruds.cluster.fields.attributes') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes[]" multiple>
+                                @foreach($attributes_list as $a)
+                                    <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || in_array($a, explode(' ',$cluster->attributes)) ? 'selected' : '' }}>{{$a}}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('attributes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('attributes') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.cluster.fields.attributes_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.cluster.fields.description_helper') }}</span>
+                    </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label class="recommended"
+                                   for="description">{{ trans('cruds.cluster.fields.description') }}</label>
+                            <textarea
+                                    class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    name="description"
+                                    id="description">{!! old('description', $cluster->description) !!}</textarea>
+                            @if($errors->has('description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.cluster.fields.description_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="iconSelect">{{ trans('global.icon_select') }}</label>
+                            <select id="iconSelect"
+                                    name="iconSelect"
+                                    class="form-control js-icon-picker"
+                                    data-icons='@json($icons)'
+                                    data-selected="{{ $cluster->icon_id ?? '-1' }}"
+                                    data-default-img="{{ asset('images/cluster.png') }}"
+                                    data-url-template="{{ route('admin.documents.show', ':id') }}"
+                                    data-upload="#iconFile">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="iconFile" name="iconFile" accept="image/png"/>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label class="recommended" for="description">{{ trans('cruds.cluster.fields.address_ip') }}</label>
+                    <label class="recommended"
+                           for="description">{{ trans('cruds.cluster.fields.address_ip') }}</label>
                     <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                            name="address_ip" id="address_ip" value="{{ old('address_ip', $cluster->address_ip) }}">
                     @if($errors->has('address_ip'))
@@ -85,12 +125,6 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="logical_servers">{{ trans('cruds.cluster.fields.logical_servers') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="logical_servers[]" id="logical_servers" multiple>
                                 @foreach($logical_servers as $id => $logical_server)
@@ -112,12 +146,6 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="routers">{{ trans('cruds.cluster.fields.routers') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('routers') ? 'is-invalid' : '' }}"
                                     name="routers[]" id="routers" multiple>
                                 @foreach($routers as $id => $router)
@@ -147,12 +175,6 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="physical_servers">{{ trans('cruds.cluster.fields.physical_servers') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="physical_servers[]" id="physical_servers" multiple>
                                 @foreach($physical_servers as $id => $physical_server)

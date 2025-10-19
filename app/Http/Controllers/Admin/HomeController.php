@@ -5,16 +5,13 @@ namespace App\Http\Controllers\Admin;
 // GDPR
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
-// ecosystem
 use App\Models\Actor;
 use App\Models\Annuaire;
-// information system
 use App\Models\ApplicationBlock;
 use App\Models\ApplicationModule;
 use App\Models\ApplicationService;
 use App\Models\Bay;
 use App\Models\Building;
-// Applications
 use App\Models\Certificate;
 use App\Models\Cluster;
 use App\Models\Container;
@@ -22,12 +19,10 @@ use App\Models\Database;
 use App\Models\DataProcessing;
 use App\Models\DhcpServer;
 use App\Models\Dnsserver;
-// Administration
 use App\Models\DomaineAd;
 use App\Models\Entity;
 use App\Models\ExternalConnectedEntity;
 use App\Models\Flux;
-// Logique
 use App\Models\ForestAd;
 use App\Models\Gateway;
 use App\Models\Information;
@@ -40,7 +35,6 @@ use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
 use App\Models\Peripheral;
-// Physique
 use App\Models\Phone;
 use App\Models\PhysicalRouter;
 use App\Models\PhysicalSecurityDevice;
@@ -60,6 +54,14 @@ use App\Models\Wan;
 use App\Models\WifiTerminal;
 use App\Models\Workstation;
 use App\Models\ZoneAdmin;
+use Illuminate\Support\Facades\DB;
+
+// ecosystem
+// information system
+// Applications
+// Administration
+// Logique
+// Physique
 
 class HomeController extends Controller
 {
@@ -514,27 +516,31 @@ class HomeController extends Controller
                 ->count(),
 
             'logicalServers' => LogicalServer::count(),
-            'logicalServers_lvl1' => LogicalServer::where('description', '<>', null)
-                ->where('active', '=', 1)
-                ->where('operating_system', '<>', null)
-                ->where('environment', '<>', null)
-                ->where('address_ip', '<>', null)
-                // logicalServer must have one application
-                ->whereExists(function ($query) {
-                    $query->select('logical_server_m_application.logical_server_id')
+            'logicalServers_lvl1' =>  LogicalServer::query()
+                ->whereNotNull('description')
+                ->where('active', 1)
+                ->whereNotNull('operating_system')
+                ->whereNotNull('environment')
+                ->whereNotNull('address_ip')
+
+                // doit avoir au moins une application
+                ->whereExists(function ($q) {
+                    $q->select(DB::raw(1))
                         ->from('logical_server_m_application')
-                        ->whereRaw('logical_server_m_application.logical_server_id = logical_servers.id');
+                        ->whereColumn('logical_server_m_application.logical_server_id', 'logical_servers.id');
                 })
-                // logicalServer must be installed on a pysical server
-                ->whereExists(function ($query) {
-                    $query->select('logical_server_physical_server.logical_server_id')
-                        ->from('logical_server_physical_server')
-                        ->whereRaw(
-                            'logical_server_physical_server.logical_server_id = logical_servers.id'
-                        )
-                        ->orWhereRaw(
-                            'logical_servers.cluster_id is not null'
-                        );
+
+                // doit être installé sur un serveur physique OU appartenir à un cluster
+                ->where(function ($q) {
+                    $q->whereExists(function ($q1) {
+                        $q1->select(DB::raw(1))
+                            ->from('logical_server_physical_server')
+                            ->whereColumn('logical_server_physical_server.logical_server_id', 'logical_servers.id');
+                    })->orWhereExists(function ($q2) {
+                        $q2->select(DB::raw(1))
+                            ->from('cluster_logical_server') // <-- table pivot N-M
+                            ->whereColumn('cluster_logical_server.logical_server_id', 'logical_servers.id');
+                    });
                 })
                 ->count(),
 

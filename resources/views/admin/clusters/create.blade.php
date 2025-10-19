@@ -9,7 +9,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label class="required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
@@ -22,7 +22,7 @@
                             <span class="help-block">{{ trans('cruds.cluster.fields.name_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="form-group">
                             <label class="recommended" for="type">{{ trans('cruds.cluster.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
@@ -44,20 +44,66 @@
                             <span class="help-block">{{ trans('cruds.cluster.fields.type_helper') }}</span>
                         </div>
                     </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="attributes">{{ trans('cruds.cluster.fields.attributes') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
+                                @if (old('attributes'))
+                                    @foreach(old('attributes') as $a)
+                                        <option selected>{{$a}}</option>
+                                    @endforeach
+                                @else
+                                    @foreach($attributes_list as $a)
+                                        <option>{{$a}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @if($errors->has('attributes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('attributes') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.cluster.fields.attributes_helper') }}</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="recommended"
-                           for="description">{{ trans('cruds.cluster.fields.description') }}</label>
-                    <textarea
-                            class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                            name="description" id="description">{!! old('description') !!}</textarea>
-                    @if($errors->has('description'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('description') }}
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label class="recommended"
+                                   for="description">{{ trans('cruds.cluster.fields.description') }}</label>
+                            <textarea
+                                    class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    name="description" id="description">{!! old('description') !!}</textarea>
+                            @if($errors->has('description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.cluster.fields.description_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.cluster.fields.description_helper') }}</span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="iconSelect">{{ trans('global.icon_select') }}</label>
+                            <select id="iconSelect"
+                                    name="iconSelect"
+                                    class="form-control js-icon-picker"
+                                    data-icons='@json($icons)'
+                                    data-selected="-1"
+                                    data-default-img="{{ asset('images/cluster.png') }}"
+                                    data-url-template="{{ route('admin.documents.show', ':id') }}"
+                                    data-upload="#iconFile">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="iconFile" name="iconFile" accept="image/png"/>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="form-group">
@@ -82,16 +128,10 @@
                     <div class="col-sm">
                         <div class="form-group">
                             <label for="logical_servers">{{ trans('cruds.cluster.fields.logical_servers') }}</label>
-                            <div style="padding-bottom: 4px">
-                                        <span class="btn btn-info btn-xs select-all"
-                                              style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="logical_servers[]" id="logical_servers" multiple>
-                                @foreach($logical_servers as $id => $logical_servers)
-                                    <option value="{{ $id }}" {{ in_array($id, old('logical_servers', [])) ? 'selected' : '' }}>{{ $logical_servers }}</option>
+                                @foreach($logical_servers as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('logical_servers', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('logical_servers'))
@@ -108,16 +148,10 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="routers">{{ trans('cruds.cluster.fields.routers') }}</label>
-                            <div style="padding-bottom: 4px">
-                                    <span class="btn btn-info btn-xs select-all"
-                                          style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('routers') ? 'is-invalid' : '' }}"
                                     name="routers[]" id="routers" multiple>
-                                @foreach($routers as $id => $router)
-                                    <option value="{{ $id }}" {{ in_array($id, old('routers', [])) ? 'selected' : '' }}>{{ $router }}</option>
+                                @foreach($routers as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('routers', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('routers'))
@@ -147,8 +181,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('physical_servers') ? 'is-invalid' : '' }}"
                             name="physical_servers[]" id="physical_servers" multiple>
-                        @foreach($physical_servers as $id => $physical_servers)
-                            <option value="{{ $id }}" {{ in_array($id, old('physical_servers', [])) ? 'selected' : '' }}>{{ $physical_servers }}</option>
+                        @foreach($physical_servers as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('physical_servers', [])) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('physical_servers'))
