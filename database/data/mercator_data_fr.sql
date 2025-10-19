@@ -311,7 +311,10 @@ INSERT INTO `cluster_logical_server` (`cluster_id`, `logical_server_id`) VALUES 
 (1,2),
 (1,3),
 (1,6),
-(1,7);
+(1,7),
+(2,4),
+(2,5),
+(3,1);
 /*!40000 ALTER TABLE `cluster_logical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +325,8 @@ UNLOCK TABLES;
 LOCK TABLES `cluster_physical_server` WRITE;
 /*!40000 ALTER TABLE `cluster_physical_server` DISABLE KEYS */;
 INSERT INTO `cluster_physical_server` (`cluster_id`, `physical_server_id`) VALUES (1,2),
-(1,5);
+(1,5),
+(2,3);
 /*!40000 ALTER TABLE `cluster_physical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,6 +336,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `cluster_router` WRITE;
 /*!40000 ALTER TABLE `cluster_router` DISABLE KEYS */;
+INSERT INTO `cluster_router` (`cluster_id`, `router_id`) VALUES (1,1);
 /*!40000 ALTER TABLE `cluster_router` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +346,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `clusters` WRITE;
 /*!40000 ALTER TABLE `clusters` DISABLE KEYS */;
-INSERT INTO `clusters` (`id`, `name`, `type`, `attributes`, `icon_id`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','XZWare',NULL,NULL,'<p>Cluster principal.</p>','10.10.8.2','2025-06-12 11:51:05','2025-06-12 11:51:05',NULL);
+INSERT INTO `clusters` (`id`, `name`, `type`, `attributes`, `icon_id`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','XZWare','C1 C2 C3',1,'<p>Cluster principal.</p>','10.10.8.2','2025-06-12 11:51:05','2025-10-19 09:23:17',NULL),
+(2,'CLUSTER02','APP','C1 C4 C5',2,'<p>desc</p>','1.2.3.4','2025-10-19 09:15:31','2025-10-19 09:23:30',NULL),
+(3,'CLUSTER03','DB','C1 C4',3,'<p>Desc</p>','1.2.3.4','2025-10-19 09:25:13','2025-10-19 09:25:13',NULL);
 /*!40000 ALTER TABLE `clusters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,6 +653,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
+INSERT INTO `documents` (`id`, `filename`, `mimetype`, `size`, `hash`, `deleted_at`, `created_at`, `updated_at`) VALUES (1,'module.png','image/png',21332,'56a60db4a6b89f3d7cbe8545d64fe1340564a1c0856564d781fe2429b87092c7',NULL,'2025-10-19 09:23:17','2025-10-19 09:23:17'),
+(2,'server.png','image/png',17981,'a2581758e69692c3df3fef17e95c6c7737c2f091d0a21b31ad0c251df529957e',NULL,'2025-10-19 09:23:30','2025-10-19 09:23:30'),
+(3,'macroprocess.png','image/png',22229,'be9bb36504f2ff6f89bd275b21fbb091209facf46afb72d5a2b7bb7b8bdf6382',NULL,'2025-10-19 09:25:13','2025-10-19 09:25:13');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1519,7 +1529,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `routers` WRITE;
 /*!40000 ALTER TABLE `routers` DISABLE KEYS */;
-INSERT INTO `routers` (`id`, `name`, `type`, `description`, `rules`, `ip_addresses`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01',NULL,'<p>Roueur principal de l\'Open Hosital</p>',NULL,'10.10.5.25','2025-06-12 11:45:47','2025-06-14 09:16:07',NULL);
+INSERT INTO `routers` (`id`, `name`, `type`, `description`, `rules`, `ip_addresses`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'LR01',NULL,'<p>Roueur principal de l\'Open Hosital</p>',NULL,'10.10.5.25','2025-06-12 11:45:47','2025-10-19 09:42:17',NULL);
 /*!40000 ALTER TABLE `routers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1714,4 +1724,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-18 18:51:45
+-- Dump completed on 2025-10-19 11:48:01
