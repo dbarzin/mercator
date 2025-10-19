@@ -346,9 +346,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `clusters` WRITE;
 /*!40000 ALTER TABLE `clusters` DISABLE KEYS */;
-INSERT INTO `clusters` (`id`, `name`, `type`, `attributes`, `icon_id`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','XZWare','C1 C2 C3',1,'<p>Cluster principal.</p>','10.10.8.2','2025-06-12 11:51:05','2025-10-19 09:23:17',NULL),
-(2,'CLUSTER02','APP','C1 C4 C5',2,'<p>desc</p>','1.2.3.4','2025-10-19 09:15:31','2025-10-19 09:23:30',NULL),
-(3,'CLUSTER03','DB','C1 C4',3,'<p>Desc</p>','1.2.3.4','2025-10-19 09:25:13','2025-10-19 09:25:13',NULL);
+INSERT INTO `clusters` (`id`, `name`, `type`, `attributes`, `icon_id`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','XZWare','C1 C2 C3',NULL,'<p>Cluster principal.</p>','10.10.8.2','2025-06-12 11:51:05','2025-10-19 09:23:17',NULL),
+(2,'CLUSTER02','APP','C1 C4 C5',NULL,'<p>desc</p>','1.2.3.4','2025-10-19 09:15:31','2025-10-19 09:23:30',NULL),
+(3,'CLUSTER03','DB','C1 C4',NULL,'<p>Desc</p>','1.2.3.4','2025-10-19 09:25:13','2025-10-19 09:25:13',NULL);
 /*!40000 ALTER TABLE `clusters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1724,4 +1724,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-19 11:48:01
+-- Dump completed on 2025-10-19 11:54:54
