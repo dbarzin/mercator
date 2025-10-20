@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -85,7 +86,7 @@ class LogicalServer extends Model
 
     public function clusters(): BelongsToMany
     {
-        return $this->belongsToMany(Cluster::class, 'cluster_id');
+        return $this->belongsToMany(Cluster::class);
     }
 
     public function domain(): BelongsTo

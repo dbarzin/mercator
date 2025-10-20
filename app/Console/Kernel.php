@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -9,8 +10,6 @@ class Kernel extends ConsoleKernel
 {
     /**
      * The Artisan commands provided by your application.
-     *
-     * @var array
      */
     protected $commands = [
         Commands\Cleanup::class,
@@ -21,10 +20,8 @@ class Kernel extends ConsoleKernel
 
     /**
      * Define the application's command schedule.
-     *
-     * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->command('mercator:cleanup')->daily();
         $schedule->command('mercator:certificate-expiracy')->daily();
@@ -34,10 +31,8 @@ class Kernel extends ConsoleKernel
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
 

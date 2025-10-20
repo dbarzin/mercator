@@ -89,7 +89,7 @@ class SecurityControlController extends Controller
         $controls = [];
         foreach ($request->request as $key => $value) {
             if (str_starts_with($key, 'CTRL_')) {
-                array_push($controls, substr($key, 5));
+                $controls[] = substr($key, 5);
             }
         }
 
@@ -101,7 +101,7 @@ class SecurityControlController extends Controller
             $process = Process::where('id', substr($source, 3))->get()->first();
             $process->securityControls()->sync($controls);
         } else {
-            return;
+            return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
         }
 
         return redirect()->route('admin.security-controls.assign');
@@ -120,13 +120,13 @@ class SecurityControlController extends Controller
             $list = Process::where('id', substr($request->id, 3))->get()->first()->securityControls;
         } else {
             // Invalid ID
-            return;
+            return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
         }
 
         // Construct the control list
         $controls = [];
         foreach ($list as $item) {
-            array_push($controls, 'CTRL_'.$item->id);
+            $controls[] = 'CTRL_' . $item->id;
         }
 
         // return JSON
