@@ -104,7 +104,7 @@ class DataProcessingController extends Controller
         // Get Documents
         $documents = [];
         foreach ($dataProcessing->documents as $doc) {
-            array_push($documents, $doc->id);
+            $documents[] = $doc->id;
         }
         session()->put('documents', $documents);
 

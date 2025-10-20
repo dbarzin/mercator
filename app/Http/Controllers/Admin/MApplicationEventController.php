@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -27,13 +26,6 @@ class MApplicationEventController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): \Illuminate\Http\Response
-    {
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
@@ -47,27 +39,6 @@ class MApplicationEventController extends Controller
         $event->saveOrFail();
 
         return response()->json(['events' => $application->events]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
-    {
     }
 
     /**

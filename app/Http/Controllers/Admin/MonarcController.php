@@ -42,7 +42,7 @@ class MonarcController extends Controller
         // $assets       = $this->getSelectableAssets();    // à adapter à ton modèle
         // return view('monarc.create', compact(,'assets'));
 
-        dd($referentials);
+        // dd($referentials);
 
         return view(
             'monarc',
@@ -103,15 +103,19 @@ class MonarcController extends Controller
 
         // Décodage de la réponse JSON
         $data = json_decode($response, true);
-        dd($response);
+
+        // dd($response);
 
         // Vérification de la structure de la réponse
         if (! is_array($data)) {
             echo 'Réponse invalide ou non JSON.';
 
-            return null;
+            return;
         }
 
+        // Initialize the collection of names
+        $names = collect();
+        
         // Parcours des objets pour extraire les "name"
         foreach ($data as $bloc) {
             if (isset($bloc['data']) && is_array($bloc['data'])) {
@@ -123,8 +127,8 @@ class MonarcController extends Controller
                 }
             }
         }
-        dd($names);
+        // dd($names);
 
-        return $names;
+        return;
     }
 }

@@ -63,7 +63,7 @@ body {
     top: 56px;
     left: 0;
     background-color: #ffffff;
-    padding-top: 0px;
+    padding-top: 0;
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -294,8 +294,8 @@ table.dataTable thead .sorting_desc {
 }
 
 table.dataTable tbody th.focus, table.dataTable tbody td.focus {
-    outline: 0px;
-    outline-offset: 0px;
+    outline: 0;
+    outline-offset: 0;
 }
 
 table .navbar-brand-full {
@@ -347,8 +347,8 @@ table .navbar-brand-full {
 }
 
 .select2-results__option {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .form-group .required::after {
