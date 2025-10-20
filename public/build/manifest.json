@@ -30,12 +30,12 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-8hlu2ifI.css",
+    "file": "assets/app-BsJ7k6KR.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/mapping.css": {
-    "file": "assets/mapping-B03IrhoI.css",
+    "file": "assets/mapping-xOZU8kvR.css",
     "src": "resources/css/mapping.css",
     "isEntry": true
   },
