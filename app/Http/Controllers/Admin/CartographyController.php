@@ -809,7 +809,7 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.application.fields.RTO'),
                         (intdiv($application->rto, 60 * 24) > 0 ?
-                            (strval(intdiv($application->rto, 60 * 24)).' '.
+                            (intdiv($application->rto, 60 * 24) .' '.
                                 (intdiv($application->rto, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '').
                         (intdiv($application->rto, 60) % 24 > 0 ?
                             (strval(intdiv($application->rto, 60) % 24)).' '.
@@ -826,7 +826,7 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.application.fields.RPO'),
                         (intdiv($application->rpo, 60 * 24) > 0 ?
-                            (strval(intdiv($application->rpo, 60 * 24)).' '.
+                            (intdiv($application->rpo, 60 * 24) .' '.
                                 (intdiv($application->rpo, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '').
                         (intdiv($application->rpo, 60) % 24 > 0 ?
                             (strval(intdiv($application->rpo, 60) % 24)).' '.

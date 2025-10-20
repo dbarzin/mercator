@@ -25,7 +25,7 @@ class CertificateExpiracy extends Command
     /**
      * Execute the console command.
      */
-    public function handle(): mixed
+    public function handle(): void
     {
         Log::debug('CertificateExpiracy - Start.');
 
@@ -159,6 +159,8 @@ class CertificateExpiracy extends Command
         }
 
         Log::debug('CertificateExpiracy - DONE.');
+
+        return;
     }
 
     /**

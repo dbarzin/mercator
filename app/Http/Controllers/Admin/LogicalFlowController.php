@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
-// Models
 use App\Models\LogicalFlow;
 use App\Models\LogicalServer;
 use App\Models\Peripheral;
@@ -16,10 +15,12 @@ use App\Models\PhysicalServer;
 use App\Models\Router;
 use App\Models\StorageDevice;
 use App\Models\Workstation;
-// Framework
 use Gate;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
+
+// Models
+// Framework
 
 class LogicalFlowController extends Controller
 {
@@ -27,7 +28,7 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalFlows = LogicalFlow::with(
+        $logicalFlows = LogicalFlow::with([
             'router',
             'logicalServerSource',
             'peripheralSource',
@@ -41,6 +42,7 @@ class LogicalFlowController extends Controller
             'storageDeviceDest',
             'workstationDest',
             'physicalSecurityDeviceDest'
+            ]
         )
             ->orderby('name')
             ->get();

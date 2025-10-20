@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -11,937 +12,321 @@ class PermissionsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
+        \Log::info('PermissionsTableSeeder');
 
-        \DB::table('permissions')->delete();
-
-        \DB::table('permissions')->insert([
-            0 => [
-                'title' => 'user_management_access',
-            ],
-            1 => [
-                'title' => 'permission_create',
-            ],
-            2 => [
-                'title' => 'permission_edit',
-            ],
-            3 => [
-                'title' => 'permission_show',
-            ],
-            4 => [
-                'title' => 'permission_delete',
-            ],
-            5 => [
-                'title' => 'permission_access',
-            ],
-            6 => [
-                'title' => 'role_create',
-            ],
-            7 => [
-                'title' => 'role_edit',
-            ],
-            8 => [
-                'title' => 'role_show',
-            ],
-            9 => [
-                'title' => 'role_delete',
-            ],
-            10 => [
-                'title' => 'role_access',
-            ],
-            11 => [
-                'title' => 'user_create',
-            ],
-            12 => [
-                'title' => 'user_edit',
-            ],
-            13 => [
-                'title' => 'user_show',
-            ],
-            14 => [
-                'title' => 'user_delete',
-            ],
-            15 => [
-                'title' => 'user_access',
-            ],
-            16 => [
-                'title' => 'entity_create',
-            ],
-            17 => [
-                'title' => 'entity_edit',
-            ],
-            18 => [
-                'title' => 'entity_show',
-            ],
-            19 => [
-                'title' => 'entity_delete',
-            ],
-            20 => [
-                'title' => 'entity_access',
-            ],
-            21 => [
-                'title' => 'ecosystem_access',
-            ],
-            22 => [
-                'title' => 'relation_create',
-            ],
-            23 => [
-                'title' => 'relation_edit',
-            ],
-            24 => [
-                'title' => 'relation_show',
-            ],
-            25 => [
-                'title' => 'relation_delete',
-            ],
-            26 => [
-                'title' => 'relation_access',
-            ],
-            27 => [
-                'title' => 'process_create',
-            ],
-            28 => [
-                'title' => 'process_edit',
-            ],
-            29 => [
-                'title' => 'process_show',
-            ],
-            30 => [
-                'title' => 'process_delete',
-            ],
-            31 => [
-                'title' => 'process_access',
-            ],
-            32 => [
-                'title' => 'metier_access',
-            ],
-            33 => [
-                'title' => 'operation_create',
-            ],
-            34 => [
-                'title' => 'operation_edit',
-            ],
-            35 => [
-                'title' => 'operation_show',
-            ],
-            36 => [
-                'title' => 'operation_delete',
-            ],
-            37 => [
-                'title' => 'operation_access',
-            ],
-            38 => [
-                'title' => 'actor_create',
-            ],
-            39 => [
-                'title' => 'actor_edit',
-            ],
-            40 => [
-                'title' => 'actor_show',
-            ],
-            41 => [
-                'title' => 'actor_delete',
-            ],
-            42 => [
-                'title' => 'actor_access',
-            ],
-            43 => [
-                'title' => 'activity_create',
-            ],
-            44 => [
-                'title' => 'activity_edit',
-            ],
-            45 => [
-                'title' => 'activity_show',
-            ],
-            46 => [
-                'title' => 'activity_delete',
-            ],
-            47 => [
-                'title' => 'activity_access',
-            ],
-            48 => [
-                'title' => 'task_create',
-            ],
-            49 => [
-                'title' => 'task_edit',
-            ],
-            50 => [
-                'title' => 'task_show',
-            ],
-            51 => [
-                'title' => 'task_delete',
-            ],
-            52 => [
-                'title' => 'task_access',
-            ],
-            53 => [
-                'title' => 'information_create',
-            ],
-            54 => [
-                'title' => 'information_edit',
-            ],
-            55 => [
-                'title' => 'information_show',
-            ],
-            56 => [
-                'title' => 'information_delete',
-            ],
-            57 => [
-                'title' => 'information_access',
-            ],
-            58 => [
-                'title' => 'application_block_create',
-            ],
-            59 => [
-                'title' => 'application_block_edit',
-            ],
-            60 => [
-                'title' => 'application_block_show',
-            ],
-            61 => [
-                'title' => 'application_block_delete',
-            ],
-            62 => [
-                'title' => 'application_block_access',
-            ],
-            63 => [
-                'title' => 'application_create',
-            ],
-            64 => [
-                'title' => 'application_edit',
-            ],
-            65 => [
-                'title' => 'application_show',
-            ],
-            66 => [
-                'title' => 'application_delete',
-            ],
-            67 => [
-                'title' => 'application_access',
-            ],
-            68 => [
-                'title' => 'papplication_access',
-            ],
-            69 => [
-                'title' => 'm_application_create',
-            ],
-            70 => [
-                'title' => 'm_application_edit',
-            ],
-            71 => [
-                'title' => 'm_application_show',
-            ],
-            72 => [
-                'title' => 'm_application_delete',
-            ],
-            73 => [
-                'title' => 'm_application_access',
-            ],
-            74 => [
-                'title' => 'application_service_create',
-            ],
-            75 => [
-                'title' => 'application_service_edit',
-            ],
-            76 => [
-                'title' => 'application_service_show',
-            ],
-            77 => [
-                'title' => 'application_service_delete',
-            ],
-            78 => [
-                'title' => 'application_service_access',
-            ],
-            79 => [
-                'title' => 'database_create',
-            ],
-            80 => [
-                'title' => 'database_edit',
-            ],
-            81 => [
-                'title' => 'database_show',
-            ],
-            82 => [
-                'title' => 'database_delete',
-            ],
-            83 => [
-                'title' => 'database_access',
-            ],
-            84 => [
-                'title' => 'flux_create',
-            ],
-            85 => [
-                'title' => 'flux_edit',
-            ],
-            86 => [
-                'title' => 'flux_show',
-            ],
-            87 => [
-                'title' => 'flux_delete',
-            ],
-            88 => [
-                'title' => 'flux_access',
-            ],
-            89 => [
-                'title' => 'zone_admin_create',
-            ],
-            90 => [
-                'title' => 'zone_admin_edit',
-            ],
-            91 => [
-                'title' => 'zone_admin_show',
-            ],
-            92 => [
-                'title' => 'zone_admin_delete',
-            ],
-            93 => [
-                'title' => 'zone_admin_access',
-            ],
-            94 => [
-                'title' => 'administration_access',
-            ],
-            95 => [
-                'title' => 'annuaire_create',
-            ],
-            96 => [
-                'title' => 'annuaire_edit',
-            ],
-            97 => [
-                'title' => 'annuaire_show',
-            ],
-            98 => [
-                'title' => 'annuaire_delete',
-            ],
-            99 => [
-                'title' => 'annuaire_access',
-            ],
-            100 => [
-                'title' => 'forest_ad_create',
-            ],
-            101 => [
-                'title' => 'forest_ad_edit',
-            ],
-            102 => [
-                'title' => 'forest_ad_show',
-            ],
-            103 => [
-                'title' => 'forest_ad_delete',
-            ],
-            104 => [
-                'title' => 'forest_ad_access',
-            ],
-            105 => [
-                'title' => 'domaine_ad_create',
-            ],
-            106 => [
-                'title' => 'domaine_ad_edit',
-            ],
-            107 => [
-                'title' => 'domaine_ad_show',
-            ],
-            108 => [
-                'title' => 'domaine_ad_delete',
-            ],
-            109 => [
-                'title' => 'domaine_ad_access',
-            ],
-            110 => [
-                'title' => 'infrastructure_access',
-            ],
-            111 => [
-                'title' => 'network_create',
-            ],
-            112 => [
-                'title' => 'network_edit',
-            ],
-            113 => [
-                'title' => 'network_show',
-            ],
-            114 => [
-                'title' => 'network_delete',
-            ],
-            115 => [
-                'title' => 'network_access',
-            ],
-            116 => [
-                'title' => 'subnetwork_create',
-            ],
-            117 => [
-                'title' => 'subnetwork_edit',
-            ],
-            118 => [
-                'title' => 'subnetwork_show',
-            ],
-            119 => [
-                'title' => 'subnetwork_delete',
-            ],
-            120 => [
-                'title' => 'subnetwork_access',
-            ],
-            121 => [
-                'title' => 'gateway_create',
-            ],
-            122 => [
-                'title' => 'gateway_edit',
-            ],
-            123 => [
-                'title' => 'gateway_show',
-            ],
-            124 => [
-                'title' => 'gateway_delete',
-            ],
-            125 => [
-                'title' => 'gateway_access',
-            ],
-            126 => [
-                'title' => 'external_connected_entity_create',
-            ],
-            127 => [
-                'title' => 'external_connected_entity_edit',
-            ],
-            128 => [
-                'title' => 'external_connected_entity_show',
-            ],
-            129 => [
-                'title' => 'external_connected_entity_delete',
-            ],
-            130 => [
-                'title' => 'external_connected_entity_access',
-            ],
-            131 => [
-                'title' => 'network_switch_create',
-            ],
-            132 => [
-                'title' => 'network_switch_edit',
-            ],
-            133 => [
-                'title' => 'network_switch_show',
-            ],
-            134 => [
-                'title' => 'network_switch_delete',
-            ],
-            135 => [
-                'title' => 'network_switch_access',
-            ],
-            136 => [
-                'title' => 'router_create',
-            ],
-            137 => [
-                'title' => 'router_edit',
-            ],
-            138 => [
-                'title' => 'router_show',
-            ],
-            139 => [
-                'title' => 'router_delete',
-            ],
-            140 => [
-                'title' => 'router_access',
-            ],
-            141 => [
-                'title' => 'security_device_create',
-            ],
-            142 => [
-                'title' => 'security_device_edit',
-            ],
-            143 => [
-                'title' => 'security_device_show',
-            ],
-            144 => [
-                'title' => 'security_device_delete',
-            ],
-            145 => [
-                'title' => 'security_device_access',
-            ],
-            146 => [
-                'title' => 'dhcp_server_create',
-            ],
-            147 => [
-                'title' => 'dhcp_server_edit',
-            ],
-            148 => [
-                'title' => 'dhcp_server_show',
-            ],
-            149 => [
-                'title' => 'dhcp_server_delete',
-            ],
-            150 => [
-                'title' => 'dhcp_server_access',
-            ],
-            151 => [
-                'title' => 'dnsserver_create',
-            ],
-            152 => [
-                'title' => 'dnsserver_edit',
-            ],
-            153 => [
-                'title' => 'dnsserver_show',
-            ],
-            154 => [
-                'title' => 'dnsserver_delete',
-            ],
-            155 => [
-                'title' => 'dnsserver_access',
-            ],
-            156 => [
-                'title' => 'logical_server_create',
-            ],
-            157 => [
-                'title' => 'logical_server_edit',
-            ],
-            158 => [
-                'title' => 'logical_server_show',
-            ],
-            159 => [
-                'title' => 'logical_server_delete',
-            ],
-            160 => [
-                'title' => 'logical_server_access',
-            ],
-            161 => [
-                'title' => 'physicalinfrastructure_access',
-            ],
-            162 => [
-                'title' => 'site_create',
-            ],
-            163 => [
-                'title' => 'site_edit',
-            ],
-            164 => [
-                'title' => 'site_show',
-            ],
-            165 => [
-                'title' => 'site_delete',
-            ],
-            166 => [
-                'title' => 'site_access',
-            ],
-            167 => [
-                'title' => 'building_create',
-            ],
-            168 => [
-                'title' => 'building_edit',
-            ],
-            169 => [
-                'title' => 'building_show',
-            ],
-            170 => [
-                'title' => 'building_delete',
-            ],
-            171 => [
-                'title' => 'building_access',
-            ],
-            172 => [
-                'title' => 'bay_create',
-            ],
-            173 => [
-                'title' => 'bay_edit',
-            ],
-            174 => [
-                'title' => 'bay_show',
-            ],
-            175 => [
-                'title' => 'bay_delete',
-            ],
-            176 => [
-                'title' => 'bay_access',
-            ],
-            177 => [
-                'title' => 'physical_server_create',
-            ],
-            178 => [
-                'title' => 'physical_server_edit',
-            ],
-            179 => [
-                'title' => 'physical_server_show',
-            ],
-            180 => [
-                'title' => 'physical_server_delete',
-            ],
-            181 => [
-                'title' => 'physical_server_access',
-            ],
-            182 => [
-                'title' => 'workstation_create',
-            ],
-            183 => [
-                'title' => 'workstation_edit',
-            ],
-            184 => [
-                'title' => 'workstation_show',
-            ],
-            185 => [
-                'title' => 'workstation_delete',
-            ],
-            186 => [
-                'title' => 'workstation_access',
-            ],
-            187 => [
-                'title' => 'storage_device_create',
-            ],
-            188 => [
-                'title' => 'storage_device_edit',
-            ],
-            189 => [
-                'title' => 'storage_device_show',
-            ],
-            190 => [
-                'title' => 'storage_device_delete',
-            ],
-            191 => [
-                'title' => 'storage_device_access',
-            ],
-            192 => [
-                'title' => 'peripheral_create',
-            ],
-            193 => [
-                'title' => 'peripheral_edit',
-            ],
-            194 => [
-                'title' => 'peripheral_show',
-            ],
-            195 => [
-                'title' => 'peripheral_delete',
-            ],
-            196 => [
-                'title' => 'peripheral_access',
-            ],
-            197 => [
-                'title' => 'phone_create',
-            ],
-            198 => [
-                'title' => 'phone_edit',
-            ],
-            199 => [
-                'title' => 'phone_show',
-            ],
-            200 => [
-                'title' => 'phone_delete',
-            ],
-            201 => [
-                'title' => 'phone_access',
-            ],
-            202 => [
-                'title' => 'physical_switch_create',
-            ],
-            203 => [
-                'title' => 'physical_switch_edit',
-            ],
-            204 => [
-                'title' => 'physical_switch_show',
-            ],
-            205 => [
-                'title' => 'physical_switch_delete',
-            ],
-            206 => [
-                'title' => 'physical_switch_access',
-            ],
-            207 => [
-                'title' => 'physical_router_create',
-            ],
-            208 => [
-                'title' => 'physical_router_edit',
-            ],
-            209 => [
-                'title' => 'physical_router_show',
-            ],
-            210 => [
-                'title' => 'physical_router_delete',
-            ],
-            211 => [
-                'title' => 'physical_router_access',
-            ],
-            212 => [
-                'title' => 'wifi_terminal_create',
-            ],
-            213 => [
-                'title' => 'wifi_terminal_edit',
-            ],
-            214 => [
-                'title' => 'wifi_terminal_show',
-            ],
-            215 => [
-                'title' => 'wifi_terminal_delete',
-            ],
-            216 => [
-                'title' => 'wifi_terminal_access',
-            ],
-            217 => [
-                'title' => 'physical_security_device_create',
-            ],
-            218 => [
-                'title' => 'physical_security_device_edit',
-            ],
-            219 => [
-                'title' => 'physical_security_device_show',
-            ],
-            220 => [
-                'title' => 'physical_security_device_delete',
-            ],
-            221 => [
-                'title' => 'physical_security_device_access',
-            ],
-            222 => [
-                'title' => 'wan_create',
-            ],
-            223 => [
-                'title' => 'wan_edit',
-            ],
-            224 => [
-                'title' => 'wan_show',
-            ],
-            225 => [
-                'title' => 'wan_delete',
-            ],
-            226 => [
-                'title' => 'wan_access',
-            ],
-            227 => [
-                'title' => 'man_create',
-            ],
-            228 => [
-                'title' => 'man_edit',
-            ],
-            229 => [
-                'title' => 'man_show',
-            ],
-            230 => [
-                'title' => 'man_delete',
-            ],
-            231 => [
-                'title' => 'man_access',
-            ],
-            232 => [
-                'title' => 'lan_create',
-            ],
-            233 => [
-                'title' => 'lan_edit',
-            ],
-            234 => [
-                'title' => 'lan_show',
-            ],
-            235 => [
-                'title' => 'lan_delete',
-            ],
-            236 => [
-                'title' => 'lan_access',
-            ],
-            237 => [
-                'title' => 'vlan_create',
-            ],
-            238 => [
-                'title' => 'vlan_edit',
-            ],
-            239 => [
-                'title' => 'vlan_show',
-            ],
-            240 => [
-                'title' => 'vlan_delete',
-            ],
-            241 => [
-                'title' => 'vlan_access',
-            ],
-            242 => [
-                'title' => 'application_module_create',
-            ],
-            243 => [
-                'title' => 'application_module_edit',
-            ],
-            244 => [
-                'title' => 'application_module_show',
-            ],
-            245 => [
-                'title' => 'application_module_delete',
-            ],
-            246 => [
-                'title' => 'application_module_access',
-            ],
-            247 => [
-                'title' => 'audit_log_show',
-            ],
-            248 => [
-                'title' => 'audit_log_access',
-            ],
-            249 => [
-                'title' => 'macro_processus_create',
-            ],
-            250 => [
-                'title' => 'macro_processus_edit',
-            ],
-            251 => [
-                'title' => 'macro_processus_show',
-            ],
-            252 => [
-                'title' => 'macro_processus_delete',
-            ],
-            253 => [
-                'title' => 'macro_processus_access',
-            ],
-            254 => [
-                'title' => 'configuration_access',
-            ],
-            255 => [
-                'title' => 'profile_password_edit',
-            ],
-            256 => [
-                'title' => 'certificate_create',
-            ],
-            257 => [
-                'title' => 'certificate_edit',
-            ],
-            258 => [
-                'title' => 'certificate_show',
-            ],
-            259 => [
-                'title' => 'certificate_delete',
-            ],
-            260 => [
-                'title' => 'certificate_access',
-            ],
-            261 => [
-                'title' => 'configure',
-            ],
-            262 => [
-                'title' => 'physical_link_create',
-            ],
-            263 => [
-                'title' => 'physical_link_edit',
-            ],
-            264 => [
-                'title' => 'physical_link_show',
-            ],
-            265 => [
-                'title' => 'physical_link_delete',
-            ],
-            266 => [
-                'title' => 'physical_link_access',
-            ],
-            267 => [
-                'title' => 'gdpr_access',
-            ],
-            268 => [
-                'title' => 'security_control_create',
-            ],
-            269 => [
-                'title' => 'security_control_edit',
-            ],
-            270 => [
-                'title' => 'security_control_show',
-            ],
-            271 => [
-                'title' => 'security_control_delete',
-            ],
-            272 => [
-                'title' => 'security_control_access',
-            ],
-            273 => [
-                'title' => 'data_processing_create',
-            ],
-            274 => [
-                'title' => 'data_processing_edit',
-            ],
-            275 => [
-                'title' => 'data_processing_show',
-            ],
-            276 => [
-                'title' => 'data_processing_delete',
-            ],
-            277 => [
-                'title' => 'data_processing_access',
-            ],
-            278 => [
-                'title' => 'patching_access',
-            ],
-            279 => [
-                'title' => 'patching_make',
-            ],
-            280 => [
-                'title' => 'cluster_create',
-            ],
-            281 => [
-                'title' => 'cluster_edit',
-            ],
-            282 => [
-                'title' => 'cluster_show',
-            ],
-            283 => [
-                'title' => 'cluster_delete',
-            ],
-            284 => [
-                'title' => 'cluster_access',
-            ],
-            285 => [
-                'title' => 'logical_flow_create',
-            ],
-            286 => [
-                'title' => 'logical_flow_edit',
-            ],
-            287 => [
-                'title' => 'logical_flow_show',
-            ],
-            288 => [
-                'title' => 'logical_flow_delete',
-            ],
-            289 => [
-                'title' => 'logical_flow_access',
-            ],
-            290 => [
-                'title' => 'admin_user_create',
-            ],
-            291 => [
-                'title' => 'admin_user_edit',
-            ],
-            292 => [
-                'title' => 'admin_user_show',
-            ],
-            293 => [
-                'title' => 'admin_user_delete',
-            ],
-            294 => [
-                'title' => 'admin_user_access',
-            ],
-            295 => [
-                'title' => 'graph_create',
-            ],
-            296 => [
-                'title' => 'graph_edit',
-            ],
-            297 => [
-                'title' => 'graph_show',
-            ],
-            298 => [
-                'title' => 'graph_delete',
-            ],
-            299 => [
-                'title' => 'graph_access',
-            ],
-            300 => [
-                'title' => 'container_create',
-            ],
-            301 => [
-                'title' => 'container_edit',
-            ],
-            302 => [
-                'title' => 'container_show',
-            ],
-            303 => [
-                'title' => 'container_delete',
-            ],
-            304 => [
-                'title' => 'container_access',
-            ],
-            305 => [
-                'title' => 'tools_access',
-            ],
-            306 => [
-                'title' => 'explore_access',
-            ],
-            307 => [
-                'title' => 'reports_access',
-            ],
-        ]);
-
+        if (DB::table('permissions')->count() === 0) {
+            DB::table('permissions')->insert([
+                ['id' => 1, 'title' => 'user_management_access'],
+                ['id' => 2, 'title' => 'permission_create'],
+                ['id' => 3, 'title' => 'permission_edit'],
+                ['id' => 4, 'title' => 'permission_show'],
+                ['id' => 5, 'title' => 'permission_delete'],
+                ['id' => 6, 'title' => 'permission_access'],
+                ['id' => 7, 'title' => 'role_create'],
+                ['id' => 8, 'title' => 'role_edit'],
+                ['id' => 9, 'title' => 'role_show'],
+                ['id' => 10, 'title' => 'role_delete'],
+                ['id' => 11, 'title' => 'role_access'],
+                ['id' => 12, 'title' => 'user_create'],
+                ['id' => 13, 'title' => 'user_edit'],
+                ['id' => 14, 'title' => 'user_show'],
+                ['id' => 15, 'title' => 'user_delete'],
+                ['id' => 16, 'title' => 'user_access'],
+                ['id' => 17, 'title' => 'entity_create'],
+                ['id' => 18, 'title' => 'entity_edit'],
+                ['id' => 19, 'title' => 'entity_show'],
+                ['id' => 20, 'title' => 'entity_delete'],
+                ['id' => 21, 'title' => 'entity_access'],
+                ['id' => 22, 'title' => 'ecosystem_access'],
+                ['id' => 23, 'title' => 'relation_create'],
+                ['id' => 24, 'title' => 'relation_edit'],
+                ['id' => 25, 'title' => 'relation_show'],
+                ['id' => 26, 'title' => 'relation_delete'],
+                ['id' => 27, 'title' => 'relation_access'],
+                ['id' => 28, 'title' => 'process_create'],
+                ['id' => 29, 'title' => 'process_edit'],
+                ['id' => 30, 'title' => 'process_show'],
+                ['id' => 31, 'title' => 'process_delete'],
+                ['id' => 32, 'title' => 'process_access'],
+                ['id' => 33, 'title' => 'metier_access'],
+                ['id' => 34, 'title' => 'operation_create'],
+                ['id' => 35, 'title' => 'operation_edit'],
+                ['id' => 36, 'title' => 'operation_show'],
+                ['id' => 37, 'title' => 'operation_delete'],
+                ['id' => 38, 'title' => 'operation_access'],
+                ['id' => 39, 'title' => 'actor_create'],
+                ['id' => 40, 'title' => 'actor_edit'],
+                ['id' => 41, 'title' => 'actor_show'],
+                ['id' => 42, 'title' => 'actor_delete'],
+                ['id' => 43, 'title' => 'actor_access'],
+                ['id' => 44, 'title' => 'activity_create'],
+                ['id' => 45, 'title' => 'activity_edit'],
+                ['id' => 46, 'title' => 'activity_show'],
+                ['id' => 47, 'title' => 'activity_delete'],
+                ['id' => 48, 'title' => 'activity_access'],
+                ['id' => 49, 'title' => 'task_create'],
+                ['id' => 50, 'title' => 'task_edit'],
+                ['id' => 51, 'title' => 'task_show'],
+                ['id' => 52, 'title' => 'task_delete'],
+                ['id' => 53, 'title' => 'task_access'],
+                ['id' => 54, 'title' => 'information_create'],
+                ['id' => 55, 'title' => 'information_edit'],
+                ['id' => 56, 'title' => 'information_show'],
+                ['id' => 57, 'title' => 'information_delete'],
+                ['id' => 58, 'title' => 'information_access'],
+                ['id' => 59, 'title' => 'application_block_create'],
+                ['id' => 60, 'title' => 'application_block_edit'],
+                ['id' => 61, 'title' => 'application_block_show'],
+                ['id' => 62, 'title' => 'application_block_delete'],
+                ['id' => 63, 'title' => 'application_block_access'],
+                ['id' => 64, 'title' => 'application_create'],
+                ['id' => 65, 'title' => 'application_edit'],
+                ['id' => 66, 'title' => 'application_show'],
+                ['id' => 67, 'title' => 'application_delete'],
+                ['id' => 68, 'title' => 'application_access'],
+                ['id' => 69, 'title' => 'papplication_access'],
+                ['id' => 70, 'title' => 'm_application_create'],
+                ['id' => 71, 'title' => 'm_application_edit'],
+                ['id' => 72, 'title' => 'm_application_show'],
+                ['id' => 73, 'title' => 'm_application_delete'],
+                ['id' => 74, 'title' => 'm_application_access'],
+                ['id' => 75, 'title' => 'application_service_create'],
+                ['id' => 76, 'title' => 'application_service_edit'],
+                ['id' => 77, 'title' => 'application_service_show'],
+                ['id' => 78, 'title' => 'application_service_delete'],
+                ['id' => 79, 'title' => 'application_service_access'],
+                ['id' => 80, 'title' => 'database_create'],
+                ['id' => 81, 'title' => 'database_edit'],
+                ['id' => 82, 'title' => 'database_show'],
+                ['id' => 83, 'title' => 'database_delete'],
+                ['id' => 84, 'title' => 'database_access'],
+                ['id' => 85, 'title' => 'flux_create'],
+                ['id' => 86, 'title' => 'flux_edit'],
+                ['id' => 87, 'title' => 'flux_show'],
+                ['id' => 88, 'title' => 'flux_delete'],
+                ['id' => 89, 'title' => 'flux_access'],
+                ['id' => 90, 'title' => 'zone_admin_create'],
+                ['id' => 91, 'title' => 'zone_admin_edit'],
+                ['id' => 92, 'title' => 'zone_admin_show'],
+                ['id' => 93, 'title' => 'zone_admin_delete'],
+                ['id' => 94, 'title' => 'zone_admin_access'],
+                ['id' => 95, 'title' => 'administration_access'],
+                ['id' => 96, 'title' => 'annuaire_create'],
+                ['id' => 97, 'title' => 'annuaire_edit'],
+                ['id' => 98, 'title' => 'annuaire_show'],
+                ['id' => 99, 'title' => 'annuaire_delete'],
+                ['id' => 100, 'title' => 'annuaire_access'],
+                ['id' => 101, 'title' => 'forest_ad_create'],
+                ['id' => 102, 'title' => 'forest_ad_edit'],
+                ['id' => 103, 'title' => 'forest_ad_show'],
+                ['id' => 104, 'title' => 'forest_ad_delete'],
+                ['id' => 105, 'title' => 'forest_ad_access'],
+                ['id' => 106, 'title' => 'domaine_ad_create'],
+                ['id' => 107, 'title' => 'domaine_ad_edit'],
+                ['id' => 108, 'title' => 'domaine_ad_show'],
+                ['id' => 109, 'title' => 'domaine_ad_delete'],
+                ['id' => 110, 'title' => 'domaine_ad_access'],
+                ['id' => 111, 'title' => 'infrastructure_access'],
+                ['id' => 112, 'title' => 'network_create'],
+                ['id' => 113, 'title' => 'network_edit'],
+                ['id' => 114, 'title' => 'network_show'],
+                ['id' => 115, 'title' => 'network_delete'],
+                ['id' => 116, 'title' => 'network_access'],
+                ['id' => 117, 'title' => 'subnetwork_create'],
+                ['id' => 118, 'title' => 'subnetwork_edit'],
+                ['id' => 119, 'title' => 'subnetwork_show'],
+                ['id' => 120, 'title' => 'subnetwork_delete'],
+                ['id' => 121, 'title' => 'subnetwork_access'],
+                ['id' => 122, 'title' => 'gateway_create'],
+                ['id' => 123, 'title' => 'gateway_edit'],
+                ['id' => 124, 'title' => 'gateway_show'],
+                ['id' => 125, 'title' => 'gateway_delete'],
+                ['id' => 126, 'title' => 'gateway_access'],
+                ['id' => 127, 'title' => 'external_connected_entity_create'],
+                ['id' => 128, 'title' => 'external_connected_entity_edit'],
+                ['id' => 129, 'title' => 'external_connected_entity_show'],
+                ['id' => 130, 'title' => 'external_connected_entity_delete'],
+                ['id' => 131, 'title' => 'external_connected_entity_access'],
+                ['id' => 132, 'title' => 'network_switch_create'],
+                ['id' => 133, 'title' => 'network_switch_edit'],
+                ['id' => 134, 'title' => 'network_switch_show'],
+                ['id' => 135, 'title' => 'network_switch_delete'],
+                ['id' => 136, 'title' => 'network_switch_access'],
+                ['id' => 137, 'title' => 'router_create'],
+                ['id' => 138, 'title' => 'router_edit'],
+                ['id' => 139, 'title' => 'router_show'],
+                ['id' => 140, 'title' => 'router_delete'],
+                ['id' => 141, 'title' => 'router_access'],
+                ['id' => 142, 'title' => 'security_device_create'],
+                ['id' => 143, 'title' => 'security_device_edit'],
+                ['id' => 144, 'title' => 'security_device_show'],
+                ['id' => 145, 'title' => 'security_device_delete'],
+                ['id' => 146, 'title' => 'security_device_access'],
+                ['id' => 147, 'title' => 'dhcp_server_create'],
+                ['id' => 148, 'title' => 'dhcp_server_edit'],
+                ['id' => 149, 'title' => 'dhcp_server_show'],
+                ['id' => 150, 'title' => 'dhcp_server_delete'],
+                ['id' => 151, 'title' => 'dhcp_server_access'],
+                ['id' => 152, 'title' => 'dnsserver_create'],
+                ['id' => 153, 'title' => 'dnsserver_edit'],
+                ['id' => 154, 'title' => 'dnsserver_show'],
+                ['id' => 155, 'title' => 'dnsserver_delete'],
+                ['id' => 156, 'title' => 'dnsserver_access'],
+                ['id' => 157, 'title' => 'logical_server_create'],
+                ['id' => 158, 'title' => 'logical_server_edit'],
+                ['id' => 159, 'title' => 'logical_server_show'],
+                ['id' => 160, 'title' => 'logical_server_delete'],
+                ['id' => 161, 'title' => 'logical_server_access'],
+                ['id' => 162, 'title' => 'physicalinfrastructure_access'],
+                ['id' => 163, 'title' => 'site_create'],
+                ['id' => 164, 'title' => 'site_edit'],
+                ['id' => 165, 'title' => 'site_show'],
+                ['id' => 166, 'title' => 'site_delete'],
+                ['id' => 167, 'title' => 'site_access'],
+                ['id' => 168, 'title' => 'building_create'],
+                ['id' => 169, 'title' => 'building_edit'],
+                ['id' => 170, 'title' => 'building_show'],
+                ['id' => 171, 'title' => 'building_delete'],
+                ['id' => 172, 'title' => 'building_access'],
+                ['id' => 173, 'title' => 'bay_create'],
+                ['id' => 174, 'title' => 'bay_edit'],
+                ['id' => 175, 'title' => 'bay_show'],
+                ['id' => 176, 'title' => 'bay_delete'],
+                ['id' => 177, 'title' => 'bay_access'],
+                ['id' => 178, 'title' => 'physical_server_create'],
+                ['id' => 179, 'title' => 'physical_server_edit'],
+                ['id' => 180, 'title' => 'physical_server_show'],
+                ['id' => 181, 'title' => 'physical_server_delete'],
+                ['id' => 182, 'title' => 'physical_server_access'],
+                ['id' => 183, 'title' => 'workstation_create'],
+                ['id' => 184, 'title' => 'workstation_edit'],
+                ['id' => 185, 'title' => 'workstation_show'],
+                ['id' => 186, 'title' => 'workstation_delete'],
+                ['id' => 187, 'title' => 'workstation_access'],
+                ['id' => 188, 'title' => 'storage_device_create'],
+                ['id' => 189, 'title' => 'storage_device_edit'],
+                ['id' => 190, 'title' => 'storage_device_show'],
+                ['id' => 191, 'title' => 'storage_device_delete'],
+                ['id' => 192, 'title' => 'storage_device_access'],
+                ['id' => 193, 'title' => 'peripheral_create'],
+                ['id' => 194, 'title' => 'peripheral_edit'],
+                ['id' => 195, 'title' => 'peripheral_show'],
+                ['id' => 196, 'title' => 'peripheral_delete'],
+                ['id' => 197, 'title' => 'peripheral_access'],
+                ['id' => 198, 'title' => 'phone_create'],
+                ['id' => 199, 'title' => 'phone_edit'],
+                ['id' => 200, 'title' => 'phone_show'],
+                ['id' => 201, 'title' => 'phone_delete'],
+                ['id' => 202, 'title' => 'phone_access'],
+                ['id' => 203, 'title' => 'physical_switch_create'],
+                ['id' => 204, 'title' => 'physical_switch_edit'],
+                ['id' => 205, 'title' => 'physical_switch_show'],
+                ['id' => 206, 'title' => 'physical_switch_delete'],
+                ['id' => 207, 'title' => 'physical_switch_access'],
+                ['id' => 208, 'title' => 'physical_router_create'],
+                ['id' => 209, 'title' => 'physical_router_edit'],
+                ['id' => 210, 'title' => 'physical_router_show'],
+                ['id' => 211, 'title' => 'physical_router_delete'],
+                ['id' => 212, 'title' => 'physical_router_access'],
+                ['id' => 213, 'title' => 'wifi_terminal_create'],
+                ['id' => 214, 'title' => 'wifi_terminal_edit'],
+                ['id' => 215, 'title' => 'wifi_terminal_show'],
+                ['id' => 216, 'title' => 'wifi_terminal_delete'],
+                ['id' => 217, 'title' => 'wifi_terminal_access'],
+                ['id' => 218, 'title' => 'physical_security_device_create'],
+                ['id' => 219, 'title' => 'physical_security_device_edit'],
+                ['id' => 220, 'title' => 'physical_security_device_show'],
+                ['id' => 221, 'title' => 'physical_security_device_delete'],
+                ['id' => 222, 'title' => 'physical_security_device_access'],
+                ['id' => 223, 'title' => 'wan_create'],
+                ['id' => 224, 'title' => 'wan_edit'],
+                ['id' => 225, 'title' => 'wan_show'],
+                ['id' => 226, 'title' => 'wan_delete'],
+                ['id' => 227, 'title' => 'wan_access'],
+                ['id' => 228, 'title' => 'man_create'],
+                ['id' => 229, 'title' => 'man_edit'],
+                ['id' => 230, 'title' => 'man_show'],
+                ['id' => 231, 'title' => 'man_delete'],
+                ['id' => 232, 'title' => 'man_access'],
+                ['id' => 233, 'title' => 'lan_create'],
+                ['id' => 234, 'title' => 'lan_edit'],
+                ['id' => 235, 'title' => 'lan_show'],
+                ['id' => 236, 'title' => 'lan_delete'],
+                ['id' => 237, 'title' => 'lan_access'],
+                ['id' => 238, 'title' => 'vlan_create'],
+                ['id' => 239, 'title' => 'vlan_edit'],
+                ['id' => 240, 'title' => 'vlan_show'],
+                ['id' => 241, 'title' => 'vlan_delete'],
+                ['id' => 242, 'title' => 'vlan_access'],
+                ['id' => 243, 'title' => 'application_module_create'],
+                ['id' => 244, 'title' => 'application_module_edit'],
+                ['id' => 245, 'title' => 'application_module_show'],
+                ['id' => 246, 'title' => 'application_module_delete'],
+                ['id' => 247, 'title' => 'application_module_access'],
+                ['id' => 248, 'title' => 'audit_log_show'],
+                ['id' => 249, 'title' => 'audit_log_access'],
+                ['id' => 250, 'title' => 'macro_processus_create'],
+                ['id' => 251, 'title' => 'macro_processus_edit'],
+                ['id' => 252, 'title' => 'macro_processus_show'],
+                ['id' => 253, 'title' => 'macro_processus_delete'],
+                ['id' => 254, 'title' => 'macro_processus_access'],
+                ['id' => 255, 'title' => 'configuration_access'],
+                ['id' => 256, 'title' => 'profile_password_edit'],
+                ['id' => 257, 'title' => 'certificate_create'],
+                ['id' => 258, 'title' => 'certificate_edit'],
+                ['id' => 259, 'title' => 'certificate_show'],
+                ['id' => 260, 'title' => 'certificate_delete'],
+                ['id' => 261, 'title' => 'certificate_access'],
+                ['id' => 262, 'title' => 'configure'],
+                ['id' => 263, 'title' => 'physical_link_create'],
+                ['id' => 264, 'title' => 'physical_link_edit'],
+                ['id' => 265, 'title' => 'physical_link_show'],
+                ['id' => 266, 'title' => 'physical_link_delete'],
+                ['id' => 267, 'title' => 'physical_link_access'],
+                ['id' => 268, 'title' => 'gdpr_access'],
+                ['id' => 269, 'title' => 'security_control_create'],
+                ['id' => 270, 'title' => 'security_control_edit'],
+                ['id' => 271, 'title' => 'security_control_show'],
+                ['id' => 272, 'title' => 'security_control_delete'],
+                ['id' => 273, 'title' => 'security_control_access'],
+                ['id' => 274, 'title' => 'data_processing_create'],
+                ['id' => 275, 'title' => 'data_processing_edit'],
+                ['id' => 276, 'title' => 'data_processing_show'],
+                ['id' => 277, 'title' => 'data_processing_delete'],
+                ['id' => 278, 'title' => 'data_processing_access'],
+                ['id' => 279, 'title' => 'patching_access'],
+                ['id' => 280, 'title' => 'patching_make'],
+                ['id' => 281, 'title' => 'cluster_create'],
+                ['id' => 282, 'title' => 'cluster_edit'],
+                ['id' => 283, 'title' => 'cluster_show'],
+                ['id' => 284, 'title' => 'cluster_delete'],
+                ['id' => 285, 'title' => 'cluster_access'],
+                ['id' => 286, 'title' => 'logical_flow_create'],
+                ['id' => 287, 'title' => 'logical_flow_edit'],
+                ['id' => 288, 'title' => 'logical_flow_show'],
+                ['id' => 289, 'title' => 'logical_flow_delete'],
+                ['id' => 290, 'title' => 'logical_flow_access'],
+                ['id' => 291, 'title' => 'admin_user_create'],
+                ['id' => 292, 'title' => 'admin_user_edit'],
+                ['id' => 293, 'title' => 'admin_user_show'],
+                ['id' => 294, 'title' => 'admin_user_delete'],
+                ['id' => 295, 'title' => 'admin_user_access'],
+                ['id' => 296, 'title' => 'graph_create'],
+                ['id' => 297, 'title' => 'graph_edit'],
+                ['id' => 298, 'title' => 'graph_show'],
+                ['id' => 299, 'title' => 'graph_delete'],
+                ['id' => 300, 'title' => 'graph_access'],
+                ['id' => 301, 'title' => 'container_create'],
+                ['id' => 302, 'title' => 'container_edit'],
+                ['id' => 303, 'title' => 'container_show'],
+                ['id' => 304, 'title' => 'container_delete'],
+                ['id' => 305, 'title' => 'container_access'],
+                ['id' => 306, 'title' => 'tools_access'],
+                ['id' => 307, 'title' => 'explore_access'],
+                ['id' => 308, 'title' => 'reports_access'],
+            ]);
+        }
     }
 }
