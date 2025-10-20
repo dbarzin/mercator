@@ -21,7 +21,7 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $operations = Operation::with('process', 'tasks', 'actors', 'activities')->orderBy('name')->get();
+        $operations = Operation::with(['process', 'tasks', 'actors', 'activities'])->orderBy('name')->get();
 
         return view('admin.operations.index', compact('operations'));
     }

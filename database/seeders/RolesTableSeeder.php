@@ -4,29 +4,37 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RolesTableSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
+\Log::info('RolesTableSeeder');
+        if (DB::table('roles')->count() === 0) {
 
-        \DB::table('roles')->delete();
+            $roles = [
+                [
+                    'id' => 1,
+                    'title' => 'Admin',
+                ],
+                [
+                    'id' => 2,
+                    'title' => 'User',
+                ],
+                [
+                    'id' => 3,
+                    'title' => 'Auditor',
+                ],
+                [
+                    'id' => 4,
+                    'title' => 'Cartographer',
+                ],
+            ];
 
-        $roles = [
-            [
-                'title' => 'Admin',
-            ],
-            [
-                'title' => 'User',
-            ],
-            [
-                'title' => 'Auditor',
-            ],
-            [
-                'title' => 'Cartographer',
-            ],
-        ];
+            Role::insert($roles);
 
-        Role::insert($roles);
+            \Log::info('RolesTableSeeder: Roles inserted');;
+        }
     }
 }
