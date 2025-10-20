@@ -27,19 +27,20 @@ class Handler extends ExceptionHandler
      * Report or log an exception.
      *
      * @throws \Exception
+     * @throws Throwable
      */
-    public function report(Throwable $exception): void
+    public function report(Throwable $e): void
     {
         try {
-            \Log::error($exception->getMessage(), [
-                'exception' => $exception::class,
-                'file' => $exception->getFile(),
-                'line' => $exception->getLine(),
+            \Log::error($e->getMessage(), [
+                'exception' => $e::class,
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
             ]);
         } catch (\Throwable $loggingError) {
             error_log('Error trying to log an exception : '.$loggingError->getMessage());
         }
-        parent::report($exception);
+        parent::report($e);
     }
 
     /**
@@ -47,8 +48,8 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $e): \Symfony\Component\HttpFoundation\Response
     {
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 }

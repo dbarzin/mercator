@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -83,7 +84,7 @@ class SecurityControlController extends Controller
         return view('admin.securityControls.assign', compact('apps', 'procs', 'controls'));
     }
 
-    public function associate(Request $request)
+    public function associate(Request $request): void
     {
         abort_if(Gate::denies('security_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $controls = [];
@@ -107,7 +108,7 @@ class SecurityControlController extends Controller
         return redirect()->route('admin.security-controls.assign');
     }
 
-    public function list(Request $request)
+    public function list(Request $request): void
     {
         abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
