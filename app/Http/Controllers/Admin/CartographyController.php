@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 // RGPD
@@ -2495,14 +2496,14 @@ class CartographyController extends Controller
         return $table;
     }
 
-    private static function addTextRow(Table $table, string $title, ?string $value = null)
+    private static function addTextRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
         $table->addCell(2000, CartographyController::NOSPACE)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
         $table->addCell(6000, CartographyController::NOSPACE)->addText($value, CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
     }
 
-    private static function addHTMLRow(Table $table, string $title, ?string $value = null)
+    private static function addHTMLRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
         $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);

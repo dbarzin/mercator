@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -46,7 +47,7 @@ class GDPRView extends Controller
 
         // All macroprocess with process having a data_processing
         $all_macroprocess = MacroProcessus::query()
-            ->whereExists(function ($query) {
+            ->whereExists(function ($query): void {
                 $query->select('processes.id')
                     ->from('processes')
                     ->join('data_processing_process', 'processes.id', '=', 'data_processing_process.process_id')
@@ -63,7 +64,7 @@ class GDPRView extends Controller
 
             $all_process = Process::orderBy('name')
                 ->where('macroprocess_id', $macroprocess)
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('data_processing_process.process_id')
                         ->from('data_processing_process')
                         ->join('data_processing', 'data_processing_process.data_processing_id', '=', 'data_processing.id')
@@ -75,7 +76,7 @@ class GDPRView extends Controller
             if ($process !== null) {
                 // Data processing of this process
                 $dataProcessings = DataProcessing::query()
-                    ->whereExists(function ($query) use ($process) {
+                    ->whereExists(function ($query) use ($process): void {
                         $query->select('data_processing_id')
                             ->from('data_processing_process')
                             ->where('data_processing_process.process_id', $process)
@@ -88,7 +89,7 @@ class GDPRView extends Controller
             } else {
                 // Data processing for this macroprocess
                 $dataProcessings = DataProcessing::query()
-                    ->whereExists(function ($query) use ($macroprocess) {
+                    ->whereExists(function ($query) use ($macroprocess): void {
                         $query->select('data_processing_id')
                             ->from('data_processing_process')
                             ->join('processes', 'processes.id', 'data_processing_process.process_id')
@@ -102,7 +103,7 @@ class GDPRView extends Controller
         } else {
             // only macroProcesses with data processisng
             $macroProcessuses = MacroProcessus::orderBy('name')
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('processes.id')
                         ->from('processes')
                         ->join('data_processing_process', 'data_processing_process.process_id', '=', 'processes.id')
@@ -114,7 +115,7 @@ class GDPRView extends Controller
 
             // only process with data processisng
             $processes = Process::query()
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('data_processing_id')
                         ->from('data_processing_process')
                         ->join('data_processing', 'data_processing_process.data_processing_id', '=', 'data_processing.id')
@@ -131,7 +132,7 @@ class GDPRView extends Controller
             $all_process = Process::query()
                 ->orderBy('name')
                 ->where('macroprocess_id', $macroprocess)
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('data_processing_process.process_id')
                         ->from('data_processing_process')
                         ->whereRaw('data_processing_process.process_id = processes.id');

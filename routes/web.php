@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Report;
@@ -38,7 +39,7 @@ Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class, 'r
 Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class, 'handleKeycloakCallback']);
 
 // Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function (): void {
     // Dashboard
     Route::get('/', [Admin\HomeController::class, 'index'])->name('home');
 
@@ -424,7 +425,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 });
 
 // Profile
-Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function (): void {
     Route::get('password', [Controllers\Auth\ChangePasswordController::class, 'edit'])->name('password.edit');
     Route::post('password', [Controllers\Auth\ChangePasswordController::class, 'update'])->name('password.update');
     Route::get('preferences', [Controllers\Auth\ProfileController::class, 'showProfile']);

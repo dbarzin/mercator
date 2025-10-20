@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,7 +37,7 @@ class RelationValue extends Model
         return $value;
     }
 
-    public function setDatePriceAttribute($value)
+    public function setDatePriceAttribute($value): void
     {
         $this->attributes['date_price'] = $value;
     }

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -12,10 +13,8 @@ class MApplicationEventController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\Response
     {
         $id = $request->query('id');
 
@@ -29,19 +28,15 @@ class MApplicationEventController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         $user = User::findOrFail($request->get('user_id'));
@@ -56,28 +51,22 @@ class MApplicationEventController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(MApplicationEvent $mApplicationEvent)
+    public function show(MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
     {
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function edit(MApplicationEvent $mApplicationEvent)
+    public function edit(MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
     {
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MApplicationEvent $mApplicationEvent)
+    public function update(Request $request, MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
     {
     }
 
@@ -85,10 +74,8 @@ class MApplicationEventController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id  Id de l'évènement
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Request $request, int $id)
+    public function destroy(Request $request, int $id): \Illuminate\Http\JsonResponse
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         MApplicationEvent::findOrFail($id)->delete();

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Providers;
 
 use App\Services\KeycloakProviderService as KeycloakSocialiteProvider;
@@ -10,10 +11,8 @@ class KeycloakProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Socialite::extend('keycloak', function ($app) {
             $config = $app['config']['services.keycloak'];
