@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -61,22 +62,23 @@ class LogicalServerController extends Controller
                 'ma.name as m_application_name',
                 'ps.id as physical_server_id',
                 'ps.name as physical_server_name',
-                'c.id as cluster_id',
-                'c.name as cluster_name'
+                'cl.id as cluster_id',
+                'cl.name as cluster_name',
             )
             ->leftJoin('logical_server_m_application as lsma', 'ls.id', '=', 'lsma.logical_server_id')
-            ->leftJoin('m_applications as ma', function ($join) {
+            ->leftJoin('m_applications as ma', function ($join): void {
                 $join->on('lsma.m_application_id', '=', 'ma.id')
                     ->whereNull('ma.deleted_at');
             })
             ->leftJoin('logical_server_physical_server as lsps', 'ls.id', '=', 'lsps.logical_server_id')
-            ->leftJoin('physical_servers as ps', function ($join) {
+            ->leftJoin('cluster_logical_server as cls', 'ls.id', '=', 'cls.logical_server_id')
+            ->leftJoin('clusters as cl', function ($join): void {
+                $join->on('cls.cluster_id', '=', 'cl.id')
+                    ->whereNull('ma.deleted_at');
+            })
+            ->leftJoin('physical_servers as ps', function ($join): void {
                 $join->on('lsps.physical_server_id', '=', 'ps.id')
                     ->whereNull('ps.deleted_at');
-            })
-            ->leftJoin('clusters as c', function ($join) {
-                $join->on('ls.cluster_id', '=', 'c.id')
-                    ->whereNull('c.deleted_at');
             })
             ->whereNull('ls.deleted_at')
             ->orderBy('ls.name', 'asc')
@@ -148,11 +150,15 @@ class LogicalServerController extends Controller
                 'attributes' => $logicalServer->attributes,
                 'configuration' => $logicalServer->configuration,
                 'address_ip' => $logicalServer->address_ip,
-                'cluster' => $logicalServer->cluster_id ? (object) ['id' => $logicalServer->cluster_id, 'name' => $logicalServer->cluster_name] : null,
                 'applications' => $items->filter(function ($item) {
                     return ! is_null($item->m_application_id);
                 })->unique('m_application_id')->map(function ($item) {
                     return (object) ['id' => $item->m_application_id, 'name' => $item->m_application_name];
+                })->values(),
+                'clusters' => $items->filter(function ($item) {
+                    return ! is_null($item->cluster_id);
+                })->unique('cluster_id')->map(function ($item) {
+                    return (object) ['id' => $item->cluster_id, 'name' => $item->cluster_name];
                 })->values(),
                 'physicalServers' => $items->filter(function ($item) {
                     return ! is_null($item->physical_server_id);
@@ -242,6 +248,7 @@ class LogicalServerController extends Controller
         $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
+        $logicalServer->clusters()->sync($request->input('clusters', []));
 
         return redirect()->route('admin.logical-servers.index');
     }
@@ -315,9 +322,11 @@ class LogicalServerController extends Controller
 
         $logicalServer->update($request->all());
 
+        // Relations
         $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
+        $logicalServer->clusters()->sync($request->input('clusters', []));
 
         return redirect()->route('admin.logical-servers.index');
     }

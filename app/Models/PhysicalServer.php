@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -61,9 +62,9 @@ class PhysicalServer extends Model
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function cluster(): BelongsTo
+    public function clusters(): BelongsToMany
     {
-        return $this->belongsTo(Cluster::class, 'cluster_id');
+        return $this->BelongsToMany(Cluster::class)->orderBy('name');
     }
 
     public function logicalServers(): BelongsToMany

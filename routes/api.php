@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\API;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [API\AuthController::class, 'login']);
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:api')->group(function (): void {
     Route::resource('data-processings', API\DataProcessingController::class);
     Route::resource('security-controls', API\SecurityControlController::class);
 

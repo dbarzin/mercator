@@ -1,19 +1,19 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Traits\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Flux
+ * Flux Applicatif
  */
 class Flux extends Model
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, SoftDeletes;
 
     public $table = 'fluxes';
 
@@ -30,6 +30,7 @@ class Flux extends Model
 
     protected $fillable = [
         'name',
+        'nature',
         'attributes',
         'description',
         'application_source_id',
@@ -42,7 +43,6 @@ class Flux extends Model
         'database_dest_id',
         'crypted',
         'bidirectional',
-        'nature',
     ];
 
     public function source_id(): ?string

@@ -1,11 +1,11 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Traits\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Cluster extends Model
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, SoftDeletes;
 
     public $table = 'clusters';
 
@@ -21,6 +21,7 @@ class Cluster extends Model
         'name',
         'description',
         'type',
+        'attributes',
     ];
 
     protected array $dates = [
@@ -31,26 +32,25 @@ class Cluster extends Model
 
     protected $fillable = [
         'name',
-        'description',
         'type',
+        'attributes',
+        'description',
+        'icon_id',
         'address_ip',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
-    public function logicalServers(): HasMany
+    public function logicalServers(): BelongsToMany
     {
-        return $this->hasMany(LogicalServer::class, 'cluster_id')->orderBy('name');
+        return $this->BelongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    public function routers(): HasMany
+    public function routers(): BelongsToMany
     {
-        return $this->hasMany(Router::class, 'cluster_id')->orderBy('name');
+        return $this->BelongsToMany(Router::class)->orderBy('name');
     }
 
-    public function physicalServers(): HasMany
+    public function physicalServers(): BelongsToMany
     {
-        return $this->hasMany(PhysicalServer::class, 'cluster_id')->orderBy('name');
+        return $this->BelongsToMany(PhysicalServer::class)->orderBy('name');
     }
 }

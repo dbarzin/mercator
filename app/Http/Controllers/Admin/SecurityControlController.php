@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -83,13 +84,13 @@ class SecurityControlController extends Controller
         return view('admin.securityControls.assign', compact('apps', 'procs', 'controls'));
     }
 
-    public function associate(Request $request)
+    public function associate(Request $request): void
     {
         abort_if(Gate::denies('security_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $controls = [];
         foreach ($request->request as $key => $value) {
             if (str_starts_with($key, 'CTRL_')) {
-                array_push($controls, substr($key, 5));
+                $controls[] = substr($key, 5);
             }
         }
 
@@ -101,13 +102,13 @@ class SecurityControlController extends Controller
             $process = Process::where('id', substr($source, 3))->get()->first();
             $process->securityControls()->sync($controls);
         } else {
-            return;
+            return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
         }
 
         return redirect()->route('admin.security-controls.assign');
     }
 
-    public function list(Request $request)
+    public function list(Request $request): void
     {
         abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -120,13 +121,13 @@ class SecurityControlController extends Controller
             $list = Process::where('id', substr($request->id, 3))->get()->first()->securityControls;
         } else {
             // Invalid ID
-            return;
+            return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
         }
 
         // Construct the control list
         $controls = [];
         foreach ($list as $item) {
-            array_push($controls, 'CTRL_'.$item->id);
+            $controls[] = 'CTRL_' . $item->id;
         }
 
         // return JSON

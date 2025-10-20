@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -18,7 +19,7 @@ class LogicalServer extends Model
 
     public $table = 'logical_servers';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'type',
         'description',
@@ -26,7 +27,7 @@ class LogicalServer extends Model
         'net_services',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -83,9 +84,9 @@ class LogicalServer extends Model
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
-    public function cluster(): BelongsTo
+    public function clusters(): BelongsToMany
     {
-        return $this->belongsTo(Cluster::class, 'cluster_id');
+        return $this->belongsToMany(Cluster::class);
     }
 
     public function domain(): BelongsTo

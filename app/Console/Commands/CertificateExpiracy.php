@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Console\Commands;
 
 use App\Models\Certificate;
@@ -13,15 +14,11 @@ class CertificateExpiracy extends Command
 {
     /**
      * The name and signature of the console command.
-     *
-     * @var string
      */
     protected $signature = 'mercator:certificate-expiracy';
 
     /**
      * The console command description.
-     *
-     * @var string
      */
     protected $description = 'Check expired certificates';
 
@@ -169,7 +166,6 @@ class CertificateExpiracy extends Command
      */
     private function needCheck(): bool
     {
-        return true;
         $check_frequency = config('mercator-config.cert.check-frequency');
 
         return // Daily

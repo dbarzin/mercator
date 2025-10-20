@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -105,7 +106,7 @@ class PhysicalInventory extends Controller
         return response()->download($path)->deleteFileAfterSend(true);
     }
 
-    private function addToInventory(array &$inventory, Site $site, ?Building $building = null, ?Bay $bay = null)
+    private function addToInventory(array &$inventory, Site $site, ?Building $building = null, ?Bay $bay = null): void
     {
         // PhysicalServer
         if ($bay !== null) {

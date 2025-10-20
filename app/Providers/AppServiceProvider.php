@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
@@ -11,10 +12,8 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         // Ignore default migration from here
         // Sanctum::ignoreMigrations();
@@ -22,10 +21,8 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Paginator::useBootstrap();
 
@@ -36,12 +33,12 @@ class AppServiceProvider extends ServiceProvider
         // if (env('APP_DEBUG')) {
         if (config('app.debug')) {
             // Log SQL Queries
-            \DB::listen(function ($query) {
+            \DB::listen(function ($query): void {
                 \Log::info($query->time.':'.$query->sql);
             });
         }
 
-        view()->composer('*', function ($view) {
+        view()->composer('*', function ($view): void {
             $version = trim(file_get_contents(base_path('version.txt')));
             $view->with('appVersion', $version);
         });

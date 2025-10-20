@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -30,6 +31,8 @@ class BuildingController extends Controller
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+
+        // Lists
         $attributes_list = $this->getAttributes();
         $type_list = Building::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
@@ -195,7 +198,8 @@ class BuildingController extends Controller
 
     private function getAttributes()
     {
-        $attributes_list = Building::select('attributes')
+        $attributes_list = Building::query()
+            ->select('attributes')
             ->where('attributes', '<>', null)
             ->pluck('attributes');
         $res = [];
