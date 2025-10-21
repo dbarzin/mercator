@@ -13,7 +13,7 @@ class MApplicationEvent extends Model
 
     public $table = 'm_application_events';
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
     ];

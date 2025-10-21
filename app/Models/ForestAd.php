@@ -19,12 +19,12 @@ class ForestAd extends Model
 
     public $table = 'forest_ads';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

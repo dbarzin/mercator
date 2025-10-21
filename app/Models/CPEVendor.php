@@ -18,10 +18,10 @@ class CPEVendor extends Model
 
     public $timestamps = false;
 
-    public static $searchable = [
+    public static array $searchable = [
     ];
 
-    protected $dates = [
+    protected array $dates = [
     ];
 
     protected $fillable = [

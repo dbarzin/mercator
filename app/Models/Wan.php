@@ -18,11 +18,11 @@ class Wan extends Model
 
     public $table = 'wans';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

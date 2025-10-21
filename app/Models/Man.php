@@ -16,13 +16,13 @@ class Man extends Model
 {
     use Auditable, HasFactory, SoftDeletes;
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
     ];
 
     public $table = 'mans';
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

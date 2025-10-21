@@ -15,10 +15,10 @@ class Document extends Model
 
     public $table = 'documents';
 
-    public static $searchable = [
+    public static array $searchable = [
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

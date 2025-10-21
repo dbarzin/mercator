@@ -20,7 +20,7 @@ class Process extends Model
 
     public $table = 'processes';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'icon_id',
@@ -28,7 +28,7 @@ class Process extends Model
         'owner',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

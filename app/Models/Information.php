@@ -17,14 +17,14 @@ class Information extends Model
 
     public $table = 'information';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'owner',
         'constraints',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

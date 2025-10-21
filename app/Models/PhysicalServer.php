@@ -19,7 +19,7 @@ class PhysicalServer extends Model
 
     public $table = 'physical_servers';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'type',
         'description',
@@ -27,7 +27,7 @@ class PhysicalServer extends Model
         'responsible',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

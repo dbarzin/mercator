@@ -18,7 +18,7 @@ class PhysicalLink extends Model
 
     public $table = 'physical_links';
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

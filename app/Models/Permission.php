@@ -16,7 +16,7 @@ class Permission extends Model
 
     public $table = 'permissions';
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
