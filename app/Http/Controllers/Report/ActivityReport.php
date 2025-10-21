@@ -99,6 +99,22 @@ class ActivityReport extends ReportController
             $section->addTitle(trans('cruds.dataProcessing.fields.purpose'), 2);
             self::addText($section, $dataProcessing->purpose);
 
+            $section->addTitle(trans('cruds.dataProcessing.fields.lawfulness'), 2);
+
+            // Booleans
+            $txt = "<ul>";
+            if ($dataProcessing->lawfulness_consent)
+                $txt .= '<li>' . trans('cruds.dataProcessing.fields.lawfulness_consent') . '</li>';
+            if ($dataProcessing->lawfulness_contract)
+                $txt .= '<li>' . trans('cruds.dataProcessing.fields.lawfulness_contract') . '</li>';
+            if ($dataProcessing->lawfulness_legal_obligation)
+                $txt .= '<li>' . trans('cruds.dataProcessing.fields.lawfulness_legal_obligation') . '</li>';
+            $txt .= "</ul><br/>";
+
+            $txt .= $dataProcessing->lawfulness;
+
+            self::addText($section, $txt);
+
             $section->addTitle(trans('cruds.dataProcessing.fields.categories'), 2);
             self::addText($section, $dataProcessing->categories);
 
