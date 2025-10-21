@@ -62,13 +62,27 @@ class DataProcessingController extends Controller
     {
         $request->merge(['legal_basis' => implode(', ', $request->legal_bases !== null ? $request->legal_bases : [])]);
 
+        // Create DataProcessing
         $dataProcessing = DataProcessing::create($request->all());
+
+        // Links
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
-
         $dataProcessing->documents()->sync(session()->get('documents'));
 
+        // Booleans
+        $dataProcessing->lawfulness_legitimate_interest = $request->has('lawfulness_legitimate_interest');
+        $dataProcessing->lawfulness_public_interest = $request->has('lawfulness_public_interest');
+        $dataProcessing->lawfulness_vital_interest = $request->has('lawfulness_vital_interest');
+        $dataProcessing->lawfulness_legal_obligation = $request->has('lawfulness_legal_obligation');
+        $dataProcessing->lawfulness_contract = $request->has('lawfulness_contract');
+        $dataProcessing->lawfulness_consent = $request->has('lawfulness_consent');
+
+        // Save
+        $dataProcessing->save();
+
+        // Forget the documents
         session()->forget('documents');
 
         return redirect()->route('admin.data-processings.index');
@@ -118,12 +132,26 @@ class DataProcessingController extends Controller
     {
         $dataProcessing->legal_basis = implode(', ', $request->legal_bases !== null ? $request->legal_bases : []);
 
+        // Update
         $dataProcessing->update($request->all());
+
+        // Links
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
-
         $dataProcessing->documents()->sync(session()->get('documents'));
+
+        // Booleans
+        $dataProcessing->lawfulness_legitimate_interest = $request->has('lawfulness_legitimate_interest');
+        $dataProcessing->lawfulness_public_interest = $request->has('lawfulness_public_interest');
+        $dataProcessing->lawfulness_vital_interest = $request->has('lawfulness_vital_interest');
+        $dataProcessing->lawfulness_legal_obligation = $request->has('lawfulness_legal_obligation');
+        $dataProcessing->lawfulness_contract = $request->has('lawfulness_contract');
+        $dataProcessing->lawfulness_consent = $request->has('lawfulness_consent');
+
+        $dataProcessing->update();
+
+        // Forget Documents
         session()->forget('documents');
 
         return redirect()->route('admin.data-processings.index');

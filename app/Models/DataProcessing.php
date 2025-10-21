@@ -18,13 +18,21 @@ class DataProcessing extends Model
 
     public $table = 'data_processing';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
-        'legal_basis',
+        'description',
+        'responsible',
+        'purpose',
+        'categories',
+        'recipients',
+        'transfert',
+        'retention',
+        'controls',
+        'lawfulness',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -41,6 +49,13 @@ class DataProcessing extends Model
         'transfert',
         'retention',
         'controls',
+        'lawfulness',
+        'lawfulness_legitimate_interest',
+        'lawfulness_public_interest',
+        'lawfulness_vital_interest',
+        'lawfulness_legal_obligation',
+        'lawfulness_contract',
+        'lawfulness_consent',
     ];
 
     public function processes(): BelongsToMany
