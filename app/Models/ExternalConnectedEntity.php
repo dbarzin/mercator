@@ -19,7 +19,7 @@ class ExternalConnectedEntity extends Model
 
     public $table = 'external_connected_entities';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'contacts',
@@ -27,7 +27,7 @@ class ExternalConnectedEntity extends Model
         'dest_desc',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

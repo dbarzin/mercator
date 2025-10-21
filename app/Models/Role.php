@@ -17,7 +17,7 @@ class Role extends Model
 
     public $table = 'roles';
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -30,7 +30,7 @@ class Role extends Model
         'deleted_at',
     ];
 
-    public static function getRoleByTitle(string $title)
+    public static function getRoleByTitle(string $title): ?Role
     {
         return Role::whereTitle($title)->first();
     }

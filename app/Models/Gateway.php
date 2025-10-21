@@ -18,13 +18,13 @@ class Gateway extends Model
 
     public $table = 'gateways';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'ip',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

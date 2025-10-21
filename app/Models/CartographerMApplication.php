@@ -13,7 +13,7 @@ class CartographerMApplication extends Model
 
     public $table = 'cartographer_m_application';
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

@@ -19,12 +19,12 @@ class StorageDevice extends Model
 
     public $table = 'storage_devices';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

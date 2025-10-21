@@ -20,7 +20,7 @@ class Relation extends Model
 
     public $table = 'relations';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'type',
         'description',
@@ -29,7 +29,7 @@ class Relation extends Model
         'comments',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

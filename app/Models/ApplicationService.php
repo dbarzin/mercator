@@ -19,13 +19,13 @@ class ApplicationService extends Model
 
     public $table = 'application_services';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'exposition',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

@@ -19,13 +19,13 @@ class Subnetwork extends Model
 
     public $table = 'subnetworks';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'responsible_exp',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

@@ -20,7 +20,7 @@ class Entity extends Model
 
     public $table = 'entities';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'security_level',
@@ -28,7 +28,7 @@ class Entity extends Model
         'entity_type',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
