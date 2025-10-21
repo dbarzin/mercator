@@ -18,13 +18,13 @@ class NetworkSwitch extends Model
 
     public $table = 'network_switches';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'ip',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

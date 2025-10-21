@@ -19,13 +19,13 @@ class PhysicalSwitch extends Model
 
     public $table = 'physical_switches';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'type',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

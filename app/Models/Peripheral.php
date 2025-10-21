@@ -19,14 +19,14 @@ class Peripheral extends Model
 
     public $table = 'peripherals';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'type',
         'description',
         'responsible',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

@@ -20,14 +20,14 @@ class Database extends Model
 
     public $table = 'databases';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'responsible',
         'type',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

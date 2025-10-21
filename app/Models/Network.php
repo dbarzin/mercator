@@ -18,7 +18,7 @@ class Network extends Model
 
     public $table = 'networks';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'protocol_type',
@@ -26,7 +26,7 @@ class Network extends Model
         'responsible_sec',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

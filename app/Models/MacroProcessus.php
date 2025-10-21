@@ -18,14 +18,14 @@ class MacroProcessus extends Model
 
     public $table = 'macro_processuses';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'description',
         'io_elements',
         'owner',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',

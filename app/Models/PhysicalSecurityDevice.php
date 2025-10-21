@@ -19,13 +19,13 @@ class PhysicalSecurityDevice extends Model
 
     public $table = 'physical_security_devices';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'type',
         'description',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
