@@ -91,7 +91,6 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            {{ $flux->source_id()  }}
                             <label class="recommended">{{ trans('cruds.flux.fields.source') }}</label>
                             <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}"
                                     name="src_id" id="src_id">
