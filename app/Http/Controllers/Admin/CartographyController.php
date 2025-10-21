@@ -65,14 +65,6 @@ use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Shared\Html;
 use Symfony\Component\HttpFoundation\Response;
 
-// information system
-// Applications
-// Administration
-// Logique
-// Physique
-// PhpOffice
-// Laravel
-
 class CartographyController extends Controller
 {
     // Cell style

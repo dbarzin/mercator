@@ -6,128 +6,114 @@ namespace App\Http\Controllers\Report;
 use App\Models\DataProcessing;
 use Carbon\Carbon;
 use Gate;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActivityList extends ReportController
 {
-    public function generateDocx()
+    /**
+     * @throws Exception
+     */
+    public function generateExcel()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // get template
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
-        $phpWord->getSettings()->setHideGrammaticalErrors(true);
-        $phpWord->getSettings()->setHideSpellingErrors(true);
-        $section = $phpWord->addSection();
+        $register = DataProcessing::query()
+            ->orderBy('name')
+            ->get();
 
-        // Numbering Style
-        $phpWord->addNumberingStyle(
-            'hNum',
-            ['type' => 'multilevel', 'levels' => [
-                ['pStyle' => 'Heading1', 'format' => 'decimal', 'text' => '%1.'],
-                ['pStyle' => 'Heading2', 'format' => 'decimal', 'text' => '%1.%2.'],
-                ['pStyle' => 'Heading3', 'format' => 'decimal', 'text' => '%1.%2.%3.'],
-            ],
-            ]
-        );
-        $phpWord->addTitleStyle(
-            0,
-            ['size' => 28, 'bold' => true],
-            ['align' => 'center']
-        );
-        $phpWord->addTitleStyle(
-            1,
-            ['size' => 16, 'bold' => true],
-            ['spaceAfter' => 100, 'spaceBefore' => 100, 'numStyle' => 'hNum', 'numLevel' => 0]
-        );
-        $phpWord->addTitleStyle(
-            2,
-            ['size' => 14, 'bold' => true],
-            ['spaceAfter' => 100, 'spaceBefore' => 100, 'numStyle' => 'hNum', 'numLevel' => 1]
-        );
-        $phpWord->addTitleStyle(
-            3,
-            ['size' => 12, 'bold' => true],
-            ['numStyle' => 'hNum', 'numLevel' => 2]
-        );
+        $header = [
+            trans('cruds.dataProcessing.fields.name'),
+            trans('cruds.dataProcessing.fields.description'),
+            trans('cruds.dataProcessing.fields.responsible'),
+            trans('cruds.dataProcessing.fields.purpose'),
+            trans('cruds.dataProcessing.fields.lawfulness'),
+            trans('cruds.dataProcessing.fields.categories'),
+            trans('cruds.dataProcessing.fields.recipients'),
+            trans('cruds.dataProcessing.fields.transfert'),
+            trans('cruds.dataProcessing.fields.retention'),
+            trans('cruds.dataProcessing.fields.processes'),
+            trans('cruds.dataProcessing.fields.applications'),
+            trans('cruds.dataProcessing.fields.information'),
+            trans('cruds.dataProcessing.fields.security_controls'),
+        ];
 
-        // Title
-        $section->addTitle(trans('cruds.dataProcessing.report_title'), 0);
-        $section->addTextBreak(1);
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], null, 'A1');
 
-        // TOC
-        $toc = $section->addTOC(['spaceAfter' => 50, 'size' => 10]);
-        $toc->setMinDepth(1);
-        $toc->setMaxDepth(1);
-        $section->addTextBreak(1);
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
 
-        // page break
-        $section->addPageBreak();
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+        $sheet->getStyle('A:N')->getAlignment()->setWrapText(true);
 
-        // Add footer
-        $footer = $section->addFooter();
-        $footer->addPreserveText('{PAGE} / {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        // column size
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('C')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('D')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('E')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('F')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('G')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('H')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('I')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('J')->setWidth(350, 'pt');
 
-        $register = DataProcessing::orderBy('name')->get();
+        $sheet->getColumnDimension('K')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('L')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('M')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('N')->setWidth(350, 'pt');
+
+
+        // converter
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate
+        $row = 2;
         foreach ($register as $dataProcessing) {
-            // schema
-            $section->addTitle($dataProcessing->name, 1);
+            $sheet->setCellValue("A{$row}", $dataProcessing->name);
+            $sheet->setCellValue("B{$row}", $html->toRichTextObject($dataProcessing->description));
+            $sheet->setCellValue("C{$row}", $html->toRichTextObject($dataProcessing->responsible));
+            $sheet->setCellValue("D{$row}", $html->toRichTextObject($dataProcessing->purpose));
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($dataProcessing->lawfulness));
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($dataProcessing->categories));
+            $sheet->setCellValue("G{$row}", $html->toRichTextObject($dataProcessing->recipients));
+            $sheet->setCellValue("H{$row}", $html->toRichTextObject($dataProcessing->transfert));
+            $sheet->setCellValue("I{$row}", $html->toRichTextObject($dataProcessing->retention));
 
-            $section->addTitle(trans('cruds.dataProcessing.fields.legal_basis'), 2);
-            $this->addText($section, $dataProcessing->legal_basis);
-
-            $section->addTitle(trans('cruds.dataProcessing.fields.description'), 2);
-            $this->addText($section, $dataProcessing->description);
-
-            $section->addTitle(trans('cruds.dataProcessing.fields.responsible'), 2);
-            $this->addText($section, $dataProcessing->responsible);
-
-            $section->addTitle(trans('cruds.dataProcessing.fields.purpose'), 2);
-            $this->addText($section, $dataProcessing->purpose);
-
-            $section->addTitle(trans('cruds.dataProcessing.fields.categories'), 2);
-            $this->addText($section, $dataProcessing->categories);
-
-            $section->addTitle(trans('cruds.dataProcessing.fields.recipients'), 2);
-            $this->addText($section, $dataProcessing->recipients);
-
-            $section->addTitle(trans('cruds.dataProcessing.fields.transfert'), 2);
-            $this->addText($section, $dataProcessing->transfert);
-
-            $section->addTitle(trans('cruds.dataProcessing.fields.retention'), 2);
-            $this->addText($section, $dataProcessing->retention);
-
-            // Processes
-            $section->addTitle(trans('cruds.dataProcessing.fields.processes'), 2);
-            $txt = '<ul>';
+            // processes
+            $txt = '';
             foreach ($dataProcessing->processes as $p) {
-                $txt .= '<li>'.$p->name.'</li>';
+                $txt .= $p->name;
+                if ($dataProcessing->processes->last() !== $p) {
+                    $txt .= ', ';
+                }
             }
-            $txt .= '</ul>';
-            $this->addText($section, $txt);
+            $sheet->setCellValue("J{$row}", $txt);
 
             // Applications
-            $section->addTitle(trans('cruds.dataProcessing.fields.applications'), 2);
-            $txt = '<ul>';
-            foreach ($dataProcessing->applications as $ap) {
-                $txt .= '<li>'.$ap->name.'</li>';
+            $txt = '';
+            foreach ($dataProcessing->applications as $application) {
+                $txt .= $application->name;
+                if ($dataProcessing->applications->last() !== $application) {
+                    $txt .= ', ';
+                }
             }
-            $txt .= '</ul>';
-            $this->addText($section, $txt);
+            $sheet->setCellValue("K{$row}", $txt);
 
             // Informations
-            $section->addTitle(trans('cruds.dataProcessing.fields.information'), 2);
-            $txt = '<ul>';
-            foreach ($dataProcessing->informations as $inf) {
-                $txt .= '<li>'.$inf->name.'</li>';
+            $txt = '';
+            foreach ($dataProcessing->informations as $information) {
+                $txt .= $information->name;
+                if ($dataProcessing->informations->last() !== $information) {
+                    $txt .= ', ';
+                }
             }
-            $txt .= '</ul>';
-            $this->addText($section, $txt);
+            $sheet->setCellValue("L{$row}", $txt);
 
-            // Security Controls
-            $section->addTitle(trans('cruds.dataProcessing.fields.security_controls'), 2);
-            // TODO : improve me
+            // TODO : improve me using union
+            // https://laravel.com/docs/10.x/queries#unions
             $allControls = Collect();
             foreach ($dataProcessing->processes as $process) {
                 foreach ($process->securityControls as $sc) {
@@ -139,24 +125,24 @@ class ActivityList extends ReportController
                     $allControls->push($sc->name);
                 }
             }
+
             $allControls->unique();
-            $txt = '<ul>';
-            foreach ($allControls as $control) {
-                $txt .= '<li>'.$control.'</li>';
-            }
-            $txt .= '</ul>';
-            $this->addText($section, $txt);
+            $txt = implode(', ', $allControls->toArray());
+
+            $sheet->setCellValue("M{$row}", $txt);
+
+            $row++;
         }
 
-        // Filename
-        $filepath = storage_path('app/reports/register-'.Carbon::today()->format('Ymd').'.docx');
+        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
-        // Saving the document as Word2007 file.
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        // $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
 
-        $objWriter->save($filepath);
+        $writer->save($path);
 
-        // return
-        return response()->download($filepath)->deleteFileAfterSend(true);
+        return response()->download($path)->deleteFileAfterSend(true);
+
     }
 }
