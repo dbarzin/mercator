@@ -57,7 +57,7 @@ class Flux extends Model
             return 'MOD_'.$this->module_source_id;
         }
         if ($this->database_source_id !== null) {
-            return 'DATABASE_'.$this->database_source_id;
+            return 'DB_'.$this->database_source_id;
         }
 
         return null;
@@ -75,7 +75,7 @@ class Flux extends Model
             return 'MOD_'.$this->module_dest_id;
         }
         if ($this->database_dest_id !== null) {
-            return 'DATABASE_'.$this->database_dest_id;
+            return 'DB_'.$this->database_dest_id;
         }
 
         return null;
