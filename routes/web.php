@@ -359,7 +359,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/cve', [Admin\CVEController::class, 'list'])->name('report.view.cve');
 
     // GDPR
-    Route::get('report/activityList', [Report\ActivityList::class, 'generateDocx'])->name('report.activityList');
+    Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel'])->name('report.activityList');
     Route::get('report/activityReport', [Report\ActivityReport::class, 'generateDocx'])->name('report.activityReport');
 
     // CPE
