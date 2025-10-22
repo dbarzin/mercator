@@ -19,7 +19,7 @@ class AdminUserFactory extends Factory
             'lastname' => $this->faker->lastName(),
             'type' => $this->faker->word(),
             'attributes' => $this->faker->word(),
-            'icon_id' => $this->faker->randomNumber(),
+            'icon_id' => null,
             'description' => $this->faker->text(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
