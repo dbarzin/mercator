@@ -14,7 +14,7 @@ class EntityFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'icon_id' => $this->faker->randomNumber(),
+            'icon_id' => null,
             'security_level' => $this->faker->word(),
             'contact_point' => $this->faker->word(),
             'description' => $this->faker->text(),

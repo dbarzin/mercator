@@ -15,12 +15,12 @@ class BuildingFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'description' => $this->faker->text(),
+            'type' => $this->faker->word(),
             'attributes' => $this->faker->word(),
+            'description' => $this->faker->text(),
+            'icon_id' => null,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'type' => $this->faker->word(),
-            'icon_id' => $this->faker->randomNumber(),
 
             'site_id' => Site::factory(),
         ];
