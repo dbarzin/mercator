@@ -43,4 +43,4 @@ jobs:
           add: 'docs/_helm_chart/chart/Chart.yaml'
       
       - name: Release Chart
-        uses: NW-Tech/mercator/.github/workflow/chart-release.yaml 
+        uses: NW-Tech/mercator/.github/workflow/chart-release.yaml@master
