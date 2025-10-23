@@ -41,3 +41,6 @@ jobs:
           default_author: github_actions
           message: "chore: bump chart appVersion to ${{ env.CHART_APPVERSION }}"
           add: 'docs/_helm_chart/chart/Chart.yaml'
+      
+      - name: Release Chart
+        uses: NW-Tech/mercator/.github/workflow/chart-release.yaml 
