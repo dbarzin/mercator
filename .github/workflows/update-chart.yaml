@@ -43,4 +43,4 @@ jobs:
           add: 'docs/_helm_chart/chart/Chart.yaml'
 
   call_release_chart_workflow:
-    uses: ./.github/workflow/chart-release.yaml
+    uses: ./.github/workflows/chart-release.yaml
