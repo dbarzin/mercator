@@ -3,7 +3,7 @@ entries:
   mercator:
   - apiVersion: v2
     appVersion: 2025.10.14
-    created: "2025-10-16T09:32:19.224063732+02:00"
+    created: "2025-10-23T12:27:01.477167505+02:00"
     dependencies:
     - condition: redis.enabled
       name: redis
@@ -16,7 +16,7 @@ entries:
     description: Mercator is a powerful and versatile open-source web application
       designed to facilitate the mapping of information systems, as outlined in the
       Mapping The Information System Guide by ANSSI.
-    digest: dd11536adb7ea75b2d4daa46a7c46562eb95744ecc4feb3666a509e18ac528a9
+    digest: 19ed46fe4a2e8ddd3d6c15714adbeb8d401a9aba7078f1348bf2f63e33a15e64
     home: https://github.com/dbarzin/mercator
     icon: https://raw.githubusercontent.com/dbarzin/mercator/refs/heads/master/public/images/mercator.png
     maintainers:
@@ -27,4 +27,4 @@ entries:
     urls:
     - https://nw-tech.github.io/mercator/_helm_chart/index/mercator-2.1.0.tgz
     version: 2.1.0
-generated: "2025-10-16T09:32:19.182422125+02:00"
+generated: "2025-10-23T12:27:01.43092009+02:00"
