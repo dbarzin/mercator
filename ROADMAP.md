@@ -25,6 +25,7 @@ Changements prévus en 2025 et plus :
 ## Evolutions mineurs
 
 - [x] Packaging des librairies JavaScript avec [Laravel Vite](https://laravel-vite.com/).
+- [ ] Tests de non-régression avec Pest
 - [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
 - [ ] Améliorer (et revue) la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
@@ -36,7 +37,6 @@ Changements prévus en 2025 et plus :
 
 ## Petites évolutions
 
-- [ ] Améliorer les tests Dusk
 - [ ] Dark Theme
 
 Changements réalisés en 2024 :
