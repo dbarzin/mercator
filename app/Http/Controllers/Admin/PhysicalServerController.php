@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -10,7 +11,6 @@ use App\Models\Bay;
 use App\Models\Building;
 use App\Models\Cluster;
 use App\Models\Document;
-// Laravel
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\PhysicalServer;
@@ -18,6 +18,8 @@ use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+// Laravel
 
 class PhysicalServerController extends Controller
 {
@@ -90,6 +92,7 @@ class PhysicalServerController extends Controller
         $request->merge($physicalServer->only($physicalServer->getFillable()));
         $request->merge(['applications' => $physicalServer->applications()->pluck('id')->unique()->toArray()]);
         $request->merge(['logicalServers' => $physicalServer->logicalServers()->pluck('id')->unique()->toArray()]);
+        $request->merge(['clusters' => $physicalServer->clusters()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(
@@ -142,6 +145,7 @@ class PhysicalServerController extends Controller
         // Seave Relations
         $physicalServer->applications()->sync($request->input('applications', []));
         $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
+        $physicalServer->clusters()->sync($request->input('clusters', []));
 
         return redirect()->route('admin.physical-servers.index');
     }
@@ -214,6 +218,7 @@ class PhysicalServerController extends Controller
         // Relations
         $physicalServer->applications()->sync($request->input('applications', []));
         $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
+        $physicalServer->clusters()->sync($request->input('clusters', []));
 
         return redirect()->route('admin.physical-servers.index');
     }

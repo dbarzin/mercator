@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -8,15 +9,11 @@ class Cleanup extends Command
 {
     /**
      * The name and signature of the console command.
-     *
-     * @var string
      */
     protected $signature = 'mercator:cleanup';
 
     /**
      * The console command description.
-     *
-     * @var string
      */
     protected $description = 'Cleanup temporary files';
 
@@ -33,7 +30,7 @@ class Cleanup extends Command
     /**
      * Execute the console command.
      */
-    public function handle(): mixed
+    public function handle(): void
     {
         // clean reports
         $folder = storage_path('app/reports');

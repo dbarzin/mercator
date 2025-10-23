@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Report;
 
 // GDPR

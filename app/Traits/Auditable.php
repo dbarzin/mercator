@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Traits;
 
 use App\Models\AuditLog;
@@ -7,22 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Auditable
 {
-    public static function bootAuditable()
+    public static function bootAuditable(): void
     {
-        static::created(function (Model $model) {
+        static::created(function (Model $model): void {
             self::audit('created', $model);
         });
 
-        static::updated(function (Model $model) {
+        static::updated(function (Model $model): void {
             self::audit('updated', $model);
         });
 
-        static::deleted(function (Model $model) {
+        static::deleted(function (Model $model): void {
             self::audit('deleted', $model);
         });
     }
 
-    protected static function audit($description, $model)
+    protected static function audit($description, $model): void
     {
         AuditLog::create([
             'description' => $description,

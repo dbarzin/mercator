@@ -1,20 +1,18 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 // GDPR
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
-// ecosystem
 use App\Models\Actor;
 use App\Models\Annuaire;
-// information system
 use App\Models\ApplicationBlock;
 use App\Models\ApplicationModule;
 use App\Models\ApplicationService;
 use App\Models\Bay;
 use App\Models\Building;
-// Applications
 use App\Models\Certificate;
 use App\Models\Cluster;
 use App\Models\Container;
@@ -22,12 +20,10 @@ use App\Models\Database;
 use App\Models\DataProcessing;
 use App\Models\DhcpServer;
 use App\Models\Dnsserver;
-// Administration
 use App\Models\DomaineAd;
 use App\Models\Entity;
 use App\Models\ExternalConnectedEntity;
 use App\Models\Flux;
-// Logique
 use App\Models\ForestAd;
 use App\Models\Gateway;
 use App\Models\Information;
@@ -40,7 +36,6 @@ use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
 use App\Models\Peripheral;
-// Physique
 use App\Models\Phone;
 use App\Models\PhysicalRouter;
 use App\Models\PhysicalSecurityDevice;
@@ -60,15 +55,21 @@ use App\Models\Wan;
 use App\Models\WifiTerminal;
 use App\Models\Workstation;
 use App\Models\ZoneAdmin;
+use Illuminate\Support\Facades\DB;
+
+// ecosystem
+// information system
+// Applications
+// Administration
+// Logique
+// Physique
 
 class HomeController extends Controller
 {
     /**
      * Show maturity level 1.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function maturity1()
+    public function maturity1(): \Illuminate\Contracts\Support\Renderable
     {
         $view = view('admin/reports/maturity1');
         foreach ($this->computeMaturity() as $maturity => $level) {
@@ -80,10 +81,8 @@ class HomeController extends Controller
 
     /**
      * Show maturity level 2.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function maturity2()
+    public function maturity2(): \Illuminate\Contracts\Support\Renderable
     {
         $view = view('admin/reports/maturity2');
         foreach ($this->computeMaturity() as $maturity => $level) {
@@ -95,10 +94,8 @@ class HomeController extends Controller
 
     /**
      * Show maturity level 3.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function maturity3()
+    public function maturity3(): \Illuminate\Contracts\Support\Renderable
     {
         $view = view('admin/reports/maturity3');
         foreach ($this->computeMaturity() as $maturity => $level) {
@@ -110,10 +107,8 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\Support\Renderable
     {
         $view = view('home');
         foreach ($this->computeMaturity() as $maturity => $level) {
@@ -125,10 +120,8 @@ class HomeController extends Controller
 
     /**
      * Compute maturity levels
-     *
-     * @return array
      */
-    protected function computeMaturity()
+    protected function computeMaturity(): array
     {
         $levels = [
             // GDPR
@@ -143,7 +136,7 @@ class HomeController extends Controller
                 ->where('security_level', '<>', null)
                 ->where('contact_point', '<>', 'null')
                 // entity must support at least one process
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('entity_process.entity_id')
                         ->from('entity_process')
                         ->whereRaw('entity_process.entity_id = entities.id');
@@ -233,7 +226,7 @@ class HomeController extends Controller
 
             'operations_lvl2' => Operation::where('description', '<>', null)
                 // must have at least one actor
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('actor_operation.operation_id')
                         ->from('actor_operation')
                         ->whereRaw('actor_operation.operation_id = operations.id');
@@ -242,13 +235,13 @@ class HomeController extends Controller
 
             'operations_lvl3' => Operation::where('description', '<>', null)
                 // must have at least one actor
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('actor_operation.operation_id')
                         ->from('actor_operation')
                         ->whereRaw('actor_operation.operation_id = operations.id');
                 })
                 // must have at least one task
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('operation_task.operation_id')
                         ->from('operation_task')
                         ->whereRaw('operation_task.operation_id = operations.id');
@@ -258,7 +251,7 @@ class HomeController extends Controller
             'tasks' => Task::count(),
             'tasks_lvl3' => Task::where('description', '<>', null)
                 // task must have one operation
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('operation_task.task_id')
                         ->from('operation_task')
                         ->whereRaw('operation_task.task_id = tasks.id');
@@ -294,7 +287,7 @@ class HomeController extends Controller
             'applicationBlocks_lvl2' => ApplicationBlock::where('description', '<>', null)
                 ->where('responsible', '<>', null)
                 // applicationBlock must have one application
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('m_applications.id')
                         ->from('m_applications')
                         ->whereRaw('m_applications.application_block_id = application_blocks.id');
@@ -308,7 +301,7 @@ class HomeController extends Controller
                 ->where('type', '<>', null)
                 ->where('users', '<>', null)
                 // application must have one process
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('m_application_process.m_application_id')
                         ->from('m_application_process')
                         ->whereRaw('m_application_process.m_application_id = m_applications.id');
@@ -334,7 +327,7 @@ class HomeController extends Controller
                 ->where('security_need_a', '<>', null)
                 ->where('security_need_t', '<>', null)
                 // application must have one process
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('m_application_process.m_application_id')
                         ->from('m_application_process')
                         ->whereRaw('m_application_process.m_application_id = m_applications.id');
@@ -370,7 +363,7 @@ class HomeController extends Controller
                 ->where('security_need_a', '<>', null)
                 ->where('security_need_t', '<>', null)
                 // application must have one process
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('m_application_process.m_application_id')
                         ->from('m_application_process')
                         ->whereRaw('m_application_process.m_application_id = m_applications.id');
@@ -384,7 +377,7 @@ class HomeController extends Controller
             'applicationServices' => ApplicationService::count(),
             'applicationServices_lvl2' => ApplicationService::where('description', '<>', null)
                 // applicationService must have one application
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('application_service_m_application.m_application_id')
                         ->from('application_service_m_application')
                         ->whereRaw('application_service_m_application.application_service_id = application_services.id');
@@ -415,12 +408,12 @@ class HomeController extends Controller
 
             'fluxes' => Flux::count(),
             'fluxes_lvl1' => Flux::where('description', '<>', null)
-                ->orWhere(function ($query) {
+                ->orWhere(function ($query): void {
                     $query->where('application_source_id', '<>', null)
                         ->where('module_source_id', '<>', null)
                         ->where('database_source_id', '<>', null);
                 })
-                ->orWhere(function ($query) {
+                ->orWhere(function ($query): void {
                     $query->where('application_dest_id', '<>', null)
                         ->where('module_dest_id', '<>', null)
                         ->where('database_dest_id', '<>', null);
@@ -514,27 +507,31 @@ class HomeController extends Controller
                 ->count(),
 
             'logicalServers' => LogicalServer::count(),
-            'logicalServers_lvl1' => LogicalServer::where('description', '<>', null)
-                ->where('active', '=', 1)
-                ->where('operating_system', '<>', null)
-                ->where('environment', '<>', null)
-                ->where('address_ip', '<>', null)
-                // logicalServer must have one application
-                ->whereExists(function ($query) {
-                    $query->select('logical_server_m_application.logical_server_id')
+            'logicalServers_lvl1' => LogicalServer::query()
+                ->whereNotNull('description')
+                ->where('active', 1)
+                ->whereNotNull('operating_system')
+                ->whereNotNull('environment')
+                ->whereNotNull('address_ip')
+
+                // doit avoir au moins une application
+                ->whereExists(function ($q): void {
+                    $q->select(DB::raw(1))
                         ->from('logical_server_m_application')
-                        ->whereRaw('logical_server_m_application.logical_server_id = logical_servers.id');
+                        ->whereColumn('logical_server_m_application.logical_server_id', 'logical_servers.id');
                 })
-                // logicalServer must be installed on a pysical server
-                ->whereExists(function ($query) {
-                    $query->select('logical_server_physical_server.logical_server_id')
-                        ->from('logical_server_physical_server')
-                        ->whereRaw(
-                            'logical_server_physical_server.logical_server_id = logical_servers.id'
-                        )
-                        ->orWhereRaw(
-                            'logical_servers.cluster_id is not null'
-                        );
+
+                // doit être installé sur un serveur physique OU appartenir à un cluster
+                ->where(function ($q): void {
+                    $q->whereExists(function ($q1): void {
+                        $q1->select(DB::raw(1))
+                            ->from('logical_server_physical_server')
+                            ->whereColumn('logical_server_physical_server.logical_server_id', 'logical_servers.id');
+                    })->orWhereExists(function ($q2): void {
+                        $q2->select(DB::raw(1))
+                            ->from('cluster_logical_server') // <-- table pivot N-M
+                            ->whereColumn('cluster_logical_server.logical_server_id', 'logical_servers.id');
+                    });
                 })
                 ->count(),
 
@@ -542,13 +539,13 @@ class HomeController extends Controller
             'containers_lvl1' => Container::where('description', '<>', null)
                 ->where('type', '<>', null)
                 // Container must have one application
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('container_m_application.m_application_id')
                         ->from('container_m_application')
                         ->whereRaw('container_m_application.container_id = containers.id');
                 })
                 // Container must be deployer one logical_server
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('container_logical_server.logical_server_id')
                         ->from('container_logical_server')
                         ->whereRaw('container_logical_server.container_id = containers.id');
@@ -561,7 +558,7 @@ class HomeController extends Controller
                 ->where('start_validity', '<>', null)
                 ->where('end_validity', '<>', null)
                 // certificate must be on a logical server
-                ->whereExists(function ($query) {
+                ->whereExists(function ($query): void {
                     $query->select('certificate_logical_server.logical_server_id')
                         ->from('certificate_logical_server')
                         ->whereRaw(

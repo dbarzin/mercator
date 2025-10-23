@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 // Models
@@ -76,7 +77,7 @@ class ExplorerController extends Controller
             }
         }
         // Physical Server
-        $physicalServers = DB::table('physical_servers')->select('id', 'name', 'icon_id', 'bay_id', 'cluster_id')->whereNull('deleted_at')->get();
+        $physicalServers = DB::table('physical_servers')->select('id', 'name', 'icon_id', 'bay_id')->whereNull('deleted_at')->get();
         foreach ($physicalServers as $physicalServer) {
             $this->addNode(
                 $nodes,
@@ -88,9 +89,6 @@ class ExplorerController extends Controller
             );
             if ($physicalServer->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('BAY_', $physicalServer->bay_id));
-            }
-            if ($physicalServer->cluster_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('CLUSTER_', $physicalServer->cluster_id));
             }
         }
         // Workstation
@@ -373,7 +371,7 @@ class ExplorerController extends Controller
         }
 
         // Logical Routers
-        $logicalRouters = DB::table('routers')->select('id', 'name', 'ip_addresses', 'cluster_id')->get();
+        $logicalRouters = DB::table('routers')->select('id', 'name', 'ip_addresses')->get();
         foreach ($logicalRouters as $logicalRouter) {
             $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers');
             if ($logicalRouter->ip_addresses !== null) {
@@ -385,10 +383,6 @@ class ExplorerController extends Controller
                         }
                     }
                 }
-            }
-
-            if ($logicalRouter->cluster_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('ROUTER_', $logicalRouter->id), $this->formatId('CLUSTER_', $logicalRouter->cluster_id));
             }
         }
 
@@ -449,9 +443,34 @@ class ExplorerController extends Controller
         }
 
         // Clusters
-        $clusters = DB::table('clusters')->select('id', 'name')->whereNull('deleted_at')->get();
+        $clusters = DB::table('clusters')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($clusters as $cluster) {
-            $this->addNode($nodes, 5, $this->formatId('CLUSTER_', $cluster->id), $cluster->name, '/images/cluster.png', 'clusters');
+            $this->addNode(
+                $nodes,
+                5,
+                $this->formatId('CLUSTER_', $cluster->id),
+                $cluster->name,
+                $cluster->icon_id === null ? '/images/cluster.png' : "/admin/documents/{$cluster->icon_id}",
+                'clusters'
+            );
+        }
+
+        // Cluster - Logical Servers
+        $joins = DB::table('cluster_logical_server')->select('cluster_id', 'logical_server_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('CLUSTER_', $join->cluster_id), $this->formatId('LSERVER_', $join->logical_server_id));
+        }
+
+        // Cluster - Logical Servers
+        $joins = DB::table('cluster_physical_server')->select('cluster_id', 'physical_server_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('CLUSTER_', $join->cluster_id), $this->formatId('PSERVER_', $join->physical_server_id));
+        }
+
+        // Cluster - Routers
+        $joins = DB::table('cluster_router')->select('cluster_id', 'router_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('CLUSTER_', $join->cluster_id), $this->formatId('ROUTER_', $join->router_id));
         }
 
         // Containers
@@ -486,7 +505,7 @@ class ExplorerController extends Controller
         }
 
         // Logical Servers
-        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'icon_id', 'address_ip', 'cluster_id', 'domain_id')->get();
+        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'icon_id', 'address_ip', 'domain_id')->get();
         foreach ($logicalServers as $logicalServer) {
             $this->addNode(
                 $nodes,
@@ -496,9 +515,6 @@ class ExplorerController extends Controller
                 $logicalServer->icon_id === null ? '/images/lserver.png' : "/admin/documents/{$logicalServer->icon_id}",
                 'logical-servers'
             );
-            if ($logicalServer->cluster_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('LSERVER_', $logicalServer->id), $this->formatId('CLUSTER_', $logicalServer->cluster_id));
-            }
             if ($logicalServer->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $logicalServer->address_ip) as $address) {
@@ -749,7 +765,7 @@ class ExplorerController extends Controller
                 continue;
             }
 
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $src_id, $dest_id);
+            $this->addFluxEdge($edges, $flux->nature, $flux->bidirectional, $src_id, $dest_id);
         }
 
         // ---------------------------------------------------
@@ -875,7 +891,7 @@ class ExplorerController extends Controller
         return [$nodes, $edges];
     }
 
-    private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null)
+    private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null): void
     {
         $data = ['vue' => $vue, 'id' => $id,  'label' => $label, 'image' => $image, 'type' => $type];
         if ($title !== null) {
@@ -884,22 +900,22 @@ class ExplorerController extends Controller
         array_push($nodes, $data);
     }
 
-    private function addLinkEdge(&$edges, $from, $to)
+    private function addLinkEdge(&$edges, $from, $to): void
     {
         $this->addEdge($edges, null, false, $from, $to, 'LINK');
     }
 
-    private function addPhysicalLinkEdge(&$edges, $from, $to)
+    private function addPhysicalLinkEdge(&$edges, $from, $to): void
     {
         $this->addEdge($edges, null, false, $from, $to, 'CABLE');
     }
 
-    private function addFluxEdge(&$edges, $name, $bidir, $from, $to)
+    private function addFluxEdge(&$edges, $name, $bidir, $from, $to): void
     {
         $this->addEdge($edges, $name, $bidir, $from, $to, 'FLUX');
     }
 
-    private function addEdge(&$edges, $name, $bidir, $from, $to, $type)
+    private function addEdge(&$edges, $name, $bidir, $from, $to, $type): void
     {
         if ($from !== null && $to !== null) {
             array_push($edges, ['name' => $name, 'bidirectional' => $bidir, 'from' => $from, 'to' => $to, 'type' => $type]);

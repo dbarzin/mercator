@@ -1,11 +1,11 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -47,9 +47,9 @@ class Router extends Model
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
-    public function cluster(): BelongsTo
+    public function clusters(): BelongsToMany
     {
-        return $this->belongsTo(Cluster::class, 'cluster_id');
+        return $this->BelongsToMany(Cluster::class, 'cluster_id');
     }
 
     /*

@@ -689,7 +689,7 @@ digraph  {
         @elseif ($flow->application_dest_id!=null)
         A{{ $flow->application_dest_id }}
         @endif
-        [ label="{{ $flow->name }}"
+        [ label="{{ $flow->nature }}"
         @if ($flow->bidirectional)
         dir="both"
 @endif
