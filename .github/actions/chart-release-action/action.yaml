@@ -26,7 +26,7 @@ runs:
         charts_dir: _helm_chart
         skip_existing: true
         mark_as_latest: false
-        config: docs/_helm_chart/chart-release-config.yaml
+        # config: docs/_helm_chart/chart-release-config.yaml
       env:
-        CR_TOKEN: "${{ inputs.cf_token}}"
+        CR_TOKEN: "${{inputs.cf_token}}"
           
