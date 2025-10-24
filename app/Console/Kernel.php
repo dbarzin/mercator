@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Cleanup::class,
-        Commands\CertificateExpiracy::class,
+        Commands\CertificateExpiration::class,
         Commands\CVESearch::class,
         Commands\CPEImport::class,
     ];

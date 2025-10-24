@@ -103,7 +103,7 @@ To import the test database (optional)
 
 ## CPE Database (optional)
 
-An Artisan command **`cpe:sync`**  **synchronizes CPEs (Common Platform Enumeration)** from the NVD (National
+An Artisan command **`mecator:cpe-sync`**  **synchronizes CPEs (Common Platform Enumeration)** from the NVD (National
 Vulnerability Database) and populates the
 `cpe_vendors`, `cpe_products`, and `cpe_versions` tables.
 

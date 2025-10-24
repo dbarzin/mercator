@@ -101,7 +101,8 @@ Pour importer la base de données de test (facultatif)
 
 ## Base de données CPE (facultatif)
 
-Une commande Artisan **`cpe:sync`** **synchronise les CPE (Common Platform Enumeration)** depuis la NVD (National
+Une commande Artisan **`mercator:cpe-sync`** **synchronise les CPE (Common Platform Enumeration)** depuis la NVD (
+National
 Vulnerability Database) et alimente les tables
 `cpe_vendors`, `cpe_products` et `cpe_versions`.
 

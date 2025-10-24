@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Models\DataProcessing;
@@ -14,7 +13,7 @@ class ActivityList extends ReportController
     /**
      * @throws Exception
      */
-    public function generateExcel()
+    public function generateExcel(): Response
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
