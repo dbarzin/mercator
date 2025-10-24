@@ -2,6 +2,10 @@ name: Release Charts
 description: Keep chart inde up to date
     # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+inputs:
+  cf_token:
+    description: github env cf_token
+    required: true
 runs:    
   using: "composite"
   steps:
@@ -23,6 +27,6 @@ runs:
         skip_existing: true
         mark_as_latest: false
         config: docs/_helm_chart/chart-release-config.yaml
-      # env:
-      #   CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      env:
+        CR_TOKEN: "${{ input.cf_token}}"
           
