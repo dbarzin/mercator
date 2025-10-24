@@ -19,7 +19,7 @@ class ClusterFactory extends Factory
             'address_ip' => $this->faker->ipv4(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'deleted_at' => Carbon::now(),
+            'deleted_at' => null,
         ];
     }
 }
