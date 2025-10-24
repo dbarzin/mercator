@@ -42,7 +42,11 @@ jobs:
           message: "chore: bump chart appVersion to ${{ env.CHART_APPVERSION }}"
           add: 'docs/_helm_chart/chart/Chart.yaml'
       
-      - name: Release Charts
-        uses: ./.github/actions/chart-release-action
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.7.0
         with:
-          cf_token : ${{secrets.GITHUB_TOKEN}}
+          charts_dir: _helm_chart
+          skip_existing: true
+          mark_as_latest: false
+        env:
+          CR_TOKEN: "${{inputs.cf_token}}"
