@@ -49,4 +49,4 @@ jobs:
           skip_existing: true
           mark_as_latest: false
         env:
-          CR_TOKEN: "${{inputs.cf_token}}"
+          CR_TOKEN: "${{secrets.GITHUB_TOKEN}}"
