@@ -41,6 +41,6 @@ jobs:
           default_author: github_actions
           message: "chore: bump chart appVersion to ${{ env.CHART_APPVERSION }}"
           add: 'docs/_helm_chart/chart/Chart.yaml'
-
-  call_release_chart_workflow:
-    uses: ./.github/workflows/chart-release.yaml
+      
+      - name: Release Chart
+        uses: ./.github/actions/chart-release-action
