@@ -16,7 +16,7 @@ class ContainerFactory extends Factory
             'name' => $this->faker->name(),
             'type' => $this->faker->word(),
             'description' => $this->faker->text(),
-            'icon_id' => $this->faker->randomNumber(),
+            'icon_id' => null,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

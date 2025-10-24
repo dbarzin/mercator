@@ -14,7 +14,7 @@ class SiteFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'icon_id' => $this->faker->randomNumber(),
+            'icon_id' => null,
             'description' => $this->faker->text(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
