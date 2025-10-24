@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Log;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
-class CertificateExpiracy extends Command
+class CertificateExpiration extends Command
 {
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'mercator:certificate-expiracy';
+    protected $signature = 'mercator:certificate-expiration';
 
     /**
      * The console command description.
@@ -27,14 +27,14 @@ class CertificateExpiracy extends Command
      */
     public function handle(): void
     {
-        Log::debug('CertificateExpiracy - Start.');
+        Log::debug('CertificateExpiration - Start.');
 
-        Log::debug('CertificateExpiracy - day '.Carbon::now()->day);
+        Log::debug('CertificateExpiration - day '.Carbon::now()->day);
 
         // if (true) {
         if ($this->needCheck()) {
             // Check for old certificates
-            Log::debug('CertificateExpiracy - check');
+            Log::debug('CertificateExpiration - check');
 
             $certificates = Certificate::where('status', 0)
                 ->where('end_validity', '<=', Carbon::now()
@@ -52,11 +52,11 @@ class CertificateExpiracy extends Command
             // check
             $repeat_notification = config('mercator-config.cert.repeat-notification');
             if (intval($repeat_notification) === 0) {
-                Log::debug('CertificateExpiracy - remove cert aleady notified');
+                Log::debug('CertificateExpiration - remove cert aleady notified');
                 foreach ($certificates as $key => $cert) {
                     if ($cert->last_notification === null) {
                         // never notified
-                        Log::debug('CertificateExpiracy - '.$cert->name.' never notified.');
+                        Log::debug('CertificateExpiration - '.$cert->name.' never notified.');
                         $cert->last_notification = now();
                         $cert->save();
                     } elseif (
@@ -65,11 +65,11 @@ class CertificateExpiracy extends Command
                                 now()->addDays(-intval(config('mercator-config.cert.expire-delay')))
                             )
                     ) {
-                        Log::debug('CertificateExpiracy - '.$cert->name.' already notified on '.$cert->last_notification);
+                        Log::debug('CertificateExpiration - '.$cert->name.' already notified on '.$cert->last_notification);
                         $certificates->forget($key);
                     } else {
                         // must be notified
-                        Log::debug('CertificateExpiracy - '.$cert->name.' kept.');
+                        Log::debug('CertificateExpiration - '.$cert->name.' kept.');
                         $cert->last_notification = now();
                         $cert->save();
                     }
@@ -155,10 +155,10 @@ class CertificateExpiracy extends Command
                 }
             }
         } else {
-            Log::debug('CertificateExpiracy - no check');
+            Log::debug('CertificateExpiration - no check');
         }
 
-        Log::debug('CertificateExpiracy - DONE.');
+        Log::debug('CertificateExpiration - DONE.');
 
         return;
     }
