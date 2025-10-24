@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-class SyncCpe extends Command
+class CPESync extends Command
 {
-    protected $signature = 'cpe:sync
+    protected $signature = 'mercator:cpe-sync
                             {--per-page=2000 : Number of items per page (max NVD 10000)}
                             {--max=0 : Maximum number of items to process (0 = unlimited)}
                             {--full : Ignore lastMod* window and fetch the full dictionary}
