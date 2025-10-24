@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Activity;
+use App\Models\Entity;
 use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
@@ -27,21 +27,21 @@ beforeEach(function () {
 });
 
 describe('index', function () {
-    test('can display activities index page', function () {
-        Activity::factory()->count(3)->create();
+    test('can display entities index page', function () {
+        Entity::factory()->count(3)->create();
 
-        $response = $this->get(route('admin.activities.index'));
+        $response = $this->get(route('admin.entities.index'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.activities.index');
-        $response->assertViewHas('activities');
+        $response->assertViewIs('admin.entities.index');
+        $response->assertViewHas('entities');
     });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->get(route('admin.activities.index'));
+        $response = $this->get(route('admin.entities.index'));
 
         $response->assertForbidden();
     });
@@ -50,18 +50,18 @@ describe('index', function () {
 
 describe('create', function () {
     test('can display create form', function () {
-        $response = $this->get(route('admin.activities.create'));
+        $response = $this->get(route('admin.entities.create'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.activities.create');
-        $response->assertViewHas(['operations', 'processes', 'applications', 'types']);
+        $response->assertViewIs('admin.entities.create');
+        $response->assertViewHas(['entities', 'icons']);
     });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->get(route('admin.activities.create'));
+        $response = $this->get(route('admin.entities.create'));
 
         $response->assertForbidden();
     });
@@ -72,12 +72,12 @@ describe('show', function () {
 
         test('can display object', function () {
             $name =  fake()->word();
-            $activity = Activity::factory()->create(['name' => $name]);
+            $entity = Entity::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.activities.show', $activity->id));
+            $response = $this->get(route('admin.entities.show', $entity->id));
 
             $response->assertOk();
-            $response->assertViewIs('admin.activities.show');
+            $response->assertViewIs('admin.entities.show');
             $response->assertSee($name);
         });
 
@@ -86,9 +86,9 @@ describe('show', function () {
         $this->actingAs($user);
 
         $name =  fake()->word();
-        $activity = Activity::factory()->create(['name' => $name]);
+        $entity = Entity::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.activities.show', $activity->id));
+        $response = $this->get(route('admin.entities.show', $entity->id));
 
         $response->assertForbidden();
     });
@@ -98,13 +98,13 @@ describe('show', function () {
 describe('edit', function () {
     test('can display edit form', function () {
         $name =  fake()->word();
-        $activity = Activity::factory()->create(['name' => $name]);
+        $entity = Entity::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.activities.edit', $activity));
+        $response = $this->get(route('admin.entities.edit', $entity));
 
         $response->assertOk();
-        $response->assertViewIs('admin.activities.edit');
-        $response->assertViewHas('activity');
+        $response->assertViewIs('admin.entities.edit');
+        $response->assertViewHas('entity');
         $response->assertSee($name);
     });
 
@@ -112,9 +112,9 @@ describe('edit', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $activity = Activity::factory()->create();
+        $entity = Entity::factory()->create();
 
-        $response = $this->get(route('admin.activities.edit', $activity));
+        $response = $this->get(route('admin.entities.edit', $entity));
 
         $response->assertForbidden();
     });
@@ -123,32 +123,32 @@ describe('edit', function () {
 describe('update', function () {
     test('can update activity', function () {
         $name =  fake()->word();
-        $activity = Activity::factory()->create(['name' => $name]);
+        $entity = Entity::factory()->create(['name' => $name]);
 
         $data = [
             'name' => 'Updated Name',
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->put(route('admin.activities.update', $activity), $data);
+        $response = $this->put(route('admin.entities.update', $entity), $data);
 
-        $response->assertRedirect(route('admin.activities.index'));
-        $this->assertDatabaseHas('activities', ['name' => 'Updated Name']);
+        $response->assertRedirect(route('admin.entities.index'));
+        $this->assertDatabaseHas('entities', ['name' => 'Updated Name']);
     });
 });
 
 describe('destroy', function () {
     test('can delete activity', function () {
-        $activity = Activity::factory()->create();
+        $entity = Entity::factory()->create();
 
-        $response = $this->delete(route('admin.activities.destroy', $activity->id));
-        $response->assertRedirect(route('admin.activities.index'));
+        $response = $this->delete(route('admin.entities.destroy', $entity->id));
+        $response->assertRedirect(route('admin.entities.index'));
 
-        $this->assertSoftDeleted('activities', ['id' => $activity->id]);
+        $this->assertSoftDeleted('entities', ['id' => $entity->id]);
 
-        $activity->refresh();
-        expect($activity->deleted_at)->not->toBeNull()
-            ->and($activity->trashed())->toBeTrue();
+        $entity->refresh();
+        expect($entity->deleted_at)->not->toBeNull()
+            ->and($entity->trashed())->toBeTrue();
 
     });
 
@@ -156,32 +156,32 @@ test('denies access without permission', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $activity = Activity::factory()->create();
+    $entity = Entity::factory()->create();
 
-    $response = $this->delete(route('admin.activities.destroy', $activity));
+    $response = $this->delete(route('admin.entities.destroy', $entity));
 
     $response->assertForbidden();
     });
 });
 
 describe('massDestroy', function () {
-    test('can delete multiple activities', function () {
-        $activities = Activity::factory()->count(3)->create();
-        $ids = $activities->pluck('id')->toArray();
+    test('can delete multiple entities', function () {
+        $entities = Entity::factory()->count(3)->create();
+        $ids = $entities->pluck('id')->toArray();
 
-        $response = $this->delete(route('admin.activities.massDestroy'), ['ids' => $ids]);
+        $response = $this->delete(route('admin.entities.massDestroy'), ['ids' => $ids]);
         $response->assertNoContent();
 
         foreach ($ids as $id) {
-            $this->assertSoftDeleted('activities', ['id' => $id]);
+            $this->assertSoftDeleted('entities', ['id' => $id]);
         }
     });
 
     test('returns no content status', function () {
-        $activity = Activity::factory()->create();
+        $entity = Entity::factory()->create();
 
-        $response = $this->delete(route('admin.activities.massDestroy'), [
-            'ids' => [$activity->id],
+        $response = $this->delete(route('admin.entities.massDestroy'), [
+            'ids' => [$entity->id],
         ]);
 
         $response->assertStatus(204);
@@ -191,10 +191,10 @@ describe('massDestroy', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $activity = Activity::factory()->create();
+        $entity = Entity::factory()->create();
 
-        $response = $this->delete(route('admin.activities.massDestroy'), [
-            'ids' => [$activity->id],
+        $response = $this->delete(route('admin.entities.massDestroy'), [
+            'ids' => [$entity->id],
         ]);
 
         $response->assertForbidden();
