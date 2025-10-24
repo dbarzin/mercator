@@ -42,5 +42,7 @@ jobs:
           message: "chore: bump chart appVersion to ${{ env.CHART_APPVERSION }}"
           add: 'docs/_helm_chart/chart/Chart.yaml'
       
-      - name: Release Chart
+      - name: Release Charts
         uses: ./.github/actions/chart-release-action
+        with:
+          cf_token : ${{secrets.GITHUB_TOKEN}}
