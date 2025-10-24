@@ -249,9 +249,9 @@
             edges: [ <?php
                          foreach ($edges as $edge) {
                              if ($edge["from"] == $node["id"])
-                                 echo '{attachedNodeId:"' . $edge["to"] . ($edge["name"] !== null ? '",name:"' . $edge["name"] : "") . '",edgeType:"' . $edge["type"] . '", edgeDirection: "TO", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
+                                 echo '{attachedNodeId:"' . $edge["to"] . '"' . ($edge["name"] !== null ? ',name:' . json_encode($edge["name"]) : "") . ',edgeType:"' . $edge["type"] . '", edgeDirection: "TO", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
                              if ($edge["to"] == $node["id"])
-                                 echo '{attachedNodeId:"' . $edge["from"] . ($edge["name"] !== null ? '",name:"' . $edge["name"] : "") . '",edgeType:"' . $edge["type"] . '", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
+                                 echo '{attachedNodeId:"' . $edge["from"] . '"' . ($edge["name"] !== null ? ',name:' . json_encode($edge["name"]) : "") . ',edgeType:"' . $edge["type"] . '", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
                          } ?> ]
         });
         @endforeach
