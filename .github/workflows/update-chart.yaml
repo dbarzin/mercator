@@ -3,7 +3,7 @@ name: Update Chart appVersion
 on:
   push:
     branches:
-      - dev
+      - master
     paths:
       - 'version.txt'
 
