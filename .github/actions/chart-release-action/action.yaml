@@ -23,6 +23,6 @@ runs:
         skip_existing: true
         mark_as_latest: false
         config: docs/_helm_chart/chart-release-config.yaml
-      env:
-        CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      # env:
+      #   CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           

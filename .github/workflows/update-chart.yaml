@@ -43,4 +43,4 @@ jobs:
           add: 'docs/_helm_chart/chart/Chart.yaml'
       
       - name: Release Chart
-        uses: ./.github/actions/chart-release-action
+        uses: .github/actions/chart-release-action
