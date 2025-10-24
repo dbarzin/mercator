@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\API;
+use App\Http\Controllers\Report;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -232,10 +233,16 @@ Route::middleware('auth:api')->group(function (): void {
     Route::resource('users', API\UserController::class);
 
     // Permissions
-    Route::delete('permission/mass-destroy', [API\PermissionController::class, 'massDestroy'])->name('permission.mass-destroy');
     Route::resource('permission', API\PermissionController::class);
 
     // Roles
-    Route::delete('role/mass-destroy', [API\RoleController::class, 'massDestroy'])->name('role.mass-destroy');
     Route::resource('role', API\RoleController::class);
+
+    // =======================================
+    // Reports
+    // =======================================
+    Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel'])
+        ->name('api.activities.export');
+
+
 });
