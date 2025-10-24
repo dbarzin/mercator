@@ -28,5 +28,5 @@ runs:
         mark_as_latest: false
         config: docs/_helm_chart/chart-release-config.yaml
       env:
-        CR_TOKEN: "${{ input.cf_token}}"
+        CR_TOKEN: "${{ inputs.cf_token}}"
           
