@@ -4,7 +4,7 @@ description: Keep chart inde up to date
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
 inputs:
   cf_token:
-    description: github env cf_token
+    description: "github env cf_token"
     required: true
 runs:    
   using: "composite"
@@ -26,7 +26,6 @@ runs:
         charts_dir: _helm_chart
         skip_existing: true
         mark_as_latest: false
-        config: docs/_helm_chart/chart-release-config.yaml
       env:
         CR_TOKEN: "${{inputs.cf_token}}"
           
