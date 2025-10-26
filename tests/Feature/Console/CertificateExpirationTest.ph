@@ -10,8 +10,7 @@ it('test mercator:cpe-sync --now --max=10', function () {
 
     $exit = $this->artisan('mercator:cpe-sync', [
         '--now' => true,
-        '--full' => true,
-        '--max' => 100,
+        '--max' => 10,
     ])->run();
 
     expect($exit)->toBe(0);
