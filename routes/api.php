@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\API;
 use App\Http\Controllers\Report;
 use Illuminate\Support\Facades\Route;
@@ -241,8 +242,21 @@ Route::middleware('auth:api')->group(function (): void {
     // =======================================
     // Reports
     // =======================================
-    Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel'])
-        ->name('api.activities.export');
+    Route::get('report/cartography', [Admin\CartographyController::class, 'cartography']);
+    Route::get('report/entities', [Report\EntityList::class, 'generateExcel']);
+    Route::get('report/applicationsByBlocks', [Report\ApplicationList::class, 'generateExcel']);
+    Route::get('report/directory', [Report\Directory::class, 'generateDocx']);
+    Route::get('report/logicalServers', [Report\LogicalServers::class, 'generateExcel']);
+    Route::get('report/securityNeeds', [Report\SecurityNeeds::class, 'generateExcel']);
+    Route::get('report/logicalServerConfigs', [Report\LogicalServerConfigs::class, 'generateExcel']);
+    Route::get('report/externalAccess', [Report\ExternalAccess::class, 'generateExcel']);
+    Route::get('report/physicalInventory', [Report\PhysicalInventory::class, 'generateExcel']);
+    Route::get('report/vlans', [Report\VLANList::class, 'generateExcel']);
+    Route::get('report/workstations', [Report\WorkstationList::class, 'generateExcel']);
+    Route::get('report/cve', [Admin\CVEController::class, 'list']);
 
+    // GDPR
+    Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel']);
+    Route::get('report/activityReport', [Report\ActivityReport::class, 'generateDocx']);
 
 });

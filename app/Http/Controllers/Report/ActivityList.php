@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Report;
 
 use App\Models\DataProcessing;
@@ -140,7 +141,7 @@ class ActivityList extends ReportController
         $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $writer->save($path);
-
+        
         return response()->download($path)->deleteFileAfterSend(true);
 
     }
