@@ -6,55 +6,8 @@ use Laravel\Passport\Passport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
- * Helpers
- */
-function actAsAdminAllAllowed(): User {
-    // Récupère (ou crée) un user "admin" et bypass toutes les autorisations
-    $user = User::find(1) ?? User::factory()->create(['id' => 1]);
-    Passport::actingAs($user);
-
-    // Bypass complet des Gates/Policies pendant ce test
-    Gate::before(function ($user, $ability) {
-        return true; // autorise tout
-    });
-
-    return $user;
-}
-
-/**
- * Valide une réponse de téléchargement de fichier (BinaryFileResponse),
- * l'extension (via Content-Disposition) et un contenu non vide.
- * Pour DOCX/XLSX on vérifie aussi la signature ZIP "PK".
- */
-function assertBinaryDownload($response, string $expectedExt, int $minBytes = 100): void {
-    $response->assertOk();
-    $response->assertHeader('Content-Disposition');
-
-    $disposition = $response->headers->get('Content-Disposition');
-    expect($disposition)->toBeString()
-        ->and(strtolower($disposition))->toContain('attachment;')
-        ->and(strtolower($disposition))->toContain('filename=')
-        ->and(strtolower($disposition))->toContain('.' . strtolower($expectedExt));
-
-    $base = $response->baseResponse;
-    expect($base)->toBeInstanceOf(BinaryFileResponse::class);
-
-    $path = $base->getFile()->getPathname();
-    expect(is_file($path))->toBeTrue();
-
-    $content = file_get_contents($path);
-    expect(strlen($content))->toBeGreaterThan($minBytes);
-
-    // DOCX/XLSX sont des ZIP → début "PK"
-    if (in_array(strtolower($expectedExt), ['docx', 'xlsx'], true)) {
-        expect(substr($content, 0, 2))->toBe('PK');
-    }
-}
-
-/**
  * DATASETS
  * - FILE_REPORTS : routes qui renvoient un fichier + extension attendue
- * - JSON_REPORTS : routes JSON
  */
 $FILE_REPORTS = [
     // endpoint                               ext
@@ -96,9 +49,37 @@ it('forbids report endpoints without permission', function (string $endpoint) {
  * TESTS "permitted" pour les endpoints FICHIERS
  */
 it('returns a file download for report endpoints when permitted', function (string $endpoint, string $ext) {
-    actAsAdminAllAllowed();
+    // Récupère (ou crée) un user "admin" et bypass toutes les autorisations
+    $user = User::find(1) ?? User::factory()->create(['id' => 1]);
+    Passport::actingAs($user);
+
+    // Bypass complet des Gates/Policies pendant ce test
+    Gate::before(function ($user, $ability) {
+        return true; // autorise tout
+    });
 
     $response = $this->get($endpoint);
-    assertBinaryDownload($response, $ext);
+    $response->assertOk();
+    $response->assertHeader('Content-Disposition');
+
+    $disposition = $response->headers->get('Content-Disposition');
+    expect($disposition)->toBeString()
+        ->and(strtolower($disposition))->toContain('attachment;')
+        ->and(strtolower($disposition))->toContain('filename=')
+        ->and(strtolower($disposition))->toContain('.' . strtolower($ext));
+
+    $base = $response->baseResponse;
+    expect($base)->toBeInstanceOf(BinaryFileResponse::class);
+
+    $path = $base->getFile()->getPathname();
+    expect(is_file($path))->toBeTrue();
+
+    $content = file_get_contents($path);
+    expect(strlen($content))->toBeGreaterThan(100);
+
+    // DOCX/XLSX sont des ZIP → début "PK"
+    if (in_array(strtolower($ext), ['docx', 'xlsx'], true)) {
+        expect(substr($content, 0, 2))->toBe('PK');
+    }
 })->with($FILE_REPORTS);
 
