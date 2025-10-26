@@ -2464,7 +2464,7 @@ class CartographyController extends Controller
         }
 
         // return
-        return response()->download($filepath);
+        return response()->download($filepath)->deleteFileAfterSend(true);
     }
 
     private static function addTable(Section $section, ?string $title = null)
