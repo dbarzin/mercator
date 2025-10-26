@@ -21,17 +21,17 @@ php artisan passport:install
 For each object in the cartography data model, there is an API.
 The list of APIs can be found in /route/api.php
 
-_GDPR view_
+__GDPR view__
 
 - /api/data-processings
 - /api/security-controls
 
-_Ecosystem view_
+__Ecosystem view__
 
 - /api/entities
 - /api/relations
 
-_Information system business view_
+__Information system business view__
 
 - /api/macro-processuses
 - /api/processes
@@ -41,7 +41,7 @@ _Information system business view_
 - /api/actors
 - /api/information
 
-_Application view_
+__Application view__
 
 - /api/application-blocks
 - /api/applications
@@ -50,7 +50,7 @@ _Application view_
 - /api/databases
 - /api/fluxes
 
-_Administration view_
+__Administration view__
 
 - /api/zone-admins
 - /api/annuaires
@@ -58,7 +58,7 @@ _Administration view_
 - /api/domaine-ads
 - /api/admin-users
 
-_Logical infrastructure view_
+__Logical infrastructure view__
 
 - /api/networks
 - /api/subnetworks
@@ -75,7 +75,7 @@ _Logical infrastructure view_
 - /api/certificates
 - /api/vlans
 
-_Physical infrastructure view_
+__Physical infrastructure view__
 
 - /api/sites
 - /api/buildings
@@ -94,6 +94,23 @@ _Physical infrastructure view_
 - /api/lans
 - /api/physical-links
 - /api/fluxes
+
+__Reports__
+
+- /api/report/cartography
+- /api/report/entities
+- /api/report/applicationsByBlocks
+- /api/report/directory
+- /api/report/logicalServers
+- /api/report/securityNeeds
+- /api/report/logicalServerConfigs
+- /api/report/externalAccess
+- /api/report/physicalInventory
+- /api/report/vlans
+- /api/report/workstations
+- /api/report/cve
+- /api/report/activityList
+- /api/report/activityReport
 
 ### Actions managed by the resource controller
 
