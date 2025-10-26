@@ -256,7 +256,7 @@ Route::middleware('auth:api')->group(function (): void {
     Route::get('report/cve', [Admin\CVEController::class, 'list']);
 
     // GDPR
-    Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel']);
-    Route::get('report/activityReport', [Report\ActivityReport::class, 'generateDocx']);
+    Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel'])->name('report.activityList');
+    Route::get('report/activityReport', [Report\ActivityReport::class, 'generateDocx'])->name('report.activityReport');
 
 });
