@@ -95,6 +95,23 @@ __Vue de l'infrastructure physique__
 - /api/physical-links
 - /api/fluxes
 
+__Rapport__
+
+- /api/report/cartography
+- /api/report/entities
+- /api/report/applicationsByBlocks
+- /api/report/directory
+- /api/report/logicalServers
+- /api/report/securityNeeds
+- /api/report/logicalServerConfigs
+- /api/report/externalAccess
+- /api/report/physicalInventory
+- /api/report/vlans
+- /api/report/workstations
+- /api/report/cve
+- /api/report/activityList
+- /api/report/activityReport
+
 ### Actions gérées par le contrôleur de ressources
 
 Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
