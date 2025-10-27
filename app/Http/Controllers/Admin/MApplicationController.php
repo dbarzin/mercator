@@ -12,11 +12,11 @@ use App\Models\AdminUser;
 use App\Models\ApplicationBlock;
 use App\Models\ApplicationService;
 use App\Models\Database;
-use App\Models\Document;
 use App\Models\Entity;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\Process;
+use App\Models\SecurityDevice;
 use App\Models\User;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +57,7 @@ class MApplicationController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
@@ -112,6 +113,7 @@ class MApplicationController extends Controller
                 'services',
                 'databases',
                 'logical_servers',
+                'security_devices',
                 'applicationBlocks',
                 'icons',
                 'users',
@@ -141,27 +143,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $application->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $application->icon_id = intval($request->iconSelect);
-        } else {
-            $application->icon_id = null;
-        }
+        $this->handleIconUpload($request, $application);
 
         // Save application
         $application->save();
@@ -174,6 +156,7 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
@@ -195,6 +178,7 @@ class MApplicationController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
@@ -256,6 +240,7 @@ class MApplicationController extends Controller
                 'services',
                 'databases',
                 'logical_servers',
+                'security_devices',
                 'applicationBlocks',
                 'icons',
                 'users',
@@ -283,27 +268,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $application->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $application->icon_id = intval($request->iconSelect);
-        } else {
-            $application->icon_id = null;
-        }
+        $this->handleIconUpload($request, $application);
 
         // Other fields
         $application->update($request->all());
@@ -316,6 +281,7 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes

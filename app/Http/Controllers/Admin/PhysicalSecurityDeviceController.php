@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-// Framework
 use App\Models\Bay;
 use App\Models\Building;
 use App\Models\PhysicalSecurityDevice;
@@ -16,6 +15,8 @@ use App\Models\SecurityDevice;
 use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+
+// Framework
 
 class PhysicalSecurityDeviceController extends Controller
 {
@@ -38,21 +39,36 @@ class PhysicalSecurityDeviceController extends Controller
 
         $securityDevices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
 
+        // Lists
         $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
             ->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        // Select icons
+        $icons = PhysicalSecurityDevice::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         return view(
             'admin.physicalSecurityDevices.create',
-            compact('securityDevices', 'sites', 'buildings', 'bays', 'type_list')
-        );
+            compact('securityDevices',
+                'sites',
+                'buildings',
+                'bays',
+                'type_list',
+                'attributes_list',
+                'icons')
+            );
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
     {
-        $physicalSecurityDevices = PhysicalSecurityDevice::create($request->all());
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
+        $physicalSecurityDevice = new PhysicalSecurityDevice($request->all());
+        $this->handleIconUpload($request, $physicalSecurityDevice);
+        $physicalSecurityDevice->save();
 
         // Relations
-        $physicalSecurityDevices->securityDevices()->sync($request->input('security_devices', []));
+        $physicalSecurityDevice->securityDevices()->sync($request->input('security_devices', []));
 
         return redirect()->route('admin.physical-security-devices.index');
     }
@@ -67,19 +83,36 @@ class PhysicalSecurityDeviceController extends Controller
 
         $securityDevices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
 
+        // Lists
         $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
             ->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        // Select icons
+        $icons = PhysicalSecurityDevice::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $physicalSecurityDevice->load('site', 'building', 'bay');
 
         return view(
             'admin.physicalSecurityDevices.edit',
-            compact('securityDevices', 'sites', 'buildings', 'bays', 'physicalSecurityDevice', 'type_list')
+            compact('securityDevices',
+                'sites',
+                'buildings',
+                'bays',
+                'physicalSecurityDevice',
+                'type_list',
+                'attributes_list',
+                'icons')
         );
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
+        // Save icon
+        $this->handleIconUpload($request, $physicalSecurityDevice);
+        
         $physicalSecurityDevice->update($request->all());
 
         // Relations
@@ -112,4 +145,24 @@ class PhysicalSecurityDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    private function getAttributes()
+    {
+        $attributes_list = PhysicalSecurityDevice::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
+    }
+
 }

@@ -8,7 +8,6 @@ use App\Http\Requests\MassDestroyEntityRequest;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
 use App\Models\Database;
-use App\Models\Document;
 use App\Models\Entity;
 use App\Models\MApplication;
 use App\Models\Process;
@@ -51,27 +50,9 @@ class EntityController extends Controller
         $entity = Entity::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $entity);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $entity->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $entity->icon_id = intval($request->iconSelect);
-        } else {
-            $entity->icon_id = null;
-        }
+        // Save entity
         $entity->save();
 
         // Save relations
@@ -110,27 +91,7 @@ class EntityController extends Controller
     public function update(UpdateEntityRequest $request, Entity $entity)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $entity->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $entity->icon_id = intval($request->iconSelect);
-        } else {
-            $entity->icon_id = null;
-        }
+        $this->handleIconUpload($request, $entity);
 
         // set is_external
         $request['is_external'] = $request->has('is_external');

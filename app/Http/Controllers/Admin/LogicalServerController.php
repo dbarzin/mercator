@@ -9,7 +9,6 @@ use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
 use App\Models\Cluster;
 use App\Models\Database;
-use App\Models\Document;
 use App\Models\DomaineAd;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
@@ -219,27 +218,7 @@ class LogicalServerController extends Controller
         $logicalServer = LogicalServer::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $logicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $logicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $logicalServer->icon_id = null;
-        }
+        $this->handleIconUpload($request, $logicalServer);
 
         // Save LogicalServer
         $logicalServer->save();
@@ -298,28 +277,9 @@ class LogicalServerController extends Controller
         $request['active'] = $request->has('active');
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $logicalServer);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $logicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $logicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $logicalServer->icon_id = null;
-        }
-
+        // Save LogicalServer
         $logicalServer->update($request->all());
 
         // Relations

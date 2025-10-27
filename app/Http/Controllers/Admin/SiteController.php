@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
-use App\Models\Document;
 use App\Models\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,27 +56,8 @@ class SiteController extends Controller
         $site = Site::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $site);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $site->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $site->icon_id = intval($request->iconSelect);
-        } else {
-            $site->icon_id = null;
-        }
         $site->save();
 
         return redirect()->route('admin.sites.index');
@@ -95,27 +75,7 @@ class SiteController extends Controller
     public function update(UpdateSiteRequest $request, Site $site)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $site->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $site->icon_id = intval($request->iconSelect);
-        } else {
-            $site->icon_id = null;
-        }
+        $this->handleIconUpload($request, $site);
 
         $site->update($request->all());
 
