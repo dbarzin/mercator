@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
-use App\Models\Document;
 use App\Models\MApplication;
 use App\Models\PhysicalSecurityDevice;
 use App\Models\SecurityDevice;
@@ -62,27 +61,9 @@ class SecurityDeviceController extends Controller
         $securityDevice->applications()->sync($request->input('applications', []));
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $securityDevice);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $securityDevice->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $securityDevice->icon_id = intval($request->iconSelect);
-        } else {
-            $securityDevice->icon_id = null;
-        }
+        // Save Security Device
         $securityDevice->save();
 
         return redirect()->route('admin.security-devices.index');
@@ -117,28 +98,9 @@ class SecurityDeviceController extends Controller
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $securityDevice);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $securityDevice->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $securityDevice->icon_id = intval($request->iconSelect);
-        } else {
-            $securityDevice->icon_id = null;
-        }
-
+        // Save Security Device
         $securityDevice->update($request->all());
 
         // Relations

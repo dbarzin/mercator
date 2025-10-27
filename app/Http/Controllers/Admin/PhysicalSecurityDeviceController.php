@@ -10,7 +10,6 @@ use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
 use App\Models\Bay;
 use App\Models\Building;
-use App\Models\Document;
 use App\Models\PhysicalSecurityDevice;
 use App\Models\SecurityDevice;
 use App\Models\Site;
@@ -64,34 +63,14 @@ class PhysicalSecurityDeviceController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
-        $physicalSecurityDevices = PhysicalSecurityDevice::create($request->all());
+        $physicalSecurityDevice = PhysicalSecurityDevice::create($request->all());
 
-        // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $physicalSecurityDevice);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $physicalSecurityDevices->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $physicalSecurityDevices->icon_id = intval($request->iconSelect);
-        } else {
-            $physicalSecurityDevices->icon_id = null;
-        }
-        $physicalSecurityDevices->save();
+        $physicalSecurityDevice->save();
 
         // Relations
-        $physicalSecurityDevices->securityDevices()->sync($request->input('security_devices', []));
+        $physicalSecurityDevice->securityDevices()->sync($request->input('security_devices', []));
 
         return redirect()->route('admin.physical-security-devices.index');
     }
@@ -134,28 +113,8 @@ class PhysicalSecurityDeviceController extends Controller
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $physicalSecurityDevice->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $physicalSecurityDevice->icon_id = intval($request->iconSelect);
-        } else {
-            $physicalSecurityDevice->icon_id = null;
-        }
-
+        $this->handleIconUpload($request, $physicalSecurityDevice);
+        
         $physicalSecurityDevice->update($request->all());
 
         // Relations

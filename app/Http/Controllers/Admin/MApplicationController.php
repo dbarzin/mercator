@@ -12,7 +12,6 @@ use App\Models\AdminUser;
 use App\Models\ApplicationBlock;
 use App\Models\ApplicationService;
 use App\Models\Database;
-use App\Models\Document;
 use App\Models\Entity;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
@@ -144,27 +143,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $application->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $application->icon_id = intval($request->iconSelect);
-        } else {
-            $application->icon_id = null;
-        }
+        $this->handleIconUpload($request, $application);
 
         // Save application
         $application->save();
@@ -289,27 +268,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $application->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $application->icon_id = intval($request->iconSelect);
-        } else {
-            $application->icon_id = null;
-        }
+        $this->handleIconUpload($request, $application);
 
         // Other fields
         $application->update($request->all());

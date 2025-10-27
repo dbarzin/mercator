@@ -35,13 +35,13 @@
                 <tbody>
                 <tr>
                     <th width="10%">
-                        <dt>{{ trans('cruds.application.fields.name') }}</dt>
+                    <td>{{ trans('cruds.application.fields.name') }}</td>
                     </th>
                     <td>
                         {{ $application->name }}
                     </td>
                     <th width="10%">
-                        <dt>{{ trans('cruds.application.fields.application_block') }}</dt>
+                    <td>{{ trans('cruds.application.fields.application_block') }}</td>
                     </th>
                     <td width="10%">
                         @if ($application->applicationBlock!=null)
@@ -49,7 +49,7 @@
                         @endif
                     </td>
                     <th width="10%">
-                        <dt>{{ trans('cruds.application.fields.attributes') }}</dt>
+                    <td>{{ trans('cruds.application.fields.attributes') }}</td>
                     </th>
                     <td width="10%">
                         {{ $application->attributes }}
@@ -57,17 +57,17 @@
                 </tr>
                 <tr>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.description') }}</dt>
+                    <td>{{ trans('cruds.application.fields.description') }}</td>
                     </th>
                     <td colspan="4">
                         {!! $application->description !!}
                     </td>
                     <td width="10%">
                         @if ($application->icon_id === null)
-                            <img src='/images/application.png' width='120' height='120'>
+                            <img src='/images/application.png' width='120' height='120' alt="Application"/>
                         @else
                             <img src='{{ route('admin.documents.show', $application->icon_id) }}' width='100'
-                                 height='100'>
+                                 height='100' Alt="Application"/>
                         @endif
                     </td>
                 </tr>
@@ -113,19 +113,19 @@
                 </tr>
                 <tr>
                     <th width="10%">
-                        <dt>{{ trans('cruds.application.fields.functional_referent') }}</dt>
+                    <td>{{ trans('cruds.application.fields.functional_referent') }}</td>
                     </th>
                     <td width="15%">
                         {{ $application->functional_referent }}
                     </td>
                     <th width="10%">
-                        <dt>{{ trans('cruds.application.fields.editor') }}</dt>
+                    <td>{{ trans('cruds.application.fields.editor') }}</td>
                     </th>
                     <td width="15%">
                         {{ $application->editor }}
                     </td>
                     <th width="10%">
-                        <dt>{{ trans('cruds.application.fields.users') }}</dt>
+                        <ts>{{ trans('cruds.application.fields.users') }}</ts>
                     </th>
                     <td width="15%">
                         {{ $application->users }}
@@ -133,7 +133,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.cartographers') }}</dt>
+                    <td>{{ trans('cruds.application.fields.cartographers') }}</td>
                     </th>
                     <td>
                         @foreach($application->cartographers as $cartographer)
@@ -144,7 +144,7 @@
                         @endforeach
                     </td>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.administrators') }}</dt>
+                    <td>{{ trans('cruds.application.fields.administrators') }}</td>
                     </th>
                     <td>
                         @foreach($application->administrators as $administrator)
@@ -179,20 +179,20 @@
                         {{ $application->type }}
                     </td>
                     <th width="10%">
-                        <dt>{{ trans('cruds.application.fields.external') }}</dt>
+                    <td>{{ trans('cruds.application.fields.external') }}</td>
                     <td width="20%">
                         {{ $application->external }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.install_date') }}</dt>
+                    <td>{{ trans('cruds.application.fields.install_date') }}</td>
                     </th>
                     <td>
                         {{ $application->install_date }}
                     </td>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.update_date') }}</dt>
+                    <td>{{ trans('cruds.application.fields.update_date') }}</td>
                     </th>
                     <td>
                         {{ $application->update_date }}
@@ -200,7 +200,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.events') }}</dt>
+                    <td>{{ trans('cruds.application.fields.events') }}</td>
                     </th>
                     <td>
                         <button class="btn btn-info events_list_button">
@@ -210,7 +210,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.documentation') }}</dt>
+                    <td>{{ trans('cruds.application.fields.documentation') }}</td>
                     </th>
                     <td colspan="5">
                         @if (filter_var($application->documentation, FILTER_VALIDATE_URL))
@@ -222,7 +222,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.databases') }}</dt>
+                    <td>{{ trans('cruds.application.fields.databases') }}</td>
                     </th>
                     <td colspan="2">
                         @foreach($application->databases as $database)
@@ -233,7 +233,7 @@
                         @endforeach
                     </td>
                     <th>
-                        <dt>{{ trans('cruds.application.fields.services') }}</dt>
+                    <td>{{ trans('cruds.application.fields.services') }}</td>
                     </th>
                     <td colspan="2">
                         @foreach($application->services as $service)
@@ -256,13 +256,13 @@
                 <tbody>
                 <tr>
                     <th width="60%">
-                        <dt>{{ trans('cruds.application.fields.security_need') }}</dt>
+                    <td>{{ trans('cruds.application.fields.security_need') }}</td>
                     </th>
                     <th width="20%">
-                        <dt>{{ trans('cruds.application.fields.RTO') }}</dt>
+                    <td>{{ trans('cruds.application.fields.RTO') }}</td>
                     </th>
                     <th width="20%">
-                        <dt>{{ trans('cruds.application.fields.RPO') }}</dt>
+                    <td>{{ trans('cruds.application.fields.RPO') }}</td>
                     </th>
                 </tr>
                 <tr>

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
+const ZIP_SIGNATURE = 'PK';
+
 /**
  * DATASETS
  * - FILE_REPORTS : routes qui renvoient un fichier + extension attendue
@@ -31,7 +33,6 @@ $FILE_REPORTS = [
     ['/api/report/cve',                      'xlsx'],
 
 ];
-
 /**
  * TESTS "forbidden" (403) pour TOUTES les routes,
  * avec utilisateur authentifié SANS permissions.
@@ -79,7 +80,7 @@ it('returns a file download for report endpoints when permitted', function (stri
 
     // DOCX/XLSX sont des ZIP → début "PK"
     if (in_array(strtolower($ext), ['docx', 'xlsx'], true)) {
-        expect(substr($content, 0, 2))->toBe('PK');
+        expect(substr($content, 0, 2))->toBe(ZIP_SIGNATURE);
     }
 })->with($FILE_REPORTS);
 

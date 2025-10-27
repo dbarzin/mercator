@@ -8,7 +8,6 @@ use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
 use App\Models\Cluster;
-use App\Models\Document;
 use App\Models\LogicalServer;
 use App\Models\PhysicalServer;
 use App\Models\Router;
@@ -58,27 +57,9 @@ class ClusterController extends Controller
         $cluster->routers()->sync($request->input('routers', []));
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $cluster);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $cluster->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $cluster->icon_id = intval($request->iconSelect);
-        } else {
-            $cluster->icon_id = null;
-        }
+        // Save Cluster
         $cluster->save();
 
         return redirect()->route('admin.clusters.index');
@@ -110,28 +91,9 @@ class ClusterController extends Controller
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $cluster);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $cluster->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $cluster->icon_id = intval($request->iconSelect);
-        } else {
-            $cluster->icon_id = null;
-        }
-
+        // Save Cluster
         $cluster->update($request->all());
 
         $cluster->logicalServers()->sync($request->input('logical_servers', []));

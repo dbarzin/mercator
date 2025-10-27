@@ -8,7 +8,6 @@ use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
 use App\Models\Activity;
-use App\Models\Document;
 use App\Models\Entity;
 use App\Models\Information;
 use App\Models\MacroProcessus;
@@ -58,28 +57,7 @@ class ProcessController extends Controller
         $process->applications()->sync($request->input('applications', []));
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $process->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $process->icon_id = intval($request->iconSelect);
-        } else {
-            $process->icon_id = null;
-        }
-        $process->save();
+        $this->handleIconUpload($request, $process);
 
         return redirect()->route('admin.processes.index');
     }
@@ -117,27 +95,7 @@ class ProcessController extends Controller
     public function update(UpdateProcessRequest $request, Process $process)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $process->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $process->icon_id = intval($request->iconSelect);
-        } else {
-            $process->icon_id = null;
-        }
+        $this->handleIconUpload($request, $process);
 
         $process->update($request->all());
         $process->activities()->sync($request->input('activities', []));
