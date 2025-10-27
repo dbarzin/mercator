@@ -26,7 +26,7 @@
                         <label for="type">{{ trans('cruds.router.fields.type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                             @if (!$type_list->contains(old('type')))
-                                <option> {{ old('type') }}</option>'
+                                <option> {{ old('type') }}</option>
                             @endif
                             @foreach($type_list as $t)
                                 <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>

@@ -29,7 +29,7 @@
                                     name="type" id="type">
                                 <option></option>
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>

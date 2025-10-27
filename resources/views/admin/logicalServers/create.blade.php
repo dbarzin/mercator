@@ -31,7 +31,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $type)
                                     <option {{ old('type') == $type ? 'selected' : '' }}>{{ $type }}</option>
@@ -121,7 +121,7 @@
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$operating_system_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $t)
                                     <option {{ old('operating_system') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -180,7 +180,7 @@
                                 <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}"
                                         name="environment" id="environment">
                                     @if (!$environment_list->contains(old('environment')))
-                                        <option> {{ old('environment') }}</option>'
+                                        <option> {{ old('environment') }}</option>
                                     @endif
                                     @foreach($environment_list as $t)
                                         <option {{ old('environment') == $t ? 'selected' : '' }}>{{$t}}</option>

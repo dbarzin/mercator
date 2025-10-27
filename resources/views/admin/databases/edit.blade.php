@@ -28,7 +28,7 @@
                         <label class="recommended" for="type">{{ trans('cruds.database.fields.type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                             @if (!$type_list->contains(old('type')))
-                                <option> {{ old('type') }}</option>'
+                                <option> {{ old('type') }}</option>
                             @endif
                             @foreach($type_list as $t)
                                 <option {{ (old('type') ? old('type') : $database->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -106,7 +106,7 @@
                         <label class="recommended" for="responsible">{{ trans('cruds.database.fields.responsible') }}</label>
                         <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
                             @if (!$external_list->contains(old('responsible')))
-                                <option> {{ old('responsible') }}</option>'
+                                <option> {{ old('responsible') }}</option>
                             @endif
                             @foreach($responsible_list as $t)
                                 <option {{ (old('responsible') ? old('responsible') : $database->responsible) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -218,7 +218,7 @@
                         <label for="external"><br>{{ trans('cruds.database.fields.external') }}</label>
                         <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}" name="external" id="external">
                             @if (!$external_list->contains(old('external')))
-                                <option> {{ old('external') }}</option>'
+                                <option> {{ old('external') }}</option>
                             @endif
                             @foreach($external_list as $t)
                                 <option {{ (old('external') ? old('external') : $database->external) == $t ? 'selected' : '' }}>{{$t}}</option>

@@ -157,7 +157,7 @@
                             <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}"
                                     name="functional_referent" id="referent">
                                 @if (!$referent_list->contains(old('functional_referent')))
-                                    <option> {{ old('functional_referent') }}</option>'
+                                    <option> {{ old('functional_referent') }}</option>
                                 @endif
                                 @foreach($referent_list as $t)
                                     <option {{ old('functional_referent') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -177,7 +177,7 @@
                             <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}"
                                     name="editor" id="editor">
                                 @if (!$editor_list->contains(old('editor')))
-                                    <option> {{ old('editor') }}</option>'
+                                    <option> {{ old('editor') }}</option>
                                 @endif
                                 @foreach($editor_list as $t)
                                     <option {{ old('editor') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -197,7 +197,7 @@
                             <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}"
                                     name="users" id="users">
                                 @if (!$users_list->contains(old('users')))
-                                    <option> {{ old('users') }}</option>'
+                                    <option> {{ old('users') }}</option>
                                 @endif
                                 @foreach($users_list as $t)
                                     <option {{ old('users') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -286,7 +286,7 @@
                                     name="type" id="type">
                                 <option></option>
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -308,7 +308,7 @@
                             <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}"
                                     name="external" id="external">
                                 @if (!$external_list->contains(old('external')))
-                                    <option> {{ old('external') }}</option>'
+                                    <option> {{ old('external') }}</option>
                                 @endif
                                 @foreach($external_list as $t)
                                     <option {{ old('external') == $t ? 'selected' : '' }}>{{$t}}</option>

@@ -80,7 +80,7 @@
                         <label class="recommended" for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('ip_allocation_type') ? 'is-invalid' : '' }}" name="ip_allocation_type" id="ip_allocation_type">
                             @if (!$ip_allocation_type_list->contains(old('ip_allocation_type')))
-                                <option> {{ old('ip_allocation_type') }}</option>'
+                                <option> {{ old('ip_allocation_type') }}</option>
                             @endif
                             @foreach($ip_allocation_type_list as $t)
                                 <option {{ (old('ip_allocation_type') ? old('ip_allocation_type') : $subnetwork->ip_allocation_type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -116,7 +116,7 @@
                         <label for="zone">{{ trans('cruds.subnetwork.fields.zone') }}</label>
                         <select class="form-control select2-free {{ $errors->has('zone') ? 'is-invalid' : '' }}" name="zone" id="zone">
                             @if (!$wifi_list->contains(old('zone')))
-                                <option> {{ old('responsible_exp') }}</option>'
+                                <option> {{ old('responsible_exp') }}</option>
                             @endif
                             @foreach($zone_list as $z)
                                 <option {{ (old('zone') ? old('zone') : $subnetwork->zone) == $z ? 'selected' : '' }}>{{$z}}</option>
@@ -134,7 +134,7 @@
                         <label class="recommended" for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
                         <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}" name="dmz" id="dmz">
                             @if (!$wifi_list->contains(old('dmz')))
-                                <option> {{ old('responsible_exp') }}</option>'
+                                <option> {{ old('responsible_exp') }}</option>
                             @endif
                             @foreach($dmz_list as $z)
                                 <option {{ (old('dmz') ? old('dmz') : $subnetwork->dmz) == $z ? 'selected' : '' }}>{{$z}}</option>
@@ -152,7 +152,7 @@
                         <label class="recommended" for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
                         <select class="form-control select2-free {{ $errors->has('wifi') ? 'is-invalid' : '' }}" name="wifi" id="wifi">
                             @if (!$wifi_list->contains(old('wifi')))
-                                <option> {{ old('responsible_exp') }}</option>'
+                                <option> {{ old('responsible_exp') }}</option>
                             @endif
                             @foreach($wifi_list as $w)
                                 <option {{ (old('wifi') ? old('wifi') : $subnetwork->wifi) == $w ? 'selected' : '' }}>{{$w}}</option>
@@ -170,7 +170,7 @@
                         <label class="recommended" for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
                         <select class="form-control select2-free {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}" name="responsible_exp" id="responsible_exp">
                             @if (!$responsible_exp_list->contains(old('responsible_exp')))
-                                <option> {{ old('responsible_exp') }}</option>'
+                                <option> {{ old('responsible_exp') }}</option>
                             @endif
                             @foreach($responsible_exp_list as $t)
                                 <option {{ (old('responsible_exp') ? old('responsible_exp') : $subnetwork->responsible_exp) == $t ? 'selected' : '' }}>{{$t}}</option>
