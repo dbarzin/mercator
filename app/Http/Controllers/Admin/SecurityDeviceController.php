@@ -136,7 +136,7 @@ class SecurityDeviceController extends Controller
     {
         $attributes_list = SecurityDevice::query()
             ->select('attributes')
-            ->where('attributes', '<>', null)
+            ->whereNotNull('attributes')
             ->pluck('attributes');
         $res = [];
         foreach ($attributes_list as $i) {
