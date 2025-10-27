@@ -37,7 +37,7 @@
 
                 <div class="form-group">
                     <label for="exposition">{{ trans('cruds.applicationService.fields.exposition') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
+                    <select class="form-control select2-free {{ $errors->has('exposition') ? 'is-invalid' : '' }}"
                             name="exposition" id="exposition">
                         @if (!$exposition_list->contains(old('exposition')))
                             <option> {{ old('exposition') }}</option>
