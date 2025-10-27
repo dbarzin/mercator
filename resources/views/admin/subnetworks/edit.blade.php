@@ -131,7 +131,7 @@
                             <label for="zone">{{ trans('cruds.subnetwork.fields.zone') }}</label>
                             <select class="form-control select2-free {{ $errors->has('zone') ? 'is-invalid' : '' }}"
                                     name="zone" id="zone">
-                                @if (!$wifi_list->contains(old('zone')))
+                                @if (!$zone_list->contains(old('zone')))
                                     <option> {{ old('zone') }}</option>
                                 @endif
                                 @foreach($zone_list as $z)
@@ -150,7 +150,7 @@
                             <label class="recommended" for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
                             <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}"
                                     name="dmz" id="dmz">
-                                @if (!$wifi_list->contains(old('dmz')))
+                                @if (!$dmz_list->contains(old('dmz')))
                                     <option> {{ old('dmz') }}</option>
                                 @endif
                                 @foreach($dmz_list as $z)
