@@ -7,6 +7,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Indique si la migration doit être exécutée dans une transaction automatique.
+     *
+     * - true : Laravel exécute la migration dans une transaction si le SGBD le permet (PostgreSQL, SQLite...).
+     *          Cela garantit que toutes les modifications sont annulées en cas d'erreur (atomicité).
+     * - false : Laravel exécute la migration hors transaction.
+     *           Utilisez cette option lorsqu'une opération DDL ou spécifique (ex : certains index ou contraintes sur MySQL)
+     *           n'est pas compatible avec le mode transactionnel, afin d'éviter les erreurs du SGBD.
+     *
+     * Exemple d’usage :
+     *    public $withinTransaction = false; // Désactive la transaction automatique pour cette migration.
+     *
+     * Référence officielle :
+     * https://api.laravel.com/docs/12.x/Illuminate/Database/Migrations/Migration.html
+     */
+    public $withinTransaction = false;
+
     public function up(): void
     {
 
@@ -77,6 +94,21 @@ return new class extends Migration
         // Enfin, suppression de la colonne
         if (Schema::hasColumn('physical_servers', 'cluster_id')) {
             Schema::table('physical_servers', function (Blueprint $table) {
+                try {
+                    Schema::table('physical_servers', function (Blueprint $table) {
+                        $table->dropForeign(['cluster_id']); // drop FK by column name, no constraint name
+                      });
+                } catch (\Illuminate\Database\QueryException $e) {
+                      // Constraint does not exist or already dropped, ignore
+                } // use array notation with column name, not constraint name
+
+                try {
+                    Schema::table('physical_servers', function (Blueprint $table) {
+                        $table->dropIndex(['cluster_id']);
+                    });
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // Index does not exist, ignore
+                } // similarly for index
                 $table->dropColumn('cluster_id');
             });
         }
