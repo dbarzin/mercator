@@ -37,7 +37,7 @@
                     <select class="form-control select2-free {{ $errors->has('exposition') ? 'is-invalid' : '' }}"
                             name="exposition" id="exposition">
                         @if (!$exposition_list->contains(old('exposition')))
-                            <option> {{ old('exposition') }}</option>'
+                            <option> {{ old('exposition') }}</option>
                         @endif
                         @foreach($exposition_list as $t)
                             <option {{ old('exposition') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="required"
+                    <label class="recommended"
                            for="applications">{{ trans('cruds.applicationService.fields.applications') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all"
@@ -62,8 +62,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                             name="applications[]" id="applications" multiple>
-                        @foreach($applications as $id => $applications)
-                            <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $applications }}</option>
+                        @foreach($applications as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('applications'))
@@ -71,7 +71,7 @@
                             {{ $errors->first('applications') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.applicationService.fields.modules_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.applicationService.fields.applications_helper') }}</span>
                 </div>
 
                 <div class="form-group">
@@ -84,8 +84,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('modules') ? 'is-invalid' : '' }}"
                             name="modules[]" id="modules" multiple>
-                        @foreach($modules as $id => $modules)
-                            <option value="{{ $id }}" {{ in_array($id, old('modules', [])) ? 'selected' : '' }}>{{ $modules }}</option>
+                        @foreach($modules as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('modules', [])) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('modules'))
