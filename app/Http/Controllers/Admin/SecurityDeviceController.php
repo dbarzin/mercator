@@ -97,11 +97,14 @@ class SecurityDeviceController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
+        // Save Security Device
+        $securityDevice->update($request->all());
+
         // Save icon
         $this->handleIconUpload($request, $securityDevice);
 
         // Save Security Device
-        $securityDevice->update($request->all());
+        $securityDevice->save();
 
         // Relations
         $securityDevice->physicalSecurityDevices()->sync($request->input('physical_security_devices', []));

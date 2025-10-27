@@ -124,7 +124,7 @@
                         {{ $application->editor }}
                     </td>
                     <th width="10%">
-                        <ts>{{ trans('cruds.application.fields.users') }}</ts>
+                        { trans('cruds.application.fields.users') }}
                     </th>
                     <td width="15%">
                         {{ $application->users }}
@@ -580,10 +580,11 @@
             /**
              * Fire the popup
              */
+            var titleText = @json(trans('cruds.application.fields.events'));
             $('.events_list_button').click(function (e) {
                 e.preventDefault()
                 Swal.fire({
-                    title: 'Évènements',
+                    title: titleText,
                     icon: 'info',
                     html: makeHtmlForSwalEvents(),
                     showCloseButton: true
