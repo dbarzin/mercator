@@ -148,8 +148,7 @@
                     </th>
                     <td>
                         @foreach($application->administrators as $administrator)
-                            <a href="{{ route('admin.admin-users.show', $administrator->id) }}"
-                            ">{{ $administrator->user_id }}</a>
+                            <a href="{{ route('admin.admin-users.show', $administrator->id) }}">{{ $administrator->user_id }}</a>
                             @if(!$loop->last)
                                 ,
                             @endif
