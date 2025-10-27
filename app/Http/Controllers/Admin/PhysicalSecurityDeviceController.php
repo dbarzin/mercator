@@ -63,10 +63,8 @@ class PhysicalSecurityDeviceController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
-        $physicalSecurityDevice = PhysicalSecurityDevice::create($request->all());
-
+        $physicalSecurityDevice = new PhysicalSecurityDevice($request->all());
         $this->handleIconUpload($request, $physicalSecurityDevice);
-
         $physicalSecurityDevice->save();
 
         // Relations
