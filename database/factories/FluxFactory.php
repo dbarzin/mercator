@@ -24,7 +24,7 @@ class FluxFactory extends Factory
             'nature' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'attributes' => $this->faker->word(3),
+            'attributes' => $this->faker->words(3),
 
             'application_source_id' => MApplication::factory(),
             'service_source_id' => ApplicationService::factory(),
