@@ -27,7 +27,7 @@ class MApplicationFactory extends Factory
             'responsible' => $this->faker->word(),
             'functional_referent' => $this->faker->word(),
             'type' => $this->faker->word(),
-            'icon_id' => $this->faker->randomNumber(),
+            'icon_id' => null,
             'technology' => $this->faker->word(),
             'external' => $this->faker->word(),
             'users' => $this->faker->word(),
