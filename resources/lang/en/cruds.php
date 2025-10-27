@@ -1387,9 +1387,9 @@ return [
             'applications' => 'Applications',
             'applications_helper' => 'List of applications installed on the device',
         ],
-        'title' => 'Logical security device',
-        'title_short' => 'Security device',
-        'title_singular' => 'Logical security devices',
+        'title' => 'Logical security devices',
+        'title_short' => 'Security devices',
+        'title_singular' => 'Logical security device',
     ],
     'site' => [
         'description' => 'Geographic location bringing together a set of people and / or resources.',
