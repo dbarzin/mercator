@@ -65,31 +65,9 @@ return new class extends Migration
             });
 
         // 3) Suppression contrainte FK/index/colonne cluster_id sur logical_servers
-
-        // Certaines anciennes migrations peuvent avoir des noms de contraintes différents.
-        // On tente proprement : d'abord dropForeign via tableau, sinon on ignore.
         Schema::table('logical_servers', function (Blueprint $table) {
-            // Si la contrainte existe, ceci fonctionne ; sinon Laravel lèvera une exception.
-            // On encapsule donc dans un try/catch global.
+            $table->dropForeign('cluster_id_fk_5435359');
         });
-
-        try {
-            Schema::table('logical_servers', function (Blueprint $table) {
-                // Essaie de supprimer la contrainte si elle existe
-                $table->dropIndex(['cluster_id_fk_5435359']);
-            });
-        } catch (\Throwable $e) {
-            // pas de FK ou nom différent : on ignore
-        }
-
-        try {
-            Schema::table('logical_servers', function (Blueprint $table) {
-                // Supprime l'index si présent (MUL peut n'être qu'un index)
-                $table->dropForeign('cluster_id_fk_5435359');
-            });
-        } catch (\Throwable $e) {
-            // pas d'index : on ignore
-        }
 
         // Enfin, suppression de la colonne
         if (Schema::hasColumn('logical_servers', 'cluster_id')) {
