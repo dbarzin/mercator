@@ -724,7 +724,7 @@
                             <select class="form-control select2 {{ $errors->has('security_devices') ? 'is-invalid' : '' }}"
                                     name="security_devices[]" id="security_devices" multiple>
                                 @foreach($security_devices as $id => $name)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('security_devices', [])) || $application->logicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ (in_array($id, old('security_devices', [])) || $application->securityDevices->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('security_devices'))
