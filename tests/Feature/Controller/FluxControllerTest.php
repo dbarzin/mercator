@@ -121,7 +121,7 @@ describe('edit', function () {
 });
 
 describe('update', function () {
-    test('can update activity', function () {
+    test('can update flux', function () {
         $name =  fake()->word();
         $flux = Flux::factory()->create(['name' => $name]);
 
@@ -138,7 +138,7 @@ describe('update', function () {
 });
 
 describe('destroy', function () {
-    test('can delete activity', function () {
+    test('can delete flux', function () {
         $flux = Flux::factory()->create();
 
         $response = $this->delete(route('admin.fluxes.destroy', $flux->id));
