@@ -98,7 +98,7 @@
                         <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.protocol') }}</label>
                         <select class="form-control select2-free {{ $errors->has('protocol') ? 'is-invalid' : '' }}" name="protocol" id="protocol">
                             @if (!$protocol_list->contains(old('protocol')))
-                                <option> {{ old('protocol') }}</option>'
+                                <option> {{ old('protocol') }}</option>
                             @endif
                             @foreach($protocol_list as $protocol)
                                 <option {{ (old('protocol') ? old('protocol') : $logicalFlow->protocol) == $protocol ? 'selected' : '' }}>{{$protocol}}</option>

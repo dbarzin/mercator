@@ -31,7 +31,7 @@
                             <select class="form-control select2-free {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
                                     name="entity_type" id="entity_type">
                                 @if (!$entityTypes->contains(old('entity_type')))
-                                    <option> {{ old('entity_type') }}</option>'
+                                    <option> {{ old('entity_type') }}</option>
                                 @endif
                                 @foreach($entityTypes as $t)
                                     <option {{ (old('entity_type') ? old('entity_type') : $entity->entity_type) == $t ? 'selected' : '' }}>{{$t}}</option>

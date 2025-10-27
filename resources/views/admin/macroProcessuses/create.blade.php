@@ -141,7 +141,7 @@
                     <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}"
                             name="owner" id="owner">
                         @if (!$owner_list->contains(old('owner')))
-                            <option> {{ old('owner') }}</option>'
+                            <option> {{ old('owner') }}</option>
                         @endif
                         @foreach($owner_list as $t)
                             <option {{ old('owner') == $t ? 'selected' : '' }}>{{$t}}</option>

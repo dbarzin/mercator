@@ -165,7 +165,7 @@
                             <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}"
                                     name="functional_referent" id="referent">
                                 @if (!$referent_list->contains(old('functional_referent')))
-                                    <option> {{ old('functional_referent') }}</option>'
+                                    <option> {{ old('functional_referent') }}</option>
                                 @endif
                                 @foreach($referent_list as $t)
                                     <option {{ (old('functional_referent') ? old('functional_referent') : $application->functional_referent) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -185,7 +185,7 @@
                             <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}"
                                     name="editor" id="editor">
                                 @if (!$editor_list->contains(old('editor')))
-                                    <option> {{ old('editor') }}</option>'
+                                    <option> {{ old('editor') }}</option>
                                 @endif
                                 @foreach($editor_list as $t)
                                     <option {{ (old('editor') ? old('editor') : $application->editor) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -206,7 +206,7 @@
                             <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}"
                                     name="users" id="users">
                                 @if (!$type_list->contains(old('users')))
-                                    <option> {{ old('users') }}</option>'
+                                    <option> {{ old('users') }}</option>
                                 @endif
                                 @foreach($users_list as $t)
                                     <option {{ (old('users') ? old('users') : $application->users) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -277,7 +277,7 @@
                             <select class="form-control select2-free {{ $errors->has('technology') ? 'is-invalid' : '' }}"
                                     name="technology" id="technology">
                                 @if (!$technology_list->contains(old('technology')))
-                                    <option> {{ old('technology') }}</option>'
+                                    <option> {{ old('technology') }}</option>
                                 @endif
                                 @foreach($technology_list as $t)
                                     <option {{ (old('technology') ? old('technology') : $application->technology) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -297,7 +297,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $application->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -318,7 +318,7 @@
                             <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}"
                                     name="external" id="external">
                                 @if (!$type_list->contains(old('external')))
-                                    <option> {{ old('external') }}</option>'
+                                    <option> {{ old('external') }}</option>
                                 @endif
                                 @foreach($external_list as $t)
                                     <option {{ (old('external') ? old('external') : $application->external) == $t ? 'selected' : '' }}>{{$t}}</option>

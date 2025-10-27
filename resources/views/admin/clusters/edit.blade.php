@@ -31,7 +31,7 @@
                                     name="type"
                                     id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('users') ? old('users') : $cluster->type) == $t ? 'selected' : '' }}>{{$t}}</option>

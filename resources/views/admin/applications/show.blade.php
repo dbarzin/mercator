@@ -124,7 +124,7 @@
                         {{ $application->editor }}
                     </td>
                     <th width="10%">
-                        { trans('cruds.application.fields.users') }}
+                        {{ trans('cruds.application.fields.users') }}
                     </th>
                     <td width="15%">
                         {{ $application->users }}
