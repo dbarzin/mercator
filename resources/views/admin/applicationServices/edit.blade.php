@@ -40,7 +40,7 @@
                     <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                             name="exposition" id="exposition">
                         @if (!$exposition_list->contains(old('exposition')))
-                            <option> {{ old('exposition') }}</option>'
+                            <option> {{ old('exposition') }}</option>
                         @endif
                         @foreach($exposition_list as $t)
                             <option {{ (old('exposition') ? old('exposition') : $applicationService->exposition) == $t ? 'selected' : '' }}>{{$t}}</option>
