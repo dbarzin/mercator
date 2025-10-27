@@ -693,7 +693,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="security_devices">{{ trans('cruds.application.fields.security_devices') }}</label>
-                            <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
+                            <select class="form-control select2 {{ $errors->has('security_devices') ? 'is-invalid' : '' }}"
                                     name="security_devices[]" id="security_devices" multiple>
                                 @foreach($security_devices as $id => $name)
                                     <option value="{{ $id }}" {{ in_array($id, old('security_devices', [])) ? 'selected' : '' }}>{{ $name }}</option>
