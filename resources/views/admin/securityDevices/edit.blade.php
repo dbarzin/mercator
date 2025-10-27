@@ -35,15 +35,15 @@
                                     name="type"
                                     id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $securityDevice->type) == $t ? 'selected' : '' }}>{{$t}}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('types'))
+                            @if($errors->has('type'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('types') }}
+                                    {{ $errors->first('type') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.securityDevice.fields.type_helper') }}</span>
@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.securityDevice.fields.attributes') }}</label>
                             <select class="form-control select2-free {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
-                                    name="attributes[]" id="attributes[]" multiple>
+                                    name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || in_array($a, explode(' ',$securityDevice->attributes)) ? 'selected' : '' }}>{{$a}}</option>
                                 @endforeach

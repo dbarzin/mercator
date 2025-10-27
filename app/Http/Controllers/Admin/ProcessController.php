@@ -59,6 +59,9 @@ class ProcessController extends Controller
         // Save icon
         $this->handleIconUpload($request, $process);
 
+        // Save process
+        $process->save();
+        
         return redirect()->route('admin.processes.index');
     }
 
