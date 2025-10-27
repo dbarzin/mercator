@@ -57,19 +57,15 @@ return new class extends Migration
         });
 
         try {
-            Schema::table('logical_servers', function (Blueprint $table) {
                 // Essaie de supprimer la contrainte si elle existe
                 $table->dropIndex(['cluster_id_fk_5435359']);
-            });
         } catch (\Throwable $e) {
             // pas de FK ou nom différent : on ignore
         }
 
         try {
-            Schema::table('logical_servers', function (Blueprint $table) {
                 // Supprime l'index si présent (MUL peut n'être qu'un index)
                 $table->dropForeign('cluster_id_fk_5435359');
-            });
         } catch (\Throwable $e) {
             // pas d'index : on ignore
         }
