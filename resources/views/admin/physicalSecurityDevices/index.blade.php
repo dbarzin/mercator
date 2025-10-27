@@ -71,12 +71,13 @@
                                 {{ $physicalSecurityDevice->type ?? '' }}
                             </td>
                             <td>
-                                @php
-                                    if ($physicalSecurityDevice->attributes)
-                                        foreach(explode(" ",$physicalSecurityDevice->attributes) as $a)
-                                            echo "<div class='badge badge-info'>$a</div> ";
-                                @endphp
-
+                                @if($physicalSecurityDevice->attributes)
+                                    @foreach(preg_split('/\s+/', trim($physicalSecurityDevice->attributes)) as $a)
+                                        @if($a !== '')
+                                            <span class="badge badge-info">{{ e($a) }}</span>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </td>
                             <td>
                                 {{ $physicalSecurityDevice->address_ip ?? '' }}
