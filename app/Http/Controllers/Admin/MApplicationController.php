@@ -17,6 +17,7 @@ use App\Models\Entity;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\Process;
+use App\Models\SecurityDevice;
 use App\Models\User;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +58,7 @@ class MApplicationController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
@@ -112,6 +114,7 @@ class MApplicationController extends Controller
                 'services',
                 'databases',
                 'logical_servers',
+                'security_devices',
                 'applicationBlocks',
                 'icons',
                 'users',
@@ -174,6 +177,7 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
@@ -195,6 +199,7 @@ class MApplicationController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
@@ -256,6 +261,7 @@ class MApplicationController extends Controller
                 'services',
                 'databases',
                 'logical_servers',
+                'security_devices',
                 'applicationBlocks',
                 'icons',
                 'users',
@@ -316,6 +322,7 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes

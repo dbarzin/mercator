@@ -20,6 +20,8 @@ class SecurityDevice extends Model
 
     public static array $searchable = [
         'name',
+        'type',
+        'attributes',
         'description',
     ];
 
@@ -31,14 +33,19 @@ class SecurityDevice extends Model
 
     protected $fillable = [
         'name',
+        'type',
+        'attributes',
         'description',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'icon_id',
     ];
 
     public function physicalSecurityDevices(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalSecurityDevice::class)->orderBy('name');
+    }
+
+    public function applications(): BelongsToMany
+    {
+        return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 }

@@ -157,6 +157,11 @@ class MApplication extends Model
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
+    public function securityDevices(): BelongsToMany
+    {
+        return $this->belongsToMany(SecurityDevice::class)->orderBy('name');
+    }
+
     public function applicationBlock(): BelongsTo
     {
         return $this->belongsTo(ApplicationBlock::class, 'application_block_id');
