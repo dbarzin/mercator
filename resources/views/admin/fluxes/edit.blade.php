@@ -34,7 +34,7 @@
                             <select class="form-control select2-free {{ $errors->has('nature') ? 'is-invalid' : '' }}"
                                     name="nature" id="nature">
                                 @if (!$nature_list->contains(old('nature')))
-                                    <option> {{ old('nature') }}</option>'
+                                    <option> {{ old('nature') }}</option>
                                 @endif
                                 @foreach($nature_list as $nature)
                                     <option {{ (old('nature') ? old('nature') : $flux->nature) == $nature ? 'selected' : '' }}>{{$nature}}</option>

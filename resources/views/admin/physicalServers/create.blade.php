@@ -29,7 +29,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$responsible_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -169,7 +169,7 @@
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$operating_system_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $t)
                                     <option {{ old('operating_system') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -207,7 +207,7 @@
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsible" id="responsible">
                                 @if (!$responsible_list->contains(old('responsible')))
-                                    <option> {{ old('responsible') }}</option>'
+                                    <option> {{ old('responsible') }}</option>
                                 @endif
                                 @foreach($responsible_list as $t)
                                     <option {{ old('responsible') == $t ? 'selected' : '' }}>{{$t}}</option>

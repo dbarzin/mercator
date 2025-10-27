@@ -29,7 +29,7 @@
                                     name="domain" id="domain">
 
                                 @if (!$domain_list->contains(old('domain')))
-                                    <option> {{ old('domain') }}</option>'
+                                    <option> {{ old('domain') }}</option>
                                 @endif
                                 @foreach($domain_list as $domain)
                                     <option {{ old('domain') == $domain ? 'selected' : '' }}>{{$domain}}</option>
@@ -49,7 +49,7 @@
                             <select class="form-control select2-free {{ $errors->has('domain') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $type)
                                     <option {{ old('type') == $type ? 'selected' : '' }}>{{$type}}</option>
@@ -132,7 +132,7 @@
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsible" id="responsible">
                                 @if (!$type_list->contains(old('responsible')))
-                                    <option> {{ old('responsible') }}</option>'
+                                    <option> {{ old('responsible') }}</option>
                                 @endif
                                 @foreach($responsible_list as $responsible)
                                     <option {{ old('responsible') == $responsible ? 'selected' : '' }}>{{$responsible}}</option>

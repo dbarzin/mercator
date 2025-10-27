@@ -32,7 +32,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type" maxlength='255'>
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $logicalServer->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -125,7 +125,7 @@
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$operating_system_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $t)
                                     <option {{ (old('operating_system') ? old('operating_system') : $logicalServer->operating_system) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -182,7 +182,7 @@
                             <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}"
                                     name="environment" id="environment">
                                 @if (!$environment_list->contains(old('environment')))
-                                    <option> {{ old('environment') }}</option>'
+                                    <option> {{ old('environment') }}</option>
                                 @endif
                                 @foreach($environment_list as $t)
                                     <option {{ (old('environment') ? old('environment') : $logicalServer->environment) == $t ? 'selected' : '' }}>{{$t}}</option>

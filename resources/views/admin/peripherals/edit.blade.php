@@ -32,7 +32,7 @@
                                     name="domain" id="domain">
                                 <option value="">{{ trans('global.pleaseSelect') }}</option>
                                 @if (!$domain_list->contains(old('domain')))
-                                    <option>{{ old('domain') }}</option>'
+                                    <option>{{ old('domain') }}</option>
                                 @endif
                                 @foreach($domain_list as $d)
                                     <option {{ (old('domain') ? old('domain') : $peripheral->domain) == $d ? 'selected' : '' }}>{{$d}}</option>
@@ -53,7 +53,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $peripheral->type) == $t ? 'selected' : '' }}>{{$t}}</option>

@@ -27,7 +27,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -47,7 +47,7 @@
                             <select class="form-control select2-free {{ $errors->has('status') ? 'is-invalid' : '' }}"
                                     name="status" id="status">
                                 @if (!$type_list->contains(old('status')))
-                                    <option> {{ old('status') }}</option>'
+                                    <option> {{ old('status') }}</option>
                                 @endif
                                 @foreach($status_list as $status)
                                     <option {{ old('status') == $status ? 'selected' : '' }}>{{$status}}</option>
@@ -108,7 +108,7 @@
                         <select class="form-control select2-free {{ $errors->has('status') ? 'is-invalid' : '' }}"
                                 name="manufacturer" id="manufacturer">
                             @if (!$type_list->contains(old('manufacturer')))
-                                <option> {{ old('manufacturer') }}</option>'
+                                <option> {{ old('manufacturer') }}</option>
                             @endif
                             @foreach($manufacturer_list as $manufacturer)
                                 <option {{ old('manufacturer') == $manufacturer ? 'selected' : '' }}>{{$manufacturer}}</option>
@@ -126,7 +126,7 @@
                         <select class="form-control select2-free {{ $errors->has('status') ? 'is-invalid' : '' }}"
                                 name="model" id="model">
                             @if (!$model_list->contains(old('model')))
-                                <option> {{ old('model') }}</option>'
+                                <option> {{ old('model') }}</option>
                             @endif
                             @foreach($model_list as $model)
                                 <option {{ old('model') == $model ? 'selected' : '' }}>{{$model}}</option>
@@ -158,7 +158,7 @@
                             <select class="form-control select2-free {{ $errors->has('cpu') ? 'is-invalid' : '' }}"
                                     name="cpu" id="cpu">
                                 @if (!$type_list->contains(old('cpu')))
-                                    <option> {{ old('cpu') }}</option>'
+                                    <option> {{ old('cpu') }}</option>
                                 @endif
                                 @foreach($cpu_list as $c)
                                     <option {{ old('cpu') == $c ? 'selected' : '' }}>{{$c}}</option>
@@ -291,7 +291,7 @@
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$type_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $os)
                                     <option {{ old('operating_system')  == $os ? 'selected' : '' }}>{{$os}}</option>
@@ -382,7 +382,7 @@
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="network_port_type" id="network_port_type">
                                 @if (!$type_list->contains(old('network_port_type')))
-                                    <option> {{ old('network_port_type') }}</option>'
+                                    <option> {{ old('network_port_type') }}</option>
                                 @endif
                                 @foreach($network_port_type_list as $type)
                                     <option {{ old('network_port_type')  == $type ? 'selected' : '' }}>{{$type}}</option>

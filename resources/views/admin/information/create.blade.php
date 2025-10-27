@@ -55,7 +55,7 @@
                         <label class="recommended" for="storage">{{ trans('cruds.information.fields.storage') }}</label>
                         <select class="form-control select2-free {{ $errors->has('storage') ? 'is-invalid' : '' }}" name="storage" id="storage">
                             @if (!$owner_list->contains(old('storage')))
-                                <option> {{ old('storage') }}</option>'
+                                <option> {{ old('storage') }}</option>
                             @endif
                             @foreach($storage_list as $t)
                                 <option {{ old('storage') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -77,7 +77,7 @@
                         <label class="recommended" for="owner">{{ trans('cruds.information.fields.owner') }}</label>
                         <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}" name="owner" id="owner">
                             @if (!$owner_list->contains(old('owner')))
-                                <option> {{ old('owner') }}</option>'
+                                <option> {{ old('owner') }}</option>
                             @endif
                             @foreach($owner_list as $t)
                                 <option {{ old('owner') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -94,7 +94,7 @@
                         <label class="recommended" for="administrator">{{ trans('cruds.information.fields.administrator') }}</label>
                         <select class="form-control select2-free {{ $errors->has('administrator') ? 'is-invalid' : '' }}" name="administrator" id="administrator">
                             @if (!$owner_list->contains(old('administrator')))
-                                <option> {{ old('administrator') }}</option>'
+                                <option> {{ old('administrator') }}</option>
                             @endif
                             @foreach($administrator_list as $t)
                                 <option {{ old('administrator') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -112,7 +112,7 @@
                         <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
                         <select class="form-control select2-free {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" name="sensitivity" id="sensitivity">
                             @if (!$owner_list->contains(old('sensitivity')))
-                                <option> {{ old('sensitivity') }}</option>'
+                                <option> {{ old('sensitivity') }}</option>
                             @endif
                             @foreach($sensitivity_list as $t)
                                 <option {{ old('sensitivity') == $t ? 'selected' : '' }}>{{$t}}</option>
