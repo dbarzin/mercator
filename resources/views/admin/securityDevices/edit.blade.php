@@ -38,7 +38,7 @@
                                     <option> {{ old('type') }}</option>'
                                 @endif
                                 @foreach($type_list as $t)
-                                    <option {{ (old('users') ? old('users') : $securityDevice->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                                    <option {{ (old('type') ? old('type') : $securityDevice->type) == $t ? 'selected' : '' }}>{{$t}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('types'))
