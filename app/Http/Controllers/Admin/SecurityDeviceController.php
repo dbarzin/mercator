@@ -58,7 +58,7 @@ class SecurityDeviceController extends Controller
         $securityDevice = SecurityDevice::create($request->all());
 
         // Relations
-        $securityDevice->physicalSecurityDevices()->sync($request->input('physicalSecurityDevices', []));
+        $securityDevice->physicalSecurityDevices()->sync($request->input('physical_security_devices', []));
         $securityDevice->applications()->sync($request->input('applications', []));
 
         // Save icon
