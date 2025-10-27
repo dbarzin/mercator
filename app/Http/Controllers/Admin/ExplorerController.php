@@ -150,9 +150,15 @@ class ExplorerController extends Controller
         }
 
         // Physical security devices
-        $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'address_ip', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
+        $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
-            $this->addNode($nodes, 6, $this->formatId('PSECURITY_', $securityDevice->id), $securityDevice->name, '/images/securitydevice.png', 'physical-security-devices', $securityDevice->address_ip);
+            $this->addNode($nodes,
+                6,
+                $this->formatId('PSECURITY_', $securityDevice->id),
+                $securityDevice->name,
+                $securityDevice->icon_id === null ? '/images/security.png' : "/admin/documents/{$securityDevice->icon_id}",
+                'physical-security-devices',
+                $securityDevice->address_ip);
             if ($securityDevice->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
             } elseif ($securityDevice->building_id !== null) {
@@ -399,9 +405,14 @@ class ExplorerController extends Controller
         }
 
         // Logical Security Devices
-        $logical_security_devices = DB::table('security_devices')->select('id', 'name')->whereNull('deleted_at')->get();
+        $logical_security_devices = DB::table('security_devices')->select('id', 'name','icon_id')->whereNull('deleted_at')->get();
         foreach ($logical_security_devices as $securityDevice) {
-            $this->addNode($nodes, 5, $this->formatId('LSECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'security-devices');
+            $this->addNode(
+                $nodes,
+                5, $this->formatId('LSECURITY_', $securityDevice->id),
+                $securityDevice->name,
+                $securityDevice->icon_id === null ? '/images/securitydevice.png' : "/admin/documents/{$securityDevice->icon_id}",
+                'security-devices');
         }
 
         // Logical Security Devices - Physical Security Device
@@ -695,6 +706,12 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('LSERVER_', $join->logical_server_id));
         }
+        // m_application_security_device
+        $joins = DB::table('m_application_security_device')->select('m_application_id', 'security_device_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('LSECURITY_', $join->security_device_id));
+        }
+
         // Application Services
         $services = DB::table('application_services')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($services as $service) {

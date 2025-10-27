@@ -22,6 +22,7 @@ class PhysicalSecurityDevice extends Model
     public static array $searchable = [
         'name',
         'type',
+        'attributes',
         'description',
     ];
 
@@ -34,14 +35,13 @@ class PhysicalSecurityDevice extends Model
     protected $fillable = [
         'name',
         'type',
+        'attributes',
         'description',
+        'icon_id',
         'address_ip',
         'site_id',
         'building_id',
         'bay_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     public function securityDevices(): BelongsToMany

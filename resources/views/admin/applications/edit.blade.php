@@ -658,12 +658,6 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="processes">{{ trans('cruds.application.fields.processes') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}"
                                     name="processes[]" id="processes" multiple>
                                 @foreach($processes as $id => $process)
@@ -683,12 +677,6 @@
                         <div class="form-group">
                             <label class="recommended"
                                    for="activities">{{ trans('cruds.application.fields.activities') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('activities') ? 'is-invalid' : '' }}"
                                     name="activities[]" id="activities" multiple>
                                 @foreach($activities as $id => $activity)
@@ -713,19 +701,13 @@
             <!------------------------------------------------------------------------------------------------------------->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label for="logical_servers">{{ trans('cruds.application.fields.logical_servers') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="logical_servers[]" id="logical_servers" multiple>
-                                @foreach($logical_servers as $id => $logical_servers)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('logical_servers', [])) || $application->logicalServers->contains($id)) ? 'selected' : '' }}>{{ $logical_servers }}</option>
+                                @foreach($logical_servers as $id => $name)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('logical_servers', [])) || $application->logicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('logical_servers'))
@@ -734,6 +716,23 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="logical_servers">{{ trans('cruds.application.fields.security_devices') }}</label>
+                            <select class="form-control select2 {{ $errors->has('security_devices') ? 'is-invalid' : '' }}"
+                                    name="security_devices[]" id="security_devices" multiple>
+                                @foreach($security_devices as $id => $name)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('security_devices', [])) || $application->logicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('security_devices'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('security_devices') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.application.fields.security_devices_helper') }}</span>
                         </div>
                     </div>
                 </div>
