@@ -72,9 +72,11 @@
                             </td>
                             <td>
                                 @php
-                                    foreach(explode(" ",$physicalSecurityDevice->attributes) as $a)
-                                        echo "<div class='badge badge-info'>$a</div> ";
+                                    if ($physicalSecurityDevice->attributes)
+                                        foreach(explode(" ",$physicalSecurityDevice->attributes) as $a)
+                                            echo "<div class='badge badge-info'>$a</div> ";
                                 @endphp
+
                             </td>
                             <td>
                                 {{ $physicalSecurityDevice->address_ip ?? '' }}

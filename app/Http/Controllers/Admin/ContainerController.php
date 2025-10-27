@@ -9,7 +9,6 @@ use App\Http\Requests\StoreContainerRequest;
 use App\Http\Requests\UpdateContainerRequest;
 use App\Models\Container;
 use App\Models\Database;
-use App\Models\Document;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use Gate;
@@ -48,27 +47,9 @@ class ContainerController extends Controller
         $container->databases()->sync($request->input('databases', []));
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $container);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $container->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $container->icon_id = intval($request->iconSelect);
-        } else {
-            $container->icon_id = null;
-        }
+        // Save container
         $container->save();
 
         return redirect()->route('admin.containers.index');
@@ -93,27 +74,7 @@ class ContainerController extends Controller
     public function update(UpdateContainerRequest $request, Container $container)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $container->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $container->icon_id = intval($request->iconSelect);
-        } else {
-            $container->icon_id = null;
-        }
+        $this->handleIconUpload($request, $container);
 
         $container->update($request->all());
         $container->applications()->sync($request->input('applications', []));

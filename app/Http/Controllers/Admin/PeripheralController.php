@@ -9,7 +9,6 @@ use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
 use App\Models\Bay;
 use App\Models\Building;
-use App\Models\Document;
 use App\Models\Entity;
 use App\Models\MApplication;
 use App\Models\Peripheral;
@@ -109,27 +108,9 @@ class PeripheralController extends Controller
         $peripheral = Peripheral::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $peripheral);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $peripheral->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $peripheral->icon_id = intval($request->iconSelect);
-        } else {
-            $peripheral->icon_id = null;
-        }
+        // Save Peripheral
         $peripheral->save();
 
         // Save links
@@ -177,27 +158,7 @@ class PeripheralController extends Controller
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $peripheral->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $peripheral->icon_id = intval($request->iconSelect);
-        } else {
-            $peripheral->icon_id = null;
-        }
+        $this->handleIconUpload($request, $peripheral);
 
         // Get fields
         $peripheral->update($request->all());

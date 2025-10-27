@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
-use App\Models\Document;
 use App\Models\MApplication;
 use App\Models\Workstation;
 use Gate;
@@ -118,27 +117,8 @@ class WorkstationController extends Controller
         $workstation = Workstation::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->handleIconUpload($request, $workstation);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $workstation->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $workstation->icon_id = intval($request->iconSelect);
-        } else {
-            $workstation->icon_id = null;
-        }
         $workstation->save();
 
         // Sync applications
@@ -311,27 +291,7 @@ class WorkstationController extends Controller
     public function update(UpdateWorkstationRequest $request, Workstation $workstation)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $workstation->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $workstation->icon_id = intval($request->iconSelect);
-        } else {
-            $workstation->icon_id = null;
-        }
+        $this->handleIconUpload($request, $workstation);
 
         $workstation->update($request->all());
         $workstation->applications()->sync($request->input('applications', []));

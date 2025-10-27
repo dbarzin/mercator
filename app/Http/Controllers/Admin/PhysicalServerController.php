@@ -10,7 +10,6 @@ use App\Http\Requests\UpdatePhysicalServerRequest;
 use App\Models\Bay;
 use App\Models\Building;
 use App\Models\Cluster;
-use App\Models\Document;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\PhysicalServer;
@@ -117,27 +116,7 @@ class PhysicalServerController extends Controller
         $physicalServer = PhysicalServer::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $physicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $physicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $physicalServer->icon_id = null;
-        }
+        $this->handleIconUpload($request, $physicalServer);
 
         // Save LogicalServer
         $physicalServer->save();
@@ -190,27 +169,7 @@ class PhysicalServerController extends Controller
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $physicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $physicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $physicalServer->icon_id = null;
-        }
+        $this->handleIconUpload($request, $physicalServer);
 
         // Other fields
         $physicalServer->update($request->all());
