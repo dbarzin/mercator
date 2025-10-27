@@ -65,8 +65,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                             name="applications[]" id="applications" multiple>
-                        @foreach($applications as $id => $applications)
-                            <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $applicationService->applications->contains($id)) ? 'selected' : '' }}>{{ $applications }}</option>
+                        @foreach($applications as $id => $name)
+                            <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $applicationService->applications->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('applications'))
@@ -87,8 +87,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('modules') ? 'is-invalid' : '' }}"
                             name="modules[]" id="modules" multiple>
-                        @foreach($modules as $id => $modules)
-                            <option value="{{ $id }}" {{ (in_array($id, old('modules', [])) || $applicationService->modules->contains($id)) ? 'selected' : '' }}>{{ $modules }}</option>
+                        @foreach($modules as $id => $name)
+                            <option value="{{ $id }}" {{ (in_array($id, old('modules', [])) || $applicationService->modules->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('modules'))
