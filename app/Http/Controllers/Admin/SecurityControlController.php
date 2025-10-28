@@ -97,6 +97,9 @@ class SecurityControlController extends Controller
         $source = $request->get('source');
         if (str_starts_with($source, 'APP_')) {
             $app = MApplication::query()->where('id', substr($source, 4))->first();
+            if ($app === null) {
+                return back()->withErrors(['associate' => 'Application not found'])->setStatusCode(422);
+            }
             $app->securityControls()->sync($controls);
         } elseif (str_starts_with($source, 'PR_')) {
             $process = Process::query()->where('id', substr($source, 3))->first();
