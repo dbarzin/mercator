@@ -22,6 +22,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/dusk": "^8.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.26",
@@ -29,7 +30,8 @@
         "nunomaduro/collision": "^8.0",
         "nunomaduro/phpinsights": "^2.12",
         "orangehill/iseed": "^3.0",
-        "pestphp/pest": "^3.8"
+        "pestphp/pest": "^3.8",
+        "phpstan/phpstan": "^2.1"
     },
     "autoload": {
         "psr-4": {
