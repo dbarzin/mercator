@@ -56,7 +56,6 @@ class GlobalSearchController extends Controller
         'ApplicationModule' => 'cruds.applicationModule.title',
         'MacroProcessus' => 'cruds.macroProcessus.title',
         'Certificate' => 'cruds.certificate.title',
-        'Activity' => 'cruds.activity.title',
         'DataProcessing' => 'cruds.dataProcessing.title',
         'SecurityControl' => 'cruds.securityControl.title',
         'LogicalFlow' => 'cruds.LogicalFlow.title',

@@ -43,7 +43,7 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new logicalFlowResource($logicalFlow);
+        return new LogicalFlowResource($logicalFlow);
     }
 
     public function update(UpdateLogicalFlowRequest $request, logicalFlow $logicalFlow)

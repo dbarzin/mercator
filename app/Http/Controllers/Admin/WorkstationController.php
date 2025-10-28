@@ -29,7 +29,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -131,7 +131,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -209,7 +209,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');

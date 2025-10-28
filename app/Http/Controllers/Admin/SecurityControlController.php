@@ -96,10 +96,16 @@ class SecurityControlController extends Controller
 
         $source = $request->get('source');
         if (str_starts_with($source, 'APP_')) {
-            $app = MApplication::where('id', substr($source, 4))->get()->first();
+            $app = MApplication::query()->where('id', substr($source, 4))->first();
+            if ($app === null) {
+                return back()->withErrors(['associate' => 'Application not found'])->setStatusCode(422);
+            }
             $app->securityControls()->sync($controls);
         } elseif (str_starts_with($source, 'PR_')) {
-            $process = Process::where('id', substr($source, 3))->get()->first();
+            $process = Process::query()->where('id', substr($source, 3))->first();
+            if ($process === null) {
+                return back()->withErrors(['associate' => 'Process not found'])->setStatusCode(422);
+            }
             $process->securityControls()->sync($controls);
         } else {
             return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
@@ -116,9 +122,9 @@ class SecurityControlController extends Controller
 
         // Get control list of object base on the ID
         if (str_starts_with($request->id, 'APP_')) {
-            $list = MApplication::where('id', substr($request->id, 4))->get()->first()->securityControls;
+            $list = MApplication::query()->where('id', substr($request->id, 4))->first()->securityControls;
         } elseif (str_starts_with($request->id, 'PR_')) {
-            $list = Process::where('id', substr($request->id, 3))->get()->first()->securityControls;
+            $list = Process::query()->where('id', substr($request->id, 3))->first()->securityControls;
         } else {
             // Invalid ID
             return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
