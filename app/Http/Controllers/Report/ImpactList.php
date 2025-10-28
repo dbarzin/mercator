@@ -3,16 +3,19 @@
 
 namespace App\Http\Controllers\Report;
 
-use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\ActivityImpact;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class ImpactList extends Controller
+class ImpactList extends ReportController
 {
+    /**
+     * @throws Exception
+     */
     public function generateExcel()
     {
         // 1. Récupérer toutes les activités et impacts

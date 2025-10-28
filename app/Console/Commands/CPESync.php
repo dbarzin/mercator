@@ -5,9 +5,13 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class CPESync extends Command
 {
@@ -20,6 +24,13 @@ class CPESync extends Command
 
     protected $description = 'Synchronize the database with the CPE dictionary (vendors, products, versions) from NVD.';
 
+    /**
+     * @throws \Throwable
+     * @throws NotFoundExceptionInterface
+     * @throws ConnectionException
+     * @throws ContainerExceptionInterface
+     * @throws RequestException
+     */
     public function handle(): int
     {
         // Optional random startup delay (0–15 minutes) unless --now is provided
@@ -29,8 +40,9 @@ class CPESync extends Command
             sleep($delay);
         }
 
-        $apiUrl = config('services.cpe.api_url', env('CPE_API_URL', 'https://services.nvd.nist.gov/rest/json/cpes/2.0'));
-        $apiKey = config('services.cpe.api_key', env('NVD_API_KEY'));
+        $apiKey = config('services.nvd.api_key');
+        $apiUrl = config('services.nvd.api_url');
+
         $perPage = min(max((int) $this->option('per-page'), 1), 10000);
         $maxItems = (int) $this->option('max');
         $isFull = (bool) $this->option('full');
@@ -38,7 +50,7 @@ class CPESync extends Command
 
         $this->info("Source CPE API: {$apiUrl}");
 
-        // Determine sync time window (UTC) for incremental mode
+        // Determine to sync a time window (UTC) for incremental mode
         $nowUtc = now('UTC');
         $start = null;
         $end = null;
