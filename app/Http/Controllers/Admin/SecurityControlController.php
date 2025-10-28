@@ -103,6 +103,9 @@ class SecurityControlController extends Controller
             $app->securityControls()->sync($controls);
         } elseif (str_starts_with($source, 'PR_')) {
             $process = Process::query()->where('id', substr($source, 3))->first();
+            if ($process === null) {
+                return back()->withErrors(['associate' => 'Process not found'])->setStatusCode(422);
+            }
             $process->securityControls()->sync($controls);
         } else {
             return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
