@@ -221,8 +221,6 @@ class WorkstationController extends Controller
 
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
-
         $type_list = Workstation::select('type')
             ->where('type', '<>', null)
             ->distinct()
