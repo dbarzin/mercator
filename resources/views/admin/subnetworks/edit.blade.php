@@ -196,7 +196,7 @@
                                     <option {{ (old('responsible_exp') ? old('responsible_exp') : $subnetwork->responsible_exp) == $t ? 'selected' : '' }}>{{$t}}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('responsible'))
+                            @if($errors->has('responsible_exp'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('responsible_exp') }}
                                 </div>
