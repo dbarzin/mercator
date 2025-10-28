@@ -1,111 +1,103 @@
 <?php
 
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use LdapRecord\Laravel\Auth\HasLdapUser;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 
-/**
- * App\User
- */
 class User extends Authenticatable implements LdapAuthenticatable
 {
-    use AuthenticatesWithLdap;
-    use HasApiTokens;
-    use HasFactory;
-    use HasLdapUser;
-    use Notifiable;
-    use SoftDeletes;
+    use AuthenticatesWithLdap, HasApiTokens, HasFactory, HasLdapUser, Notifiable, SoftDeletes;
 
-    public $table = 'users';
+    protected $table = 'users';
 
-    protected $hidden = [
-        'remember_token',
-        'password',
+    protected $hidden = ['remember_token', 'password'];
+
+    // $dates est obsolète — préférez $casts
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'created_at'        => 'datetime',
+        'updated_at'        => 'datetime',
+        'deleted_at'        => 'datetime',
     ];
 
-    protected array $dates = [
-        'email_verified_at',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+    protected $fillable = ['login','name','email','password','granularity','language'];
 
-    protected $fillable = [
-        'login',
-        'name',
-        'email',
-        'password',
-        'granularity',
-        'language',
-    ];
-
-    // Add some caching for roles
-    private ?BelongsToMany $cachedRoles = null;
-
-    public function setPasswordAttribute(?string $value): void
+    /**
+     * Mutator mot de passe : hash seulement si nécessaire.
+     */
+    protected function password(): Attribute
     {
-        $this->attributes['password'] = bcrypt($value);
+        return Attribute::set(function (?string $value) {
+            if ($value === null || $value === '') {
+                return null;
+            }
+            return Hash::needsRehash($value) ? Hash::make($value) : $value;
+        });
     }
 
     /**
-     * Check if the User has the 'Admin' role, which is the first role in the app
+     * Relation rôles
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * L'utilisateur es-til administrateur ?
      */
     public function isAdmin(): bool
     {
-        foreach ($this->roles()->get() as $role) {
-            if ($role->id === 1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function roles(): BelongsToMany
-    {
-        if ($this->cachedRoles === null) {
-            $this->cachedRoles = $this->belongsToMany(Role::class);
-        }
-
-        return $this->cachedRoles;
+        return $this->roles()->whereKey(1)->exists();
     }
 
     /**
-     * Permet d'ajouter un role à l'utilisateur courant
+     * Ajouter un rôle (utilise attach sur pivot).
      */
     public function addRole(Role $role): void
     {
-        if ($this->hasRole($role)) {
-            return;
+        if (! $this->hasRole($role)) {
+            $this->roles()->attach($role->getKey());
+            // Optionnel : tenir le cache en mémoire si déjà chargé :
+            if ($this->relationLoaded('roles')) {
+                $this->setRelation('roles', $this->getRelation('roles')->push($role));
+            }
         }
-
-        $this->roles()->save($role);
     }
 
     /**
-     * Check si un utilisateur a un role
-     *
-     * @param  string|Role  $role
+     * Vérifie si l'utilisateur possède un rôle.
+     * @param  string|Role  $role  Titre/slug OU instance Role.
      */
-    public function hasRole(mixed $role): bool
+    public function hasRole(string|Role $role): bool
     {
-        if ($role instanceof Role) {
-            return $this->roles()->get()->contains($role);
-        }
-        if (is_string($role)) {
-            return $this->roles()->get()->contains(Role::whereTitle($role)->first());
+        // Zéro requête si déjà eager-loaded
+        if ($this->relationLoaded('roles')) {
+            $roles = $this->getRelation('roles'); // Collection<Role>
+            return $role instanceof Role
+                ? $roles->contains('id', $role->getKey())
+                : ($roles->contains('slug', $role) || $roles->contains('title', $role));
         }
 
-        return false;
+        // Requête minimale
+        if ($role instanceof Role) {
+            return $this->roles()->whereKey($role->getKey())->exists();
+        }
+
+        // Privilégie 'slug' si disponible
+        return $this->roles()
+            ->where(fn($q) => $q->where('slug', $role)->orWhere('title', $role))
+            ->exists();
     }
 
     public function m_applications(): BelongsToMany
