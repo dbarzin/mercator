@@ -47,8 +47,8 @@ class ReportController extends Controller
             $table->addCell(8000, ['gridSpan' => 2])
                 ->addText(
                     $title,
-                    CartographyController::FANCYTABLETITLESTYLE,
-                    CartographyController::NOSPACE
+                    CartographyController::FANCY_TABLE_TITLE_STYLE,
+                    CartographyController::NO_SPACE
                 );
         }
 
@@ -58,14 +58,14 @@ class ReportController extends Controller
     protected static function addTextRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
-        $table->addCell(2000, CartographyController::NOSPACE)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
-        $table->addCell(6000, CartographyController::NOSPACE)->addText($value, CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
+        $table->addCell(2000, CartographyController::NO_SPACE)->addText($title, CartographyController::FANCY_LEFT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
+        $table->addCell(6000, CartographyController::NO_SPACE)->addText($value, CartographyController::FANCY_RIGHT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
     }
 
     protected static function addHTMLRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
-        $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
+        $table->addCell(2000)->addText($title, CartographyController::FANCY_LEFT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
         try {
             \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
         } catch (\Exception $e) {

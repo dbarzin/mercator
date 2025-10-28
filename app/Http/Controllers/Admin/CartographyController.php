@@ -68,15 +68,15 @@ use Symfony\Component\HttpFoundation\Response;
 class CartographyController extends Controller
 {
     // Cell style
-    public const FANCYTABLETITLESTYLE = ['bold' => true, 'color' => '006699'];
+    public const FANCY_TABLE_TITLE_STYLE = ['bold' => true, 'color' => '006699'];
 
-    public const FANCYLEFTTABLECELLSTYLE = ['bold' => true, 'color' => '000000'];
+    public const FANCY_LEFT_TABLE_CELL_STYLE = ['bold' => true, 'color' => '000000'];
 
-    public const FANCYRIGHTTABLECELLSTYLE = ['bold' => false, 'color' => '000000'];
+    public const FANCY_RIGHT_TABLE_CELL_STYLE = ['bold' => false, 'color' => '000000'];
 
-    public const FANCYLINKSTYLE = ['color' => '006699'];
+    public const FANCY_LINK_STYLE = ['color' => '006699'];
 
-    public const NOSPACE = [
+    public const NO_SPACE = [
         'spaceBefore' => 30,
         'spaceAfter' => 30,
     ];
@@ -201,11 +201,11 @@ class CartographyController extends Controller
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.relations'));
                 foreach ($entity->sourceRelations as $relation) {
                     if ($relation->id !== null) {
-                        $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE);
+                        $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE);
                     }
                     $textRun->addText(' -> ');
                     if ($relation->destination_id !== null) {
-                        $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? '', CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                        $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                     }
                     if ($entity->sourceRelations->last() !== $relation) {
                         $textRun->addText(', ');
@@ -215,9 +215,9 @@ class CartographyController extends Controller
                     $textRun->addText(', ');
                 }
                 foreach ($entity->destinationRelations as $relation) {
-                    $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                    $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                     $textRun->addText(' <- ');
-                    $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? '', CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                    $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                     if ($entity->destinationRelations->last() !== $relation) {
                         $textRun->addText(', ');
                     }
@@ -225,7 +225,7 @@ class CartographyController extends Controller
                 // Processus soutenus
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.processes'));
                 foreach ($entity->processes as $process) {
-                    $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
+                    $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     if ($entity->processes->last() !== $process) {
                         $textRun->addText(', ');
                     }
@@ -246,7 +246,7 @@ class CartographyController extends Controller
 
                 if ($granularity > 1) {
                     $this->addTextRow($table, trans('cruds.relation.fields.type'), $relation->type);
-                    $textRun = $this->addTextRow(
+                    $this->addTextRow(
                         $table,
                         trans('cruds.relation.fields.importance'),
                         $relation->importance === null ?
@@ -255,9 +255,9 @@ class CartographyController extends Controller
                     );
                 }
                 $textRun = $this->addTextRunRow($table, trans('cruds.relation.fields.link'));
-                $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? '', CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                 $textRun->addText(' -> ');
-                $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? '', CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                 $section->addTextBreak(1);
             }
         }
@@ -357,7 +357,7 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, trans('cruds.macroProcessus.fields.description'), $macroProcess->description);
                     $this->addHTMLRow($table, trans('cruds.macroProcessus.fields.io_elements'), $macroProcess->io_elements);
                     // Security Needs
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.macroProcessus.fields.security_need'),
                         '<p>'.
@@ -391,7 +391,7 @@ class CartographyController extends Controller
                     }
                     $textRun = $this->addTextRunRow($table, trans('cruds.macroProcessus.fields.processes'));
                     foreach ($macroProcess->processes as $process) {
-                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($macroProcess->processes->last() !== $process) {
                             $textRun->addText(', ');
                         }
@@ -413,27 +413,27 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, trans('cruds.process.fields.in_out'), $process->in_out);
                     $textRun = $this->addTextRunRow($table, trans('cruds.process.fields.activities'));
                     foreach ($process->activities as $activity) {
-                        $textRun->addLink('ACTIVITY'.$activity->id, $activity->name, CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                        $textRun->addLink('ACTIVITY'.$activity->id, $activity->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                         if ($process->activities->last() !== $activity) {
                             $textRun->addText(', ');
                         }
                     }
                     $textRun = $this->addTextRunRow($table, trans('cruds.process.fields.entities'));
                     foreach ($process->entities as $entity) {
-                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                         if ($process->entities->last() !== $entity) {
-                            $textRun->addText(', ', CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
+                            $textRun->addText(', ', CartographyController::FANCY_RIGHT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
                         }
                     }
                     $textRun = $this->addTextRunRow($table, trans('cruds.process.fields.applications'));
                     foreach ($process->applications as $application) {
-                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                         if ($process->applications->last() !== $application) {
-                            $textRun->addText(', ', CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
+                            $textRun->addText(', ', CartographyController::FANCY_RIGHT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
                         }
                     }
                     // Security Needs
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.process.fields.security_need'),
                         '<p>'.
@@ -480,7 +480,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.activity.fields.operations'));
                     foreach ($activity->operations as $operation) {
-                        $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($activity->operations->last() !== $operation) {
                             $textRun->addText(', ');
                         }
@@ -503,7 +503,7 @@ class CartographyController extends Controller
                     if ($granularity === 3) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.operation.fields.tasks'));
                         foreach ($operation->tasks as $task) {
-                            $textRun->addLink('TASK'.$task->id, $task->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('TASK'.$task->id, $task->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($operation->tasks->last() !== $task) {
                                 $textRun->addText(', ');
                             }
@@ -513,7 +513,7 @@ class CartographyController extends Controller
                     if ($granularity >= 2) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.operation.fields.actors'));
                         foreach ($operation->actors as $actor) {
-                            $textRun->addLink('ACTOR'.$actor->id, $actor->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('ACTOR'.$actor->id, $actor->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($operation->actors->last() !== $actor) {
                                 $textRun->addText(', ');
                             }
@@ -537,7 +537,7 @@ class CartographyController extends Controller
                     // Operations
                     $textRun = $this->addTextRunRow($table, trans('cruds.task.fields.operations'));
                     foreach ($task->operations as $operation) {
-                        $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($task->operations->last() !== $operation) {
                             $textRun->addText(', ');
                         }
@@ -561,7 +561,7 @@ class CartographyController extends Controller
                     // Operations
                     $textRun = $this->addTextRunRow($table, trans('cruds.actor.fields.operations'));
                     foreach ($actor->operations as $operation) {
-                        $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($actor->operations->last() !== $operation) {
                             $textRun->addText(', ');
                         }
@@ -586,13 +586,13 @@ class CartographyController extends Controller
                     // processus liés
                     $textRun = $this->addTextRunRow($table, trans('cruds.information.fields.processes'));
                     foreach ($information->processes as $process) {
-                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($information->processes->last() !== $process) {
                             $textRun->addText(', ');
                         }
                     }
                     // Security Needs
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.information.fields.security_need'),
                         '<p>'.
@@ -706,7 +706,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationBlock.fields.applications'));
                     foreach ($ab->applications as $application) {
-                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($ab->applications->last() !== $application) {
                             $textRun->addText(', ');
                         }
@@ -730,7 +730,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.entities'));
                     foreach ($application->entities as $entity) {
-                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->entities->last() !== $entity) {
                             $textRun->addText(', ');
                         }
@@ -738,7 +738,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.entity_resp'));
                     if ($application->entity_resp !== null) {
-                        $textRun->addLink('ENTITY'.$application->entity_resp->id, $application->entity_resp->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ENTITY'.$application->entity_resp->id, $application->entity_resp->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
                     $this->addTextRow($table, trans('cruds.application.fields.technology'), $application->technology);
                     $this->addTextRow($table, trans('cruds.application.fields.type'), $application->type);
@@ -749,7 +749,7 @@ class CartographyController extends Controller
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.flux'));
                     $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($application->applicationSourceFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->applicationSourceFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -757,7 +757,7 @@ class CartographyController extends Controller
                     $textRun->addTextBreak(1);
                     $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($application->applicationDestFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->applicationDestFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -767,7 +767,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans('cruds.application.fields.update_date'), $application->update_date);
 
                     // Security Needs
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.application.fields.security_need'),
                         '<p>'.
@@ -797,7 +797,7 @@ class CartographyController extends Controller
                     );
 
                     // RTO
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.application.fields.RTO'),
                         (intdiv($application->rto, 60 * 24) > 0 ?
@@ -814,7 +814,7 @@ class CartographyController extends Controller
                     );
 
                     // RPO
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.application.fields.RPO'),
                         (intdiv($application->rpo, 60 * 24) > 0 ?
@@ -834,7 +834,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.processes'));
                     foreach ($application->processes as $process) {
-                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->processes->last() !== $process) {
                             $textRun->addText(', ');
                         }
@@ -842,7 +842,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.activities'));
                     foreach ($application->activities as $activity) {
-                        $textRun->addLink('ACTIVITY'.$activity->id, $activity->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ACTIVITY'.$activity->id, $activity->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->activities->last() !== $activity) {
                             $textRun->addText(', ');
                         }
@@ -850,7 +850,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.services'));
                     foreach ($application->services as $service) {
-                        $textRun->addLink('APPLICATIONSERVICE'.$service->id, $service->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONSERVICE'.$service->id, $service->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->services->last() !== $service) {
                             $textRun->addText(', ');
                         }
@@ -858,7 +858,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.databases'));
                     foreach ($application->databases as $database) {
-                        $textRun->addLink('DATABASE'.$database->id, $database->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('DATABASE'.$database->id, $database->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->databases->last() !== $database) {
                             $textRun->addText(', ');
                         }
@@ -866,12 +866,12 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.application_block'));
                     if ($application->application_block !== null) {
-                        $textRun->addLink('APPLICATIONBLOCK'.$application->application_block_id, $application->application_block->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONBLOCK'.$application->application_block_id, $application->application_block->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.logical_servers'));
                     foreach ($application->logicalServers as $logical_server) {
-                        $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($application->logicalServers->last() !== $logical_server) {
                             $textRun->addText(', ');
                         }
@@ -895,7 +895,7 @@ class CartographyController extends Controller
                     // Modules
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationService.fields.modules'));
                     foreach ($applicationService->modules as $module) {
-                        $textRun->addLink('APPLICATIONMODULE'.$module->id, $module->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONMODULE'.$module->id, $module->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($applicationService->modules->last() !== $module) {
                             $textRun->addText(', ');
                         }
@@ -905,7 +905,7 @@ class CartographyController extends Controller
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationService.fields.flux'));
                     $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($applicationService->serviceSourceFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($applicationService->serviceSourceFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -913,7 +913,7 @@ class CartographyController extends Controller
                     $textRun->addTextBreak(1);
                     $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($applicationService->serviceDestFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($applicationService->serviceDestFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -924,7 +924,7 @@ class CartographyController extends Controller
                     // Applications
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationService.fields.applications'));
                     foreach ($applicationService->applications as $application) {
-                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($applicationService->applications->last() !== $application) {
                             $textRun->addText(', ');
                         }
@@ -947,7 +947,7 @@ class CartographyController extends Controller
                     // Services
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationModule.fields.services'));
                     foreach ($applicationModule->applicationServices as $service) {
-                        $textRun->addLink('APPLICATIONSERVICE'.$service->id, $service->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONSERVICE'.$service->id, $service->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($applicationModule->applicationServices->last() !== $service) {
                             $textRun->addText(', ');
                         }
@@ -957,7 +957,7 @@ class CartographyController extends Controller
                     $textRun = $this->addTextRunRow($table, trans('cruds.applicationModule.fields.flux'));
                     $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($applicationModule->moduleSourceFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($applicationModule->moduleSourceFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -965,7 +965,7 @@ class CartographyController extends Controller
                     $textRun->addTextBreak(1);
                     $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($applicationModule->moduleDestFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($applicationModule->moduleDestFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -988,7 +988,7 @@ class CartographyController extends Controller
                     // Services
                     $textRun = $this->addTextRunRow($table, trans('cruds.database.fields.entities'));
                     foreach ($database->entities as $entity) {
-                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($database->entities->last() !== $entity) {
                             $textRun->addText(', ');
                         }
@@ -997,7 +997,7 @@ class CartographyController extends Controller
                     // entity_resp
                     $textRun = $this->addTextRunRow($table, trans('cruds.database.fields.entity_resp'));
                     if ($database->entity_resp !== null) {
-                        $textRun->addLink('ENTITY'.$database->entity_resp->id, $database->entity_resp->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ENTITY'.$database->entity_resp->id, $database->entity_resp->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $this->addTextRow($table, trans('cruds.database.fields.responsible'), $database->responsible);
@@ -1007,7 +1007,7 @@ class CartographyController extends Controller
                     $textRun = $this->addTextRunRow($table, trans('cruds.database.fields.flux'));
                     $textRun->addText(trans('cruds.flux.fields.source').' : ');
                     foreach ($database->databaseSourceFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($database->databaseSourceFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -1015,7 +1015,7 @@ class CartographyController extends Controller
                     $textRun->addTextBreak(1);
                     $textRun->addText(trans('cruds.flux.fields.destination').' : ');
                     foreach ($database->databaseDestFluxes as $flux) {
-                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($database->databaseDestFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
@@ -1024,14 +1024,14 @@ class CartographyController extends Controller
                     // Informations
                     $textRun = $this->addTextRunRow($table, trans('cruds.database.fields.informations'));
                     foreach ($database->informations as $information) {
-                        $textRun->addLink('INFORMATION'.$information->id, $information->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('INFORMATION'.$information->id, $information->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($database->informations->last() !== $information) {
                             $textRun->addText(', ');
                         }
                     }
 
                     // Security Needs
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.database.fields.security_need'),
                         '<p>'.
@@ -1080,43 +1080,43 @@ class CartographyController extends Controller
                     // source
                     if ($flux->application_source !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.application_source'));
-                        $textRun->addLink('APPLICATION'.$flux->application_source->id, $flux->application_source->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATION'.$flux->application_source->id, $flux->application_source->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($flux->service_source !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.service_source'));
-                        $textRun->addLink('APPLICATIONSERVICE'.$flux->service_source->id, $flux->service_source->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONSERVICE'.$flux->service_source->id, $flux->service_source->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($flux->module_source !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.module_source'));
-                        $textRun->addLink('APPLICATIONMODULE'.$flux->module_source->id, $flux->module_source->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONMODULE'.$flux->module_source->id, $flux->module_source->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($flux->database_source !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.database_source'));
-                        $textRun->addLink('DATABASE'.$flux->database_source->id, $flux->database_source->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('DATABASE'.$flux->database_source->id, $flux->database_source->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     // Dest
                     if ($flux->application_dest !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.application_dest'));
-                        $textRun->addLink('APPLICATION'.$flux->application_dest->id, $flux->application_dest->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATION'.$flux->application_dest->id, $flux->application_dest->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($flux->service_dest !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.service_dest'));
-                        $textRun->addLink('APPLICATIONSERVICE'.$flux->service_dest->id, $flux->service_dest->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONSERVICE'.$flux->service_dest->id, $flux->service_dest->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($flux->module_dest !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.module_dest'));
-                        $textRun->addLink('APPLICATIONMODULE'.$flux->module_dest->id, $flux->module_dest->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATIONMODULE'.$flux->module_dest->id, $flux->module_dest->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($flux->database_dest !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.flux.fields.database_dest'));
-                        $textRun->addLink('DATABASE'.$flux->database_dest->id, $flux->database_dest->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('DATABASE'.$flux->database_dest->id, $flux->database_dest->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -1185,7 +1185,7 @@ class CartographyController extends Controller
                     // Annuaires
                     $textRun = $this->addTextRunRow($table, trans('cruds.zoneAdmin.fields.annuaires'));
                     foreach ($zone->annuaires as $annuaire) {
-                        $textRun->addLink('ANNUAIRE'.$annuaire->id, $annuaire->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ANNUAIRE'.$annuaire->id, $annuaire->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($zone->annuaires->last() !== $annuaire) {
                             $textRun->addText(', ');
                         }
@@ -1194,7 +1194,7 @@ class CartographyController extends Controller
                     // Forets
                     $textRun = $this->addTextRunRow($table, trans('cruds.zoneAdmin.fields.forests'));
                     foreach ($zone->forestAds as $forest) {
-                        $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($zone->forestAds->last() !== $forest) {
                             $textRun->addText(', ');
                         }
@@ -1219,7 +1219,7 @@ class CartographyController extends Controller
                     // Zone d'administration
                     $textRun = $this->addTextRunRow($table, trans('cruds.annuaire.fields.zone_admin'));
                     if ($annuaire->zone_admin !== null) {
-                        $textRun->addLink('ZONE'.$annuaire->zone_admin->id, $annuaire->zone_admin->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ZONE'.$annuaire->zone_admin->id, $annuaire->zone_admin->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -1240,13 +1240,13 @@ class CartographyController extends Controller
                     // Zone d'administration
                     $textRun = $this->addTextRunRow($table, trans('cruds.forestAd.fields.zone_admin'));
                     if ($forest->zone_admin !== null) {
-                        $textRun->addLink('ZONE'.$forest->zone_admin->id, $forest->zone_admin->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ZONE'.$forest->zone_admin->id, $forest->zone_admin->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     // Domaines
                     $textRun = $this->addTextRunRow($table, trans('cruds.forestAd.fields.domaines'));
                     foreach ($forest->domaines as $domain) {
-                        $textRun->addLink('DOMAIN'.$domain->id, $domain->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('DOMAIN'.$domain->id, $domain->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($forest->domaines->last() !== $domain) {
                             $textRun->addText(', ');
                         }
@@ -1274,7 +1274,7 @@ class CartographyController extends Controller
                     // FOREST
                     $textRun = $this->addTextRunRow($table, trans('cruds.domaineAd.fields.forestAds'));
                     foreach ($domain->forestAds as $forest) {
-                        $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($domain->forestAds->last() !== $forest) {
                             $textRun->addText(', ');
                         }
@@ -1423,7 +1423,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans('cruds.network.fields.responsible_sec'), $network->responsible_sec);
 
                     // Security Needs
-                    $textRun = $this->addHTMLRow(
+                    $this->addHTMLRow(
                         $table,
                         trans('cruds.network.fields.security_need'),
                         '<p>'.
@@ -1456,7 +1456,7 @@ class CartographyController extends Controller
                     // subnetworks
                     $textRun = $this->addTextRunRow($table, trans('cruds.network.fields.subnetworks'));
                     foreach ($network->subnetworks as $subnetwork) {
-                        $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($network->subnetworks->last() !== $subnetwork) {
                             $textRun->addText(', ');
                         }
@@ -1465,7 +1465,7 @@ class CartographyController extends Controller
                     // entités externes connectées
                     $textRun = $this->addTextRunRow($table, trans('cruds.network.fields.externalConnectedEntities'));
                     foreach ($network->externalConnectedEntities as $entity) {
-                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($network->externalConnectedEntities->last() !== $entity) {
                             $textRun->addText(', ');
                         }
@@ -1493,12 +1493,12 @@ class CartographyController extends Controller
                     // VLAN
                     $textRun = $this->addTextRunRow($table, trans('cruds.subnetwork.fields.vlan'));
                     if ($subnetwork->vlan !== null) {
-                        $textRun->addLink('VLAN'.$subnetwork->vlan->id, $subnetwork->vlan->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('VLAN'.$subnetwork->vlan->id, $subnetwork->vlan->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
                     // gateway
                     $textRun = $this->addTextRunRow($table, trans('cruds.subnetwork.fields.gateway'));
                     if ($subnetwork->gateway !== null) {
-                        $textRun->addLink('GATEWAY'.$subnetwork->gateway->id, $subnetwork->gateway->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('GATEWAY'.$subnetwork->gateway->id, $subnetwork->gateway->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $this->addTextRow($table, trans('cruds.subnetwork.fields.responsible_exp'), $subnetwork->responsible_exp);
@@ -1574,7 +1574,7 @@ class CartographyController extends Controller
                     // Réseau ratachés
                     $textRun = $this->addTextRunRow($table, trans('cruds.gateway.fields.subnetworks'));
                     foreach ($gateway->subnetworks as $subnetwork) {
-                        $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($gateway->subnetworks->last() !== $subnetwork) {
                             $textRun->addText(', ');
                         }
@@ -1596,7 +1596,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.entity'));
                     if ($entity->entity_id !== null) {
-                        $textRun->addLink('ENTITY'.$entity->entity->id, $entity->entity->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('ENTITY'.$entity->entity->id, $entity->entity->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.type'), $entity->type);
@@ -1604,7 +1604,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.network'));
                     if ($entity->network !== null) {
-                        $textRun->addLink('NETWORK'.$entity->network->id, $entity->network->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('NETWORK'.$entity->network->id, $entity->network->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src_desc.' '.$entity->src);
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.dest'), $entity->dest_desc.' '.$entity->dest);
@@ -1628,7 +1628,7 @@ class CartographyController extends Controller
                     // Logical Servers
                     $textRun = $this->addTextRunRow($table, trans('cruds.cluster.fields.logical_servers'));
                     foreach ($cluster->logicalServers as $server) {
-                        $textRun->addLink('LOGICAL_SERVER'.$server->id, $server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('LOGICAL_SERVER'.$server->id, $server->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($cluster->logicalServers->last() !== $server) {
                             $textRun->addText(', ');
                         }
@@ -1636,7 +1636,7 @@ class CartographyController extends Controller
                     // Physical Servers
                     $textRun = $this->addTextRunRow($table, trans('cruds.cluster.fields.physical_servers'));
                     foreach ($cluster->physicalServers as $server) {
-                        $textRun->addLink('PHYSICAL_SERVER'.$server->id, $server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PHYSICAL_SERVER'.$server->id, $server->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($cluster->physicalServers->last() !== $server) {
                             $textRun->addText(', ');
                         }
@@ -1671,7 +1671,7 @@ class CartographyController extends Controller
                     // APPLICATIONS
                     $textRun = $this->addTextRunRow($table, trans('cruds.logicalServer.fields.applications'));
                     foreach ($logicalServer->applications as $application) {
-                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($logicalServer->applications->last() !== $application) {
                             $textRun->addText(', ');
                         }
@@ -1680,7 +1680,7 @@ class CartographyController extends Controller
                     // Physical server
                     $textRun = $this->addTextRunRow($table, trans('cruds.logicalServer.fields.servers'));
                     foreach ($logicalServer->physicalServers as $server) {
-                        $textRun->addLink('PSERVER'.$server->id, $server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PSERVER'.$server->id, $server->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($logicalServer->physicalServers->last() !== $server) {
                             $textRun->addText(', ');
                         }
@@ -1691,7 +1691,7 @@ class CartographyController extends Controller
                         $textRun = $this->addTextRunRow($table, trans('cruds.logicalServer.fields.certificates'));
 
                         foreach ($logicalServer->certificates as $certificate) {
-                            $textRun->addLink('CERTIFICATE'.$certificate->id, $certificate->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('CERTIFICATE'.$certificate->id, $certificate->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($logicalServer->certificates->last() !== $certificate) {
                                 $textRun->addText(', ');
                             }
@@ -1716,7 +1716,7 @@ class CartographyController extends Controller
                     // Logical Servers
                     $textRun = $this->addTextRunRow($table, trans('cruds.container.fields.logical_servers'));
                     foreach ($container->logicalServers as $server) {
-                        $textRun->addLink('LOGICAL_SERVER'.$server->id, $server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('LOGICAL_SERVER'.$server->id, $server->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($container->logicalServers->last() !== $server) {
                             $textRun->addText(', ');
                         }
@@ -1724,7 +1724,7 @@ class CartographyController extends Controller
                     // Applications
                     $textRun = $this->addTextRunRow($table, trans('cruds.container.fields.applications'));
                     foreach ($container->applications as $application) {
-                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($container->applications->last() !== $application) {
                             $textRun->addText(', ');
                         }
@@ -1783,7 +1783,7 @@ class CartographyController extends Controller
                     if ($certificate->logical_servers->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.certificate.fields.logical_servers'));
                         foreach ($certificate->logical_servers as $logical_server) {
-                            $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($certificate->logical_servers->last() !== $logical_server) {
                                 $textRun->addText(', ');
                             }
@@ -1794,7 +1794,7 @@ class CartographyController extends Controller
                     if ($certificate->applications->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.certificate.fields.applications'));
                         foreach ($certificate->applications as $application) {
-                            $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($certificate->applications->last() !== $application) {
                                 $textRun->addText(', ');
                             }
@@ -1818,7 +1818,7 @@ class CartographyController extends Controller
                     // Sous-réseaux
                     $textRun = $this->addTextRunRow($table, trans('cruds.vlan.fields.subnetworks'));
                     foreach ($vlan->subnetworks as $subnetwork) {
-                        $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($vlan->subnetworks->last() !== $subnetwork) {
                             $textRun->addText(', ');
                         }
@@ -1968,7 +1968,7 @@ class CartographyController extends Controller
                     // Buildings
                     $textRun = $this->addTextRunRow($table, trans('cruds.site.fields.buildings'));
                     foreach ($site->buildings as $building) {
-                        $textRun->addLink('BUILDING'.$building->id, $building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$building->id, $building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($site->buildings->last() !== $building) {
                             $textRun->addText(', ');
                         }
@@ -1994,7 +1994,7 @@ class CartographyController extends Controller
                     if ($building->roomBays->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.building.fields.bays'));
                         foreach ($building->roomBays as $bay) {
-                            $textRun->addLink('BAY'.$bay->id, $bay->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('BAY'.$bay->id, $bay->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($building->roomBays->last() !== $bay) {
                                 $textRun->addText(', ');
                             }
@@ -2019,7 +2019,7 @@ class CartographyController extends Controller
                     if ($bay->bayPhysicalServers->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_servers'));
                         foreach ($bay->bayPhysicalServers as $physicalServer) {
-                            $textRun->addLink('PSERVER'.$physicalServer->id, $physicalServer->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('PSERVER'.$physicalServer->id, $physicalServer->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($bay->bayPhysicalServers->last() !== $physicalServer) {
                                 $textRun->addText(', ');
                             }
@@ -2030,7 +2030,7 @@ class CartographyController extends Controller
                     if ($bay->bayPhysicalRouters->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_routers'));
                         foreach ($bay->bayPhysicalRouters as $physicalRouter) {
-                            $textRun->addLink('ROUTER'.$physicalRouter->id, $physicalRouter->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('ROUTER'.$physicalRouter->id, $physicalRouter->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($bay->bayPhysicalRouters->last() !== $physicalRouter) {
                                 $textRun->addText(', ');
                             }
@@ -2041,7 +2041,7 @@ class CartographyController extends Controller
                     if ($bay->bayPhysicalSwitches->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_switches'));
                         foreach ($bay->bayPhysicalSwitches as $physicalSwitch) {
-                            $textRun->addLink('SWITCH'.$physicalSwitch->id, $physicalSwitch->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('SWITCH'.$physicalSwitch->id, $physicalSwitch->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($bay->bayPhysicalSwitches->last() !== $physicalSwitch) {
                                 $textRun->addText(', ');
                             }
@@ -2052,7 +2052,7 @@ class CartographyController extends Controller
                     if ($bay->bayStorageDevices->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.storage_devices'));
                         foreach ($bay->bayStorageDevices as $storageDevice) {
-                            $textRun->addLink('STORAGEDEVICE'.$storageDevice->id, $storageDevice->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('STORAGEDEVICE'.$storageDevice->id, $storageDevice->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($bay->bayStorageDevices->last() !== $storageDevice) {
                                 $textRun->addText(', ');
                             }
@@ -2063,7 +2063,7 @@ class CartographyController extends Controller
                     if ($bay->bayPhysicalSecurityDevices->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_security_devices'));
                         foreach ($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice) {
-                            $textRun->addLink('PSD'.$physicalSecurityDevice->id, $physicalSecurityDevice->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('PSD'.$physicalSecurityDevice->id, $physicalSecurityDevice->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($bay->bayPhysicalSecurityDevices->last() !== $physicalSecurityDevice) {
                                 $textRun->addText(', ');
                             }
@@ -2074,7 +2074,7 @@ class CartographyController extends Controller
                     if ($bay->bayPeripherals->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.peripherals'));
                         foreach ($bay->bayPeripherals as $peripheral) {
-                            $textRun->addLink('PERIPHERAL'.$peripheral->id, $peripheral->name, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('PERIPHERAL'.$peripheral->id, $peripheral->name, CartographyController::FANCY_LINK_STYLE, null, true);
                             if ($bay->bayPeripherals->last() !== $peripheral) {
                                 $textRun->addText(', ');
                             }
@@ -2099,17 +2099,17 @@ class CartographyController extends Controller
 
                     if ($server->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalServer.fields.site'));
-                        $textRun->addLink('SITE'.$server->site->id, $server->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$server->site->id, $server->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($server->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalServer.fields.building'));
-                        $textRun->addLink('BUILDING'.$server->building->id, $server->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$server->building->id, $server->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($server->bay !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalServer.fields.bay'));
-                        $textRun->addLink('BAY'.$server->bay->id, $server->bay->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BAY'.$server->bay->id, $server->bay->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $this->addTextRow($table, trans('cruds.physicalServer.fields.responsible'), $server->responsible);
@@ -2117,7 +2117,7 @@ class CartographyController extends Controller
                     // Serveurs logiques
                     $textRun = $this->addTextRunRow($table, trans('cruds.physicalServer.fields.logical_servers'));
                     foreach ($server->logicalServers as $logicalServer) {
-                        $textRun->addLink('LOGICAL_SERVER'.$logicalServer->id, $logicalServer->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('LOGICAL_SERVER'.$logicalServer->id, $logicalServer->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($server->logicalServers->last() !== $logicalServer) {
                             $textRun->addText(', ');
                         }
@@ -2142,9 +2142,9 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, trans('cruds.workstation.fields.address_ip'), $workstation->address_ip);
                     $textRun = $this->addTextRunRow($table, trans('cruds.workstation.fields.applications'));
                     foreach ($workstation->applications as $application) {
-                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
+                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                         if ($workstation->applications->last() !== $application) {
-                            $textRun->addText(', ', CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
+                            $textRun->addText(', ', CartographyController::FANCY_RIGHT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
                         }
                     }
 
@@ -2154,12 +2154,12 @@ class CartographyController extends Controller
 
                     if ($workstation->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.workstation.fields.site'));
-                        $textRun->addLink('SITE'.$workstation->site->id, $workstation->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$workstation->site->id, $workstation->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($workstation->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.workstation.fields.building'));
-                        $textRun->addLink('BUILDING'.$workstation->building->id, $workstation->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$workstation->building->id, $workstation->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2179,17 +2179,17 @@ class CartographyController extends Controller
 
                     if ($storageDevice->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.storageDevice.fields.site'));
-                        $textRun->addLink('SITE'.$storageDevice->site->id, $storageDevice->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$storageDevice->site->id, $storageDevice->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($storageDevice->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.storageDevice.fields.building'));
-                        $textRun->addLink('BUILDING'.$storageDevice->building->id, $storageDevice->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$storageDevice->building->id, $storageDevice->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($storageDevice->bay !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.storageDevice.fields.bay'));
-                        $textRun->addLink('BAY'.$storageDevice->bay->id, $storageDevice->bay->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BAY'.$storageDevice->bay->id, $storageDevice->bay->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2212,17 +2212,17 @@ class CartographyController extends Controller
 
                     if ($peripheral->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.peripheral.fields.site'));
-                        $textRun->addLink('SITE'.$peripheral->site->id, $peripheral->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$peripheral->site->id, $peripheral->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($peripheral->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.peripheral.fields.building'));
-                        $textRun->addLink('BUILDING'.$peripheral->building->id, $peripheral->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$peripheral->building->id, $peripheral->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($peripheral->bay !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.peripheral.fields.bay'));
-                        $textRun->addLink('BAY'.$peripheral->bay->id, $peripheral->bay->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BAY'.$peripheral->bay->id, $peripheral->bay->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2244,12 +2244,12 @@ class CartographyController extends Controller
 
                     if ($phone->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.phone.fields.site'));
-                        $textRun->addLink('SITE'.$phone->site->id, $phone->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$phone->site->id, $phone->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($phone->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.phone.fields.building'));
-                        $textRun->addLink('BUILDING'.$phone->building->id, $phone->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$phone->building->id, $phone->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2271,17 +2271,17 @@ class CartographyController extends Controller
 
                     if ($switch->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalSwitch.fields.site'));
-                        $textRun->addLink('SITE'.$switch->site->id, $switch->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$switch->site->id, $switch->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($switch->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalSwitch.fields.building'));
-                        $textRun->addLink('BUILDING'.$switch->building->id, $switch->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$switch->building->id, $switch->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($switch->bay !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalSwitch.fields.bay'));
-                        $textRun->addLink('BAY'.$switch->bay->id, $switch->bay->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BAY'.$switch->bay->id, $switch->bay->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2303,17 +2303,17 @@ class CartographyController extends Controller
 
                     if ($router->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalRouter.fields.site'));
-                        $textRun->addLink('SITE'.$router->site->id, $router->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$router->site->id, $router->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($router->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalRouter.fields.building'));
-                        $textRun->addLink('BUILDING'.$router->building->id, $router->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$router->building->id, $router->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($router->bay !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalRouter.fields.bay'));
-                        $textRun->addLink('BAY'.$router->bay->id, $router->bay->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BAY'.$router->bay->id, $router->bay->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2334,12 +2334,12 @@ class CartographyController extends Controller
 
                     if ($wifiTerminal->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.wifiTerminal.fields.site'));
-                        $textRun->addLink('SITE'.$wifiTerminal->site->id, $wifiTerminal->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$wifiTerminal->site->id, $wifiTerminal->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($wifiTerminal->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.wifiTerminal.fields.building'));
-                        $textRun->addLink('BUILDING'.$wifiTerminal->building->id, $wifiTerminal->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$wifiTerminal->building->id, $wifiTerminal->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2360,17 +2360,17 @@ class CartographyController extends Controller
 
                     if ($physicalSecurityDevice->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalSecurityDevice.fields.site'));
-                        $textRun->addLink('SITE'.$physicalSecurityDevice->site->id, $physicalSecurityDevice->site->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('SITE'.$physicalSecurityDevice->site->id, $physicalSecurityDevice->site->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($physicalSecurityDevice->building !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalSecurityDevice.fields.building'));
-                        $textRun->addLink('BUILDING'.$physicalSecurityDevice->building->id, $physicalSecurityDevice->building->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BUILDING'.$physicalSecurityDevice->building->id, $physicalSecurityDevice->building->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     if ($physicalSecurityDevice->bay !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.physicalSecurityDevice.fields.bay'));
-                        $textRun->addLink('BAY'.$physicalSecurityDevice->bay->id, $physicalSecurityDevice->bay->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('BAY'.$physicalSecurityDevice->bay->id, $physicalSecurityDevice->bay->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $section->addTextBreak(1);
@@ -2390,7 +2390,7 @@ class CartographyController extends Controller
                     // Mans
                     $textRun = $this->addTextRunRow($table, trans('cruds.wan.fields.mans'));
                     foreach ($wan->mans as $man) {
-                        $textRun->addLink('MAN'.$man->id, $man->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('MAN'.$man->id, $man->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($wan->mans->last() !== $man) {
                             $textRun->addText(', ');
                         }
@@ -2399,7 +2399,7 @@ class CartographyController extends Controller
                     // Lans
                     $textRun = $this->addTextRunRow($table, trans('cruds.wan.fields.lans'));
                     foreach ($wan->lans as $lan) {
-                        $textRun->addLink('LAN'.$lan->id, $lan->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('LAN'.$lan->id, $lan->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($wan->lans->last() !== $lan) {
                             $textRun->addText(', ');
                         }
@@ -2423,7 +2423,7 @@ class CartographyController extends Controller
                     // Lans
                     $textRun = $this->addTextRunRow($table, 'LANs');
                     foreach ($man->lans as $lan) {
-                        $textRun->addLink(trans('cruds.man.fields.lan').$lan->id, $lan->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink(trans('cruds.man.fields.lan').$lan->id, $lan->name, CartographyController::FANCY_LINK_STYLE, null, true);
                         if ($man->lans->last() !== $lan) {
                             $textRun->addText(', ');
                         }
@@ -2481,8 +2481,8 @@ class CartographyController extends Controller
         $table->addCell(8000, ['gridSpan' => 2])
             ->addText(
                 $title,
-                CartographyController::FANCYTABLETITLESTYLE,
-                CartographyController::NOSPACE
+                CartographyController::FANCY_TABLE_TITLE_STYLE,
+                CartographyController::NO_SPACE
             );
 
         return $table;
@@ -2491,14 +2491,14 @@ class CartographyController extends Controller
     private static function addTextRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
-        $table->addCell(2000, CartographyController::NOSPACE)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
-        $table->addCell(6000, CartographyController::NOSPACE)->addText($value, CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
+        $table->addCell(2000, CartographyController::NO_SPACE)->addText($title, CartographyController::FANCY_LEFT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
+        $table->addCell(6000, CartographyController::NO_SPACE)->addText($value, CartographyController::FANCY_RIGHT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
     }
 
     private static function addHTMLRow(Table $table, string $title, ?string $value = null): void
     {
         $table->addRow();
-        $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
+        $table->addCell(2000)->addText($title, CartographyController::FANCY_LEFT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
         try {
             \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
         } catch (\Exception $e) {
@@ -2509,10 +2509,10 @@ class CartographyController extends Controller
     private static function addTextRunRow(Table $table, string $title)
     {
         $table->addRow();
-        $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
+        $table->addCell(2000)->addText($title, CartographyController::FANCY_LEFT_TABLE_CELL_STYLE, CartographyController::NO_SPACE);
         $cell = $table->addCell(6000);
 
-        return $cell->addTextRun(CartographyController::FANCYRIGHTTABLECELLSTYLE);
+        return $cell->addTextRun(CartographyController::FANCY_RIGHT_TABLE_CELL_STYLE);
     }
 
     /*

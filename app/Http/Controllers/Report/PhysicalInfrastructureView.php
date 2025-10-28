@@ -58,12 +58,12 @@ class PhysicalInfrastructureView extends Controller
             $all_buildings = Building::All()->sortBy('name')
                 ->where('site_id', '=', $site)->pluck('name', 'id');
             if ($buildingId === null) {
-                $buildings = Building::All()->where('site_id', '=', $site)->sortBy('name');
+                $buildings = Building::query()->where('site_id', '=', $site)->orderBy('name')->get();
             } else {
                 $root = Building::find($buildingId);
                 if ($root !== null) {
                     $buildings = collect();
-                    // Get chidrends
+                    // Get children
                     $frontier = collect([$root]);
 
                     while ($frontier->isNotEmpty()) {

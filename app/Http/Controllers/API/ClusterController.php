@@ -12,6 +12,7 @@ use App\Models\Cluster;
 use Gate;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ClusterController extends Controller
 {
@@ -41,7 +42,7 @@ class ClusterController extends Controller
 
     public function show(Cluster $cluster)
     {
-        abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('logical_server_show'), ResponseAlias::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ClusterResource($cluster);
     }
