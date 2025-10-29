@@ -158,10 +158,10 @@ CREATE TABLE `annuaires` (
   `name` varchar(255) NOT NULL,
   `description` longtext DEFAULT NULL,
   `solution` varchar(255) DEFAULT NULL,
+  `zone_admin_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `zone_admin_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `annuaires_name_unique` (`name`),
   KEY `zone_admin_fk_1482666` (`zone_admin_id`),
@@ -283,14 +283,21 @@ DROP TABLE IF EXISTS `buildings`;
 CREATE TABLE `buildings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `description` longtext DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `attributes` varchar(255) DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
   `site_id` int(10) unsigned DEFAULT NULL,
+  `building_id` int(10) unsigned DEFAULT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `site_fk_1483431` (`site_id`),
+  KEY `building_id_fk_94821232` (`building_id`),
+  KEY `document_id_fk_49574431` (`icon_id`),
+  CONSTRAINT `building_id_fk_94821232` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `document_id_fk_49574431` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `site_fk_1483431` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -343,14 +350,50 @@ CREATE TABLE `certificates` (
   `name` varchar(255) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   `description` longtext DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   `start_validity` date DEFAULT NULL,
   `end_validity` date DEFAULT NULL,
   `last_notification` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cluster_logical_server`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cluster_logical_server` (
+  `cluster_id` int(10) unsigned NOT NULL,
+  `logical_server_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`cluster_id`,`logical_server_id`),
+  KEY `cluster_logical_server_logical_server_id_index` (`logical_server_id`),
+  CONSTRAINT `cluster_logical_server_cluster_id_foreign` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cluster_logical_server_logical_server_id_foreign` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cluster_physical_server`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cluster_physical_server` (
+  `cluster_id` int(10) unsigned NOT NULL,
+  `physical_server_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`cluster_id`,`physical_server_id`),
+  KEY `cluster_physical_server_physical_server_id_index` (`physical_server_id`),
+  CONSTRAINT `cluster_physical_server_cluster_id_foreign` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cluster_physical_server_physical_server_id_foreign` FOREIGN KEY (`physical_server_id`) REFERENCES `physical_servers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cluster_router`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cluster_router` (
+  `cluster_id` int(10) unsigned NOT NULL,
+  `router_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`cluster_id`,`router_id`),
+  KEY `cluster_router_router_id_index` (`router_id`),
+  CONSTRAINT `cluster_router_cluster_id_foreign` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cluster_router_router_id_foreign` FOREIGN KEY (`router_id`) REFERENCES `routers` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `clusters`;
@@ -360,12 +403,16 @@ CREATE TABLE `clusters` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
+  `attributes` varchar(255) DEFAULT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `address_ip` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `document_id_fk_495432841` (`icon_id`),
+  CONSTRAINT `document_id_fk_495432841` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `container_database`;
@@ -469,6 +516,13 @@ CREATE TABLE `data_processing` (
   `description` longtext DEFAULT NULL,
   `responsible` longtext DEFAULT NULL,
   `purpose` longtext DEFAULT NULL,
+  `lawfulness` text DEFAULT NULL,
+  `lawfulness_consent` tinyint(1) DEFAULT NULL,
+  `lawfulness_contract` tinyint(1) DEFAULT NULL,
+  `lawfulness_legal_obligation` tinyint(1) DEFAULT NULL,
+  `lawfulness_vital_interest` tinyint(1) DEFAULT NULL,
+  `lawfulness_public_interest` tinyint(1) DEFAULT NULL,
+  `lawfulness_legitimate_interest` tinyint(1) DEFAULT NULL,
   `categories` longtext DEFAULT NULL,
   `recipients` longtext DEFAULT NULL,
   `transfert` longtext DEFAULT NULL,
@@ -814,6 +868,7 @@ DROP TABLE IF EXISTS `fluxes`;
 CREATE TABLE `fluxes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `attributes` varchar(255) DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `application_source_id` int(10) unsigned DEFAULT NULL,
   `service_source_id` int(10) unsigned DEFAULT NULL,
@@ -1077,17 +1132,14 @@ CREATE TABLE `logical_servers` (
   `attributes` varchar(255) DEFAULT NULL,
   `patching_frequency` int(11) DEFAULT NULL,
   `next_update` date DEFAULT NULL,
-  `cluster_id` int(10) unsigned DEFAULT NULL,
   `domain_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `cluster_id_fk_5435359` (`cluster_id`),
   KEY `domain_id_fk_493844` (`domain_id`),
   KEY `logical_servers_active` (`active`),
   KEY `document_id_fk_51303394` (`icon_id`),
-  CONSTRAINT `cluster_id_fk_5435359` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `document_id_fk_51303394` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `domain_id_fk_493844` FOREIGN KEY (`domain_id`) REFERENCES `domaine_ads` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1143,6 +1195,18 @@ CREATE TABLE `m_application_process` (
   KEY `process_id_fk_1482573` (`process_id`),
   CONSTRAINT `m_application_id_fk_1482573` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `process_id_fk_1482573` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `m_application_security_device`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `m_application_security_device` (
+  `security_device_id` int(10) unsigned NOT NULL,
+  `m_application_id` int(10) unsigned NOT NULL,
+  KEY `security_device_id_fk_304832731` (`security_device_id`),
+  KEY `m_application_id_fk_41923483` (`m_application_id`),
+  CONSTRAINT `m_application_id_fk_41923483` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `security_device_id_fk_304832731` FOREIGN KEY (`security_device_id`) REFERENCES `security_devices` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_workstation`;
@@ -1677,6 +1741,8 @@ CREATE TABLE `physical_security_devices` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
+  `attributes` varchar(255) DEFAULT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `site_id` int(10) unsigned DEFAULT NULL,
   `building_id` int(10) unsigned DEFAULT NULL,
@@ -1689,8 +1755,10 @@ CREATE TABLE `physical_security_devices` (
   KEY `site_fk_1485517` (`site_id`),
   KEY `building_fk_1485518` (`building_id`),
   KEY `bay_fk_1485519` (`bay_id`),
+  KEY `document_id_fk_493827312` (`icon_id`),
   CONSTRAINT `bay_fk_1485519` FOREIGN KEY (`bay_id`) REFERENCES `bays` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `building_fk_1485518` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `document_id_fk_493827312` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `site_fk_1485517` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1723,7 +1791,6 @@ CREATE TABLE `physical_servers` (
   `patching_group` varchar(255) DEFAULT NULL,
   `paching_frequency` int(11) DEFAULT NULL,
   `next_update` date DEFAULT NULL,
-  `cluster_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1732,11 +1799,9 @@ CREATE TABLE `physical_servers` (
   KEY `building_fk_1485323` (`building_id`),
   KEY `bay_fk_1485324` (`bay_id`),
   KEY `physical_switch_fk_8732342` (`physical_switch_id`),
-  KEY `cluster_id_fk_5438543` (`cluster_id`),
   KEY `document_id_fk_5328384` (`icon_id`),
   CONSTRAINT `bay_fk_1485324` FOREIGN KEY (`bay_id`) REFERENCES `bays` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `building_fk_1485323` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `cluster_id_fk_5438543` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `document_id_fk_5328384` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `physical_switch_fk_8732342` FOREIGN KEY (`physical_switch_id`) REFERENCES `physical_switches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `site_fk_1485322` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -1875,13 +1940,10 @@ CREATE TABLE `routers` (
   `description` longtext DEFAULT NULL,
   `rules` longtext DEFAULT NULL,
   `ip_addresses` text DEFAULT NULL,
-  `cluster_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cluster_id_fk_4398834` (`cluster_id`),
-  CONSTRAINT `cluster_id_fk_4398834` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_control_m_application`;
@@ -1927,6 +1989,9 @@ DROP TABLE IF EXISTS `security_devices`;
 CREATE TABLE `security_devices` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `attributes` varchar(255) DEFAULT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `vendor` varchar(255) DEFAULT NULL,
   `product` varchar(255) DEFAULT NULL,
@@ -1934,7 +1999,9 @@ CREATE TABLE `security_devices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `document_id_fk_432938439` (`icon_id`),
+  CONSTRAINT `document_id_fk_43948313` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `sites`;
@@ -2395,3 +2462,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (216,'2025_09_05_14
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (217,'2025_09_21_134035_add_cluster_router',6);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (218,'2025_09_23_113715_add_user_login',6);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (220,'2025_09_29_193233_external_connected_entities_complement',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (221,'2025_10_02_205209_add_permissions',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (222,'2025_10_04_153231_add_attribut_on_fluxes',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (223,'2025_10_08_100558_more_buildings',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (224,'2025_10_17_073218_add_cluster_logical_server',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (225,'2025_10_17_085635_add_fields_to_cluster',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (226,'2025_10_18_174616_add_cluster_physical_server',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (227,'2025_10_18_183453_add_cluster_router',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (228,'2025_10_21_104026_add_lawfullness',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (229,'2025_10_27_095802_add_link_applications_security_devices',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (230,'2025_10_27_104704_add_fields_security_device',8);

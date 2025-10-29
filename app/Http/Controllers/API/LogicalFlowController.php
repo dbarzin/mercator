@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
-use App\Http\Resources\Admin\logicalFlowResource;
+use App\Http\Resources\Admin\LogicalFlowResource;
 use App\Models\LogicalFlow;
 use Gate;
 use Illuminate\Http\Response;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 class LogicalFlowController extends Controller
 {
-    public function index()
+    public function index() 
     {
         abort_if(Gate::denies('logical_flow_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -46,7 +46,7 @@ class LogicalFlowController extends Controller
         return new LogicalFlowResource($logicalFlow);
     }
 
-    public function update(UpdateLogicalFlowRequest $request, logicalFlow $logicalFlow)
+    public function update(UpdateLogicalFlowRequest $request, LogicalFlow $logicalFlow)
     {
         abort_if(Gate::denies('logical_flow_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -68,7 +68,7 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        logicalFlow::whereIn('id', request('ids'))->delete();
+        LogicalFlow::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

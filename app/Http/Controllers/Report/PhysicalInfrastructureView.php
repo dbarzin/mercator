@@ -78,14 +78,8 @@ class PhysicalInfrastructureView extends Controller
 
                         $frontier = $next;
                     }
-                    // Get parents
-                    /*
-                    while ($root->building != null) {
-                        $buildings->push($root->building);
-                        $root = $root->building;
-                    }
-                    */
-                }
+                } else
+                    return redirect()->back()->with('error', 'Building not found');;
             }
 
             // Get all bays

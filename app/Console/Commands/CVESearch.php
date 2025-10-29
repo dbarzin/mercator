@@ -83,7 +83,7 @@ class CVESearch extends Command
 
         Log::info('CVESearch - CVE fetched', ['count' => count($cves), 'provider' => $this->provider]);
 
-        // Analyse & filtrage
+        // Analyze & filtrage
         $lines = [];
         $cveCount = 0;
 

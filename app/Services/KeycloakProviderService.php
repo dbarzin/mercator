@@ -5,11 +5,12 @@ namespace App\Services;
 
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
+use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Socialite\Two\ProviderInterface;
 
 class KeycloakProviderService extends AbstractProvider implements ProviderInterface
 {
-    public function user()
+    public function user(): array
     {
         if ($this->hasInvalidState()) {
             throw new InvalidStateException();
@@ -28,7 +29,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         ]);
     }
 
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
         return $this->buildAuthUrlFromBase(
             config('services.keycloak.base_url').'/realms/daara/protocol/openid-connect/auth',
@@ -36,7 +37,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         );
     }
 
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
         return config('services.keycloak.base_url').'/realms/daara/protocol/openid-connect/token';
     }
@@ -56,7 +57,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         return json_decode($response->getBody(), true);
     }
 
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): array
     {
         return [
             'id' => $user['sub'],
@@ -65,7 +66,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         ];
     }
 
-    protected function getTokenFields($code)
+    protected function getTokenFields($code): array
     {
         return [
             'grant_type' => 'authorization_code',
@@ -76,7 +77,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         ];
     }
 
-    protected function getCodeFields($state = null)
+    protected function getCodeFields($state = null): array
     {
         return array_merge(
             parent::getCodeFields($state),
