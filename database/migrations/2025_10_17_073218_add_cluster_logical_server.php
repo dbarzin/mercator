@@ -65,18 +65,21 @@ return new class extends Migration
             });
 
         // 3) Suppression contrainte FK/index/colonne cluster_id sur logical_servers
-        Schema::table('logical_servers', function (Blueprint $table) {
-            if (DB::getDriverName() !== 'sqlite') {
-                $table->dropForeign('cluster_id_fk_5435359');
-            }
-        });
-
-        // Enfin, suppression de la colonne
         if (Schema::hasColumn('logical_servers', 'cluster_id')) {
-            Schema::table('logical_servers', function (Blueprint $table) {
-                $table->dropColumn('cluster_id');
-            });
+            if (config('database.default') === 'sqlite') {
+                // SQLite ne supporte pas dropColumn avec foreign keys
+                Schema::table('logical_servers', function (Blueprint $table) {
+                    $table->dropForeign(['cluster_id_fk_5435359']);
+                    $table->dropForeign(['cluster_id']);
+                });
+              } else {
+                Schema::table('logical_servers', function (Blueprint $table) {
+                    $table->dropForeign('cluster_id_fk_5435359');
+                    $table->dropColumn('cluster_id');
+                });
+            }
         }
+
     }
 
     public function down(): void

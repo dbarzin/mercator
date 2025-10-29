@@ -28,7 +28,7 @@ return new class extends Migration
             $table->unsignedInteger('icon_id')
                 ->after('attributes')
                 ->nullable()
-                ->index('document_id_fk_495432841');
+                ->index('document_id_fk_432938439');
             $table->foreign('icon_id', 'document_id_fk_43948313')
                 ->references('id')
                 ->on('documents');

@@ -94,22 +94,11 @@ return new class extends Migration
         // Enfin, suppression de la colonne
         if (Schema::hasColumn('routers', 'cluster_id')) {
             Schema::table('routers', function (Blueprint $table) {
-                try {
-                    Schema::table('routers', function (Blueprint $table) {
-                        $table->dropForeign(['cluster_id']); // drop FK by column name, no constraint name
-                      });
-                } catch (\Illuminate\Database\QueryException $e) {
-                      // Constraint does not exist or already dropped, ignore
-                } // use array notation with column name, not constraint name
-
-                try {
-                    Schema::table('routers', function (Blueprint $table) {
-                        $table->dropIndex(['cluster_id']);
-                    });
-                } catch (\Illuminate\Database\QueryException $e) {
-                    // Index does not exist, ignore
-                } // similarly for index
-                $table->dropColumn('cluster_id');
+                if (config('database.default') === 'sqlite') {
+                    $table->dropForeign(['cluster_id']);
+                } else {
+                    $table->dropColumn('cluster_id');
+                }
             });
         }
     }
