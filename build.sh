@@ -31,6 +31,7 @@ export APP_VERSION=$VERSION
 npm install
 npm run build
 
+git pull
 git add public/build/assets/*
 git commit -a -m "npm build"
 git push
