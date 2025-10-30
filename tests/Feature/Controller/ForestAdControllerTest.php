@@ -72,9 +72,9 @@ describe('show', function () {
 
         test('can display object', function () {
             $name =  fake()->word();
-            $certificate = ForestAd::factory()->create(['name' => $name]);
+            $forestAd = ForestAd::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.forest-ads.show', $certificate->id));
+            $response = $this->get(route('admin.forest-ads.show', $forestAd->id));
 
             $response->assertOk();
             $response->assertViewIs('admin.forestAds.show');
@@ -86,9 +86,9 @@ describe('show', function () {
         $this->actingAs($user);
 
         $name =  fake()->word();
-        $certificate = ForestAd::factory()->create(['name' => $name]);
+        $forestAd = ForestAd::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.forest-ads.show', $certificate->id));
+        $response = $this->get(route('admin.forest-ads.show', $forestAd->id));
 
         $response->assertForbidden();
     });
@@ -98,9 +98,9 @@ describe('show', function () {
 describe('edit', function () {
     test('can display edit form', function () {
         $name =  fake()->word();
-        $certificate = ForestAd::factory()->create(['name' => $name]);
+        $forestAd = ForestAd::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.forest-ads.edit', $certificate));
+        $response = $this->get(route('admin.forest-ads.edit', $forestAd));
 
         $response->assertOk();
         $response->assertViewIs('admin.forestAds.edit');
@@ -112,9 +112,9 @@ describe('edit', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $certificate = ForestAd::factory()->create();
+        $forestAd = ForestAd::factory()->create();
 
-        $response = $this->get(route('admin.forest-ads.edit', $certificate));
+        $response = $this->get(route('admin.forest-ads.edit', $forestAd));
 
         $response->assertForbidden();
     });
@@ -123,14 +123,14 @@ describe('edit', function () {
 describe('update', function () {
     test('can update activity', function () {
         $name =  fake()->word();
-        $certificate = ForestAd::factory()->create(['name' => $name]);
+        $forestAd = ForestAd::factory()->create(['name' => $name]);
 
         $data = [
             'name' => 'Updated Name',
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->put(route('admin.forest-ads.update', $certificate), $data);
+        $response = $this->put(route('admin.forest-ads.update', $forestAd), $data);
 
         $response->assertRedirect(route('admin.forest-ads.index'));
         $this->assertDatabaseHas('forest_ads', ['name' => 'Updated Name']);
@@ -139,16 +139,16 @@ describe('update', function () {
 
 describe('destroy', function () {
     test('can delete activity', function () {
-        $certificate = ForestAd::factory()->create();
+        $forestAd = ForestAd::factory()->create();
 
-        $response = $this->delete(route('admin.forest-ads.destroy', $certificate->id));
+        $response = $this->delete(route('admin.forest-ads.destroy', $forestAd->id));
         $response->assertRedirect(route('admin.forest-ads.index'));
 
-        $this->assertSoftDeleted('forest_ads', ['id' => $certificate->id]);
+        $this->assertSoftDeleted('forest_ads', ['id' => $forestAd->id]);
 
-        $certificate->refresh();
-        expect($certificate->deleted_at)->not->toBeNull()
-            ->and($certificate->trashed())->toBeTrue();
+        $forestAd->refresh();
+        expect($forestAd->deleted_at)->not->toBeNull()
+            ->and($forestAd->trashed())->toBeTrue();
 
     });
 
@@ -156,9 +156,9 @@ test('denies access without permission', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $certificate = ForestAd::factory()->create();
+    $forestAd = ForestAd::factory()->create();
 
-    $response = $this->delete(route('admin.forest-ads.destroy', $certificate));
+    $response = $this->delete(route('admin.forest-ads.destroy', $forestAd));
 
     $response->assertForbidden();
     });
@@ -178,10 +178,10 @@ describe('massDestroy', function () {
     });
 
     test('returns no content status', function () {
-        $certificate = ForestAd::factory()->create();
+        $forestAd = ForestAd::factory()->create();
 
         $response = $this->delete(route('admin.forest-ads.massDestroy'), [
-            'ids' => [$certificate->id],
+            'ids' => [$forestAd->id],
         ]);
 
         $response->assertStatus(204);
@@ -191,10 +191,10 @@ describe('massDestroy', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $certificate = ForestAd::factory()->create();
+        $forestAd = ForestAd::factory()->create();
 
         $response = $this->delete(route('admin.forest-ads.massDestroy'), [
-            'ids' => [$certificate->id],
+            'ids' => [$forestAd->id],
         ]);
 
         $response->assertForbidden();
