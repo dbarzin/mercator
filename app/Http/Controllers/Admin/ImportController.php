@@ -24,12 +24,16 @@ class ImportController extends Controller
 {
     public function export(Request $request)
     {
+        \Log::info('Export - Start');
+
         $request->validate([
             'object' => 'required',
         ]);
 
         // Model name from request
         $modelName = $request->get('object');
+
+        \Log::info("Export - {$modelName}");
 
         // Check permission
         abort_if(Gate::denies($this->permission($modelName, 'access')), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -39,6 +43,8 @@ class ImportController extends Controller
 
         // Récupération brute des enregistrements
         $items = $modelClass::all();
+
+        \Log::info("Export - count : {$items->count()}");
 
         $data = [];
         foreach ($items as $item) {
@@ -74,6 +80,8 @@ class ImportController extends Controller
 
             $data[] = $row;
         }
+
+        \Log::info('Export - Done.');
 
         // Get header
         $header = array_keys($data[0] ?? []);
@@ -210,9 +218,14 @@ class ImportController extends Controller
     private function resolveModelClass($modelName)
     {
         $modelClass = 'App\\Models\\'.$modelName;
+
+        \Log::info("Import - {$modelClass}");
+
         if (! class_exists($modelClass)) {
             abort(404, "Modèle [{$modelName}] introuvable.");
         }
+
+        \Log::info("Import - {$modelClass} found !");
 
         return $modelClass;
     }

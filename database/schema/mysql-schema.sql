@@ -868,6 +868,7 @@ DROP TABLE IF EXISTS `fluxes`;
 CREATE TABLE `fluxes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `nature` varchar(255) DEFAULT NULL,
   `attributes` varchar(255) DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `application_source_id` int(10) unsigned DEFAULT NULL,
@@ -880,7 +881,6 @@ CREATE TABLE `fluxes` (
   `database_dest_id` int(10) unsigned DEFAULT NULL,
   `crypted` tinyint(1) DEFAULT NULL,
   `bidirectional` tinyint(1) DEFAULT NULL,
-  `nature` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
