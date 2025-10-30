@@ -69,7 +69,6 @@ return new class extends Migration
             if (config('database.default') === 'sqlite') {
                 // SQLite ne supporte pas dropColumn avec foreign keys
                 Schema::table('logical_servers', function (Blueprint $table) {
-//                    $table->dropForeign(['cluster_id_fk_5435359']);
                     $table->dropForeign(['cluster_id']);
                 });
               } else {
