@@ -49,6 +49,7 @@ class MonarcExportService
                 'name' => $a['title'],
                 'type' => $a['type'], // 'primary' | 'supporting'
                 'parent' => $a['parent_id'] ? ($assetUuid[$a['parent_id']] ?? null) : null,
+                '_fallback_parent_uuid' => null, 
             ];
         }
 
