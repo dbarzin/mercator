@@ -528,13 +528,13 @@ To stop execution after the first error or failure:
 You can target a specific test or directory:
 
 ```bash
-./vendor/bin/pest tests/Feature/SitesTest.php
+./vendor/bin/pest tests/Feature/Api
 ```
 
 or use groups/tags:
 
 ```bash
-./vendor/bin/pest --group=regression
+./vendor/bin/pest --group=api
 ```
 
 ---
