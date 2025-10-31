@@ -203,7 +203,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Sites
     Route::resource('sites', Admin\SiteController::class);
-    Route::get('sites-clone/{id}', [Admin\SiteController::class, 'clone'])->name('sites.clone');
+    Route::get('sites/{site}/clone', [Admin\SiteController::class, 'clone'])->name('sites.clone');
     Route::delete('sites-destroy', [Admin\SiteController::class, 'massDestroy'])->name('sites.massDestroy');
 
     // Buildings
