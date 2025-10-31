@@ -18,9 +18,9 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationservices = ApplicationService::all();
+        $applicationServices = ApplicationService::all();
 
-        return response()->json($applicationservices);
+        return response()->json($applicationServices);
     }
 
     public function store(StoreApplicationServiceRequest $request)

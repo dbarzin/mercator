@@ -174,16 +174,14 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::with('cartographers')->get();
-        $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
-        $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
-        $icons = LogicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $physicalServers = PhysicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $databases = Database::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
+        $domains = DomaineAd::query()->orderBy('name')->pluck('name', 'id');
+        $icons = LogicalServer::query()->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        // Filtre sur les cartographes si nécessaire
-        $applications = $this->cartographerService->filterOnCartographers($applications);
-
+        // Lists
         $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
         $operating_system_list = LogicalServer::select('operating_system')->whereNotNull('operating_system')->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->whereNotNull('environment')->distinct()->orderBy('environment')->pluck('environment');
@@ -236,16 +234,14 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
-        $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
-        $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
-        $icons = LogicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $physicalServers = PhysicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $databases = Database::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
+        $domains = DomaineAd::query()->orderBy('name')->pluck('name', 'id');
+        $icons = LogicalServer::query()->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes si nécessaire
-        $applications = $this->cartographerService->filterOnCartographers($applications);
-
+        // Lists
         $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
