@@ -41,9 +41,10 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes si nécessaire
-        $applications = $this->cartographerService->filterOnCartographers($applications);
+        $applications = MApplication::query()
+            ->select('id','name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
 
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $exposition_list = ApplicationService::select('exposition')->where('exposition', '<>', null)->distinct()->orderBy('exposition')->pluck('exposition');
@@ -67,9 +68,11 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes
-        $applications = $this->cartographerService->filterOnCartographers($applications);
+        $applications = MApplication::query()
+            ->select('id','name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
+
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $exposition_list = ApplicationService::select('exposition')->where('exposition', '<>', null)->distinct()->orderBy('exposition')->pluck('exposition');
 

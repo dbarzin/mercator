@@ -41,9 +41,10 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes
-        $applications = $this->cartographerService->filterOnCartographers($applications);
+        $applications = MApplication::query()
+            ->select('id','name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
 
         return view('admin.applicationBlocks.create', compact('applications'));
     }
@@ -62,11 +63,11 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes
-        $applications = $this->cartographerService->filterOnCartographers($applications);
-        $applicationBlock->load('applications');
-
+        $applications = MApplication::query()
+            ->select('id','name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
+        
         return view('admin.applicationBlocks.edit', compact('applicationBlock', 'applications'));
     }
 
