@@ -552,13 +552,13 @@ Pour arrêter l'exécution après la première erreur ou le premier échec :
 Vous pouvez cibler un test ou un répertoire spécifique :
 
 ```bash
-./vendor/bin/pest tests/Feature/SitesTest.php
+./vendor/bin/pest tests/Feature/Api
 ```
 
 ou utiliser des groupes/étiquettes :
 
 ```bash
-./vendor/bin/pest --group=regression
+./vendor/bin/pest --group=api
 ```
 
 ---
