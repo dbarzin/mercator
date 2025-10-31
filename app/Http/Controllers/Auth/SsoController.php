@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite; // Importez le modèle Role
+use Laravel\Socialite\Facades\Socialite;
+
+// Importez le modèle Role
 
 class SsoController extends Controller
 {
@@ -36,10 +38,11 @@ class SsoController extends Controller
         $existingUser = User::where('email', $keycloakUser->email)->first();
 
         if (! $existingUser) {
-            if (! env('KEYCLOAK_AUTO_PROVISIONNING', true)) {
-                return redirect()->route('login')->with('message', 'User "'.$keycloakUser->email.'" is not a valid Mercator user.');
+            if (! config('services.keycloak.auto_provisioning', true)) {
+                return redirect()
+                    ->route('login')
+                    ->with('message', 'User "' . $keycloakUser->email. '" is not a valid Mercator user.');
             }
-
             $existingUser = new User();
             $existingUser->name = $keycloakUser->name; // Supposons que Keycloak fournit le nom de l'utilisateur
             $existingUser->email = $keycloakUser->email;

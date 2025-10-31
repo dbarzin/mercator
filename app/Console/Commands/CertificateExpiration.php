@@ -93,16 +93,14 @@ class CertificateExpiration extends Command
 
                 try {
                     // Server settings
-                    $mail->isSMTP();                               // Use SMTP
-                    // Server settings
-                    $mail->isSMTP();                                     // Use SMTP
-                    $mail->Host = env('MAIL_HOST');               // Set the SMTP server
-                    $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
-                    $mail->Username = env('MAIL_USERNAME');           // SMTP username
-                    $mail->Password = env('MAIL_PASSWORD');           // SMTP password
-                    $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false);  // Enable TLS encryption, `ssl` also accepted
-                    $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
-                    $mail->Port = env('MAIL_PORT');               // TCP port to connect to
+                    $mail->isSMTP();
+                    $mail->Host = config('mail.mailers.smtp.host'); // env('MAIL_HOST');
+                    $mail->SMTPAuth = config('mail.mailers.smtp.username') !== null;
+                    $mail->Username = config('mail.mailers.smtp.username'); // env('MAIL_USERNAME');
+                    $mail->Password = config('mail.mailers.smtp.password'); // env('MAIL_PASSWORD');
+                    $mail->SMTPSecure = config('mail.mailers.smtp.encryption'); // env('MAIL_SMTP_SECURE', false) ?: false; // 'tls' | 'ssl' | false
+                    $mail->SMTPAutoTLS = true; // filter_var(env('MAIL_SMTP_AUTO_TLS', true), FILTER_VALIDATE_BOOLEAN);
+                    $mail->Port = (int) config('mail.mailers.smtp.port'); // (int) env('MAIL_PORT', 587);
 
                     // Recipients
                     $mail->setFrom($mail_from);
@@ -113,11 +111,11 @@ class CertificateExpiration extends Command
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
 
-                    // Optional: Add DKIM signing
-                    $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
-                    $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
-                    $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
-                    $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+                    // DKIM (optionnel)
+                    $mail->DKIM_domain = config('mail.dkim.domain'); // env('MAIL_DKIM_DOMAIN');
+                    $mail->DKIM_private = config('mail.dkim.private'); //  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_selector = config('mail.dkim.selector'); // env('MAIL_DKIM_SELECTOR');
+                    $mail->DKIM_passphrase = config('mail.dkim.passphrase'); // env('MAIL_DKIM_PASSPHRASE');
                     $mail->DKIM_identity = $mail->From;
 
                     if ($group === null || $group === '1') {
