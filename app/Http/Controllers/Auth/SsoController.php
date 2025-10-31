@@ -38,7 +38,7 @@ class SsoController extends Controller
         $existingUser = User::where('email', $keycloakUser->email)->first();
 
         if (! $existingUser) {
-            if (! config('services.keycloak.auto_provisioning', true)) {
+            if (! config('services.keycloak.auto_provision', true)) {
                 return redirect()
                     ->route('login')
                     ->with('message', 'User "' . $keycloakUser->email. '" is not a valid Mercator user.');
