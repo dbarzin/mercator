@@ -27,17 +27,19 @@ class Document extends Model
     protected $fillable = [
     ];
 
+    /** @return BelongsToMany<Activity, self> */
     public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class);
     }
 
+    /** @return BelongsToMany<Entity, self> */
     public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class);
     }
 
-    public function humanSize()
+    public function humanSize(): string
     {
         return \Illuminate\Support\Number::fileSize($this->size);
         /*

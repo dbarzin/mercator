@@ -38,16 +38,19 @@ class ApplicationModule extends Model
         'deleted_at',
     ];
 
+    /** @return HasMany<Flux, self> */
     public function moduleSourceFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'module_source_id', 'id')->orderBy('name');
     }
 
+    /** @return HasMany<Flux, self> */
     public function moduleDestFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'module_dest_id', 'id')->orderBy('name');
     }
 
+    /** @return BelongsToMany<ApplicationService, self> */
     public function applicationServices(): BelongsToMany
     {
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');

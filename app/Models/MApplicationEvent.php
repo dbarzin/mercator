@@ -26,11 +26,13 @@ class MApplicationEvent extends Model
         'updated_at',
     ];
 
+    /** @return BelongsTo<MApplication, self> */
     public function application(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'm_application_id');
     }
 
+    /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

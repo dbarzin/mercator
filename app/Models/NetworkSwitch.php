@@ -39,6 +39,7 @@ class NetworkSwitch extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<PhysicalSwitch, self> */
     public function physicalSwitches(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalSwitch::class)->orderBy('name');

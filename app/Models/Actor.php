@@ -39,6 +39,7 @@ class Actor extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<Operation, self> */
     public function operations(): BelongsToMany
     {
         return $this->belongsToMany(Operation::class)->orderBy('name');

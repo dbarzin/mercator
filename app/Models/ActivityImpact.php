@@ -28,6 +28,7 @@ class ActivityImpact extends Model
     protected $fillable = [
     ];
 
+    /** @return BelongsTo<Activity, self> */
     public function activity(): BelongsTo
     {
         return $this->belongsTo(Activity::class);

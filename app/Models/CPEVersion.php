@@ -29,6 +29,7 @@ class CPEVersion extends Model
         'name',
     ];
 
+    /** @return BelongsTo<CPEProduct, self> */
     public function product(): BelongsTo
     {
         return $this->belongsTo(CPEProduct::class, 'cpe_product_id');

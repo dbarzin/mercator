@@ -52,26 +52,31 @@ class Peripheral extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
+    /** @return BelongsTo<Entity, self> */
     public function provider(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'provider_id');
     }
 
+    /** @return BelongsTo<Site, self> */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
+    /** @return BelongsTo<Building, self> */
     public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
+    /** @return BelongsTo<Bay, self> */
     public function bay(): BelongsTo
     {
         return $this->belongsTo(Bay::class, 'bay_id');

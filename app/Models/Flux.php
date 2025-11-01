@@ -82,41 +82,50 @@ class Flux extends Model
         return null;
     }
 
+
+    /** @return BelongsTo<MApplication, Flux> */
     public function application_source(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_source_id');
     }
 
+    /** @return BelongsTo<ApplicationService, Flux> */
     public function service_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_source_id');
     }
 
+    /** @return BelongsTo<ApplicationModule, Flux> */
     public function module_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_source_id');
     }
 
+    /** @return BelongsTo<Database, Flux> */
     public function database_source(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_source_id');
     }
 
+    /** @return BelongsTo<MApplication, Flux> */
     public function application_dest(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_dest_id');
     }
 
+    /** @return BelongsTo<ApplicationService, Flux> */
     public function service_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_dest_id');
     }
 
+    /** @return BelongsTo<ApplicationModule, Flux> */
     public function module_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_dest_id');
     }
 
+    /** @return BelongsTo<Database, Flux> */
     public function database_dest(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_dest_id');
