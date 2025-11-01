@@ -35,7 +35,6 @@ class Router extends Model
         'type',
         'description',
         'rules',
-        'cluster_id',
         'ip_addresses',
         'created_at',
         'updated_at',
@@ -51,12 +50,4 @@ class Router extends Model
     {
         return $this->BelongsToMany(Cluster::class, 'cluster_id');
     }
-
-    /*
-    public function networkSwitches()
-    {
-        // TODO: to change
-        return $this->hasMany(NetworkSwitches::class, 'router_id', 'id');
-    }
-    */
 }

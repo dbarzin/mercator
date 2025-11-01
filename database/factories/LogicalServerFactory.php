@@ -21,7 +21,6 @@ class LogicalServerFactory extends Factory
             'attributes' => json_encode(['key' => $this->faker->word]),
             'configuration' => json_encode(['setting' => $this->faker->word]),
             'address_ip' => $this->faker->ipv4,
-            'cluster_id' => null, // Assurez-vous que cette valeur est valide dans votre contexte
         ];
     }
 }
