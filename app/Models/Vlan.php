@@ -39,11 +39,13 @@ class Vlan extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<PhysicalRouter, self> */
     public function physicalRouters(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
+    /** @return HasMany<Subnetwork, self> */
     public function subnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy('name');

@@ -40,16 +40,19 @@ class Cluster extends Model
         'address_ip',
     ];
 
+    /** @return BelongsToMany<LogicalServer, self> */
     public function logicalServers(): BelongsToMany
     {
         return $this->BelongsToMany(LogicalServer::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Router, self> */
     public function routers(): BelongsToMany
     {
         return $this->BelongsToMany(Router::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<PhysicalServer, self> */
     public function physicalServers(): BelongsToMany
     {
         return $this->BelongsToMany(PhysicalServer::class)->orderBy('name');

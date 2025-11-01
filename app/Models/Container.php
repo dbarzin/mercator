@@ -39,16 +39,19 @@ class Container extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Database, self> */
     public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<LogicalServer, self> */
     public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');

@@ -29,6 +29,7 @@ class CPEVendor extends Model
         'name',
     ];
 
+    /** @return BelongsToMany<CPEProduct, self> */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(CPEProduct::class)->orderBy('name');

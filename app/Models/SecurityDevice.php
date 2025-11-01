@@ -39,11 +39,13 @@ class SecurityDevice extends Model
         'icon_id',
     ];
 
+    /** @return BelongsToMany<PhysicalSecurityDevice, self> */
     public function physicalSecurityDevices(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalSecurityDevice::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');

@@ -49,11 +49,13 @@ class Information extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<Database, self> */
     public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Process, self> */
     public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');

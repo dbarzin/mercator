@@ -39,21 +39,25 @@ class Operation extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsTo<Process, self> */
     public function process(): BelongsTo
     {
         return $this->belongsTo(Process::class, 'process_id');
     }
 
+    /** @return BelongsToMany<Activity, self> */
     public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Actor, self> */
     public function actors(): BelongsToMany
     {
         return $this->belongsToMany(Actor::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Task, self> */
     public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class)->orderBy('name');

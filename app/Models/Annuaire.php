@@ -40,6 +40,7 @@ class Annuaire extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsTo<ZoneAdmin, self> */
     public function zone_admin(): BelongsTo
     {
         return $this->belongsTo(ZoneAdmin::class, 'zone_admin_id');

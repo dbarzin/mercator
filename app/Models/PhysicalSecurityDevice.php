@@ -44,21 +44,25 @@ class PhysicalSecurityDevice extends Model
         'bay_id',
     ];
 
+    /** @return BelongsToMany<SecurityDevice, self> */
     public function securityDevices(): BelongsToMany
     {
         return $this->belongsToMany(SecurityDevice::class)->orderBy('name');
     }
 
+    /** @return <Site, self> */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
+    /** @return <Building, self> */
     public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
+    /** @return <Bay, self> */
     public function bay(): BelongsTo
     {
         return $this->belongsTo(Bay::class, 'bay_id');

@@ -39,11 +39,13 @@ class Certificate extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<LogicalServer, self> */
     public function logical_servers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');

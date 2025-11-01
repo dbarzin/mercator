@@ -49,32 +49,43 @@ class Subnetwork extends Model
         'deleted_at',
     ];
 
+    /** @return HasMany<Subnetwork, self> */
+    public function connectedSubnetsNetworks(): HasMany
+    {
+        return $this->hasMany(Network::class, 'connected_subnets_id', 'id')->orderBy('name');
+    }
+
+    /** @return HasMany<Subnetwork, self> */
     public function connectedSubnetsSubnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'connected_subnets_id', 'id')->orderBy('name');
     }
 
+    /** @return BelongsTo<Network, self> */
     public function network(): BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
+    /** @return BelongsTo<Subnetwork, self> */
     public function connected_subnets(): BelongsTo
     {
         return $this->belongsTo(Subnetwork::class, 'connected_subnets_id');
     }
 
+    /** @return BelongsTo<Gateway, self> */
     public function gateway(): BelongsTo
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 
+    /** @return BelongsTo<Vlan, self> */
     public function vlan(): BelongsTo
     {
         return $this->belongsTo(Vlan::class, 'vlan_id');
     }
 
-    public function ipRange()
+    public function ipRange(): ?string
     {
         // no address
         if ($this->address === null) {

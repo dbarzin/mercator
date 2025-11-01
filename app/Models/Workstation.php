@@ -21,7 +21,7 @@ class Workstation extends Model
 
     public $table = 'workstations';
 
-    public static $searchable = [
+    public static array $searchable = [
         'name',
         'type',
         'description',
@@ -30,7 +30,7 @@ class Workstation extends Model
         'model',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -48,7 +48,7 @@ class Workstation extends Model
         'model',
         'serial_number',
 
-        // Configuation
+        // Configuration
         'cpu',
         'memory',
         'disk',
@@ -91,36 +91,43 @@ class Workstation extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsTo<Site, self> */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
+    /** @return BelongsTo<Building, self> */
     public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
+    /** @return BelongsTo<Entity, self> */
     public function entity(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_id');
     }
 
+    /** @return BelongsTo<DomaineAd, self> */
     public function domain(): BelongsTo
     {
         return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
+    /** @return BelongsTo<Network, self> */
     public function network(): BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
+    /** @return BelongsTo<AdminUser, self> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(AdminUser::class, 'user_id');
     }
 
+    /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
