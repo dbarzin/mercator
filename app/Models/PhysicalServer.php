@@ -50,7 +50,6 @@ class PhysicalServer extends Model
         'site_id',
         'building_id',
         'bay_id',
-        'cluster_id',
         'responsible',
         'created_at',
         'updated_at',
