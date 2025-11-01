@@ -21,6 +21,8 @@ Changements prévus en 2025 et plus :
 - [ ] Identifier les chemins critiques
 - [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
 - [ ] Mettre en place une formation et un guide utilisateur
+- [ ] Configuration des labels, couleurs et niveaux DICT
+- [ ] Améliorer la qualité du code avec LaraStan et PHPStan
 
 ## Evolutions mineurs
 
