@@ -208,12 +208,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Buildings
     Route::resource('buildings', Admin\BuildingController::class);
-    Route::get('buildings-clone/{id}', [Admin\BuildingController::class, 'clone'])->name('buildings.clone');
+    Route::get('buildings/{building}/clone', [Admin\BuildingController::class, 'clone'])->name('buildings.clone');
     Route::delete('buildings-destroy', [Admin\BuildingController::class, 'massDestroy'])->name('buildings.massDestroy');
 
     // Bays
     Route::resource('bays', Admin\BayController::class);
-    Route::get('bays-clone/{id}', [Admin\BayController::class, 'clone'])->name('bays.clone');
+    Route::get('bays/{bay}/clone', [Admin\BayController::class, 'clone'])->name('bays.clone');
     Route::delete('bays-destroy', [Admin\BayController::class, 'massDestroy'])->name('bays.massDestroy');
 
     // Physical Servers
@@ -330,7 +330,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Graphs
     Route::resource('graphs', Admin\GraphController::class);
-    Route::put('graph/save', [Admin\GraphController::class, 'save']);
     Route::delete('graphs-destroy', [Admin\GraphController::class, 'massDestroy'])->name('graphs.massDestroy');
     Route::get('graphs/clone/{id}', [Admin\GraphController::class, 'clone'])->name('graphs.clone');
     // Graphs test

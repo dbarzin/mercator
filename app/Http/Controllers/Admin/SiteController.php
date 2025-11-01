@@ -48,6 +48,7 @@ class SiteController extends Controller
 
         return view('admin.sites.create', compact('icons'));
     }
+
     public function store(StoreSiteRequest $request)
     {
         $site = Site::create($request->all());
