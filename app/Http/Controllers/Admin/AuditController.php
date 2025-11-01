@@ -10,9 +10,10 @@ namespace App\Http\Controllers\Admin;
 // Logique
 // Physique
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
-use Illuminate\Support\Facades\DB;
 
 class AuditController extends HomeController
 {
@@ -784,25 +785,25 @@ class AuditController extends HomeController
 
         $auditLogs = DB::table('audit_logs')
             ->select(DB::raw('subject_type, description, YEAR(created_at), MONTH(created_at), count(*) as count'))
-            ->where('created_at', '>=', Carbon::now()->startOfMonth()->addMonth(-12))
+            ->where('created_at', '>=', Carbon::now()->startOfMonth()->addMonths(-12))
             ->groupBy('subject_type', 'description', 'YEAR(created_at)', 'MONTH(created_at)')
             ->get();
 
         $header = [
             trans('Objet'),
             trans('Action'),
-            Carbon::now()->startOfMonth()->addMonth(-12)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-11)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-10)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-9)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-8)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-7)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-6)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-5)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-4)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-3)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-2)->format('m/Y'),
-            Carbon::now()->startOfMonth()->addMonth(-1)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-12)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-11)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-10)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-9)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-8)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-7)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-6)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-5)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-4)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-3)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-2)->format('m/Y'),
+            Carbon::now()->startOfMonth()->addMonths(-1)->format('m/Y'),
             Carbon::now()->startOfMonth()->format('m/Y'),
         ];
 

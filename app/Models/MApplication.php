@@ -141,7 +141,7 @@ class MApplication extends Model
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<ApplicationModule, self> */
+    /** @return BelongsToMany<Database, self> */
     public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');

@@ -10,8 +10,8 @@ use App\Http\Resources\Admin\ApplicationResource;
 use App\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationController extends Controller
 {
@@ -71,13 +71,16 @@ class ApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application->entities = $application->entities()->pluck('id');
-        $application->processes = $application->processes()->pluck('id');
-        $application->services = $application->services()->pluck('id');
-        $application->databases = $application->databases()->pluck('id');
-        $application->logicalServers = $application->logicalServers()->pluck('id');
-        $application->activities = $application->activities()->pluck('id');
-
+        // On charge seulement les IDs (pas d’assignation sur le modèle)
+        $application->load([
+            'entities:id',
+            'processes:id',
+            'services:id',
+            'databases:id',
+            'logicalServers:id',
+            'activities:id',
+        ]);
+        
         return new ApplicationResource($application);
     }
 
