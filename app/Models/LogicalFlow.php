@@ -214,11 +214,11 @@ class LogicalFlow extends Model
             }
 
             // Build mask
-            $solid = floor($maskBits / 8);
+            $solid = floor(intval($maskBits) / 8);
             $solidBits = $solid * 8;
             $mask = str_repeat(chr(255), $solid);
             for ($i = $solidBits; $i < $maskBits; $i += 8) {
-                $bits = max(0, min(8, $maskBits - $i));
+                $bits = max(0, min(8, intval($maskBits) - $i));
                 $mask .= chr(pow(2, $bits) - 1 << 8 - $bits);
             }
             $mask = str_pad($mask, $size, chr(0));
