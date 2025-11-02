@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
 use App\Models\LogicalServer;
+use App\Models\NetworkSwitch;
 use App\Models\PhysicalServer;
-use App\Models\PhysicalSwitch;
 use App\Models\Vlan;
 use App\Models\Workstation;
 use Carbon\Carbon;
@@ -24,7 +24,7 @@ class VLANList extends Controller
 
         $lservers = LogicalServer::orderBy('name')->get();
         $pservers = PhysicalServer::orderBy('name')->get();
-        $switches = PhysicalSwitch::orderBy('name')->get();
+        $switches = NetworkSwitch::orderBy('name')->get();
         $workstations = Workstation::orderBy('name')->get();
 
         $header = [
@@ -33,9 +33,9 @@ class VLANList extends Controller
             'Description',
             'subnet name',
             'subnet address',
-            'Logical Servers',
-            'Physical Servers',
-            'Switches',
+            'Logical servers',
+            'Physical servers',
+            'Logical switches',
             'Workstations',
         ];
 
@@ -112,7 +112,7 @@ class VLANList extends Controller
                 // Switches
                 $txt = '';
                 foreach ($switches as $switch) {
-                    foreach (explode(', ', $switch->address_ip) as $ip) {
+                    foreach (explode(', ', $switch->ip) as $ip) {
                         if ($subnet->contains($ip)) {
                             if (strlen($txt) > 0) {
                                 $txt .= ', ';

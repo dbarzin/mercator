@@ -15,7 +15,7 @@ use App\Models\MApplication;
 use App\Models\PhysicalServer;
 use App\Models\Site;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 // Laravel
@@ -83,7 +83,7 @@ class PhysicalServerController extends Controller
         $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
 
         // Get PhysicalServer
-        $physicalServer = PhysicalServer::find($request->id);
+        $physicalServer = PhysicalServer::find($request['id']);
 
         // PhysicalServer not found
         abort_if($physicalServer === null, Response::HTTP_NOT_FOUND, '404 Not Found');

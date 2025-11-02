@@ -8,8 +8,8 @@ use App\Models\LogicalServer;
 use App\Models\MApplication;
 use Carbon\Carbon;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PatchingController extends Controller
@@ -91,7 +91,7 @@ class PatchingController extends Controller
     {
         abort_if(Gate::denies('patching_make'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $server = LogicalServer::find($request->id);
+        $server = LogicalServer::find($request['id']);
 
         // Lists
         $attributes_list = $this->getAttributes();
@@ -120,7 +120,7 @@ class PatchingController extends Controller
     {
         abort_if(Gate::denies('patching_make'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application = MApplication::find($request->id);
+        $application = MApplication::find($request['id']);
 
         // Lists
         $attributes_list = $this->getAttributes();
@@ -133,7 +133,7 @@ class PatchingController extends Controller
 
     public function updateServer(Request $request)
     {
-        $logicalServer = LogicalServer::find($request->id);
+        $logicalServer = LogicalServer::find($request['id']);
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $logicalServer->update($request->all());
         $logicalServer->documents()->sync(session()->get('documents'));
@@ -156,7 +156,7 @@ class PatchingController extends Controller
 
     public function updateApplication(Request $request)
     {
-        $application = MApplication::find($request->id);
+        $application = MApplication::find($request['id']);
 
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $application->update($request->all());

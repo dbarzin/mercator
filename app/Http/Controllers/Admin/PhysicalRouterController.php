@@ -14,7 +14,7 @@ use App\Models\Router;
 use App\Models\Site;
 use App\Models\Vlan;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalRouterController extends Controller
@@ -61,7 +61,7 @@ class PhysicalRouterController extends Controller
         $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Get PhysicalRouter
-        $physicalRouter = PhysicalRouter::find($request->id);
+        $physicalRouter = PhysicalRouter::find($request['id']);
 
         // PhysicalRouter not found
         abort_if($physicalRouter === null, Response::HTTP_NOT_FOUND, '404 Not Found');

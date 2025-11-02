@@ -11,7 +11,7 @@ use App\Models\Building;
 use App\Models\Phone;
 use App\Models\Site;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends Controller
@@ -50,7 +50,7 @@ class PhoneController extends Controller
         $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Get Phone
-        $phone = Phone::find($request->id);
+        $phone = Phone::find($request['id']);
 
         // Vlan not found
         abort_if($phone === null, Response::HTTP_NOT_FOUND, '404 Not Found');
