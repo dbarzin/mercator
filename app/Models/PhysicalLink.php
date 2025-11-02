@@ -220,7 +220,7 @@ class PhysicalLink extends Model
             return 'LSWITCH_'.$this->network_switch_src_id;
         }
         if ($this->router_src_id !== null) {
-            return 'ROUTER_'.$this->router_src_id;
+            return 'LROUTER_'.$this->router_src_id;
         }
 
         return null;
@@ -263,7 +263,7 @@ class PhysicalLink extends Model
             return 'LSWITCH_'.$this->network_switch_dest_id;
         }
         if ($this->router_dest_id !== null) {
-            return 'ROUTER_'.$this->router_dest_id;
+            return 'LROUTER_'.$this->router_dest_id;
         }
 
         return null;
