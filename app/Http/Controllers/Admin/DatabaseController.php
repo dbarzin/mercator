@@ -12,23 +12,11 @@ use App\Models\Entity;
 use App\Models\Information;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
-use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService)
-    {
-        $this->cartographerService = $cartographerService;
-    }
 
     public function index()
     {
