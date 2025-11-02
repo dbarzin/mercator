@@ -10,23 +10,11 @@ use App\Http\Requests\UpdateApplicationServiceRequest;
 use App\Models\ApplicationModule;
 use App\Models\ApplicationService;
 use App\Models\MApplication;
-use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationServiceController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService)
-    {
-        $this->cartographerService = $cartographerService;
-    }
 
     public function index()
     {

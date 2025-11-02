@@ -19,6 +19,7 @@ use App\Models\Process;
 use App\Models\SecurityDevice;
 use App\Models\User;
 use Gate;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 // use App\Services\CartographerService;
@@ -27,10 +28,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationController extends Controller
 {
-    /**
-     * Services
-     */
-    // protected CartographerService $cartographerService;
 
     public function index()
     {
@@ -154,7 +151,6 @@ class MApplicationController extends Controller
         $application->activities()->sync($request->input('activities', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
-        $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
         $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
@@ -184,13 +180,14 @@ class MApplicationController extends Controller
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // rto-rpo
-        $application->rto_days = intdiv($application->rto, 60 * 24);
-        $application->rto_hours = intdiv($application->rto, 60) % 24;
-        $application->rto_minutes = $application->rto % 60;
+        // TODO : Add a function in MApplication for it
+        $application['rto_days'] = intdiv($application->rto, 60 * 24);
+        $application['rto_hours'] = intdiv($application->rto, 60) % 24;
+        $application['rto_minutes'] = $application->rto % 60;
 
-        $application->rpo_days = intdiv($application->rpo, 60 * 24);
-        $application->rpo_hours = intdiv($application->rpo, 60) % 24;
-        $application->rpo_minutes = $application->rpo % 60;
+        $application['rpo_days'] = intdiv($application->rpo, 60 * 24);
+        $application['rpo_hours'] = intdiv($application->rpo, 60) % 24;
+        $application['rpo_minutes'] = $application->rpo % 60;
 
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -279,7 +276,6 @@ class MApplicationController extends Controller
         $application->activities()->sync($request->input('activities', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
-        $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
         $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
@@ -290,7 +286,7 @@ class MApplicationController extends Controller
         return redirect()->route('admin.applications.index');
     }
 
-    public function show(MApplication $application)
+    public function show(MApplication $application): View
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -299,7 +295,7 @@ class MApplicationController extends Controller
         return view('admin.applications.show', compact('application'));
     }
 
-    public function destroy(MApplication $application)
+    public function destroy(MApplication $application): Response
     {
         abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // Check for cartographers
@@ -309,29 +305,8 @@ class MApplicationController extends Controller
 
         return redirect()->route('admin.applications.index');
     }
-
-    // Return the icon of the application as a PNG file
-
-    public function icon(int $id)
-    {
-        // Get applications
-        $application = MApplication::find($id, ['icon']);
-        if ($application === null) {
-            return null;
-        }
-
-        // Get base 64 image
-        $base64Image = $application->icon;
-
-        // Décoder l'image encodée en base64
-        $imageData = base64_decode($base64Image);
-
-        // Retourner une réponse avec le contenu de l'image et le type MIME 'image/png'
-        return response($imageData)
-            ->header('Content-Type', 'image/png');
-    }
-
-    public function massDestroy(MassDestroyMApplicationRequest $request)
+    
+    public function massDestroy(MassDestroyMApplicationRequest $request) : Response
     {
         MApplication::whereIn('id', request('ids'))->delete();
 

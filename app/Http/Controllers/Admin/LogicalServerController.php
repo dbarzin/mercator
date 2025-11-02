@@ -13,7 +13,6 @@ use App\Models\DomaineAd;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\PhysicalServer;
-use App\Services\CartographerService;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,18 +21,6 @@ use Yajra\DataTables\DataTables;
 
 class LogicalServerController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService)
-    {
-        $this->cartographerService = $cartographerService;
-    }
-
     public function getData(Request $request)
     {
         $logicalServers = LogicalServer::select('id', 'name', 'type', 'attributes', 'description')->get();

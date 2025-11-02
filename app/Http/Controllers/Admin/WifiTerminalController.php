@@ -11,7 +11,7 @@ use App\Models\Building;
 use App\Models\Site;
 use App\Models\WifiTerminal;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class WifiTerminalController extends Controller
@@ -50,7 +50,7 @@ class WifiTerminalController extends Controller
         $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Get WifiTerminal
-        $wifiTerminal = WifiTerminal::find($request->id);
+        $wifiTerminal = WifiTerminal::find($request['id']);
 
         // WifiTerminal not found
         abort_if($wifiTerminal === null, Response::HTTP_NOT_FOUND, '404 Not Found');

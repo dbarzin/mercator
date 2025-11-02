@@ -112,7 +112,7 @@ class ApplicationList extends ReportController
                 $sheet->setCellValue(self::col($i++).$row, $application->name);
                 $sheet->setCellValue(self::col($i++).$row, $html->toRichTextObject($application->description));
                 $sheet->setCellValue(self::col($i++).$row, $application->vendor.':'.$application->product.':'.$application->version);
-                $sheet->setCellValue(self::col($i++).$row, $application->entity_resp ? $application->entity_resp->name : '');
+                $sheet->setCellValue(self::col($i++).$row, $application->entityResp ? $application->entityResp->name : '');
                 $sheet->setCellValue(self::col($i++).$row, $application->entities->implode('name', ', '));
                 $sheet->setCellValue(self::col($i++).$row, $application->responsible);
                 $sheet->setCellValue(self::col($i++).$row, $application->processes->implode('name', ', '));

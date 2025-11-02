@@ -10,8 +10,8 @@ use App\Http\Requests\UpdateWorkstationRequest;
 use App\Models\MApplication;
 use App\Models\Workstation;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends Controller
@@ -82,7 +82,7 @@ class WorkstationController extends Controller
             ->pluck('network_port_type');
 
         // Get Workstation
-        $workstation = Workstation::find($request->id);
+        $workstation = Workstation::find($request['id']);
 
         // Workstation not found
         abort_if($workstation === null, Response::HTTP_NOT_FOUND, '404 Not Found');
