@@ -66,13 +66,13 @@ class PhysicalLinkController extends Controller
             $devices->put('PHONE_'.$key, $value);
         }
         foreach ($physicalRouters as $key => $value) {
-            $devices->put('ROUTER_'.$key, $value);
+            $devices->put('PROUTER_'.$key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
             $devices->put('SECDEV_'.$key, $value);
         }
         foreach ($physicalServers as $key => $value) {
-            $devices->put('SERV_'.$key, $value);
+            $devices->put('PSERVER_'.$key, $value);
         }
         foreach ($physicalSwitches as $key => $value) {
             $devices->put('SWITCH_'.$key, $value);
@@ -94,7 +94,7 @@ class PhysicalLinkController extends Controller
             $devices->put('LSWITCH_'.$key, $value);
         }
         foreach ($logicalServers as $key => $value) {
-            $devices->put('LSERV_'.$key, $value);
+            $devices->put('LSERVER_'.$key, $value);
         }
 
         return view('admin.links.create', compact('devices'));
@@ -109,12 +109,12 @@ class PhysicalLinkController extends Controller
             $link->peripheral_src_id = intval(substr($request->src_id, 4));
         } elseif (str_starts_with($request->src_id, 'PHONE_')) {
             $link->phone_src_id = intval(substr($request->src_id, 6));
-        } elseif (str_starts_with($request->src_id, 'ROUTER_')) {
-            $link->physical_router_src_id = intval(substr($request->src_id, 7));
+        } elseif (str_starts_with($request->src_id, 'PROUTER_')) {
+            $link->physical_router_src_id = intval(substr($request->src_id, 8));
         } elseif (str_starts_with($request->src_id, 'SECDEV_')) {
             $link->physical_security_device_src_id = intval(substr($request->src_id, 7));
-        } elseif (str_starts_with($request->src_id, 'SERV_')) {
-            $link->physical_server_src_id = intval(substr($request->src_id, 5));
+        } elseif (str_starts_with($request->src_id, 'PSERVER_')) {
+            $link->physical_server_src_id = intval(substr($request->src_id, 8));
         } elseif (str_starts_with($request->src_id, 'SWITCH_')) {
             $link->physical_switch_src_id = intval(substr($request->src_id, 7));
         } elseif (str_starts_with($request->src_id, 'STORAGE_')) {
@@ -127,8 +127,8 @@ class PhysicalLinkController extends Controller
             $link->router_src_id = intval(substr($request->src_id, 8));
         } elseif (str_starts_with($request->src_id, 'LSWITCH_')) {
             $link->network_switch_src_id = intval(substr($request->src_id, 8));
-        } elseif (str_starts_with($request->src_id, 'LSERV_')) {
-            $link->logical_server_src_id = intval(substr($request->src_id, 6));
+        } elseif (str_starts_with($request->src_id, 'LSERVER_')) {
+            $link->logical_server_src_id = intval(substr($request->src_id, 8));
         }
 
         // Dest device
@@ -136,12 +136,12 @@ class PhysicalLinkController extends Controller
             $link->peripheral_dest_id = intval(substr($request->dest_id, 4));
         } elseif (str_starts_with($request->dest_id, 'PHONE_')) {
             $link->phone_dest_id = intval(substr($request->dest_id, 6));
-        } elseif (str_starts_with($request->dest_id, 'ROUTER_')) {
-            $link->physical_router_dest_id = intval(substr($request->dest_id, 7));
+        } elseif (str_starts_with($request->dest_id, 'PROUTER_')) {
+            $link->physical_router_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'SECDEV_')) {
             $link->physical_security_device_dest_id = intval(substr($request->dest_id, 7));
-        } elseif (str_starts_with($request->dest_id, 'SERV_')) {
-            $link->physical_server_dest_id = intval(substr($request->dest_id, 5));
+        } elseif (str_starts_with($request->dest_id, 'PSERVER_')) {
+            $link->physical_server_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'SWITCH_')) {
             $link->physical_switch_dest_id = intval(substr($request->dest_id, 7));
         } elseif (str_starts_with($request->dest_id, 'STORAGE_')) {
@@ -154,8 +154,8 @@ class PhysicalLinkController extends Controller
             $link->router_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'LSWITCH_')) {
             $link->network_switch_dest_id = intval(substr($request->dest_id, 8));
-        } elseif (str_starts_with($request->dest_id, 'LSERV_')) {
-            $link->logical_server_dest_id = intval(substr($request->dest_id, 6));
+        } elseif (str_starts_with($request->dest_id, 'LSERVER_')) {
+            $link->logical_server_dest_id = intval(substr($request->dest_id, 8));
         }
 
         // Ports
@@ -285,13 +285,13 @@ class PhysicalLinkController extends Controller
             $devices->put('PHONE_'.$key, $value);
         }
         foreach ($physicalRouters as $key => $value) {
-            $devices->put('ROUTER_'.$key, $value);
+            $devices->put('PROUTER_'.$key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
             $devices->put('SECDEV_'.$key, $value);
         }
         foreach ($physicalServers as $key => $value) {
-            $devices->put('SERV_'.$key, $value);
+            $devices->put('PSERVER_'.$key, $value);
         }
         foreach ($physicalSwitches as $key => $value) {
             $devices->put('SWITCH_'.$key, $value);
@@ -312,61 +312,7 @@ class PhysicalLinkController extends Controller
             $devices->put('LSWITCH_'.$key, $value);
         }
         foreach ($logicalServers as $key => $value) {
-            $devices->put('LSERV_'.$key, $value);
-        }
-
-        // Source device
-        if ($link->peripheral_src_id !== null) {
-            $link->src_id = 'PER_'.$link->peripheral_src_id;
-        } elseif ($link->phone_src_id !== null) {
-            $link->src_id = 'PHONE_'.$link->phone_src_id;
-        } elseif ($link->physical_router_src_id !== null) {
-            $link->src_id = 'ROUTER_'.$link->physical_router_src_id;
-        } elseif ($link->physical_security_device_src_id !== null) {
-            $link->src_id = 'SECDEV_'.$link->physical_security_device_src_id;
-        } elseif ($link->physical_server_src_id !== null) {
-            $link->src_id = 'SERV_'.$link->physical_server_src_id;
-        } elseif ($link->physical_switch_src_id !== null) {
-            $link->src_id = 'SWITCH_'.$link->physical_switch_src_id;
-        } elseif ($link->storage_device_src_id !== null) {
-            $link->src_id = 'STORAGE_'.$link->storage_device_src_id;
-        } elseif ($link->wifi_terminal_src_id !== null) {
-            $link->src_id = 'WIFI_'.$link->wifi_terminal_src_id;
-        } elseif ($link->workstation_src_id !== null) {
-            $link->src_id = 'WORK_'.$link->workstation_src_id;
-        } elseif ($link->router_src_id !== null) {
-            $link->src_id = 'LROUTER_'.$link->router_src_id;
-        } elseif ($link->network_switch_src_id !== null) {
-            $link->src_id = 'LSWITCH_'.$link->network_switch_src_id;
-        } elseif ($link->logical_server_src_id !== null) {
-            $link->src_id = 'LSERV_'.$link->logical_server_src_id;
-        }
-
-        // Dest device
-        if ($link->peripheral_dest_id !== null) {
-            $link->dest_id = 'PER_'.$link->peripheral_dest_id;
-        } elseif ($link->phone_dest_id !== null) {
-            $link->dest_id = 'PHONE_'.$link->phone_dest_id;
-        } elseif ($link->physical_router_dest_id !== null) {
-            $link->dest_id = 'ROUTER_'.$link->physical_router_dest_id;
-        } elseif ($link->physical_security_device_dest_id !== null) {
-            $link->dest_id = 'SECDEV_'.$link->physical_security_device_dest_id;
-        } elseif ($link->physical_server_dest_id !== null) {
-            $link->dest_id = 'SERV_'.$link->physical_server_dest_id;
-        } elseif ($link->physical_switch_dest_id !== null) {
-            $link->dest_id = 'SWITCH_'.$link->physical_switch_dest_id;
-        } elseif ($link->storage_device_dest_id !== null) {
-            $link->dest_id = 'STORAGE_'.$link->storage_device_dest_id;
-        } elseif ($link->wifi_terminal_dest_id !== null) {
-            $link->dest_id = 'WIFI_'.$link->wifi_terminal_dest_id;
-        } elseif ($link->workstation_dest_id !== null) {
-            $link->dest_id = 'WORK_'.$link->workstation_dest_id;
-        } elseif ($link->router_dest_id !== null) {
-            $link->dest_id = 'LROUTER_'.$link->router_dest_id;
-        } elseif ($link->network_switch_dest_id !== null) {
-            $link->dest_id = 'LSWITCH_'.$link->network_switch_dest_id;
-        } elseif ($link->logical_server_dest_id !== null) {
-            $link->dest_id = 'LSERV_'.$link->logical_server_dest_id;
+            $devices->put('LSERVER_'.$key, $value);
         }
 
         return view('admin.links.edit', compact('devices', 'link'));
@@ -387,8 +333,8 @@ class PhysicalLinkController extends Controller
             $link->phone_src_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'ROUTER_')) {
-            $link->physical_router_src_id = intval(substr($request->src_id, 7));
+        if (str_starts_with($request->src_id, 'PROUTER_')) {
+            $link->physical_router_src_id = intval(substr($request->src_id, 8));
         } else {
             $link->physical_router_src_id = null;
         }
@@ -399,7 +345,7 @@ class PhysicalLinkController extends Controller
             $link->physical_security_device_src_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'SERV_')) {
+        if (str_starts_with($request->src_id, 'PSERVER_')) {
             $link->physical_server_src_id = intval(substr($request->src_id, 5));
         } else {
             $link->physical_server_src_id = null;
@@ -441,7 +387,7 @@ class PhysicalLinkController extends Controller
             $link->network_switch_src_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'LSERV_')) {
+        if (str_starts_with($request->src_id, 'LSERVER_')) {
             $link->logical_server_src_id = intval(substr($request->src_id, 6));
         } else {
             $link->logical_server_src_id = null;
@@ -460,8 +406,8 @@ class PhysicalLinkController extends Controller
             $link->phone_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'ROUTER_')) {
-            $link->physical_router_dest_id = intval(substr($request->dest_id, 7));
+        if (str_starts_with($request->dest_id, 'PROUTER_')) {
+            $link->physical_router_dest_id = intval(substr($request->dest_id, 8));
         } else {
             $link->physical_router_dest_id = null;
         }
@@ -472,8 +418,8 @@ class PhysicalLinkController extends Controller
             $link->physical_security_device_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'SERV_')) {
-            $link->physical_server_dest_id = intval(substr($request->dest_id, 5));
+        if (str_starts_with($request->dest_id, 'PSERVER_')) {
+            $link->physical_server_dest_id = intval(substr($request->dest_id, 8));
         } else {
             $link->physical_server_dest_id = null;
         }
@@ -513,7 +459,7 @@ class PhysicalLinkController extends Controller
             $link->network_switch_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'LSERV_')) {
+        if (str_starts_with($request->dest_id, 'LSERVER_')) {
             $link->logical_server_dest_id = intval(substr($request->dest_id, 6));
         } else {
             $link->logical_server_dest_id = null;
