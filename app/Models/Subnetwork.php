@@ -188,7 +188,6 @@ class Subnetwork extends Model
      */
     public function contains(string $ip): bool
     {
-        // TODO : place me in a tools lobrary (see Subnetwork)
         $cidr = $this->address;
 
         if ((str_contains($ip, '.') && str_contains($cidr, '.')) ||

@@ -192,7 +192,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get Security Devices
-            $securityDevices = SecurityDevice::All()->sortBy('name')
+            $securityDevices = PhysicalSecurityDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->ip_addresses) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -206,7 +206,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get StorageDevices
-            $storageDevices = StorageDevice::All()->sortBy('name')
+            $storageDevices = StorageDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->ip_addresses) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -220,7 +220,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get DHCP Servers
-            $dhcpServers = DhcpServer::All()->sortBy('name')
+            $dhcpServers = DhcpServer::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
                         foreach (explode(',', $item->address_ip) as $address) {
