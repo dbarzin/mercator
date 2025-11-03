@@ -6,48 +6,19 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
-use App\Http\Resources\Admin\ApplicationResource;
 use App\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationController extends Controller
 {
     public function index(Request $request)
     {
-        $applications = QueryBuilder::for(\App\Models\MApplication::query(), $request)
-            ->allowedFilters([
-                'name',
-                'application_block_id',
-                'description',
-                'vendor',
-                'product',
-                'version',
-                'entity_resp_id',
-                'functional_referent',
-                'editor',
-                'technology',
-                'documentation',
-                'type',
-                'users',
-                'responsible',
-                'security_need_c',
-                'security_need_i',
-                'security_need_a',
-                'security_need_t',
-                'security_need_auth',
-                'rto',
-                'rpo',
-                'external',
-                'attributes',
-                'patching_frequency',
-                'install_date',
-                'update_date',
-                'next_update',
-            ])
-            ->get();
+        abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $applications = MApplication::all();
 
         return response()->json($applications);
     }
@@ -71,17 +42,14 @@ class ApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // On charge seulement les IDs (pas d’assignation sur le modèle)
-        $application->load([
-            'entities:id',
-            'processes:id',
-            'services:id',
-            'databases:id',
-            'logicalServers:id',
-            'activities:id',
-        ]);
-        
-        return new ApplicationResource($application);
+        $application['entities'] = $application->entities()->pluck('id');
+        $application['processes'] = $application->processes()->pluck('id');
+        $application['services'] = $application->services()->pluck('id');
+        $application['databases'] = $application->databases()->pluck('id');
+        $application['logicalServers'] = $application->logicalServers()->pluck('id');
+        $application['activities'] = $application->activities()->pluck('id');
+
+        return new JsonResource($application);
     }
 
     public function update(UpdateMApplicationRequest $request, MApplication $application)
