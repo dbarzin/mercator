@@ -44,11 +44,13 @@ class WifiTerminal extends Model
         'deleted_at',
     ];
 
+    /** @return BelongsTo<Site, self> */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
+    /** @return BelongsTo<Building, self> */
     public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');

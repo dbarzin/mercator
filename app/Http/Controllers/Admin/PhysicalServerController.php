@@ -14,14 +14,17 @@ use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\PhysicalServer;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 // Laravel
 
 class PhysicalServerController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -83,7 +86,7 @@ class PhysicalServerController extends Controller
         $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
 
         // Get PhysicalServer
-        $physicalServer = PhysicalServer::find($request->id);
+        $physicalServer = PhysicalServer::find($request['id']);
 
         // PhysicalServer not found
         abort_if($physicalServer === null, Response::HTTP_NOT_FOUND, '404 Not Found');
@@ -116,12 +119,12 @@ class PhysicalServerController extends Controller
         $physicalServer = PhysicalServer::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $physicalServer);
+        $this->iconUploadService->handle($request, $physicalServer);
 
         // Save LogicalServer
         $physicalServer->save();
 
-        // Seave Relations
+        // Save Relations
         $physicalServer->applications()->sync($request->input('applications', []));
         $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
         $physicalServer->clusters()->sync($request->input('clusters', []));
@@ -169,9 +172,9 @@ class PhysicalServerController extends Controller
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
     {
         // Save icon
-        $this->handleIconUpload($request, $physicalServer);
+        $this->iconUploadService->handle($request, $physicalServer);;
 
-        // Other fields
+        // Update PhysicalServer
         $physicalServer->update($request->all());
 
         // Relations

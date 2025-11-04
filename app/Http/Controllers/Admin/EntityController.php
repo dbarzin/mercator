@@ -11,11 +11,14 @@ use App\Models\Database;
 use App\Models\Entity;
 use App\Models\MApplication;
 use App\Models\Process;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -50,7 +53,7 @@ class EntityController extends Controller
         $entity = Entity::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $entity);
+        $this->iconUploadService->handle($request, $entity);
 
         // Save entity
         $entity->save();
@@ -91,7 +94,7 @@ class EntityController extends Controller
     public function update(UpdateEntityRequest $request, Entity $entity)
     {
         // Save icon
-        $this->handleIconUpload($request, $entity);
+        $this->iconUploadService->handle($request, $entity);
 
         // set is_external
         $request['is_external'] = $request->has('is_external');

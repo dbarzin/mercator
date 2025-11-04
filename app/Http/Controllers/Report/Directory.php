@@ -174,8 +174,8 @@ class Directory extends ReportController
             $section->addTitle('Application', 2);
 
             $t1 = $section->addTable($tableKVStyle);
-            $this->addHTMLRow($t1, trans('cruds.application.fields.description'), $first->description);
-            $this->addTextRow($t1, 'Processus', $this->getApplicationProcessesNames($first->application_id));
+            $this->addHTMLRow($t1, trans('cruds.application.fields.description'), $first['description']);
+            $this->addTextRow($t1, 'Processus', $this->getApplicationProcessesNames($first['application_id']));
             $this->addTextRow($t1, 'Responsable', $first->responsible);
             $this->addTextRow($t1, 'C-I-A-T', ($first->security_need_c.' - '.
                 $first->security_need_i.' - '.
@@ -191,9 +191,9 @@ class Directory extends ReportController
             // =========================
             $section->addTitle('Entité responsable', 2);
             $t2 = $section->addTable($tableKVStyle);
-            $this->addTextRow($t2, 'Nom', $first->entity_name);
-            $this->addHTMLRow($t2, 'Point de contact', $first->entity_contact_point);
-            $this->addHTMLRow($t2, 'Description', $first->entity_description);
+            $this->addTextRow($t2, 'Nom', $first['entity_name']);
+            $this->addHTMLRow($t2, 'Point de contact', $first['entity_contact_point']);
+            $this->addHTMLRow($t2, 'Description', $first['entity_description']);
 
             $section->addTextBreak(1);
 
@@ -212,16 +212,20 @@ class Directory extends ReportController
             $hasRelation = false;
             foreach ($rows as $row) {
                 // si aucune relation liée, les colonnes seront null → affichera "—"
-                if ($row->relation_name || $row->relation_type || $row->relation_importance || $row->relation_start_date || $row->relation_end_date) {
+                if ($row['relation_name'] ||
+                    $row['relation_type'] ||
+                    $row['relation_importance'] ||
+                    $row['relation_start_date'] ||
+                    $row['relation_end_date']) {
                     $hasRelation = true;
                 }
                 $r = $t3->addRow();
-                $r->addCell()->addText(str_replace('&', ' ', $row->relation_name), [], $paraTight);
-                $r->addCell()->addText(str_replace('&', ' ', $row->relation_type), [], $paraTight);
-                $r->addCell()->addText($row->relation_importance, [], $paraTight);
-                $r->addCell()->addText((optional($row->relation_start_date)->format('Y-m-d') ?? $row->relation_start_date), [], $paraTight);
-                $r->addCell()->addText((optional($row->relation_end_date)->format('Y-m-d') ?? $row->relation_end_date), [], $paraTight);
-                $this->addHTMLRow($t3, 'Description', $first->relation_description);
+                $r->addCell()->addText(str_replace('&', ' ', $row['relation_name']), [], $paraTight);
+                $r->addCell()->addText(str_replace('&', ' ', $row['relation_type']), [], $paraTight);
+                $r->addCell()->addText($row['relation_importance'], [], $paraTight);
+                $r->addCell()->addText((optional($row['relation_start_date'])->format('Y-m-d') ?? $row['relation_start_date']), [], $paraTight);
+                $r->addCell()->addText((optional($row['relation_end_date'])->format('Y-m-d') ?? $row['relation_end_date']), [], $paraTight);
+                $this->addHTMLRow($t3, 'Description', $first['relation_description']);
             }
 
             if (! $hasRelation) {

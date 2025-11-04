@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
-use App\Http\Resources\Admin\NetworkResource;
 use App\Models\Network;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class NetworkController extends Controller
 {
@@ -28,8 +28,6 @@ class NetworkController extends Controller
         abort_if(Gate::denies('network_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $network = Network::create($request->all());
-        // syncs
-        // $network->roles()->sync($request->input('roles', []));
 
         return response()->json($network, 201);
     }
@@ -38,7 +36,7 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NetworkResource($network);
+        return new JsonResource($network);
     }
 
     public function update(UpdateNetworkRequest $request, Network $network)

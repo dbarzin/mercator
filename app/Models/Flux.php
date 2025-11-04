@@ -46,7 +46,7 @@ class Flux extends Model
         'bidirectional',
     ];
 
-    public function source_id(): ?string
+    public function sourceId(): ?string
     {
         if ($this->application_source_id !== null) {
             return 'APP_'.$this->application_source_id;
@@ -64,7 +64,7 @@ class Flux extends Model
         return null;
     }
 
-    public function dest_id(): ?string
+    public function destId(): ?string
     {
         if ($this->application_dest_id !== null) {
             return 'APP_'.$this->application_dest_id;
@@ -82,41 +82,50 @@ class Flux extends Model
         return null;
     }
 
+
+    /** @return BelongsTo<MApplication, Flux> */
     public function application_source(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_source_id');
     }
 
+    /** @return BelongsTo<ApplicationService, Flux> */
     public function service_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_source_id');
     }
 
+    /** @return BelongsTo<ApplicationModule, Flux> */
     public function module_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_source_id');
     }
 
+    /** @return BelongsTo<Database, Flux> */
     public function database_source(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_source_id');
     }
 
+    /** @return BelongsTo<MApplication, Flux> */
     public function application_dest(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_dest_id');
     }
 
+    /** @return BelongsTo<ApplicationService, Flux> */
     public function service_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_dest_id');
     }
 
+    /** @return BelongsTo<ApplicationModule, Flux> */
     public function module_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_dest_id');
     }
 
+    /** @return BelongsTo<Database, Flux> */
     public function database_dest(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_dest_id');

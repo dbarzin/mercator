@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
-use App\Http\Resources\Admin\SecurityControlResource;
 use App\Models\SecurityControl;
 use Gate;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class SecurityControlController extends Controller
@@ -35,7 +35,7 @@ class SecurityControlController extends Controller
     {
         abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SecurityControlResource($securityControl);
+        return new JsonResource($securityControl);
     }
 
     public function update(UpdateSecurityControlRequest $request, SecurityControl $securityControl)

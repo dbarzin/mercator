@@ -12,23 +12,11 @@ use App\Models\Entity;
 use App\Models\Information;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
-use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService)
-    {
-        $this->cartographerService = $cartographerService;
-    }
 
     public function index()
     {
@@ -43,17 +31,19 @@ class DatabaseController extends Controller
     {
         abort_if(Gate::denies('database_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $informations = Information::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::with('cartographers')->get();
-        $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        // Filtre sur les cartographes si nécessaire
-        $applications = $this->cartographerService->filterOnCartographers($applications);
+        $entities = Entity::query()->orderBy('name')->pluck('name', 'id');
+        $entity_resps = Entity::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $informations = Information::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()
+            ->select('id','name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
+        $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+
         // lists
-        $type_list = Database::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
-        $external_list = Database::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
-        $responsible_list = Database::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = Database::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $external_list = Database::query()->select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
+        $responsible_list = Database::query()->select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         return view(
             'admin.databases.create',
@@ -85,13 +75,15 @@ class DatabaseController extends Controller
     {
         abort_if(Gate::denies('database_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $informations = Information::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::with('cartographers')->get();
-        $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        // Filtre sur les cartographes si nécessaire
-        $applications = $this->cartographerService->filterOnCartographers($applications);
+        $entities = Entity::query()->orderBy('name')->pluck('name', 'id');
+        $entity_resps = Entity::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $informations = Information::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()
+            ->select('id','name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
+        $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+
         // lists
         $type_list = Database::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $external_list = Database::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');

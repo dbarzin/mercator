@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
-use App\Http\Resources\Admin\BayResource;
 use App\Models\Bay;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class BayController extends Controller
 {
@@ -36,7 +36,7 @@ class BayController extends Controller
     {
         abort_if(Gate::denies('bay_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BayResource($bay);
+        return new JsonResource($bay);
     }
 
     public function update(UpdateBayRequest $request, Bay $bay)

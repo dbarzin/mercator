@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Entity
  */
-class Entity extends Model
+class Entity extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -44,41 +45,55 @@ class Entity extends Model
         'parent_entity_id',
     ];
 
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
+
+    /** @return HasMany<Database, self> */
     public function databases(): HasMany
     {
         return $this->hasMany(Database::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
+    /** @return HasMany<MApplication, self> */
     public function respApplications(): HasMany
     {
         return $this->hasMany(MApplication::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
+    /** @return HasMany<Relation, self> */
     public function sourceRelations(): HasMany
     {
         return $this->hasMany(Relation::class, 'source_id', 'id')->orderBy('name');
     }
 
+    /** @return HasMany<Relation, self> */
     public function destinationRelations(): HasMany
     {
         return $this->hasMany(Relation::class, 'destination_id', 'id')->orderBy('name');
     }
 
+    /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Process, self> */
     public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
+    /** @return BelongsTo<Entity, self> */
     public function parentEntity(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'parent_entity_id');
     }
 
+    /** @return HasMany<Entity, self> */
     public function entities(): HasMany
     {
         return $this->hasMany(Entity::class, 'parent_entity_id', 'id')->orderBy('name');

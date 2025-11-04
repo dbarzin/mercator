@@ -500,24 +500,77 @@ Vider les caches
 
     sudo -u www-data php artisan config:clear &&  php artisan view:clear
 
-## Tests de non-régression
+## 🧪 Tests de non-régression
 
-Pour exécuter les tests de non-régression de Mercator, vous devez d'abord instaler Chromium :
+Mercator utilise **[Pest](https://pestphp.com)** pour les tests de non-régression.
 
-    sudo apt install chromium-browser
+Ces tests garantissent que les fonctionnalités de l'application continuent de fonctionner comme prévu après les mises à
+jour ou les refactorisations.
 
-Installer le pluggin dusk
+### Configurer l'environnement
 
-    sudo -u www-data php artisan dusk:chrome-driver
+Créer un fichier d'environnement de test dédié :
 
-Configurer l'environement
+```bash
+cp .env .env.testing
+```
 
-    sudo -u www-data cp .env .env.dusk.local
+Mettre à jour la configuration de la base de données dans `.env.testing`, par exemple :
 
-Lancer l'application
+```env
+APP_ENV=testing
+APP_URL=http://127.0.0.1:8000
 
-    sudo -u www-data php artisan serve
+DB_CONNECTION=sqlite
+DB_DATABASE=:memory:
+```
 
-Dans un autre terminal, lancer les tests
+### Exécuter la suite de tests
 
-    sudo -u www-data php artisan dusk
+Exécuter tous les tests non régressifs avec Pest :
+
+```bash
+php artisan test
+```
+
+ou directement :
+
+```bash
+./vendor/bin/pest
+```
+
+### Arrêter à la première erreur
+
+Pour arrêter l'exécution après la première erreur ou le premier échec :
+
+```bash
+./vendor/bin/pest --stop-on-failure
+```
+
+### Exécuter un fichier de test ou un groupe de tests spécifique
+
+Vous pouvez cibler un test ou un répertoire spécifique :
+
+```bash
+./vendor/bin/pest tests/Feature/Api
+```
+
+ou utiliser des groupes/étiquettes :
+
+```bash
+./vendor/bin/pest --group=api
+```
+
+---
+
+✅ **Remarques**
+
+* Chromium et Laravel Dusk ne sont **plus nécessaires**.
+
+* Tous les tests sont désormais gérés par **Pest** avec les utilitaires de test intégrés de Laravel.
+
+* Les rapports de test et la couverture peuvent être générés avec :
+
+```bash
+XDEBUG_MODE=coverage ./vendor/bin/pest --coverage
+```

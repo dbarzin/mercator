@@ -13,12 +13,15 @@ use App\Models\Entity;
 use App\Models\MApplication;
 use App\Models\Peripheral;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -64,20 +67,20 @@ class PeripheralController extends Controller
     {
         abort_if(Gate::denies('peripheral_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
-        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
-        $icons = Peripheral::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $sites = Site::query()->orderBy('name')->pluck('name', 'id');
+        $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
+        $bays = Bay::query()->orderBy('name')->pluck('name', 'id');
+        $entities = Entity::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $icons = Peripheral::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
-        $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
-        $domain_list = Peripheral::select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
-        $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = Peripheral::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $domain_list = Peripheral::query()->select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
+        $responsible_list = Peripheral::query()->select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         // Get Peripheral
-        $peripheral = Peripheral::find($request->id);
+        $peripheral = Peripheral::find($request['id']);
 
         // Vlan not found
         abort_if($peripheral === null, Response::HTTP_NOT_FOUND, '404 Not Found');
@@ -108,7 +111,7 @@ class PeripheralController extends Controller
         $peripheral = Peripheral::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $peripheral);
+        $this->iconUploadService->handle($request, $peripheral);
 
         // Save Peripheral
         $peripheral->save();
@@ -158,7 +161,7 @@ class PeripheralController extends Controller
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)
     {
         // Save icon
-        $this->handleIconUpload($request, $peripheral);
+        $this->iconUploadService->handle($request, $peripheral);
 
         // Get fields
         $peripheral->update($request->all());

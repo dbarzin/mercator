@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateBayRequest;
 use App\Models\Bay;
 use App\Models\Building;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BayController extends Controller
@@ -34,17 +34,11 @@ class BayController extends Controller
         return view('admin.bays.create', compact('rooms'));
     }
 
-    public function clone(Request $request)
+    public function clone(Request $request, Bay $bay)
     {
         abort_if(Gate::denies('bay_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        // Get Bay
-        $bay = Bay::find($request->id);
-
-        // Bay not found
-        abort_if($bay === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         $request->merge($bay->only($bay->getFillable()));
         $request->flash();

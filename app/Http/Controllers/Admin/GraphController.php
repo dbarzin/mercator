@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGraphRequest;
 use App\Models\Graph;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GraphController extends Controller
@@ -85,7 +85,7 @@ class GraphController extends Controller
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // dd("Not implemented");
+        Graph::create($request->all());
 
         return redirect()->route('admin.graphs.index');
     }
@@ -111,42 +111,16 @@ class GraphController extends Controller
             ->with('content', $graph->content);
     }
 
-    public function save(Request $request)
-    {
-        abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $graph = Graph::find($request->id);
-
-        // Control not found
-        abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
-
-        // set value
-        $graph->name = $request->name;
-        $graph->type = $request->type;
-        $graph->content = $request->content;
-        $graph->save();
-
-        return true;
-    }
-
     public function update(Request $request)
     {
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // Get the graph
-        if ($request->id === '-1') {
+        
+        if ($request->id == '-1') {
             $graph = Graph::create($request->all());
-        } else {
+        }
+        else {
             $graph = Graph::find($request->id);
-
-            // Graph not found
-            abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
-
-            // set value
-            $graph->name = $request->name;
-            $graph->type = $request->type;
-            $graph->content = $request->content;
-            $graph->save();
+            $graph->update($request->all());
         }
 
         return redirect()->route('admin.graphs.index');

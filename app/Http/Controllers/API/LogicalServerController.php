@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
-use App\Http\Resources\Admin\LogicalServerResource;
 use App\Models\LogicalServer;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerController extends Controller
 {
@@ -45,11 +45,11 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServer->physicalServers = $logicalServer->physicalServers()->pluck('id');
-        $logicalServer->applications = $logicalServer->applications()->pluck('id');
-        $logicalServer->databases = $logicalServer->databases()->pluck('id');
+        $logicalServer['physicalServers'] = $logicalServer->physicalServers()->pluck('id');
+        $logicalServer['applications'] = $logicalServer->applications()->pluck('id');
+        $logicalServer['databases'] = $logicalServer->databases()->pluck('id');
 
-        return new LogicalServerResource($logicalServer);
+        return new JsonResource($logicalServer);
     }
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)

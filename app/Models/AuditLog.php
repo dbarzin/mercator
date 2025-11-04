@@ -3,9 +3,9 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 /**
@@ -30,21 +30,17 @@ class AuditLog extends Model
         'properties' => 'collection',
     ];
 
-    public function user()
+    /** @return BelongsTo<User, self> */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public static function subjectURL(string $subject_type)
+    public static function subjectURL(string $subject_type): string
     {
         return '/admin/'.
             ($subject_type === 'App\\Models\\MApplication' ?
                 'applications' :
                 Str::plural(Str::snake(substr($subject_type, 4), '-')));
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

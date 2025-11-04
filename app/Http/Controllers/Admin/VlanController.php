@@ -10,8 +10,8 @@ use App\Http\Requests\UpdateVlanRequest;
 use App\Models\Subnetwork;
 use App\Models\Vlan;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class VlanController extends Controller
@@ -32,7 +32,7 @@ class VlanController extends Controller
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         // Get Vlan
-        $vlan = Vlan::find($request->id);
+        $vlan = Vlan::find($request['id']);
 
         // Vlan not found
         abort_if($vlan === null, Response::HTTP_NOT_FOUND, '404 Not Found');

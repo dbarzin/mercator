@@ -6,10 +6,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
-use App\Http\Resources\Admin\PermissionResource;
 use App\Models\Permission;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class PermissionController extends Controller
 {
@@ -35,7 +35,7 @@ class PermissionController extends Controller
     {
         abort_if(Gate::denies('permission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PermissionResource($permission);
+        return new JsonResource($permission);
     }
 
     public function update(UpdatePermissionRequest $request, Permission $permission)
@@ -43,8 +43,6 @@ class PermissionController extends Controller
         abort_if(Gate::denies('permission_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permission->update($request->all());
-        // syncs
-        // $permissions->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

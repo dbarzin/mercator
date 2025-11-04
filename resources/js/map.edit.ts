@@ -343,13 +343,23 @@ async function saveGraphToDatabase(id: number, name: string, type: string, conte
     console.log('saveGraphToDatabase:' + id + ' name:' + name);
 
     try {
-        const response = await fetch('/admin/graph/save', {
-            method: 'PUT',
+        const response = await fetch(`/admin/graphs/${id}`, {
+            method: 'POST', // on poste...
+            credentials: 'same-origin', // envoie les cookies de session
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-Requested-With': 'XMLHttpRequest',
             },
-            body: JSON.stringify({id, name, type, content}),
+            // ...mais on "spoof" en PUT côté Laravel
+            body: JSON.stringify({
+                _method: 'PUT',
+                id,
+                name,
+                type,
+                content,
+            }),
         });
 
         console.log('réponse :', response.status);

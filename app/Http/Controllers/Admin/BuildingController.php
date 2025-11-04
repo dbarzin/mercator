@@ -9,12 +9,15 @@ use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -28,8 +31,8 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $sites = Site::query()->orderBy('name')->pluck('name', 'id');
+        $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
 
         // Lists
         $attributes_list = $this->getAttributes();
@@ -44,7 +47,8 @@ class BuildingController extends Controller
         );
     }
 
-    public function clone(Request $request)
+
+    public function clone(Request $request, Building $building)
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -56,12 +60,6 @@ class BuildingController extends Controller
         // Select icons
         $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        // Get building
-        $building = Building::find($request->id);
-
-        // Building not found
-        abort_if($building === null, Response::HTTP_NOT_FOUND, '404 Not Found');
-
         $request->merge($building->only($building->getFillable()));
         $request->flash();
 
@@ -71,6 +69,8 @@ class BuildingController extends Controller
         );
     }
 
+
+
     public function store(StoreBuildingRequest $request)
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
@@ -78,12 +78,12 @@ class BuildingController extends Controller
         $building = Building::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $building);
+        $this->iconUploadService->handle($request, $building);
 
         // Save Building
         $building->save();
 
-        // set childrens
+        // set children
         Building::whereIn('id', $request->input('buildings', []))
             ->update(['building_id' => $building->id]);
 
@@ -113,18 +113,18 @@ class BuildingController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
-        // Clear building_id if building is not present
+        // Clear building_id if the building is not present
         if (! $request->has('building_id')) {
             $building->building_id = null;
         }
 
         // Save icon
-        $this->handleIconUpload($request, $building);
+        $this->iconUploadService->handle($request, $building);
 
         // Save Building
         $building->update($request->all());
 
-        // update childrens
+        // update children
         Building::where('building_id', $building->id)
             ->update(['building_id' => null]);
 

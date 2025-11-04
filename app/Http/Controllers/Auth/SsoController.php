@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite; // Importez le modèle Role
+use Laravel\Socialite\Facades\Socialite;
+
+// Importez le modèle Role
 
 class SsoController extends Controller
 {
@@ -27,22 +29,23 @@ class SsoController extends Controller
 
         // Récupérer les rôles de Keycloak
         try {
-            $roles = $keycloakUser->user['realm_access']['roles'];
+            $roles = $keycloakUser['user']['realm_access']['roles'];
         } catch (\Exception $e) {
             $roles = [];
         }
 
         // Trouver ou créer l'utilisateur dans la base de données locale
-        $existingUser = User::where('email', $keycloakUser->email)->first();
+        $existingUser = User::where('login', $keycloakUser['nickname'])->first();
 
         if (! $existingUser) {
-            if (! env('KEYCLOAK_AUTO_PROVISIONNING', true)) {
-                return redirect()->route('login')->with('message', 'User "'.$keycloakUser->email.'" is not a valid Mercator user.');
+            if (! config('services.keycloak.auto_provision', true)) {
+                return redirect()
+                    ->route('login')
+                    ->with('message', 'User "' . $keycloakUser['nickname']. '" is not a valid Mercator user.');
             }
-
             $existingUser = new User();
-            $existingUser->name = $keycloakUser->name; // Supposons que Keycloak fournit le nom de l'utilisateur
-            $existingUser->email = $keycloakUser->email;
+            $existingUser->name = $keycloakUser['nickname']; // Supposons que Keycloak fournit le nom de l'utilisateur
+            $existingUser->email = $keycloakUser['email'];
             $existingUser->save();
         }
 

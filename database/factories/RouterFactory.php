@@ -18,7 +18,6 @@ class RouterFactory extends Factory
             'description' => $this->faker->text(),
             'rules' => $this->faker->word(),
             'ip_addresses' => $this->faker->ipv4(),
-            'cluster_id' => $this->faker->randomNumber(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

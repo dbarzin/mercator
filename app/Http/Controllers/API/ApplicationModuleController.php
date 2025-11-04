@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
-use App\Http\Resources\Admin\ApplicationModuleResource;
 use App\Models\ApplicationModule;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationModuleController extends Controller
 {
@@ -18,27 +18,25 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationmodules = ApplicationModule::all();
+        $applicationModules = ApplicationModule::all();
 
-        return response()->json($applicationmodules);
+        return response()->json($applicationModules);
     }
 
     public function store(StoreApplicationModuleRequest $request)
     {
         abort_if(Gate::denies('application_module_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationmodule = ApplicationModule::create($request->all());
-        // syncs
-        // $applicationmodule->roles()->sync($request->input('roles', []));
+        $applicationModule = ApplicationModule::create($request->all());
 
-        return response()->json($applicationmodule, 201);
+        return response()->json($applicationModule, 201);
     }
 
     public function show(ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('application_module_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ApplicationModuleResource($applicationModule);
+        return new JsonResource($applicationModule);
     }
 
     public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationModule)
@@ -46,8 +44,6 @@ class ApplicationModuleController extends Controller
         abort_if(Gate::denies('application_module_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationModule->update($request->all());
-        // syncs
-        // $applicationModule->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

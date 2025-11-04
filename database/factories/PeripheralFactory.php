@@ -19,7 +19,7 @@ class PeripheralFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'type' => $this->faker->word(),
-            'icon_id' => $this->faker->randomNumber(),
+            'icon_id' => null,
             'description' => $this->faker->text(),
             'vendor' => $this->faker->word(),
             'product' => $this->faker->word(),

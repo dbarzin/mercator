@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDnsserverRequest;
 use App\Http\Requests\StoreDnsserverRequest;
 use App\Http\Requests\UpdateDnsserverRequest;
-use App\Http\Resources\Admin\DnsserverResource;
 use App\Models\Dnsserver;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class DnsserverController extends Controller
 {
@@ -38,7 +38,7 @@ class DnsserverController extends Controller
     {
         abort_if(Gate::denies('dnsserver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DnsserverResource($dnsserver);
+        return new JsonResource($dnsserver);
     }
 
     public function update(UpdateDnsserverRequest $request, Dnsserver $dnsserver)

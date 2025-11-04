@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLanRequest;
 use App\Http\Requests\StoreLanRequest;
 use App\Http\Requests\UpdateLanRequest;
-use App\Http\Resources\Admin\LanResource;
 use App\Models\Lan;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class LanController extends Controller
 {
@@ -42,7 +42,7 @@ class LanController extends Controller
     {
         abort_if(Gate::denies('lan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new LanResource($lan);
+        return new JsonResource($lan);
     }
 
     public function update(UpdateLanRequest $request, Lan $lan)

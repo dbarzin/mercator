@@ -8,12 +8,15 @@ use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('site_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -33,17 +36,15 @@ class SiteController extends Controller
         return view('admin.sites.create', compact('icons'));
     }
 
-    public function clone(Request $request)
+    public function clone(Request $request, Site $site)
     {
         abort_if(Gate::denies('site_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Get icons
-        $icons = Site::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
-
-        // Get site
-        $site = Site::find($request->id);
-        // Vlan not found
-        abort_if($site === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+        $icons = Site::query()
+            ->whereNotNull('icon_id')
+            ->orderBy('icon_id')
+            ->distinct()
+            ->pluck('icon_id');
 
         $request->merge($site->only($site->getFillable()));
         $request->flash();
@@ -56,7 +57,7 @@ class SiteController extends Controller
         $site = Site::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $site);
+        $this->iconUploadService->handle($request, $site);
 
         $site->save();
 
@@ -75,7 +76,7 @@ class SiteController extends Controller
     public function update(UpdateSiteRequest $request, Site $site)
     {
         // Save icon
-        $this->handleIconUpload($request, $site);
+        $this->iconUploadService->handle($request, $site);
 
         $site->update($request->all());
 

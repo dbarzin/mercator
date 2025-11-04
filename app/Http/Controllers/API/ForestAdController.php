@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyForestAdRequest;
 use App\Http\Requests\StoreForestAdRequest;
 use App\Http\Requests\UpdateForestAdRequest;
-use App\Http\Resources\Admin\ForestAdResource;
 use App\Models\ForestAd;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ForestAdController extends Controller
 {
@@ -18,27 +18,25 @@ class ForestAdController extends Controller
     {
         abort_if(Gate::denies('forest_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $forestads = ForestAd::all();
+        $forestAds = ForestAd::all();
 
-        return response()->json($forestads);
+        return response()->json($forestAds);
     }
 
     public function store(StoreForestAdRequest $request)
     {
         abort_if(Gate::denies('forest_ad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $forestad = ForestAd::create($request->all());
-        // syncs
-        // $forestad->roles()->sync($request->input('roles', []));
+        $forestAd = ForestAd::create($request->all());
 
-        return response()->json($forestad, 201);
+        return response()->json($forestAd, 201);
     }
 
     public function show(ForestAd $forestad)
     {
         abort_if(Gate::denies('forest_ad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ForestAdResource($forestad);
+        return new JsonResource($forestad);
     }
 
     public function update(UpdateForestAdRequest $request, ForestAd $forestAd)
@@ -46,8 +44,6 @@ class ForestAdController extends Controller
         abort_if(Gate::denies('forest_ad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $forestAd->update($request->all());
-        // syncs
-        // $forestAd->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

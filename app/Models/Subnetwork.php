@@ -49,32 +49,43 @@ class Subnetwork extends Model
         'deleted_at',
     ];
 
+    /** @return HasMany<Subnetwork, self> */
+    public function connectedSubnetsNetworks(): HasMany
+    {
+        return $this->hasMany(Network::class, 'connected_subnets_id', 'id')->orderBy('name');
+    }
+
+    /** @return HasMany<Subnetwork, self> */
     public function connectedSubnetsSubnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'connected_subnets_id', 'id')->orderBy('name');
     }
 
+    /** @return BelongsTo<Network, self> */
     public function network(): BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
+    /** @return BelongsTo<Subnetwork, self> */
     public function connected_subnets(): BelongsTo
     {
         return $this->belongsTo(Subnetwork::class, 'connected_subnets_id');
     }
 
+    /** @return BelongsTo<Gateway, self> */
     public function gateway(): BelongsTo
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 
+    /** @return BelongsTo<Vlan, self> */
     public function vlan(): BelongsTo
     {
         return $this->belongsTo(Vlan::class, 'vlan_id');
     }
 
-    public function ipRange()
+    public function ipRange(): ?string
     {
         // no address
         if ($this->address === null) {
@@ -95,7 +106,7 @@ class Subnetwork extends Model
             }
 
             $ip = ip2long($subnetParts[0]);
-            $mask = ~1 << 32 - $subnetParts[1] - 1;
+            $mask = ~1 << 32 - intval($subnetParts[1]) - 1;
             $start = long2ip($ip & $mask);
             $end = long2ip($ip | ~$mask);
 
@@ -117,7 +128,7 @@ class Subnetwork extends Model
             $addr_given_str = inet_ntop($addr_given_bin);
 
             // Calculate the number of 'flexible' bits
-            $flexbits = 128 - $prefixlen;
+            $flexbits = 128 - intval($prefixlen);
 
             // Build the hexadecimal strings of the first and last addresses
             $addr_hex_first = $addr_given_hex;
@@ -177,7 +188,6 @@ class Subnetwork extends Model
      */
     public function contains(string $ip): bool
     {
-        // TODO : place me in a tools lobrary (see Subnetwork)
         $cidr = $this->address;
 
         if ((str_contains($ip, '.') && str_contains($cidr, '.')) ||
@@ -196,11 +206,11 @@ class Subnetwork extends Model
             }
 
             // Build mask
-            $solid = floor($maskBits / 8);
+            $solid = floor(intval($maskBits) / 8);
             $solidBits = $solid * 8;
             $mask = str_repeat(chr(255), $solid);
             for ($i = $solidBits; $i < $maskBits; $i += 8) {
-                $bits = max(0, min(8, $maskBits - $i));
+                $bits = max(0, min(8, intval($maskBits) - $i));
                 $mask .= chr(pow(2, $bits) - 1 << 8 - $bits);
             }
             $mask = str_pad($mask, $size, chr(0));

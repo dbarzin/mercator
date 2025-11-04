@@ -35,28 +35,21 @@ class Router extends Model
         'type',
         'description',
         'rules',
-        'cluster_id',
         'ip_addresses',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
+    /** @return BelongsToMany<PhysicalRouter, self> */
     public function physicalRouters(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Cluster, self> */
     public function clusters(): BelongsToMany
     {
         return $this->BelongsToMany(Cluster::class, 'cluster_id');
     }
-
-    /*
-    public function networkSwitches()
-    {
-        // TODO: to change
-        return $this->hasMany(NetworkSwitches::class, 'router_id', 'id');
-    }
-    */
 }

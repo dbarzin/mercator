@@ -11,11 +11,14 @@ use App\Models\Cluster;
 use App\Models\LogicalServer;
 use App\Models\PhysicalServer;
 use App\Models\Router;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClusterController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('cluster_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -50,14 +53,16 @@ class ClusterController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
+        // Create Cluster
         $cluster = Cluster::create($request->all());
 
+        // Save Relations
         $cluster->logicalServers()->sync($request->input('logical_servers', []));
         $cluster->physicalServers()->sync($request->input('physical_servers', []));
         $cluster->routers()->sync($request->input('routers', []));
 
         // Save icon
-        $this->handleIconUpload($request, $cluster);
+        $this->iconUploadService->handle($request, $cluster);
 
         // Save Cluster
         $cluster->save();
@@ -91,11 +96,12 @@ class ClusterController extends Controller
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Save icon
-        $this->handleIconUpload($request, $cluster);
+        $this->iconUploadService->handle($request, $cluster);
 
         // Save Cluster
         $cluster->update($request->all());
 
+        // Save Relations
         $cluster->logicalServers()->sync($request->input('logical_servers', []));
         $cluster->physicalServers()->sync($request->input('physical_servers', []));
         $cluster->routers()->sync($request->input('routers', []));

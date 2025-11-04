@@ -46,6 +46,7 @@ class MacroProcessus extends Model
         'deleted_at',
     ];
 
+    /** @return HasMany<Process, self> */
     public function processes(): HasMany
     {
         return $this->hasMany(Process::class, 'macroprocess_id', 'id')->orderBy('name');

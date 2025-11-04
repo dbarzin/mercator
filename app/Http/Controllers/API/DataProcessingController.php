@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
-use App\Http\Resources\Admin\DataProcessingResource;
 use App\Models\DataProcessing;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class DataProcessingController extends Controller
 {
@@ -39,7 +39,7 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DataProcessingResource($dataProcessing);
+        return new JsonResource($dataProcessing);
     }
 
     public function update(UpdateDataProcessingRequest $request, DataProcessing $dataProcessing)

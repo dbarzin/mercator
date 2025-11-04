@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
-use App\Http\Resources\Admin\ExternalConnectedEntityResource;
 use App\Models\ExternalConnectedEntity;
 use Gate;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class ExternalConnectedEntityController extends Controller
@@ -38,7 +38,7 @@ class ExternalConnectedEntityController extends Controller
     {
         abort_if(Gate::denies('external_connected_entity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ExternalConnectedEntityResource($externalconnectedentity);
+        return new JsonResource($externalconnectedentity);
     }
 
     public function update(UpdateExternalConnectedEntityRequest $request, ExternalConnectedEntity $externalConnectedEntity)

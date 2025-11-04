@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationServiceRequest;
 use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
-use App\Http\Resources\Admin\ApplicationServiceResource;
 use App\Models\ApplicationService;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationServiceController extends Controller
 {
@@ -18,9 +18,9 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationservices = ApplicationService::all();
+        $applicationServices = ApplicationService::all();
 
-        return response()->json($applicationservices);
+        return response()->json($applicationServices);
     }
 
     public function store(StoreApplicationServiceRequest $request)
@@ -38,7 +38,7 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ApplicationServiceResource($applicationService);
+        return new JsonResource($applicationService);
     }
 
     public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)

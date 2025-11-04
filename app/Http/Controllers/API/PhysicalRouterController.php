@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
-use App\Http\Resources\Admin\PhysicalRouterResource;
 use App\Models\PhysicalRouter;
 use Gate;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class PhysicalRouterController extends Controller
@@ -29,8 +29,6 @@ class PhysicalRouterController extends Controller
 
         $physicalrouter = PhysicalRouter::create($request->all());
         $physicalrouter->vlans()->sync($request->input('vlans', []));
-        // syncs
-        // $physicalrouter->roles()->sync($request->input('roles', []));
 
         return response()->json($physicalrouter, 201);
     }
@@ -39,7 +37,7 @@ class PhysicalRouterController extends Controller
     {
         abort_if(Gate::denies('physical_router_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalRouterResource($physicalRouter);
+        return new JsonResource($physicalRouter);
     }
 
     public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalRouter)
@@ -48,8 +46,6 @@ class PhysicalRouterController extends Controller
 
         $physicalRouter->update($request->all());
         $physicalRouter->vlans()->sync($request->input('vlans', []));
-        // syncs
-        // $physicalrouter->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

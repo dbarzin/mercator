@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
-use App\Http\Resources\Admin\SiteResource;
 use App\Models\Site;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
 {
@@ -36,7 +36,7 @@ class SiteController extends Controller
     {
         abort_if(Gate::denies('site_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SiteResource($site);
+        return new JsonResource($site);
     }
 
     public function update(UpdateSiteRequest $request, Site $site)

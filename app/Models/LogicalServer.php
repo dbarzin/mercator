@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\LogicalServer
  */
-class LogicalServer extends Model
+class LogicalServer extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -49,7 +50,6 @@ class LogicalServer extends Model
         'memory',
         'disk',
         'disk_used',
-        'cluster_id',
         'domain_id',
         'environment',
         'net_services',
@@ -59,46 +59,61 @@ class LogicalServer extends Model
         'deleted_at',
     ];
 
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
+
+    /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<PhysicalServer, self> */
     public function physicalServers(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalServer::class)->orderBy('name');
     }
 
+    /** @return \Illuminate\Support\Collection<int, int> */
     public function serverIds(): \Illuminate\Support\Collection
     {
         return $this->belongsToMany(PhysicalServer::class)->pluck('id');
     }
 
+    /** @return BelongsToMany<Document, self> */
     public function documents(): BelongsToMany
     {
         return $this->belongsToMany(Document::class)->orderBy('document_id');
     }
 
+    /** @return BelongsToMany<Database, self> */
     public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Cluster, self> */
     public function clusters(): BelongsToMany
     {
         return $this->belongsToMany(Cluster::class);
     }
 
+    /** @return BelongsTo<DomaineAd, self> */
     public function domain(): BelongsTo
     {
         return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
+    /** @return BelongsToMany<Certificate, self> */
     public function certificates(): BelongsToMany
     {
         return $this->belongsToMany(Certificate::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<Container, self> */
     public function containers(): BelongsToMany
     {
         return $this->belongsToMany(Container::class)->orderBy('name');
