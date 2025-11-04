@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @mixin \Eloquent
  */
-class Workstation extends Model
+class Workstation extends Model  implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -41,7 +42,6 @@ class Workstation extends Model
         'type',
         'status',
         'description',
-        'icon_id',
 
         // Model
         'manufacturer',
@@ -90,6 +90,13 @@ class Workstation extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /*
+     * Implement icon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
+
 
     /** @return BelongsTo<Site, self> */
     public function site(): BelongsTo

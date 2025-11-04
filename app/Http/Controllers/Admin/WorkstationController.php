@@ -9,6 +9,7 @@ use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
 use App\Models\MApplication;
 use App\Models\Workstation;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('workstation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -117,7 +120,7 @@ class WorkstationController extends Controller
         $workstation = Workstation::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $workstation);
+        $this->iconUploadService->handle($request, $workstation);
 
         $workstation->save();
 
@@ -289,11 +292,11 @@ class WorkstationController extends Controller
     public function update(UpdateWorkstationRequest $request, Workstation $workstation)
     {
         // Save icon
-        $this->handleIconUpload($request, $workstation);
+        $this->iconUploadService->handle($request, $workstation);
 
         $workstation->update($request->all());
         $workstation->applications()->sync($request->input('applications', []));
-
+        
         return redirect()->route('admin.workstations.index');
     }
 

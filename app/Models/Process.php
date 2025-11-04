@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Process
  */
-class Process extends Model
+class Process extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -49,6 +50,12 @@ class Process extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
 
     /** @return BelongsToMany<Information, self> */
     public function information(): BelongsToMany

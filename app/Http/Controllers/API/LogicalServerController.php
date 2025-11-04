@@ -45,9 +45,9 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServer->physicalServers = $logicalServer->physicalServers()->pluck('id');
-        $logicalServer->applications = $logicalServer->applications()->pluck('id');
-        $logicalServer->databases = $logicalServer->databases()->pluck('id');
+        $logicalServer['physicalServers'] = $logicalServer->physicalServers()->pluck('id');
+        $logicalServer['applications'] = $logicalServer->applications()->pluck('id');
+        $logicalServer['databases'] = $logicalServer->databases()->pluck('id');
 
         return new LogicalServerResource($logicalServer);
     }

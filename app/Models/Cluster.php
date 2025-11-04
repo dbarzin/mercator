@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Cluster
  */
-class Cluster extends Model
+class Cluster extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -39,6 +40,12 @@ class Cluster extends Model
         'icon_id',
         'address_ip',
     ];
+
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
 
     /** @return BelongsToMany<LogicalServer, self> */
     public function logicalServers(): BelongsToMany

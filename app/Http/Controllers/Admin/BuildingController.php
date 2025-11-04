@@ -9,12 +9,15 @@ use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -75,7 +78,7 @@ class BuildingController extends Controller
         $building = Building::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $building);
+        $this->iconUploadService->handle($request, $building);
 
         // Save Building
         $building->save();
@@ -116,7 +119,7 @@ class BuildingController extends Controller
         }
 
         // Save icon
-        $this->handleIconUpload($request, $building);
+        $this->iconUploadService->handle($request, $building);
 
         // Save Building
         $building->update($request->all());

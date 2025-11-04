@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-// Models
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
@@ -13,13 +12,14 @@ use App\Models\Building;
 use App\Models\PhysicalSecurityDevice;
 use App\Models\SecurityDevice;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
-// Framework
-
 class PhysicalSecurityDeviceController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('physical_security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -63,8 +63,13 @@ class PhysicalSecurityDeviceController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
+        // Create PhysicalSecurityDevice
         $physicalSecurityDevice = new PhysicalSecurityDevice($request->all());
-        $this->handleIconUpload($request, $physicalSecurityDevice);
+
+        // Save icon
+        $this->iconUploadService->handle($request, $physicalSecurityDevice);
+
+        // Save PhysicalSecurityDevice
         $physicalSecurityDevice->save();
 
         // Relations
@@ -111,8 +116,9 @@ class PhysicalSecurityDeviceController extends Controller
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Save icon
-        $this->handleIconUpload($request, $physicalSecurityDevice);
-        
+        $this->iconUploadService->handle($request, $physicalSecurityDevice);
+
+        // Update PhysicalSecurityDevice
         $physicalSecurityDevice->update($request->all());
 
         // Relations

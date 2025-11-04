@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MApplication extends Model
+class MApplication extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -65,6 +66,12 @@ class MApplication extends Model
         'update_date',
         'next_update',
     ];
+
+    /*
+     * Implement icon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
 
     /**
     /*

@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\PhysicalSecurityDevice
  */
-class PhysicalSecurityDevice extends Model
+class PhysicalSecurityDevice extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -43,6 +44,12 @@ class PhysicalSecurityDevice extends Model
         'building_id',
         'bay_id',
     ];
+
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
 
     /** @return BelongsToMany<SecurityDevice, self> */
     public function securityDevices(): BelongsToMany

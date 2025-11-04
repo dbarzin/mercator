@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Peripheral
  */
-class Peripheral extends Model
+class Peripheral extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -51,6 +52,12 @@ class Peripheral extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
 
     /** @return BelongsToMany<MApplication, self> */
     public function applications(): BelongsToMany
