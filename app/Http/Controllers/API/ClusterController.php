@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
-use App\Http\Resources\Admin\ClusterResource;
 use App\Models\Cluster;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClusterController extends Controller
 {
@@ -43,7 +43,7 @@ class ClusterController extends Controller
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClusterResource($cluster);
+        return new JsonResource($cluster);
     }
 
     public function update(UpdateClusterRequest $request, Cluster $cluster)

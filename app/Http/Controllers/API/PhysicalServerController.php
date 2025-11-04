@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
-use App\Http\Resources\Admin\PhysicalServerResource;
 use App\Models\PhysicalServer;
 use Gate;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class PhysicalServerController extends Controller
@@ -45,7 +45,7 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalServerResource($physicalServer);
+        return new JsonResource($physicalServer);
     }
 
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)

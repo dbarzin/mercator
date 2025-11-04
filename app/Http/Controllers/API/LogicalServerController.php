@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
-use App\Http\Resources\Admin\LogicalServerResource;
 use App\Models\LogicalServer;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerController extends Controller
 {
@@ -49,7 +49,7 @@ class LogicalServerController extends Controller
         $logicalServer['applications'] = $logicalServer->applications()->pluck('id');
         $logicalServer['databases'] = $logicalServer->databases()->pluck('id');
 
-        return new LogicalServerResource($logicalServer);
+        return new JsonResource($logicalServer);
     }
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)

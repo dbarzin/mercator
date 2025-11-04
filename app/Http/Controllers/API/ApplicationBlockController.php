@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
-use App\Http\Resources\Admin\ApplicationBlockResource;
 use App\Models\ApplicationBlock;
 use App\Models\MApplication;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationBlockController extends Controller
 {
@@ -39,7 +39,7 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ApplicationBlockResource($applicationBlock);
+        return new JsonResource($applicationBlock);
     }
 
     public function update(UpdateApplicationBlockRequest $request, ApplicationBlock $applicationBlock)

@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
-use App\Http\Resources\Admin\WorkstationResource;
 use App\Models\Workstation;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends Controller
 {
@@ -36,7 +36,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WorkstationResource($workstation);
+        return new JsonResource($workstation);
     }
 
     public function update(UpdateWorkstationRequest $request, Workstation $workstation)

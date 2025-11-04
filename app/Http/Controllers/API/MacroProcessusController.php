@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
-use App\Http\Resources\Admin\MacroProcessusResource;
 use App\Models\MacroProcessus;
 use App\Models\Process;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class MacroProcessusController extends Controller
 {
@@ -39,7 +39,7 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MacroProcessusResource($macroProcessus);
+        return new JsonResource($macroProcessus);
     }
 
     public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)

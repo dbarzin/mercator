@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Requests\StoreAnnuaireRequest;
 use App\Http\Requests\UpdateAnnuaireRequest;
-use App\Http\Resources\Admin\AnnuaireResource;
 use App\Models\Annuaire;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class AnnuaireController extends Controller
 {
@@ -36,7 +36,7 @@ class AnnuaireController extends Controller
     {
         abort_if(Gate::denies('annuaire_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AnnuaireResource($annuaire);
+        return new JsonResource($annuaire);
     }
 
     public function update(UpdateAnnuaireRequest $request, Annuaire $annuaire)

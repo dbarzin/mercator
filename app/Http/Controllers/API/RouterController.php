@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
-use App\Http\Resources\Admin\RouterResource;
 use App\Models\Router;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class RouterController extends Controller
 {
@@ -37,7 +37,7 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RouterResource($router);
+        return new JsonResource($router);
     }
 
     public function update(UpdateRouterRequest $request, Router $router)

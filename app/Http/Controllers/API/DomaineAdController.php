@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
-use App\Http\Resources\Admin\DomaineAdResource;
 use App\Models\DomaineAd;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class DomaineAdController extends Controller
 {
@@ -39,7 +39,7 @@ class DomaineAdController extends Controller
     {
         abort_if(Gate::denies('domaine_ad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DomaineAdResource($domaineAd);
+        return new JsonResource($domaineAd);
     }
 
     public function update(UpdateDomaineAdRequest $request, DomaineAd $domaineAd)
