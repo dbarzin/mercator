@@ -737,8 +737,8 @@ class CartographyController extends Controller
                     }
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.entity_resp'));
-                    if ($application->entity_resp !== null) {
-                        $textRun->addLink('ENTITY'.$application->entity_resp->id, $application->entity_resp->name, CartographyController::FANCY_LINK_STYLE, null, true);
+                    if ($application->entityResp !== null) {
+                        $textRun->addLink('ENTITY'.$application->entityResp->id, $application->entityResp->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
                     $this->addTextRow($table, trans('cruds.application.fields.technology'), $application->technology);
                     $this->addTextRow($table, trans('cruds.application.fields.type'), $application->type);
@@ -865,8 +865,8 @@ class CartographyController extends Controller
                     }
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.application_block'));
-                    if ($application->application_block !== null) {
-                        $textRun->addLink('APPLICATIONBLOCK'.$application->application_block_id, $application->application_block->name, CartographyController::FANCY_LINK_STYLE, null, true);
+                    if ($application->applicationBlock !== null) {
+                        $textRun->addLink('APPLICATIONBLOCK'.$application->applicationBlock->id, $application->applicationBlock->name, CartographyController::FANCY_LINK_STYLE, null, true);
                     }
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.logical_servers'));
@@ -2418,7 +2418,6 @@ class CartographyController extends Controller
                 foreach ($mans as $man) {
                     $section->addBookmark('MAN'.$man->id);
                     $table = $this->addTable($section, $man->name);
-                    $this->addHTMLRow($table, trans('cruds.man.fields.description'), $man->description);
 
                     // Lans
                     $textRun = $this->addTextRunRow($table, 'LANs');

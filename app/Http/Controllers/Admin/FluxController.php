@@ -154,6 +154,7 @@ class FluxController extends Controller
             $items->put('DB_'.$key, $value);
         }
 
+        /*
         // Source item
         if ($flux->application_source_id !== null) {
             $flux->src_id = 'APP_'.$flux->application_source_id;
@@ -175,7 +176,7 @@ class FluxController extends Controller
         } elseif ($flux->database_dest_id !== null) {
             $flux->dest_id = 'DB_'.$flux->database_dest_id;
         }
-
+        */
         return view(
             'admin.fluxes.edit',
             compact('items', 'nature_list', 'attributes_list', 'flux')

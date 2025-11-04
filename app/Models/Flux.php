@@ -46,7 +46,7 @@ class Flux extends Model
         'bidirectional',
     ];
 
-    public function source_id(): ?string
+    public function sourceId(): ?string
     {
         if ($this->application_source_id !== null) {
             return 'APP_'.$this->application_source_id;
@@ -64,7 +64,7 @@ class Flux extends Model
         return null;
     }
 
-    public function dest_id(): ?string
+    public function destId(): ?string
     {
         if ($this->application_dest_id !== null) {
             return 'APP_'.$this->application_dest_id;
