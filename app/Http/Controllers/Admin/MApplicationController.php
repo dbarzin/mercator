@@ -18,16 +18,14 @@ use App\Models\MApplication;
 use App\Models\Process;
 use App\Models\SecurityDevice;
 use App\Models\User;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
-// use App\Services\CartographerService;
-// CoreUI Gates
-// Laravel Gate
-
 class MApplicationController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
 
     public function index()
     {
@@ -140,7 +138,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        $this->handleIconUpload($request, $application);
+        $this->iconUploadService->handle($request, $application);
 
         // Save application
         $application->save();
@@ -265,7 +263,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        $this->handleIconUpload($request, $application);
+        $this->iconUploadService->handle($request, $application);
 
         // Other fields
         $application->update($request->all());
@@ -305,7 +303,7 @@ class MApplicationController extends Controller
 
         return redirect()->route('admin.applications.index');
     }
-    
+
     public function massDestroy(MassDestroyMApplicationRequest $request) : Response
     {
         MApplication::whereIn('id', request('ids'))->delete();

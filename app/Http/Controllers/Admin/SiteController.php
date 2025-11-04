@@ -8,12 +8,15 @@ use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('site_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -54,7 +57,7 @@ class SiteController extends Controller
         $site = Site::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $site);
+        $this->iconUploadService->handle($request, $site);
 
         $site->save();
 
@@ -73,7 +76,7 @@ class SiteController extends Controller
     public function update(UpdateSiteRequest $request, Site $site)
     {
         // Save icon
-        $this->handleIconUpload($request, $site);
+        $this->iconUploadService->handle($request, $site);
 
         $site->update($request->all());
 

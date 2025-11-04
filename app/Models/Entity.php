@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Entity
  */
-class Entity extends Model
+class Entity extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -43,6 +44,12 @@ class Entity extends Model
         'entity_type',
         'parent_entity_id',
     ];
+
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
 
     /** @return HasMany<Database, self> */
     public function databases(): HasMany

@@ -13,11 +13,14 @@ use App\Models\Information;
 use App\Models\MacroProcessus;
 use App\Models\MApplication;
 use App\Models\Process;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -57,7 +60,7 @@ class ProcessController extends Controller
         $process->applications()->sync($request->input('applications', []));
 
         // Save icon
-        $this->handleIconUpload($request, $process);
+        $this->iconUploadService->handle($request, $process);
 
         // Save process
         $process->save();
@@ -98,9 +101,12 @@ class ProcessController extends Controller
     public function update(UpdateProcessRequest $request, Process $process)
     {
         // Save icon
-        $this->handleIconUpload($request, $process);
+        $this->iconUploadService->handle($request, $process);
 
+        // Update Process
         $process->update($request->all());
+
+        // Relations
         $process->activities()->sync($request->input('activities', []));
         $process->entities()->sync($request->input('entities', []));
         $process->information()->sync($request->input('informations', []));

@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIcon;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Support\Collection;
 /**
  * App\Building
  */
-class Building extends Model
+class Building extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -40,6 +41,12 @@ class Building extends Model
         'building_id',
         'icon_id',
     ];
+
+    /*
+     * Implement HasIcon
+     */
+    public function setIconId(?int $id): void { $this->icon_id = $id; }
+    public function getIconId(): ?int { return $this->icon_id; }
 
     /** @return HasMany<Bay, self> */
     public function roomBays(): HasMany

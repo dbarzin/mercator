@@ -13,6 +13,7 @@ use App\Models\DomaineAd;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
 use App\Models\PhysicalServer;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,8 @@ use Yajra\DataTables\DataTables;
 
 class LogicalServerController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function getData(Request $request)
     {
         $logicalServers = LogicalServer::select('id', 'name', 'type', 'attributes', 'description')->get();
@@ -203,7 +206,7 @@ class LogicalServerController extends Controller
         $logicalServer = LogicalServer::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $logicalServer);
+        $this->iconUploadService->handle($request, $logicalServer);
 
         // Save LogicalServer
         $logicalServer->save();
@@ -260,7 +263,7 @@ class LogicalServerController extends Controller
         $request['active'] = $request->has('active');
 
         // Save icon
-        $this->handleIconUpload($request, $logicalServer);
+        $this->iconUploadService->handle($request, $logicalServer);
 
         // Save LogicalServer
         $logicalServer->update($request->all());

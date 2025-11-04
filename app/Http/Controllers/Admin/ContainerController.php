@@ -11,11 +11,14 @@ use App\Models\Container;
 use App\Models\Database;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContainerController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('container_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -41,13 +44,16 @@ class ContainerController extends Controller
 
     public function store(StoreContainerRequest $request)
     {
+        // Create container
         $container = Container::create($request->all());
+
+        // Save Relations
         $container->applications()->sync($request->input('applications', []));
         $container->logicalServers()->sync($request->input('logical_servers', []));
         $container->databases()->sync($request->input('databases', []));
 
         // Save icon
-        $this->handleIconUpload($request, $container);
+        $this->iconUploadService->handle($request, $container);
 
         // Save container
         $container->save();
@@ -74,9 +80,12 @@ class ContainerController extends Controller
     public function update(UpdateContainerRequest $request, Container $container)
     {
         // Save icon
-        $this->handleIconUpload($request, $container);
+        $this->iconUploadService->handle($request, $container);
 
+        // Update container
         $container->update($request->all());
+
+        // Save Relations
         $container->applications()->sync($request->input('applications', []));
         $container->logicalServers()->sync($request->input('logical_servers', []));
         $container->databases()->sync($request->input('databases', []));

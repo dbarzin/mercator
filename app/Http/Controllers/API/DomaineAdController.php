@@ -31,9 +31,6 @@ class DomaineAdController extends Controller
         if ($request['forestAds'] !== null) {
             $domaineAd->forestAds()->sync($request->input('forestAds', []));
         }
-        if ($request['logicalServers'] !== null) {
-            $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
-        }
 
         return response()->json($domaineAd, 201);
     }
@@ -52,9 +49,6 @@ class DomaineAdController extends Controller
         $domaineAd->update($request->all());
         if ($request['forestAds'] !== null) {
             $domaineAd->forestAds()->sync($request->input('forestAds', []));
-        }
-        if ($request['logicalServers'] !== null) {
-            $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
         }
 
         return response()->json();

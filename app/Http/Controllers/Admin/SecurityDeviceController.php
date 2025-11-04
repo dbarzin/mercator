@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateSecurityDeviceRequest;
 use App\Models\MApplication;
 use App\Models\PhysicalSecurityDevice;
 use App\Models\SecurityDevice;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,6 +19,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityDeviceController extends Controller
 {
+
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -61,7 +65,7 @@ class SecurityDeviceController extends Controller
         $securityDevice->applications()->sync($request->input('applications', []));
 
         // Save icon
-        $this->handleIconUpload($request, $securityDevice);
+        $this->iconUploadService->handle($request, $securityDevice);
 
         // Save Security Device
         $securityDevice->save();
@@ -97,14 +101,11 @@ class SecurityDeviceController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
-        // Save Security Device
-        $securityDevice->update($request->all());
-
         // Save icon
-        $this->handleIconUpload($request, $securityDevice);
+        $this->iconUploadService->handle($request, $securityDevice);
 
-        // Save Security Device
-        $securityDevice->save();
+        // Update Security Device
+        $securityDevice->update($request->all());
 
         // Relations
         $securityDevice->physicalSecurityDevices()->sync($request->input('physical_security_devices', []));

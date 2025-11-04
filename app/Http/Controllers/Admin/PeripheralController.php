@@ -13,12 +13,15 @@ use App\Models\Entity;
 use App\Models\MApplication;
 use App\Models\Peripheral;
 use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -108,7 +111,7 @@ class PeripheralController extends Controller
         $peripheral = Peripheral::create($request->all());
 
         // Save icon
-        $this->handleIconUpload($request, $peripheral);
+        $this->iconUploadService->handle($request, $peripheral);
 
         // Save Peripheral
         $peripheral->save();
@@ -158,7 +161,7 @@ class PeripheralController extends Controller
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)
     {
         // Save icon
-        $this->handleIconUpload($request, $peripheral);
+        $this->iconUploadService->handle($request, $peripheral);
 
         // Get fields
         $peripheral->update($request->all());
