@@ -6,10 +6,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalLinkRequest;
 use App\Http\Requests\StorePhysicalLinkRequest;
-use App\Http\Resources\Admin\PhysicalLinkResource;
 use App\Models\PhysicalLink;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalLinkController extends Controller
 {
@@ -35,7 +35,7 @@ class PhysicalLinkController extends Controller
     {
         abort_if(Gate::denies('physical_link_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalLinkResource($physicalLink);
+        return new JsonResource($physicalLink);
     }
 
     public function update(StorePhysicalLinkRequest $request, PhysicalLink $physicalLink)

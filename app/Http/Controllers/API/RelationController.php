@@ -5,10 +5,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRelationRequest;
-use App\Http\Resources\Admin\RelationResource;
 use App\Models\Relation;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends Controller
 {
@@ -34,7 +34,7 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RelationResource($relation);
+        return new JsonResource($relation);
     }
 
     public function update(StoreRelationRequest $request, Relation $relation)
@@ -42,8 +42,6 @@ class RelationController extends Controller
         abort_if(Gate::denies('relation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $relation->update($request->all());
-        // syncs
-        // $relation->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

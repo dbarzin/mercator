@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCertificateRequest;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
-use App\Http\Resources\Admin\CertificateResource;
 use App\Models\Certificate;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends Controller
 {
@@ -38,7 +38,7 @@ class CertificateController extends Controller
     {
         abort_if(Gate::denies('certificate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CertificateResource($certificate);
+        return new JsonResource($certificate);
     }
 
     public function update(UpdateCertificateRequest $request, Certificate $certificate)

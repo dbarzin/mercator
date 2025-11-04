@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Http\Resources\Admin\TaskResource;
 use App\Models\Task;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
@@ -36,7 +36,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TaskResource($task);
+        return new JsonResource($task);
     }
 
     public function update(UpdateTaskRequest $request, Task $task)

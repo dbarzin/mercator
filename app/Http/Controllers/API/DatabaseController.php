@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
-use App\Http\Resources\Admin\DatabaseResource;
 use App\Models\Database;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
 {
@@ -42,7 +42,7 @@ class DatabaseController extends Controller
     {
         abort_if(Gate::denies('database_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DatabaseResource($database);
+        return new JsonResource($database);
     }
 
     public function update(UpdateDatabaseRequest $request, Database $database)

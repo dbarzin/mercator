@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
-use App\Http\Resources\Admin\BuildingResource;
 use App\Models\Building;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
 {
@@ -36,7 +36,7 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BuildingResource($building);
+        return new JsonResource($building);
     }
 
     public function update(UpdateBuildingRequest $request, Building $building)

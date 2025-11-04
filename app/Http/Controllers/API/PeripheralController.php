@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
-use App\Http\Resources\Admin\PeripheralResource;
 use App\Models\Peripheral;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
@@ -37,7 +37,7 @@ class PeripheralController extends Controller
     {
         abort_if(Gate::denies('peripheral_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PeripheralResource($peripheral);
+        return new JsonResource($peripheral);
     }
 
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)

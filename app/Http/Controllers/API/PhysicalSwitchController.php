@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
-use App\Http\Resources\Admin\PhysicalSwitchResource;
 use App\Models\PhysicalSwitch;
 use Gate;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class PhysicalSwitchController extends Controller
@@ -36,7 +36,7 @@ class PhysicalSwitchController extends Controller
     {
         abort_if(Gate::denies('physical_switch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalSwitchResource($physicalSwitch);
+        return new JsonResource($physicalSwitch);
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)

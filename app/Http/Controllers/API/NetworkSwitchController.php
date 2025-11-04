@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
-use App\Http\Resources\Admin\NetworkSwitchResource;
 use App\Models\NetworkSwitch;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class NetworkSwitchController extends Controller
 {
@@ -18,28 +18,26 @@ class NetworkSwitchController extends Controller
     {
         abort_if(Gate::denies('network_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $networkswitchs = NetworkSwitch::all();
+        $networkSwitches = NetworkSwitch::all();
 
-        return response()->json($networkswitchs);
+        return response()->json($networkSwitches);
     }
 
     public function store(StoreNetworkSwitchRequest $request)
     {
         abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $networkswitch = NetworkSwitch::create($request->all());
-        $networkswitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
-        // syncs
-        // $networkswitch->roles()->sync($request->input('roles', []));
+        $networkSwitch = NetworkSwitch::create($request->all());
+        $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
 
-        return response()->json($networkswitch, 201);
+        return response()->json($networkSwitch, 201);
     }
 
-    public function show(NetworkSwitch $networkswitch)
+    public function show(NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('network_switch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NetworkSwitchResource($networkswitch);
+        return new JsonResource($networkSwitch);
     }
 
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)

@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
-use App\Http\Resources\Admin\LogicalFlowResource;
 use App\Models\LogicalFlow;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class LogicalFlowController extends Controller
 {
@@ -31,8 +31,6 @@ class LogicalFlowController extends Controller
         abort_if(Gate::denies('logical_flow_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalFlow = logicalFlow::create($request->all());
-        // $logicalFlow->servers()->sync($request->input('servers', []));
-        // $logicalFlow->applications()->sync($request->input('applications', []));
 
         Log::Debug('LogicalFlowController:store Done');
 
@@ -43,7 +41,7 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new LogicalFlowResource($logicalFlow);
+        return new JsonResource($logicalFlow);
     }
 
     public function update(UpdateLogicalFlowRequest $request, LogicalFlow $logicalFlow)

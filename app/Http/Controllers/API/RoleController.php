@@ -6,10 +6,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
-use App\Http\Resources\Admin\RoleResource;
 use App\Models\Role;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
 {
@@ -35,7 +35,7 @@ class RoleController extends Controller
     {
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RoleResource($role);
+        return new JsonResource($role);
     }
 
     public function update(UpdateRoleRequest $request, Role $role)
