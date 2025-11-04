@@ -35,16 +35,16 @@ class SsoController extends Controller
         }
 
         // Trouver ou créer l'utilisateur dans la base de données locale
-        $existingUser = User::where('login', $keycloakUser['name'])->first();
+        $existingUser = User::where('login', $keycloakUser['nickname'])->first();
 
         if (! $existingUser) {
             if (! config('services.keycloak.auto_provision', true)) {
                 return redirect()
                     ->route('login')
-                    ->with('message', 'User "' . $keycloakUser['name']. '" is not a valid Mercator user.');
+                    ->with('message', 'User "' . $keycloakUser['nickname']. '" is not a valid Mercator user.');
             }
             $existingUser = new User();
-            $existingUser->name = $keycloakUser['name']; // Supposons que Keycloak fournit le nom de l'utilisateur
+            $existingUser->name = $keycloakUser['nickname']; // Supposons que Keycloak fournit le nom de l'utilisateur
             $existingUser->email = $keycloakUser['email'];
             $existingUser->save();
         }
