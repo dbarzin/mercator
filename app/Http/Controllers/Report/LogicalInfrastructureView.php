@@ -194,28 +194,22 @@ class LogicalInfrastructureView extends Controller
             // Get Security Devices
             $securityDevices = PhysicalSecurityDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
-                    foreach (explode(',', $item->ip_addresses) as $ip) {
-                        foreach ($subnetworks as $subnetwork) {
-                            if ($subnetwork->contains($ip)) {
-                                return true;
-                            }
+                    foreach ($subnetworks as $subnetwork) {
+                        if ($subnetwork->contains($item->address_ip)) {
+                            return true;
                         }
                     }
-
                     return false;
                 });
 
             // Get StorageDevices
             $storageDevices = StorageDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
-                    foreach (explode(',', $item->ip_addresses) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
-                            if ($subnetwork->contains($ip)) {
+                            if ($subnetwork->contains($item->address_ip)) {
                                 return true;
-                            }
                         }
                     }
-
                     return false;
                 });
 

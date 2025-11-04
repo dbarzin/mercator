@@ -96,7 +96,7 @@
                                     name="src_id" id="src_id">
                                 <option></option>
                                 @foreach($items as $id => $name)
-                                    <option value="{{ $id }}" {{ ($flux->source_id() ? $flux->source_id() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ ($flux->sourceId() ? $flux->sourceId() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('src_id'))
@@ -114,7 +114,7 @@
                                     name="dest_id" id="dest_id">
                                 <option></option>
                                 @foreach($items as $id => $name)
-                                    <option value="{{ $id }}" {{ ($flux->dest_id() ? $flux->dest_id() : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ ($flux->destId() ? $flux->destId() : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('src_id'))

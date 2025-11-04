@@ -63,13 +63,13 @@ class Entity extends Model implements HasIcon
         return $this->hasMany(MApplication::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<MApplication, self> */
+    /** @return HasMany<Relation, self> */
     public function sourceRelations(): HasMany
     {
         return $this->hasMany(Relation::class, 'source_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<MApplication, self> */
+    /** @return HasMany<Relation, self> */
     public function destinationRelations(): HasMany
     {
         return $this->hasMany(Relation::class, 'destination_id', 'id')->orderBy('name');
