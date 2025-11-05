@@ -17,11 +17,18 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
-        $user = $this->getUserByToken($response);
+        $user = $this->getUserByToken($response['access_token']);;
 
-        $socialiteUser = new SocialiteUser();
-        $socialiteUser->map($this->mapUserToObject($user));
-        
+        $socialiteUser = $this->mapUserToObject($user);
+
+        $socialiteUser->setToken($response['access_token']);
+        if (isset($response['refresh_token'])) {
+            $socialiteUser->setRefreshToken($response['refresh_token']);
+        }
+        if (isset($response['expires_in'])) {
+            $socialiteUser->setExpiresIn($response['expires_in']);
+        }
+
         return $socialiteUser;
     }
 
@@ -53,13 +60,15 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         return json_decode($response->getBody(), true);
     }
 
-    protected function mapUserToObject(array $user): array
+    protected function mapUserToObject(array $user): SocialiteUser
     {
-        return [
-            'id' => $user['sub'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-        ];
+        return (new SocialiteUser())->setRaw($user)->map([
+            'id'       => $user['sub'] ?? $user['id'] ?? null,
+            'nickname' => $user['preferred_username'] ?? null,
+            'name'     => $user['name'] ?? trim(($user['given_name'] ?? '').' '.($user['family_name'] ?? '')) ?: null,
+            'email'    => $user['email'] ?? null,
+            'avatar'   => $user['picture'] ?? null,
+        ]);
     }
 
     protected function getTokenFields($code): array
