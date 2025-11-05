@@ -200,12 +200,10 @@ class CartographyController extends Controller
                 // Relations
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.relations'));
                 foreach ($entity->sourceRelations as $relation) {
-                    if ($relation->id !== null) {
-                        $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE);
-                    }
+                    $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE);
                     $textRun->addText(' -> ');
-                    if ($relation->destination_id !== null) {
-                        $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
+                    if ($relation->destination !== null) {
+                        $textRun->addLink('ENTITY'.$relation->destination->id, $relation->destination->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                     }
                     if ($entity->sourceRelations->last() !== $relation) {
                         $textRun->addText(', ');
@@ -1812,7 +1810,7 @@ class CartographyController extends Controller
                 foreach ($vlans as $vlan) {
                     $section->addBookmark('VLAN'.$vlan->id);
                     $table = $this->addTable($section, $vlan->name);
-                    $this->addTextRow($table, trans('cruds.vlan.fields.vlan_id'), $vlan->vlan_id);
+                    $this->addTextRow($table, trans('cruds.vlan.fields.vlan_id'), strval($vlan->vlan_id));
                     $this->addHTMLRow($table, trans('cruds.vlan.fields.description'), $vlan->description);
 
                     // Sous-réseaux
@@ -2150,7 +2148,7 @@ class CartographyController extends Controller
 
                     $this->addHTMLRow($table, trans('cruds.workstation.fields.cpu'), $workstation->cpu);
                     $this->addHTMLRow($table, trans('cruds.workstation.fields.memory'), $workstation->memory);
-                    $this->addHTMLRow($table, trans('cruds.workstation.fields.disk'), $workstation->disk);
+                    $this->addHTMLRow($table, trans('cruds.workstation.fields.disk'), strval($workstation->disk));
 
                     if ($workstation->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.workstation.fields.site'));

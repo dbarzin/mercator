@@ -49,37 +49,37 @@ class Subnetwork extends Model
         'deleted_at',
     ];
 
-    /** @return HasMany<Subnetwork, self> */
+    /** @return HasMany<Network, $this> */
     public function connectedSubnetsNetworks(): HasMany
     {
         return $this->hasMany(Network::class, 'connected_subnets_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Subnetwork, self> */
+    /** @return HasMany<Subnetwork, $this> */
     public function connectedSubnetsSubnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'connected_subnets_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsTo<Network, self> */
+    /** @return BelongsTo<Network, $this> */
     public function network(): BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
-    /** @return BelongsTo<Subnetwork, self> */
+    /** @return BelongsTo<Subnetwork, $this> */
     public function connected_subnets(): BelongsTo
     {
         return $this->belongsTo(Subnetwork::class, 'connected_subnets_id');
     }
 
-    /** @return BelongsTo<Gateway, self> */
+    /** @return BelongsTo<Gateway, $this> */
     public function gateway(): BelongsTo
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 
-    /** @return BelongsTo<Vlan, self> */
+    /** @return BelongsTo<Vlan, $this> */
     public function vlan(): BelongsTo
     {
         return $this->belongsTo(Vlan::class, 'vlan_id');
@@ -206,7 +206,7 @@ class Subnetwork extends Model
             }
 
             // Build mask
-            $solid = floor(intval($maskBits) / 8);
+            $solid = intdiv(intval($maskBits), 8);
             $solidBits = $solid * 8;
             $mask = str_repeat(chr(255), $solid);
             for ($i = $solidBits; $i < $maskBits; $i += 8) {

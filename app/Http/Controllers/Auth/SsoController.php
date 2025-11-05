@@ -28,11 +28,7 @@ class SsoController extends Controller
         }
 
         // Récupérer les rôles de Keycloak
-        try {
-            $roles = $keycloakUser['user']['realm_access']['roles'];
-        } catch (\Exception $e) {
-            $roles = [];
-        }
+        $roles = $keycloakUser['user']['realm_access']['roles'];
 
         // Trouver ou créer l'utilisateur dans la base de données locale
         $existingUser = User::where('login', $keycloakUser['nickname'])->first();
@@ -53,7 +49,7 @@ class SsoController extends Controller
         foreach ($roles as $role) {
             $roleModel = Role::where('title', $role)->first();
             if ($roleModel) {
-                $existingUser->roles()->syncWithoutDetaching($roleModel->id);
+                $existingUser->roles()->syncWithoutDetaching($roleModel);
             }
         }
 

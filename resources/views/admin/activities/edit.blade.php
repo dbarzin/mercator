@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended"
+                    <label class="recommended2"
                            for="description">{{ trans('cruds.activity.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -359,7 +359,7 @@
                 <div class='row'>
                     <div class="col">
                         <div class="form-group">
-                            <label class="recommended" for="drp">{{ trans('cruds.activity.fields.drp') }}</label>
+                            <label for="drp">{{ trans('cruds.activity.fields.drp') }}</label>
                             <textarea class="form-control ckeditor {{ $errors->has('drp') ? 'is-invalid' : '' }}"
                                       name="drp" id="drp">{!! old('drp', $activity->drp) !!}</textarea>
                             @if($errors->has('drp'))

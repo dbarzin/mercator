@@ -83,49 +83,49 @@ class Flux extends Model
     }
 
 
-    /** @return BelongsTo<MApplication, Flux> */
+    /** @return BelongsTo<MApplication, $this> */
     public function application_source(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_source_id');
     }
 
-    /** @return BelongsTo<ApplicationService, Flux> */
+    /** @return BelongsTo<ApplicationService, $this> */
     public function service_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_source_id');
     }
 
-    /** @return BelongsTo<ApplicationModule, Flux> */
+    /** @return BelongsTo<ApplicationModule, $this> */
     public function module_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_source_id');
     }
 
-    /** @return BelongsTo<Database, Flux> */
+    /** @return BelongsTo<Database, $this> */
     public function database_source(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_source_id');
     }
 
-    /** @return BelongsTo<MApplication, Flux> */
+    /** @return BelongsTo<MApplication, $this> */
     public function application_dest(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_dest_id');
     }
 
-    /** @return BelongsTo<ApplicationService, Flux> */
+    /** @return BelongsTo<ApplicationService, $this> */
     public function service_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_dest_id');
     }
 
-    /** @return BelongsTo<ApplicationModule, Flux> */
+    /** @return BelongsTo<ApplicationModule, $this> */
     public function module_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_dest_id');
     }
 
-    /** @return BelongsTo<Database, Flux> */
+    /** @return BelongsTo<Database, $this> */
     public function database_dest(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_dest_id');

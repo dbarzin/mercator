@@ -58,25 +58,25 @@ class DataProcessing extends Model
         'lawfulness_consent',
     ];
 
-    /** @return BelongsToMany<Process, self> */
+    /** @return BelongsToMany<Process, $this> */
     public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Information, self> */
+    /** @return BelongsToMany<Information, $this> */
     public function informations(): BelongsToMany
     {
         return $this->belongsToMany(Information::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Document, self> */
+    /** @return BelongsToMany<Document, $this> */
     public function documents(): BelongsToMany
     {
         return $this->belongsToMany(Document::class);

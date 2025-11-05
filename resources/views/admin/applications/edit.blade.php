@@ -228,11 +228,7 @@
                             <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}"
                                     name="cartographers[]" id="cartographers" multiple>
                                 @foreach($cartographers_list as $id => $cartographer)
-                                    @if(null !== old('cartographers'))
-                                        <option value="{{ $id }}" {{ in_array($id, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
-                                    @else
-                                        <option value="{{ $id }}" {{ $application->cartographers->contains($id) && !$errors->any() ? 'selected' : '' }}>{{ $cartographer }}</option>
-                                    @endif
+                                    <option value="{{ $id }}" {{ in_array($id, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('cartographers'))

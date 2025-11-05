@@ -27,13 +27,13 @@ class Document extends Model
     protected $fillable = [
     ];
 
-    /** @return BelongsToMany<Activity, self> */
+    /** @return BelongsToMany<Activity, $this> */
     public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class);
     }
 
-    /** @return BelongsToMany<Entity, self> */
+    /** @return BelongsToMany<Entity, $this> */
     public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class);

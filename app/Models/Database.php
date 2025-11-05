@@ -50,49 +50,49 @@ class Database extends Model
         'deleted_at',
     ];
 
-    /** @return HasMany<Flux, self> */
+    /** @return HasMany<Flux, $this> */
     public function databaseSourceFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'database_source_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Flux, self> */
+    /** @return HasMany<Flux, $this> */
     public function databaseDestFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'database_dest_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Entity, self> */
+    /** @return BelongsToMany<Entity, $this> */
     public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
-    /** @return BelongsTo<Entity, self> */
+    /** @return BelongsTo<Entity, $this> */
     public function entity_resp(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_resp_id');
     }
 
-    /** @return BelongsToMany<Information, self> */
+    /** @return BelongsToMany<Information, $this> */
     public function informations(): BelongsToMany
     {
         return $this->belongsToMany(Information::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<LogicalServer, self> */
+    /** @return BelongsToMany<LogicalServer, $this> */
     public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Container, self> */
+    /** @return BelongsToMany<Container, $this> */
     public function containers(): BelongsToMany
     {
         return $this->belongsToMany(Container::class)->orderBy('name');

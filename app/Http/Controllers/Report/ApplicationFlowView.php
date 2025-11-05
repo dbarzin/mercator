@@ -22,11 +22,11 @@ class ApplicationFlowView extends Controller
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Blocks
-        if ($request->applicationBlocks === null) {
+        if ($request->applicationBlocks == null) {
             $applicationBlocks = [];
             $request->session()->put('applicationBlocks', []);
         } else {
-            if ($request->applicationBlocks !== null) {
+            if ($request->applicationBlocks != null) {
                 $applicationBlocks = $request->applicationBlocks;
                 $request->session()->put('applicationBlocks', $applicationBlocks);
             } else {
@@ -35,11 +35,11 @@ class ApplicationFlowView extends Controller
         }
 
         // Applications
-        if ($request->applications === null) {
+        if ($request->applications == null) {
             $request->session()->put('applications', []);
             $applications = [];
         } else {
-            if ($request->applications !== null) {
+            if ($request->applications != null) {
                 $applications = $request->applications;
                 $request->session()->put('applications', $applications);
             } else {
@@ -48,11 +48,11 @@ class ApplicationFlowView extends Controller
         }
 
         // Databases
-        if ($request->databases === null) {
+        if ($request->databases == null) {
             $request->session()->put('databases', []);
             $databases = [];
         } else {
-            if ($request->databases !== null) {
+            if ($request->databases != null) {
                 $databases = $request->databases;
                 $request->session()->put('databases', $databases);
             } else {

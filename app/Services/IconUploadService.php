@@ -23,7 +23,7 @@ class IconUploadService
             $document->hash = hash_file('sha256', $file->path());
             $document->save();
 
-            $file->move(storage_path('docs'), $document->id);
+            $file->move(storage_path('docs'), strval($document->id));
             $model->setIconId($document->id);
         } elseif (preg_match('/^\d+$/', $request->input('iconSelect', ''))) {
             $model->setIconId((int) $request->input('iconSelect'));

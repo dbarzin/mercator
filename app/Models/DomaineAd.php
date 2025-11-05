@@ -42,13 +42,13 @@ class DomaineAd extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsToMany<ForestAd, self> */
+    /** @return BelongsToMany<ForestAd, $this> */
     public function forestAds(): BelongsToMany
     {
         return $this->belongsToMany(ForestAd::class)->orderBy('name');
     }
 
-    /** @return HasMany<LogicalServer, self> */
+    /** @return HasMany<LogicalServer, $this> */
     public function logicalServers(): HasMany
     {
         return $this->hasMany(LogicalServer::class, 'domain_id');

@@ -40,7 +40,7 @@ class Gateway extends Model
         'deleted_at',
     ];
 
-    /** @return HasMany<Subnetwork, self> */
+    /** @return HasMany<Subnetwork, $this> */
     public function subnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'gateway_id', 'id')->orderBy('name');

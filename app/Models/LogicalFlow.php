@@ -62,37 +62,37 @@ class LogicalFlow extends Model
 
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅  Sources  ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
 
-    /** @return BelongsTo<LogicalServer, self> */
+    /** @return BelongsTo<LogicalServer, $this> */
     public function logicalServerSource(): BelongsTo
     {
         return $this->belongsTo(LogicalServer::class, 'logical_server_source_id');
     }
 
-    /** @return BelongsTo<Peripheral, self> */
+    /** @return BelongsTo<Peripheral, $this> */
     public function peripheralSource(): BelongsTo
     {
         return $this->belongsTo(Peripheral::class, 'peripheral_source_id');
     }
 
-    /** @return BelongsTo<PhysicalServer, self> */
+    /** @return BelongsTo<PhysicalServer, $this> */
     public function physicalServerSource(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_source_id');
     }
 
-    /** @return BelongsTo<StorageDevice, self> */
+    /** @return BelongsTo<StorageDevice, $this> */
     public function storageDeviceSource(): BelongsTo
     {
         return $this->belongsTo(StorageDevice::class, 'storage_device_source_id');
     }
 
-    /** @return BelongsTo<Workstation, self> */
+    /** @return BelongsTo<Workstation, $this> */
     public function workstationSource(): BelongsTo
     {
         return $this->belongsTo(Workstation::class, 'workstation_source_id');
     }
 
-    /** @return BelongsTo<PhysicalSecurityDevice, self> */
+    /** @return BelongsTo<PhysicalSecurityDevice, $this> */
     public function physicalSecurityDeviceSource(): BelongsTo
     {
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_source_id');
@@ -100,37 +100,37 @@ class LogicalFlow extends Model
 
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ Destinations ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
 
-    /** @return BelongsTo<LogicalServer, self> */
+    /** @return BelongsTo<LogicalServer, $this> */
     public function logicalServerDest(): BelongsTo
     {
         return $this->belongsTo(LogicalServer::class, 'logical_server_dest_id');
     }
 
-    /** @return BelongsTo<Peripheral, self> */
+    /** @return BelongsTo<Peripheral, $this> */
     public function peripheralDest(): BelongsTo
     {
         return $this->belongsTo(Peripheral::class, 'peripheral_dest_id');
     }
 
-    /** @return BelongsTo<PhysicalServer, self> */
+    /** @return BelongsTo<PhysicalServer, $this> */
     public function physicalServerDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_dest_id');
     }
 
-    /** @return BelongsTo<StorageDevice, self> */
+    /** @return BelongsTo<StorageDevice, $this> */
     public function storageDeviceDest(): BelongsTo
     {
         return $this->belongsTo(StorageDevice::class, 'storage_device_dest_id');
     }
 
-    /** @return BelongsTo<Workstation, self> */
+    /** @return BelongsTo<Workstation, $this> */
     public function workstationDest(): BelongsTo
     {
         return $this->belongsTo(Workstation::class, 'workstation_dest_id');
     }
 
-    /** @return BelongsTo<PhysicalSecurityDevice, self> */
+    /** @return BelongsTo<PhysicalSecurityDevice, $this> */
     public function physicalSecurityDeviceDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_dest_id');
@@ -152,7 +152,7 @@ class LogicalFlow extends Model
             $this->contains($this->dest_ip_range, $ip);
     }
 
-    /** @return BelongsTo<Router, self> */
+    /** @return BelongsTo<Router, $this> */
     public function router(): BelongsTo
     {
         return $this->belongsTo(Router::class, 'router_id');
@@ -217,7 +217,7 @@ class LogicalFlow extends Model
             [$net, $maskBits] = explode('/', $cidr);
 
             // Size
-            $size = strpos($ip, ':') === false ? 4 : 16;
+            $size = !str_contains($ip, ':') ? 4 : 16;
 
             // Convert to binary
             $ip = inet_pton(trim($ip));
@@ -227,7 +227,7 @@ class LogicalFlow extends Model
             }
 
             // Build mask
-            $solid = floor(intval($maskBits) / 8);
+            $solid = intdiv(intval($maskBits), 8);
             $solidBits = $solid * 8;
             $mask = str_repeat(chr(255), $solid);
             for ($i = $solidBits; $i < $maskBits; $i += 8) {

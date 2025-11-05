@@ -56,25 +56,25 @@ class Relation extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsTo<Entity, self> */
+    /** @return BelongsTo<Entity, $this> */
     public function source(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'source_id')->orderBy('name');
     }
 
-    /** @return BelongsTo<Entity, self> */
+    /** @return BelongsTo<Entity, $this> */
     public function destination(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'destination_id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<Document, self> */
+    /** @return BelongsToMany<Document, $this> */
     public function documents(): BelongsToMany
     {
         return $this->belongsToMany(Document::class);
     }
 
-    /** @return HasMany<RelationValue, self> */
+    /** @return HasMany<RelationValue, $this> */
     public function values(): HasMany
     {
         return $this->hasMany(RelationValue::class, 'relation_id', 'id')->orderBy('date_price');

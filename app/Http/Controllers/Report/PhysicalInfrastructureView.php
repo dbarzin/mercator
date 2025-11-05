@@ -26,23 +26,23 @@ class PhysicalInfrastructureView extends Controller
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->site === null) {
+        if ($request->site == null) {
             $request->session()->put('site', null);
             $site = null;
             $request->session()->put('building', null);
             $buildingId = null;
         } else {
-            if ($request->site !== null) {
+            if ($request->site != null) {
                 $site = intval($request->site);
                 $request->session()->put('site', $site);
             } else {
                 $site = $request->session()->get('site');
             }
 
-            if ($request->building === null) {
+            if ($request->building == null) {
                 $request->session()->put('building', null);
                 $buildingId = null;
-            } elseif ($request->building !== null) {
+            } elseif ($request->building != null) {
                 $buildingId = intval($request->building);
                 $request->session()->put('building', $buildingId);
             } else {
@@ -96,7 +96,7 @@ class PhysicalInfrastructureView extends Controller
 
             $physicalServers = PhysicalServer::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($buildings === null) && ($item->site_id === $site)) {
+                    if (($buildings == null) && ($item->site_id == $site)) {
                         return true;
                     }
                     if ($item->bay_id === null) {
