@@ -49,7 +49,7 @@ class SsoController extends Controller
         foreach ($roles as $role) {
             $roleModel = Role::where('title', $role)->first();
             if ($roleModel) {
-                $existingUser->roles()->syncWithoutDetaching($roleModel->id);
+                $existingUser->roles()->syncWithoutDetaching($roleModel);
             }
         }
 

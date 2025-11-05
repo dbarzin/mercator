@@ -1810,7 +1810,7 @@ class CartographyController extends Controller
                 foreach ($vlans as $vlan) {
                     $section->addBookmark('VLAN'.$vlan->id);
                     $table = $this->addTable($section, $vlan->name);
-                    $this->addTextRow($table, trans('cruds.vlan.fields.vlan_id'), $vlan->vlan_id);
+                    $this->addTextRow($table, trans('cruds.vlan.fields.vlan_id'), strval($vlan->vlan_id));
                     $this->addHTMLRow($table, trans('cruds.vlan.fields.description'), $vlan->description);
 
                     // Sous-réseaux
@@ -2148,7 +2148,7 @@ class CartographyController extends Controller
 
                     $this->addHTMLRow($table, trans('cruds.workstation.fields.cpu'), $workstation->cpu);
                     $this->addHTMLRow($table, trans('cruds.workstation.fields.memory'), $workstation->memory);
-                    $this->addHTMLRow($table, trans('cruds.workstation.fields.disk'), $workstation->disk);
+                    $this->addHTMLRow($table, trans('cruds.workstation.fields.disk'), strval($workstation->disk));
 
                     if ($workstation->site !== null) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.workstation.fields.site'));

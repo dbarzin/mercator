@@ -217,7 +217,7 @@ class LogicalFlow extends Model
             [$net, $maskBits] = explode('/', $cidr);
 
             // Size
-            $size = strpos($ip, ':') === false ? 4 : 16;
+            $size = !str_contains($ip, ':') ? 4 : 16;
 
             // Convert to binary
             $ip = inet_pton(trim($ip));
@@ -227,7 +227,7 @@ class LogicalFlow extends Model
             }
 
             // Build mask
-            $solid = floor(intval($maskBits) / 8);
+            $solid = intdiv(intval($maskBits), 8);
             $solidBits = $solid * 8;
             $mask = str_repeat(chr(255), $solid);
             for ($i = $solidBits; $i < $maskBits; $i += 8) {
