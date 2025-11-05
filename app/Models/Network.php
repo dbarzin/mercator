@@ -48,13 +48,13 @@ class Network extends Model
         'deleted_at',
     ];
 
-    /** @return HasMany<ExternalConnectedEntity, self> */
+    /** @return HasMany<ExternalConnectedEntity, $this> */
     public function externalConnectedEntities(): HasMany
     {
         return $this->hasMany(ExternalConnectedEntity::class, 'network_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Subnetwork, self> */
+    /** @return HasMany<Subnetwork, $this> */
     public function subnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'network_id', 'id')->orderBy('name');

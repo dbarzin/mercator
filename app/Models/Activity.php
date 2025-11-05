@@ -51,25 +51,25 @@ class Activity extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsToMany<Process, self> */
+    /** @return BelongsToMany<Process, $this> */
     public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Operation, self> */
+    /** @return BelongsToMany<Operation, $this> */
     public function operations(): BelongsToMany
     {
         return $this->belongsToMany(Operation::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    /** @return HasMany<ActivityImpact, self> */
+    /** @return HasMany<ActivityImpact, $this> */
     public function impacts(): HasMany
     {
         return $this->hasMany(ActivityImpact::class)->orderBy('impact_type');

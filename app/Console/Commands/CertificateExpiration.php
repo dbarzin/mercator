@@ -31,7 +31,6 @@ class CertificateExpiration extends Command
 
         Log::debug('CertificateExpiration - day '.Carbon::now()->day);
 
-        // if (true) {
         if ($this->needCheck()) {
             // Check for old certificates
             Log::debug('CertificateExpiration - check');

@@ -68,18 +68,14 @@ class PatchingController extends Controller
         );
 
         // Filter on attributes
-        if ($attributes_filter !== null) {
-            foreach ($attributes_filter as $a) {
-                if (str_starts_with($a, '-')) {
-                    $servers->where('attributes', 'not like', '%'.substr($a, 1).'%');
-                    $applications->where('attributes', 'not like', '%'.substr($a, 1).'%');
-                } else {
-                    $servers->where('attributes', 'like', '%'.$a.'%');
-                    $applications->where('attributes', 'like', '%'.$a.'%');
-                }
+        foreach ($attributes_filter as $a) {
+            if (str_starts_with($a, '-')) {
+                $servers->where('attributes', 'not like', '%'.substr($a, 1).'%');
+                $applications->where('attributes', 'not like', '%'.substr($a, 1).'%');
+            } else {
+                $servers->where('attributes', 'like', '%'.$a.'%');
+                $applications->where('attributes', 'like', '%'.$a.'%');
             }
-        } else {
-            $attributes_filter = [];
         }
         // Union
         $patches = $servers->union($applications)->orderBy('name')->get();
@@ -101,7 +97,7 @@ class PatchingController extends Controller
         // Documents
         $documents = [];
         foreach ($server->documents as $doc) {
-            array_push($documents, $doc->id);
+            $documents[] = $doc->id;
         }
         session()->put('documents', $documents);
 
@@ -231,15 +227,13 @@ class PatchingController extends Controller
         );
 
         // Filter on attributes
-        if ($attributes_filter !== null) {
-            foreach ($attributes_filter as $a) {
-                if (str_starts_with($a, '-')) {
-                    $servers->where('attributes', 'not like', '%'.substr($a, 1).'%');
-                    $applications->where('attributes', 'not like', '%'.substr($a, 1).'%');
-                } else {
-                    $servers->where('attributes', 'like', '%'.$a.'%');
-                    $applications->where('attributes', 'like', '%'.$a.'%');
-                }
+        foreach ($attributes_filter as $a) {
+            if (str_starts_with($a, '-')) {
+                $servers->where('attributes', 'not like', '%'.substr($a, 1).'%');
+                $applications->where('attributes', 'not like', '%'.substr($a, 1).'%');
+            } else {
+                $servers->where('attributes', 'like', '%'.$a.'%');
+                $applications->where('attributes', 'like', '%'.$a.'%');
             }
         }
 

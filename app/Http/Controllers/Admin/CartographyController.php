@@ -200,12 +200,10 @@ class CartographyController extends Controller
                 // Relations
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.relations'));
                 foreach ($entity->sourceRelations as $relation) {
-                    if ($relation->id !== null) {
-                        $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE);
-                    }
+                    $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE);
                     $textRun->addText(' -> ');
-                    if ($relation->destination_id !== null) {
-                        $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
+                    if ($relation->destination !== null) {
+                        $textRun->addLink('ENTITY'.$relation->destination->id, $relation->destination->name ?? '', CartographyController::FANCY_LINK_STYLE, CartographyController::NO_SPACE, true);
                     }
                     if ($entity->sourceRelations->last() !== $relation) {
                         $textRun->addText(', ');

@@ -39,13 +39,13 @@ class ForestAd extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsTo<ZoneAdmin, self> */
+    /** @return BelongsTo<ZoneAdmin, $this> */
     public function zone_admin(): BelongsTo
     {
         return $this->belongsTo(ZoneAdmin::class, 'zone_admin_id');
     }
 
-    /** @return BelongsToMany<DomaineAd, self> */
+    /** @return BelongsToMany<DomaineAd, $this> */
     public function domaines(): BelongsToMany
     {
         return $this->belongsToMany(DomaineAd::class)->orderBy('name');

@@ -46,13 +46,13 @@ class SecurityDevice extends Model implements HasIcon
     public function setIconId(?int $id): void { $this->icon_id = $id; }
     public function getIconId(): ?int { return $this->icon_id; }
 
-    /** @return BelongsToMany<PhysicalSecurityDevice, self> */
+    /** @return BelongsToMany<PhysicalSecurityDevice, $this> */
     public function physicalSecurityDevices(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalSecurityDevice::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');

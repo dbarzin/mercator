@@ -20,23 +20,23 @@ class ApplicationView extends Controller
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->applicationBlock === null) {
+        if ($request->applicationBlock == null) {
             $request->session()->put('applicationBlock', null);
             $applicationBlock = null;
             $request->session()->put('application', null);
             $application = null;
         } else {
-            if ($request->applicationBlock !== null) {
+            if ($request->applicationBlock != null) {
                 $applicationBlock = intval($request->applicationBlock);
                 $request->session()->put('applicationBlock', $applicationBlock);
             } else {
                 $applicationBlock = $request->session()->get('applicationBlock');
             }
 
-            if ($request->application === null) {
+            if ($request->application == null) {
                 $request->session()->put('application', null);
                 $application = null;
-            } elseif ($request->application !== null) {
+            } elseif ($request->application != null) {
                 $application = intval($request->application);
                 $request->session()->put('application', $application);
             } else {

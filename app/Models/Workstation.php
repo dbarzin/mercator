@@ -98,43 +98,43 @@ class Workstation extends Model  implements HasIcon
     public function getIconId(): ?int { return $this->icon_id; }
 
 
-    /** @return BelongsTo<Site, self> */
+    /** @return BelongsTo<Site, $this> */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    /** @return BelongsTo<Building, self> */
+    /** @return BelongsTo<Building, $this> */
     public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    /** @return BelongsTo<Entity, self> */
+    /** @return BelongsTo<Entity, $this> */
     public function entity(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_id');
     }
 
-    /** @return BelongsTo<DomaineAd, self> */
+    /** @return BelongsTo<DomaineAd, $this> */
     public function domain(): BelongsTo
     {
         return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
-    /** @return BelongsTo<Network, self> */
+    /** @return BelongsTo<Network, $this> */
     public function network(): BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
-    /** @return BelongsTo<AdminUser, self> */
+    /** @return BelongsTo<AdminUser, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(AdminUser::class, 'user_id');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');

@@ -33,7 +33,7 @@ class EcosystemView extends Controller
         $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités */
         foreach ($entitiesGroups as $entity_type => $entOfGroup) {
             $entities = $entities->concat($entOfGroup);
-            if ($entity_type !== null) {
+            if ($entity_type != null) {
                 $isTypeExists = $isTypeExists || ($entity_type === $typeFilter);
                 $entityTypes->push($entity_type);
             }

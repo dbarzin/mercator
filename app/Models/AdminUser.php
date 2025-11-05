@@ -46,13 +46,13 @@ class AdminUser extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsTo<DomaineAd, self> */
+    /** @return BelongsTo<DomaineAd, $this> */
     public function domain(): BelongsTo
     {
         return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class, 'admin_user_m_application', 'admin_user_id', 'm_application_id');

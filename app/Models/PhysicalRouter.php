@@ -43,31 +43,31 @@ class PhysicalRouter extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsTo<Site, self> */
+    /** @return BelongsTo<Site, $this> */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    /** @return BelongsTo<Building, self> */
+    /** @return BelongsTo<Building, $this> */
     public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    /** @return BelongsTo<Bay, self> */
+    /** @return BelongsTo<Bay, $this> */
     public function bay(): BelongsTo
     {
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
-    /** @return BelongsToMany<Router, self> */
+    /** @return BelongsToMany<Router, $this> */
     public function routers(): BelongsToMany
     {
         return $this->belongsToMany(Router::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Vlan, self> */
+    /** @return BelongsToMany<Vlan, $this> */
     public function vlans(): BelongsToMany
     {
         return $this->belongsToMany(Vlan::class)->orderBy('name');

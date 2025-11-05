@@ -51,49 +51,49 @@ class Entity extends Model implements HasIcon
     public function setIconId(?int $id): void { $this->icon_id = $id; }
     public function getIconId(): ?int { return $this->icon_id; }
 
-    /** @return HasMany<Database, self> */
+    /** @return HasMany<Database, $this> */
     public function databases(): HasMany
     {
         return $this->hasMany(Database::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<MApplication, self> */
+    /** @return HasMany<MApplication, $this> */
     public function respApplications(): HasMany
     {
         return $this->hasMany(MApplication::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Relation, self> */
+    /** @return HasMany<Relation, $this> */
     public function sourceRelations(): HasMany
     {
         return $this->hasMany(Relation::class, 'source_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Relation, self> */
+    /** @return HasMany<Relation, $this> */
     public function destinationRelations(): HasMany
     {
         return $this->hasMany(Relation::class, 'destination_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Process, self> */
+    /** @return BelongsToMany<Process, $this> */
     public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
-    /** @return BelongsTo<Entity, self> */
+    /** @return BelongsTo<Entity, $this> */
     public function parentEntity(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'parent_entity_id');
     }
 
-    /** @return HasMany<Entity, self> */
+    /** @return HasMany<Entity, $this> */
     public function entities(): HasMany
     {
         return $this->hasMany(Entity::class, 'parent_entity_id', 'id')->orderBy('name');

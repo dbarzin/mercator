@@ -30,13 +30,13 @@ class CPEProduct extends Model
         'name',
     ];
 
-    /** @return BelongsToMany<CPEVersion, self> */
+    /** @return BelongsToMany<CPEVersion, $this> */
     public function versions(): BelongsToMany
     {
         return $this->belongsToMany(CPEVersion::class)->orderBy('name');
     }
 
-    /** @return BelongsTo<CPEVendor, self> */
+    /** @return BelongsTo<CPEVendor, $this> */
     public function vendor(): BelongsTo
     {
         return $this->belongsTo(CPEVendor::class, 'cpe_vendor_id');

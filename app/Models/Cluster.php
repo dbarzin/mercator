@@ -47,19 +47,19 @@ class Cluster extends Model implements HasIcon
     public function setIconId(?int $id): void { $this->icon_id = $id; }
     public function getIconId(): ?int { return $this->icon_id; }
 
-    /** @return BelongsToMany<LogicalServer, self> */
+    /** @return BelongsToMany<LogicalServer, $this> */
     public function logicalServers(): BelongsToMany
     {
         return $this->BelongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Router, self> */
+    /** @return BelongsToMany<Router, $this> */
     public function routers(): BelongsToMany
     {
         return $this->BelongsToMany(Router::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<PhysicalServer, self> */
+    /** @return BelongsToMany<PhysicalServer, $this> */
     public function physicalServers(): BelongsToMany
     {
         return $this->BelongsToMany(PhysicalServer::class)->orderBy('name');

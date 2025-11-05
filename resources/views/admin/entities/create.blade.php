@@ -131,7 +131,7 @@
                     <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended2"
+                    <label class="recommended1"
                            for="seurity_level">{{ trans('cruds.entity.fields.security_level') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}"
                               name="security_level" id="security_level">{!! old('security_level') !!}</textarea>

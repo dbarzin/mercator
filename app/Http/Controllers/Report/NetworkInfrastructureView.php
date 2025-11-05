@@ -27,23 +27,24 @@ class NetworkInfrastructureView extends Controller
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->site === null) {
+        $buildingIds=null;
+        if ($request->site == null) {
             $request->session()->put('site', null);
             $siteId = null;
             $request->session()->put('building', null);
             $building = null;
         } else {
-            if ($request->site !== null) {
+            if ($request->site != null) {
                 $siteId = intval($request->site);
                 $request->session()->put('site', $siteId);
             } else {
                 $siteId = $request->session()->get('site');
             }
 
-            if ($request->buildings === null) {
+            if ($request->buildings == null) {
                 $request->session()->put('buildings', null);
                 $buildingIds = null;
-            } elseif ($request->buildings !== null) {
+            } elseif ($request->buildings != null) {
                 $buildingIds = $request->buildings;
                 $request->session()->put('buildings', $buildingIds);
             } else {
@@ -53,7 +54,7 @@ class NetworkInfrastructureView extends Controller
 
         $all_sites = Site::All()->sortBy('name')->pluck('name', 'id');
 
-        if ($siteId !== null) {
+        if ($siteId != null) {
             $sites = Site::where('id', '=', $siteId)->get();
             $site = $sites->first();
 
@@ -61,7 +62,7 @@ class NetworkInfrastructureView extends Controller
                 ->where('site_id', $siteId)
                 ->pluck('name', 'id');
 
-            if ($buildingIds === null || (count($buildingIds) === 0)) {
+            if ($buildingIds == null || (count($buildingIds) == 0)) {
                 $buildings = Building::where('site_id', '=', $site->id)
                     ->orderBy('name')->get();
             } else {

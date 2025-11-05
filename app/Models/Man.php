@@ -35,13 +35,13 @@ class Man extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsToMany<Wan, self> */
+    /** @return BelongsToMany<Wan, $this> */
     public function Wans(): BelongsToMany
     {
         return $this->belongsToMany(Wan::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Lan, self> */
+    /** @return BelongsToMany<Lan, $this> */
     public function lans(): BelongsToMany
     {
         return $this->belongsToMany(Lan::class)->orderBy('name');
