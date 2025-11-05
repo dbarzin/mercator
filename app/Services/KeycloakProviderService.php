@@ -17,7 +17,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
-        $user = $this->getUserByToken($response['access_token']);;
+        $user = $this->getUserByToken($response['access_token']);
 
         $socialiteUser = $this->mapUserToObject($user);
 
