@@ -206,7 +206,7 @@ class Subnetwork extends Model
             }
 
             // Build mask
-            $solid = floor(intval($maskBits) / 8);
+            $solid = intdiv(intval($maskBits), 8);
             $solidBits = $solid * 8;
             $mask = str_repeat(chr(255), $solid);
             for ($i = $solidBits; $i < $maskBits; $i += 8) {

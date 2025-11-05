@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use ReflectionClass;
 use ReflectionMethod;
@@ -22,6 +23,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ImportController extends Controller
 {
+    /**
+     * @throws \ReflectionException
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function export(Request $request)
     {
         \Log::info('Export - Start');
@@ -86,7 +92,8 @@ class ImportController extends Controller
         // Get header
         $header = array_keys($data[0] ?? []);
 
-        return Excel::download(new GenericExport($data, $header), $modelName.'-'.Carbon::today()->format('Ymd').'.xlsx');
+        return Excel::download(new GenericExport($data, $header), $modelName.'-'.Carbon::today()->format('Ymd').'.xlsx')
+            ->deleteFileAfterSend(true);
     }
 
     public static function permission($modelName, $action)
@@ -94,6 +101,9 @@ class ImportController extends Controller
         return Str::snake($modelName, '_').'_'.$action;
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function import(Request $request)
     {
         $request->validate([
@@ -120,7 +130,7 @@ class ImportController extends Controller
         $updateCount = 0;
         $simulatedErrors = [];
 
-        $rows = Excel::toCollection(null, $request->file('file'))->first();
+        $rows = Excel::toCollection((object)null, $request->file('file'))->first();
         $header = $rows->shift();
 
         DB::beginTransaction();
@@ -236,9 +246,9 @@ class ImportController extends Controller
  */
 class GenericExport implements FromArray, WithHeadings, WithStyles
 {
-    protected $data;
+    protected array $data;
 
-    protected $headers;
+    protected array $headers;
 
     public function __construct(array $data, array $headers)
     {
