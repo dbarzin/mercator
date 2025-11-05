@@ -10,14 +10,13 @@ use App\Models\Information;
 use App\Models\MApplication;
 use App\Models\Process;
 use App\Models\Site;
-use App\Services\MonarcExportService;
 use App\Services\MospService;
 
 class MonarcController extends Controller
 {
     public function __construct(
         private MospService $mosp,
-        private MonarcExportService $exporter,
+        // private MonarcExportService $exporter,
     ) {
     }
 
@@ -36,7 +35,7 @@ class MonarcController extends Controller
         // Get all objects
         // https://objects.monarc.lu/api/v2/object
         // curl -X POST "https://objects.monarc.lu/api/v2/object/" -H  "accept: application/json" -H  "X-API-KEY: <your-token>" -H  "Content-Type: application/json" -d $object
-        // $this->getNames();
+        $this->getNames();
 
         $referentials = $this->mosp->getReferentials(); // en mémoire (cache)
         // $assets       = $this->getSelectableAssets();    // à adapter à ton modèle

@@ -36,73 +36,73 @@ class PhysicalLink extends Model
 
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅  Sources  ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
 
-    /** @return BelongsTo<Peripheral, self> */
+    /** @return BelongsTo<Peripheral, $this> */
     public function peripheralSrc(): BelongsTo
     {
         return $this->belongsTo(Peripheral::class, 'peripheral_src_id');
     }
 
-    /** @return BelongsTo<Phone, self> */
+    /** @return BelongsTo<Phone, $this> */
     public function phoneSrc(): BelongsTo
     {
         return $this->belongsTo(Phone::class, 'phone_src_id');
     }
 
-    /** @return BelongsTo<PhysicalRouter, self> */
+    /** @return BelongsTo<PhysicalRouter, $this> */
     public function physicalRouterSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalRouter::class, 'physical_router_src_id');
     }
 
-    /** @return BelongsTo<PhysicalSecurityDevice, self> */
+    /** @return BelongsTo<PhysicalSecurityDevice, $this> */
     public function physicalSecurityDeviceSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_src_id');
     }
 
-    /** @return BelongsTo<PhysicalServer, self> */
+    /** @return BelongsTo<PhysicalServer, $this> */
     public function physicalServerSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_src_id');
     }
 
-    /** @return BelongsTo<PhysicalSwitch, self> */
+    /** @return BelongsTo<PhysicalSwitch, $this> */
     public function physicalSwitchSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalSwitch::class, 'physical_switch_src_id');
     }
 
-    /** @return BelongsTo<StorageDevice, self> */
+    /** @return BelongsTo<StorageDevice, $this> */
     public function storageDeviceSrc(): BelongsTo
     {
         return $this->belongsTo(StorageDevice::class, 'storage_device_src_id');
     }
 
-    /** @return BelongsTo<WifiTerminal, self> */
+    /** @return BelongsTo<WifiTerminal, $this> */
     public function wifiTerminalSrc(): BelongsTo
     {
         return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_src_id');
     }
 
-    /** @return BelongsTo<Workstation, self> */
+    /** @return BelongsTo<Workstation, $this> */
     public function workstationSrc(): BelongsTo
     {
         return $this->belongsTo(Workstation::class, 'workstation_src_id');
     }
 
-    /** @return BelongsTo<Router, self> */
+    /** @return BelongsTo<Router, $this> */
     public function routerSrc(): BelongsTo
     {
         return $this->belongsTo(Router::class, 'router_src_id');
     }
 
-    /** @return BelongsTo<NetworkSwitch, self> */
+    /** @return BelongsTo<NetworkSwitch, $this> */
     public function networkSwitchSrc(): BelongsTo
     {
         return $this->belongsTo(NetworkSwitch::class, 'network_switch_src_id');
     }
 
-    /** @return BelongsTo<LogicalServer, self> */
+    /** @return BelongsTo<LogicalServer, $this> */
     public function logicalServerSrc(): BelongsTo
     {
         return $this->belongsTo(LogicalServer::class, 'logical_server_src_id');
@@ -110,73 +110,73 @@ class PhysicalLink extends Model
 
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ Destinations ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
 
-    /** @return BelongsTo<Peripheral, self> */
+    /** @return BelongsTo<Peripheral, $this> */
     public function peripheralDest(): BelongsTo
     {
         return $this->belongsTo(Peripheral::class, 'peripheral_dest_id');
     }
 
-    /** @return BelongsTo<Phone, self> */
+    /** @return BelongsTo<Phone, $this> */
     public function phoneDest(): BelongsTo
     {
         return $this->belongsTo(Phone::class, 'phone_dest_id');
     }
 
-    /** @return BelongsTo<PhysicalRouter, self> */
+    /** @return BelongsTo<PhysicalRouter, $this> */
     public function physicalRouterDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalRouter::class, 'physical_router_dest_id');
     }
 
-    /** @return BelongsTo<PhysicalSecurityDevice, self> */
+    /** @return BelongsTo<PhysicalSecurityDevice, $this> */
     public function physicalSecurityDeviceDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_dest_id');
     }
 
-    /** @return BelongsTo<PhysicalServer, self> */
+    /** @return BelongsTo<PhysicalServer, $this> */
     public function physicalServerDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_dest_id');
     }
 
-    /** @return BelongsTo<PhysicalSwitch, self> */
+    /** @return BelongsTo<PhysicalSwitch, $this> */
     public function physicalSwitchDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalSwitch::class, 'physical_switch_dest_id');
     }
 
-    /** @return BelongsTo<StorageDevice, self> */
+    /** @return BelongsTo<StorageDevice, $this> */
     public function storageDeviceDest(): BelongsTo
     {
         return $this->belongsTo(StorageDevice::class, 'storage_device_dest_id');
     }
 
-    /** @return BelongsTo<WifiTerminal, self> */
+    /** @return BelongsTo<WifiTerminal, $this> */
     public function wifiTerminalDest(): BelongsTo
     {
         return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_dest_id');
     }
 
-    /** @return BelongsTo<Workstation, self> */
+    /** @return BelongsTo<Workstation, $this> */
     public function workstationDest(): BelongsTo
     {
         return $this->belongsTo(Workstation::class, 'workstation_dest_id');
     }
 
-    /** @return BelongsTo<Router, self> */
+    /** @return BelongsTo<Router, $this> */
     public function routerDest(): BelongsTo
     {
         return $this->belongsTo(Router::class, 'router_dest_id');
     }
 
-    /** @return BelongsTo<NetworkSwitch, self> */
+    /** @return BelongsTo<NetworkSwitch, $this> */
     public function networkSwitchDest(): BelongsTo
     {
         return $this->belongsTo(NetworkSwitch::class, 'network_switch_dest_id');
     }
 
-    /** @return BelongsTo<LogicalServer, self> */
+    /** @return BelongsTo<LogicalServer, $this> */
     public function logicalServerDest(): BelongsTo
     {
         return $this->belongsTo(LogicalServer::class, 'logical_server_dest_id');

@@ -106,91 +106,91 @@ class MApplication extends Model implements HasIcon
         return implode(' ', $parts);
     }
 
-    /** @return HasMany<Flux, self> */
+    /** @return HasMany<Flux, $this> */
     public function applicationSourceFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'application_source_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Flux, self> */
+    /** @return HasMany<Flux, $this> */
     public function applicationDestFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'application_dest_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<Entity, self> */
+    /** @return BelongsToMany<Entity, $this> */
     public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
-    /** @return BelongsTo<Entity, self> */
+    /** @return BelongsTo<Entity, $this> */
     public function entityResp(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_resp_id');
     }
 
-    /** @return BelongsToMany<Process, self> */
+    /** @return BelongsToMany<Process, $this> */
     public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Activity, self> */
+    /** @return BelongsToMany<Activity, $this> */
     public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<ApplicationService, self> */
+    /** @return BelongsToMany<ApplicationService, $this> */
     public function services(): BelongsToMany
     {
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Database, self> */
+    /** @return BelongsToMany<Database, $this> */
     public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Workstation, self> */
+    /** @return BelongsToMany<Workstation, $this> */
     public function workstations(): BelongsToMany
     {
         return $this->belongsToMany(Workstation::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Container, self> */
+    /** @return BelongsToMany<LogicalServer, $this> */
     public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<SecurityDevice, self> */
+    /** @return BelongsToMany<SecurityDevice, $this> */
     public function securityDevices(): BelongsToMany
     {
         return $this->belongsToMany(SecurityDevice::class)->orderBy('name');
     }
 
-    /** @return BelongsTo<ApplicationBlock, self> */
+    /** @return BelongsTo<ApplicationBlock, $this> */
     public function applicationBlock(): BelongsTo
     {
         return $this->belongsTo(ApplicationBlock::class, 'application_block_id');
     }
 
-    /** @return BelongsToMany<AdminUser, self> */
+    /** @return BelongsToMany<AdminUser, $this> */
     public function administrators(): BelongsToMany
     {
         return $this->belongsToMany(AdminUser::class, 'admin_user_m_application', 'm_application_id', 'admin_user_id');
     }
 
-    /** @return HasMany<MApplicationEvent, self> */
+    /** @return HasMany<MApplicationEvent, $this> */
     public function events(): HasMany
     {
         return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id')->with('user');
     }
 
-    /** @return BelongsToMany<SecurityControl, self> */
+    /** @return BelongsToMany<SecurityControl, $this> */
     public function securityControls(): BelongsToMany
     {
         return $this->belongsToMany(SecurityControl::class, 'security_control_m_application')->orderBy('name');

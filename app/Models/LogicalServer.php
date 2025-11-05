@@ -65,13 +65,13 @@ class LogicalServer extends Model implements HasIcon
     public function setIconId(?int $id): void { $this->icon_id = $id; }
     public function getIconId(): ?int { return $this->icon_id; }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<PhysicalServer, self> */
+    /** @return BelongsToMany<PhysicalServer, $this> */
     public function physicalServers(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalServer::class)->orderBy('name');
@@ -83,37 +83,37 @@ class LogicalServer extends Model implements HasIcon
         return $this->belongsToMany(PhysicalServer::class)->pluck('id');
     }
 
-    /** @return BelongsToMany<Document, self> */
+    /** @return BelongsToMany<Document, $this> */
     public function documents(): BelongsToMany
     {
         return $this->belongsToMany(Document::class)->orderBy('document_id');
     }
 
-    /** @return BelongsToMany<Database, self> */
+    /** @return BelongsToMany<Database, $this> */
     public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Cluster, self> */
+    /** @return BelongsToMany<Cluster, $this> */
     public function clusters(): BelongsToMany
     {
         return $this->belongsToMany(Cluster::class);
     }
 
-    /** @return BelongsTo<DomaineAd, self> */
+    /** @return BelongsTo<DomaineAd, $this> */
     public function domain(): BelongsTo
     {
         return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
-    /** @return BelongsToMany<Certificate, self> */
+    /** @return BelongsToMany<Certificate, $this> */
     public function certificates(): BelongsToMany
     {
         return $this->belongsToMany(Certificate::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Container, self> */
+    /** @return BelongsToMany<Container, $this> */
     public function containers(): BelongsToMany
     {
         return $this->belongsToMany(Container::class)->orderBy('name');

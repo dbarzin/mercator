@@ -45,43 +45,43 @@ class Site extends Model implements HasIcon
     public function setIconId(?int $id): void { $this->icon_id = $id; }
     public function getIconId(): ?int { return $this->icon_id; }
 
-    /** @return HasMany<Building, self> */
+    /** @return HasMany<Building, $this> */
     public function buildings(): HasMany
     {
         return $this->hasMany(Building::class, 'site_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<PhysicalServer, self> */
+    /** @return HasMany<PhysicalServer, $this> */
     public function physicalServers(): HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'site_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<PhysicalRouter, self> */
+    /** @return HasMany<Workstation, $this> */
     public function workstations(): HasMany
     {
         return $this->hasMany(Workstation::class, 'site_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<PhysicalRouter, self> */
+    /** @return HasMany<StorageDevice, $this> */
     public function storageDevices(): HasMany
     {
         return $this->hasMany(StorageDevice::class, 'site_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Peripheral, self> */
+    /** @return HasMany<Peripheral, $this> */
     public function peripherals(): HasMany
     {
         return $this->hasMany(Peripheral::class, 'site_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<WifiTerminal, self> */
+    /** @return HasMany<Phone, $this> */
     public function phones(): HasMany
     {
         return $this->hasMany(Phone::class, 'site_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<WifiTerminal, self> */
+    /** @return HasMany<PhysicalSwitch, $this> */
     public function physicalSwitches(): HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'site_id', 'id')->orderBy('name');

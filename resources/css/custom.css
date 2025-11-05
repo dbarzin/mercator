@@ -357,22 +357,22 @@ table .navbar-brand-full {
 }
 
 .form-group .recommended::after {
-    content: " *";
+    content: " #";
     color: orange;
 }
 
 .form-group .recommended1::after {
-    content: " *";
+    content: " #";
     color: orange;
 }
 
 .form-group .recommended2::after {
-    content: " **";
+    content: " ##";
     color: orange;
 }
 
 .form-group .recommended3::after {
-    content: " ***";
+    content: " ###";
     color: orange;
 }
 

@@ -47,25 +47,25 @@ class ExternalConnectedEntity extends Model
         'dest_desc',
     ];
 
-    /** @return BelongsTo<Entity, self> */
+    /** @return BelongsTo<Entity, $this> */
     public function entity(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_id');
     }
 
-    /** @return BelongsTo<Network, self> */
+    /** @return BelongsTo<Network, $this> */
     public function network(): BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
-    /** @return BelongsToMany<Subnetwork, self> */
+    /** @return BelongsToMany<Subnetwork, $this> */
     public function subnetworks(): BelongsToMany
     {
         return $this->belongsToMany(Subnetwork::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Document, self> */
+    /** @return BelongsToMany<Document, $this> */
     public function documents(): BelongsToMany
     {
         return $this->belongsToMany(Document::class);

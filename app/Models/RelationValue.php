@@ -43,7 +43,7 @@ class RelationValue extends Model
         $this->attributes['date_price'] = $value;
     }
 
-    /** @return BelongsTo<Relation, self> */
+    /** @return BelongsTo<Relation, $this> */
     public function relation(): BelongsTo
     {
         return $this->belongsTo(Relation::class, 'relation_id');

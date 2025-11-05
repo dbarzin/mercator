@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use Random\RandomException;
 use Throwable;
 
 class CVESearch extends Command
@@ -27,6 +28,9 @@ class CVESearch extends Command
     /** @var int days */
     protected int $checkFrequency;
 
+    /**
+     * @throws RandomException
+     */
     public function handle(): int
     {
         Log::info('CVESearch - Start', ['day' => Carbon::now()->day]);
@@ -312,17 +316,4 @@ class CVESearch extends Command
         }
     }
 
-    /**
-     * Conserve ta logique d’exécution périodique (non utilisée dans handle()).
-     */
-    private function needCheck(): bool
-    {
-        $cf = $this->checkFrequency;
-
-        Log::debug('CVESearch - check-frequency', ['value' => $cf]);
-
-        return ($cf === 1) ||                                      // Daily
-            (($cf === 7) && (Carbon::now()->dayOfWeek === 1)) || // Weekly (Mon)
-            (($cf === 30) && (Carbon::now()->day === 1));       // Monthly (1st)
-    }
 }

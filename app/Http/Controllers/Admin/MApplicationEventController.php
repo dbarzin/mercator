@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MApplication;
 use App\Models\MApplicationEvent;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MApplicationEventController extends Controller
@@ -13,7 +14,7 @@ class MApplicationEventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): \Illuminate\Http\Response
+    public function index(Request $request): JsonResponse
     {
         $id = $request->query('id');
 
@@ -28,7 +29,7 @@ class MApplicationEventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         $user = User::findOrFail($request->get('user_id'));
@@ -46,7 +47,7 @@ class MApplicationEventController extends Controller
      *
      * @param  int  $id  Id de l'évènement
      */
-    public function destroy(Request $request, int $id): \Illuminate\Http\JsonResponse
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         MApplicationEvent::findOrFail($id)->delete();

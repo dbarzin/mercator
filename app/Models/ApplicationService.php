@@ -40,31 +40,31 @@ class ApplicationService extends Model
         'deleted_at',
     ];
 
-    /** @return HasMany<Flux, self> */
+    /** @return HasMany<Flux, $this> */
     public function serviceSourceFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'service_source_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Flux, self> */
+    /** @return HasMany<Flux, $this> */
     public function serviceDestFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'service_dest_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function servicesApplications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<ApplicationModule, self> */
+    /** @return BelongsToMany<ApplicationModule, $this> */
     public function modules(): BelongsToMany
     {
         return $this->belongsToMany(ApplicationModule::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');

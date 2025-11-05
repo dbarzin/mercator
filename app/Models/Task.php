@@ -37,7 +37,7 @@ class Task extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsToMany<Operation, self> */
+    /** @return BelongsToMany<Operation, $this> */
     public function operations(): BelongsToMany
     {
         return $this->belongsToMany(Operation::class)->orderBy('name');

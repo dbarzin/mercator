@@ -8,6 +8,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
+
 class MospService
 {
     public function __construct(
@@ -59,7 +60,7 @@ class MospService
     /** Nombre de menaces par référentiel (compte rapide, mis en cache) */
     public function getThreatsCountForReferential(string $slug): int
     {
-        dd($slug['json_object']);
+        // dd($slug['json_object']);
 
         return 0;
     }

@@ -34,23 +34,23 @@ class LogicalInfrastructureView extends Controller
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->network === null) {
+        if ($request->network == null) {
             $request->session()->put('network', null);
             $network = null;
             $request->session()->put('subnetwork', null);
             $subnetwork = null;
         } else {
-            if ($request->network !== null) {
+            if ($request->network != null) {
                 $network = intval($request->network);
                 $request->session()->put('network', $network);
             } else {
                 $network = $request->session()->get('network');
             }
 
-            if ($request->subnetwork === null) {
+            if ($request->subnetwork == null) {
                 $request->session()->put('subnetwork', null);
                 $subnetwork = null;
-            } elseif ($request->subnetwork !== null) {
+            } elseif ($request->subnetwork != null) {
                 $subnetwork = intval($request->subnetwork);
                 $request->session()->put('subnetwork', $subnetwork);
             } else {

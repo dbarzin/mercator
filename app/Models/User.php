@@ -48,7 +48,7 @@ class User extends Authenticatable implements LdapAuthenticatable
     /**
      * Relation rôles
      *
-     * @return BelongsToMany<Role, self>
+     * @return BelongsToMany<Role, $this>
      */
     public function roles(): BelongsToMany
     {
@@ -105,7 +105,7 @@ class User extends Authenticatable implements LdapAuthenticatable
             ->exists();
     }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function m_applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class, 'cartographer_m_application');

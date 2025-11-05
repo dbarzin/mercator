@@ -46,19 +46,19 @@ class Container extends Model implements HasIcon
     public function setIconId(?int $id): void { $this->icon_id = $id; }
     public function getIconId(): ?int { return $this->icon_id; }
 
-    /** @return BelongsToMany<MApplication, self> */
+    /** @return BelongsToMany<MApplication, $this> */
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Database, self> */
+    /** @return BelongsToMany<Database, $this> */
     public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<LogicalServer, self> */
+    /** @return BelongsToMany<LogicalServer, $this> */
     public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');

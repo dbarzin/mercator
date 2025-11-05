@@ -41,13 +41,13 @@ class Router extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsToMany<PhysicalRouter, self> */
+    /** @return BelongsToMany<PhysicalRouter, $this> */
     public function physicalRouters(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Cluster, self> */
+    /** @return BelongsToMany<Cluster, $this> */
     public function clusters(): BelongsToMany
     {
         return $this->BelongsToMany(Cluster::class, 'cluster_id');
