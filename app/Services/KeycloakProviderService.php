@@ -3,30 +3,26 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Socialite\Two\ProviderInterface;
+use Laravel\Socialite\Two\User as SocialiteUser;
 
 class KeycloakProviderService extends AbstractProvider implements ProviderInterface
 {
-    public function user(): array
+    public function user(): SocialiteUser
     {
         if ($this->hasInvalidState()) {
             throw new InvalidStateException();
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
+        $user = $this->getUserByToken($response);
 
-        $user = $this->mapUserToObject($this->getUserByToken(
-            $token = Arr::get($response, 'access_token')
-        ));
-
-        return array_merge($user, [
-            'access_token' => $token,
-            'refresh_token' => Arr::get($response, 'refresh_token'),
-            'expires_in' => Arr::get($response, 'expires_in'),
-        ]);
+        $socialiteUser = new SocialiteUser();
+        $socialiteUser->map($this->mapUserToObject($user));
+        
+        return $socialiteUser;
     }
 
     protected function getAuthUrl($state): string
