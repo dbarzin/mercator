@@ -132,17 +132,6 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.application.fields.cartographers') }}
-                    </th>
-                    <td>
-                        @foreach($application->cartographers as $cartographer)
-                            {{ $cartographer->name }}
-                            @if(!$loop->last)
-                                ,
-                            @endif
-                        @endforeach
-                    </td>
-                    <th>
                         {{ trans('cruds.application.fields.administrators') }}
                     </th>
                     <td>
