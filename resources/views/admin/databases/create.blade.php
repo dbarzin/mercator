@@ -110,7 +110,7 @@
                                    for="responsible">{{ trans('cruds.database.fields.responsible') }}</label>
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsible" id="responsible">
-                                @if (!$type_list->contains(old('responsible')))
+                                @if (!$responsible_list->contains(old('responsible')))
                                     <option> {{ old('responsible') }}</option>
                                 @endif
                                 @foreach($responsible_list as $t)
@@ -221,7 +221,7 @@
                             <label for="external">{{ trans('cruds.database.fields.external') }}</label>
                             <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}"
                                     name="external" id="external">
-                                @if (!$type_list->contains(old('external')))
+                                @if (!$external_list->contains(old('external')))
                                     <option> {{ old('external') }}</option>
                                 @endif
                                 @foreach($external_list as $t)
