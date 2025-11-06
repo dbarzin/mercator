@@ -125,7 +125,7 @@ describe('edit', function () {
 });
 
 describe('update', function () {
-    test('can update activity', function () {
+    test('can update MApplication', function () {
         $name =  fake()->word();
         $container = MApplication::factory()->create(['name' => $name]);
 
