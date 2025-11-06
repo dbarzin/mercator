@@ -37,7 +37,7 @@ class MApplicationEventController extends Controller
         $event->application()->associate($application);
         $event->user()->associate($user);
         $event->message = $request->get('message');
-        $event->save();
+        $event->saveOrFail();
 
         return response()->json(['events' => $application->events]);
     }
