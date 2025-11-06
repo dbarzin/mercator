@@ -207,12 +207,6 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="applications">{{ trans('cruds.database.fields.logical_servers') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="logical_servers[]" id="logical_servers" multiple>
                                 @foreach($logical_servers as $id => $name)
@@ -234,7 +228,7 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="external"><br>{{ trans('cruds.database.fields.external') }}</label>
+                            <label for="external">{{ trans('cruds.database.fields.external') }}</label>
                             <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}"
                                     name="external" id="external">
                                 @if (!$external_list->contains(old('external')))
