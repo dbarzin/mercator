@@ -259,4 +259,8 @@ Route::middleware('auth:api')->group(function (): void {
     Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel'])->name('report.activityList');
     Route::get('report/activityReport', [Report\ActivityReport::class, 'generateDocx'])->name('report.activityReport');
 
+
+    Route::get('report/impacts', [Report\ImpactList::class, 'generateExcel'])->name('report.view.impacts');
+    Route::get('report/rto', [Report\RTO::class, 'generateExcel'])->name('report.view.rto');
+
 });

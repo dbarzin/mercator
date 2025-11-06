@@ -111,6 +111,8 @@ __Rapport__
 - /api/report/cve
 - /api/report/activityList
 - /api/report/activityReport
+- /api/report/impacts
+- /api/report/rto
 
 ### Actions gérées par le contrôleur de ressources
 
