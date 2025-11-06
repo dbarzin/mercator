@@ -32,6 +32,10 @@ $FILE_REPORTS = [
     // CVE
     ['/api/report/cve',                      'xlsx'],
 
+    // BCP : Impacts & RTO
+    ['/api/report/impacts',                  'xlsx'],
+    ['/api/report/rto',                      'xlsx'],
+
 ];
 /**
  * TESTS "forbidden" (403) pour TOUTES les routes,

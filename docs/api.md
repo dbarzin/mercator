@@ -111,6 +111,8 @@ __Reports__
 - /api/report/cve
 - /api/report/activityList
 - /api/report/activityReport
+- /api/report/impacts
+- /api/report/rto
 
 ### Actions managed by the resource controller
 
