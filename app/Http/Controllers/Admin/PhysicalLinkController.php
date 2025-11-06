@@ -315,7 +315,8 @@ class PhysicalLinkController extends Controller
             $devices->put('LSERVER_'.$key, $value);
         }
 
-        return view('admin.links.edit', compact('devices', 'link'));
+        return view('admin.links.edit',
+            compact('devices', 'link'));
     }
 
     public function update(UpdatePhysicalLinkRequest $request, PhysicalLink $link)

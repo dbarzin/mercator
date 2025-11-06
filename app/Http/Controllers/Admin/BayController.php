@@ -10,12 +10,14 @@ use App\Http\Requests\UpdateBayRequest;
 use App\Models\Bay;
 use App\Models\Building;
 use Gate;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class BayController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         abort_if(Gate::denies('bay_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -25,7 +27,7 @@ class BayController extends Controller
         return view('admin.bays.index', compact('bays'));
     }
 
-    public function create()
+    public function create(): View
     {
         abort_if(Gate::denies('bay_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -34,7 +36,7 @@ class BayController extends Controller
         return view('admin.bays.create', compact('rooms'));
     }
 
-    public function clone(Request $request, Bay $bay)
+    public function clone(Request $request, Bay $bay) : View
     {
         abort_if(Gate::denies('bay_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -46,14 +48,14 @@ class BayController extends Controller
         return view('admin.bays.create', compact('rooms'));
     }
 
-    public function store(StoreBayRequest $request)
+    public function store(StoreBayRequest $request): RedirectResponse
     {
         Bay::create($request->all());
 
         return redirect()->route('admin.bays.index');
     }
 
-    public function edit(Bay $bay)
+    public function edit(Bay $bay): View
     {
         abort_if(Gate::denies('bay_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -64,14 +66,14 @@ class BayController extends Controller
         return view('admin.bays.edit', compact('rooms', 'bay'));
     }
 
-    public function update(UpdateBayRequest $request, Bay $bay)
+    public function update(UpdateBayRequest $request, Bay $bay): RedirectResponse
     {
         $bay->update($request->all());
 
         return redirect()->route('admin.bays.index');
     }
 
-    public function show(Bay $bay)
+    public function show(Bay $bay): View
     {
         abort_if(Gate::denies('bay_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -80,7 +82,7 @@ class BayController extends Controller
         return view('admin.bays.show', compact('bay'));
     }
 
-    public function destroy(Bay $bay)
+    public function destroy(Bay $bay): RedirectResponse
     {
         abort_if(Gate::denies('bay_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -89,7 +91,7 @@ class BayController extends Controller
         return redirect()->route('admin.bays.index');
     }
 
-    public function massDestroy(MassDestroyBayRequest $request)
+    public function massDestroy(MassDestroyBayRequest $request): Response
     {
         Bay::whereIn('id', request('ids'))->delete();
 
