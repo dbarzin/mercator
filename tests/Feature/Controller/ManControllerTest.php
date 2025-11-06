@@ -166,8 +166,8 @@ test('denies access without permission', function () {
 
 describe('massDestroy', function () {
     test('can delete multiple man', function () {
-        $man = Man::factory()->count(3)->create();
-        $ids = $man->pluck('id')->toArray();
+        $mans = Man::factory()->count(3)->create();
+        $ids = $mans->pluck('id')->toArray();
 
         $response = $this->delete(route('admin.mans.massDestroy'), ['ids' => $ids]);
         $response->assertNoContent();
