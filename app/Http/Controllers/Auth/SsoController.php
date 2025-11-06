@@ -18,6 +18,17 @@ class SsoController extends Controller
         return Socialite::driver('keycloak')->redirect();
     }
 
+    / **
+     * Handle the Keycloak OAuth callback and authenticate or provision a local user.
+     *
+     * Retrieves the Keycloak user from Socialite, finds or (optionally) creates a corresponding local User,
+     * synchronizes any matching local Role models from the Keycloak roles without detaching existing roles,
+     * logs the local user in, and redirects to the intended page. If authentication with Keycloak fails
+     * the request is redirected back to the login route with an error; if the local user does not exist and
+     * auto-provisioning is disabled, the request is redirected back to the login route with a message.
+     *
+     * @return \Illuminate\Http\RedirectResponse A redirect response to the intended URL on success, or to the login route with an error/message on failure.
+     */
     public function handleKeycloakCallback()
     {
         try {

@@ -13,6 +13,16 @@ class PhoneFactory extends Factory
 {
     protected $model = Phone::class;
 
+    /**
+     * Define default attribute values for creating Phone model instances.
+     *
+     * The returned array maps Phone model attributes to generated values:
+     * - `name`, `type`, `description`, `vendor`, `product`, `version`, `address_ip` are populated with faker data.
+     * - `physical_switch_id`, `site_id`, `building_id` are factory definitions that create the related models.
+     * - `created_at` and `updated_at` are set to the current timestamp.
+     *
+     * @return array<string,mixed> Associative array of Phone attributes keyed by column name.
+     */
     public function definition(): array
     {
         return [
