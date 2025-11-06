@@ -34,7 +34,7 @@ describe('index', function () {
         $response = $this->get(route('admin.physical-routers.index'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.physicalRouters.index');;
+        $response->assertViewIs('admin.physicalRouters.index');
         $response->assertViewHas('physicalRouters');
     });
 
