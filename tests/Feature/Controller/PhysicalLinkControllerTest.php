@@ -29,7 +29,7 @@ beforeEach(function () {
 });
 
 describe('index', function () {
-    test('can display phones index page', function () {
+    test('can display physical links index page', function () {
         PhysicalLink::factory()->count(3)->create();
 
         $response = $this->get(route('admin.links.index'));
