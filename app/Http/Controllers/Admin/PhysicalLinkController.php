@@ -257,6 +257,12 @@ class PhysicalLinkController extends Controller
         return redirect()->route('admin.links.index');
     }
 
+    /**
+     * Show the form to edit the specified PhysicalLink.
+     *
+     * @param PhysicalLink $link The PhysicalLink to edit; its current data populates the form.
+     * @return \Illuminate\View\View The edit view populated with the consolidated devices list and the provided link.
+     */
     public function edit(PhysicalLink $link)
     {
         abort_if(Gate::denies('physical_link_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -319,6 +325,16 @@ class PhysicalLinkController extends Controller
             compact('devices', 'link'));
     }
 
+    /**
+     * Update an existing physical link by assigning source/destination device IDs and ports, validate port uniqueness, and persist changes.
+     *
+     * The method derives specific device foreign keys from prefixed `src_id` and `dest_id` values, sets `src_port` and `dest_port`,
+     * performs cross-record port conflict checks, and saves the updated link if validation passes.
+     *
+     * @param \App\Http\Requests\UpdatePhysicalLinkRequest $request Validated input containing prefixed `src_id`, `dest_id`, `src_port`, and `dest_port`.
+     * @param \App\Models\PhysicalLink $link The physical link instance to update.
+     * @return \Illuminate\Http\RedirectResponse Redirects to the physical links index on success; redirects back with validation errors and input on failure.
+     */
     public function update(UpdatePhysicalLinkRequest $request, PhysicalLink $link)
     {
         // Source device
