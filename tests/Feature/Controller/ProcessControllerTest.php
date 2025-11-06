@@ -72,9 +72,9 @@ describe('show', function () {
 
     test('can display object', function () {
         $name =  fake()->word();
-        $Process = Process::factory()->create(['name' => $name]);
+        $rocess = Process::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.processes.show', $Process->id));
+        $response = $this->get(route('admin.processes.show', $rocess->id));
 
         $response->assertOk();
         $response->assertViewIs('admin.processes.show');
@@ -86,9 +86,9 @@ describe('show', function () {
         $this->actingAs($user);
 
         $name =  fake()->word();
-        $Process = Process::factory()->create(['name' => $name]);
+        $rocess = Process::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.processes.show', $Process->id));
+        $response = $this->get(route('admin.processes.show', $rocess->id));
 
         $response->assertForbidden();
     });
@@ -98,9 +98,9 @@ describe('show', function () {
 describe('edit', function () {
     test('can display edit form', function () {
         $name =  fake()->word();
-        $Process = Process::factory()->create(['name' => $name]);
+        $rocess = Process::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.processes.edit', $Process));
+        $response = $this->get(route('admin.processes.edit', $rocess));
 
         $response->assertOk();
         $response->assertViewIs('admin.processes.edit');
@@ -112,9 +112,9 @@ describe('edit', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $Process = Process::factory()->create();
+        $rocess = Process::factory()->create();
 
-        $response = $this->get(route('admin.processes.edit', $Process));
+        $response = $this->get(route('admin.processes.edit', $rocess));
 
         $response->assertForbidden();
     });
@@ -123,14 +123,14 @@ describe('edit', function () {
 describe('update', function () {
     test('can update Process', function () {
         $name =  fake()->word();
-        $Process = Process::factory()->create(['name' => $name]);
+        $rocess = Process::factory()->create(['name' => $name]);
 
         $data = [
             'name' => 'Updated Name',
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->put(route('admin.processes.update', $Process), $data);
+        $response = $this->put(route('admin.processes.update', $rocess), $data);
 
         $response->assertRedirect(route('admin.processes.index'));
         $this->assertDatabaseHas('processes', ['name' => 'Updated Name']);
@@ -139,16 +139,16 @@ describe('update', function () {
 
 describe('destroy', function () {
     test('can delete Process', function () {
-        $Process = Process::factory()->create();
+        $rocess = Process::factory()->create();
 
-        $response = $this->delete(route('admin.processes.destroy', $Process->id));
+        $response = $this->delete(route('admin.processes.destroy', $rocess->id));
         $response->assertRedirect(route('admin.processes.index'));
 
-        $this->assertSoftDeleted('processes', ['id' => $Process->id]);
+        $this->assertSoftDeleted('processes', ['id' => $rocess->id]);
 
-        $Process->refresh();
-        expect($Process->deleted_at)->not->toBeNull()
-            ->and($Process->trashed())->toBeTrue();
+        $rocess->refresh();
+        expect($rocess->deleted_at)->not->toBeNull()
+            ->and($rocess->trashed())->toBeTrue();
 
     });
 
@@ -156,9 +156,9 @@ describe('destroy', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $Process = Process::factory()->create();
+        $rocess = Process::factory()->create();
 
-        $response = $this->delete(route('admin.processes.destroy', $Process));
+        $response = $this->delete(route('admin.processes.destroy', $rocess));
 
         $response->assertForbidden();
     });
@@ -178,10 +178,10 @@ describe('massDestroy', function () {
     });
 
     test('returns no content status', function () {
-        $Process = Process::factory()->create();
+        $rocess = Process::factory()->create();
 
         $response = $this->delete(route('admin.processes.massDestroy'), [
-            'ids' => [$Process->id],
+            'ids' => [$rocess->id],
         ]);
 
         $response->assertStatus(204);
@@ -191,10 +191,10 @@ describe('massDestroy', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $Process = Process::factory()->create();
+        $rocess = Process::factory()->create();
 
         $response = $this->delete(route('admin.processes.massDestroy'), [
-            'ids' => [$Process->id],
+            'ids' => [$rocess->id],
         ]);
 
         $response->assertForbidden();

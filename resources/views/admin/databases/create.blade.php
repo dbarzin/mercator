@@ -72,8 +72,8 @@
                             <label for="entities">{{ trans('cruds.database.fields.entities') }}</label>
                             <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}"
                                     name="entities[]" id="entities" multiple>
-                                @foreach($entities as $id => $entities)
-                                    <option value="{{ $id }}" {{ in_array($id, old('entities', [])) ? 'selected' : '' }}>{{ $entities }}</option>
+                                @foreach($entities as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('entities', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('entities'))
@@ -146,8 +146,8 @@
                             </div>
                             <select class="form-control select2 {{ $errors->has('informations') ? 'is-invalid' : '' }}"
                                     name="informations[]" id="informations" multiple>
-                                @foreach($informations as $id => $informations)
-                                    <option value="{{ $id }}" {{ in_array($id, old('informations', [])) ? 'selected' : '' }}>{{ $informations }}</option>
+                                @foreach($informations as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('informations', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('informations'))
@@ -169,7 +169,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label for="entities">{{ trans('cruds.database.fields.applications') }}</label>
+                            <label for="applications">{{ trans('cruds.database.fields.applications') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all"
                                       style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -178,13 +178,13 @@
                             </div>
                             <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                                     name="applications[]" id="applications" multiple>
-                                @foreach($applications as $id => $applications)
-                                    <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $applications }}</option>
+                                @foreach($applications as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('entities'))
+                            @if($errors->has('applications'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('entities') }}
+                                    {{ $errors->first('applications') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.database.fields.applications_helper') }}</span>
@@ -201,16 +201,16 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="entities">{{ trans('cruds.database.fields.logical_servers') }}</label>
+                            <label for="logical_servers">{{ trans('cruds.database.fields.logical_servers') }}</label>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="logical_servers[]" id="logical_servers" multiple>
                                 @foreach($logical_servers as $id => $name)
                                     <option value="{{ $id }}" {{ in_array($id, old('logical_servers', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('entities'))
+                            @if($errors->has('logical_servers'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('entities') }}
+                                    {{ $errors->first('logical_servers') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.database.fields.logical_servers_helper') }}</span>

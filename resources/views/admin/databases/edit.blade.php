@@ -95,8 +95,8 @@
                                    for="entity_resp_id">{{ trans('cruds.database.fields.entity_resp') }}</label>
                             <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}"
                                     name="entity_resp_id" id="entity_resp_id">
-                                @foreach($entity_resps as $id => $entity_resp)
-                                    <option value="{{ $id }}" {{ ($database->entity_resp ? $database->entity_resp->id : old('entity_resp_id')) == $id ? 'selected' : '' }}>{{ $entity_resp }}</option>
+                                @foreach($entity_resps as $id => $name)
+                                    <option value="{{ $id }}" {{ ($database->entity_resp ? $database->entity_resp->id : old('entity_resp_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('entity_resp'))
@@ -115,8 +115,8 @@
                                    for="responsible">{{ trans('cruds.database.fields.responsible') }}</label>
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsible" id="responsible">
-                                @if (!$external_list->contains(old('responsible')))
-                                    <option> {{ old('responsible') }}</option>
+                                @if (!$responsible_list->contains(old('responsible')))
+                                    <option>{{ old('responsible') }}</option>
                                 @endif
                                 @foreach($responsible_list as $t)
                                     <option {{ (old('responsible') ? old('responsible') : $database->responsible) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -150,8 +150,8 @@
                             </div>
                             <select class="form-control select2 {{ $errors->has('informations') ? 'is-invalid' : '' }}"
                                     name="informations[]" id="informations" multiple>
-                                @foreach($informations as $id => $informations)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('informations', [])) || $database->informations->contains($id)) ? 'selected' : '' }}>{{ $informations }}</option>
+                                @foreach($informations as $id => $name)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('informations', [])) || $database->informations->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('informations'))
@@ -308,7 +308,7 @@
                                 <label for="security_need">{{ trans('global.tracability_short') }}</label>
                             </td>
                             <td width="120">
-                                <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}"
+                                <select class="form-control select2 risk {{ $errors->has('security_need_t') ? 'is-invalid' : '' }}"
                                         name="security_need_t" id="security_need_t">
                                     <option value="-1" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == -1 ? 'selected' : '' }}></option>
                                     <option value="0" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
