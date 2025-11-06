@@ -18,7 +18,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label {{ auth()->user()->granularity>=2 ? 'class="recommended"' : ""}} for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
+                            <label class="recommended"
+                                   for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
                             <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}"
                                     name="application_block_id" id="application_block_id">
                                 <option value="">...</option>
@@ -55,7 +56,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="description">{{ trans('cruds.application.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -96,7 +97,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended2"
                                    for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsibles[]" id="responsibles" multiple>
@@ -114,8 +115,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
+                            <label for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
                             <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}"
                                     name="entity_resp_id" id="entity_resp_id">
                                 <option value="">...</option>
@@ -133,8 +133,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="entities">{{ trans('cruds.application.fields.entities') }}</label>
+                            <label for="entities">{{ trans('cruds.application.fields.entities') }}</label>
                             <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}"
                                     name="entities[]" id="entities" multiple>
                                 @foreach($entities as $id => $entities)
@@ -193,7 +192,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
+                            <label class="recommended1"
+                                   for="users">{{ trans('cruds.application.fields.users') }}</label>
                             <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}"
                                     name="users" id="users">
                                 @if (!$users_list->contains(old('users')))
@@ -258,7 +258,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="technology">{{ trans('cruds.application.fields.technology') }}</label>
                             <select class="form-control select2-free {{ $errors->has('technology') ? 'is-invalid' : '' }}"
                                     name="technology" id="technology">
@@ -281,7 +281,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended" for="type">{{ trans('cruds.application.fields.type') }}</label>
+                            <label class="recommended1" for="type">{{ trans('cruds.application.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 <option></option>
@@ -411,11 +411,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label
-                                    @if (auth()->user()->granularity>=2)
-                                        class="recommended"
-                                    @endif
-                                    for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
+                            <label class="recommended2"
+                                   for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
                             <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                                 <tr>
                                     <td align="right" valign="bottom">
@@ -566,8 +563,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
+                            <label for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
                             <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
                                 <option>{{ old('vendor', '') }}</option>
                             </select>
@@ -577,8 +573,7 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="product">{{ trans('cruds.application.fields.product') }}</label>
+                            <label for="product">{{ trans('cruds.application.fields.product') }}</label>
                             <select id="product-selector" class="form-control" name="product">
                                 <option>{{ old('product', '') }}</option>
                             </select>
@@ -592,8 +587,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="version">{{ trans('cruds.application.fields.version') }}</label>
+                            <label for="version">{{ trans('cruds.application.fields.version') }}</label>
                             <select id="version-selector" class="form-control" name="version">
                                 <option>{{ old('version', '') }}</option>
                             </select>
@@ -628,12 +622,12 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="processes">{{ trans('cruds.application.fields.processes') }}</label>
                             <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}"
                                     name="processes[]" id="processes" multiple>
-                                @foreach($processes as $id => $processes)
-                                    <option value="{{ $id }}" {{ in_array($id, old('processes', [])) ? 'selected' : '' }}>{{ $processes }}</option>
+                                @foreach($processes as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('processes', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('processes'))
@@ -647,8 +641,7 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="processes">{{ trans('cruds.application.fields.activities') }}</label>
+                            <label for="activities">{{ trans('cruds.application.fields.activities') }}</label>
                             <select class="form-control select2 {{ $errors->has('activities') ? 'is-invalid' : '' }}"
                                     name="activities[]" id="activities" multiple>
                                 @foreach($activities as $id => $activity)
