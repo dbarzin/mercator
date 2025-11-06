@@ -179,7 +179,7 @@ describe('destroy', function () {
 });
 
 describe('massDestroy', function () {
-    test('can delete multiple phones', function () {
+    test('can delete multiple physical links', function () {
         $phones = PhysicalLink::factory()->count(3)->create();
         $ids = $phones->pluck('id')->toArray();
 
