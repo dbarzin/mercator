@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Man;
+use App\Models\MApplication;
 use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
@@ -27,21 +27,21 @@ beforeEach(function () {
 });
 
 describe('index', function () {
-    test('can display man index page', function () {
-        Man::factory()->count(3)->create();
+    test('can display applications index page', function () {
+        MApplication::factory()->count(3)->create();
 
-        $response = $this->get(route('admin.mans.index'));
+        $response = $this->get(route('admin.applications.index'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.mans.index');
-        $response->assertViewHas('mans');
+        $response->assertViewIs('admin.applications.index');
+        $response->assertViewHas('applications');
     });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->get(route('admin.mans.index'));
+        $response = $this->get(route('admin.applications.index'));
 
         $response->assertForbidden();
     });
@@ -50,18 +50,22 @@ describe('index', function () {
 
 describe('create', function () {
     test('can display create form', function () {
-        $response = $this->get(route('admin.mans.create'));
+        $response = $this->get(route('admin.applications.create'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.mans.create');
-        $response->assertViewHas(['lans']);
+        $response->assertViewIs('admin.applications.create');
+        $response->assertViewHas([
+            'activities',
+            'services',
+            'databases',
+        ]);
     });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->get(route('admin.mans.create'));
+        $response = $this->get(route('admin.applications.create'));
 
         $response->assertForbidden();
     });
@@ -72,12 +76,12 @@ describe('show', function () {
 
         test('can display object', function () {
             $name =  fake()->word();
-            $container = Man::factory()->create(['name' => $name]);
+            $container = MApplication::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.mans.show', $container->id));
+            $response = $this->get(route('admin.applications.show', $container->id));
 
             $response->assertOk();
-            $response->assertViewIs('admin.mans.show');
+            $response->assertViewIs('admin.applications.show');
             $response->assertSee($name);
         });
 
@@ -86,9 +90,9 @@ describe('show', function () {
         $this->actingAs($user);
 
         $name =  fake()->word();
-        $container = Man::factory()->create(['name' => $name]);
+        $container = MApplication::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.mans.show', $container->id));
+        $response = $this->get(route('admin.applications.show', $container->id));
 
         $response->assertForbidden();
     });
@@ -98,13 +102,13 @@ describe('show', function () {
 describe('edit', function () {
     test('can display edit form', function () {
         $name =  fake()->word();
-        $container = Man::factory()->create(['name' => $name]);
+        $container = MApplication::factory()->create(['name' => $name]);
 
-        $response = $this->get(route('admin.mans.edit', $container));
+        $response = $this->get(route('admin.applications.edit', $container));
 
         $response->assertOk();
-        $response->assertViewIs('admin.mans.edit');
-        $response->assertViewHas('man');
+        $response->assertViewIs('admin.applications.edit');
+        $response->assertViewHas('application');
         $response->assertSee($name);
     });
 
@@ -112,39 +116,39 @@ describe('edit', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $container = Man::factory()->create();
+        $container = MApplication::factory()->create();
 
-        $response = $this->get(route('admin.mans.edit', $container));
+        $response = $this->get(route('admin.applications.edit', $container));
 
         $response->assertForbidden();
     });
 });
 
 describe('update', function () {
-    test('can update activity', function () {
+    test('can update MApplication', function () {
         $name =  fake()->word();
-        $container = Man::factory()->create(['name' => $name]);
+        $container = MApplication::factory()->create(['name' => $name]);
 
         $data = [
             'name' => 'Updated Name',
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->put(route('admin.mans.update', $container), $data);
+        $response = $this->put(route('admin.applications.update', $container), $data);
 
-        $response->assertRedirect(route('admin.mans.index'));
-        $this->assertDatabaseHas('mans', ['name' => 'Updated Name']);
+        $response->assertRedirect(route('admin.applications.index'));
+        $this->assertDatabaseHas('m_applications', ['name' => 'Updated Name']);
     });
 });
 
 describe('destroy', function () {
-    test('can delete activity', function () {
-        $container = Man::factory()->create();
+    test('can delete MApplication', function () {
+        $container = MApplication::factory()->create();
 
-        $response = $this->delete(route('admin.mans.destroy', $container->id));
-        $response->assertRedirect(route('admin.mans.index'));
+        $response = $this->delete(route('admin.applications.destroy', $container->id));
+        $response->assertRedirect(route('admin.applications.index'));
 
-        $this->assertSoftDeleted('mans', ['id' => $container->id]);
+        $this->assertSoftDeleted('m_applications', ['id' => $container->id]);
 
         $container->refresh();
         expect($container->deleted_at)->not->toBeNull()
@@ -156,32 +160,32 @@ test('denies access without permission', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $container = Man::factory()->create();
+    $container = MApplication::factory()->create();
 
-    $response = $this->delete(route('admin.mans.destroy', $container));
+    $response = $this->delete(route('admin.applications.destroy', $container));
 
     $response->assertForbidden();
     });
 });
 
 describe('massDestroy', function () {
-    test('can delete multiple man', function () {
-        $man = Man::factory()->count(3)->create();
-        $ids = $man->pluck('id')->toArray();
+    test('can delete multiple applications', function () {
+        $application = MApplication::factory()->count(3)->create();
+        $ids = $application->pluck('id')->toArray();
 
-        $response = $this->delete(route('admin.mans.massDestroy'), ['ids' => $ids]);
+        $response = $this->delete(route('admin.applications.massDestroy'), ['ids' => $ids]);
         $response->assertNoContent();
 
         foreach ($ids as $id) {
-            $this->assertSoftDeleted('mans', ['id' => $id]);
+            $this->assertSoftDeleted('m_applications', ['id' => $id]);
         }
     });
 
     test('returns no content status', function () {
-        $man = Man::factory()->create();
+        $application = MApplication::factory()->create();
 
-        $response = $this->delete(route('admin.mans.massDestroy'), [
-            'ids' => [$man->id],
+        $response = $this->delete(route('admin.applications.massDestroy'), [
+            'ids' => [$application->id],
         ]);
 
         $response->assertStatus(204);
@@ -191,10 +195,10 @@ describe('massDestroy', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $man = Man::factory()->create();
+        $application = MApplication::factory()->create();
 
-        $response = $this->delete(route('admin.mans.massDestroy'), [
-            'ids' => [$man->id],
+        $response = $this->delete(route('admin.applications.massDestroy'), [
+            'ids' => [$application->id],
         ]);
 
         $response->assertForbidden();
