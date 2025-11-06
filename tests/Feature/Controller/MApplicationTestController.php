@@ -142,7 +142,7 @@ describe('update', function () {
 });
 
 describe('destroy', function () {
-    test('can delete activity', function () {
+    test('can delete MApplication', function () {
         $container = MApplication::factory()->create();
 
         $response = $this->delete(route('admin.applications.destroy', $container->id));
