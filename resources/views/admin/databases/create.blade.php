@@ -37,6 +37,11 @@
                                     <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('type'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('type') }}
+                                </div>
+                            @endif
                             <span class="help-block">{{ trans('cruds.database.fields.type_helper') }}</span>
                         </div>
                     </div>
@@ -95,9 +100,9 @@
                                     <option value="{{ $id }}" {{ old('entity_resp_id') == $id ? 'selected' : '' }}>{{ $entity_resp }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('entity_resp'))
+                            @if($errors->has('entity_resp_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('entity_resp') }}
+                                    {{ $errors->first('entity_resp_id') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.database.fields.entity_resp_helper') }}</span>
