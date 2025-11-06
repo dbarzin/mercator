@@ -18,7 +18,7 @@ class SsoController extends Controller
         return Socialite::driver('keycloak')->redirect();
     }
 
-    / **
+    /**
      * Handle the Keycloak OAuth callback and authenticate or provision a local user.
      *
      * Retrieves the Keycloak user from Socialite, finds or (optionally) creates a corresponding local User,
