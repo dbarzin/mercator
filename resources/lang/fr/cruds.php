@@ -473,6 +473,7 @@ return [
         ],
         'title' => 'Bases de données',
         'title_singular' => 'Base de données',
+        'title_security' => 'Sécurité'
     ],
     'dataProcessing' => [
         'description' => 'Registre des activités de traitement',

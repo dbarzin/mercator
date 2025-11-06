@@ -466,6 +466,7 @@ return [
         ],
         'title' => 'Database',
         'title_singular' => 'Database',
+        'title_security' => 'Security'
     ],
     'dataProcessing' => [
         'description' => 'Data processing register',
