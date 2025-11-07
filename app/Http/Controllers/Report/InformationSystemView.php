@@ -11,13 +11,14 @@ use App\Models\MacroProcessus;
 use App\Models\Operation;
 use App\Models\Process;
 use App\Models\Task;
-use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationSystemView extends Controller
 {
-    public function generate(Request $request)
+    public function generate(Request $request): View
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
