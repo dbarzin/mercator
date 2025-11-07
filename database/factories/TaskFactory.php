@@ -10,6 +10,16 @@ class TaskFactory extends Factory
 {
     protected $model = Task::class;
 
+    /**
+     * Define the default attributes for a Task model factory.
+     *
+     * Provides an associative array with:
+     * - `name`: a fake full name,
+     * - `description`: fake text,
+     * - `created_at` and `updated_at`: Carbon timestamps set to now.
+     *
+     * @return array<string, mixed> Associative array of attribute names to values.
+     */
     public function definition(): array
     {
         return [
