@@ -92,7 +92,8 @@
                             @foreach($applicationBlocks as $ab)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="APPLICATIONBLOCK{{ $ab->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/application-blocks/{{ $ab->id }}">{{ $ab->name }}</a>
@@ -141,7 +142,8 @@
                             @foreach($applications as $application)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="APPLICATION{{$application->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/applications/{{ $application->id }}">{{ $application->name }}</a>
@@ -466,7 +468,8 @@
                             @foreach($applicationServices as $applicationService)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="APPLICATIONSERVICE{{$applicationService->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/application-services/{{ $applicationService->id }}">{{ $applicationService->name }}</a>
@@ -545,7 +548,8 @@
                             @foreach($applicationModules as $applicationModule)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="APPLICATIONMODULE{{$applicationModule->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/application-modules/{{ $applicationModule->id }}">{{ $applicationModule->name }}</a><br>
@@ -609,7 +613,8 @@
                             @foreach($databases as $database)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="DATABASE{{$database->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/databases/{{ $database->id }}">{{ $database->name }}</a>
@@ -823,7 +828,8 @@
                             @foreach($fluxes as $flux)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="FLUX{{$flux->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/fluxes/{{ $flux->id }}">{{ $flux->name }}</a>
@@ -904,8 +910,7 @@
                                                         <a href="#DATABASE{{$flux->database_dest->id}}">{{$flux->database_dest->name}}</a>
                                                     </td>
                                                 </tr>
-                                                @endif
-                                                </li>
+                                        @endif
                                         @endforeach
                                     </div>
                                 </div>
