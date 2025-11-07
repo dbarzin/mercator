@@ -135,6 +135,22 @@ describe('update', function () {
         $response->assertRedirect(route('admin.wifi-terminals.index'));
         $this->assertDatabaseHas('wifi_terminals', ['name' => 'Updated Name']);
     });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $wifiTerminal = WifiTerminal::factory()->create();
+
+        $data = [
+            'name' => 'Updated Name',
+            'description' => fake()->sentence(),
+        ];
+
+        $response = $this->put(route('admin.wifi-terminals.update', $wifiTerminal), $data);
+
+        $response->assertForbidden();
+    });
 });
 
 describe('destroy', function () {
