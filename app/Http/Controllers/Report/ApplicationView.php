@@ -12,11 +12,12 @@ use App\Models\Flux;
 use App\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationView extends Controller
 {
-    public function generate(Request $request)
+    public function generate(Request $request) : View
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
