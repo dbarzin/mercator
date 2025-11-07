@@ -15,6 +15,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdministrationView extends Controller
 {
+    /**
+     * Build the administration report view populated with zones, annuaires, forests, domains, and admin users.
+     *
+     * Aborts with HTTP 403 Forbidden if the current user is denied the 'reports_access' gate.
+     *
+     * @return \Illuminate\View\View The rendered 'admin/reports/administration' view with keys:
+     *                                - 'zones' => collection of ZoneAdmin
+     *                                - 'annuaires' => collection of Annuaire
+     *                                - 'forests' => collection of ForestAd
+     *                                - 'domains' => collection of DomaineAd
+     *                                - 'adminUsers' => collection of AdminUser
+     */
     public function generate(): View
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
