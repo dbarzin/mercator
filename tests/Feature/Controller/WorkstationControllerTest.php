@@ -135,6 +135,22 @@ describe('update', function () {
         $response->assertRedirect(route('admin.workstations.index'));
         $this->assertDatabaseHas('workstations', ['name' => 'Updated Name']);
     });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $workstation = Workstation::factory()->create();
+
+        $data = [
+            'name' => 'Updated Name',
+            'description' => fake()->sentence(),
+        ];
+
+        $response = $this->put(route('admin.workstations.update', $workstation), $data);
+
+        $response->assertForbidden();
+    });
 });
 
 describe('destroy', function () {
@@ -161,6 +177,16 @@ describe('destroy', function () {
         $response = $this->delete(route('admin.workstations.destroy', $Workstation));
 
         $response->assertForbidden();
+    });
+    
+    test('returns no content status', function () {
+        $Workstation = Workstation::factory()->create();
+
+        $response = $this->delete(route('admin.workstations.massDestroy'), [
+            'ids' => [$Workstation->id],
+        ]);
+
+        $response->assertStatus(204);
     });
 });
 

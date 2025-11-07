@@ -28,7 +28,7 @@ beforeEach(function () {
 });
 
 describe('index', function () {
-    test('can display activities index page', function () {
+    test('can display security controls index page', function () {
         SecurityControl::factory()->count(3)->create();
 
         $response = $this->get(route('admin.security-controls.index'));
@@ -135,6 +135,22 @@ describe('update', function () {
         $response->assertRedirect(route('admin.security-controls.index'));
         $this->assertDatabaseHas('security_controls', ['name' => 'Updated Name']);
     });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $securityControl = SecurityControl::factory()->create();
+
+        $data = [
+            'name' => 'Updated Name',
+            'description' => fake()->sentences(3,true),
+        ];
+
+        $response = $this->put(route('admin.security-controls.update', $securityControl), $data);
+
+        $response->assertForbidden();
+    });
 });
 
 describe('destroy', function () {
@@ -165,7 +181,7 @@ describe('destroy', function () {
 });
 
 describe('massDestroy', function () {
-    test('can delete multiple activities', function () {
+    test('can delete multiple security controls', function () {
         $securityControl = SecurityControl::factory()->count(3)->create();
         $ids = $securityControl->pluck('id')->toArray();
 
