@@ -1,0 +1,204 @@
+
+<?php
+
+use App\Models\User;
+use App\Models\Vlan;
+use Database\Seeders\PermissionRoleTableSeeder;
+use Database\Seeders\PermissionsTableSeeder;
+use Database\Seeders\RolesTableSeeder;
+use Database\Seeders\RoleUserTableSeeder;
+use Database\Seeders\UsersTableSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+beforeEach(function () {
+
+    $this->seed([
+        PermissionsTableSeeder::class,
+        RolesTableSeeder::class,
+        PermissionRoleTableSeeder::class,
+        UsersTableSeeder::class,
+        RoleUserTableSeeder::class,
+    ]);
+
+    $this->user = User::query()->find(1);
+    $this->actingAs($this->user);
+
+});
+
+describe('index', function () {
+    test('can display vlans index page', function () {
+        Vlan::factory()->count(3)->create();
+
+        $response = $this->get(route('admin.vlans.index'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.vlans.index');
+        $response->assertViewHas('vlans');
+    });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('admin.vlans.index'));
+
+        $response->assertForbidden();
+    });
+
+});
+
+describe('create', function () {
+    test('can display create form', function () {
+        $response = $this->get(route('admin.vlans.create'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.vlans.create');
+    });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('admin.vlans.create'));
+
+        $response->assertForbidden();
+    });
+
+});
+
+describe('show', function () {
+
+    test('can display object', function () {
+        $name =  fake()->word();
+        $Vlan = Vlan::factory()->create(['name' => $name]);
+
+        $response = $this->get(route('admin.vlans.show', $Vlan->id));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.vlans.show');
+        $response->assertSee($name);
+    });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $name =  fake()->word();
+        $Vlan = Vlan::factory()->create(['name' => $name]);
+
+        $response = $this->get(route('admin.vlans.show', $Vlan->id));
+
+        $response->assertForbidden();
+    });
+
+});
+
+describe('edit', function () {
+    test('can display edit form', function () {
+        $name =  fake()->word();
+        $Vlan = Vlan::factory()->create(['name' => $name]);
+
+        $response = $this->get(route('admin.vlans.edit', $Vlan));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.vlans.edit');
+        $response->assertViewHas('vlan');
+        $response->assertSee($name);
+    });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $Vlan = Vlan::factory()->create();
+
+        $response = $this->get(route('admin.vlans.edit', $Vlan));
+
+        $response->assertForbidden();
+    });
+});
+
+describe('update', function () {
+    test('can update Vlan', function () {
+        $name =  fake()->word();
+        $Vlan = Vlan::factory()->create(['name' => $name]);
+
+        $data = [
+            'name' => 'Updated Name',
+            'description' => fake()->sentence(),
+        ];
+
+        $response = $this->put(route('admin.vlans.update', $Vlan), $data);
+
+        $response->assertRedirect(route('admin.vlans.index'));
+        $this->assertDatabaseHas('vlans', ['name' => 'Updated Name']);
+    });
+});
+
+describe('destroy', function () {
+    test('can delete Vlan', function () {
+        $Vlan = Vlan::factory()->create();
+
+        $response = $this->delete(route('admin.vlans.destroy', $Vlan->id));
+        $response->assertRedirect(route('admin.vlans.index'));
+
+        $this->assertSoftDeleted('vlans', ['id' => $Vlan->id]);
+
+        $Vlan->refresh();
+        expect($Vlan->deleted_at)->not->toBeNull()
+            ->and($Vlan->trashed())->toBeTrue();
+
+    });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $Vlan = Vlan::factory()->create();
+
+        $response = $this->delete(route('admin.vlans.destroy', $Vlan));
+
+        $response->assertForbidden();
+    });
+});
+
+describe('massDestroy', function () {
+    test('can delete multiple vlans', function () {
+        $vlans = Vlan::factory()->count(3)->create();
+        $ids = $vlans->pluck('id')->toArray();
+
+        $response = $this->delete(route('admin.vlans.massDestroy'), ['ids' => $ids]);
+        $response->assertNoContent();
+
+        foreach ($ids as $id) {
+            $this->assertSoftDeleted('vlans', ['id' => $id]);
+        }
+    });
+
+    test('returns no content status', function () {
+        $Vlan = Vlan::factory()->create();
+
+        $response = $this->delete(route('admin.vlans.massDestroy'), [
+            'ids' => [$Vlan->id],
+        ]);
+
+        $response->assertStatus(204);
+    });
+
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $Vlan = Vlan::factory()->create();
+
+        $response = $this->delete(route('admin.vlans.massDestroy'), [
+            'ids' => [$Vlan->id],
+        ]);
+
+        $response->assertForbidden();
+    });
+
+
+});
