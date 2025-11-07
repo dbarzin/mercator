@@ -58,33 +58,13 @@ CREATE TABLE IF NOT EXISTS "oauth_personal_access_clients"(
   "created_at" datetime,
   "updated_at" datetime
 );
-CREATE TABLE IF NOT EXISTS "personal_access_tokens"(
-  "id" integer primary key autoincrement not null,
-  "tokenable_type" varchar not null,
-  "tokenable_id" integer not null,
-  "name" varchar not null,
-  "token" varchar not null,
-  "abilities" text,
-  "last_used_at" datetime,
-  "expires_at" datetime,
-  "created_at" datetime,
-  "updated_at" datetime
-);
-CREATE INDEX "personal_access_tokens_tokenable_type_tokenable_id_index" on "personal_access_tokens"(
-  "tokenable_type",
-  "tokenable_id"
-);
-CREATE UNIQUE INDEX "personal_access_tokens_token_unique" on "personal_access_tokens"(
-  "token"
-);
 CREATE TABLE IF NOT EXISTS "activities"(
   "id" integer primary key autoincrement not null,
   "name" varchar not null,
   "description" text,
   "created_at" datetime,
   "updated_at" datetime,
-  "deleted_at" datetime
-  ,
+  "deleted_at" datetime,
   "drp" text,
   "drp_link" varchar,
   "recovery_time_objective" integer,
@@ -184,8 +164,7 @@ CREATE TABLE IF NOT EXISTS "information"(
   "security_need_i" integer,
   "security_need_a" integer,
   "security_need_t" integer,
-  "retention" varchar
-  ,
+  "retention" varchar,
   "security_need_auth" integer
 );
 CREATE TABLE IF NOT EXISTS "lans"(
@@ -208,8 +187,7 @@ CREATE TABLE IF NOT EXISTS "macro_processuses"(
   "deleted_at" datetime,
   "security_need_i" integer,
   "security_need_a" integer,
-  "security_need_t" integer
-  ,
+  "security_need_t" integer,
   "security_need_auth" integer
 );
 CREATE TABLE IF NOT EXISTS "mans"(
@@ -262,8 +240,7 @@ CREATE TABLE IF NOT EXISTS "networks"(
   "deleted_at" datetime,
   "security_need_i" integer,
   "security_need_a" integer,
-  "security_need_t" integer
-  ,
+  "security_need_t" integer,
   "security_need_auth" integer
 );
 CREATE TABLE IF NOT EXISTS "password_resets"(
@@ -1110,8 +1087,7 @@ CREATE TABLE IF NOT EXISTS "data_processing"(
   "controls" text,
   "created_at" datetime,
   "updated_at" datetime,
-  "deleted_at" datetime
-  ,
+  "deleted_at" datetime,
   "legal_basis" varchar,
   "lawfulness" text,
   "lawfulness_legitimate_interest" tinyint(1),
@@ -1350,7 +1326,6 @@ CREATE TABLE IF NOT EXISTS "graphs"(
   "updated_at" datetime,
   "deleted_at" datetime
 );
-CREATE UNIQUE INDEX "graphs_name_unique" on "graphs"("name", "deleted_at");
 CREATE TABLE IF NOT EXISTS "processes"(
   "id" integer primary key autoincrement not null,
   "name" varchar not null,
@@ -1636,12 +1611,9 @@ CREATE TABLE IF NOT EXISTS "users"(
   "created_at" datetime,
   "updated_at" datetime,
   "deleted_at" datetime,
-  "guid" varchar,
-  "domain" varchar,
   "login" varchar not null
 );
 CREATE UNIQUE INDEX "users_email_unique" on "users"("email", "deleted_at");
-CREATE UNIQUE INDEX "users_guid_unique" on "users"("guid");
 CREATE TABLE IF NOT EXISTS "document_external_connected_entity"(
   "external_connected_entity_id" integer not null,
   "document_id" integer not null,
@@ -1694,39 +1666,6 @@ CREATE TABLE IF NOT EXISTS "cluster_logical_server"(
 CREATE INDEX "cluster_logical_server_logical_server_id_index" on "cluster_logical_server"(
   "logical_server_id"
 );
-CREATE TABLE IF NOT EXISTS "logical_servers"(
-  "id" integer primary key autoincrement not null,
-  "name" varchar not null,
-  "description" text,
-  "net_services" varchar,
-  "configuration" text,
-  "created_at" datetime,
-  "updated_at" datetime,
-  "deleted_at" datetime,
-  "operating_system" varchar,
-  "address_ip" varchar,
-  "cpu" varchar,
-  "memory" varchar,
-  "environment" varchar,
-  "disk" integer,
-  "install_date" date,
-  "update_date" date,
-  "disk_used" integer,
-  "attributes" varchar,
-  "patching_frequency" integer,
-  "next_update" date,
-  "cluster_id" integer,
-  "domain_id" integer,
-  "type" varchar,
-  "active" tinyint(1) not null default('1'),
-  "icon_id" integer,
-  foreign key("icon_id") references documents("id") on delete no action on update no action,
-  foreign key("domain_id") references domaine_ads("id") on delete set null on update no action
-);
-CREATE INDEX "cluster_id_fk_5435359" on "logical_servers"("cluster_id");
-CREATE INDEX "document_id_fk_51303394" on "logical_servers"("icon_id");
-CREATE INDEX "domain_id_fk_493844" on "logical_servers"("domain_id");
-CREATE INDEX "logical_servers_active" on "logical_servers"("active");
 CREATE TABLE IF NOT EXISTS "clusters"(
   "id" integer primary key autoincrement not null,
   "name" varchar not null,
@@ -1871,233 +1810,266 @@ CREATE TABLE IF NOT EXISTS "security_devices"(
   foreign key("icon_id") references "documents"("id")
 );
 CREATE INDEX "document_id_fk_432938439" on "security_devices"("icon_id");
+CREATE TABLE IF NOT EXISTS "logical_servers"(
+  "id" integer primary key autoincrement not null,
+  "name" varchar not null,
+  "description" text,
+  "net_services" varchar,
+  "configuration" text,
+  "created_at" datetime,
+  "updated_at" datetime,
+  "deleted_at" datetime,
+  "operating_system" varchar,
+  "address_ip" varchar,
+  "cpu" varchar,
+  "memory" varchar,
+  "environment" varchar,
+  "disk" integer,
+  "install_date" date,
+  "update_date" date,
+  "disk_used" integer,
+  "attributes" varchar,
+  "patching_frequency" integer,
+  "next_update" date,
+  "cluster_id" integer,
+  "domain_id" integer,
+  "type" varchar,
+  "active" tinyint(1),
+  "icon_id" integer,
+  foreign key("domain_id") references domaine_ads("id") on delete set null on update no action,
+  foreign key("icon_id") references documents("id") on delete no action on update no action
+);
+CREATE INDEX "cluster_id_fk_5435359" on "logical_servers"("cluster_id");
+CREATE INDEX "document_id_fk_51303394" on "logical_servers"("icon_id");
+CREATE INDEX "domain_id_fk_493844" on "logical_servers"("domain_id");
+CREATE INDEX "logical_servers_active" on "logical_servers"("active");
 
 INSERT INTO migrations VALUES(1,'2016_06_01_000001_create_oauth_auth_codes_table',1);
 INSERT INTO migrations VALUES(2,'2016_06_01_000002_create_oauth_access_tokens_table',1);
 INSERT INTO migrations VALUES(3,'2016_06_01_000003_create_oauth_refresh_tokens_table',1);
 INSERT INTO migrations VALUES(4,'2016_06_01_000004_create_oauth_clients_table',1);
 INSERT INTO migrations VALUES(5,'2016_06_01_000005_create_oauth_personal_access_clients_table',1);
-INSERT INTO migrations VALUES(6,'2019_12_14_000001_create_personal_access_tokens_table',1);
-INSERT INTO migrations VALUES(7,'2021_05_08_191249_create_activities_table',1);
-INSERT INTO migrations VALUES(8,'2021_05_08_191249_create_activity_operation_table',1);
-INSERT INTO migrations VALUES(9,'2021_05_08_191249_create_activity_process_table',1);
-INSERT INTO migrations VALUES(10,'2021_05_08_191249_create_actor_operation_table',1);
-INSERT INTO migrations VALUES(11,'2021_05_08_191249_create_actors_table',1);
-INSERT INTO migrations VALUES(12,'2021_05_08_191249_create_annuaires_table',1);
-INSERT INTO migrations VALUES(13,'2021_05_08_191249_create_application_blocks_table',1);
-INSERT INTO migrations VALUES(14,'2021_05_08_191249_create_application_module_application_service_table',1);
-INSERT INTO migrations VALUES(15,'2021_05_08_191249_create_application_modules_table',1);
-INSERT INTO migrations VALUES(16,'2021_05_08_191249_create_application_service_m_application_table',1);
-INSERT INTO migrations VALUES(17,'2021_05_08_191249_create_application_services_table',1);
-INSERT INTO migrations VALUES(18,'2021_05_08_191249_create_audit_logs_table',1);
-INSERT INTO migrations VALUES(19,'2021_05_08_191249_create_bay_wifi_terminal_table',1);
-INSERT INTO migrations VALUES(20,'2021_05_08_191249_create_bays_table',1);
-INSERT INTO migrations VALUES(21,'2021_05_08_191249_create_buildings_table',1);
-INSERT INTO migrations VALUES(22,'2021_05_08_191249_create_database_entity_table',1);
-INSERT INTO migrations VALUES(23,'2021_05_08_191249_create_database_information_table',1);
-INSERT INTO migrations VALUES(24,'2021_05_08_191249_create_database_m_application_table',1);
-INSERT INTO migrations VALUES(25,'2021_05_08_191249_create_databases_table',1);
-INSERT INTO migrations VALUES(26,'2021_05_08_191249_create_dhcp_servers_table',1);
-INSERT INTO migrations VALUES(27,'2021_05_08_191249_create_dnsservers_table',1);
-INSERT INTO migrations VALUES(28,'2021_05_08_191249_create_domaine_ad_forest_ad_table',1);
-INSERT INTO migrations VALUES(29,'2021_05_08_191249_create_domaine_ads_table',1);
-INSERT INTO migrations VALUES(30,'2021_05_08_191249_create_entities_table',1);
-INSERT INTO migrations VALUES(31,'2021_05_08_191249_create_entity_m_application_table',1);
-INSERT INTO migrations VALUES(32,'2021_05_08_191249_create_entity_process_table',1);
-INSERT INTO migrations VALUES(33,'2021_05_08_191249_create_external_connected_entities_table',1);
-INSERT INTO migrations VALUES(34,'2021_05_08_191249_create_external_connected_entity_network_table',1);
-INSERT INTO migrations VALUES(35,'2021_05_08_191249_create_fluxes_table',1);
-INSERT INTO migrations VALUES(36,'2021_05_08_191249_create_forest_ads_table',1);
-INSERT INTO migrations VALUES(37,'2021_05_08_191249_create_gateways_table',1);
-INSERT INTO migrations VALUES(38,'2021_05_08_191249_create_information_process_table',1);
-INSERT INTO migrations VALUES(39,'2021_05_08_191249_create_information_table',1);
-INSERT INTO migrations VALUES(40,'2021_05_08_191249_create_lan_man_table',1);
-INSERT INTO migrations VALUES(41,'2021_05_08_191249_create_lan_wan_table',1);
-INSERT INTO migrations VALUES(42,'2021_05_08_191249_create_lans_table',1);
-INSERT INTO migrations VALUES(43,'2021_05_08_191249_create_logical_server_m_application_table',1);
-INSERT INTO migrations VALUES(44,'2021_05_08_191249_create_logical_server_physical_server_table',1);
-INSERT INTO migrations VALUES(45,'2021_05_08_191249_create_logical_servers_table',1);
-INSERT INTO migrations VALUES(46,'2021_05_08_191249_create_m_application_process_table',1);
-INSERT INTO migrations VALUES(47,'2021_05_08_191249_create_m_applications_table',1);
-INSERT INTO migrations VALUES(48,'2021_05_08_191249_create_macro_processuses_table',1);
-INSERT INTO migrations VALUES(49,'2021_05_08_191249_create_man_wan_table',1);
-INSERT INTO migrations VALUES(50,'2021_05_08_191249_create_mans_table',1);
-INSERT INTO migrations VALUES(51,'2021_05_08_191249_create_media_table',1);
-INSERT INTO migrations VALUES(52,'2021_05_08_191249_create_network_subnetword_table',1);
-INSERT INTO migrations VALUES(53,'2021_05_08_191249_create_network_switches_table',1);
-INSERT INTO migrations VALUES(54,'2021_05_08_191249_create_networks_table',1);
-INSERT INTO migrations VALUES(55,'2021_05_08_191249_create_operation_task_table',1);
-INSERT INTO migrations VALUES(56,'2021_05_08_191249_create_operations_table',1);
-INSERT INTO migrations VALUES(57,'2021_05_08_191249_create_password_resets_table',1);
-INSERT INTO migrations VALUES(58,'2021_05_08_191249_create_peripherals_table',1);
-INSERT INTO migrations VALUES(59,'2021_05_08_191249_create_permission_role_table',1);
-INSERT INTO migrations VALUES(60,'2021_05_08_191249_create_permissions_table',1);
-INSERT INTO migrations VALUES(61,'2021_05_08_191249_create_phones_table',1);
-INSERT INTO migrations VALUES(62,'2021_05_08_191249_create_physical_router_vlan_table',1);
-INSERT INTO migrations VALUES(63,'2021_05_08_191249_create_physical_routers_table',1);
-INSERT INTO migrations VALUES(64,'2021_05_08_191249_create_physical_security_devices_table',1);
-INSERT INTO migrations VALUES(65,'2021_05_08_191249_create_physical_servers_table',1);
-INSERT INTO migrations VALUES(66,'2021_05_08_191249_create_physical_switches_table',1);
-INSERT INTO migrations VALUES(67,'2021_05_08_191249_create_processes_table',1);
-INSERT INTO migrations VALUES(68,'2021_05_08_191249_create_relations_table',1);
-INSERT INTO migrations VALUES(69,'2021_05_08_191249_create_role_user_table',1);
-INSERT INTO migrations VALUES(70,'2021_05_08_191249_create_roles_table',1);
-INSERT INTO migrations VALUES(71,'2021_05_08_191249_create_routers_table',1);
-INSERT INTO migrations VALUES(72,'2021_05_08_191249_create_security_devices_table',1);
-INSERT INTO migrations VALUES(73,'2021_05_08_191249_create_sites_table',1);
-INSERT INTO migrations VALUES(74,'2021_05_08_191249_create_storage_devices_table',1);
-INSERT INTO migrations VALUES(75,'2021_05_08_191249_create_subnetworks_table',1);
-INSERT INTO migrations VALUES(76,'2021_05_08_191249_create_tasks_table',1);
-INSERT INTO migrations VALUES(77,'2021_05_08_191249_create_users_table',1);
-INSERT INTO migrations VALUES(78,'2021_05_08_191249_create_vlans_table',1);
-INSERT INTO migrations VALUES(79,'2021_05_08_191249_create_wans_table',1);
-INSERT INTO migrations VALUES(80,'2021_05_08_191249_create_wifi_terminals_table',1);
-INSERT INTO migrations VALUES(81,'2021_05_08_191249_create_workstations_table',1);
-INSERT INTO migrations VALUES(82,'2021_05_08_191249_create_zone_admins_table',1);
-INSERT INTO migrations VALUES(83,'2021_05_08_191251_add_foreign_keys_to_activity_operation_table',1);
-INSERT INTO migrations VALUES(84,'2021_05_08_191251_add_foreign_keys_to_activity_process_table',1);
-INSERT INTO migrations VALUES(85,'2021_05_08_191251_add_foreign_keys_to_actor_operation_table',1);
-INSERT INTO migrations VALUES(86,'2021_05_08_191251_add_foreign_keys_to_annuaires_table',1);
-INSERT INTO migrations VALUES(87,'2021_05_08_191251_add_foreign_keys_to_application_module_application_service_table',1);
-INSERT INTO migrations VALUES(88,'2021_05_08_191251_add_foreign_keys_to_application_service_m_application_table',1);
-INSERT INTO migrations VALUES(89,'2021_05_08_191251_add_foreign_keys_to_bay_wifi_terminal_table',1);
-INSERT INTO migrations VALUES(90,'2021_05_08_191251_add_foreign_keys_to_bays_table',1);
-INSERT INTO migrations VALUES(91,'2021_05_08_191251_add_foreign_keys_to_buildings_table',1);
-INSERT INTO migrations VALUES(92,'2021_05_08_191251_add_foreign_keys_to_database_entity_table',1);
-INSERT INTO migrations VALUES(93,'2021_05_08_191251_add_foreign_keys_to_database_information_table',1);
-INSERT INTO migrations VALUES(94,'2021_05_08_191251_add_foreign_keys_to_database_m_application_table',1);
-INSERT INTO migrations VALUES(95,'2021_05_08_191251_add_foreign_keys_to_databases_table',1);
-INSERT INTO migrations VALUES(96,'2021_05_08_191251_add_foreign_keys_to_domaine_ad_forest_ad_table',1);
-INSERT INTO migrations VALUES(97,'2021_05_08_191251_add_foreign_keys_to_entity_m_application_table',1);
-INSERT INTO migrations VALUES(98,'2021_05_08_191251_add_foreign_keys_to_entity_process_table',1);
-INSERT INTO migrations VALUES(99,'2021_05_08_191251_add_foreign_keys_to_external_connected_entity_network_table',1);
-INSERT INTO migrations VALUES(100,'2021_05_08_191251_add_foreign_keys_to_fluxes_table',1);
-INSERT INTO migrations VALUES(101,'2021_05_08_191251_add_foreign_keys_to_forest_ads_table',1);
-INSERT INTO migrations VALUES(102,'2021_05_08_191251_add_foreign_keys_to_information_process_table',1);
-INSERT INTO migrations VALUES(103,'2021_05_08_191251_add_foreign_keys_to_lan_man_table',1);
-INSERT INTO migrations VALUES(104,'2021_05_08_191251_add_foreign_keys_to_lan_wan_table',1);
-INSERT INTO migrations VALUES(105,'2021_05_08_191251_add_foreign_keys_to_logical_server_m_application_table',1);
-INSERT INTO migrations VALUES(106,'2021_05_08_191251_add_foreign_keys_to_logical_server_physical_server_table',1);
-INSERT INTO migrations VALUES(107,'2021_05_08_191251_add_foreign_keys_to_m_application_process_table',1);
-INSERT INTO migrations VALUES(108,'2021_05_08_191251_add_foreign_keys_to_m_applications_table',1);
-INSERT INTO migrations VALUES(109,'2021_05_08_191251_add_foreign_keys_to_man_wan_table',1);
-INSERT INTO migrations VALUES(110,'2021_05_08_191251_add_foreign_keys_to_network_subnetword_table',1);
-INSERT INTO migrations VALUES(111,'2021_05_08_191251_add_foreign_keys_to_operation_task_table',1);
-INSERT INTO migrations VALUES(112,'2021_05_08_191251_add_foreign_keys_to_peripherals_table',1);
-INSERT INTO migrations VALUES(113,'2021_05_08_191251_add_foreign_keys_to_permission_role_table',1);
-INSERT INTO migrations VALUES(114,'2021_05_08_191251_add_foreign_keys_to_phones_table',1);
-INSERT INTO migrations VALUES(115,'2021_05_08_191251_add_foreign_keys_to_physical_router_vlan_table',1);
-INSERT INTO migrations VALUES(116,'2021_05_08_191251_add_foreign_keys_to_physical_routers_table',1);
-INSERT INTO migrations VALUES(117,'2021_05_08_191251_add_foreign_keys_to_physical_security_devices_table',1);
-INSERT INTO migrations VALUES(118,'2021_05_08_191251_add_foreign_keys_to_physical_servers_table',1);
-INSERT INTO migrations VALUES(119,'2021_05_08_191251_add_foreign_keys_to_physical_switches_table',1);
-INSERT INTO migrations VALUES(120,'2021_05_08_191251_add_foreign_keys_to_processes_table',1);
-INSERT INTO migrations VALUES(121,'2021_05_08_191251_add_foreign_keys_to_relations_table',1);
-INSERT INTO migrations VALUES(122,'2021_05_08_191251_add_foreign_keys_to_role_user_table',1);
-INSERT INTO migrations VALUES(123,'2021_05_08_191251_add_foreign_keys_to_storage_devices_table',1);
-INSERT INTO migrations VALUES(124,'2021_05_08_191251_add_foreign_keys_to_subnetworks_table',1);
-INSERT INTO migrations VALUES(125,'2021_05_08_191251_add_foreign_keys_to_wifi_terminals_table',1);
-INSERT INTO migrations VALUES(126,'2021_05_08_191251_add_foreign_keys_to_workstations_table',1);
-INSERT INTO migrations VALUES(127,'2021_05_13_180642_add_cidt_criteria',1);
-INSERT INTO migrations VALUES(128,'2021_05_19_161123_rename_subnetwork',1);
-INSERT INTO migrations VALUES(129,'2021_06_22_170555_add_type',1);
-INSERT INTO migrations VALUES(130,'2021_07_14_071311_create_certificates_table',1);
-INSERT INTO migrations VALUES(131,'2021_08_08_125856_config_right',1);
-INSERT INTO migrations VALUES(132,'2021_08_11_201624_certificate_application_link',1);
-INSERT INTO migrations VALUES(133,'2021_08_18_171048_network_redesign',1);
-INSERT INTO migrations VALUES(134,'2021_08_20_034757_default_gateway',1);
-INSERT INTO migrations VALUES(135,'2021_08_28_152910_cleanup',1);
-INSERT INTO migrations VALUES(136,'2021_09_19_125048_relation-inportance',1);
-INSERT INTO migrations VALUES(137,'2021_09_21_161028_add_router_ip',1);
-INSERT INTO migrations VALUES(138,'2021_09_22_114706_add_security_ciat',1);
-INSERT INTO migrations VALUES(139,'2021_09_23_192127_rename_descrition',1);
-INSERT INTO migrations VALUES(140,'2021_09_28_205405_add_direction_to_flows',1);
-INSERT INTO migrations VALUES(141,'2021_10_12_210233_physical_router_name_type',1);
-INSERT INTO migrations VALUES(142,'2021_10_19_102610_add_address_ip',1);
-INSERT INTO migrations VALUES(143,'2021_11_23_204551_add_app_version',1);
-INSERT INTO migrations VALUES(144,'2022_02_08_210603_create_cartographer_m_application_table',1);
-INSERT INTO migrations VALUES(145,'2022_02_22_32654_add_cert_status',1);
-INSERT INTO migrations VALUES(146,'2022_02_27_162738_add_functional_referent_to_m_application',1);
-INSERT INTO migrations VALUES(147,'2022_02_27_163129_add_editor_to_m_application',1);
-INSERT INTO migrations VALUES(148,'2022_02_27_192155_add_date_fields_to_m_application',1);
-INSERT INTO migrations VALUES(149,'2022_02_28_205630_create_m_application_event_table',1);
-INSERT INTO migrations VALUES(150,'2022_05_02_123756_add_update_to_logical_servers',1);
-INSERT INTO migrations VALUES(151,'2022_05_18_140331_add_is_external_column_to_entities',1);
-INSERT INTO migrations VALUES(152,'2022_05_21_103208_add_type_property_to_entities',1);
-INSERT INTO migrations VALUES(153,'2022_06_27_061444_application_workstation',1);
-INSERT INTO migrations VALUES(154,'2022_07_28_105153_add_link_operation_process',1);
-INSERT INTO migrations VALUES(155,'2022_08_11_165441_add_vpn_fields',1);
-INSERT INTO migrations VALUES(156,'2022_09_13_204845_cert_last_notification',1);
-INSERT INTO migrations VALUES(157,'2022_12_17_115624_rto_rpo',1);
-INSERT INTO migrations VALUES(158,'2023_01_03_205224_database_logical_server',1);
-INSERT INTO migrations VALUES(159,'2023_01_08_123726_add_physical_link',1);
-INSERT INTO migrations VALUES(160,'2023_01_27_165009_add_flux_nature',1);
-INSERT INTO migrations VALUES(161,'2023_01_28_145242_add_logical_devices_link',1);
-INSERT INTO migrations VALUES(162,'2023_02_09_164940_gdpr',1);
-INSERT INTO migrations VALUES(163,'2023_03_16_123031_create_documents_table',1);
-INSERT INTO migrations VALUES(164,'2023_03_22_185812_create_cpe',1);
-INSERT INTO migrations VALUES(165,'2023_04_18_123308_add_gdpr_tables',1);
-INSERT INTO migrations VALUES(166,'2023_05_29_161406_security_controls_links',1);
-INSERT INTO migrations VALUES(167,'2023_06_14_120958_add_physical_address_ip',1);
-INSERT INTO migrations VALUES(168,'2023_08_06_100128_add_physicalserver_size',1);
-INSERT INTO migrations VALUES(169,'2023_08_07_183714_application_physical_server',1);
-INSERT INTO migrations VALUES(170,'2023_09_04_111440_add_application_patching',1);
-INSERT INTO migrations VALUES(171,'2023_09_26_074104_iot',1);
-INSERT INTO migrations VALUES(172,'2023_10_28_124418_add_cluster',1);
-INSERT INTO migrations VALUES(173,'2023_11_30_070804_fix_migration_typo',1);
-INSERT INTO migrations VALUES(174,'2024_02_21_085107_application_patching',1);
-INSERT INTO migrations VALUES(175,'2024_02_29_134239_patching_attributes',1);
-INSERT INTO migrations VALUES(176,'2024_03_14_165211_router_ip_lenght',1);
-INSERT INTO migrations VALUES(177,'2024_03_19_195927_contracts',1);
-INSERT INTO migrations VALUES(178,'2024_04_06_161307_nomalization',1);
-INSERT INTO migrations VALUES(179,'2024_04_08_105719_network_flow',1);
-INSERT INTO migrations VALUES(180,'2024_04_14_072101_add_parent_entity',1);
-INSERT INTO migrations VALUES(181,'2024_04_28_075916_normalize_process_name',1);
-INSERT INTO migrations VALUES(182,'2024_05_09_180526_improve_network_flow',1);
-INSERT INTO migrations VALUES(183,'2024_05_15_212326_routers_log_phys',1);
-INSERT INTO migrations VALUES(184,'2024_06_03_165236_add_user',1);
-INSERT INTO migrations VALUES(185,'2024_06_11_060639_external_connnected_entities_desc',1);
-INSERT INTO migrations VALUES(186,'2024_06_18_125723_link_domain_lservers',1);
-INSERT INTO migrations VALUES(187,'2024_08_27_200851_normalize_storage_devices',1);
-INSERT INTO migrations VALUES(188,'2024_09_22_112404_add_icon',1);
-INSERT INTO migrations VALUES(189,'2024_09_24_044657_move_icons_to_docs',1);
-INSERT INTO migrations VALUES(190,'2024_09_24_084005_move_icons_to_docs',1);
-INSERT INTO migrations VALUES(191,'2024_09_26_160952_building_attributes',1);
-INSERT INTO migrations VALUES(192,'2024_10_31_220940_add_vlan_id',1);
-INSERT INTO migrations VALUES(193,'2024_11_13_183902_add_type_to_logical_servers',1);
-INSERT INTO migrations VALUES(194,'2024_11_19_101048_add_ldap_columns_to_users_table',1);
-INSERT INTO migrations VALUES(195,'2024_11_26_130914_add_authenticity',2);
-INSERT INTO migrations VALUES(196,'2025_01_03_130604_create_graphs_table',2);
-INSERT INTO migrations VALUES(197,'2025_01_10_123601_logical_server_disabled',2);
-INSERT INTO migrations VALUES(198,'2025_01_16_120601_add_icon_to_process',2);
-INSERT INTO migrations VALUES(199,'2025_01_17_133444_add_table_containers',2);
-INSERT INTO migrations VALUES(200,'2025_02_18_073549_application_assignation',2);
-INSERT INTO migrations VALUES(201,'2025_03_17_094654_datetime_to_date',2);
-INSERT INTO migrations VALUES(202,'2025_03_24_132409_remove_unique_name_deleted_at_indexes',2);
-INSERT INTO migrations VALUES(203,'2025_03_26_133906_external_nullable',2);
-INSERT INTO migrations VALUES(204,'2025_04_27_084635_add_icon_to_servers',2);
-INSERT INTO migrations VALUES(205,'2025_04_27_123200_add_legal_basis',2);
-INSERT INTO migrations VALUES(206,'2025_06_19_072710_add_databases_to_containers',2);
-INSERT INTO migrations VALUES(207,'2025_06_28_155312_add_glpi_fields',2);
-INSERT INTO migrations VALUES(208,'2025_07_01_065432_admin_user_fields',2);
-INSERT INTO migrations VALUES(209,'2025_07_02_123433_rename_permission',2);
-INSERT INTO migrations VALUES(210,'2025_07_07_070846_add_admin_user_application',2);
-INSERT INTO migrations VALUES(211,'2025_07_08_065626_add_references_to_logical_flows',2);
-INSERT INTO migrations VALUES(212,'2025_07_17_145227_activities_bia',2);
-INSERT INTO migrations VALUES(213,'2025_07_17_150249_create_activity_impact_table',2);
-INSERT INTO migrations VALUES(214,'2025_08_23_111003_add_pra',2);
-INSERT INTO migrations VALUES(215,'2025_08_27_135552_physical_logical_security_devices',2);
-INSERT INTO migrations VALUES(216,'2025_09_05_141822_add_external_ref_id_to_entities',2);
-INSERT INTO migrations VALUES(217,'2025_09_21_134035_add_cluster_router',2);
-INSERT INTO migrations VALUES(218,'2025_09_23_113715_add_user_login',2);
-INSERT INTO migrations VALUES(219,'2025_09_29_193233_external_connected_entities_complement',2);
-INSERT INTO migrations VALUES(220,'2025_10_02_205209_add_permissions',2);
-INSERT INTO migrations VALUES(221,'2025_10_04_153231_add_attribut_on_fluxes',2);
-INSERT INTO migrations VALUES(222,'2025_10_08_100558_more_buildings',2);
-INSERT INTO migrations VALUES(223,'2025_10_17_073218_add_cluster_logical_server',2);
-INSERT INTO migrations VALUES(224,'2025_10_17_085635_add_fields_to_cluster',2);
-INSERT INTO migrations VALUES(225,'2025_10_18_174616_add_cluster_physical_server',2);
-INSERT INTO migrations VALUES(226,'2025_10_18_183453_add_cluster_router',2);
-INSERT INTO migrations VALUES(227,'2025_10_21_104026_add_lawfullness',2);
-INSERT INTO migrations VALUES(228,'2025_10_27_095802_add_link_applications_security_devices',2);
-INSERT INTO migrations VALUES(229,'2025_10_27_104704_add_fields_security_device',2);
+INSERT INTO migrations VALUES(6,'2021_05_08_191249_create_activities_table',1);
+INSERT INTO migrations VALUES(7,'2021_05_08_191249_create_activity_operation_table',1);
+INSERT INTO migrations VALUES(8,'2021_05_08_191249_create_activity_process_table',1);
+INSERT INTO migrations VALUES(9,'2021_05_08_191249_create_actor_operation_table',1);
+INSERT INTO migrations VALUES(10,'2021_05_08_191249_create_actors_table',1);
+INSERT INTO migrations VALUES(11,'2021_05_08_191249_create_annuaires_table',1);
+INSERT INTO migrations VALUES(12,'2021_05_08_191249_create_application_blocks_table',1);
+INSERT INTO migrations VALUES(13,'2021_05_08_191249_create_application_module_application_service_table',1);
+INSERT INTO migrations VALUES(14,'2021_05_08_191249_create_application_modules_table',1);
+INSERT INTO migrations VALUES(15,'2021_05_08_191249_create_application_service_m_application_table',1);
+INSERT INTO migrations VALUES(16,'2021_05_08_191249_create_application_services_table',1);
+INSERT INTO migrations VALUES(17,'2021_05_08_191249_create_audit_logs_table',1);
+INSERT INTO migrations VALUES(18,'2021_05_08_191249_create_bay_wifi_terminal_table',1);
+INSERT INTO migrations VALUES(19,'2021_05_08_191249_create_bays_table',1);
+INSERT INTO migrations VALUES(20,'2021_05_08_191249_create_buildings_table',1);
+INSERT INTO migrations VALUES(21,'2021_05_08_191249_create_database_entity_table',1);
+INSERT INTO migrations VALUES(22,'2021_05_08_191249_create_database_information_table',1);
+INSERT INTO migrations VALUES(23,'2021_05_08_191249_create_database_m_application_table',1);
+INSERT INTO migrations VALUES(24,'2021_05_08_191249_create_databases_table',1);
+INSERT INTO migrations VALUES(25,'2021_05_08_191249_create_dhcp_servers_table',1);
+INSERT INTO migrations VALUES(26,'2021_05_08_191249_create_dnsservers_table',1);
+INSERT INTO migrations VALUES(27,'2021_05_08_191249_create_domaine_ad_forest_ad_table',1);
+INSERT INTO migrations VALUES(28,'2021_05_08_191249_create_domaine_ads_table',1);
+INSERT INTO migrations VALUES(29,'2021_05_08_191249_create_entities_table',1);
+INSERT INTO migrations VALUES(30,'2021_05_08_191249_create_entity_m_application_table',1);
+INSERT INTO migrations VALUES(31,'2021_05_08_191249_create_entity_process_table',1);
+INSERT INTO migrations VALUES(32,'2021_05_08_191249_create_external_connected_entities_table',1);
+INSERT INTO migrations VALUES(33,'2021_05_08_191249_create_external_connected_entity_network_table',1);
+INSERT INTO migrations VALUES(34,'2021_05_08_191249_create_fluxes_table',1);
+INSERT INTO migrations VALUES(35,'2021_05_08_191249_create_forest_ads_table',1);
+INSERT INTO migrations VALUES(36,'2021_05_08_191249_create_gateways_table',1);
+INSERT INTO migrations VALUES(37,'2021_05_08_191249_create_information_process_table',1);
+INSERT INTO migrations VALUES(38,'2021_05_08_191249_create_information_table',1);
+INSERT INTO migrations VALUES(39,'2021_05_08_191249_create_lan_man_table',1);
+INSERT INTO migrations VALUES(40,'2021_05_08_191249_create_lan_wan_table',1);
+INSERT INTO migrations VALUES(41,'2021_05_08_191249_create_lans_table',1);
+INSERT INTO migrations VALUES(42,'2021_05_08_191249_create_logical_server_m_application_table',1);
+INSERT INTO migrations VALUES(43,'2021_05_08_191249_create_logical_server_physical_server_table',1);
+INSERT INTO migrations VALUES(44,'2021_05_08_191249_create_logical_servers_table',1);
+INSERT INTO migrations VALUES(45,'2021_05_08_191249_create_m_application_process_table',1);
+INSERT INTO migrations VALUES(46,'2021_05_08_191249_create_m_applications_table',1);
+INSERT INTO migrations VALUES(47,'2021_05_08_191249_create_macro_processuses_table',1);
+INSERT INTO migrations VALUES(48,'2021_05_08_191249_create_man_wan_table',1);
+INSERT INTO migrations VALUES(49,'2021_05_08_191249_create_mans_table',1);
+INSERT INTO migrations VALUES(50,'2021_05_08_191249_create_media_table',1);
+INSERT INTO migrations VALUES(51,'2021_05_08_191249_create_network_subnetword_table',1);
+INSERT INTO migrations VALUES(52,'2021_05_08_191249_create_network_switches_table',1);
+INSERT INTO migrations VALUES(53,'2021_05_08_191249_create_networks_table',1);
+INSERT INTO migrations VALUES(54,'2021_05_08_191249_create_operation_task_table',1);
+INSERT INTO migrations VALUES(55,'2021_05_08_191249_create_operations_table',1);
+INSERT INTO migrations VALUES(56,'2021_05_08_191249_create_password_resets_table',1);
+INSERT INTO migrations VALUES(57,'2021_05_08_191249_create_peripherals_table',1);
+INSERT INTO migrations VALUES(58,'2021_05_08_191249_create_permission_role_table',1);
+INSERT INTO migrations VALUES(59,'2021_05_08_191249_create_permissions_table',1);
+INSERT INTO migrations VALUES(60,'2021_05_08_191249_create_phones_table',1);
+INSERT INTO migrations VALUES(61,'2021_05_08_191249_create_physical_router_vlan_table',1);
+INSERT INTO migrations VALUES(62,'2021_05_08_191249_create_physical_routers_table',1);
+INSERT INTO migrations VALUES(63,'2021_05_08_191249_create_physical_security_devices_table',1);
+INSERT INTO migrations VALUES(64,'2021_05_08_191249_create_physical_servers_table',1);
+INSERT INTO migrations VALUES(65,'2021_05_08_191249_create_physical_switches_table',1);
+INSERT INTO migrations VALUES(66,'2021_05_08_191249_create_processes_table',1);
+INSERT INTO migrations VALUES(67,'2021_05_08_191249_create_relations_table',1);
+INSERT INTO migrations VALUES(68,'2021_05_08_191249_create_role_user_table',1);
+INSERT INTO migrations VALUES(69,'2021_05_08_191249_create_roles_table',1);
+INSERT INTO migrations VALUES(70,'2021_05_08_191249_create_routers_table',1);
+INSERT INTO migrations VALUES(71,'2021_05_08_191249_create_security_devices_table',1);
+INSERT INTO migrations VALUES(72,'2021_05_08_191249_create_sites_table',1);
+INSERT INTO migrations VALUES(73,'2021_05_08_191249_create_storage_devices_table',1);
+INSERT INTO migrations VALUES(74,'2021_05_08_191249_create_subnetworks_table',1);
+INSERT INTO migrations VALUES(75,'2021_05_08_191249_create_tasks_table',1);
+INSERT INTO migrations VALUES(76,'2021_05_08_191249_create_users_table',1);
+INSERT INTO migrations VALUES(77,'2021_05_08_191249_create_vlans_table',1);
+INSERT INTO migrations VALUES(78,'2021_05_08_191249_create_wans_table',1);
+INSERT INTO migrations VALUES(79,'2021_05_08_191249_create_wifi_terminals_table',1);
+INSERT INTO migrations VALUES(80,'2021_05_08_191249_create_workstations_table',1);
+INSERT INTO migrations VALUES(81,'2021_05_08_191249_create_zone_admins_table',1);
+INSERT INTO migrations VALUES(82,'2021_05_08_191251_add_foreign_keys_to_activity_operation_table',1);
+INSERT INTO migrations VALUES(83,'2021_05_08_191251_add_foreign_keys_to_activity_process_table',1);
+INSERT INTO migrations VALUES(84,'2021_05_08_191251_add_foreign_keys_to_actor_operation_table',1);
+INSERT INTO migrations VALUES(85,'2021_05_08_191251_add_foreign_keys_to_annuaires_table',1);
+INSERT INTO migrations VALUES(86,'2021_05_08_191251_add_foreign_keys_to_application_module_application_service_table',1);
+INSERT INTO migrations VALUES(87,'2021_05_08_191251_add_foreign_keys_to_application_service_m_application_table',1);
+INSERT INTO migrations VALUES(88,'2021_05_08_191251_add_foreign_keys_to_bay_wifi_terminal_table',1);
+INSERT INTO migrations VALUES(89,'2021_05_08_191251_add_foreign_keys_to_bays_table',1);
+INSERT INTO migrations VALUES(90,'2021_05_08_191251_add_foreign_keys_to_buildings_table',1);
+INSERT INTO migrations VALUES(91,'2021_05_08_191251_add_foreign_keys_to_database_entity_table',1);
+INSERT INTO migrations VALUES(92,'2021_05_08_191251_add_foreign_keys_to_database_information_table',1);
+INSERT INTO migrations VALUES(93,'2021_05_08_191251_add_foreign_keys_to_database_m_application_table',1);
+INSERT INTO migrations VALUES(94,'2021_05_08_191251_add_foreign_keys_to_databases_table',1);
+INSERT INTO migrations VALUES(95,'2021_05_08_191251_add_foreign_keys_to_domaine_ad_forest_ad_table',1);
+INSERT INTO migrations VALUES(96,'2021_05_08_191251_add_foreign_keys_to_entity_m_application_table',1);
+INSERT INTO migrations VALUES(97,'2021_05_08_191251_add_foreign_keys_to_entity_process_table',1);
+INSERT INTO migrations VALUES(98,'2021_05_08_191251_add_foreign_keys_to_external_connected_entity_network_table',1);
+INSERT INTO migrations VALUES(99,'2021_05_08_191251_add_foreign_keys_to_fluxes_table',1);
+INSERT INTO migrations VALUES(100,'2021_05_08_191251_add_foreign_keys_to_forest_ads_table',1);
+INSERT INTO migrations VALUES(101,'2021_05_08_191251_add_foreign_keys_to_information_process_table',1);
+INSERT INTO migrations VALUES(102,'2021_05_08_191251_add_foreign_keys_to_lan_man_table',1);
+INSERT INTO migrations VALUES(103,'2021_05_08_191251_add_foreign_keys_to_lan_wan_table',1);
+INSERT INTO migrations VALUES(104,'2021_05_08_191251_add_foreign_keys_to_logical_server_m_application_table',1);
+INSERT INTO migrations VALUES(105,'2021_05_08_191251_add_foreign_keys_to_logical_server_physical_server_table',1);
+INSERT INTO migrations VALUES(106,'2021_05_08_191251_add_foreign_keys_to_m_application_process_table',1);
+INSERT INTO migrations VALUES(107,'2021_05_08_191251_add_foreign_keys_to_m_applications_table',1);
+INSERT INTO migrations VALUES(108,'2021_05_08_191251_add_foreign_keys_to_man_wan_table',1);
+INSERT INTO migrations VALUES(109,'2021_05_08_191251_add_foreign_keys_to_network_subnetword_table',1);
+INSERT INTO migrations VALUES(110,'2021_05_08_191251_add_foreign_keys_to_operation_task_table',1);
+INSERT INTO migrations VALUES(111,'2021_05_08_191251_add_foreign_keys_to_peripherals_table',1);
+INSERT INTO migrations VALUES(112,'2021_05_08_191251_add_foreign_keys_to_permission_role_table',1);
+INSERT INTO migrations VALUES(113,'2021_05_08_191251_add_foreign_keys_to_phones_table',1);
+INSERT INTO migrations VALUES(114,'2021_05_08_191251_add_foreign_keys_to_physical_router_vlan_table',1);
+INSERT INTO migrations VALUES(115,'2021_05_08_191251_add_foreign_keys_to_physical_routers_table',1);
+INSERT INTO migrations VALUES(116,'2021_05_08_191251_add_foreign_keys_to_physical_security_devices_table',1);
+INSERT INTO migrations VALUES(117,'2021_05_08_191251_add_foreign_keys_to_physical_servers_table',1);
+INSERT INTO migrations VALUES(118,'2021_05_08_191251_add_foreign_keys_to_physical_switches_table',1);
+INSERT INTO migrations VALUES(119,'2021_05_08_191251_add_foreign_keys_to_processes_table',1);
+INSERT INTO migrations VALUES(120,'2021_05_08_191251_add_foreign_keys_to_relations_table',1);
+INSERT INTO migrations VALUES(121,'2021_05_08_191251_add_foreign_keys_to_role_user_table',1);
+INSERT INTO migrations VALUES(122,'2021_05_08_191251_add_foreign_keys_to_storage_devices_table',1);
+INSERT INTO migrations VALUES(123,'2021_05_08_191251_add_foreign_keys_to_subnetworks_table',1);
+INSERT INTO migrations VALUES(124,'2021_05_08_191251_add_foreign_keys_to_wifi_terminals_table',1);
+INSERT INTO migrations VALUES(125,'2021_05_08_191251_add_foreign_keys_to_workstations_table',1);
+INSERT INTO migrations VALUES(126,'2021_05_13_180642_add_cidt_criteria',1);
+INSERT INTO migrations VALUES(127,'2021_05_19_161123_rename_subnetwork',1);
+INSERT INTO migrations VALUES(128,'2021_06_22_170555_add_type',1);
+INSERT INTO migrations VALUES(129,'2021_07_14_071311_create_certificates_table',1);
+INSERT INTO migrations VALUES(130,'2021_08_08_125856_config_right',1);
+INSERT INTO migrations VALUES(131,'2021_08_11_201624_certificate_application_link',1);
+INSERT INTO migrations VALUES(132,'2021_08_18_171048_network_redesign',1);
+INSERT INTO migrations VALUES(133,'2021_08_20_034757_default_gateway',1);
+INSERT INTO migrations VALUES(134,'2021_08_28_152910_cleanup',1);
+INSERT INTO migrations VALUES(135,'2021_09_19_125048_relation-inportance',1);
+INSERT INTO migrations VALUES(136,'2021_09_21_161028_add_router_ip',1);
+INSERT INTO migrations VALUES(137,'2021_09_22_114706_add_security_ciat',1);
+INSERT INTO migrations VALUES(138,'2021_09_23_192127_rename_descrition',1);
+INSERT INTO migrations VALUES(139,'2021_09_28_205405_add_direction_to_flows',1);
+INSERT INTO migrations VALUES(140,'2021_10_12_210233_physical_router_name_type',1);
+INSERT INTO migrations VALUES(141,'2021_10_19_102610_add_address_ip',1);
+INSERT INTO migrations VALUES(142,'2021_11_23_204551_add_app_version',1);
+INSERT INTO migrations VALUES(143,'2022_02_08_210603_create_cartographer_m_application_table',1);
+INSERT INTO migrations VALUES(144,'2022_02_22_32654_add_cert_status',1);
+INSERT INTO migrations VALUES(145,'2022_02_27_162738_add_functional_referent_to_m_application',1);
+INSERT INTO migrations VALUES(146,'2022_02_27_163129_add_editor_to_m_application',1);
+INSERT INTO migrations VALUES(147,'2022_02_27_192155_add_date_fields_to_m_application',1);
+INSERT INTO migrations VALUES(148,'2022_02_28_205630_create_m_application_event_table',1);
+INSERT INTO migrations VALUES(149,'2022_05_02_123756_add_update_to_logical_servers',1);
+INSERT INTO migrations VALUES(150,'2022_05_18_140331_add_is_external_column_to_entities',1);
+INSERT INTO migrations VALUES(151,'2022_05_21_103208_add_type_property_to_entities',1);
+INSERT INTO migrations VALUES(152,'2022_06_27_061444_application_workstation',1);
+INSERT INTO migrations VALUES(153,'2022_07_28_105153_add_link_operation_process',1);
+INSERT INTO migrations VALUES(154,'2022_08_11_165441_add_vpn_fields',1);
+INSERT INTO migrations VALUES(155,'2022_09_13_204845_cert_last_notification',1);
+INSERT INTO migrations VALUES(156,'2022_12_17_115624_rto_rpo',1);
+INSERT INTO migrations VALUES(157,'2023_01_03_205224_database_logical_server',1);
+INSERT INTO migrations VALUES(158,'2023_01_08_123726_add_physical_link',1);
+INSERT INTO migrations VALUES(159,'2023_01_27_165009_add_flux_nature',1);
+INSERT INTO migrations VALUES(160,'2023_01_28_145242_add_logical_devices_link',1);
+INSERT INTO migrations VALUES(161,'2023_02_09_164940_gdpr',1);
+INSERT INTO migrations VALUES(162,'2023_03_16_123031_create_documents_table',1);
+INSERT INTO migrations VALUES(163,'2023_03_22_185812_create_cpe',1);
+INSERT INTO migrations VALUES(164,'2023_04_18_123308_add_gdpr_tables',1);
+INSERT INTO migrations VALUES(165,'2023_05_29_161406_security_controls_links',1);
+INSERT INTO migrations VALUES(166,'2023_06_14_120958_add_physical_address_ip',1);
+INSERT INTO migrations VALUES(167,'2023_08_06_100128_add_physicalserver_size',1);
+INSERT INTO migrations VALUES(168,'2023_08_07_183714_application_physical_server',1);
+INSERT INTO migrations VALUES(169,'2023_09_04_111440_add_application_patching',1);
+INSERT INTO migrations VALUES(170,'2023_09_26_074104_iot',1);
+INSERT INTO migrations VALUES(171,'2023_10_28_124418_add_cluster',1);
+INSERT INTO migrations VALUES(172,'2023_11_30_070804_fix_migration_typo',1);
+INSERT INTO migrations VALUES(173,'2024_02_21_085107_application_patching',1);
+INSERT INTO migrations VALUES(174,'2024_02_29_134239_patching_attributes',1);
+INSERT INTO migrations VALUES(175,'2024_03_14_165211_router_ip_lenght',1);
+INSERT INTO migrations VALUES(176,'2024_03_19_195927_contracts',1);
+INSERT INTO migrations VALUES(177,'2024_04_06_161307_nomalization',1);
+INSERT INTO migrations VALUES(178,'2024_04_08_105719_network_flow',1);
+INSERT INTO migrations VALUES(179,'2024_04_14_072101_add_parent_entity',1);
+INSERT INTO migrations VALUES(180,'2024_04_28_075916_normalize_process_name',1);
+INSERT INTO migrations VALUES(181,'2024_05_09_180526_improve_network_flow',1);
+INSERT INTO migrations VALUES(182,'2024_05_15_212326_routers_log_phys',1);
+INSERT INTO migrations VALUES(183,'2024_06_03_165236_add_user',1);
+INSERT INTO migrations VALUES(184,'2024_06_11_060639_external_connnected_entities_desc',1);
+INSERT INTO migrations VALUES(185,'2024_06_18_125723_link_domain_lservers',1);
+INSERT INTO migrations VALUES(186,'2024_08_27_200851_normalize_storage_devices',1);
+INSERT INTO migrations VALUES(187,'2024_09_22_112404_add_icon',1);
+INSERT INTO migrations VALUES(188,'2024_09_24_044657_move_icons_to_docs',1);
+INSERT INTO migrations VALUES(189,'2024_09_24_084005_move_icons_to_docs',1);
+INSERT INTO migrations VALUES(190,'2024_09_26_160952_building_attributes',1);
+INSERT INTO migrations VALUES(191,'2024_10_31_220940_add_vlan_id',1);
+INSERT INTO migrations VALUES(192,'2024_11_13_183902_add_type_to_logical_servers',1);
+INSERT INTO migrations VALUES(193,'2024_11_26_130914_add_authenticity',1);
+INSERT INTO migrations VALUES(194,'2025_01_03_130604_create_graphs_table',1);
+INSERT INTO migrations VALUES(195,'2025_01_10_123601_logical_server_disabled',1);
+INSERT INTO migrations VALUES(196,'2025_01_16_120601_add_icon_to_process',1);
+INSERT INTO migrations VALUES(197,'2025_01_17_133444_add_table_containers',1);
+INSERT INTO migrations VALUES(198,'2025_02_18_073549_application_assignation',1);
+INSERT INTO migrations VALUES(199,'2025_03_17_094654_datetime_to_date',1);
+INSERT INTO migrations VALUES(200,'2025_03_24_132409_remove_unique_name_deleted_at_indexes',1);
+INSERT INTO migrations VALUES(201,'2025_03_26_133906_external_nullable',1);
+INSERT INTO migrations VALUES(202,'2025_04_27_084635_add_icon_to_servers',1);
+INSERT INTO migrations VALUES(203,'2025_04_27_123200_add_legal_basis',1);
+INSERT INTO migrations VALUES(204,'2025_06_19_072710_add_databases_to_containers',1);
+INSERT INTO migrations VALUES(205,'2025_06_28_155312_add_glpi_fields',1);
+INSERT INTO migrations VALUES(206,'2025_07_01_065432_admin_user_fields',1);
+INSERT INTO migrations VALUES(207,'2025_07_02_123433_rename_permission',1);
+INSERT INTO migrations VALUES(208,'2025_07_07_070846_add_admin_user_application',1);
+INSERT INTO migrations VALUES(209,'2025_07_08_065626_add_references_to_logical_flows',1);
+INSERT INTO migrations VALUES(210,'2025_07_17_145227_activities_bia',1);
+INSERT INTO migrations VALUES(211,'2025_07_17_150249_create_activity_impact_table',1);
+INSERT INTO migrations VALUES(212,'2025_08_23_111003_add_pra',1);
+INSERT INTO migrations VALUES(213,'2025_08_27_135552_physical_logical_security_devices',1);
+INSERT INTO migrations VALUES(214,'2025_09_05_141822_add_external_ref_id_to_entities',1);
+INSERT INTO migrations VALUES(215,'2025_09_21_134035_add_cluster_router',1);
+INSERT INTO migrations VALUES(216,'2025_09_23_113715_add_user_login',1);
+INSERT INTO migrations VALUES(217,'2025_09_29_193233_external_connected_entities_complement',1);
+INSERT INTO migrations VALUES(218,'2025_10_02_205209_add_permissions',1);
+INSERT INTO migrations VALUES(219,'2025_10_04_153231_add_attribut_on_fluxes',1);
+INSERT INTO migrations VALUES(220,'2025_10_08_100558_more_buildings',1);
+INSERT INTO migrations VALUES(221,'2025_10_17_073218_add_cluster_logical_server',1);
+INSERT INTO migrations VALUES(222,'2025_10_17_085635_add_fields_to_cluster',1);
+INSERT INTO migrations VALUES(223,'2025_10_18_174616_add_cluster_physical_server',1);
+INSERT INTO migrations VALUES(224,'2025_10_18_183453_add_cluster_router',1);
+INSERT INTO migrations VALUES(225,'2025_10_21_104026_add_lawfullness',1);
+INSERT INTO migrations VALUES(226,'2025_10_27_095802_add_link_applications_security_devices',1);
+INSERT INTO migrations VALUES(227,'2025_10_27_104704_add_fields_security_device',1);
+INSERT INTO migrations VALUES(228,'2025_10_30_081134_change_active_nullable_on_lservers',1);
+INSERT INTO migrations VALUES(229,'2025_11_01_123622_drop_unique_graphs_name_unique_on_graphs_table',1);
