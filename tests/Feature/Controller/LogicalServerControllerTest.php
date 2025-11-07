@@ -28,7 +28,7 @@ beforeEach(function () {
 });
 
 describe('index', function () {
-    test('can display activities index page', function () {
+    test('can display logical servers index page', function () {
         LogicalServer::factory()->count(3)->create();
 
         $response = $this->get(route('admin.logical-servers.index'));
@@ -167,9 +167,9 @@ describe('destroy', function () {
 });
 
 describe('massDestroy', function () {
-    test('can delete multiple activities', function () {
-        $activities = LogicalServer::factory()->count(3)->create();
-        $ids = $activities->pluck('id')->toArray();
+    test('can delete multiple logical servers', function () {
+        $logicalServers = LogicalServer::factory()->count(3)->create();
+        $ids = $logicalServers->pluck('id')->toArray();
 
         $response = $this->delete(route('admin.logical-servers.massDestroy'), ['ids' => $ids]);
         $response->assertNoContent();

@@ -1,0 +1,69 @@
+<?php
+
+use App\Models\User;
+use Database\Seeders\PermissionRoleTableSeeder;
+use Database\Seeders\PermissionsTableSeeder;
+use Database\Seeders\RolesTableSeeder;
+use Database\Seeders\RoleUserTableSeeder;
+use Database\Seeders\UsersTableSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    // Seed base permissions/roles and users as in other feature tests
+    $this->seed([
+        PermissionsTableSeeder::class,
+        RolesTableSeeder::class,
+        PermissionRoleTableSeeder::class,
+        UsersTableSeeder::class,
+        RoleUserTableSeeder::class,
+    ]);
+
+    // Login as an admin (id=1 seeded by UsersTableSeeder)
+    $this->user = User::query()->find(1);
+    $this->actingAs($this->user);
+});
+
+describe('Logical Infrastructure View', function () {
+    test('can display logical-infrastructure view page', function () {
+        $response = $this->get(route('admin.report.view.logical-infrastructure'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.reports.logical_infrastructure');
+        $response->assertViewHasAll([
+            'all_networks',
+            'all_subnetworks',
+            'networks',
+            'subnetworks',
+            'gateways',
+            'externalConnectedEntities',
+            'networkSwitches',
+            'workstations',
+            'phones',
+            'physicalSecurityDevices',
+            'peripherals',
+            'wifiTerminals',
+            'routers',
+            'securityDevices',
+            'storageDevices',
+            'dhcpServers',
+            'dnsservers',
+            'clusters',
+            'logicalServers',
+            'certificates',
+            'containers',
+            'vlans'
+            ]);
+    });
+
+    test('denies access without permission', function () {
+        // New user without the reports_access permission
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('admin.report.view.logical-infrastructure'));
+
+        $response->assertForbidden();
+    });
+});
