@@ -19,8 +19,9 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.forestAd.fields.name_helper') }}</span>
                 </div>
-                <div class="recommended1" class="form-group">
-                    <label for="description">{{ trans('cruds.forestAd.fields.description') }}</label>
+                <div class="form-group">
+                    <label class="recommended1"
+                           for="description">{{ trans('cruds.forestAd.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
                     @if($errors->has('description'))
@@ -56,8 +57,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('domaines') ? 'is-invalid' : '' }}"
                             name="domaines[]" id="domaines" multiple>
-                        @foreach($domaines as $id => $domaines)
-                            <option value="{{ $id }}" {{ in_array($id, old('domaines', [])) ? 'selected' : '' }}>{{ $domaines }}</option>
+                        @foreach($domaines as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('domaines', [])) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('domaines'))

@@ -26,7 +26,8 @@
                     </div>
                     <div class="col-3">
                         <div class="form-group">
-                            <label class="recommended" for="type">{{ trans('cruds.cluster.fields.type') }}</label>
+                            <label class="recommended1"
+                                   for="type">{{ trans('cruds.cluster.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type"
                                     id="type">
@@ -67,7 +68,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="description">{{ trans('cruds.cluster.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -100,8 +101,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="recommended"
-                           for="description">{{ trans('cruds.cluster.fields.address_ip') }}</label>
+                    <label for="address_ip">{{ trans('cruds.cluster.fields.address_ip') }}</label>
                     <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                            name="address_ip" id="address_ip" value="{{ old('address_ip', $cluster->address_ip) }}">
                     @if($errors->has('address_ip'))
@@ -123,8 +123,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="logical_servers">{{ trans('cruds.cluster.fields.logical_servers') }}</label>
+                            <label for="logical_servers">{{ trans('cruds.cluster.fields.logical_servers') }}</label>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="logical_servers[]" id="logical_servers" multiple>
                                 @foreach($logical_servers as $id => $logical_server)
@@ -144,8 +143,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="routers">{{ trans('cruds.cluster.fields.routers') }}</label>
+                            <label for="routers">{{ trans('cruds.cluster.fields.routers') }}</label>
                             <select class="form-control select2 {{ $errors->has('routers') ? 'is-invalid' : '' }}"
                                     name="routers[]" id="routers" multiple>
                                 @foreach($routers as $id => $router)
@@ -173,8 +171,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="physical_servers">{{ trans('cruds.cluster.fields.physical_servers') }}</label>
+                            <label for="physical_servers">{{ trans('cruds.cluster.fields.physical_servers') }}</label>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
                                     name="physical_servers[]" id="physical_servers" multiple>
                                 @foreach($physical_servers as $id => $physical_server)

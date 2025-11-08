@@ -43,8 +43,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($securityDevices as $key => $securityDevice)
-                        <tr data-entry-id="{{ $securityDevice->id }}">
+                    @foreach($securityDevices as $securityDevice)
+                        <tr data-entry-id="{{ $securityDevice->id }}"
+                            @if (
+                                ($securityDevice->description===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>
