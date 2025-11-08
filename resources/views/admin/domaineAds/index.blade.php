@@ -53,7 +53,7 @@
                                 ($domaineAd->domain_ctrl_cnt===null)||
                                 ($domaineAd->user_count===null)||
                                 ($domaineAd->machine_count===null)||
-                                ($domaineAd->relation_inter_domaine==null)
+                                ($domaineAd->relation_inter_domaine===null)
                                 )
                                 class="table-warning"
                                 @endif
@@ -70,10 +70,7 @@
                                 @foreach($domaineAd->forestAds as $forestAd)
                                     <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
                                         {{ $forestAd->name }}
-                                    </a>
-                                    @if ($loop->last!=$forestAd)
-                                        ,
-                                    @endif
+                                    </a>{{ !$loop->last ? ',' : '' }}
                                 @endforeach
                             </td>
                             <td>

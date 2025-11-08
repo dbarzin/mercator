@@ -63,20 +63,14 @@
                                 @foreach($zoneAdmin->annuaires as $annuaire)
                                     <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
                                         {{ $annuaire->name }}
-                                    </a>
-                                    @if ($zoneAdmin->annuaires->last()!=$annuaire)
-                                        ,
-                                    @endif
+                                    </a>{{ !$loop->last ? ',' : '' }}
                                 @endforeach
                             </td>
                             <td>
                                 @foreach($zoneAdmin->forestAds as $forestAd)
                                     <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
                                         {{ $forestAd->name ?? '' }}
-                                    </a>
-                                    @if ($zoneAdmin->forestAds->last()!=$forestAd)
-                                        ,
-                                    @endif
+                                    </a>{{ !$loop->last ? ',' : '' }}
                                 @endforeach
                             </td>
                             <td nowrap>

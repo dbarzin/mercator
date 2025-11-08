@@ -42,7 +42,7 @@
                             @if (
                                 ($annuaire->description===null)||
                                 ($annuaire->solution===null)||
-                                ($annuaire->zone_admin_id==null)
+                                ($annuaire->zone_admin_id===null)
                                 )
                                 class="table-warning"
                                 @endif
