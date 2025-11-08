@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="type">{{ trans('cruds.physicalSecurityDevice.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
@@ -70,7 +70,7 @@
                     <div class="col-9">
 
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="description">{{ trans('cruds.physicalSecurityDevice.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -137,8 +137,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="address_ip">{{ trans('cruds.physicalSecurityDevice.fields.address_ip') }}</label>
+                            <label for="address_ip">{{ trans('cruds.physicalSecurityDevice.fields.address_ip') }}</label>
                             <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                                    name="address_ip" id="address_ip"
                                    value="{{ old('address_ip', $physicalSecurityDevice->address_ip) }}">
@@ -162,7 +161,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="site_id">{{ trans('cruds.physicalSecurityDevice.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
@@ -180,7 +179,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="recommended1"
                                    for="building_id">{{ trans('cruds.physicalSecurityDevice.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">

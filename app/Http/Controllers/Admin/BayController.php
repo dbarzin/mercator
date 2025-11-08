@@ -27,7 +27,7 @@ class BayController extends Controller
         abort_if(Gate::denies('bay_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $bays = Bay::all()->sortBy('name');
-        $bays = Bay::with('room')->orderBy('name')->get();
+        $bays = Bay::query()->with('room')->orderBy('name')->get();
 
         return view('admin.bays.index', compact('bays'));
     }
