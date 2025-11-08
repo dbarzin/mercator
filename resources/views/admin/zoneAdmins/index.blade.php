@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-@can('zone_admin_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.zone-admins.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.zoneAdmin.title_singular') }}
-            </a>
+    @can('zone_admin_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a id="btn-new" class="btn btn-success" href="{{ route('admin.zone-admins.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.zoneAdmin.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.zoneAdmin.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.zoneAdmin.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <tr>
                         <th width="10">
 
@@ -38,10 +38,16 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @foreach($zoneAdmins as $key => $zoneAdmin)
-                        <tr data-entry-id="{{ $zoneAdmin->id }}">
+                        <tr data-entry-id="{{ $zoneAdmin->id }}"
+                            @if (
+                                ($zoneAdmin->description===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>
@@ -55,42 +61,41 @@
                             </td>
                             <td>
                                 @foreach($zoneAdmin->annuaires as $annuaire)
-                                <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
-                                    {{ $annuaire->name }}
-                                </a>
-                                @if ($zoneAdmin->annuaires->last()!=$annuaire)
-                                    ,
-                                @endif
+                                    <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
+                                        {{ $annuaire->name }}
+                                    </a>{{ !$loop->last ? ',' : '' }}
                                 @endforeach
                             </td>
                             <td>
                                 @foreach($zoneAdmin->forestAds as $forestAd)
-                                <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
-                                    {{ $forestAd->name ?? '' }}
-                                </a>
-                                @if ($zoneAdmin->forestAds->last()!=$forestAd)
-                                    ,
-                                @endif
+                                    <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
+                                        {{ $forestAd->name ?? '' }}
+                                    </a>{{ !$loop->last ? ',' : '' }}
                                 @endforeach
                             </td>
                             <td nowrap>
                                 @can('zone_admin_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.zone-admins.show', $zoneAdmin->id) }}">
+                                    <a class="btn btn-xs btn-primary"
+                                       href="{{ route('admin.zone-admins.show', $zoneAdmin->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('zone_admin_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.zone-admins.edit', $zoneAdmin->id) }}">
+                                    <a class="btn btn-xs btn-info"
+                                       href="{{ route('admin.zone-admins.edit', $zoneAdmin->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('zone_admin_delete')
-                                    <form action="{{ route('admin.zone-admins.destroy', $zoneAdmin->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.zone-admins.destroy', $zoneAdmin->id) }}"
+                                          method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
 
@@ -98,20 +103,20 @@
 
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 @section('scripts')
-@parent
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.zoneAdmin.title_singular"),
-    'URL' => route('admin.zone-admins.massDestroy'),
-    'canDelete' => auth()->user()->can('zone_admin_delete') ? true : false
-));
-</script>
+    @parent
+    <script>
+        @include('partials.datatable', array(
+            'id' => '#dataTable',
+            'title' => trans("cruds.zoneAdmin.title_singular"),
+            'URL' => route('admin.zone-admins.massDestroy'),
+            'canDelete' => auth()->user()->can('zone_admin_delete') ? true : false
+        ));
+    </script>
 @endsection

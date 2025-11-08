@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-@can('annuaire_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.annuaires.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.annuaire.title_singular') }}
-            </a>
+    @can('annuaire_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a id="btn-new" class="btn btn-success" href="{{ route('admin.annuaires.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.annuaire.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.annuaire.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.annuaire.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <tr>
                         <th width="10">
 
@@ -35,16 +35,24 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @foreach($annuaires as $key => $annuaire)
-                        <tr data-entry-id="{{ $annuaire->id }}">
+                        <tr data-entry-id="{{ $annuaire->id }}"
+                            @if (
+                                ($annuaire->description===null)||
+                                ($annuaire->solution===null)||
+                                ($annuaire->zone_admin_id===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>
                             <td>
                                 <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
-                                {{ $annuaire->name ?? '' }}
+                                    {{ $annuaire->name ?? '' }}
                                 </a>
                             </td>
                             <td>
@@ -52,30 +60,35 @@
                             </td>
                             <td>
                                 @if ($annuaire->zone_admin!=null)
-                                <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin->id) }}">
-                                    {{ $annuaire->zone_admin->name ?? '' }}
-                                </a>
+                                    <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin->id) }}">
+                                        {{ $annuaire->zone_admin->name ?? '' }}
+                                    </a>
                                 @endif
                             </td>
 
                             <td nowrap>
                                 @can('annuaire_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.annuaires.show', $annuaire->id) }}">
+                                    <a class="btn btn-xs btn-primary"
+                                       href="{{ route('admin.annuaires.show', $annuaire->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('annuaire_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.annuaires.edit', $annuaire->id) }}">
+                                    <a class="btn btn-xs btn-info"
+                                       href="{{ route('admin.annuaires.edit', $annuaire->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('annuaire_delete')
-                                    <form action="{{ route('admin.annuaires.destroy', $annuaire->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.annuaires.destroy', $annuaire->id) }}" method="POST"
+                                          onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
 
@@ -83,20 +96,20 @@
 
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 @section('scripts')
-@parent
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.annuaire.title_singular"),
-    'URL' => route('admin.annuaires.massDestroy'),
-    'canDelete' => auth()->user()->can('annuaire_delete') ? true : false
-));
-</script>
+    @parent
+    <script>
+        @include('partials.datatable', array(
+            'id' => '#dataTable',
+            'title' => trans("cruds.annuaire.title_singular"),
+            'URL' => route('admin.annuaires.massDestroy'),
+            'canDelete' => auth()->user()->can('annuaire_delete') ? true : false
+        ));
+    </script>
 @endsection
