@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="type">{{ trans('cruds.wifiTerminal.fields.type') }}</label>
+                            <label class="recommended1" for="type">{{ trans('cruds.wifiTerminal.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @foreach($type_list as $type)
@@ -46,7 +46,8 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.wifiTerminal.fields.description') }}</label>
+                            <label class="recommended1"
+                                   for="description">{{ trans('cruds.wifiTerminal.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description"
@@ -91,8 +92,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
+                            <label for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
                             <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
                                 <option>{{ old('vendor', $wifiTerminal->vendor) }}</option>
                             </select>
@@ -102,8 +102,7 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="product">{{ trans('cruds.application.fields.product') }}</label>
+                            <label for="product">{{ trans('cruds.application.fields.product') }}</label>
                             <select id="product-selector" class="form-control" name="product">
                                 <option>{{ old('name', $wifiTerminal->product) }}</option>
                             </select>
@@ -117,8 +116,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="version">{{ trans('cruds.application.fields.version') }}</label>
+                            <label for="version">{{ trans('cruds.application.fields.version') }}</label>
                             <select id="version-selector" class="form-control" name="version">
                                 <option>{{ old('version', $wifiTerminal->version) }}</option>
                             </select>
@@ -152,7 +150,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="site_id">{{ trans('cruds.wifiTerminal.fields.site') }}</label>
+                            <label class="recommended1"
+                                   for="site_id">{{ trans('cruds.wifiTerminal.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
                                 @foreach($sites as $id => $site)
@@ -169,7 +168,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="building_id">{{ trans('cruds.wifiTerminal.fields.building') }}</label>
+                            <label class="recommended1"
+                                   for="building_id">{{ trans('cruds.wifiTerminal.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">
                                 @foreach($buildings as $id => $building)

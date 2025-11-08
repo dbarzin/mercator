@@ -26,7 +26,8 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.site.fields.description') }}</label>
+                            <label class="recommended1"
+                                   for="description">{{ trans('cruds.site.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description" id="description">{!! old('description') !!}</textarea>

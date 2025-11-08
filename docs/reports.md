@@ -118,6 +118,7 @@ The calculation of conformity levels for each mapping object is based on the pre
 | Security devices            | 1     | Description                                                                                    |
 | Clusters                    | 1     | Description, type                                                                              |  
 | Logical servers             | 1     | Description, OS, environment, IP address, applications, physical servers or clusters           |
+| VLans                       | 1     | Description                                                                                    |
 | Certificates                | 2     | Description, Type, validity start date, validity end date, applications or logical server      |
 | **Physical infrastructure** |       |                                                                                                |
 | Sites                       | 1     | Description                                                                                    |
@@ -133,4 +134,3 @@ The calculation of conformity levels for each mapping object is based on the pre
 | WiFi terminals              | 1     | Description, type, site, building                                                              |
 | Physical security devices   | 1     | Description, type, site, building                                                              |
 | LANs                        | 1     | Description                                                                                    |
-| VLans                       | 1     | Description                                                                                    |

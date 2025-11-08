@@ -49,9 +49,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($physicalSecurityDevices as $key => $physicalSecurityDevice)
+                    @foreach($physicalSecurityDevices as $physicalSecurityDevice)
                         <tr data-entry-id="{{ $physicalSecurityDevice->id }}"
-
                             @if (($physicalSecurityDevice->description==null)||
                                 ($physicalSecurityDevice->type==null)||
                                 ($physicalSecurityDevice->site_id==null)||
