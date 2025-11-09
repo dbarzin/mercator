@@ -75,15 +75,15 @@
                         <div class="form-group">
                             <label class="recommended1"
                                    for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>
-                            <select class="form-control select2 {{ $errors->has('vlan') ? 'is-invalid' : '' }}"
+                            <select class="form-control select2 {{ $errors->has('vlan_id') ? 'is-invalid' : '' }}"
                                     name="vlan_id" id="vlan_id">
                                 @foreach($vlans as $id => $vlan)
                                     <option value="{{ $id }}" {{ ($subnetwork->vlan ? $subnetwork->vlan->id : old('vlan_id')) == $id ? 'selected' : '' }}>{{ $vlan }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('vlan'))
+                            @if($errors->has('vlan_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('vlan') }}
+                                    {{ $errors->first('vlan_id') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.subnetwork.fields.vlan_helper') }}</span>

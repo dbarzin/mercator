@@ -25,7 +25,7 @@
                     <div class="col-md-4">
 
                         <div class="form-group">
-                            <label for="responsible">{{ trans('cruds.router.fields.type') }}</label>
+                            <label for="type">{{ trans('cruds.router.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @foreach($type_list as $type)
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="databases">{{ trans('cruds.router.fields.physical_routers') }}</label>
+                    <label for="physicalRouters">{{ trans('cruds.router.fields.physical_routers') }}</label>
                     <select class="form-control select2 {{ $errors->has('physical_routers') ? 'is-invalid' : '' }}"
                             name="physicalRouters[]" id="physicalRouters" multiple>
                         @foreach($physical_routers as $id => $name)

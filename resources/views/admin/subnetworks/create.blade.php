@@ -134,7 +134,7 @@
                                 @foreach($zone_list as $z)
                                     <option {{ old('zone') == $z ? 'selected' : '' }}>{{$z}}</option>
                                 @endforeach
-                                @if (!$ip_allocation_type_list->contains(old('zone')))
+                                @if (!$zone_list->contains(old('zone')))
                                     <option {{ old('zone') ? 'selected' : ''}}> {{ old('zone') }}</option>
                                 @endif
                             </select>
@@ -155,7 +155,7 @@
                                 @foreach($dmz_list as $z)
                                     <option {{ old('dmz') == $z ? 'selected' : '' }}>{{$z}}</option>
                                 @endforeach
-                                @if (!$ip_allocation_type_list->contains(old('dmz')))
+                                @if (!$dmz_list->contains(old('dmz')))
                                     <option {{ old('dmz') ? 'selected' : ''}}> {{ old('dmz') }}</option>
                                 @endif
                             </select>
@@ -176,7 +176,7 @@
                                 @foreach($wifi_list as $w)
                                     <option {{ old('wifi') == $w ? 'selected' : '' }}>{{$w}}</option>
                                 @endforeach
-                                @if (!$ip_allocation_type_list->contains(old('wifi')))
+                                @if (!$wifi_list->contains(old('wifi')))
                                     <option {{ old('wifi') ? 'selected' : ''}}> {{ old('wifi') }}</option>
                                 @endif
                             </select>
