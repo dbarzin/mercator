@@ -29,6 +29,7 @@ class NetworkSwitchController extends Controller
 
         $networkSwitch = NetworkSwitch::create($request->all());
         $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
+        $networkSwitch->vlans()->sync($request->input('vlans', []));
 
         return response()->json($networkSwitch, 201);
     }
@@ -45,9 +46,10 @@ class NetworkSwitchController extends Controller
         abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkSwitch->update($request->all());
-        $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
-        // syncs
-        // $networkSwitch->roles()->sync($request->input('roles', []));
+        if ($request->has('physicalSwitches'))
+            $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
+        if ($request->has('vlans'))
+            $networkSwitch->vlans()->sync($request->input('vlans', []));
 
         return response()->json();
     }
