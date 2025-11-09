@@ -39,13 +39,21 @@ class NetworkSwitch extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsToMany<PhysicalSwitch, $this> */
+    /**
+     * Get the physical switches related to this network switch, ordered by name.
+     *
+     * @return BelongsToMany<PhysicalSwitch, $this> The related PhysicalSwitch models ordered by name.
+     */
     public function physicalSwitches(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalSwitch::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<Vlan, $this> */
+    /**
+     * Get VLANs associated with this network switch, ordered by name.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Vlan> A many-to-many relation for the related `Vlan` models, ordered by the `name` attribute.
+     */
     public function vlans(): BelongsToMany
     {
         return $this->belongsToMany(Vlan::class)->orderBy('name');
