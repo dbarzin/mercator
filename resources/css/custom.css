@@ -351,14 +351,9 @@ table .navbar-brand-full {
     padding-right: 0;
 }
 
-.form-group .required::after {
+.form-group .label-required::after {
     content: " *";
     color: red;
-}
-
-.form-group .recommended::after {
-    content: " #";
-    color: orange;
 }
 
 .form-group .label-maturity-1::after {

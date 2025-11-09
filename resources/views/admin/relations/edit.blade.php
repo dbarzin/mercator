@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.relation.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.relation.fields.name') }}</label>
                             <input type="text" class="form-control" id="name" name="name" min="0"
                                    value="{{ old('name', $relation->name) }}" required autofocus/>
                             @if($errors->has('name'))
@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.relation.fields.reference') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.relation.fields.reference') }}</label>
                             <input type="text" class="form-control" id="reference" name="reference" min="0"
                                    value="{{ old('reference', $relation->reference) }}">
                             @if($errors->has('reference'))
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.relation.fields.order_number') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.relation.fields.order_number') }}</label>
                             <input type="text" class="form-control" id="order_number" name="order_number" min="0"
                                    value="{{ old('order_number', $relation->order_number) }}">
                             @if($errors->has('order_number'))
@@ -113,7 +113,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="required" for="source_id">{{ trans('cruds.relation.fields.source') }}</label>
+                            <label class="label-required" for="source_id">{{ trans('cruds.relation.fields.source') }}</label>
                             <select class="form-control select2 {{ $errors->has('source') ? 'is-invalid' : '' }}"
                                     name="source_id" id="source_id" required>
                                 <option value="">{{ trans('global.pleaseSelect') }}</option>
@@ -132,7 +132,7 @@
 
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="required"
+                            <label class="label-required"
                                    for="destination_id">{{ trans('cruds.relation.fields.destination') }}</label>
                             <select class="form-control select2 {{ $errors->has('destination') ? 'is-invalid' : '' }}"
                                     name="destination_id" id="destination_id" required>

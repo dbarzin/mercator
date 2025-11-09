@@ -10,7 +10,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.subnetwork.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.subnetwork.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $subnetwork->name) }}" required autofocus/>
                     @if($errors->has('name'))

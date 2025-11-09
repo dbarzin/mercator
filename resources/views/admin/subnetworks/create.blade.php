@@ -8,7 +8,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.subnetwork.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.subnetwork.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', '') }}" required autofocus/>
                     @if($errors->has('name'))
@@ -19,7 +19,7 @@
                     <span class="help-block">{{ trans('cruds.subnetwork.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="description">{{ trans('cruds.subnetwork.fields.description') }}</label>
+                    <label class="label-required" for="description">{{ trans('cruds.subnetwork.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
                     @if($errors->has('description'))
@@ -38,7 +38,7 @@
                             <tr>
                                 <td>
                                     <div class="form-group">
-                                        <label class="required"
+                                        <label class="label-required"
                                                for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
                                         <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
                                                type="text" name="address" id="address" value="{{ old('address', '') }}">
@@ -52,7 +52,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <label class="required"
+                                        <label class="label-required"
                                                for="default_gateway">{{ trans('cruds.subnetwork.fields.default_gateway') }}</label>
                                         <input class="form-control {{ $errors->has('default_gateway') ? 'is-invalid' : '' }}"
                                                type="text" name="default_gateway" id="default_gateway"

@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $logicalServer->name) }}" required
                                    maxlength='64' autofocus/>

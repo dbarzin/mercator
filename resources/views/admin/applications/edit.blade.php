@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.application.fields.name') }}</label>
                             <input type="text" class="form-control" id="name" name="name"
                                    value="{{ old('name', $application->name) }}" required maxlength="32" autofocus/>
                             <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>

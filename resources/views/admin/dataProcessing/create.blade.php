@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" maxlength=64 value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
