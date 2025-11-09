@@ -24,6 +24,13 @@ class NetworkSwitchController extends Controller
         return view('admin.networkSwitches.index', compact('networkSwitches'));
     }
 
+    /**
+     * Show the form for creating a new network switch.
+     *
+     * Provides name=>id lists of available physical switches and VLANs for form selectors.
+     *
+     * @return \Illuminate\View\View The network switch creation view populated with `physicalSwitches` and `vlans`.
+     */
     public function create()
     {
         abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -35,6 +42,12 @@ class NetworkSwitchController extends Controller
             compact('physicalSwitches', 'vlans'));
     }
 
+    /**
+     * Create a new NetworkSwitch and persist its physical switch and VLAN associations.
+     *
+     * @param \App\Http\Requests\StoreNetworkSwitchRequest $request Validated input including network switch attributes and optional `physicalSwitches` and `vlans` arrays to associate.
+     * @return \Illuminate\Http\RedirectResponse Redirects to the network switches index route.
+     */
     public function store(StoreNetworkSwitchRequest $request)
     {
         $networkSwitch = NetworkSwitch::create($request->all());
@@ -44,6 +57,13 @@ class NetworkSwitchController extends Controller
         return redirect()->route('admin.network-switches.index');
     }
 
+    /**
+     * Show the form for editing the given network switch.
+     *
+     * @param NetworkSwitch $networkSwitch The network switch to edit.
+     * @return \Illuminate\View\View The view displaying the network switch edit form populated with physical switch and VLAN options.
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If the current user is denied the 'network_switch_edit' ability (HTTP 403).
+     */
     public function edit(NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -57,6 +77,17 @@ class NetworkSwitchController extends Controller
         );
     }
 
+    /**
+     * Updates the given network switch and synchronizes its related physical switches and VLANs.
+     *
+     * The method applies all validated request data to the provided NetworkSwitch, syncs the
+     * physicalSwitches and vlans relationships from the request (using an empty array if absent),
+     * and redirects back to the network switches index.
+     *
+     * @param \App\Http\Requests\UpdateNetworkSwitchRequest $request Validated input for updating the network switch.
+     * @param \App\Models\NetworkSwitch $networkSwitch The network switch instance to update.
+     * @return \Illuminate\Http\RedirectResponse Redirect response to the network switches index route.
+     */
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
     {
         $networkSwitch->update($request->all());

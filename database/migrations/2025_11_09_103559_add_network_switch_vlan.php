@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Create the network_switch_vlan pivot table mapping network switches to VLANs.
+     *
+     * The table contains unsigned integer columns `network_switch_id` and `vlan_id`,
+     * a composite primary key on (`network_switch_id`, `vlan_id`) to prevent duplicates,
+     * individual indexes on each column, and foreign key constraints referencing
+     * `network_switches.id` and `vlans.id` with cascade on delete.
      */
     public function up(): void
     {
@@ -31,7 +36,7 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Drop the network_switch_vlan pivot table if it exists.
      */
     public function down(): void
     {
