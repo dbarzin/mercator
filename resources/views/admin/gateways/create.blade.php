@@ -20,7 +20,7 @@
                     <span class="help-block">{{ trans('cruds.gateway.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.gateway.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="authentification">{{ trans('cruds.gateway.fields.authentification') }}</label>
                     <input class="form-control {{ $errors->has('authentification') ? 'is-invalid' : '' }}" type="text"
                            name="authentification" id="authentification" value="{{ old('authentification', '') }}">
@@ -67,7 +67,7 @@
                     <span class="help-block">{{ trans('cruds.gateway.fields.authentification_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1" for="ip">{{ trans('cruds.gateway.fields.ip') }}</label>
+                    <label class="label-maturity-1" for="ip">{{ trans('cruds.gateway.fields.ip') }}</label>
                     <input class="form-control {{ $errors->has('ip') ? 'is-invalid' : '' }}" type="text" name="ip"
                            id="ip" value="{{ old('ip', '') }}">
                     @if($errors->has('ip'))

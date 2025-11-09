@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="form-group">
-                                <label class="recommended1"
+                                <label class="label-maturity-1"
                                        for="description">{{ trans('cruds.workstation.fields.description') }}</label>
                                 <textarea
                                         class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -416,7 +416,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="site_id">{{ trans('cruds.workstation.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
@@ -434,7 +434,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="building_id">{{ trans('cruds.workstation.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">

@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="type">{{ trans('cruds.cluster.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type"
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.cluster.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"

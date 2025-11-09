@@ -20,7 +20,7 @@
                     <span class="help-block">{{ trans('cruds.lan.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1" for="description">{{ trans('cruds.lan.fields.description') }}</label>
+                    <label class="label-maturity-1" for="description">{{ trans('cruds.lan.fields.description') }}</label>
                     <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text"
                            name="description" id="description" value="{{ old('description', '') }}">
                     @if($errors->has('description'))

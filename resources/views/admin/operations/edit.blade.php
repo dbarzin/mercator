@@ -21,7 +21,7 @@
                     <span class="help-block">{{ trans('cruds.operation.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.operation.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -58,7 +58,7 @@
                     <div class="col-md-6">
 
                         <div class="form-group">
-                            <label class="recommended3"
+                            <label class="label-maturity-3"
                                    for="tasks">{{ trans('cruds.operation.fields.activities') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all"
@@ -85,7 +85,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="recommended2"
+                            <label class="label-maturity-2"
                                    for="actors">{{ trans('cruds.operation.fields.actors') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all"

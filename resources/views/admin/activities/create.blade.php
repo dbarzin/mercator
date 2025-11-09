@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                            <label class="recommended2"
+                            <label class="label-maturity-2"
                                    for="description">{{ trans('cruds.activity.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"

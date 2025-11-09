@@ -19,7 +19,7 @@
                     <span class="help-block">{{ trans('cruds.annuaire.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.annuaire.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
@@ -31,7 +31,7 @@
                     <span class="help-block">{{ trans('cruds.annuaire.fields.description_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1" for="solution">{{ trans('cruds.annuaire.fields.solution') }}</label>
+                    <label class="label-maturity-1" for="solution">{{ trans('cruds.annuaire.fields.solution') }}</label>
                     <input class="form-control {{ $errors->has('solution') ? 'is-invalid' : '' }}" type="text"
                            name="solution" id="solution" value="{{ old('solution', '') }}">
                     @if($errors->has('solution'))
@@ -42,7 +42,7 @@
                     <span class="help-block">{{ trans('cruds.annuaire.fields.solution_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="zone_admin_id">{{ trans('cruds.annuaire.fields.zone_admin') }}</label>
                     <select class="form-control select2 {{ $errors->has('zone_admin') ? 'is-invalid' : '' }}"
                             name="zone_admin_id" id="zone_admin_id">
