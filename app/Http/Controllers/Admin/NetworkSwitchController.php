@@ -15,6 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NetworkSwitchController extends Controller
 {
+    /**
+     * Display a listing of network switches.
+     *
+     * Aborts with HTTP 403 if the current user is not authorized to access network switches.
+     *
+     * @return \Illuminate\View\View View 'admin.networkSwitches.index' with `networkSwitches` ordered by `name`.
+     */
     public function index()
     {
         abort_if(Gate::denies('network_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -113,6 +120,12 @@ class NetworkSwitchController extends Controller
         return redirect()->route('admin.network-switches.index');
     }
 
+    /**
+     * Delete multiple NetworkSwitch records identified by the request's `ids`.
+     *
+     * @param \App\Http\Requests\MassDestroyNetworkSwitchRequest $request Request containing an `ids` array of NetworkSwitch IDs to delete.
+     * @return \Illuminate\Http\Response HTTP 204 No Content response.
+     */
     public function massDestroy(MassDestroyNetworkSwitchRequest $request)
     {
         NetworkSwitch::whereIn('id', request('ids'))->delete();

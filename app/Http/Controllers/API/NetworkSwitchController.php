@@ -14,6 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NetworkSwitchController extends Controller
 {
+    /**
+     * Return a JSON list of all NetworkSwitch resources.
+     *
+     * Aborts with HTTP 403 if the current user lacks the `network_switch_access` permission.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON HTTP response containing all NetworkSwitch records.
+     */
     public function index()
     {
         abort_if(Gate::denies('network_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -44,6 +51,14 @@ class NetworkSwitchController extends Controller
         return response()->json($networkSwitch, 201);
     }
 
+    /**
+     * Get the specified NetworkSwitch as a JSON resource.
+     *
+     * Aborts with HTTP 403 if the caller lacks the `network_switch_show` permission.
+     *
+     * @param \App\Models\NetworkSwitch $networkSwitch The NetworkSwitch to be returned.
+     * @return \Illuminate\Http\Resources\Json\JsonResource JSON representation of the given NetworkSwitch.
+     */
     public function show(NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('network_switch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -82,6 +97,14 @@ class NetworkSwitchController extends Controller
         return response()->json();
     }
 
+    /**
+     * Deletes multiple NetworkSwitch records identified by IDs provided in the request.
+     *
+     * Expects the request to include an `ids` array containing the IDs of NetworkSwitch records to delete.
+     *
+     * @param MassDestroyNetworkSwitchRequest $request Request containing `ids` (array<int>).
+     * @return \Illuminate\Http\Response Empty response with HTTP 204 No Content.
+     */
     public function massDestroy(MassDestroyNetworkSwitchRequest $request)
     {
         abort_if(Gate::denies('network_switch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
