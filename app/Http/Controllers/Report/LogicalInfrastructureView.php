@@ -30,6 +30,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LogicalInfrastructureView extends Controller
 {
+    /**
+     * Generates data for the logical infrastructure report and returns the report view.
+     *
+     * Prepares networks, subnetworks and related resource collections filtered by the
+     * selected network/subnetwork (from request or session). Persists 'network', 'subnetwork'
+     * and 'show_ip' selections to session and applies VLAN-aware filtering to network switches
+     * when a specific network is selected.
+     *
+     * @param \Illuminate\Http\Request $request HTTP request carrying optional 'network', 'subnetwork', and 'show_ip' inputs; selections are persisted to session.
+     * @return \Illuminate\View\View The rendered 'admin/reports/logical_infrastructure' view populated with the prepared collections.
+     */
     public function generate(Request $request)
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

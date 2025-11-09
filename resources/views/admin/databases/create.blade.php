@@ -13,7 +13,7 @@
                     <div class="col-sm-8">
 
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.database.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.database.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -27,7 +27,7 @@
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="recommended1" for="type">{{ trans('cruds.database.fields.type') }}</label>
+                            <label class="label-maturity-1" for="type">{{ trans('cruds.database.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.database.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -92,7 +92,7 @@
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="entity_resp_id">{{ trans('cruds.database.fields.entity_resp') }}</label>
                             <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}"
                                     name="entity_resp_id" id="entity_resp_id">
@@ -111,7 +111,7 @@
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="responsible">{{ trans('cruds.database.fields.responsible') }}</label>
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsible" id="responsible">
@@ -254,7 +254,7 @@
                     <table cellspacing="5" cellpadding="5" border="0">
                         <tr>
                             <td width='20%'>
-                                <label class="recommended2"
+                                <label class="label-maturity-2"
                                        for="security_need">{{ trans('cruds.database.fields.security_need') }}</label>
                             </td>
                             <td align="right" width="10">

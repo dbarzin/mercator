@@ -351,27 +351,22 @@ table .navbar-brand-full {
     padding-right: 0;
 }
 
-.form-group .required::after {
+.form-group .label-required::after {
     content: " *";
     color: red;
 }
 
-.form-group .recommended::after {
+.form-group .label-maturity-1::after {
     content: " #";
     color: orange;
 }
 
-.form-group .recommended1::after {
-    content: " #";
-    color: orange;
-}
-
-.form-group .recommended2::after {
+.form-group .label-maturity-2::after {
     content: " ##";
     color: orange;
 }
 
-.form-group .recommended3::after {
+.form-group .label-maturity-3::after {
     content: " ###";
     color: orange;
 }

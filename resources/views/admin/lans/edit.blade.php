@@ -10,7 +10,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.lan.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.lan.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $lan->name) }}" required autofocus/>
                     @if($errors->has('name'))
@@ -21,7 +21,7 @@
                     <span class="help-block">{{ trans('cruds.lan.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1" for="description">{{ trans('cruds.lan.fields.description') }}</label>
+                    <label class="label-maturity-1" for="description">{{ trans('cruds.lan.fields.description') }}</label>
                     <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text"
                            name="description" id="description" value="{{ old('description', $lan->description) }}">
                     @if($errors->has('description'))

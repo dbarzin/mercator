@@ -23,6 +23,16 @@ class NetworkSwitchController extends Controller
         return response()->json($networkSwitches);
     }
 
+    /**
+     * Create a new NetworkSwitch resource and persist its relationships.
+     *
+     * Creates a NetworkSwitch from validated request data and synchronizes its
+     * `physicalSwitches` and `vlans` relationships using the corresponding
+     * request inputs (defaults to empty arrays if not provided).
+     *
+     * @param StoreNetworkSwitchRequest $request Validated input for creating the network switch.
+     * @return \Illuminate\Http\JsonResponse The created NetworkSwitch serialized as JSON with HTTP status 201.
+     */
     public function store(StoreNetworkSwitchRequest $request)
     {
         abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -41,6 +51,15 @@ class NetworkSwitchController extends Controller
         return new JsonResource($networkSwitch);
     }
 
+    /**
+     * Update the specified NetworkSwitch with request data and, when provided, synchronize its related physical switches and VLANs.
+     *
+     * Aborts with HTTP 403 if the current user lacks the `network_switch_edit` permission.
+     *
+     * @param \App\Http\Requests\UpdateNetworkSwitchRequest $request Request containing fields to update; may include `physicalSwitches` and/or `vlans` arrays to sync relationships.
+     * @param \App\Models\NetworkSwitch $networkSwitch The NetworkSwitch model to update.
+     * @return \Illuminate\Http\JsonResponse An empty JSON response with HTTP 200 status.
+     */
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');

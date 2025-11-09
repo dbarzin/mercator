@@ -10,7 +10,7 @@
             <div class="form-check">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label>
+                        <label class="label-required" for="title">{{ trans('cruds.role.fields.title') }}</label>
                         <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title') }}" required autofocus/>
                         @if($errors->has('title'))
                             <div class="invalid-feedback">

@@ -9,7 +9,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.network.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.network.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', '') }}" required autofocus/>
                     @if($errors->has('name'))
@@ -20,7 +20,7 @@
                     <span class="help-block">{{ trans('cruds.network.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.network.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
@@ -43,7 +43,7 @@
                     <span class="help-block">{{ trans('cruds.network.fields.protocol_type_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="responsible">{{ trans('cruds.network.fields.responsible') }}</label>
                     <input class="form-control {{ $errors->has('responsible') ? 'is-invalid' : '' }}" type="text"
                            name="responsible" id="responsible" value="{{ old('responsible', '') }}">
@@ -55,7 +55,7 @@
                     <span class="help-block">{{ trans('cruds.network.fields.responsible_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="responsible_sec">{{ trans('cruds.network.fields.responsible_sec') }}</label>
                     <input class="form-control {{ $errors->has('responsible_sec') ? 'is-invalid' : '' }}" type="text"
                            name="responsible_sec" id="responsible_sec" value="{{ old('responsible_sec', '') }}">
@@ -77,7 +77,7 @@
                             <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                                 <tr>
                                     <td width='20%'>
-                                        <label class="recommended1"
+                                        <label class="label-maturity-1"
                                                for="security_need">{{ trans('cruds.information.fields.security_need') }}
                                         </label>
                                     </td>

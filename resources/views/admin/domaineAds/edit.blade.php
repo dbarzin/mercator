@@ -11,7 +11,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.domaineAd.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.domaineAd.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $domaineAd->name) }}" required autofocus/>
                     @if($errors->has('name'))
@@ -22,7 +22,7 @@
                     <span class="help-block">{{ trans('cruds.domaineAd.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.domaineAd.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -35,7 +35,7 @@
                     <span class="help-block">{{ trans('cruds.domaineAd.fields.description_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="domain_ctrl_cnt">{{ trans('cruds.domaineAd.fields.domain_ctrl_cnt') }}</label>
                     <input class="form-control {{ $errors->has('domain_ctrl_cnt') ? 'is-invalid' : '' }}" type="number"
                            name="domain_ctrl_cnt" id="domain_ctrl_cnt"
@@ -48,7 +48,7 @@
                     <span class="help-block">{{ trans('cruds.domaineAd.fields.domain_ctrl_cnt_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="user_count">{{ trans('cruds.domaineAd.fields.user_count') }}</label>
                     <input class="form-control {{ $errors->has('user_count') ? 'is-invalid' : '' }}" type="number"
                            name="user_count" id="user_count" value="{{ old('user_count', $domaineAd->user_count) }}"
@@ -61,7 +61,7 @@
                     <span class="help-block">{{ trans('cruds.domaineAd.fields.user_count_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="machine_count">{{ trans('cruds.domaineAd.fields.machine_count') }}</label>
                     <input class="form-control {{ $errors->has('machine_count') ? 'is-invalid' : '' }}" type="number"
                            name="machine_count" id="machine_count"
@@ -74,7 +74,7 @@
                     <span class="help-block">{{ trans('cruds.domaineAd.fields.machine_count_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="relation_inter_domaine">{{ trans('cruds.domaineAd.fields.relation_inter_domaine') }}</label>
                     <input class="form-control {{ $errors->has('relation_inter_domaine') ? 'is-invalid' : '' }}"
                            type="text" name="relation_inter_domaine" id="relation_inter_domaine"

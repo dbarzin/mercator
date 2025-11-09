@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $entity->name) }}" required
                                    maxlength="64" autofocus/>
@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.entity.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('contact_point') ? 'is-invalid' : '' }}"
                               name="contact_point"
@@ -126,7 +126,7 @@
                     <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="security_level">{{ trans('cruds.entity.fields.security_level') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}"
                               name="security_level"
@@ -189,7 +189,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="processes">{{ trans('cruds.entity.fields.processes') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all"

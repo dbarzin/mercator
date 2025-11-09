@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.phone.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.phone.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended1" for="description">{{ trans('cruds.phone.fields.description') }}</label>
+                    <label class="label-maturity-1" for="description">{{ trans('cruds.phone.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
                     @if($errors->has('description'))
@@ -88,7 +88,7 @@
                     <div class="col-md-4">
 
                         <div class="form-group">
-                            <label class="recommended1" for="site_id">{{ trans('cruds.phone.fields.site') }}</label>
+                            <label class="label-maturity-1" for="site_id">{{ trans('cruds.phone.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
                                 @foreach($sites as $id => $site)
@@ -105,7 +105,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="building_id">{{ trans('cruds.phone.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">

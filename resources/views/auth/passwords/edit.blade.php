@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("profile.password.update") }}">
             @csrf
             <div class="form-group">
-                <label class="required" for="title">{{ trans('cruds.user.fields.email') }}</label>
+                <label class="label-required" for="title">{{ trans('cruds.user.fields.email') }}</label>
                 <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="text" name="email" id="email" value="{{ old('email', auth()->user()->email) }}" required>
                 @if($errors->has('email'))
                     <div class="invalid-feedback">
@@ -20,7 +20,7 @@
             </div>
             @if (\Config::get('LDAP_DOMAIN')==null)
             <div class="form-group">
-                <label class="required" for="title">New {{ trans('cruds.user.fields.password') }}</label>
+                <label class="label-required" for="title">New {{ trans('cruds.user.fields.password') }}</label>
                 <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" autocomplete="new-password" required>
                 @if($errors->has('password'))
                     <div class="invalid-feedback">
@@ -29,7 +29,7 @@
                 @endif
             </div>
             <div class="form-group">
-                <label class="required" for="title">Repeat New {{ trans('cruds.user.fields.password') }}</label>
+                <label class="label-required" for="title">Repeat New {{ trans('cruds.user.fields.password') }}</label>
                 <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" required>
             </div>
             <div class="form-group">

@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.physicalSwitch.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.physicalSwitch.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required maxlength="64"
                                    autofocus/>
@@ -27,7 +27,7 @@
 
                         <div class="form-group">
                             <label for="type"
-                                   class="recommended1">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
+                                   class="label-maturity-1">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 <option></option>
@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                     <label for="description"
-                           class="recommended1">{{ trans('cruds.physicalSwitch.fields.description') }}</label>
+                           class="label-maturity-1">{{ trans('cruds.physicalSwitch.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
                     @if($errors->has('description'))
@@ -95,7 +95,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="site_id"
-                                   class="recommended1">{{ trans('cruds.physicalSwitch.fields.site') }}</label>
+                                   class="label-maturity-1">{{ trans('cruds.physicalSwitch.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
                                 @foreach($sites as $id => $site)
@@ -113,7 +113,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="building_id"
-                                   class="recommended1">{{ trans('cruds.physicalSwitch.fields.building') }}</label>
+                                   class="label-maturity-1">{{ trans('cruds.physicalSwitch.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">
                                 @foreach($buildings as $id => $building)

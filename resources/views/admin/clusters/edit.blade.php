@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name"
                                    id="name" value="{{ old('name', $cluster->name) }}" required autofocus/>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="type">{{ trans('cruds.cluster.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type"
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.cluster.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"

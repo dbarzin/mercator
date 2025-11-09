@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-group">
-                            <label class="recommended1" for="type">{{ trans('cruds.cluster.fields.type') }}</label>
+                            <label class="label-maturity-1" for="type">{{ trans('cruds.cluster.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 <option></option>
@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.cluster.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.cluster.fields.address_ip') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.cluster.fields.address_ip') }}</label>
                     <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                            name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}">
                     @if($errors->has('address_ip'))

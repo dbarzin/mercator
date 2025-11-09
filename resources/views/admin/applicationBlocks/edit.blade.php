@@ -11,7 +11,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.applicationBlock.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.applicationBlock.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $applicationBlock->name) }}" required maxlength="64"
                            autofocus/>
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended2"
+                    <label class="label-maturity-2"
                            for="description">{{ trans('cruds.applicationBlock.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended2"
+                    <label class="label-maturity-2"
                            for="responsible">{{ trans('cruds.applicationBlock.fields.responsible') }}</label>
                     <input class="form-control {{ $errors->has('responsible') ? 'is-invalid' : '' }}" type="text"
                            name="responsible" id="responsible"
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended2"
+                    <label class="label-maturity-2"
                            for="applications">{{ trans('cruds.applicationBlock.fields.applications') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all"

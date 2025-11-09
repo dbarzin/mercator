@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required maxlength="64"
                                    autofocus/>
@@ -156,7 +156,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <div class="form-group">
-                                <label class="recommended1"
+                                <label class="label-maturity-1"
                                        for="applications">{{ trans('cruds.logicalServer.fields.clusters') }}</label>
                                 <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                                         name="clusters[]" id="clusters" multiple>
@@ -316,7 +316,7 @@
                     <div class="row">
                         <div class="col-sm">
                             <div class="form-group">
-                                <label class="recommended1"
+                                <label class="label-maturity-1"
                                        for="applications">{{ trans('cruds.logicalServer.fields.applications') }}</label>
                                 <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                                         name="applications[]" id="applications" multiple>
@@ -361,7 +361,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="recommended1"
+                                <label class="label-maturity-1"
                                        for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
                                 <select class="form-control select2 {{ $errors->has('domains') ? 'is-invalid' : '' }}"
                                         name="domain_id" id="domain_id">

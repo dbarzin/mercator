@@ -9,7 +9,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.task.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.task.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $task->name) }}" required autofocus/>
                     @if($errors->has('name'))
@@ -20,7 +20,7 @@
                     <span class="help-block">{{ trans('cruds.task.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended3" for="description">{{ trans('cruds.task.fields.description') }}</label>
+                    <label class="label-maturity-3" for="description">{{ trans('cruds.task.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
                               id="description">{{ old('description', $task->description) }}</textarea>

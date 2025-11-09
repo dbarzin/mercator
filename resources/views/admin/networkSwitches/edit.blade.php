@@ -12,7 +12,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.networkSwitch.fields.name') }}</label>
+                        <label class="label-required" for="name">{{ trans('cruds.networkSwitch.fields.name') }}</label>
                         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                name="name"
                                id="name" value="{{ old('name', $networkSwitch->name) }}" required autofocus/>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label class="recommended1"
+                        <label class="label-maturity-1"
                                for="description">{{ trans('cruds.networkSwitch.fields.description') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                   name="description"

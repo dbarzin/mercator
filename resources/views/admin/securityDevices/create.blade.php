@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.securityDevice.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.securityDevice.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.securityDevice.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"

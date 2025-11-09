@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.application.fields.name') }}</label>
                             <input type="text" class="form-control" id="name" name="name"
                                    value="{{ old('name', $application->name) }}" required maxlength="32" autofocus/>
                             <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
@@ -60,7 +60,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.application.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -103,7 +103,7 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="recommended2"
+                            <label class="label-maturity-2"
                                    for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsibles[]" id="responsibles" multiple>
@@ -199,7 +199,7 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="users">{{ trans('cruds.application.fields.users') }}</label>
                             <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}"
                                     name="users" id="users">
@@ -266,7 +266,7 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="technology">{{ trans('cruds.application.fields.technology') }}</label>
                             <select class="form-control select2-free {{ $errors->has('technology') ? 'is-invalid' : '' }}"
                                     name="technology" id="technology">
@@ -287,7 +287,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="recommended1" for="type">{{ trans('cruds.application.fields.type') }}</label>
+                            <label class="label-maturity-1" for="type">{{ trans('cruds.application.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
@@ -435,7 +435,7 @@
                 <div class="row">
                     <div class="col-7">
                         <div class="form-group">
-                            <label class="recommended2"
+                            <label class="label-maturity-2"
                                    for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
                             <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                                 <tr>
@@ -645,7 +645,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="processes">{{ trans('cruds.application.fields.processes') }}</label>
                             <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}"
                                     name="processes[]" id="processes" multiple>

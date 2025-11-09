@@ -39,19 +39,31 @@ class Vlan extends Model
         'deleted_at',
     ];
 
-    /** @return BelongsToMany<PhysicalRouter, $this> */
+    /**
+     * Get the physical routers associated with this VLAN.
+     *
+     * @return BelongsToMany<PhysicalRouter, $this> Belongs-to-many relationship for PhysicalRouter models, ordered by `name`.
+     */
     public function physicalRouters(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<NetworkSwitch, $this> */
+    /**
+     * Get the network switches associated with this VLAN, ordered by name.
+     *
+     * @return BelongsToMany<NetworkSwitch, $this> BelongsToMany relationship for NetworkSwitch models related to this Vlan, ordered by `name`.
+     */
     public function networkSwitches(): BelongsToMany
     {
         return $this->belongsToMany(NetworkSwitch::class)->orderBy('name');
     }
 
-    /** @return HasMany<Subnetwork, $this> */
+    /**
+     * Get subnetworks that belong to this VLAN, ordered by name.
+     *
+     * @return HasMany<Subnetwork, $this> HasMany relation of Subnetwork models associated with this VLAN, ordered by name.
+     */
     public function subnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy('name');

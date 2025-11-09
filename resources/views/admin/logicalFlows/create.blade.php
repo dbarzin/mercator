@@ -111,7 +111,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.logicalFlow.fields.source_ip_range') }}</label>
+                        <label class="label-required" for="name">{{ trans('cruds.logicalFlow.fields.source_ip_range') }}</label>
                         <input class="form-control {{ $errors->has('source_ip_range') ? 'is-invalid' : '' }}" type="text" name="source_ip_range" id="source_ip_range" value="{{ old('source_ip_range') }}">
                         @if($errors->has('source_ip_range'))
                             <div class="invalid-feedback">
@@ -136,7 +136,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.logicalFlow.fields.dest_ip_range') }}</label>
+                        <label class="label-required" for="name">{{ trans('cruds.logicalFlow.fields.dest_ip_range') }}</label>
                         <input class="form-control {{ $errors->has('source_ip_range') ? 'is-invalid' : '' }}" type="text" name="dest_ip_range" id="dest_ip_range" value="{{ old('dest_ip_range') }}">
                         @if($errors->has('dest_ip_range'))
                             <div class="invalid-feedback">
