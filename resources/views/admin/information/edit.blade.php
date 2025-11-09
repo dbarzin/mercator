@@ -23,7 +23,7 @@
                     <span class="help-block">{{ trans('cruds.information.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.information.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="storage">{{ trans('cruds.information.fields.storage') }}</label>
                             <select class="form-control select2-free {{ $errors->has('storage') ? 'is-invalid' : '' }}"
                                     name="storage" id="storage">
@@ -85,7 +85,7 @@
 
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="owner">{{ trans('cruds.information.fields.owner') }}</label>
                             <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}"
                                     name="owner" id="owner">
@@ -104,7 +104,7 @@
                             <span class="help-block">{{ trans('cruds.information.fields.owner_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="administrator">{{ trans('cruds.information.fields.administrator') }}</label>
                             <select class="form-control select2-free {{ $errors->has('administrator') ? 'is-invalid' : '' }}"
                                     name="administrator" id="administrator">
@@ -124,7 +124,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="recommended2"
+                            <label class="label-maturity-2"
                                    for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
                             <select class="form-control select2-free {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}"
                                     name="sensitivity" id="sensitivity">
@@ -151,7 +151,7 @@
                             <table cellspacing="5" cellpadding="5" border="0">
                                 <tr>
                                     <td width="140">
-                                        <label class="recommended2"
+                                        <label class="label-maturity-2"
                                                for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
                                     </td>
                                     <td align="right" width="10">

@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended1" for="description">{{ trans('cruds.router.fields.description') }}</label>
+                    <label class="label-maturity-1" for="description">{{ trans('cruds.router.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
                     @if($errors->has('description'))

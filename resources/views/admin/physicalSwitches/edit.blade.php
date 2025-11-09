@@ -29,7 +29,7 @@
 
                         <div class="form-group">
                             <label for="type"
-                                   class="recommended1">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
+                                   class="label-maturity-1">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                     <label for="description"
-                           class="recommended1">{{ trans('cruds.physicalSwitch.fields.description') }}</label>
+                           class="label-maturity-1">{{ trans('cruds.physicalSwitch.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
                               id="description">{!! old('description', $physicalSwitch->description) !!}</textarea>

@@ -26,7 +26,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label class="recommended1"
+                        <label class="label-maturity-1"
                                for="description">{{ trans('cruds.networkSwitch.fields.description') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                   name="description"

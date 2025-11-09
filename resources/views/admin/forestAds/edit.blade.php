@@ -22,7 +22,7 @@
                     <span class="help-block">{{ trans('cruds.forestAd.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.forestAd.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -35,7 +35,7 @@
                     <span class="help-block">{{ trans('cruds.forestAd.fields.description_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="zone_admin_id">{{ trans('cruds.forestAd.fields.zone_admin') }}</label>
                     <select class="form-control select2 {{ $errors->has('zone_admin') ? 'is-invalid' : '' }}"
                             name="zone_admin_id" id="zone_admin_id">

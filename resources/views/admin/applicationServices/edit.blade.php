@@ -22,7 +22,7 @@
                     <span class="help-block">{{ trans('cruds.applicationService.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended2"
+                    <label class="label-maturity-2"
                            for="description">{{ trans('cruds.applicationService.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended2"
+                    <label class="label-maturity-2"
                            for="applications">{{ trans('cruds.applicationService.fields.applications') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all"

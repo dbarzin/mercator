@@ -86,7 +86,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.entity.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('contact_point') ? 'is-invalid' : '' }}"
                               name="contact_point" id="contact_point">{!! old('contact_point') !!}</textarea>
@@ -131,7 +131,7 @@
                     <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="seurity_level">{{ trans('cruds.entity.fields.security_level') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}"
                               name="security_level" id="security_level">{!! old('security_level') !!}</textarea>

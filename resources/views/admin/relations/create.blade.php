@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended1" for="type">{{ trans('cruds.relation.fields.type') }}</label>
+                            <label class="label-maturity-1" for="type">{{ trans('cruds.relation.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
@@ -151,7 +151,7 @@
                 </div>
                 <!---------------------------------------------------------------------------------------------------->
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="description">{{ trans('cruds.relation.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description" id="description">{!! old('description') !!}</textarea>
@@ -201,7 +201,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="recommended2"
+                            <label class="label-maturity-2"
                                    for="importance">{{ trans('cruds.relation.fields.importance') }}</label>
                             <select class="form-control select2 risk {{ $errors->has('importance') ? 'is-invalid' : '' }}"
                                     name="importance" id="importance">

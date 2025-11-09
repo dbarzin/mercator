@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('ip_allocation_type') ? 'is-invalid' : '' }}"
                                     name="ip_allocation_type" id="ip_allocation_type">
@@ -127,7 +127,7 @@
                     <div class="col-sm">
 
                         <div class="form-group">
-                            <label class="recommended1" for="zone">{{ trans('cruds.subnetwork.fields.zone') }}</label>
+                            <label class="label-maturity-1" for="zone">{{ trans('cruds.subnetwork.fields.zone') }}</label>
                             <select class="form-control select2-free {{ $errors->has('zone') ? 'is-invalid' : '' }}"
                                     name="zone" id="zone">
                                 <option></option>
@@ -148,7 +148,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="recommended1" for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
+                            <label class="label-maturity-1" for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
                             <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}"
                                     name="dmz" id="dmz">
                                 <option></option>
@@ -169,7 +169,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="recommended1" for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
+                            <label class="label-maturity-1" for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
                             <select class="form-control select2-free {{ $errors->has('wifi') ? 'is-invalid' : '' }}"
                                     name="wifi" id="wifi">
                                 <option></option>
@@ -190,7 +190,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
                             <select class="form-control select2-free {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}"
                                     name="responsible_exp" id="responsible_exp">
