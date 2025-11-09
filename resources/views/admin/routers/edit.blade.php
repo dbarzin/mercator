@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <form method="POST" action="{{ route("admin.routers.update", [$router->id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route("admin.routers.update", [$router->id]) }}">
         @method('PUT')
         @csrf
         <div class="card">

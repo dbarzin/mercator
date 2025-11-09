@@ -111,15 +111,15 @@
 
                         <div class="form-group">
                             <label for="gateway_id">{{ trans('cruds.subnetwork.fields.gateway') }}</label>
-                            <select class="form-control select2 {{ $errors->has('gateway') ? 'is-invalid' : '' }}"
+                            <select class="form-control select2 {{ $errors->has('gateway_id') ? 'is-invalid' : '' }}"
                                     name="gateway_id" id="gateway_id">
                                 @foreach($gateways as $id => $gateway)
                                     <option value="{{ $id }}" {{ ($subnetwork->gateway ? $subnetwork->gateway->id : old('gateway_id')) == $id ? 'selected' : '' }}>{{ $gateway }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('gateway'))
+                            @if($errors->has('gateway_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('gateway') }}
+                                    {{ $errors->first('gateway_id') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.subnetwork.fields.gateway_helper') }}</span>
@@ -208,16 +208,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="vlan_id">{{ trans('cruds.subnetwork.fields.network') }}</label>
+                    <label for="network_id">{{ trans('cruds.subnetwork.fields.network') }}</label>
                     <select class="form-control select2 {{ $errors->has('network') ? 'is-invalid' : '' }}"
                             name="network_id" id="network_id">
                         @foreach($networks as $id => $network)
                             <option value="{{ $id }}" {{ ($subnetwork->network ? $subnetwork->network->id : old('network_id')) == $id ? 'selected' : '' }}>{{ $network }}</option>
                         @endforeach
                     </select>
-                    @if($errors->has('network'))
+                    @if($errors->has('network_id'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('network') }}
+                            {{ $errors->first('network_id') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.subnetwork.fields.network_helper') }}</span>
