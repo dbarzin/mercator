@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="entities">{{ trans('cruds.gateway.fields.subnetworks') }}</label>
+                    <label for="subnetworks">{{ trans('cruds.gateway.fields.subnetworks') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all"
                               style="border-radius: 0">{{ trans('global.select_all') }}</span>

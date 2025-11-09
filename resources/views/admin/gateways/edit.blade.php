@@ -35,8 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended"
-                           for="applications">{{ trans('cruds.gateway.fields.subnetworks') }}</label>
+                    <label for="applications">{{ trans('cruds.gateway.fields.subnetworks') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all"
                               style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -52,7 +51,7 @@
                     @if($errors->has('subnetworks'))
                         <span class="text-danger">{{ $errors->first('subnetworks') }}</span>
                     @endif
-                    <span class="help-block">{{ trans('cruds.gateway.fields.subnetworks') }}</span>
+                    <span class="help-block">{{ trans('cruds.gateway.fields.subnetworks_helper') }}</span>
                 </div>
 
 
