@@ -45,6 +45,12 @@ class Vlan extends Model
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
+    /** @return BelongsToMany<NetworkSwitch, $this> */
+    public function networkSwitches(): BelongsToMany
+    {
+        return $this->belongsToMany(NetworkSwitch::class)->orderBy('name');
+    }
+
     /** @return HasMany<Subnetwork, $this> */
     public function subnetworks(): HasMany
     {

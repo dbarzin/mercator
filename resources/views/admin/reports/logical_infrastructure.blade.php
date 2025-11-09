@@ -516,6 +516,17 @@
                                                 <td>{!! $networkSwitch->description !!}</td>
                                             </tr>
                                             <tr>
+                                                <th>{{ trans("cruds.networkSwitch.fields.vlans") }}</th>
+                                                <td>
+                                                    @foreach($networkSwitch->vlans as $vlan)
+                                                        <a href="#VLAN{{ $vlan->id }}">{{ $vlan->name }}</a>
+                                                        @if (!$loop->last)
+                                                            ,
+                                                        @endif
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <th>{{ trans("cruds.networkSwitch.fields.ip") }}</th>
                                                 <td>{!! $networkSwitch->ip !!}</td>
                                             </tr>
