@@ -13,7 +13,7 @@
 
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label class="required" for="userId">{{ trans('cruds.adminUser.fields.user_id') }}</label>
+                        <label class="label-required" for="userId">{{ trans('cruds.adminUser.fields.user_id') }}</label>
                         <input class="form-control {{ $errors->has('userId') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" value="{{ old('user_id', $adminUser->user_id) }}" required autofocus/>
                         @if($errors->has('userId'))
                             <div class="invalid-feedback">

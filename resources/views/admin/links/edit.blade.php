@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
                             <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}"
                                     name="src_id" id="src_id" autofocus>
                                 <option>...</option>
@@ -31,7 +31,7 @@
 
                     <div class="col-sm-1">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.physicalLink.fields.src_port') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.physicalLink.fields.src_port') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="src_port" id="src_port" value="{{ old('src_port', $link->src_port) }}">
                             @if($errors->has('src_port'))
@@ -45,7 +45,7 @@
 
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.physicalLink.fields.dest') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.physicalLink.fields.dest') }}</label>
                             <select class="form-control select2 {{ $errors->has('dest_id') ? 'is-invalid' : '' }}"
                                     name="dest_id" id="dest_id">
                                 <option>...</option>
@@ -64,7 +64,7 @@
 
                     <div class="col-sm-1">
                         <div class="form-group">
-                            <label class="required"
+                            <label class="label-required"
                                    for="name">{{ trans('cruds.physicalLink.fields.dest_port') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="dest_port" id="dest_port" value="{{ old('dest_port', $link->dest_port) }}">

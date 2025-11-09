@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.cluster.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.cluster.fields.address_ip') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.cluster.fields.address_ip') }}</label>
                     <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                            name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}">
                     @if($errors->has('address_ip'))

@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.flux.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.flux.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -84,7 +84,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.flux.fields.source') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.flux.fields.source') }}</label>
                             <select class="form-control select2 {{ $errors->has('dest_id') ? 'is-invalid' : '' }}"
                                     name="src_id" id="src_id">
                                 <option></option>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.flux.fields.destination') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.flux.fields.destination') }}</label>
                             <select class="form-control select2 {{ $errors->has('dest_id') ? 'is-invalid' : '' }}"
                                     name="dest_id" id="dest_id">
                                 <option></option>

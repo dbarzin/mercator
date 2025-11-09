@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
+                        <label class="label-required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
                         <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="src_id" id="src_id" autofocus>
                                 <option></option>
                             @foreach($devices as $id => $name)
@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.physicalLink.fields.dest') }}</label>
+                        <label class="label-required" for="name">{{ trans('cruds.physicalLink.fields.dest') }}</label>
                         <select class="form-control select2 {{ $errors->has('dest_id') ? 'is-invalid' : '' }}" name="dest_id" id="dest_id">
                                 <option></option>
                             @foreach($devices as $id => $name)

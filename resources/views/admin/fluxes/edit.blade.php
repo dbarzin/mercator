@@ -15,7 +15,7 @@
 
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.flux.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.flux.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $flux->name) }}" required autofocus/>
                             @if($errors->has('name'))

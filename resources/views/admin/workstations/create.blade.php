@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.workstation.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.workstation.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))

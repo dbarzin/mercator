@@ -9,7 +9,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.dhcpServer.fields.name') }}</label>
+                <label class="label-required" for="name">{{ trans('cruds.dhcpServer.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
@@ -29,7 +29,7 @@
                 <span class="help-block">{{ trans('cruds.dhcpServer.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.dhcpServer.fields.address_ip') }}</label>
+                <label class="label-required" for="name">{{ trans('cruds.dhcpServer.fields.address_ip') }}</label>
                 <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}" required>
                 @if($errors->has('address_ip'))
                     <div class="invalid-feedback">

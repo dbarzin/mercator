@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.physicalSwitch.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.physicalSwitch.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required maxlength="64"
                                    autofocus/>
