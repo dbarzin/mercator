@@ -1524,6 +1524,7 @@ return [
             'subnetworks_helper' => 'Sous-réseaux rattachés',
             'vlan_id' => 'VLAN-ID',
             'vlan_id_helper' => 'Identificateur uniquer du VLAN (1-4096)',
+            'network_switches' => 'Commutateurs logiques',
         ],
         'title' => 'VLAN - Virtual Local Area Network',
         'title_short' => 'VLAN',
