@@ -52,7 +52,7 @@
                                     <option value="{{ $id }}" {{ old('dest_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('src_id'))
+                            @if($errors->has('dest_id'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('dest_id') }}
                                 </div>
