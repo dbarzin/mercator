@@ -953,6 +953,13 @@ class ExplorerController extends Controller
         }
     }
 
+    /**
+     * Concatenates a prefix and an identifier into a single identifier string, or returns null if the identifier is null.
+     *
+     * @param string $prefix The string prefix to prepend.
+     * @param mixed|null $id The identifier to append; when null, no identifier is produced.
+     * @return string|null The concatenated identifier (`$prefix . $id`) when `$id` is not null, or `null` otherwise.
+     */
     private function formatId($prefix, $id)
     {
         if ($id !== null) {

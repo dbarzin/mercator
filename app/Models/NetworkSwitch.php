@@ -40,9 +40,9 @@ class NetworkSwitch extends Model
     ];
 
     /**
-     * Get the physical switches related to this network switch, ordered by name.
+     * Get the physical switches related to this NetworkSwitch, ordered by name.
      *
-     * @return BelongsToMany<PhysicalSwitch, $this> The related PhysicalSwitch models ordered by name.
+     * @return BelongsToMany<PhysicalSwitch> The related PhysicalSwitch models ordered by name.
      */
     public function physicalSwitches(): BelongsToMany
     {
