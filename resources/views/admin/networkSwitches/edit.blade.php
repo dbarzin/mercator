@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class="form-group">
                         <label for="physicalSwitches">{{ trans('cruds.networkSwitch.fields.physical_switches') }}</label>
-                        <select class="form-control select2 {{ $errors->has('physical_routers') ? 'is-invalid' : '' }}"
+                        <select class="form-control select2 {{ $errors->has('physicalSwitches') ? 'is-invalid' : '' }}"
                                 name="physicalSwitches[]" id="physicalSwitches" multiple>
                             @foreach($physicalSwitches as $id => $name)
                                 <option value="{{ $id }}" {{ (in_array($id, old('physicalSwitches', [])) || $networkSwitch->physicalSwitches->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
