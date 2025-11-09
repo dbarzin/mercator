@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <form method="POST" action="{{ route("admin.zone-admins.update", [$zoneAdmin->id]) }}"
-          enctype="multipart/form-data">
+    <form method="POST" action="{{ route("admin.zone-admins.update", [$zoneAdmin->id]) }}">
         @method('PUT')
         @csrf
         <div class="card">

@@ -1099,7 +1099,7 @@ return [
         'description' => 'Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.',
         'fields' => [
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => 'Nom de l\'équipement de sécurité',
             'address_ip' => 'Adresse IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Rack',
@@ -1125,7 +1125,7 @@ return [
         'description' => 'Machine physique exécutant un ensemble de services informatiques.',
         'fields' => [
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => 'Nom du serveur physique',
             'address_ip' => 'Adresse(s) IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Rack',

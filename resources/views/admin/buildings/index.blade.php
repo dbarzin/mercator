@@ -49,8 +49,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($buildings as $key => $building)
-                        <tr data-entry-id="{{ $building->id }}">
+                    @foreach($buildings as $building)
+                        <tr data-entry-id="{{ $building->id }}"
+                            @if (
+                                ($building->description===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>

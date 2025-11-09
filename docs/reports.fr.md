@@ -122,6 +122,7 @@ suivants :
 | Dispositifs de sécurité          | 1      | Description                                                                                            |
 | Clusters                         | 1      | Description, type                                                                                      |  
 | Serveurs logiques                | 1      | Description, OS, environnement, adresse IP, applications, serveurs physique ou clusters                |
+| VLans                            | 1      | Description                                                                                            |
 | Certificats                      | 2      | Description, Type, date de début de validité, date de fin de validité, applications ou serveur logique |
 | **Infrastructure physique**      |        |                                                                                                        |
 | Sites                            | 1      | Description                                                                                            |
@@ -137,4 +138,3 @@ suivants :
 | Terminaux WiFi                   | 1      | Description, type, site, building                                                                      |
 | Dispositifs de sécurité physique | 1      | Description, type, site, building                                                                      |
 | LANs                             | 1      | Description                                                                                            |
-| VLans                            | 1      | Description                                                                                            |

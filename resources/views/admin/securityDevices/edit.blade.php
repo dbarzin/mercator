@@ -29,8 +29,7 @@
 
                     <div class="col-3">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="type">{{ trans('cruds.securityDevice.fields.type') }}</label>
+                            <label for="type">{{ trans('cruds.securityDevice.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type"
                                     id="type">
@@ -72,7 +71,8 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.securityDevice.fields.description') }}</label>
+                            <label class="recommended1"
+                                   for="description">{{ trans('cruds.securityDevice.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description"
