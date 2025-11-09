@@ -26,7 +26,15 @@ class ExplorerController extends Controller
 
     // TODO : return a JSON in place of nodes[] and edges[]
     // TODO : split me in several private functions by views
-    // TODO : check user rights
+    /**
+     * Build node and edge collections representing the system graph across all views.
+     *
+     * The returned nodes represent entities (sites, devices, applications, processes, etc.) annotated with view level and visual metadata.
+     * Each node is an associative array with keys: `vue`, `id`, `label`, `image`, `type` and optionally `title`.
+     * Each edge is an associative array with keys: `name`, `bidirectional`, `from`, `to`, `type`.
+     *
+     * @return array An array with two elements: `[0 => array $nodes, 1 => array $edges]` where `$nodes` is the list of node arrays and `$edges` is the list of edge arrays.  
+     */
     public function getData(): array
     {
         $nodes = [];
