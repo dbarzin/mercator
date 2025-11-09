@@ -88,11 +88,11 @@
                                         <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}"
                                                 name="security_need_c" id="security_need_c">
                                             <option value="-1"></option>
-                                            <option value="0" {{ ($network->security_need_c ? $network->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                            <option value="1" {{ ($network->security_need_c ? $network->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                            <option value="2" {{ ($network->security_need_c ? $network->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                            <option value="3" {{ ($network->security_need_c ? $network->security_need_c : old('security_need_c')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                            <option value="4" {{ ($network->security_need_c ? $network->security_need_c : old('security_need_c')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                            <option value="0" {{ old('security_need_c', $network->security_need_c) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                            <option value="1" {{ old('security_need_c', $network->security_need_c) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                            <option value="2" {{ old('security_need_c', $network->security_need_c) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                            <option value="3" {{ old('security_need_c', $network->security_need_c) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                            <option value="4" {{ old('security_need_c', $network->security_need_c) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                         </select>
                                     </td>
                                     <td align="right" width="10">
@@ -102,11 +102,11 @@
                                         <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}"
                                                 name="security_need_i" id="security_need_i">
                                             <option value="-1"></option>
-                                            <option value="0" {{ ($network->security_need_i ? $network->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                            <option value="1" {{ ($network->security_need_i ? $network->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                            <option value="2" {{ ($network->security_need_i ? $network->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                            <option value="3" {{ ($network->security_need_i ? $network->security_need_i : old('security_need_i')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                            <option value="4" {{ ($network->security_need_i ? $network->security_need_i : old('security_need_i')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                            <option value="0" {{ old('security_need_i', $network->security_need_i) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                            <option value="1" {{ old('security_need_i', $network->security_need_i) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                            <option value="2" {{ old('security_need_i', $network->security_need_i) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                            <option value="3" {{ old('security_need_i', $network->security_need_i) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                            <option value="4" {{ old('security_need_i', $network->security_need_i) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                         </select>
                                     </td>
                                     <td align="right" width="10">
@@ -116,11 +116,11 @@
                                         <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}"
                                                 name="security_need_a" id="security_need_a">
                                             <option value="-1"></option>
-                                            <option value="0" {{ ($network->security_need_a ? $network->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                            <option value="1" {{ ($network->security_need_a ? $network->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                            <option value="2" {{ ($network->security_need_a ? $network->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                            <option value="3" {{ ($network->security_need_a ? $network->security_need_a : old('security_need_a')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                            <option value="4" {{ ($network->security_need_a ? $network->security_need_a : old('security_need_a')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                            <option value="0" {{ old('security_need_a', $network->security_need_a) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                            <option value="1" {{ old('security_need_a', $network->security_need_a) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                            <option value="2" {{ old('security_need_a', $network->security_need_a) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                            <option value="3" {{ old('security_need_a', $network->security_need_a) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                            <option value="4" {{ old('security_need_a', $network->security_need_a) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                         </select>
                                     </td>
                                     <td align="right" width="10">
@@ -130,11 +130,11 @@
                                         <select class="form-control select2 risk{{ $errors->has('security_need_t') ? 'is-invalid' : '' }}"
                                                 name="security_need_t" id="security_need_t">
                                             <option value="-1"></option>
-                                            <option value="0" {{ ($network->security_need_t ? $network->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                            <option value="1" {{ ($network->security_need_t ? $network->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                            <option value="2" {{ ($network->security_need_t ? $network->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                            <option value="3" {{ ($network->security_need_t ? $network->security_need_t : old('security_need_t')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                            <option value="4" {{ ($network->security_need_t ? $network->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                            <option value="0" {{ old('security_need_t', $network->security_need_t) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                            <option value="1" {{ old('security_need_t', $network->security_need_t) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                            <option value="2" {{ old('security_need_t', $network->security_need_t) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                            <option value="3" {{ old('security_need_t', $network->security_need_t) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                            <option value="4" {{ old('security_need_t', $network->security_need_t) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                         </select>
                                     </td>
                                     @if (config('mercator-config.parameters.security_need_auth'))
@@ -145,11 +145,11 @@
                                             <select class="form-control select2 risk{{ $errors->has('security_need_auth') ? 'is-invalid' : '' }}"
                                                     name="security_need_auth" id="security_need_auth">
                                                 <option value="-1"></option>
-                                                <option value="0" {{ ($network->security_need_auth ? $network->security_need_auth : old('security_need_auth')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                                <option value="1" {{ ($network->security_need_auth ? $network->security_need_auth : old('security_need_auth')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                                <option value="2" {{ ($network->security_need_auth ? $network->security_need_auth : old('security_need_auth')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                                <option value="3" {{ ($network->security_need_auth ? $network->security_need_auth : old('security_need_auth')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                                <option value="4" {{ ($network->security_need_auth ? $network->security_need_auth : old('security_need_auth')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                                <option value="0" {{ old('security_need_auth', $network->security_need_auth) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                                <option value="1" {{ old('security_need_auth', $network->security_need_auth) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                                <option value="2" {{ old('security_need_auth', $network->security_need_auth) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                                <option value="3" {{ old('security_need_auth', $network->security_need_auth) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                                <option value="4" {{ old('security_need_auth', $network->security_need_auth) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                             </select>
                                         </td>
                                     @endif
