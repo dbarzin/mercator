@@ -63,8 +63,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="label-maturity-1 for="
-                                   site_id">{{ trans('cruds.physicalRouter.fields.site') }}</label>
+                            <label class="label-maturity-1"
+                                   for="site_id">{{ trans('cruds.physicalRouter.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
                                 <option value="">{{ trans('global.pleaseSelect') }} </option>
