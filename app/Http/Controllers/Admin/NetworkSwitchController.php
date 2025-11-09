@@ -9,6 +9,7 @@ use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
 use App\Models\NetworkSwitch;
 use App\Models\PhysicalSwitch;
+use App\Models\Vlan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,15 +28,18 @@ class NetworkSwitchController extends Controller
     {
         abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalSwitches = PhysicalSwitch::all()->sortBy('name')->pluck('name', 'id');
+        $physicalSwitches = PhysicalSwitch::query()->orderBy('name')->pluck('name', 'id');
+        $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id');
 
-        return view('admin.networkSwitches.create', compact('physicalSwitches'));
+        return view('admin.networkSwitches.create',
+            compact('physicalSwitches', 'vlans'));
     }
 
     public function store(StoreNetworkSwitchRequest $request)
     {
         $networkSwitch = NetworkSwitch::create($request->all());
         $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
+        $networkSwitch->vlans()->sync($request->input('vlans', []));
 
         return redirect()->route('admin.network-switches.index');
     }
@@ -44,11 +48,12 @@ class NetworkSwitchController extends Controller
     {
         abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalSwitches = PhysicalSwitch::all()->sortBy('name')->pluck('name', 'id');
+        $physicalSwitches = PhysicalSwitch::query()->orderBy('name')->pluck('name', 'id');
+        $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id');
 
         return view(
             'admin.networkSwitches.edit',
-            compact('networkSwitch', 'physicalSwitches')
+            compact('networkSwitch', 'physicalSwitches','vlans')
         );
     }
 
@@ -56,6 +61,7 @@ class NetworkSwitchController extends Controller
     {
         $networkSwitch->update($request->all());
         $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
+        $networkSwitch->vlans()->sync($request->input('vlans', []));
 
         return redirect()->route('admin.network-switches.index');
     }

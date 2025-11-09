@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="applications">{{ trans('cruds.gateway.fields.subnetworks') }}</label>
+                    <label for="subnetworks">{{ trans('cruds.gateway.fields.subnetworks') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all"
                               style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -49,16 +49,18 @@
                         @endforeach
                     </select>
                     @if($errors->has('subnetworks'))
-                        <span class="text-danger">{{ $errors->first('subnetworks') }}</span>
+                        <div class="invalid-feedback">
+                            {{ $errors->first('subnetworks') }}
+                        </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.gateway.fields.subnetworks_helper') }}</span>
                 </div>
 
-
                 <div class="form-group">
                     <label class="recommended1"
                            for="authentification">{{ trans('cruds.gateway.fields.authentification') }}</label>
-                    <input class="form-control {{ $errors->has('authentification') ? 'is-invalid' : '' }}" type="text"
+                    <input class="form-control {{ $errors->has('authentification') ? 'is-invalid' : '' }}"
+                           type="text"
                            name="authentification" id="authentification"
                            value="{{ old('authentification', $gateway->authentification) }}">
                     @if($errors->has('authentification'))
@@ -70,7 +72,8 @@
                 </div>
                 <div class="form-group">
                     <label class="recommended1" for="ip">{{ trans('cruds.gateway.fields.ip') }}</label>
-                    <input class="form-control {{ $errors->has('ip') ? 'is-invalid' : '' }}" type="text" name="ip"
+                    <input class="form-control {{ $errors->has('ip') ? 'is-invalid' : '' }}" type="text"
+                           name="ip"
                            id="ip" value="{{ old('ip', $gateway->ip) }}">
                     @if($errors->has('ip'))
                         <div class="invalid-feedback">

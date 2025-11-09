@@ -17,9 +17,10 @@
                         @endif
 
                         <div class="col-sm-4">
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped"
+                                   style="max-width: 600px; width: 100%;">
                                 <tr>
-                                    <td>
+                                    <td width="50%">
                                         {{ trans("cruds.network.title_singular") }} :
                                         <select name="network" id="network"
                                                 onchange="this.form.subnetwork.value='';this.form.submit()"
@@ -30,7 +31,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td width="50%">
                                         {{ trans("cruds.subnetwork.title_singular") }} :
                                         <select name="subnetwork" id="subnetwork" onchange="this.form.submit()"
                                                 class="form-control select2">
@@ -100,7 +101,8 @@
                             @foreach($networks as $network)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="NETWORK{{ $network->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/networks/{{ $network->id }}">{{ $network->name }}</a>
@@ -259,7 +261,8 @@
                             @foreach($subnetworks as $subnetwork)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="SUBNET{{ $subnetwork->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/subnetworks/{{ $subnetwork->id }}">{{ $subnetwork->name }}</a>
@@ -343,7 +346,8 @@
                             @foreach($gateways as $gateway)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="GATEWAY{{ $gateway->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/gateways/{{ $gateway->id }}">{{ $gateway->name }}</a>
@@ -395,7 +399,8 @@
                             @foreach($externalConnectedEntities as $entity)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="EXTENTITY{{ $entity->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/external-connected-entities/{{ $entity->id }}">{{ $entity->name }}</a>
@@ -456,7 +461,8 @@
                             @foreach($routers as $router)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="ROUTER{{ $router->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/routers/{{ $router->id }}">{{ $router->name }}</a>
@@ -497,7 +503,8 @@
                             @foreach($networkSwitches as $networkSwitch)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="SW{{ $networkSwitch->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/network-switches/{{ $networkSwitch->id }}">{{ $networkSwitch->name }}</a>
@@ -507,6 +514,17 @@
                                             <tr>
                                                 <th width="20%">{{ trans("cruds.networkSwitch.fields.description") }}</th>
                                                 <td>{!! $networkSwitch->description !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ trans("cruds.networkSwitch.fields.vlans") }}</th>
+                                                <td>
+                                                    @foreach($networkSwitch->vlans as $vlan)
+                                                        <a href="#VLAN{{ $vlan->id }}">{{ $vlan->name }}</a>
+                                                        @if (!$loop->last)
+                                                            ,
+                                                        @endif
+                                                    @endforeach
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.networkSwitch.fields.ip") }}</th>
@@ -534,7 +552,8 @@
                             @foreach($clusters as $cluster)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="CLUSTER{{ $cluster->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/clusters/{{ $cluster->id }}">{{ $cluster->name }}</a>
@@ -601,7 +620,8 @@
                             @foreach($logicalServers as $logicalServer)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="LOGICAL_SERVER{{ $logicalServer->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/logical-servers/{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
@@ -729,7 +749,8 @@
                             @foreach($containers as $container)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="CONT{{ $container->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/containers/{{ $container->id }}">{{ $container->name }}</a>
@@ -811,7 +832,8 @@
                             @foreach($workstations as $workstation)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="WORKSTATION{{ $workstation->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/workstations/{{ $workstation->id }}">{{ $workstation->name }}</a>
@@ -868,7 +890,8 @@
                             @foreach($phones as $phone)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="PHONE{{ $phone->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
@@ -925,7 +948,8 @@
                             @foreach($physicalSecurityDevices as $physicalSecurityDevice)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="SECURITY{{ $physicalSecurityDevice->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
@@ -982,7 +1006,8 @@
                             @foreach($storageDevices as $storageDevice)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="STOR{{ $storageDevice->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/storage-devices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
@@ -1047,7 +1072,8 @@
                             @foreach($wifiTerminals as $wifiTerminal)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="WIFI{{ $wifiTerminal->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
@@ -1070,8 +1096,7 @@
                                                 <th>{{ trans("cruds.wifiTerminal.fields.site") }}</th>
                                                 <td>
                                                     @if ($wifiTerminal->site!==null)
-                                                        <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{!
-                                                            $wifiTerminal->site->name !}</a>
+                                                        <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{{ $wifiTerminal->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1079,8 +1104,8 @@
                                                 <th>{{ trans("cruds.wifiTerminal.fields.building") }}</th>
                                                 <td>
                                                     @if ($wifiTerminal->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">{!
-                                                            $wifiTerminal->building->name !}</a>
+                                                        <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">
+                                                            {{$wifiTerminal->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1106,7 +1131,8 @@
                             @foreach($peripherals as $peripheral)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="PERIPHERAL{{ $peripheral->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/peripherals/{{ $peripheral->id }}">{{ $peripheral->name }}</a>
@@ -1175,7 +1201,8 @@
                             @foreach($dhcpServers as $dhcpServer)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="DHCP_SERVER{{ $dhcpServer->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/dhcp-servers/{{ $dhcpServer->id }}">{{ $dhcpServer->name }}</a>
@@ -1212,7 +1239,8 @@
                             @foreach($dnsservers as $dnsserver)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="DNS_SERVER{{ $dnsserver->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/dnsservers/{{ $dnsserver->id }}">{{ $dnsserver->name }}</a>
@@ -1249,7 +1277,8 @@
                             @foreach($certificates as $certificate)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="CERT{{ $certificate->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/certificates/{{ $certificate->id }}">{{ $certificate->name }}</a>
@@ -1322,7 +1351,8 @@
                             @foreach($vlans as $vlan)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="VLAN{{ $vlan->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/vlans/{{ $vlan->id }}">{{ $vlan->name }}</a>
@@ -1584,6 +1614,11 @@ digraph  {
         @can('network_switch_access')
         @foreach($networkSwitches as $networkSwitch)
         SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!=null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
+        @if ($networkSwitch->vlans->count()>0)
+        @foreach($networkSwitch->vlans as $vlan)
+        VLAN{{ $vlan->id }} -> SW{{ $networkSwitch->id }}
+        @endforeach
+        @else
         @foreach(explode(',',$networkSwitch->ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1591,6 +1626,7 @@ digraph  {
         @endif
         @endforeach
         @endforeach
+        @endif
         @endforeach
         @endcan
 

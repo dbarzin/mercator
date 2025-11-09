@@ -93,17 +93,31 @@ class LogicalInfrastructureView extends Controller
                     return false;
                 });
 
+            // Get VLANS
+            $vlans = Vlan::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    return $subnetworks->pluck('vlan_id')->contains($item->id);
+                });
+
             // Get NetworkSwitches
             $networkSwitches = NetworkSwitch::All()->sortBy('name')
-                ->filter(function ($item) use ($subnetworks) {
-                    foreach (explode(',', $item->ip) as $ip) {
-                        foreach ($subnetworks as $subnetwork) {
-                            if ($subnetwork->contains($ip)) {
+                ->filter(function ($item) use ($subnetworks, $vlans) {
+                    if ($item->vlans()->count()>0) {
+                        foreach ($item->vlans as $v) {
+                            if ($vlans->pluck('id')->contains($v->id)) {
                                 return true;
                             }
                         }
                     }
-
+                    else {
+                        foreach (explode(',', $item->ip) as $ip) {
+                            foreach ($subnetworks as $subnetwork) {
+                                if ($subnetwork->contains($ip)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
                     return false;
                 });
 
@@ -285,11 +299,6 @@ class LogicalInfrastructureView extends Controller
                     return false;
                 });
 
-            // Get VLANS
-            $vlans = Vlan::All()->sortBy('name')
-                ->filter(function ($item) use ($subnetworks) {
-                    return $subnetworks->pluck('vlan_id')->contains($item->id);
-                });
         } else {
             $all_subnetworks = Subnetwork::All()->sortBy('name')->pluck('name', 'id');
 

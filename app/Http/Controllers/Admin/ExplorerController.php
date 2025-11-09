@@ -404,6 +404,12 @@ class ExplorerController extends Controller
             $this->addNode($nodes, 5, $this->formatId('LSWITCH_', $networkSwitch->id), $networkSwitch->name, '/images/switch.png', 'switches');
         }
 
+        // Network Switches - VLAN
+        $joins = DB::table('network_switch_vlan')->select('network_switch_id', 'vlan_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('LSWITCH_', $join->network_switch_id), $this->formatId('VLAN_', $join->vlan_id));
+        }
+
         // Logical Security Devices
         $logical_security_devices = DB::table('security_devices')->select('id', 'name','icon_id')->whereNull('deleted_at')->get();
         foreach ($logical_security_devices as $securityDevice) {

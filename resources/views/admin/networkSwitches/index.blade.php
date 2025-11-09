@@ -29,6 +29,9 @@
                             {{ trans('cruds.networkSwitch.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.networkSwitch.fields.vlans') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.networkSwitch.fields.ip') }}
                         </th>
                         <th>
@@ -58,6 +61,16 @@
                             </td>
                             <td>
                                 {!! $networkSwitch->description ?? '' !!}
+                            </td>
+                            <td>
+                                @foreach($networkSwitch->vlans as $vlan)
+                                    <a href="{{ route('admin.vlans.show', $vlan->id) }}">
+                                        {{ $vlan->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
                                 {{ $networkSwitch->ip ?? '' }}

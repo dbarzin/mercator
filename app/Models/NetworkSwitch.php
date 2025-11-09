@@ -44,4 +44,11 @@ class NetworkSwitch extends Model
     {
         return $this->belongsToMany(PhysicalSwitch::class)->orderBy('name');
     }
+
+    /** @return BelongsToMany<Vlan, $this> */
+    public function vlans(): BelongsToMany
+    {
+        return $this->belongsToMany(Vlan::class)->orderBy('name');
+    }
+
 }

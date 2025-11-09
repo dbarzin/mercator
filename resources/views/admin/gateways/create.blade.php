@@ -42,8 +42,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('subnetworks') ? 'is-invalid' : '' }}"
                             name="subnetworks[]" id="subnetworks" multiple>
-                        @foreach($subnetworks as $id => $subnetworks)
-                            <option value="{{ $id }}" {{ in_array($id, old('subnetworks', [])) ? 'selected' : '' }}>{{ $subnetworks }}</option>
+                        @foreach($subnetworks as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('subnetworks', [])) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('subnetworks'))
