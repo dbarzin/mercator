@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     // DDL non transactionnel pour SQLite & co
-    public $withinTransaction = false;
+    public bool $withinTransaction = false;
 
     /**
      * Apply migration: create the cluster_router pivot, migrate existing router->cluster relations into it, and remove the routers.cluster_id column and its constraints/indexes.
