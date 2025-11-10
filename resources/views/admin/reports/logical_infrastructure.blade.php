@@ -17,10 +17,9 @@
                         @endif
 
                         <div class="col-sm-4">
-                            <table class="table table-bordered table-striped"
-                                   style="max-width: 600px; width: 100%;">
+                            <table class="table table-bordered table-striped" style="width: 600px;">
                                 <tr>
-                                    <td width="50%">
+                                    <td style="width: 300px;">
                                         {{ trans("cruds.network.title_singular") }} :
                                         <select name="network" id="network"
                                                 onchange="this.form.subnetwork.value='';this.form.submit()"
@@ -31,7 +30,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td width="50%">
+                                    <td style="width: 300px;">
                                         {{ trans("cruds.subnetwork.title_singular") }} :
                                         <select name="subnetwork" id="subnetwork" onchange="this.form.submit()"
                                                 class="form-control select2">
