@@ -91,14 +91,11 @@ class SubnetworkController extends Controller
         abort_if(Gate::denies('subnetwork_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $connected_subnets = Subnetwork::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $gateways = Gateway::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = Network::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $subnetworks = Subnetwork::query()
-            ->whereKeyNot($subnetwork->id)
-            ->orderBy('name')
-            ->pluck('name', 'id')
-            ->prepend(trans('global.pleaseSelect'), '');
+        $gateways = Gateway::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $vlans = Vlan::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = Network::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '')0;
+        $subnetworks = Subnetwork::query()->whereKeyNot($subnetwork->id)->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
         // lists
         $ip_allocation_type_list = Subnetwork::select('ip_allocation_type')->where('ip_allocation_type', '<>', null)->distinct()->orderBy('ip_allocation_type')->pluck('ip_allocation_type');
         $responsible_exp_list = Subnetwork::select('responsible_exp')->where('responsible_exp', '<>', null)->distinct()->orderBy('responsible_exp')->pluck('responsible_exp');
