@@ -44,6 +44,7 @@ class Subnetwork extends Model
         'responsible_exp',
         'gateway_id',
         'network_id',
+        'subnetwork_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -83,6 +84,12 @@ class Subnetwork extends Model
     public function vlan(): BelongsTo
     {
         return $this->belongsTo(Vlan::class, 'vlan_id');
+    }
+
+    /** @return BelongsTo<Subnetwork, $this> */
+    public function subnetwork(): BelongsTo
+    {
+        return $this->belongsTo(Subnetwork::class, 'subnetwork_id');
     }
 
     public function ipRange(): ?string

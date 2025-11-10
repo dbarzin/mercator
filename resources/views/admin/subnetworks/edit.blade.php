@@ -10,85 +10,163 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label class="label-required" for="name">{{ trans('cruds.subnetwork.fields.name') }}</label>
-                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
-                           id="name" value="{{ old('name', $subnetwork->name) }}" required autofocus/>
-                    @if($errors->has('name'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('name') }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="label-required" for="name">{{ trans('cruds.subnetwork.fields.name') }}</label>
+                            <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
+                                   name="name"
+                                   id="name" value="{{ old('name', $subnetwork->name) }}" required autofocus/>
+                            @if($errors->has('name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.subnetwork.fields.name_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.name_helper') }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label class="label-maturity-1"
-                           for="description">{{ trans('cruds.subnetwork.fields.description') }}</label>
-                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                              name="description"
-                              id="description">{!! old('description', $subnetwork->description) !!}</textarea>
-                    @if($errors->has('description'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('description') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.description_helper') }}</span>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm">
-                        <table width='100%'>
-                            <tr>
-                                <td>
-                                    <div class="form-group">
-                                        <label class="label-maturity-1"
-                                               for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
-                                        <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                                               type="text" name="address" id="address"
-                                               value="{{ old('address', $subnetwork->address) }}">
-                                        @if($errors->has('address'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('address') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <label class="label-maturity-1"
-                                               for="default_gateway">{{ trans('cruds.subnetwork.fields.default_gateway') }}</label>
-                                        <input class="form-control {{ $errors->has('default_gateway') ? 'is-invalid' : '' }}"
-                                               type="text" name="default_gateway" id="default_gateway"
-                                               value="{{ old('default_gateway', $subnetwork->default_gateway) }}">
-                                        @if($errors->has('default_gateway'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('default_gateway') }}
-                                            </div>
-                                        @endif
-                                        <span class="help-block">{{ trans('cruds.subnetwork.fields.default_gateway_helper') }}</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
 
                         <div class="form-group">
                             <label class="label-maturity-1"
-                                   for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>
-                            <select class="form-control select2 {{ $errors->has('vlan_id') ? 'is-invalid' : '' }}"
-                                    name="vlan_id" id="vlan_id">
-                                @foreach($vlans as $id => $vlan)
-                                    <option value="{{ $id }}" {{ ($subnetwork->vlan ? $subnetwork->vlan->id : old('vlan_id')) == $id ? 'selected' : '' }}>{{ $vlan }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('vlan_id'))
+                                   for="description">{{ trans('cruds.subnetwork.fields.description') }}</label>
+                            <textarea
+                                    class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    name="description" rows="4"
+                                    id="description">{!! old('description', $subnetwork->description) !!}</textarea>
+                            @if($errors->has('description'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('vlan_id') }}
+                                    {{ $errors->first('description') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.subnetwork.fields.vlan_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.subnetwork.fields.description_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-header">
+                {{ trans('cruds.subnetwork.title_connexion') }}
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="network_id">{{ trans('cruds.subnetwork.fields.network') }}</label>
+                            <select class="form-control select2 {{ $errors->has('network_id') ? 'is-invalid' : '' }}"
+                                    name="network_id" id="network_id">
+                                @foreach($networks as $id => $name)
+                                    <option value="{{ $id }}" {{ ($subnetwork->network ? $subnetwork->network->id : old('network_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('network_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('network_id') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.subnetwork.fields.network_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="subnetwork_id">{{ trans('cruds.subnetwork.fields.subnetwork') }}</label>
+                            <select class="form-control select2 {{ $errors->has('subnetwork_id') ? 'is-invalid' : '' }}"
+                                    name="subnetwork_id" id="subnetwork_id">
+                                <option></option>
+                                @foreach($subnetworks as $id => $name)
+                                    <option value="{{ $id }}" {{ ($subnetwork->subnetwork ? $subnetwork->subnetwork->id : old('subnetwork_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('subnetwork_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('subnetwork_id') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.subnetwork.fields.subnetwork_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-header">
+                {{ trans('cruds.subnetwork.title_addressing') }}
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="label-maturity-1"
+                                   for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
+                            <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
+                                   type="text" name="address" id="address"
+                                   value="{{ old('address', $subnetwork->address) }}">
+                            @if($errors->has('address'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('address') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="label-maturity-1" for="default_gateway">
+                                {{ trans('cruds.subnetwork.fields.default_gateway') }}
+                            </label>
+                            <input
+                                    class="form-control {{ $errors->has('default_gateway') ? 'is-invalid' : '' }}"
+                                    type="text"
+                                    name="default_gateway"
+                                    id="default_gateway"
+                                    value="{{ old('default_gateway', $subnetwork->default_gateway) }}"
+                                    placeholder="{{ __('ex: 10.42.0.1') }}"
+                            />
+                            @if($errors->has('default_gateway'))
+                                <div class="invalid-feedback">{{ $errors->first('default_gateway') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.subnetwork.fields.default_gateway_helper') }}</span>
                         </div>
 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="gateway_id">{{ trans('cruds.subnetwork.fields.gateway') }}</label>
+                            <select class="form-control select2 {{ $errors->has('gateway_id') ? 'is-invalid' : '' }}"
+                                    name="gateway_id" id="gateway_id">
+                                @foreach($gateways as $id => $gateway)
+                                    <option value="{{ $id }}" {{ ($subnetwork->gateway ? $subnetwork->gateway->id : old('gateway_id')) == $id ? 'selected' : '' }}>{{ $gateway }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('gateway_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('gateway_id') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.subnetwork.fields.gateway_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="label-maturity-1"
+                                       for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>
+                                <select class="form-control select2 {{ $errors->has('vlan_id') ? 'is-invalid' : '' }}"
+                                        name="vlan_id" id="vlan_id">
+                                    @foreach($vlans as $id => $vlan)
+                                        <option value="{{ $id }}" {{ ($subnetwork->vlan ? $subnetwork->vlan->id : old('vlan_id')) == $id ? 'selected' : '' }}>{{ $vlan }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('vlan_id'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('vlan_id') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.subnetwork.fields.vlan_helper') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="label-maturity-1"
                                    for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
@@ -108,26 +186,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.subnetwork.fields.ip_allocation_type_helper') }}</span>
                         </div>
-
-                        <div class="form-group">
-                            <label for="gateway_id">{{ trans('cruds.subnetwork.fields.gateway') }}</label>
-                            <select class="form-control select2 {{ $errors->has('gateway_id') ? 'is-invalid' : '' }}"
-                                    name="gateway_id" id="gateway_id">
-                                @foreach($gateways as $id => $gateway)
-                                    <option value="{{ $id }}" {{ ($subnetwork->gateway ? $subnetwork->gateway->id : old('gateway_id')) == $id ? 'selected' : '' }}>{{ $gateway }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('gateway_id'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('gateway_id') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.subnetwork.fields.gateway_helper') }}</span>
-                        </div>
                     </div>
-
-                    <div class="col-sm">
-
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-header">
+                {{ trans('cruds.subnetwork.title_classification') }}
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="zone">{{ trans('cruds.subnetwork.fields.zone') }}</label>
                             <select class="form-control select2-free {{ $errors->has('zone') ? 'is-invalid' : '' }}"
@@ -146,9 +215,11 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.subnetwork.fields.zone_helper') }}</span>
                         </div>
-
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label class="label-maturity-1" for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
+                            <label class="label-maturity-1"
+                                   for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
                             <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}"
                                     name="dmz" id="dmz">
                                 @if (!$dmz_list->contains(old('dmz')))
@@ -165,9 +236,12 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.subnetwork.fields.dmz_helper') }}</span>
                         </div>
+                    </div>
 
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label class="label-maturity-1" for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
+                            <label class="label-maturity-1"
+                                   for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
                             <select class="form-control select2-free {{ $errors->has('wifi') ? 'is-invalid' : '' }}"
                                     name="wifi" id="wifi">
                                 @if (!$wifi_list->contains(old('wifi')))
@@ -184,6 +258,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
                         </div>
+                    </div>
+
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-header">
+                {{ trans('cruds.subnetwork.title_governance') }}
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
 
                         <div class="form-group">
                             <label class="label-maturity-1"
@@ -207,21 +293,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="network_id">{{ trans('cruds.subnetwork.fields.network') }}</label>
-                    <select class="form-control select2 {{ $errors->has('network_id') ? 'is-invalid' : '' }}"
-                            name="network_id" id="network_id">
-                        @foreach($networks as $id => $network)
-                            <option value="{{ $id }}" {{ ($subnetwork->network ? $subnetwork->network->id : old('network_id')) == $id ? 'selected' : '' }}>{{ $network }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('network_id'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('network_id') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.network_helper') }}</span>
-                </div>
             </div>
         </div>
         <div class="form-group">

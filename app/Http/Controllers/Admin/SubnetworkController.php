@@ -37,9 +37,10 @@ class SubnetworkController extends Controller
         abort_if(Gate::denies('subnetwork_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $connected_subnets = Subnetwork::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $gateways = Gateway::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = Network::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $gateways = Gateway::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = Network::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // lists
         $ip_allocation_type_list = Subnetwork::select('ip_allocation_type')->where('ip_allocation_type', '<>', null)->distinct()->orderBy('ip_allocation_type')->pluck('ip_allocation_type');
@@ -54,6 +55,7 @@ class SubnetworkController extends Controller
                 'gateways',
                 'vlans',
                 'networks',
+                'subnetworks',
                 'ip_allocation_type_list',
                 'responsible_exp_list',
                 'dmz_list',
@@ -71,6 +73,7 @@ class SubnetworkController extends Controller
         $gateways = Gateway::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $networks = Network::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // lists
         $ip_allocation_type_list = Subnetwork::select('ip_allocation_type')->where('ip_allocation_type', '<>', null)->distinct()->orderBy('ip_allocation_type')->pluck('ip_allocation_type');
@@ -88,6 +91,7 @@ class SubnetworkController extends Controller
                 'gateways',
                 'vlans',
                 'networks',
+                'subnetworks',
                 'ip_allocation_type_list',
                 'responsible_exp_list',
                 'dmz_list',
