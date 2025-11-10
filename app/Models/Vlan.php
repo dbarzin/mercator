@@ -50,9 +50,9 @@ class Vlan extends Model
     }
 
     /**
-     * Get the network switches associated with this VLAN, ordered by name.
+     * Network switches associated with this VLAN, ordered by name.
      *
-     * @return BelongsToMany<NetworkSwitch, $this> Relation for NetworkSwitch models related to this Vlan, ordered by `name`.
+     * @return BelongsToMany<NetworkSwitch, $this> Many-to-many relation yielding NetworkSwitch models ordered by `name`.
      */
     public function networkSwitches(): BelongsToMany
     {
@@ -60,7 +60,7 @@ class Vlan extends Model
     }
 
     /**
-     * Get subnetworks belonging to this VLAN ordered by name.
+     * Retrieve subnetworks that belong to this VLAN, ordered by `name`.
      *
      * @return HasMany<Subnetwork, $this> Subnetwork models associated with this VLAN, ordered by name.
      */

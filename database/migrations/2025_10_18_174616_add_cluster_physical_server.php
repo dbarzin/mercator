@@ -10,6 +10,17 @@ return new class extends Migration
     // SQLite ne gère pas les DDL en transaction -> off
     public $withinTransaction = false;
 
+    / **
+     * Create the cluster_physical_server pivot table, migrate existing cluster associations into it,
+     * and remove the legacy `cluster_id` column and its related constraints/indexes from physical_servers.
+     *
+     * The migration performs three main actions:
+     * 1. Create the pivot table `cluster_physical_server` with a composite primary key (cluster_id, physical_server_id),
+     *    an index on `physical_server_id`, and cascading foreign keys to `clusters.id` and `physical_servers.id`.
+     * 2. Backfill the pivot from existing `physical_servers.cluster_id`, inserting (cluster_id, physical_server_id) pairs.
+     * 3. If `physical_servers.cluster_id` exists, drop its foreign key(s) and related indexes (including defensive attempts
+     *    for common/custom index names and a SQLite-specific purge of indexes containing "cluster_id"), then drop the column.
+     */
     public function up(): void
     {
         // 1) Table pivot
@@ -101,6 +112,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Restores the physical_servers.cluster_id column, repopulates it from the pivot, re-adds the foreign key, and removes the pivot table.
+     *
+     * If missing, adds a nullable `cluster_id` column and index on `physical_servers`; sets `cluster_id` to the minimum associated cluster for each physical server based on `cluster_physical_server`; recreates the foreign key to `clusters(id)` with `ON DELETE CASCADE`; and drops the `cluster_physical_server` pivot table.
+     */
     public function down(): void
     {
         // 1) Recréer la colonne (nullable) + index
