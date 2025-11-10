@@ -7,10 +7,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    // SQLite ne gère pas les DDL en transaction -> off
-    public $withinTransaction = false;
-
-    / **
+    /**
      * Create the cluster_physical_server pivot table, migrate existing cluster associations into it,
      * and remove the legacy `cluster_id` column and its related constraints/indexes from physical_servers.
      *
