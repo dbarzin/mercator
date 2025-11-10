@@ -10,6 +10,11 @@ return new class extends Migration
     // DDL non transactionnel pour SQLite & co
     public $withinTransaction = false;
 
+    /**
+     * Apply migration: create the cluster_router pivot, migrate existing router->cluster relations into it, and remove the routers.cluster_id column and its constraints/indexes.
+     *
+     * Creates the cluster_router pivot table with foreign keys to clusters and routers, copies non-null routers.cluster_id values into the pivot (in batches), and then safely removes the cluster_id foreign key, related indexes and the column from the routers table (including defensive handling for legacy constraint/index names and SQLite).
+     */
     public function up(): void
     {
         // 1) Table pivot
@@ -98,6 +103,13 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Reverts the migration by restoring the routers.cluster_id column and removing the cluster_router pivot.
+     *
+     * Restores a nullable unsigned integer `cluster_id` on `routers` (adds an index), populates it from `cluster_router`
+     * using the minimum `cluster_id` per `router_id`, recreates the foreign key to `clusters.id` with ON DELETE CASCADE,
+     * and then drops the `cluster_router` table.
+     */
     public function down(): void
     {
         // 1) Recréer la colonne (nullable) + index (laisser Laravel nommer)

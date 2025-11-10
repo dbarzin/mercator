@@ -24,6 +24,13 @@ return new class extends Migration
      */
     public $withinTransaction = false;
 
+    /**
+     * Move cluster association from logical_servers into a pivot table.
+     *
+     * Creates the cluster_logical_server pivot table with a composite primary key and foreign keys,
+     * backfills it from existing logical_servers.cluster_id values, then removes the foreign key
+     * (and on non-SQLite drivers the cluster_id column) from logical_servers.
+     */
     public function up(): void
     {
 
