@@ -95,7 +95,7 @@ class SubnetworkController extends Controller
         $vlans = Vlan::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $networks = Network::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '')0;
         $subnetworks = Subnetwork::query()->whereKeyNot($subnetwork->id)->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
         // lists
         $ip_allocation_type_list = Subnetwork::select('ip_allocation_type')->where('ip_allocation_type', '<>', null)->distinct()->orderBy('ip_allocation_type')->pluck('ip_allocation_type');
         $responsible_exp_list = Subnetwork::select('responsible_exp')->where('responsible_exp', '<>', null)->distinct()->orderBy('responsible_exp')->pluck('responsible_exp');
