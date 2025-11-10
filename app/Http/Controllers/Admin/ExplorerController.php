@@ -360,7 +360,10 @@ class ExplorerController extends Controller
         // Subnetworks
         foreach ($subnetworks as $subnetwork) {
             $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
-            if ($subnetwork->network_id !== null) {
+            if ($subnetwork->subnetwork_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('SUBNETWORK_', $subnetwork->subnetwork_id));
+            }
+            elseif ($subnetwork->network_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('NETWORK_', $subnetwork->network_id));
             }
             if ($subnetwork->vlan_id !== null) {

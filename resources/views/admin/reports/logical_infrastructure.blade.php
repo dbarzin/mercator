@@ -274,6 +274,22 @@
                                                 <td>{!! $subnetwork->description !!}</td>
                                             </tr>
                                             <tr>
+                                                <th>{{ trans("cruds.subnetwork.fields.network") }}</th>
+                                                <td>
+                                                    @if ($subnetwork->network!=null)
+                                                        <a href="#NETWORK{{ $subnetwork->network->id }}">{{ $subnetwork->network->name }}</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ trans("cruds.subnetwork.fields.subnetwork") }}</th>
+                                                <td>
+                                                    @if ($subnetwork->subnetwork!=null)
+                                                        <a href="#SUBNET{{ $subnetwork->subnetwork->id }}">{{ $subnetwork->subnetwork->name }}</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <th>
                                                     {{ trans("cruds.subnetwork.fields.address") }}
                                                     -
@@ -313,16 +329,16 @@
                                                 <td>{{ $subnetwork->ip_allocation_type }}</td>
                                             </tr>
                                             <tr>
-                                                <th>{{ trans("cruds.subnetwork.fields.responsible_exp") }}</th>
-                                                <td>{{ $subnetwork->responsible_exp }}</td>
-                                            </tr>
-                                            <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.dmz") }}</th>
                                                 <td>{{ $subnetwork->dmz }}</td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.wifi") }}</th>
                                                 <td>{{ $subnetwork->wifi }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ trans("cruds.subnetwork.fields.responsible_exp") }}</th>
+                                                <td>{{ $subnetwork->responsible_exp }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -1412,7 +1428,9 @@ digraph  {
         @if ($subnetwork->vlan_id!=null)
         SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
-        @if ($subnetwork->network_id!=null)
+        @if ($subnetwork->subnetwork_id!=null)
+        SUBNET{{ $subnetwork->subnetwork_id }} -> SUBNET{{ $subnetwork->id }}
+        @elseif ($subnetwork->network_id!=null)
         NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
         @endif
         @if ($subnetwork->gateway_id!=null)
