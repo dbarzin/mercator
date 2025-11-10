@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Add a nullable unsigned `subnetwork_id` column to the `subnetworks` table and create its index and foreign key.
+     *
+     * The new `subnetwork_id` column is placed after `network_id`, indexed, and constrained to `subnetworks.id` with
+     * `ON DELETE SET NULL` behavior.
      */
     public function up(): void
     {
@@ -24,7 +27,11 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverts the migration by removing the `subnetwork_id` column and its associated index and foreign key from the `subnetworks` table.
+     *
+     * If the `subnetwork_id` column does not exist, the method returns without making changes. On SQLite, foreign key and index removal are skipped and only the column is dropped.
+     *
+     * @return void
      */
     public function down(): void
     {

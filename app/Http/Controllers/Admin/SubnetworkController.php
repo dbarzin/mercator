@@ -32,6 +32,18 @@ class SubnetworkController extends Controller
         return redirect()->route('admin.subnetworks.index');
     }
 
+    /**
+     * Display the form to create a new Subnetwork and prepare selection lists for the view.
+     *
+     * Prepares ordered lists for gateways, vlans, networks, subnetworks and distinct non-null
+     * values for ip_allocation_type, responsible_exp, dmz, wifi, and zone. Aborts with HTTP 403
+     * if the current user is not authorized to create subnetworks.
+     *
+     * @return \Illuminate\View\View The create view populated with the prepared lists:
+     *                                `gateways`, `vlans`, `networks`, `subnetworks`,
+     *                                `ip_allocation_type_list`, `responsible_exp_list`,
+     *                                `dmz_list`, `wifi_list`, and `zone_list`.
+     */
     public function create()
     {
         abort_if(Gate::denies('subnetwork_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -65,6 +77,15 @@ class SubnetworkController extends Controller
         );
     }
 
+    /**
+     * Display the edit form for a given subnetwork.
+     *
+     * Loads the `connected_subnets` and `gateway` relationships on the provided model
+     * and prepares lists used to populate select inputs in the edit view.
+     *
+     * @param \App\Models\Subnetwork $subnetwork The Subnetwork model to edit.
+     * @return \Illuminate\View\View The edit view populated with the subnetwork and selection lists.
+     */
     public function edit(Subnetwork $subnetwork)
     {
         abort_if(Gate::denies('subnetwork_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');

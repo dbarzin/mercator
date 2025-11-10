@@ -52,7 +52,7 @@ class NetworkSwitch extends Model
     /**
      * Get VLANs associated with this network switch, ordered by name.
      *
-     * @return BelongsToMany<Vlan, $this> A many-to-many relation for the related `Vlan` models, ordered by the `name` attribute.
+     * @return BelongsToMany<Vlan, $this> The many-to-many relation instance for the related `Vlan` models.
      */
     public function vlans(): BelongsToMany
     {
