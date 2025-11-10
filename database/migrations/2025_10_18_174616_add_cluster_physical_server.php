@@ -8,31 +8,24 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Indique si la migration doit être exécutée dans une transaction automatique.
+     * Create the cluster_physical_server pivot table, migrate existing cluster associations into it,
+     * and remove the legacy `cluster_id` column and its related constraints/indexes from physical_servers.
      *
-     * - true : Laravel exécute la migration dans une transaction si le SGBD le permet (PostgreSQL, SQLite...).
-     *          Cela garantit que toutes les modifications sont annulées en cas d'erreur (atomicité).
-     * - false : Laravel exécute la migration hors transaction.
-     *           Utilisez cette option lorsqu'une opération DDL ou spécifique (ex : certains index ou contraintes sur MySQL)
-     *           n'est pas compatible avec le mode transactionnel, afin d'éviter les erreurs du SGBD.
-     *
-     * Exemple d’usage :
-     *    public $withinTransaction = false; // Désactive la transaction automatique pour cette migration.
-     *
-     * Référence officielle :
-     * https://api.laravel.com/docs/12.x/Illuminate/Database/Migrations/Migration.html
+     * The migration performs three main actions:
+     * 1. Create the pivot table `cluster_physical_server` with a composite primary key (cluster_id, physical_server_id),
+     *    an index on `physical_server_id`, and cascading foreign keys to `clusters.id` and `physical_servers.id`.
+     * 2. Backfill the pivot from existing `physical_servers.cluster_id`, inserting (cluster_id, physical_server_id) pairs.
+     * 3. If `physical_servers.cluster_id` exists, drop its foreign key(s) and related indexes (including defensive attempts
+     *    for common/custom index names and a SQLite-specific purge of indexes containing "cluster_id"), then drop the column.
      */
-    public $withinTransaction = false;
-
     public function up(): void
     {
-
         // 1) Table pivot
         Schema::create('cluster_physical_server', function (Blueprint $table) {
             $table->unsignedInteger('cluster_id');
             $table->unsignedInteger('physical_server_id');
 
-            $table->primary(['cluster_id', 'physical_server_id']); // empêche les doublons
+            $table->primary(['cluster_id', 'physical_server_id']);
             $table->index('physical_server_id');
 
             $table->foreign('cluster_id')
@@ -44,77 +37,94 @@ return new class extends Migration
                 ->onDelete('cascade');
         });
 
-        // 2) Backfill : copier physical_servers.cluster_id -> pivot
-        // On ignore les lignes où cluster_id est NULL
+        // 2) Backfill depuis physical_servers.cluster_id
         DB::table('physical_servers')
             ->whereNotNull('cluster_id')
             ->orderBy('id')
             ->chunkById(1000, function ($rows) {
-                $now = now();
                 $inserts = [];
                 foreach ($rows as $row) {
                     $inserts[] = [
-                        'cluster_id'        => $row->cluster_id,
-                        'physical_server_id' => $row->id,
+                        'cluster_id'          => $row->cluster_id,
+                        'physical_server_id'  => $row->id,
                     ];
                 }
-                if (!empty($inserts)) {
-                    // insertOrIgnore pour éviter tout doublon éventuel
+                if ($inserts) {
                     DB::table('cluster_physical_server')->insertOrIgnore($inserts);
                 }
             });
 
-        // 3) Suppression contrainte FK/index/colonne cluster_id sur physical_servers
-
-        // Certaines anciennes migrations peuvent avoir des noms de contraintes différents.
-        // On tente proprement : d'abord dropForeign via tableau, sinon on ignore.
-        Schema::table('physical_servers', function (Blueprint $table) {
-            // Si la contrainte existe, ceci fonctionne ; sinon Laravel lèvera une exception.
-            // On encapsule donc dans un try/catch global.
-        });
-
-        try {
-            Schema::table('physical_servers', function (Blueprint $table) {
-                // Essaie de supprimer la contrainte si elle existe
-                $table->dropIndex(['cluster_id_fk_5438543']);
-            });
-        } catch (\Throwable $e) {
-            // pas de FK ou nom différent : on ignore
-        }
-
-        try {
-            Schema::table('physical_servers', function (Blueprint $table) {
-                // Supprime l'index si présent (MUL peut n'être qu'un index)
-                $table->dropForeign('cluster_id_fk_5438543');
-            });
-        } catch (\Throwable $e) {
-            // pas d'index : on ignore
-        }
-
-        // Enfin, suppression de la colonne
+        // 3) Suppression propre de la FK, des index et de la colonne `cluster_id`
         if (Schema::hasColumn('physical_servers', 'cluster_id')) {
+            Schema::disableForeignKeyConstraints();
+
+            // 3.1 Drop FK (essayer par colonnes + par noms possibles)
+            try {
+                Schema::table('physical_servers', function (Blueprint $table) {
+                    $table->dropForeign(['cluster_id']); // portable
+                });
+            } catch (\Throwable $e) {}
+            try {
+                Schema::table('physical_servers', function (Blueprint $table) {
+                    $table->dropForeign('cluster_id_fk_5438543'); // ancien nom custom éventuel
+                });
+            } catch (\Throwable $e) {}
+
+            // 3.2 Drop index (IMPORTANT: par NOM d'index quand on le connaît)
+            try {
+                Schema::table('physical_servers', function (Blueprint $table) {
+                    $table->dropIndex('cluster_id_fk_5438543'); // l'index qui casse chez toi
+                });
+            } catch (\Throwable $e) {}
+
+            // essayer aussi les conventions courantes
+            try {
+                Schema::table('physical_servers', function (Blueprint $table) {
+                    $table->dropIndex(['cluster_id']); // ex: physical_servers_cluster_id_index
+                });
+            } catch (\Throwable $e) {}
+            try {
+                Schema::table('physical_servers', function (Blueprint $table) {
+                    $table->dropIndex('physical_servers_cluster_id_index');
+                });
+            } catch (\Throwable $e) {}
+
+            // 3.3 SQLite: purge défensive de tout index contenant "cluster_id"
+            if (DB::getDriverName() === 'sqlite') {
+                $indexes = DB::select("PRAGMA index_list('physical_servers')");
+                foreach ($indexes as $idx) {
+                    // $idx->name (string), $idx->origin (c, u, pk)
+                    if (isset($idx->name) && stripos($idx->name, 'cluster_id') !== false) {
+                        DB::statement('DROP INDEX IF EXISTS "'.$idx->name.'"');
+                    }
+                }
+            }
+
+            // 3.4 Enfin, suppression de la colonne
             Schema::table('physical_servers', function (Blueprint $table) {
-                if (config('database.default') === 'sqlite') {
-                    $table->dropForeign(['cluster_id']);
-                }
-                else {
-                    $table->dropColumn('cluster_id');
-                }
+                $table->dropColumn('cluster_id');
             });
+
+            Schema::enableForeignKeyConstraints();
         }
     }
 
+    /**
+     * Restores the physical_servers.cluster_id column, repopulates it from the pivot, re-adds the foreign key, and removes the pivot table.
+     *
+     * If missing, adds a nullable `cluster_id` column and index on `physical_servers`; sets `cluster_id` to the minimum associated cluster for each physical server based on `cluster_physical_server`; recreates the foreign key to `clusters(id)` with `ON DELETE CASCADE`; and drops the `cluster_physical_server` pivot table.
+     */
     public function down(): void
     {
-        // 1) Recréation cluster_id (nullable)
-        Schema::table('physical_servers', function (Blueprint $table) {
-            // link to cluster
-            $table->unsignedInteger('cluster_id')->index('cluster_id_fk_5435359')->nullable();
-        });
+        // 1) Recréer la colonne (nullable) + index
+        if (!Schema::hasColumn('physical_servers', 'cluster_id')) {
+            Schema::table('physical_servers', function (Blueprint $table) {
+                $table->unsignedInteger('cluster_id')->nullable();
+                $table->index('cluster_id'); // portable
+            });
+        }
 
-
-        // 2) Backfill inverse : si plusieurs clusters, on choisit le MIN(cluster_id)
-        // (règle simple et déterministe)
+        // 2) Backfill inverse: MIN(cluster_id) si plusieurs
         $pairs = DB::table('cluster_physical_server')
             ->select('physical_server_id', DB::raw('MIN(cluster_id) AS cluster_id'))
             ->groupBy('physical_server_id')
@@ -126,12 +136,14 @@ return new class extends Migration
                 ->update(['cluster_id' => $p->cluster_id]);
         }
 
-        // 3) Contrainte FK/Index (optionnel mais propre)
+        // 3) Reposer la FK (nom laissé au SGBD)
         Schema::table('physical_servers', function (Blueprint $table) {
-            $table->foreign('cluster_id', 'cluster_id_fk_5438543')->references('id')->on('clusters')->onUpdate('NO ACTION')->onDelete('CASCADE');
+            $table->foreign('cluster_id')
+                ->references('id')->on('clusters')
+                ->onDelete('cascade');
         });
 
-        // 4) Suppression de la table pivot
+        // 4) Drop de la table pivot
         Schema::dropIfExists('cluster_physical_server');
     }
 };

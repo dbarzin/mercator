@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedInteger('icon_id')
                 ->after('attributes')
                 ->nullable()
-                ->index('document_id_fk_493827312');
-            $table->foreign('icon_id', 'document_id_fk_493827312')
+                ->index();
+            $table->foreign('icon_id')
                 ->references('id')
                 ->on('documents');
         });
@@ -28,8 +28,8 @@ return new class extends Migration
             $table->unsignedInteger('icon_id')
                 ->after('attributes')
                 ->nullable()
-                ->index('document_id_fk_432938439');
-            $table->foreign('icon_id', 'document_id_fk_43948313')
+                ->index();
+            $table->foreign('icon_id')
                 ->references('id')
                 ->on('documents');
         });
@@ -43,7 +43,7 @@ return new class extends Migration
 
         Schema::table('physical_security_devices', function (Blueprint $table) {
             if (DB::getDriverName() !== 'sqlite') {
-                $table->dropForeign('document_id_fk_493827312');
+                $table->dropForeign('icon_id');
             }
             $table->dropColumn('icon_id');
             $table->dropColumn('attributes');
@@ -51,7 +51,7 @@ return new class extends Migration
 
         Schema::table('security_devices', function (Blueprint $table) {
             if (DB::getDriverName() !== 'sqlite') {
-                $table->dropForeign('document_id_fk_43948313');
+                $table->dropForeign('icon_id');
             }
             $table->dropColumn('icon_id');
             $table->dropColumn('attributes');

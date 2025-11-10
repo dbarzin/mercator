@@ -44,6 +44,7 @@ class Subnetwork extends Model
         'responsible_exp',
         'gateway_id',
         'network_id',
+        'subnetwork_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -79,12 +80,36 @@ class Subnetwork extends Model
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 
-    /** @return BelongsTo<Vlan, $this> */
+    /**
+     * Get the Vlan that this subnetwork is associated with.
+     *
+     * @return BelongsTo<Vlan, $this> Relationship to the Vlan model.
+     */
     public function vlan(): BelongsTo
     {
         return $this->belongsTo(Vlan::class, 'vlan_id');
     }
 
+    /**
+     * Get the parent subnetwork that this subnetwork belongs to.
+     *
+     * @return BelongsTo<Subnetwork, $this> Relation to the parent Subnetwork model.
+     */
+    public function subnetwork(): BelongsTo
+    {
+        return $this->belongsTo(Subnetwork::class, 'subnetwork_id');
+    }
+
+    /**
+     * Produce a human-readable IP range for this subnetwork's CIDR address.
+     *
+     * Returns the inclusive range represented by the model's `address` property:
+     * - For IPv4 CIDRs returns "start - end".
+     * - For IPv6 CIDRs returns "first -> last".
+     * - Returns `null` when `address` is null and "N/A" when `address` is missing a prefix or not a valid IP/CIDR.
+     *
+     * @return string|null The IP range string, `null` if no address is set, or `"N/A"` for invalid/unparsable addresses.
+     */
     public function ipRange(): ?string
     {
         // no address

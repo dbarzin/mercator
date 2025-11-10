@@ -42,7 +42,7 @@ class NetworkSwitch extends Model
     /**
      * Get the physical switches related to this NetworkSwitch, ordered by name.
      *
-     * @return BelongsToMany<PhysicalSwitch> The related PhysicalSwitch models ordered by name.
+     * @return BelongsToMany<PhysicalSwitch, $this> The related PhysicalSwitch models ordered by name.
      */
     public function physicalSwitches(): BelongsToMany
     {
@@ -52,7 +52,7 @@ class NetworkSwitch extends Model
     /**
      * Get VLANs associated with this network switch, ordered by name.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Vlan> A many-to-many relation for the related `Vlan` models, ordered by the `name` attribute.
+     * @return BelongsToMany<Vlan, $this> The many-to-many relation instance for the related `Vlan` models.
      */
     public function vlans(): BelongsToMany
     {

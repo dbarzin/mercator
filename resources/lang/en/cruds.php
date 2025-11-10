@@ -1457,11 +1457,17 @@ return [
             'wifi_helper' => 'Access to the Wifi network (yes / no)',
             'zone' => 'Zone',
             'zone_helper' => 'Firewall zone (ZFB)',
+            'subnetwork' => 'Parent subnetwork',
+            'subnetwork_helper' => '',
         ],
         'title' => 'Subnets',
         'title_short' => 'Subnets',
         'title_singular' => 'Subnet',
-    ],
+        'title_connexion' => 'Connection',
+        'title_addressing' => 'Addressing',
+        'title_classification' => 'Network Classification',
+        'title_governance' => 'Governance',
+        ],
     'task' => [
         'description' => 'Elementary activity performed by an organizational function and constituting an indivisible unit of work in the added value chain of a process.',
         'fields' => [

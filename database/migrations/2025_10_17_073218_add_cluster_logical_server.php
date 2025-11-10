@@ -24,6 +24,13 @@ return new class extends Migration
      */
     public $withinTransaction = false;
 
+    /**
+     * Move cluster association from logical_servers into a pivot table.
+     *
+     * Creates the cluster_logical_server pivot table with a composite primary key and foreign keys,
+     * backfills it from existing logical_servers.cluster_id values, then removes the foreign key
+     * (and on non-SQLite drivers the cluster_id column) from logical_servers.
+     */
     public function up(): void
     {
 
@@ -66,7 +73,7 @@ return new class extends Migration
 
         // 3) Suppression contrainte FK/index/colonne cluster_id sur logical_servers
         if (Schema::hasColumn('logical_servers', 'cluster_id')) {
-            if (config('database.default') === 'sqlite') {
+            if (DB::getDriverName()  === 'sqlite') {
                 // SQLite ne supporte pas dropColumn avec foreign keys
                 Schema::table('logical_servers', function (Blueprint $table) {
                     $table->dropForeign(['cluster_id']);
