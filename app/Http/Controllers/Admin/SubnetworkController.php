@@ -91,9 +91,9 @@ class SubnetworkController extends Controller
         abort_if(Gate::denies('subnetwork_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $connected_subnets = Subnetwork::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $gateways = Gateway::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $vlans = Vlan::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = Network::query()->ordreBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '')0;
+        $gateways = Gateway::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = Network::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $subnetworks = Subnetwork::query()->whereKeyNot($subnetwork->id)->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // lists
