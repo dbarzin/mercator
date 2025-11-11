@@ -31,9 +31,14 @@ export APP_VERSION=$VERSION
 npm install
 npm run build
 
-git add public/build/assets/*
-git commit -a -m "npm build"
-git push
+# Vérifie s'il y a quelque chose à valider
+if ! git diff --quiet -- public/build/assets/; then
+    git add public/build/assets/*
+    git commit -m "npm build"
+    git push
+else
+    echo "Aucun changement à committer, on continue."
+fi
 
 echo "[✔] Frontend built with APP_VERSION=$VERSION"
 
