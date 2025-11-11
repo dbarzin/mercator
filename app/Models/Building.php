@@ -55,7 +55,7 @@ class Building extends Model implements HasIcon
     }
 
     /** @return HasMany<PhysicalServer, $this> */
-    public function buildingPhysicalServers(): HasMany
+    public function physicalServers(): HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'building_id', 'id')->orderBy('name');
     }
@@ -73,37 +73,37 @@ class Building extends Model implements HasIcon
     }
 
     /** @return HasMany<Workstation, $this> */
-    public function buildingWorkstations(): HasMany
+    public function workstations(): HasMany
     {
         return $this->hasMany(Workstation::class, 'building_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<StorageDevice, $this> */
-    public function buildingStorageDevices(): HasMany
+    public function storageDevices(): HasMany
     {
         return $this->hasMany(StorageDevice::class, 'building_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<Peripheral, $this> */
-    public function buildingPeripherals(): HasMany
+    public function peripherals(): HasMany
     {
         return $this->hasMany(Peripheral::class, 'building_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<Phone, $this> */
-    public function buildingPhones(): HasMany
+    public function phones(): HasMany
     {
         return $this->hasMany(Phone::class, 'building_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<WifiTerminal, $this> */
-    public function wifiTerminals(): HasMany
+    public function terminals(): HasMany
     {
         return $this->hasMany(WifiTerminal::class, 'building_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<PhysicalSwitch, $this> */
-    public function buildingPhysicalSwitches(): HasMany
+    public function physicalSwitches(): HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
     }
