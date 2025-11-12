@@ -10,13 +10,13 @@ use Illuminate\Foundation\Http\FormRequest;
 class IconUploadService
 {
     /**
-     * @param Model&HasIcon $model
+     * @param  Model&HasIcon  $model
      */
     public function handle(FormRequest $request, Model $model): void
     {
         if ($request->hasFile('iconFile')) {
             $file = $request->file('iconFile');
-            $document = new Document();
+            $document = new Document;
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();

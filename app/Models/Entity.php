@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Contracts\HasIcon;
@@ -48,8 +47,15 @@ class Entity extends Model implements HasIcon
     /*
      * Implement HasIcon
      */
-    public function setIconId(?int $id): void { $this->icon_id = $id; }
-    public function getIconId(): ?int { return $this->icon_id; }
+    public function setIconId(?int $id): void
+    {
+        $this->icon_id = $id;
+    }
+
+    public function getIconId(): ?int
+    {
+        return $this->icon_id;
+    }
 
     /** @return HasMany<Database, $this> */
     public function databases(): HasMany

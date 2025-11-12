@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
@@ -37,7 +36,7 @@ class NetworkSwitchController extends Controller
      * `physicalSwitches` and `vlans` relationships using the corresponding
      * request inputs (defaults to empty arrays if not provided).
      *
-     * @param StoreNetworkSwitchRequest $request Validated input for creating the network switch.
+     * @param  StoreNetworkSwitchRequest  $request  Validated input for creating the network switch.
      * @return \Illuminate\Http\JsonResponse The created NetworkSwitch serialized as JSON with HTTP status 201.
      */
     public function store(StoreNetworkSwitchRequest $request)
@@ -56,7 +55,7 @@ class NetworkSwitchController extends Controller
      *
      * Aborts with HTTP 403 if the caller lacks the `network_switch_show` permission.
      *
-     * @param \App\Models\NetworkSwitch $networkSwitch The NetworkSwitch to be returned.
+     * @param  \App\Models\NetworkSwitch  $networkSwitch  The NetworkSwitch to be returned.
      * @return \Illuminate\Http\Resources\Json\JsonResource JSON representation of the given NetworkSwitch.
      */
     public function show(NetworkSwitch $networkSwitch)
@@ -71,8 +70,8 @@ class NetworkSwitchController extends Controller
      *
      * Aborts with HTTP 403 if the current user lacks the `network_switch_edit` permission.
      *
-     * @param \App\Http\Requests\UpdateNetworkSwitchRequest $request Request containing fields to update; may include `physicalSwitches` and/or `vlans` arrays to sync relationships.
-     * @param \App\Models\NetworkSwitch $networkSwitch The NetworkSwitch model to update.
+     * @param  \App\Http\Requests\UpdateNetworkSwitchRequest  $request  Request containing fields to update; may include `physicalSwitches` and/or `vlans` arrays to sync relationships.
+     * @param  \App\Models\NetworkSwitch  $networkSwitch  The NetworkSwitch model to update.
      * @return \Illuminate\Http\JsonResponse An empty JSON response with HTTP 200 status.
      */
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
@@ -80,10 +79,12 @@ class NetworkSwitchController extends Controller
         abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkSwitch->update($request->all());
-        if ($request->has('physicalSwitches'))
+        if ($request->has('physicalSwitches')) {
             $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
-        if ($request->has('vlans'))
+        }
+        if ($request->has('vlans')) {
             $networkSwitch->vlans()->sync($request->input('vlans', []));
+        }
 
         return response()->json();
     }
@@ -102,7 +103,7 @@ class NetworkSwitchController extends Controller
      *
      * Expects the request to include an `ids` array containing the IDs of NetworkSwitch records to delete.
      *
-     * @param MassDestroyNetworkSwitchRequest $request Request containing `ids` (array<int>).
+     * @param  MassDestroyNetworkSwitchRequest  $request  Request containing `ids` (array<int>).
      * @return \Illuminate\Http\Response Empty response with HTTP 204 No Content.
      */
     public function massDestroy(MassDestroyNetworkSwitchRequest $request)

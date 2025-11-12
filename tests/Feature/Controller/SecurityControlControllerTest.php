@@ -71,7 +71,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $securityControl = SecurityControl::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.security-controls.show', $securityControl->id));
@@ -85,7 +85,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $securityControl = SecurityControl::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.security-controls.show', $securityControl->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $securityControl = SecurityControl::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.security-controls.edit', $securityControl));
@@ -122,12 +122,12 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update SecurityControl', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $securityControl = SecurityControl::factory()->create(['name' => $name]);
 
         $data = [
             'name' => 'Updated Name',
-            'description' => fake()->sentences(3,true),
+            'description' => fake()->sentences(3, true),
         ];
 
         $response = $this->put(route('admin.security-controls.update', $securityControl), $data);
@@ -144,7 +144,7 @@ describe('update', function () {
 
         $data = [
             'name' => 'Updated Name',
-            'description' => fake()->sentences(3,true),
+            'description' => fake()->sentences(3, true),
         ];
 
         $response = $this->put(route('admin.security-controls.update', $securityControl), $data);
@@ -215,6 +215,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

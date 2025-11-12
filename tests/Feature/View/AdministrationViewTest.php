@@ -37,7 +37,7 @@ describe('Administration View', function () {
             'forests',
             'domains',
             'adminUsers',
-            ]);
+        ]);
     });
 
     test('denies access without permission', function () {

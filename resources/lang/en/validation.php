@@ -1,4 +1,5 @@
 <?php
+
 return [
     'accepted' => 'You must accept: attribute.',
     'active_url' => ': attribute is not a valid URL.',

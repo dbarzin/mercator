@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -61,7 +60,6 @@ class StorageDevice extends Model
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
-    /** @return string */
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');

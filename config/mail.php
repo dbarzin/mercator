@@ -125,10 +125,10 @@ return [
     */
 
     'dkim' => [
-        'domain'      => env('MAIL_DKIM_DOMAIN'),
-        'private'     => env('MAIL_DKIM_PRIVATE'),
-        'selector'    => env('MAIL_DKIM_SELECTOR'),
-        'passphrase'  => env('MAIL_DKIM_PASSPHRASE'),
+        'domain' => env('MAIL_DKIM_DOMAIN'),
+        'private' => env('MAIL_DKIM_PRIVATE'),
+        'selector' => env('MAIL_DKIM_SELECTOR'),
+        'passphrase' => env('MAIL_DKIM_PASSPHRASE'),
     ],
 
 ];

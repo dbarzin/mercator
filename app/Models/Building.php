@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Contracts\HasIcon;
@@ -45,8 +44,15 @@ class Building extends Model implements HasIcon
     /*
      * Implement HasIcon
      */
-    public function setIconId(?int $id): void { $this->icon_id = $id; }
-    public function getIconId(): ?int { return $this->icon_id; }
+    public function setIconId(?int $id): void
+    {
+        $this->icon_id = $id;
+    }
+
+    public function getIconId(): ?int
+    {
+        return $this->icon_id;
+    }
 
     /** @return HasMany<Bay, $this> */
     public function roomBays(): HasMany
@@ -65,7 +71,7 @@ class Building extends Model implements HasIcon
     {
         return $this->hasMany(PhysicalRouter::class, 'building_id', 'id')->orderBy('name');
     }
-    
+
     /** @return HasMany<Workstation, $this> */
     public function workstations(): HasMany
     {
@@ -90,8 +96,14 @@ class Building extends Model implements HasIcon
         return $this->hasMany(Phone::class, 'building_id', 'id')->orderBy('name');
     }
 
+    /** @return HasMany<Phone, $this> */
+    public function physicalRouters(): HasMany
+    {
+        return $this->hasMany(PhysicalRouter::class, 'building_id', 'id')->orderBy('name');
+    }
+
     /** @return HasMany<WifiTerminal, $this> */
-    public function terminals(): HasMany
+    public function wifiTerminals(): HasMany
     {
         return $this->hasMany(WifiTerminal::class, 'building_id', 'id')->orderBy('name');
     }

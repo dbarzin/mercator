@@ -70,22 +70,22 @@ describe('create', function () {
 
 describe('show', function () {
 
-        test('can display object', function () {
-            $name =  fake()->word();
-            $cluster = Cluster::factory()->create(['name' => $name]);
+    test('can display object', function () {
+        $name = fake()->word();
+        $cluster = Cluster::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.clusters.show', $cluster->id));
+        $response = $this->get(route('admin.clusters.show', $cluster->id));
 
-            $response->assertOk();
-            $response->assertViewIs('admin.clusters.show');
-            $response->assertSee($name);
-        });
+        $response->assertOk();
+        $response->assertViewIs('admin.clusters.show');
+        $response->assertSee($name);
+    });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $cluster = Cluster::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.clusters.show', $cluster->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $cluster = Cluster::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.clusters.edit', $cluster));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update activity', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $cluster = Cluster::factory()->create(['name' => $name]);
 
         $data = [
@@ -152,15 +152,15 @@ describe('destroy', function () {
 
     });
 
-test('denies access without permission', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-    $cluster = Cluster::factory()->create();
+        $cluster = Cluster::factory()->create();
 
-    $response = $this->delete(route('admin.clusters.destroy', $cluster));
+        $response = $this->delete(route('admin.clusters.destroy', $cluster));
 
-    $response->assertForbidden();
+        $response->assertForbidden();
     });
 });
 
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

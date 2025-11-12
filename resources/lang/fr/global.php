@@ -1,4 +1,5 @@
 <?php
+
 return [
     'add' => 'Ajouter',
     'apply' => 'Appliquer',

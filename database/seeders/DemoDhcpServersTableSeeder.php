@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoDhcpServersTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoDhcpServersTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('dhcp_servers')->delete();
-        
-        
-        
+
     }
 }

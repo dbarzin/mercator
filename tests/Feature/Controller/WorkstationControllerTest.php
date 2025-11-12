@@ -71,7 +71,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $Workstation = Workstation::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.workstations.show', $Workstation->id));
@@ -85,7 +85,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $Workstation = Workstation::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.workstations.show', $Workstation->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $Workstation = Workstation::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.workstations.edit', $Workstation));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update Workstation', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $Workstation = Workstation::factory()->create(['name' => $name]);
 
         $data = [
@@ -178,7 +178,7 @@ describe('destroy', function () {
 
         $response->assertForbidden();
     });
-    
+
     test('returns no content status', function () {
         $Workstation = Workstation::factory()->create();
 
@@ -225,6 +225,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

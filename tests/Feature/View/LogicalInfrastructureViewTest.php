@@ -53,8 +53,8 @@ describe('Logical Infrastructure View', function () {
             'logicalServers',
             'certificates',
             'containers',
-            'vlans'
-            ]);
+            'vlans',
+        ]);
     });
 
     test('denies access without permission', function () {

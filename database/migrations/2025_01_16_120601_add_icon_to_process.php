@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('processes', function (Blueprint $table) {
-            $table->unsignedInteger('icon_id')->after("name")->nullable()->index('document_id_fk_5938654');
-            $table->foreign('icon_id','document_id_fk_5938654')->references('id')->on('documents')->onUpdate('NO ACTION');
+            $table->unsignedInteger('icon_id')->after('name')->nullable()->index('document_id_fk_5938654');
+            $table->foreign('icon_id', 'document_id_fk_5938654')->references('id')->on('documents')->onUpdate('NO ACTION');
         });
     }
 

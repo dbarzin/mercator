@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -38,7 +37,7 @@ class LogicalInfrastructureView extends Controller
      * and 'show_ip' selections to session and applies VLAN-aware filtering to network switches
      * when a specific network is selected.
      *
-     * @param \Illuminate\Http\Request $request HTTP request carrying optional 'network', 'subnetwork', and 'show_ip' inputs; selections are persisted to session.
+     * @param  \Illuminate\Http\Request  $request  HTTP request carrying optional 'network', 'subnetwork', and 'show_ip' inputs; selections are persisted to session.
      * @return \Illuminate\View\View The rendered 'admin/reports/logical_infrastructure' view populated with the prepared collections.
      */
     public function generate(Request $request)
@@ -84,12 +83,29 @@ class LogicalInfrastructureView extends Controller
             $externalConnectedEntities = ExternalConnectedEntity::where('network_id', '=', $network)
                 ->orderBy('name')->get();
 
-            if ($subnetwork !== null) {
-                $subnetworks = Subnetwork::All()->sortBy('name')
-                    ->where('id', '=', $subnetwork);
-            } else {
+            if ($subnetwork === null) {
                 $subnetworks = Subnetwork::All()->sortBy('name')
                     ->where('network_id', '=', $network);
+            } else {
+                $root = Subnetwork::find($subnetwork);
+                if ($root !== null) {
+                    $subnetworks = collect();
+
+                    // Get children
+                    $frontier = collect([$root]);
+                    while ($frontier->isNotEmpty()) {
+                        $next = collect();
+                        foreach ($frontier as $node) {
+                            if (! $subnetworks->contains('id', $node->id)) {
+                                $subnetworks->push($node);
+                                $next = $next->merge($node->subnetworks);
+                            }
+                        }
+                        $frontier = $next;
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Subnetwork not found');
+                }
             }
 
             // Get Gateways
@@ -113,14 +129,13 @@ class LogicalInfrastructureView extends Controller
             // Get NetworkSwitches
             $networkSwitches = NetworkSwitch::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks, $vlans) {
-                    if ($item->vlans()->count()>0) {
+                    if ($item->vlans()->count() > 0) {
                         foreach ($item->vlans as $v) {
                             if ($vlans->pluck('id')->contains($v->id)) {
                                 return true;
                             }
                         }
-                    }
-                    else {
+                    } else {
                         foreach (explode(',', $item->ip) as $ip) {
                             foreach ($subnetworks as $subnetwork) {
                                 if ($subnetwork->contains($ip)) {
@@ -129,6 +144,7 @@ class LogicalInfrastructureView extends Controller
                             }
                         }
                     }
+
                     return false;
                 });
 
@@ -224,17 +240,19 @@ class LogicalInfrastructureView extends Controller
                             return true;
                         }
                     }
+
                     return false;
                 });
 
             // Get StorageDevices
             $storageDevices = StorageDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
-                        foreach ($subnetworks as $subnetwork) {
-                            if ($subnetwork->contains($item->address_ip)) {
-                                return true;
+                    foreach ($subnetworks as $subnetwork) {
+                        if ($subnetwork->contains($item->address_ip)) {
+                            return true;
                         }
                     }
+
                     return false;
                 });
 

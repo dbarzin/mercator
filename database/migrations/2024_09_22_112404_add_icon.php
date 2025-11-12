@@ -11,23 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('m_applications', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('m_applications', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
-        Schema::table('workstations', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('workstations', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
-        Schema::table('peripherals', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('peripherals', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
-        Schema::table('sites', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('sites', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
-        Schema::table('entities', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('entities', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
-        Schema::table('admin_users', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("type");
+        Schema::table('admin_users', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('type');
         });
     }
 
@@ -36,22 +36,22 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('m_applications', function(Blueprint $table) {
+        Schema::table('m_applications', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
-        Schema::table('workstations', function(Blueprint $table) {
+        Schema::table('workstations', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
-        Schema::table('peripherals', function(Blueprint $table) {
+        Schema::table('peripherals', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
-        Schema::table('sites', function(Blueprint $table) {
+        Schema::table('sites', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
-        Schema::table('entities', function(Blueprint $table) {
+        Schema::table('entities', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
-        Schema::table('admin_users', function(Blueprint $table) {
+        Schema::table('admin_users', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
     }

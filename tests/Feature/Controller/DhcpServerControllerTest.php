@@ -26,11 +26,11 @@ beforeEach(function () {
 
     // Add missing roles (deprecatd)
     DB::table('permission_role')->insert([
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title','dhcp_server_create')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title','dhcp_server_edit')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title','dhcp_server_show')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title','dhcp_server_delete')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title','dhcp_server_access')->value('id')],
+        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_create')->value('id')],
+        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_edit')->value('id')],
+        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_show')->value('id')],
+        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_delete')->value('id')],
+        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_access')->value('id')],
     ]);
 
     // Log the user
@@ -82,22 +82,22 @@ describe('create', function () {
 
 describe('show', function () {
 
-        test('can display object', function () {
-            $name =  fake()->word();
-            $dhcpServer = DhcpServer::factory()->create(['name' => $name]);
+    test('can display object', function () {
+        $name = fake()->word();
+        $dhcpServer = DhcpServer::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.dhcp-servers.show', $dhcpServer->id));
+        $response = $this->get(route('admin.dhcp-servers.show', $dhcpServer->id));
 
-            $response->assertOk();
-            $response->assertViewIs('admin.dhcpServers.show');
-            $response->assertSee($name);
-        });
+        $response->assertOk();
+        $response->assertViewIs('admin.dhcpServers.show');
+        $response->assertSee($name);
+    });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $dhcpServer = DhcpServer::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.dhcp-servers.show', $dhcpServer->id));
@@ -109,7 +109,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $dhcpServer = DhcpServer::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.dhcp-servers.edit', $dhcpServer));
@@ -134,7 +134,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update activity', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $dhcpServer = DhcpServer::factory()->create(['name' => $name]);
 
         $data = [
@@ -164,15 +164,15 @@ describe('destroy', function () {
 
     });
 
-test('denies access without permission', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-    $dhcpServer = DhcpServer::factory()->create();
+        $dhcpServer = DhcpServer::factory()->create();
 
-    $response = $this->delete(route('admin.dhcp-servers.destroy', $dhcpServer));
+        $response = $this->delete(route('admin.dhcp-servers.destroy', $dhcpServer));
 
-    $response->assertForbidden();
+        $response->assertForbidden();
     });
 });
 
@@ -211,6 +211,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

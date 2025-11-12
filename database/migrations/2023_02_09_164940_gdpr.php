@@ -46,5 +46,3 @@ class Gdpr extends Migration
         });
     }
 }
-
-

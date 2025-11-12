@@ -70,22 +70,22 @@ describe('create', function () {
 
 describe('show', function () {
 
-        test('can display object', function () {
-            $name =  fake()->word();
-            $forestAd = ForestAd::factory()->create(['name' => $name]);
+    test('can display object', function () {
+        $name = fake()->word();
+        $forestAd = ForestAd::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.forest-ads.show', $forestAd->id));
+        $response = $this->get(route('admin.forest-ads.show', $forestAd->id));
 
-            $response->assertOk();
-            $response->assertViewIs('admin.forestAds.show');
-            $response->assertSee($name);
-        });
+        $response->assertOk();
+        $response->assertViewIs('admin.forestAds.show');
+        $response->assertSee($name);
+    });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $forestAd = ForestAd::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.forest-ads.show', $forestAd->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $forestAd = ForestAd::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.forest-ads.edit', $forestAd));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update activity', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $forestAd = ForestAd::factory()->create(['name' => $name]);
 
         $data = [
@@ -152,15 +152,15 @@ describe('destroy', function () {
 
     });
 
-test('denies access without permission', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-    $forestAd = ForestAd::factory()->create();
+        $forestAd = ForestAd::factory()->create();
 
-    $response = $this->delete(route('admin.forest-ads.destroy', $forestAd));
+        $response = $this->delete(route('admin.forest-ads.destroy', $forestAd));
 
-    $response->assertForbidden();
+        $response->assertForbidden();
     });
 });
 
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

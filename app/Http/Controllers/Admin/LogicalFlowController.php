@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -41,8 +40,8 @@ class LogicalFlowController extends Controller
             'physicalServerDest',
             'storageDeviceDest',
             'workstationDest',
-            'physicalSecurityDeviceDest'
-            ]
+            'physicalSecurityDeviceDest',
+        ]
         )
             ->orderby('name')
             ->get();

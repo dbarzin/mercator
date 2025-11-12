@@ -34,7 +34,7 @@ describe('index', function () {
         $response = $this->get(route('admin.physical-switches.index'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.physicalSwitches.index');;
+        $response->assertViewIs('admin.physicalSwitches.index');
         $response->assertViewHas('physicalSwitches');
     });
 
@@ -71,7 +71,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $physicalSwitch = PhysicalSwitch::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.physical-switches.show', $physicalSwitch->id));
@@ -85,7 +85,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $physicalSwitch = PhysicalSwitch::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.physical-switches.show', $physicalSwitch->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $physicalSwitch = PhysicalSwitch::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.physical-switches.edit', $physicalSwitch));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update PhysicalSwitch', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $physicalSwitch = PhysicalSwitch::factory()->create(['name' => $name]);
 
         $data = [
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

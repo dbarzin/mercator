@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -20,8 +19,6 @@ class ForgotPasswordController extends Controller
 {
     /**
      * Show the reset password form
-     *
-     * @return View
      */
     public function showForgetPasswordForm(): View
     {
@@ -30,8 +27,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Generated a reset token
-     *
-     * @return RedirectResponse
      */
     public function submitForgetPasswordForm(Request $request): RedirectResponse
     {
@@ -130,8 +125,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Show reset password form
-     *
-     * @return View
      */
     public function showResetPasswordForm($token): View
     {
@@ -143,8 +136,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Reset the password
-     *
-     * @return RedirectResponse
      */
     public function submitResetPasswordForm(Request $request): RedirectResponse
     {

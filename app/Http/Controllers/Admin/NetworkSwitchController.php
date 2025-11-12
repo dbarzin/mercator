@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -52,7 +51,7 @@ class NetworkSwitchController extends Controller
     /**
      * Create a new NetworkSwitch and persist its physical switch and VLAN associations.
      *
-     * @param \App\Http\Requests\StoreNetworkSwitchRequest $request Validated input including network switch attributes and optional `physicalSwitches` and `vlans` arrays to associate.
+     * @param  \App\Http\Requests\StoreNetworkSwitchRequest  $request  Validated input including network switch attributes and optional `physicalSwitches` and `vlans` arrays to associate.
      * @return \Illuminate\Http\RedirectResponse Redirects to the network switches index route.
      */
     public function store(StoreNetworkSwitchRequest $request)
@@ -67,8 +66,9 @@ class NetworkSwitchController extends Controller
     /**
      * Show the form for editing the given network switch.
      *
-     * @param NetworkSwitch $networkSwitch The network switch to edit.
+     * @param  NetworkSwitch  $networkSwitch  The network switch to edit.
      * @return \Illuminate\View\View The view displaying the network switch edit form populated with physical switch and VLAN options.
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException If the current user is denied the 'network_switch_edit' ability (HTTP 403).
      */
     public function edit(NetworkSwitch $networkSwitch)
@@ -80,7 +80,7 @@ class NetworkSwitchController extends Controller
 
         return view(
             'admin.networkSwitches.edit',
-            compact('networkSwitch', 'physicalSwitches','vlans')
+            compact('networkSwitch', 'physicalSwitches', 'vlans')
         );
     }
 
@@ -91,8 +91,8 @@ class NetworkSwitchController extends Controller
      * physicalSwitches and vlans relationships from the request (using an empty array if absent),
      * and redirects back to the network switches index.
      *
-     * @param \App\Http\Requests\UpdateNetworkSwitchRequest $request Validated input for updating the network switch.
-     * @param \App\Models\NetworkSwitch $networkSwitch The network switch instance to update.
+     * @param  \App\Http\Requests\UpdateNetworkSwitchRequest  $request  Validated input for updating the network switch.
+     * @param  \App\Models\NetworkSwitch  $networkSwitch  The network switch instance to update.
      * @return \Illuminate\Http\RedirectResponse Redirect response to the network switches index route.
      */
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
@@ -123,7 +123,7 @@ class NetworkSwitchController extends Controller
     /**
      * Delete multiple NetworkSwitch records identified by the request's `ids`.
      *
-     * @param \App\Http\Requests\MassDestroyNetworkSwitchRequest $request Request containing an `ids` array of NetworkSwitch IDs to delete.
+     * @param  \App\Http\Requests\MassDestroyNetworkSwitchRequest  $request  Request containing an `ids` array of NetworkSwitch IDs to delete.
      * @return \Illuminate\Http\Response HTTP 204 No Content response.
      */
     public function massDestroy(MassDestroyNetworkSwitchRequest $request)

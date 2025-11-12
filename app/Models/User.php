@@ -25,12 +25,12 @@ class User extends Authenticatable implements LdapAuthenticatable
     // $dates est obsolète — préférez $casts
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'created_at'        => 'datetime',
-        'updated_at'        => 'datetime',
-        'deleted_at'        => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
-    protected $fillable = ['login','name','email','password','granularity','language'];
+    protected $fillable = ['login', 'name', 'email', 'password', 'granularity', 'language'];
 
     /**
      * Mutator mot de passe : hash seulement si nécessaire.
@@ -41,6 +41,7 @@ class User extends Authenticatable implements LdapAuthenticatable
             if ($value === null || $value === '') {
                 return null;
             }
+
             return Hash::needsRehash($value) ? Hash::make($value) : $value;
         });
     }
@@ -65,9 +66,6 @@ class User extends Authenticatable implements LdapAuthenticatable
 
     /**
      * Ajouter un rôle (utilise attach sur pivot).
-     *
-     * @param Role $role
-     * @return void
      */
     public function addRole(Role $role): void
     {
@@ -82,6 +80,7 @@ class User extends Authenticatable implements LdapAuthenticatable
 
     /**
      * Vérifie si l'utilisateur possède un rôle.
+     *
      * @param  string|Role  $role  Titre/slug OU instance Role.
      */
     public function hasRole(string|Role $role): bool
@@ -89,6 +88,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         // Zéro requête si déjà eager-loaded
         if ($this->relationLoaded('roles')) {
             $roles = $this->getRelation('roles'); // Collection<Role>
+
             return $role instanceof Role
                 ? $roles->contains('id', $role->getKey())
                 : ($roles->contains('slug', $role) || $roles->contains('title', $role));
@@ -101,7 +101,7 @@ class User extends Authenticatable implements LdapAuthenticatable
 
         // Privilégie 'slug' si disponible
         return $this->roles()
-            ->where(fn($q) => $q->where('slug', $role)->orWhere('title', $role))
+            ->where(fn ($q) => $q->where('slug', $role)->orWhere('title', $role))
             ->exists();
     }
 

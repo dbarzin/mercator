@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('logical_servers', function(Blueprint $table) {
+        Schema::table('logical_servers', function (Blueprint $table) {
             $table->unsignedInteger('domain_id')->index('domain_id_fk_493844')->nullable();
-            $table->foreign('domain_id','domain_id_fk_493844')->references('id')->on('domaine_ads')->onUpdate('NO ACTION')->onDelete('SET NULL');
+            $table->foreign('domain_id', 'domain_id_fk_493844')->references('id')->on('domaine_ads')->onUpdate('NO ACTION')->onDelete('SET NULL');
         });
     }
 

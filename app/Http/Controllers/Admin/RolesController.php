@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -20,7 +19,6 @@ class RolesController extends Controller
      * Triage des permissions pour un meilleur affichage dans la vue Blade
      *
      * @param  Collection  $permissions  Tableau des permissions sur lesquelles le triage sera effectué
-     *
      * @return array Tableau avec les permissions triées
      */
     public function getSortedPerms(Collection $permissions): array

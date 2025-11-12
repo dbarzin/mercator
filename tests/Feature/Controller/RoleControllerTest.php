@@ -71,7 +71,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $title =  fake()->word();
+        $title = fake()->word();
         $Role = Role::factory()->create(['title' => $title]);
 
         $response = $this->get(route('admin.roles.show', $Role->id));
@@ -85,7 +85,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $title =  fake()->word();
+        $title = fake()->word();
         $Role = Role::factory()->create(['title' => $title]);
 
         $response = $this->get(route('admin.roles.show', $Role->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $title =  fake()->word();
+        $title = fake()->word();
         $Role = Role::factory()->create(['title' => $title]);
 
         $response = $this->get(route('admin.roles.edit', $Role));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update Role', function () {
-        $title =  fake()->word();
+        $title = fake()->word();
         $Role = Role::factory()->create(['title' => $title]);
 
         $data = [
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

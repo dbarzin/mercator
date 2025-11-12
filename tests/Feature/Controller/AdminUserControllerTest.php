@@ -71,7 +71,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $user_id =  fake()->word();
+        $user_id = fake()->word();
         $adminUser = AdminUser::factory()->create(['user_id' => $user_id]);
 
         $response = $this->get(route('admin.admin-users.show', $adminUser->id));
@@ -85,7 +85,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $user_id =  fake()->word();
+        $user_id = fake()->word();
         $adminUser = AdminUser::factory()->create(['user_id' => $user_id]);
 
         $response = $this->get(route('admin.admin-users.show', $adminUser->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $user_id =  fake()->word();
+        $user_id = fake()->word();
         $adminUser = AdminUser::factory()->create(['user_id' => $user_id]);
 
         $response = $this->get(route('admin.admin-users.edit', $adminUser));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update AdminUser', function () {
-        $user_id =  fake()->word();
+        $user_id = fake()->word();
         $adminUser = AdminUser::factory()->create(['user_id' => $user_id]);
 
         $data = [
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

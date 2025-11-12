@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\Cidr;
@@ -25,7 +24,7 @@ class StoreLogicalFlowRequest extends FormRequest
                 'max:64',
             ],
             'source_ip_range' => [
-                new Cidr(),
+                new Cidr,
                 'nullable',
                 'required_without:src_id',
             ],
@@ -34,7 +33,7 @@ class StoreLogicalFlowRequest extends FormRequest
                 'required_without:source_ip_range',
             ],
             'dest_ip_range' => [
-                new Cidr(),
+                new Cidr,
                 'nullable',
                 'required_without:dest_id',
             ],

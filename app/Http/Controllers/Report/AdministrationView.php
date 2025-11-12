@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -21,11 +20,11 @@ class AdministrationView extends Controller
      * Aborts with HTTP 403 Forbidden if the current user is denied the 'reports_access' gate.
      *
      * @return \Illuminate\View\View The rendered 'admin/reports/administration' view with keys:
-     *                                - 'zones' => collection of ZoneAdmin
-     *                                - 'annuaires' => collection of Annuaire
-     *                                - 'forests' => collection of ForestAd
-     *                                - 'domains' => collection of DomaineAd
-     *                                - 'adminUsers' => collection of AdminUser
+     *                               - 'zones' => collection of ZoneAdmin
+     *                               - 'annuaires' => collection of Annuaire
+     *                               - 'forests' => collection of ForestAd
+     *                               - 'domains' => collection of DomaineAd
+     *                               - 'adminUsers' => collection of AdminUser
      */
     public function generate(): View
     {

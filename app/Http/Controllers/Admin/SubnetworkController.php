@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -40,9 +39,9 @@ class SubnetworkController extends Controller
      * if the current user is not authorized to create subnetworks.
      *
      * @return \Illuminate\View\View The create view populated with the prepared lists:
-     *                                `gateways`, `vlans`, `networks`, `subnetworks`,
-     *                                `ip_allocation_type_list`, `responsible_exp_list`,
-     *                                `dmz_list`, `wifi_list`, and `zone_list`.
+     *                               `gateways`, `vlans`, `networks`, `subnetworks`,
+     *                               `ip_allocation_type_list`, `responsible_exp_list`,
+     *                               `dmz_list`, `wifi_list`, and `zone_list`.
      */
     public function create()
     {
@@ -83,7 +82,7 @@ class SubnetworkController extends Controller
      * Loads the `connected_subnets` and `gateway` relationships on the provided model
      * and prepares lists used to populate select inputs in the edit view.
      *
-     * @param \App\Models\Subnetwork $subnetwork The Subnetwork model to edit.
+     * @param  \App\Models\Subnetwork  $subnetwork  The Subnetwork model to edit.
      * @return \Illuminate\View\View The edit view populated with the subnetwork and selection lists.
      */
     public function edit(Subnetwork $subnetwork)

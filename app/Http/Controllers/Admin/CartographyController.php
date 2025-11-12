@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 // RGPD
@@ -93,7 +92,7 @@ class CartographyController extends Controller
         $vues = $request->input('vues', []);
 
         // get template
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new \PhpOffice\PhpWord\PhpWord;
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);
@@ -799,7 +798,7 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.application.fields.RTO'),
                         (intdiv($application->rto, 60 * 24) > 0 ?
-                            (intdiv($application->rto, 60 * 24) .' '.
+                            (intdiv($application->rto, 60 * 24).' '.
                                 (intdiv($application->rto, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '').
                         (intdiv($application->rto, 60) % 24 > 0 ?
                             (strval(intdiv($application->rto, 60) % 24)).' '.
@@ -816,7 +815,7 @@ class CartographyController extends Controller
                         $table,
                         trans('cruds.application.fields.RPO'),
                         (intdiv($application->rpo, 60 * 24) > 0 ?
-                            (intdiv($application->rpo, 60 * 24) .' '.
+                            (intdiv($application->rpo, 60 * 24).' '.
                                 (intdiv($application->rpo, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '').
                         (intdiv($application->rpo, 60) % 24 > 0 ?
                             (strval(intdiv($application->rpo, 60) % 24)).' '.

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Contracts\HasIcon;
@@ -16,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @mixin \Eloquent
  */
-class Workstation extends Model  implements HasIcon
+class Workstation extends Model implements HasIcon
 {
     use Auditable, HasFactory, SoftDeletes;
 
@@ -94,9 +93,15 @@ class Workstation extends Model  implements HasIcon
     /*
      * Implement icon
      */
-    public function setIconId(?int $id): void { $this->icon_id = $id; }
-    public function getIconId(): ?int { return $this->icon_id; }
+    public function setIconId(?int $id): void
+    {
+        $this->icon_id = $id;
+    }
 
+    public function getIconId(): ?int
+    {
+        return $this->icon_id;
+    }
 
     /** @return BelongsTo<Site, $this> */
     public function site(): BelongsTo

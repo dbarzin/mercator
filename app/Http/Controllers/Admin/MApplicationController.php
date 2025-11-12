@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -304,7 +303,7 @@ class MApplicationController extends Controller
         return redirect()->route('admin.applications.index');
     }
 
-    public function massDestroy(MassDestroyMApplicationRequest $request) : Response
+    public function massDestroy(MassDestroyMApplicationRequest $request): Response
     {
         MApplication::whereIn('id', request('ids'))->delete();
 
