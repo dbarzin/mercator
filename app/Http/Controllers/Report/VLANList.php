@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -39,7 +38,7 @@ class VLANList extends Controller
             'Workstations',
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -64,7 +63,7 @@ class VLANList extends Controller
         $sheet->getStyle('I')->getAlignment()->setWrapText(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -149,7 +148,7 @@ class VLANList extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/vlans-' . Carbon::today()->format('Ymd') . '.xlsx');
+        $path = storage_path('app/vlans-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 

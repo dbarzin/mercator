@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -172,7 +171,7 @@ class PhysicalServerController extends Controller
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
     {
         // Save icon
-        $this->iconUploadService->handle($request, $physicalServer);;
+        $this->iconUploadService->handle($request, $physicalServer);
 
         // Update PhysicalServer
         $physicalServer->update($request->all());

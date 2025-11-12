@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -27,7 +26,7 @@ class NetworkInfrastructureView extends Controller
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $buildingIds=null;
+        $buildingIds = null;
         if ($request->site == null) {
             $request->session()->put('site', null);
             $siteId = null;

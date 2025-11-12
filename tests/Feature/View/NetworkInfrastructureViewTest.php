@@ -46,8 +46,8 @@ describe('Network Infrastructure View', function () {
             'physicalRouters',
             'wifiTerminals',
             'physicalSecurityDevices',
-            'physicalLinks', 
-            ]);
+            'physicalLinks',
+        ]);
     });
 
     test('denies access without permission', function () {

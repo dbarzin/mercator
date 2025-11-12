@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\Cidr;
@@ -10,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UpdateLogicalFlowRequest extends FormRequest
 {
-    public function authorize() : bool
+    public function authorize(): bool
     {
         abort_if(Gate::denies('logical_flow_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -26,7 +25,7 @@ class UpdateLogicalFlowRequest extends FormRequest
             ],
 
             'source_ip_range' => [
-                new Cidr(),
+                new Cidr,
                 'nullable',
                 'required_without:src_id',
             ],
@@ -35,7 +34,7 @@ class UpdateLogicalFlowRequest extends FormRequest
                 'required_without:source_ip_range',
             ],
             'dest_ip_range' => [
-                new Cidr(),
+                new Cidr,
                 'nullable',
                 'required_without:dest_id',
             ],

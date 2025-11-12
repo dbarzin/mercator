@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Console\Commands;
 
 use App\Models\MApplication;
@@ -315,5 +314,4 @@ class CVESearch extends Command
             Log::error('CVESearch - Mailer error', ['error' => $mail->ErrorInfo ?: $e->getMessage()]);
         }
     }
-
 }

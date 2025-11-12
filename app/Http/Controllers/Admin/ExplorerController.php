@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 // Models
@@ -33,7 +32,7 @@ class ExplorerController extends Controller
      * Each node is an associative array with keys: `vue`, `id`, `label`, `image`, `type` and optionally `title`.
      * Each edge is an associative array with keys: `name`, `bidirectional`, `from`, `to`, `type`.
      *
-     * @return array An array with two elements: `[0 => array $nodes, 1 => array $edges]` where `$nodes` is the list of node arrays and `$edges` is the list of edge arrays.  
+     * @return array An array with two elements: `[0 => array $nodes, 1 => array $edges]` where `$nodes` is the list of node arrays and `$edges` is the list of edge arrays.
      */
     public function getData(): array
     {
@@ -362,8 +361,7 @@ class ExplorerController extends Controller
             $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
             if ($subnetwork->subnetwork_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('SUBNETWORK_', $subnetwork->subnetwork_id));
-            }
-            elseif ($subnetwork->network_id !== null) {
+            } elseif ($subnetwork->network_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('NETWORK_', $subnetwork->network_id));
             }
             if ($subnetwork->vlan_id !== null) {
@@ -422,7 +420,7 @@ class ExplorerController extends Controller
         }
 
         // Logical Security Devices
-        $logical_security_devices = DB::table('security_devices')->select('id', 'name','icon_id')->whereNull('deleted_at')->get();
+        $logical_security_devices = DB::table('security_devices')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($logical_security_devices as $securityDevice) {
             $this->addNode(
                 $nodes,
@@ -959,8 +957,8 @@ class ExplorerController extends Controller
     /**
      * Concatenates a prefix and an identifier into a single identifier string, or returns null if the identifier is null.
      *
-     * @param string $prefix The string prefix to prepend.
-     * @param mixed|null $id The identifier to append; when null, no identifier is produced.
+     * @param  string  $prefix  The string prefix to prepend.
+     * @param  mixed|null  $id  The identifier to append; when null, no identifier is produced.
      * @return string|null The concatenated identifier (`$prefix . $id`) when `$id` is not null, or `null` otherwise.
      */
     private function formatId($prefix, $id)

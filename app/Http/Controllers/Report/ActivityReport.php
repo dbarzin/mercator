@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 // GDPR
@@ -26,7 +25,7 @@ class ActivityReport extends ReportController
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // get template
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new \PhpOffice\PhpWord\PhpWord;
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);
@@ -102,14 +101,17 @@ class ActivityReport extends ReportController
             $section->addTitle(trans('cruds.dataProcessing.fields.lawfulness'), 2);
 
             // Booleans
-            $txt = "<ul>";
-            if ($dataProcessing->lawfulness_consent)
-                $txt .= '<li>' . trans('cruds.dataProcessing.fields.lawfulness_consent') . '</li>';
-            if ($dataProcessing->lawfulness_contract)
-                $txt .= '<li>' . trans('cruds.dataProcessing.fields.lawfulness_contract') . '</li>';
-            if ($dataProcessing->lawfulness_legal_obligation)
-                $txt .= '<li>' . trans('cruds.dataProcessing.fields.lawfulness_legal_obligation') . '</li>';
-            $txt .= "</ul><br/>";
+            $txt = '<ul>';
+            if ($dataProcessing->lawfulness_consent) {
+                $txt .= '<li>'.trans('cruds.dataProcessing.fields.lawfulness_consent').'</li>';
+            }
+            if ($dataProcessing->lawfulness_contract) {
+                $txt .= '<li>'.trans('cruds.dataProcessing.fields.lawfulness_contract').'</li>';
+            }
+            if ($dataProcessing->lawfulness_legal_obligation) {
+                $txt .= '<li>'.trans('cruds.dataProcessing.fields.lawfulness_legal_obligation').'</li>';
+            }
+            $txt .= '</ul><br/>';
 
             $txt .= $dataProcessing->lawfulness;
 

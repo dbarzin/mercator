@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Models\MApplication;
@@ -73,7 +72,7 @@ class Directory extends ReportController
                 ->get();
 
         // --- Styles de base
-        $phpWord = new PhpWord();
+        $phpWord = new PhpWord;
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true); // !!!!
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -17,8 +16,7 @@ class MonarcController extends Controller
     public function __construct(
         private MospService $mosp,
         // private MonarcExportService $exporter,
-    ) {
-    }
+    ) {}
 
     public function index()
     {
@@ -114,7 +112,7 @@ class MonarcController extends Controller
 
         // Initialize the collection of names
         $names = collect();
-        
+
         // Parcours des objets pour extraire les "name"
         foreach ($data as $bloc) {
             if (isset($bloc['data']) && is_array($bloc['data'])) {
@@ -128,6 +126,5 @@ class MonarcController extends Controller
         }
         // dd($names);
 
-        return;
     }
 }

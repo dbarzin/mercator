@@ -30,8 +30,6 @@ return new class extends Migration
      * Reverts the migration by removing the `subnetwork_id` column and its associated index and foreign key from the `subnetworks` table.
      *
      * If the `subnetwork_id` column does not exist, the method returns without making changes. On SQLite, foreign key and index removal are skipped and only the column is dropped.
-     *
-     * @return void
      */
     public function down(): void
     {

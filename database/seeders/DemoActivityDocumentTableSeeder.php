@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoActivityDocumentTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -15,10 +14,7 @@ class DemoActivityDocumentTableSeeder extends Seeder
     public function run()
     {
 
+        \DB::table('activity_document')->delete();
 
-            \DB::table('activity_document')->delete();
-
-
-        
     }
 }

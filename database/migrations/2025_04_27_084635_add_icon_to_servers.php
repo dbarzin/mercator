@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('logical_servers', function (Blueprint $table) {
-            $table->unsignedInteger('icon_id')->after('name')->nullable()->index('document_id_fk_51303394');;
-            $table->foreign('icon_id','document_id_fk_51303394')->references('id')->on('documents');
+            $table->unsignedInteger('icon_id')->after('name')->nullable()->index('document_id_fk_51303394');
+            $table->foreign('icon_id', 'document_id_fk_51303394')->references('id')->on('documents');
         });
 
         Schema::table('physical_servers', function (Blueprint $table) {
             $table->unsignedInteger('icon_id')->after('name')->nullable()->index('document_id_fk_5328384');
-            $table->foreign('icon_id','document_id_fk_5328384')->references('id')->on('documents');
+            $table->foreign('icon_id', 'document_id_fk_5328384')->references('id')->on('documents');
         });
     }
 

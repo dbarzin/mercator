@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -25,7 +24,7 @@ class InformationSystemView extends Controller
      * and informations filtered by the optional `macroprocess` and `process` request inputs,
      * stores selected identifiers in session, and returns the report view.
      *
-     * @param Request $request HTTP request; may include `macroprocess` and `process` inputs used to filter results and persisted to session.
+     * @param  Request  $request  HTTP request; may include `macroprocess` and `process` inputs used to filter results and persisted to session.
      * @return View The rendered 'admin/reports/information_system' view with these variables:
      *              - `all_macroprocess`: all MacroProcessus sorted by name
      *              - `macroProcessuses`: selected MacroProcessus collection

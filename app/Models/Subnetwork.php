@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -98,6 +97,16 @@ class Subnetwork extends Model
     public function subnetwork(): BelongsTo
     {
         return $this->belongsTo(Subnetwork::class, 'subnetwork_id');
+    }
+
+    /**
+     * Get the child subnetworks that this subnetwork belongs to.
+     *
+     * @return HasMany<Subnetwork, $this> Relation to the parent Subnetwork model.
+     */
+    public function subnetworks(): HasMany
+    {
+        return $this->hasMany(Subnetwork::class, 'subnetwork_id', 'id');
     }
 
     /**
@@ -213,9 +222,10 @@ class Subnetwork extends Model
      */
     public function contains(?string $ip): bool
     {
-        if ($ip === null)
+        if ($ip === null) {
             return false;
-        
+        }
+
         $cidr = $this->address;
 
         if ((str_contains($ip, '.') && str_contains($cidr, '.')) ||

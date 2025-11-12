@@ -473,7 +473,7 @@ return [
         ],
         'title' => 'Bases de données',
         'title_singular' => 'Base de données',
-        'title_security' => 'Sécurité'
+        'title_security' => 'Sécurité',
     ],
     'dataProcessing' => [
         'description' => 'Registre des activités de traitement',
@@ -514,9 +514,9 @@ return [
             'lawfulness_consent' => 'Consent du traitement',
             'lawfulness_contract' => "Nécessaire à l'exécution d'un contrat",
             'lawfulness_legal_obligation' => "Respect d'une obligation légale",
-            'lawfulness_vital_interest' => "Sauvegarde des intérêts vitaux",
+            'lawfulness_vital_interest' => 'Sauvegarde des intérêts vitaux',
             'lawfulness_public_interest' => "Mission d'intérêt public",
-            'lawfulness_legitimate_interest' => "Intérêts légitimes",
+            'lawfulness_legitimate_interest' => 'Intérêts légitimes',
         ],
         'report_title' => 'Registre des traitements',
         'title' => 'Registre',
@@ -1323,7 +1323,7 @@ return [
             'impacts' => "Impacts sur la continuité d'activité",
             'impacts_helper' => 'Mesure des conséquences d’une interruption de service',
             'cve' => 'Trouver les CVE correspondantes',
-            'cve_helper' => "Recherche de CVE en fonction du CPE des applications",
+            'cve_helper' => 'Recherche de CVE en fonction du CPE des applications',
         ],
         'explorer' => [
             'title' => 'Exploration de la cartographie',

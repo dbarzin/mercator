@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -81,7 +80,6 @@ class Flux extends Model
 
         return null;
     }
-
 
     /** @return BelongsTo<MApplication, $this> */
     public function application_source(): BelongsTo

@@ -71,7 +71,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $Site = Site::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.sites.show', $Site->id));
@@ -85,7 +85,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $Site = Site::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.sites.show', $Site->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $Site = Site::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.sites.edit', $Site));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update Site', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $Site = Site::factory()->create(['name' => $name]);
 
         $data = [
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

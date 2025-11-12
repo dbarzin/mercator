@@ -11,30 +11,30 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('workstations', function(Blueprint $table) {
-            $table->dropColumn('icon')->nullable()->after("type");
-            $table->unsignedInteger('icon_id')->after("type")->nullable()->index('document_id_fk_129483');
-            $table->foreign('icon_id','document_id_fk_129483')->references('id')->on('documents')->onUpdate('NO ACTION');
+        Schema::table('workstations', function (Blueprint $table) {
+            $table->dropColumn('icon')->nullable()->after('type');
+            $table->unsignedInteger('icon_id')->after('type')->nullable()->index('document_id_fk_129483');
+            $table->foreign('icon_id', 'document_id_fk_129483')->references('id')->on('documents')->onUpdate('NO ACTION');
         });
-        Schema::table('peripherals', function(Blueprint $table) {
-            $table->dropColumn('icon')->nullable()->after("name");
-            $table->unsignedInteger('icon_id')->after("type")->nullable()->index('document_id_fk_129484');
-            $table->foreign('icon_id','document_id_fk_129484')->references('id')->on('documents')->onUpdate('NO ACTION');
+        Schema::table('peripherals', function (Blueprint $table) {
+            $table->dropColumn('icon')->nullable()->after('name');
+            $table->unsignedInteger('icon_id')->after('type')->nullable()->index('document_id_fk_129484');
+            $table->foreign('icon_id', 'document_id_fk_129484')->references('id')->on('documents')->onUpdate('NO ACTION');
         });
-        Schema::table('sites', function(Blueprint $table) {
-            $table->dropColumn('icon')->nullable()->after("name");
-            $table->unsignedInteger('icon_id')->after("name")->nullable()->index('document_id_fk_129485');
-            $table->foreign('icon_id','document_id_fk_129485')->references('id')->on('documents')->onUpdate('NO ACTION');
+        Schema::table('sites', function (Blueprint $table) {
+            $table->dropColumn('icon')->nullable()->after('name');
+            $table->unsignedInteger('icon_id')->after('name')->nullable()->index('document_id_fk_129485');
+            $table->foreign('icon_id', 'document_id_fk_129485')->references('id')->on('documents')->onUpdate('NO ACTION');
         });
-        Schema::table('entities', function(Blueprint $table) {
-            $table->dropColumn('icon')->nullable()->after("name");
-            $table->unsignedInteger('icon_id')->after("name")->nullable()->index('document_id_fk_129486');
-            $table->foreign('icon_id','document_id_fk_129486')->references('id')->on('documents')->onUpdate('NO ACTION');
+        Schema::table('entities', function (Blueprint $table) {
+            $table->dropColumn('icon')->nullable()->after('name');
+            $table->unsignedInteger('icon_id')->after('name')->nullable()->index('document_id_fk_129486');
+            $table->foreign('icon_id', 'document_id_fk_129486')->references('id')->on('documents')->onUpdate('NO ACTION');
         });
-        Schema::table('admin_users', function(Blueprint $table) {
-            $table->dropColumn('icon')->nullable()->after("type");
-            $table->unsignedInteger('icon_id')->after("type")->nullable()->index('document_id_fk_129487');
-            $table->foreign('icon_id','document_id_fk_129487')->references('id')->on('documents')->onUpdate('NO ACTION');
+        Schema::table('admin_users', function (Blueprint $table) {
+            $table->dropColumn('icon')->nullable()->after('type');
+            $table->unsignedInteger('icon_id')->after('type')->nullable()->index('document_id_fk_129487');
+            $table->foreign('icon_id', 'document_id_fk_129487')->references('id')->on('documents')->onUpdate('NO ACTION');
         });
     }
 
@@ -54,8 +54,8 @@ return new class extends Migration
             $table->dropColumn('icon_id');
         });
 
-        Schema::table('workstations', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('workstations', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
 
         // Drop icon_id on Peripherals
@@ -69,10 +69,9 @@ return new class extends Migration
             $table->dropColumn('icon_id');
         });
 
-        Schema::table('peripherals', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('peripherals', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
-
 
         // Drop icon_id on Sites
         Schema::table('sites', function (Blueprint $table) {
@@ -85,8 +84,8 @@ return new class extends Migration
             $table->dropColumn('icon_id');
         });
 
-        Schema::table('sites', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('sites', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
 
         // Drop icon_id on Entities
@@ -100,8 +99,8 @@ return new class extends Migration
             $table->dropColumn('icon_id');
         });
 
-        Schema::table('entities', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("name");
+        Schema::table('entities', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('name');
         });
 
         // Drop icon_id on Admin users
@@ -115,8 +114,8 @@ return new class extends Migration
             $table->dropColumn('icon_id');
         });
 
-        Schema::table('admin_users', function(Blueprint $table) {
-            $table->mediumText('icon')->nullable()->after("type");
+        Schema::table('admin_users', function (Blueprint $table) {
+            $table->mediumText('icon')->nullable()->after('type');
         });
     }
 };

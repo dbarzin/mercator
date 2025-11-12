@@ -36,7 +36,7 @@ return [
         'redirect' => env('KEYCLOAK_REDIRECT_URI'),
         'base_url' => env('KEYCLOAK_BASE_URL'),
         'realms' => env('KEYCLOAK_REALM'),
-        'auto_provisioning'=> env('KEYCLOAK_AUTO_PROVISIONING'),
+        'auto_provisioning' => env('KEYCLOAK_AUTO_PROVISIONING'),
     ],
 
     'nvd' => [

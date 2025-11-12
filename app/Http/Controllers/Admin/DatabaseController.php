@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -17,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('database_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -35,7 +33,7 @@ class DatabaseController extends Controller
         $entity_resps = Entity::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $informations = Information::query()->orderBy('name')->pluck('name', 'id');
         $applications = MApplication::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
         $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
@@ -79,7 +77,7 @@ class DatabaseController extends Controller
         $entity_resps = Entity::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $informations = Information::query()->orderBy('name')->pluck('name', 'id');
         $applications = MApplication::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
         $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');

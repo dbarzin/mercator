@@ -13,7 +13,7 @@ return new class extends Migration
     {
         //
         Schema::table('data_processing', function (Blueprint $table) {
-            $table->string("legal_basis")->after("name")->nullable();
+            $table->string('legal_basis')->after('name')->nullable();
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     {
         //
         Schema::table('data_processing', function (Blueprint $table) {
-            $table->dropColumn("legal_basis");
+            $table->dropColumn('legal_basis');
         });
     }
 };

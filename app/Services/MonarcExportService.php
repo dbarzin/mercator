@@ -1,6 +1,5 @@
 <?php
 
-
 // app/Services/MonarcExportService.php
 
 namespace App\Services;
@@ -9,9 +8,7 @@ use Illuminate\Support\Str;
 
 class MonarcExportService
 {
-    public function __construct(private MospService $mosp)
-    {
-    }
+    public function __construct(private MospService $mosp) {}
 
     /**
      * @param  array  $referentialSlugs  ex: ["iso27002"]
@@ -49,7 +46,7 @@ class MonarcExportService
                 'name' => $a['title'],
                 'type' => $a['type'], // 'primary' | 'supporting'
                 'parent' => $a['parent_id'] ? ($assetUuid[$a['parent_id']] ?? null) : null,
-                '_fallback_parent_uuid' => null, 
+                '_fallback_parent_uuid' => null,
             ];
         }
 

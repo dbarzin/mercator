@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('entities', function(Blueprint $table) {
+        Schema::table('entities', function (Blueprint $table) {
             $table->unsignedInteger('parent_entity_id')->index('entity_id_fk_4398013')->nullable();
-            $table->foreign('parent_entity_id','entity_id_fk_4398013')->references('id')->on('entities')->onUpdate('NO ACTION')->onDelete('SET NULL');
+            $table->foreign('parent_entity_id', 'entity_id_fk_4398013')->references('id')->on('entities')->onUpdate('NO ACTION')->onDelete('SET NULL');
         });
     }
 
@@ -32,5 +32,4 @@ return new class extends Migration
             $table->dropColumn('parent_entity_id');
         });
     }
-
 };

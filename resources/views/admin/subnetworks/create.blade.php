@@ -348,7 +348,7 @@
         </div>
 
         <div class="form-group d-flex gap-2">
-            <a id="btn-cancel" class="btn btn-outline-secondary" href="{{ route('admin.subnetworks.index') }}">
+            <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.subnetworks.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
             <button id="btn-new" class="btn btn-danger" type="submit">

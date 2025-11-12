@@ -47,7 +47,7 @@ it('forbids report endpoints without permission', function (string $endpoint) {
 
     $this->get($endpoint)->assertForbidden();
 })->with(
-    array_map(fn($e) => [$e[0]], $FILE_REPORTS)
+    array_map(fn ($e) => [$e[0]], $FILE_REPORTS)
 );
 
 /**
@@ -71,7 +71,7 @@ it('returns a file download for report endpoints when permitted', function (stri
     expect($disposition)->toBeString()
         ->and(strtolower($disposition))->toContain('attachment;')
         ->and(strtolower($disposition))->toContain('filename=')
-        ->and(strtolower($disposition))->toContain('.' . strtolower($ext));
+        ->and(strtolower($disposition))->toContain('.'.strtolower($ext));
 
     $base = $response->baseResponse;
     expect($base)->toBeInstanceOf(BinaryFileResponse::class);
@@ -87,4 +87,3 @@ it('returns a file download for report endpoints when permitted', function (stri
         expect(substr($content, 0, 2))->toBe(ZIP_SIGNATURE);
     }
 })->with($FILE_REPORTS);
-

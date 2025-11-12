@@ -70,22 +70,22 @@ describe('create', function () {
 
 describe('show', function () {
 
-        test('can display object', function () {
-            $name =  fake()->word();
-            $graph = Graph::factory()->create(['name' => $name]);
+    test('can display object', function () {
+        $name = fake()->word();
+        $graph = Graph::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.graphs.show', $graph->id));
+        $response = $this->get(route('admin.graphs.show', $graph->id));
 
-            $response->assertOk();
-            $response->assertViewIs('admin.graphs.show');
-            $response->assertSee($name);
-        });
+        $response->assertOk();
+        $response->assertViewIs('admin.graphs.show');
+        $response->assertSee($name);
+    });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $graph = Graph::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.graphs.show', $graph->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $graph = Graph::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.graphs.edit', $graph));
@@ -123,17 +123,17 @@ describe('edit', function () {
 describe('update', function () {
     test('can update graph', function () {
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $graph = Graph::factory()->create(['name' => $name, 'type' => fake()->word()]);
 
         $data = [
-            'id'   => $graph->id,
+            'id' => $graph->id,
             'name' => 'Updated Name',
             'type' => $graph->type,
             'content' => '<GraphDataModel></GraphDataModel>',
         ];
 
-        $response = $this->put(route("admin.graphs.update", $graph),$data);
+        $response = $this->put(route('admin.graphs.update', $graph), $data);
 
         $response->assertRedirect(route('admin.graphs.index'));
         $this->assertDatabaseHas('graphs', ['name' => 'Updated Name']);
@@ -155,15 +155,15 @@ describe('destroy', function () {
 
     });
 
-test('denies access without permission', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-    $graph = Graph::factory()->create();
+        $graph = Graph::factory()->create();
 
-    $response = $this->delete(route('admin.graphs.destroy', $graph));
+        $response = $this->delete(route('admin.graphs.destroy', $graph));
 
-    $response->assertForbidden();
+        $response->assertForbidden();
     });
 });
 
@@ -202,6 +202,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

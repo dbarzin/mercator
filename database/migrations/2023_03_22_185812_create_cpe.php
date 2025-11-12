@@ -20,7 +20,7 @@ class CreateCpe extends Migration
         });
 
         Schema::table('cpe_vendors', function (Blueprint $table) {
-            $table->unique(['part','name']);
+            $table->unique(['part', 'name']);
         });
 
         Schema::create('cpe_products', function (Blueprint $table) {
@@ -46,62 +46,62 @@ class CreateCpe extends Migration
         });
 
         Schema::table('m_applications', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
         });
 
         Schema::table('physical_switches', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('physical_routers', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('peripherals', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('wifi_terminals', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('phones', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('security_devices', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('workstations', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('physical_servers', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
         Schema::table('storage_devices', function (Blueprint $table) {
-            $table->string('vendor')->after("description")->nullable();
-            $table->string('product')->after("vendor")->nullable();
-            $table->string('version')->after("product")->nullable();
+            $table->string('vendor')->after('description')->nullable();
+            $table->string('product')->after('vendor')->nullable();
+            $table->string('version')->after('product')->nullable();
         });
 
     }

@@ -9,8 +9,6 @@ class PermissionRoleTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
     public function run(): void
     {
@@ -304,9 +302,9 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => 1, 'permission_id' => 306],
                 ['role_id' => 1, 'permission_id' => 307],
                 ['role_id' => 1, 'permission_id' => 308]]
-                );
+            );
 
-                DB::table('permission_role')->insert([
+            DB::table('permission_role')->insert([
                 ['role_id' => 2, 'permission_id' => 17],
                 ['role_id' => 2, 'permission_id' => 18],
                 ['role_id' => 2, 'permission_id' => 19],
@@ -583,7 +581,7 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => 2, 'permission_id' => 306],
                 ['role_id' => 2, 'permission_id' => 307],
                 ['role_id' => 2, 'permission_id' => 308]]
-                    );
+            );
 
             DB::table('permission_role')->insert([
 
@@ -705,7 +703,7 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => 3, 'permission_id' => 307],
                 ['role_id' => 3, 'permission_id' => 308]]);
 
-                DB::table('permission_role')->insert([
+            DB::table('permission_role')->insert([
 
                 ['role_id' => 4, 'permission_id' => 59],
                 ['role_id' => 4, 'permission_id' => 60],

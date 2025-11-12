@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -36,7 +35,7 @@ class LogicalServerConfigs extends Controller
             trans('cruds.logicalServer.fields.servers'),            // O
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -66,7 +65,7 @@ class LogicalServerConfigs extends Controller
         $sheet->getStyle('H')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;

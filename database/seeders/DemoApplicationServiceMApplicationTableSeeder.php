@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoApplicationServiceMApplicationTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,123 +13,99 @@ class DemoApplicationServiceMApplicationTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('application_service_m_application')->delete();
-        
-        \DB::table('application_service_m_application')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('application_service_m_application')->insert([
+            0 => [
                 'm_application_id' => 2,
                 'application_service_id' => 3,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'm_application_id' => 2,
                 'application_service_id' => 4,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'm_application_id' => 1,
                 'application_service_id' => 3,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'm_application_id' => 15,
                 'application_service_id' => 2,
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'm_application_id' => 15,
                 'application_service_id' => 3,
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'm_application_id' => 1,
                 'application_service_id' => 1,
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'm_application_id' => 4,
                 'application_service_id' => 11,
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'm_application_id' => 4,
                 'application_service_id' => 5,
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'm_application_id' => 2,
                 'application_service_id' => 7,
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'm_application_id' => 4,
                 'application_service_id' => 7,
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'm_application_id' => 1,
                 'application_service_id' => 10,
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'm_application_id' => 16,
                 'application_service_id' => 10,
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'm_application_id' => 16,
                 'application_service_id' => 11,
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'm_application_id' => 16,
                 'application_service_id' => 5,
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'm_application_id' => 16,
                 'application_service_id' => 6,
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'm_application_id' => 16,
                 'application_service_id' => 7,
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'm_application_id' => 16,
                 'application_service_id' => 9,
-            ),
-            17 => 
-            array (
+            ],
+            17 => [
                 'm_application_id' => 16,
                 'application_service_id' => 1,
-            ),
-            18 => 
-            array (
+            ],
+            18 => [
                 'm_application_id' => 16,
                 'application_service_id' => 2,
-            ),
-            19 => 
-            array (
+            ],
+            19 => [
                 'm_application_id' => 16,
                 'application_service_id' => 3,
-            ),
-            20 => 
-            array (
+            ],
+            20 => [
                 'm_application_id' => 16,
                 'application_service_id' => 4,
-            ),
-            21 => 
-            array (
+            ],
+            21 => [
                 'm_application_id' => 16,
                 'application_service_id' => 8,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

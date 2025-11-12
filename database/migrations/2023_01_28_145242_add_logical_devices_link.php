@@ -42,7 +42,7 @@ class AddLogicalDevicesLink extends Migration
     public function down()
     {
         Schema::table('physical_links', function (Blueprint $table) {
- 
+
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('router_src_id_fk');
             }

@@ -1428,9 +1428,15 @@ digraph  {
         SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
         @if ($subnetwork->subnetwork_id!=null)
+        @if ($subnetworks->contains('id', $subnetwork->subnetwork_id))
         SUBNET{{ $subnetwork->subnetwork_id }} -> SUBNET{{ $subnetwork->id }}
-        @elseif ($subnetwork->network_id!=null)
+        @else
         NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
+        @endif
+        @elseif ($subnetwork->network_id!=null)
+        @if ($networks->contains('id', $subnetwork->network_id))
+        NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
+        @endif
         @endif
         @if ($subnetwork->gateway_id!=null)
         SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}

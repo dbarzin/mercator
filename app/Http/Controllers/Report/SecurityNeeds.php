@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Models\Database;
@@ -77,7 +76,7 @@ class SecurityNeeds extends ReportController
             $header[] = trans('global.authenticity_short');
         }
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -210,7 +209,7 @@ class SecurityNeeds extends ReportController
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/securityNeeds-' . Carbon::today()->format('Ymd') . '.xlsx');
+        $path = storage_path('app/securityNeeds-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 

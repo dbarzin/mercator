@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationServiceController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('application_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -30,7 +28,7 @@ class ApplicationServiceController extends Controller
         abort_if(Gate::denies('application_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applications = MApplication::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
 
@@ -57,7 +55,7 @@ class ApplicationServiceController extends Controller
         abort_if(Gate::denies('application_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applications = MApplication::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
 

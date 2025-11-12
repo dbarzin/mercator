@@ -74,22 +74,22 @@ describe('create', function () {
 
 describe('show', function () {
 
-        test('can display object', function () {
-            $name =  fake()->word();
-            $container = MApplication::factory()->create(['name' => $name]);
+    test('can display object', function () {
+        $name = fake()->word();
+        $container = MApplication::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.applications.show', $container->id));
+        $response = $this->get(route('admin.applications.show', $container->id));
 
-            $response->assertOk();
-            $response->assertViewIs('admin.applications.show');
-            $response->assertSee($name);
-        });
+        $response->assertOk();
+        $response->assertViewIs('admin.applications.show');
+        $response->assertSee($name);
+    });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $container = MApplication::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.applications.show', $container->id));
@@ -101,7 +101,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $container = MApplication::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.applications.edit', $container));
@@ -126,7 +126,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update MApplication', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $container = MApplication::factory()->create(['name' => $name]);
 
         $data = [
@@ -156,15 +156,15 @@ describe('destroy', function () {
 
     });
 
-test('denies access without permission', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-    $container = MApplication::factory()->create();
+        $container = MApplication::factory()->create();
 
-    $response = $this->delete(route('admin.applications.destroy', $container));
+        $response = $this->delete(route('admin.applications.destroy', $container));
 
-    $response->assertForbidden();
+        $response->assertForbidden();
     });
 });
 
@@ -203,6 +203,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

@@ -71,7 +71,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $macoProcessus = MacroProcessus::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.macro-processuses.show', $macoProcessus->id));
@@ -85,7 +85,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $macoProcessus = MacroProcessus::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.macro-processuses.show', $macoProcessus->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $macoProcessus = MacroProcessus::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.macro-processuses.edit', $macoProcessus));
@@ -122,12 +122,12 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update MacroProcessus', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $macoProcessus = MacroProcessus::factory()->create(['name' => $name]);
 
         $data = [
             'name' => 'Updated Name',
-            'description' => fake()->sentences(3,true),
+            'description' => fake()->sentences(3, true),
             'source_ip_range' => fake()->ipv4().'/32',
             'dest_ip_range' => fake()->ipv4().'/32',
         ];
@@ -201,6 +201,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

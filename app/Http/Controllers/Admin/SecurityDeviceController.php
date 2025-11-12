@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 // Models
@@ -19,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityDeviceController extends Controller
 {
-
     public function __construct(private readonly IconUploadService $iconUploadService) {}
 
     public function index()
@@ -89,11 +87,11 @@ class SecurityDeviceController extends Controller
 
         return view('admin.securityDevices.edit',
             compact('securityDevice',
-            'physicalSecurityDevices',
-            'applications',
-            'type_list',
-            'attributes_list',
-            'icons'
+                'physicalSecurityDevices',
+                'applications',
+                'type_list',
+                'attributes_list',
+                'icons'
             ));
     }
 
@@ -136,6 +134,7 @@ class SecurityDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
     private function getAttributes()
     {
         $attributes_list = SecurityDevice::query()
@@ -154,5 +153,4 @@ class SecurityDeviceController extends Controller
 
         return array_unique($res);
     }
-
 }

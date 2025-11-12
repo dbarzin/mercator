@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -102,7 +101,7 @@ class PhysicalLinkController extends Controller
 
     public function store(StorePhysicalLinkRequest $request)
     {
-        $link = new PhysicalLink();
+        $link = new PhysicalLink;
 
         // Source device
         if (str_starts_with($request->src_id, 'PER_')) {
@@ -260,7 +259,7 @@ class PhysicalLinkController extends Controller
     /**
      * Show the form to edit the specified PhysicalLink.
      *
-     * @param PhysicalLink $link The PhysicalLink to edit; its current data populates the form.
+     * @param  PhysicalLink  $link  The PhysicalLink to edit; its current data populates the form.
      * @return \Illuminate\View\View The edit view populated with the consolidated devices list and the provided link.
      */
     public function edit(PhysicalLink $link)
@@ -331,8 +330,8 @@ class PhysicalLinkController extends Controller
      * The method derives specific device foreign keys from prefixed `src_id` and `dest_id` values, sets `src_port` and `dest_port`,
      * performs cross-record port conflict checks, and saves the updated link if validation passes.
      *
-     * @param \App\Http\Requests\UpdatePhysicalLinkRequest $request Validated input containing prefixed `src_id`, `dest_id`, `src_port`, and `dest_port`.
-     * @param \App\Models\PhysicalLink $link The physical link instance to update.
+     * @param  \App\Http\Requests\UpdatePhysicalLinkRequest  $request  Validated input containing prefixed `src_id`, `dest_id`, `src_port`, and `dest_port`.
+     * @param  \App\Models\PhysicalLink  $link  The physical link instance to update.
      * @return \Illuminate\Http\RedirectResponse Redirects to the physical links index on success; redirects back with validation errors and input on failure.
      */
     public function update(UpdatePhysicalLinkRequest $request, PhysicalLink $link)

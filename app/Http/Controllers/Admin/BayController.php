@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -56,10 +55,10 @@ class BayController extends Controller
      * The view includes a sorted list of buildings (rooms) and flashes the provided bay's fillable attributes
      * into the request so the creation form is pre-populated.
      *
-     * @param Bay $bay The bay whose attributes will be used to pre-fill the creation form.
+     * @param  Bay  $bay  The bay whose attributes will be used to pre-fill the creation form.
      * @return View The bay creation view with a `rooms` list and flashed input from `$bay`.
      */
-    public function clone(Request $request, Bay $bay) : View
+    public function clone(Request $request, Bay $bay): View
     {
         abort_if(Gate::denies('bay_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -74,7 +73,7 @@ class BayController extends Controller
     /**
      * Creates a new Bay from the request's validated data and redirects to the bays index.
      *
-     * @param StoreBayRequest $request The validated input used to create the Bay.
+     * @param  StoreBayRequest  $request  The validated input used to create the Bay.
      * @return RedirectResponse Redirect to the admin.bays.index route.
      */
     public function store(StoreBayRequest $request): RedirectResponse
@@ -87,7 +86,7 @@ class BayController extends Controller
     /**
      * Show the form for editing the specified bay.
      *
-     * @param \App\Models\Bay $bay The bay instance to edit.
+     * @param  \App\Models\Bay  $bay  The bay instance to edit.
      * @return \Illuminate\View\View The edit view populated with the bay and selectable rooms.
      */
     public function edit(Bay $bay): View
@@ -104,8 +103,8 @@ class BayController extends Controller
     /**
      * Update the given Bay with validated request data and redirect to the bays index.
      *
-     * @param UpdateBayRequest $request Validated input for updating the bay.
-     * @param Bay $bay The Bay model instance to update.
+     * @param  UpdateBayRequest  $request  Validated input for updating the bay.
+     * @param  Bay  $bay  The Bay model instance to update.
      * @return RedirectResponse A redirect response to the admin.bays.index route.
      */
     public function update(UpdateBayRequest $request, Bay $bay): RedirectResponse
@@ -118,14 +117,14 @@ class BayController extends Controller
     /**
      * Display the specified bay with its associated room and hardware collections.
      *
-     * @param \App\Models\Bay $bay The Bay instance to display.
+     * @param  \App\Models\Bay  $bay  The Bay instance to display.
      * @return \Illuminate\View\View The view presenting the Bay and its loaded relationships.
      */
     public function show(Bay $bay): View
     {
         abort_if(Gate::denies('bay_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bay->load('room', 'bayPhysicalServers', 'bayStorageDevices', 'bayPeripherals', 'bayPhysicalSwitches', 'bayPhysicalRouters', 'bayPhysicalSecurityDevices');
+        $bay->load('room', 'physicalServers', 'storageDevices', 'peripherals', 'physicalSwitches', 'physicalRouters', 'physicalSecurityDevices');
 
         return view('admin.bays.show', compact('bay'));
     }
@@ -133,7 +132,7 @@ class BayController extends Controller
     /**
      * Delete the given Bay and redirect to the bays index.
      *
-     * @param \App\Models\Bay $bay The Bay model to delete.
+     * @param  \App\Models\Bay  $bay  The Bay model to delete.
      * @return \Illuminate\Http\RedirectResponse Redirects to the admin.bays.index route.
      */
     public function destroy(Bay $bay): RedirectResponse
@@ -148,7 +147,7 @@ class BayController extends Controller
     /**
      * Deletes multiple Bay records identified by IDs supplied in the request.
      *
-     * @param MassDestroyBayRequest $request The request containing an `ids` array of Bay record IDs to delete.
+     * @param  MassDestroyBayRequest  $request  The request containing an `ids` array of Bay record IDs to delete.
      * @return Response An empty response with HTTP 204 No Content.
      */
     public function massDestroy(MassDestroyBayRequest $request): Response

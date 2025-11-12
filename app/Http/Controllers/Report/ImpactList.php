@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Models\Activity;
@@ -36,7 +35,7 @@ class ImpactList extends ReportController
         $centered = ['alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]];
 
         // 3. Créer une nouvelle feuille Excel
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         // 4. Écrire l'en-tête (ligne 1)
@@ -70,7 +69,7 @@ class ImpactList extends ReportController
         }
 
         $writer = new Xlsx($spreadsheet);
-        $path = storage_path('impacts-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('impacts-'.Carbon::today()->format('Ymd').'.xlsx');
         $writer->save($path);
 
         return response()

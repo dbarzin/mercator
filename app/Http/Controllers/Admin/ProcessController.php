@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -64,7 +63,7 @@ class ProcessController extends Controller
 
         // Save process
         $process->save();
-        
+
         return redirect()->route('admin.processes.index');
     }
 
