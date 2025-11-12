@@ -65,13 +65,7 @@ class Building extends Model implements HasIcon
     {
         return $this->hasMany(PhysicalRouter::class, 'building_id', 'id')->orderBy('name');
     }
-
-    /** @return HasMany<PhysicalSwitch, $this> */
-    public function buildingPhysicalSwitch(): HasMany
-    {
-        return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
-    }
-
+    
     /** @return HasMany<Workstation, $this> */
     public function workstations(): HasMany
     {
