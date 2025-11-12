@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             RoleUserTableSeeder::class,
         ]);
         // Test data seeder
-        if (env('USE_DEMO_DATA', false)) {
+        if (env('USE_DEMO_DATA', false)) { // @phpstan-ignore-line
             $this->call(DemoApplicationBlocksTableSeeder::class);
             $this->call(DemoOperationsTableSeeder::class);
             $this->call(DemoActorsTableSeeder::class);

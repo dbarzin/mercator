@@ -20,10 +20,10 @@ return new class extends Migration
         $buildings = Building::All();
         foreach ($buildings as $building) {
             $building->attributes = '';
-            if ($building->camera) {
+            if ($building->camera) { // @phpstan-ignore-line
                 $building->attributes .= 'Camera ';
             }
-            if ($building->badge) {
+            if ($building->badge) { // @phpstan-ignore-line
                 $building->attributes .= 'Badge';
             }
             $building->save();
