@@ -211,8 +211,11 @@ class Subnetwork extends Model
     /**
      * Does the given IP match the CIDR prefix
      */
-    public function contains(string $ip): bool
+    public function contains(?string $ip): bool
     {
+        if ($ip === null)
+            return false;
+        
         $cidr = $this->address;
 
         if ((str_contains($ip, '.') && str_contains($cidr, '.')) ||
