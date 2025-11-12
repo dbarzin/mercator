@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -114,11 +113,10 @@ class GraphController extends Controller
     public function update(Request $request)
     {
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         if ($request->id == '-1') {
             $graph = Graph::create($request->all());
-        }
-        else {
+        } else {
             $graph = Graph::find($request->id);
             $graph->update($request->all());
         }

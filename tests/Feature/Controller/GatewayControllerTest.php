@@ -70,22 +70,22 @@ describe('create', function () {
 
 describe('show', function () {
 
-        test('can display object', function () {
-            $name =  fake()->word();
-            $bay = Gateway::factory()->create(['name' => $name]);
+    test('can display object', function () {
+        $name = fake()->word();
+        $bay = Gateway::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.gateways.show', $bay->id));
+        $response = $this->get(route('admin.gateways.show', $bay->id));
 
-            $response->assertOk();
-            $response->assertViewIs('admin.gateways.show');
-            $response->assertSee($name);
-        });
+        $response->assertOk();
+        $response->assertViewIs('admin.gateways.show');
+        $response->assertSee($name);
+    });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $bay = Gateway::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.gateways.show', $bay->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $bay = Gateway::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.gateways.edit', $bay));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update activity', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $bay = Gateway::factory()->create(['name' => $name]);
 
         $data = [
@@ -152,15 +152,15 @@ describe('destroy', function () {
 
     });
 
-test('denies access without permission', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-    $bay = Gateway::factory()->create();
+        $bay = Gateway::factory()->create();
 
-    $response = $this->delete(route('admin.gateways.destroy', $bay));
+        $response = $this->delete(route('admin.gateways.destroy', $bay));
 
-    $response->assertForbidden();
+        $response->assertForbidden();
     });
 });
 
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

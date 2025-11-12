@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LogicalFlowController extends Controller
 {
-    public function index() 
+    public function index()
     {
         abort_if(Gate::denies('logical_flow_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

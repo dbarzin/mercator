@@ -1,4 +1,5 @@
 <?php
+
 // tests/Feature/Console/CPESyncCommandTest.php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;

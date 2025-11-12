@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     /**
      * Apply migration: create the cluster_router pivot, migrate existing router->cluster relations into it, and remove the routers.cluster_id column and its constraints/indexes.
      *
@@ -41,7 +40,7 @@ return new class extends Migration
                 foreach ($rows as $row) {
                     $inserts[] = [
                         'cluster_id' => $row->cluster_id,
-                        'router_id'  => $row->id,
+                        'router_id' => $row->id,
                     ];
                 }
                 if ($inserts) {
@@ -58,29 +57,34 @@ return new class extends Migration
                 Schema::table('routers', function (Blueprint $table) {
                     $table->dropForeign(['cluster_id']); // portable
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
             try {
                 Schema::table('routers', function (Blueprint $table) {
                     $table->dropForeign('cluster_id_fk_4398834'); // ancien nom éventuel
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
 
             // 3.2 – supprimer les index liés (par NOM et par COLONNE)
             try {
                 Schema::table('routers', function (Blueprint $table) {
                     $table->dropIndex('cluster_id_fk_4398834'); // index historique éventuel
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
             try {
                 Schema::table('routers', function (Blueprint $table) {
                     $table->dropIndex(['cluster_id']); // ex: routers_cluster_id_index
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
             try {
                 Schema::table('routers', function (Blueprint $table) {
                     $table->dropIndex('routers_cluster_id_index'); // convention Laravel MySQL
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
 
             // 3.3 – SQLite: purge défensive de tout index qui contient "cluster_id"
             if (DB::getDriverName() === 'sqlite') {
@@ -111,7 +115,7 @@ return new class extends Migration
     public function down(): void
     {
         // 1) Recréer la colonne (nullable) + index (laisser Laravel nommer)
-        if (!Schema::hasColumn('routers', 'cluster_id')) {
+        if (! Schema::hasColumn('routers', 'cluster_id')) {
             Schema::table('routers', function (Blueprint $table) {
                 $table->unsignedInteger('cluster_id')->nullable();
                 $table->index('cluster_id'); // portable

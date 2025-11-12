@@ -69,7 +69,7 @@ class ActivityController extends Controller
 
         if ($impact_types !== null) {
             for ($i = 0; $i < count($impact_types); $i++) {
-                $activityImpact = new ActivityImpact();
+                $activityImpact = new ActivityImpact;
                 $activityImpact->activity_id = $activity->id;
                 $activityImpact->impact_type = $impact_types[$i];
                 $activityImpact->severity = $severities[$i];
@@ -125,7 +125,7 @@ class ActivityController extends Controller
 
         if ($impact_types !== null) {
             for ($i = 0; $i < count($impact_types); $i++) {
-                $activityImpact = new ActivityImpact();
+                $activityImpact = new ActivityImpact;
                 $activityImpact->activity_id = $activity->id;
                 $activityImpact->impact_type = $impact_types[$i];
                 $activityImpact->severity = $severities[$i];

@@ -239,11 +239,11 @@
                                                 <th width="20%">{{ trans("cruds.bay.fields.description") }}</th>
                                                 <td>{!! $bay->description !!}</td>
                                             </tr>
-                                            @if ($bay->bayPhysicalServers->count()>0)
+                                            @if ($bay->physicalServers->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_servers") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalServers as $physicalServer)
+                                                        @foreach($bay->physicalServers as $physicalServer)
                                                             <a href="#PSERVER{{$physicalServer->id}}">{{ $physicalServer->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -252,11 +252,11 @@
                                                     </td>
                                                 </tr>
                                             @endif
-                                            @if ($bay->bayPhysicalRouters->count()>0)
+                                            @if ($bay->physicalRouters->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_routers") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalRouters as $physicalRouter)
+                                                        @foreach($bay->physicalRouters as $physicalRouter)
                                                             <a href="#ROUTER{{$physicalRouter->id}}">{{ $physicalRouter->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -266,11 +266,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayPhysicalSwitches->count()>0)
+                                            @if ($bay->physicalSwitches->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_switches") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch)
+                                                        @foreach($bay->physicalSwitches as $bayPhysicalSwitch)
                                                             <a href="#SWITCH{{$bayPhysicalSwitch->id}}">{{ $bayPhysicalSwitch->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -280,11 +280,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayStorageDevices->count()>0)
+                                            @if ($bay->storageDevices->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.storage_devices") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayStorageDevices as $bayStorageDevice)
+                                                        @foreach($bay->storageDevices as $bayStorageDevice)
                                                             <a href="#STORAGEDEVICE{{$bayStorageDevice->id}}">{{ $bayStorageDevice->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -294,11 +294,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayPhysicalSecurityDevices->count()>0)
+                                            @if ($bay->physicalSecurityDevices->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_security_devices") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice)
+                                                        @foreach($bay->physicalSecurityDevices as $physicalSecurityDevice)
                                                             <a href="#PSD{{$physicalSecurityDevice->id}}">{{ $physicalSecurityDevice->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -308,11 +308,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayPeripherals->count()>0)
+                                            @if ($bay->peripherals->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.peripherals") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPeripherals as $peripheral)
+                                                        @foreach($bay->peripherals as $peripheral)
                                                             <a href="#PERIPHERAL{{$peripheral->id}}">{{ $peripheral->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,

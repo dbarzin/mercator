@@ -45,8 +45,8 @@ return new class extends Migration
                 $inserts = [];
                 foreach ($rows as $row) {
                     $inserts[] = [
-                        'cluster_id'          => $row->cluster_id,
-                        'physical_server_id'  => $row->id,
+                        'cluster_id' => $row->cluster_id,
+                        'physical_server_id' => $row->id,
                     ];
                 }
                 if ($inserts) {
@@ -63,31 +63,36 @@ return new class extends Migration
                 Schema::table('physical_servers', function (Blueprint $table) {
                     $table->dropForeign(['cluster_id']); // portable
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
             try {
                 Schema::table('physical_servers', function (Blueprint $table) {
                     $table->dropForeign('cluster_id_fk_5438543'); // ancien nom custom éventuel
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
 
             // 3.2 Drop index (IMPORTANT: par NOM d'index quand on le connaît)
             try {
                 Schema::table('physical_servers', function (Blueprint $table) {
                     $table->dropIndex('cluster_id_fk_5438543'); // l'index qui casse chez toi
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
 
             // essayer aussi les conventions courantes
             try {
                 Schema::table('physical_servers', function (Blueprint $table) {
                     $table->dropIndex(['cluster_id']); // ex: physical_servers_cluster_id_index
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
             try {
                 Schema::table('physical_servers', function (Blueprint $table) {
                     $table->dropIndex('physical_servers_cluster_id_index');
                 });
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
 
             // 3.3 SQLite: purge défensive de tout index contenant "cluster_id"
             if (DB::getDriverName() === 'sqlite') {
@@ -117,7 +122,7 @@ return new class extends Migration
     public function down(): void
     {
         // 1) Recréer la colonne (nullable) + index
-        if (!Schema::hasColumn('physical_servers', 'cluster_id')) {
+        if (! Schema::hasColumn('physical_servers', 'cluster_id')) {
             Schema::table('physical_servers', function (Blueprint $table) {
                 $table->unsignedInteger('cluster_id')->nullable();
                 $table->index('cluster_id'); // portable

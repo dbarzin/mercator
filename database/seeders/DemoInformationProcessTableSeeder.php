@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoInformationProcessTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoInformationProcessTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('information_process')->delete();
-        
-        
-        
+
     }
 }

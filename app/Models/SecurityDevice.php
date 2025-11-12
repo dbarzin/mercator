@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Contracts\HasIcon;
@@ -43,8 +42,15 @@ class SecurityDevice extends Model implements HasIcon
     /*
      * Implement HasIcon
      */
-    public function setIconId(?int $id): void { $this->icon_id = $id; }
-    public function getIconId(): ?int { return $this->icon_id; }
+    public function setIconId(?int $id): void
+    {
+        $this->icon_id = $id;
+    }
+
+    public function getIconId(): ?int
+    {
+        return $this->icon_id;
+    }
 
     /** @return BelongsToMany<PhysicalSecurityDevice, $this> */
     public function physicalSecurityDevices(): BelongsToMany

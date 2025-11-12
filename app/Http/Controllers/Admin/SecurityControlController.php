@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -133,7 +132,7 @@ class SecurityControlController extends Controller
         // Construct the control list
         $controls = [];
         foreach ($list as $item) {
-            $controls[] = 'CTRL_' . $item->id;
+            $controls[] = 'CTRL_'.$item->id;
         }
 
         // return JSON

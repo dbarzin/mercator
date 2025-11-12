@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\IPList;
@@ -32,7 +31,7 @@ class UpdatePeripheralRequest extends FormRequest
             'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Models\ApplicationBlock;
@@ -55,7 +54,7 @@ class ApplicationList extends ReportController
             trans('cruds.database.title'),
         );
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -101,7 +100,7 @@ class ApplicationList extends ReportController
         $sheet->getStyle('1')->getFont()->setBold(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the sheet
         $row = 2;

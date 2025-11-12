@@ -40,7 +40,7 @@ describe('Application Flows View', function () {
             'applicationModules',
             'databases',
             'flows',
-            ]);
+        ]);
     });
 
     test('denies access without permission', function () {

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationBlockController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('application_block_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -30,7 +28,7 @@ class ApplicationBlockController extends Controller
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applications = MApplication::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
 
@@ -52,10 +50,10 @@ class ApplicationBlockController extends Controller
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applications = MApplication::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
-        
+
         return view('admin.applicationBlocks.edit', compact('applicationBlock', 'applications'));
     }
 

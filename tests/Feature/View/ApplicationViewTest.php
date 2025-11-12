@@ -39,8 +39,8 @@ describe('Applications View', function () {
             'applicationServices',
             'applicationModules',
             'databases',
-            'fluxes', 
-            ]);
+            'fluxes',
+        ]);
     });
 
     test('denies access without permission', function () {

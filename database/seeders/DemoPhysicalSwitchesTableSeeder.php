@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoPhysicalSwitchesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoPhysicalSwitchesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('physical_switches')->delete();
-        
-        
-        
+
     }
 }

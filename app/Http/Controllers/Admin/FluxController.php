@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -18,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends Controller
 {
-
-
     public function index()
     {
         abort_if(Gate::denies('flux_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -64,7 +61,7 @@ class FluxController extends Controller
 
     public function store(StoreFluxRequest $request)
     {
-        $flux = new Flux();
+        $flux = new Flux;
         $flux->name = $request->name;
         $flux->nature = $request->nature;
         $flux->description = $request->description;

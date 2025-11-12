@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +29,6 @@ class Role extends Model
         'deleted_at',
     ];
 
-    /** @return Role|null */
     public static function getRoleByTitle(string $title): ?Role
     {
         return Role::whereTitle($title)->first();

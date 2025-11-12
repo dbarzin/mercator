@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Console\Commands;
 
 use App\Models\Certificate;
@@ -157,7 +156,6 @@ class CertificateExpiration extends Command
 
         Log::debug('CertificateExpiration - DONE.');
 
-        return;
     }
 
     /**

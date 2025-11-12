@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
-    public function run() : void
+    public function run(): void
     {
         if (DB::table('users')->count() === 0) {
             $users = [

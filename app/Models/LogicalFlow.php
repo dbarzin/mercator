@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -217,7 +216,7 @@ class LogicalFlow extends Model
             [$net, $maskBits] = explode('/', $cidr);
 
             // Size
-            $size = !str_contains($ip, ':') ? 4 : 16;
+            $size = ! str_contains($ip, ':') ? 4 : 16;
 
             // Convert to binary
             $ip = inet_pton(trim($ip));

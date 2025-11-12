@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -48,9 +47,9 @@ class SsoController extends Controller
             if (! config('services.keycloak.auto_provision', true)) {
                 return redirect()
                     ->route('login')
-                    ->with('message', 'User "' . $keycloakUser['nickname']. '" is not a valid Mercator user.');
+                    ->with('message', 'User "'.$keycloakUser['nickname'].'" is not a valid Mercator user.');
             }
-            $existingUser = new User();
+            $existingUser = new User;
             $existingUser->name = $keycloakUser['nickname']; // Supposons que Keycloak fournit le nom de l'utilisateur
             $existingUser->email = $keycloakUser['email'];
             $existingUser->save();

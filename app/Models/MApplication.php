@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Contracts\HasIcon;
@@ -70,21 +69,26 @@ class MApplication extends Model implements HasIcon
     /*
      * Implement icon
      */
-    public function setIconId(?int $id): void { $this->icon_id = $id; }
-    public function getIconId(): ?int { return $this->icon_id; }
+    public function setIconId(?int $id): void
+    {
+        $this->icon_id = $id;
+    }
+
+    public function getIconId(): ?int
+    {
+        return $this->icon_id;
+    }
 
     /**
     /*
-    * format $delay in minute to string in format "a days b hours c minutes"
-     *
-     * @param int|null $delay
-     * @return string|null
-    */
+     * format $delay in minute to string in format "a days b hours c minutes"
+     */
     public static function formatDelay(?int $delay): ?string
     {
-        if ($delay === null)
+        if ($delay === null) {
             return null;
-        
+        }
+
         $days = intdiv($delay, 60 * 24);
         $hours = intdiv($delay, 60) % 24;
         $minutes = $delay % 60;

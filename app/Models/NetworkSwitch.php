@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -58,5 +57,4 @@ class NetworkSwitch extends Model
     {
         return $this->belongsToMany(Vlan::class)->orderBy('name');
     }
-
 }

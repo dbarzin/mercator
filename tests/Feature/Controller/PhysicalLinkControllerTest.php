@@ -35,7 +35,7 @@ describe('index', function () {
         $response = $this->get(route('admin.links.index'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.links.index');;
+        $response->assertViewIs('admin.links.index');
         $response->assertViewHas('physicalLinks');
     });
 
@@ -130,9 +130,9 @@ describe('update', function () {
         $physicalLink = PhysicalLink::factory()->create();
 
         $data = [
-            'src_id' => 'PER_' . $peripheralSrc->id,
+            'src_id' => 'PER_'.$peripheralSrc->id,
             'src_port' => $srcPort,
-            'dest_id' => 'PER_' . $peripheralDest->id,
+            'dest_id' => 'PER_'.$peripheralDest->id,
             'dest_port' => $destPort,
         ];
 
@@ -146,8 +146,8 @@ describe('update', function () {
                 'src_port' => $srcPort,
                 'dest_port' => $destPort,
                 'peripheral_src_id' => $peripheralSrc->id,
-                'peripheral_dest_id' => $peripheralDest->id
-            ]);;
+                'peripheral_dest_id' => $peripheralDest->id,
+            ]);
     });
 });
 
@@ -213,6 +213,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

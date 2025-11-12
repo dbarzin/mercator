@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Models\DataProcessing;
@@ -38,7 +37,7 @@ class ActivityList extends ReportController
             trans('cruds.dataProcessing.fields.security_controls'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -65,9 +64,8 @@ class ActivityList extends ReportController
         $sheet->getColumnDimension('M')->setWidth(350, 'pt');
         $sheet->getColumnDimension('N')->setWidth(350, 'pt');
 
-
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate
         $row = 2;
@@ -134,14 +132,14 @@ class ActivityList extends ReportController
             $row++;
         }
 
-        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/register-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
-        
+
         return response()->download($path)->deleteFileAfterSend(true);
 
     }

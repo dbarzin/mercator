@@ -45,17 +45,19 @@ describe('GlobalSearchController', function () {
         $response->assertOk();
         $response->assertViewIs('admin.search');
         $response->assertViewHas('searchableData', function ($data) use ($zone) {
-            if (!is_array($data) || empty($data)) {
+            if (! is_array($data) || empty($data)) {
                 return false;
             }
             // Look for at least one item for the ZoneAdmin model with our name
             foreach ($data as $item) {
                 if (($item['model'] ?? null) === 'ZoneAdmin' && ($item['data']['name'] ?? null) === 'AlphaZone') {
                     // also ensure URL points to the show page under /admin/zone-admins/{id}
-                    $expectedUrl = '/admin/zone-admins/' . $zone->id;
+                    $expectedUrl = '/admin/zone-admins/'.$zone->id;
+
                     return ($item['url'] ?? '') === $expectedUrl;
                 }
             }
+
             return false;
         });
     });

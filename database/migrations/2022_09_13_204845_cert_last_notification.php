@@ -14,7 +14,7 @@ class CertLastNotification extends Migration
     public function up()
     {
         Schema::table('certificates', function (Blueprint $table) {
-            $table->dateTime('last_notification')->after('end_validity')->nullable();;
+            $table->dateTime('last_notification')->after('end_validity')->nullable();
         });
     }
 

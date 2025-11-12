@@ -1,4 +1,5 @@
 <?php
+
 return [
     'password' => 'Le mot de passe doit comporter au moins 6 caractères et la confirmation correspondre.',
     'reset' => 'Votre mot de passe a été réinitialisé.',

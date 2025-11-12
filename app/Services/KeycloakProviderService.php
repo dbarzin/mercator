@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use Laravel\Socialite\Two\AbstractProvider;
@@ -17,13 +16,14 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
      * maps the info into a SocialiteUser, and attaches the access token plus any refresh token
      * and expiration returned by Keycloak.
      *
-     * @throws \Laravel\Socialite\Two\InvalidStateException If the OAuth state is invalid.
      * @return \Laravel\Socialite\Two\User The mapped SocialiteUser with `token`, optional `refreshToken`, and optional `expiresIn` set.
+     *
+     * @throws \Laravel\Socialite\Two\InvalidStateException If the OAuth state is invalid.
      */
     public function user(): SocialiteUser
     {
         if ($this->hasInvalidState()) {
-            throw new InvalidStateException();
+            throw new InvalidStateException;
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
@@ -72,12 +72,12 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
 
     protected function mapUserToObject(array $user): SocialiteUser
     {
-        return (new SocialiteUser())->setRaw($user)->map([
-            'id'       => $user['sub'] ?? $user['id'] ?? null,
+        return (new SocialiteUser)->setRaw($user)->map([
+            'id' => $user['sub'] ?? $user['id'] ?? null,
             'nickname' => $user['preferred_username'] ?? null,
-            'name'     => $user['name'] ?? trim(($user['given_name'] ?? '').' '.($user['family_name'] ?? '')) ?: null,
-            'email'    => $user['email'] ?? null,
-            'avatar'   => $user['picture'] ?? null,
+            'name' => $user['name'] ?? trim(($user['given_name'] ?? '').' '.($user['family_name'] ?? '')) ?: null,
+            'email' => $user['email'] ?? null,
+            'avatar' => $user['picture'] ?? null,
         ]);
     }
 

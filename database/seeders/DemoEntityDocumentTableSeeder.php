@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoEntityDocumentTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoEntityDocumentTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('entity_document')->delete();
-        
-        
-        
+
     }
 }

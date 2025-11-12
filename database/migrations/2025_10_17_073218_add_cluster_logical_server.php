@@ -61,11 +61,11 @@ return new class extends Migration
                 $inserts = [];
                 foreach ($rows as $row) {
                     $inserts[] = [
-                        'cluster_id'        => $row->cluster_id,
+                        'cluster_id' => $row->cluster_id,
                         'logical_server_id' => $row->id,
                     ];
                 }
-                if (!empty($inserts)) {
+                if (! empty($inserts)) {
                     // insertOrIgnore pour éviter tout doublon éventuel
                     DB::table('cluster_logical_server')->insertOrIgnore($inserts);
                 }
@@ -73,12 +73,12 @@ return new class extends Migration
 
         // 3) Suppression contrainte FK/index/colonne cluster_id sur logical_servers
         if (Schema::hasColumn('logical_servers', 'cluster_id')) {
-            if (DB::getDriverName()  === 'sqlite') {
+            if (DB::getDriverName() === 'sqlite') {
                 // SQLite ne supporte pas dropColumn avec foreign keys
                 Schema::table('logical_servers', function (Blueprint $table) {
                     $table->dropForeign(['cluster_id']);
                 });
-              } else {
+            } else {
                 Schema::table('logical_servers', function (Blueprint $table) {
                     $table->dropForeign('cluster_id_fk_5435359');
                     $table->dropColumn('cluster_id');
@@ -95,7 +95,6 @@ return new class extends Migration
             // link to cluster
             $table->unsignedInteger('cluster_id')->index('cluster_id_fk_5435359')->nullable();
         });
-
 
         // 2) Backfill inverse : si plusieurs clusters, on choisit le MIN(cluster_id)
         // (règle simple et déterministe)

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoActivityProcessTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,78 +13,63 @@ class DemoActivityProcessTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('activity_process')->delete();
-        
-        \DB::table('activity_process')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('activity_process')->insert([
+            0 => [
                 'process_id' => 1,
                 'activity_id' => 1,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'process_id' => 1,
                 'activity_id' => 2,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'process_id' => 2,
                 'activity_id' => 3,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'process_id' => 2,
                 'activity_id' => 4,
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'process_id' => 3,
                 'activity_id' => 2,
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'process_id' => 3,
                 'activity_id' => 5,
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'process_id' => 4,
                 'activity_id' => 5,
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'process_id' => 5,
                 'activity_id' => 4,
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'process_id' => 6,
                 'activity_id' => 4,
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'process_id' => 7,
                 'activity_id' => 3,
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'process_id' => 8,
                 'activity_id' => 4,
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'process_id' => 9,
                 'activity_id' => 3,
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'process_id' => 1,
                 'activity_id' => 10,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

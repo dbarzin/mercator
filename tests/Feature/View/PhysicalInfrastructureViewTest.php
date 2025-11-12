@@ -27,7 +27,7 @@ beforeEach(function () {
 
 describe('Physical Infrastructure View', function () {
     test('can display physical-infrastructure view page', function () {
-        $response = $this->get(route('admin.report.view.physical-infrastructure'));;
+        $response = $this->get(route('admin.report.view.physical-infrastructure'));
 
         $response->assertOk();
         $response->assertViewIs('admin.reports.physical_infrastructure');
@@ -46,7 +46,7 @@ describe('Physical Infrastructure View', function () {
             'physicalRouters',
             'wifiTerminals',
             'physicalSecurityDevices',
-            ]);
+        ]);
     });
 
     test('denies access without permission', function () {

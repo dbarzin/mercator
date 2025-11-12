@@ -13,12 +13,12 @@ class DatabaseLogicalServer extends Migration
      */
     public function up()
     {
-         Schema::create('database_logical_server', function (Blueprint $table) {
+        Schema::create('database_logical_server', function (Blueprint $table) {
             $table->unsignedInteger('database_id')->index('database_id_fk_1542475');
             $table->unsignedInteger('logical_server_id')->index('logical_server_id_fk_1542475');
         });
-   }
- 
+    }
+
     /**
      * Reverse the migrations.
      *

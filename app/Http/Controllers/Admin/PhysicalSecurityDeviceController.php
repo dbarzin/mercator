@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -56,7 +55,7 @@ class PhysicalSecurityDeviceController extends Controller
                 'type_list',
                 'attributes_list',
                 'icons')
-            );
+        );
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
@@ -170,5 +169,4 @@ class PhysicalSecurityDeviceController extends Controller
 
         return array_unique($res);
     }
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -47,7 +46,6 @@ class BuildingController extends Controller
         );
     }
 
-
     public function clone(Request $request, Building $building)
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -68,8 +66,6 @@ class BuildingController extends Controller
             compact('sites', 'buildings', 'icons', 'attributes_list', 'type_list')
         );
     }
-
-
 
     public function store(StoreBuildingRequest $request)
     {

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -296,7 +295,7 @@ class WorkstationController extends Controller
 
         $workstation->update($request->all());
         $workstation->applications()->sync($request->input('applications', []));
-        
+
         return redirect()->route('admin.workstations.index');
     }
 

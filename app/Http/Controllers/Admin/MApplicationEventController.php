@@ -31,18 +31,19 @@ class MApplicationEventController extends Controller
      *
      * Expects the request to provide the application ID, user ID, and event message.
      *
-     * @param \Illuminate\Http\Request $request Request containing:
-     *     - `m_application_id` (int): ID of the application to attach the event to.
-     *     - `user_id` (int): ID of the user who created the event.
-     *     - `message` (string): The event message.
+     * @param  \Illuminate\Http\Request  $request  Request containing:
+     *                                             - `m_application_id` (int): ID of the application to attach the event to.
+     *                                             - `user_id` (int): ID of the user who created the event.
+     *                                             - `message` (string): The event message.
      * @return \Illuminate\Http\JsonResponse JSON with an `events` key containing the application's events.
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the application or user cannot be found.
      */
     public function store(Request $request): JsonResponse
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         $user = User::findOrFail($request->get('user_id'));
-        $event = new MApplicationEvent();
+        $event = new MApplicationEvent;
         $event->application()->associate($application);
         $event->user()->associate($user);
         $event->message = $request->get('message');

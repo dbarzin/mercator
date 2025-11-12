@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\IPList;
@@ -31,7 +30,7 @@ class UpdateRouterRequest extends FormRequest
             ],
             'ip_addresses' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

@@ -72,7 +72,7 @@ describe('create', function () {
 describe('show', function () {
 
     test('can display object', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $relation = Relation::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.relations.show', $relation->id));
@@ -86,7 +86,7 @@ describe('show', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $relation = Relation::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.relations.show', $relation->id));
@@ -98,7 +98,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $relation = Relation::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.relations.edit', $relation));
@@ -123,9 +123,9 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update Relation', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
 
-        $source =  Entity::factory()->create();
+        $source = Entity::factory()->create();
         $destination = Entity::factory()->create();
 
         $relation = Relation::factory()->create(
@@ -210,6 +210,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

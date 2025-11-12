@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Traits\Auditable;
@@ -40,37 +39,37 @@ class Bay extends Model
     ];
 
     /** @return HasMany<PhysicalServer, $this> */
-    public function bayPhysicalServers(): HasMany
+    public function physicalServers(): HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'bay_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<StorageDevice, $this> */
-    public function bayStorageDevices(): HasMany
+    public function storageDevices(): HasMany
     {
         return $this->hasMany(StorageDevice::class, 'bay_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<Peripheral, $this> */
-    public function bayPeripherals(): HasMany
+    public function peripherals(): HasMany
     {
         return $this->hasMany(Peripheral::class, 'bay_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<PhysicalSwitch, $this> */
-    public function bayPhysicalSwitches(): HasMany
+    public function physicalSwitches(): HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'bay_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<PhysicalRouter, $this> */
-    public function bayPhysicalRouters(): HasMany
+    public function physicalRouters(): HasMany
     {
         return $this->hasMany(PhysicalRouter::class, 'bay_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<PhysicalSecurityDevice, $this> */
-    public function bayPhysicalSecurityDevices(): HasMany
+    public function physicalSecurityDevices(): HasMany
     {
         return $this->hasMany(PhysicalSecurityDevice::class, 'bay_id', 'id')->orderBy('name');
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -78,8 +77,9 @@ class PhysicalInfrastructureView extends Controller
 
                         $frontier = $next;
                     }
-                } else
-                    return redirect()->back()->with('error', 'Building not found');;
+                } else {
+                    return redirect()->back()->with('error', 'Building not found');
+                }
             }
 
             // Get all bays
