@@ -37,7 +37,7 @@ class CreateCertificatesTable extends Migration
         });
 
         // if not initial migration -> add permissions
-        if (Permission::All()->count() > 0) {
+        if (Permission::query()->count() > 0) {
             // create new permissions
             $permissions = [
                 [
@@ -82,7 +82,7 @@ class CreateCertificatesTable extends Migration
     {
         Schema::dropIfExists('certificate_logical_server');
         Schema::dropIfExists('certificates');
-        if (Permission::All()->count() > 0) {
+        if (Permission::query()->count() > 0) {
             DB::delete('delete from permissions where id in (257, 258, 259, 260, 261)');
         }
     }
