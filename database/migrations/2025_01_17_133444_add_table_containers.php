@@ -45,7 +45,7 @@ return new class extends Migration
         });
 
         // if not initial migration -> add permissions
-        if (Permission::All()->count() > 0) {
+        if (Permission::query()->count() > 0) {
             // create new permissions
             $permissions = [
                 [
@@ -92,7 +92,7 @@ return new class extends Migration
         Schema::dropIfExists('container_logical_server');
         Schema::dropIfExists('container_m_application');
         Schema::dropIfExists('containers');
-        if (Permission::All()->count() > 0) {
+        if (Permission::query()->count() > 0) {
             DB::delete('delete from permissions where id in (301, 302, 303, 304, 305)');
         }
     }

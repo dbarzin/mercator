@@ -15,9 +15,9 @@ return new class extends Migration
             $table->string('type')->nullable()->after('name');
             $table->unsignedInteger('building_id')
                 ->nullable()
-                ->after('site_id');
+                ->after('site_id')
+                ->index('building_id_fk_94821232');
             $table->foreign('building_id')
-                ->index('building_id_fk_94821232')
                 ->references('id')
                 ->on('buildings')
                 ->onDelete('set null');
