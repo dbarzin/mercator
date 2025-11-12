@@ -2013,66 +2013,66 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, trans('cruds.bay.fields.description'), $bay->description);
 
                     // Serveurs physiques
-                    if ($bay->bayPhysicalServers->count() > 0) {
+                    if ($bay->physicalServers->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_servers'));
-                        foreach ($bay->bayPhysicalServers as $physicalServer) {
+                        foreach ($bay->physicalServers as $physicalServer) {
                             $textRun->addLink('PSERVER'.$physicalServer->id, $physicalServer->name, CartographyController::FANCY_LINK_STYLE, null, true);
-                            if ($bay->bayPhysicalServers->last() !== $physicalServer) {
+                            if ($bay->physicalServers->last() !== $physicalServer) {
                                 $textRun->addText(', ');
                             }
                         }
                     }
 
                     // PhysicalRouters
-                    if ($bay->bayPhysicalRouters->count() > 0) {
+                    if ($bay->physicalRouters->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_routers'));
-                        foreach ($bay->bayPhysicalRouters as $physicalRouter) {
+                        foreach ($bay->physicalRouters as $physicalRouter) {
                             $textRun->addLink('ROUTER'.$physicalRouter->id, $physicalRouter->name, CartographyController::FANCY_LINK_STYLE, null, true);
-                            if ($bay->bayPhysicalRouters->last() !== $physicalRouter) {
+                            if ($bay->physicalRouters->last() !== $physicalRouter) {
                                 $textRun->addText(', ');
                             }
                         }
                     }
 
                     // Physical Switches
-                    if ($bay->bayPhysicalSwitches->count() > 0) {
+                    if ($bay->physicalSwitches->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_switches'));
-                        foreach ($bay->bayPhysicalSwitches as $physicalSwitch) {
+                        foreach ($bay->physicalSwitches as $physicalSwitch) {
                             $textRun->addLink('SWITCH'.$physicalSwitch->id, $physicalSwitch->name, CartographyController::FANCY_LINK_STYLE, null, true);
-                            if ($bay->bayPhysicalSwitches->last() !== $physicalSwitch) {
+                            if ($bay->physicalSwitches->last() !== $physicalSwitch) {
                                 $textRun->addText(', ');
                             }
                         }
                     }
 
                     // Storage Devices
-                    if ($bay->bayStorageDevices->count() > 0) {
+                    if ($bay->storageDevices->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.storage_devices'));
-                        foreach ($bay->bayStorageDevices as $storageDevice) {
+                        foreach ($bay->storageDevices as $storageDevice) {
                             $textRun->addLink('STORAGEDEVICE'.$storageDevice->id, $storageDevice->name, CartographyController::FANCY_LINK_STYLE, null, true);
-                            if ($bay->bayStorageDevices->last() !== $storageDevice) {
+                            if ($bay->storageDevices->last() !== $storageDevice) {
                                 $textRun->addText(', ');
                             }
                         }
                     }
 
                     // PhysicalSecurityDevices
-                    if ($bay->bayPhysicalSecurityDevices->count() > 0) {
+                    if ($bay->physicalSecurityDevices->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.physical_security_devices'));
-                        foreach ($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice) {
+                        foreach ($bay->physicalSecurityDevices as $physicalSecurityDevice) {
                             $textRun->addLink('PSD'.$physicalSecurityDevice->id, $physicalSecurityDevice->name, CartographyController::FANCY_LINK_STYLE, null, true);
-                            if ($bay->bayPhysicalSecurityDevices->last() !== $physicalSecurityDevice) {
+                            if ($bay->physicalSecurityDevices->last() !== $physicalSecurityDevice) {
                                 $textRun->addText(', ');
                             }
                         }
                     }
 
                     // Peripherals
-                    if ($bay->bayPeripherals->count() > 0) {
+                    if ($bay->peripherals->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.bay.fields.peripherals'));
-                        foreach ($bay->bayPeripherals as $peripheral) {
+                        foreach ($bay->peripherals as $peripheral) {
                             $textRun->addLink('PERIPHERAL'.$peripheral->id, $peripheral->name, CartographyController::FANCY_LINK_STYLE, null, true);
-                            if ($bay->bayPeripherals->last() !== $peripheral) {
+                            if ($bay->peripherals->last() !== $peripheral) {
                                 $textRun->addText(', ');
                             }
                         }

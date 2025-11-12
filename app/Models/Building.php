@@ -96,7 +96,7 @@ class Building extends Model implements HasIcon
         return $this->hasMany(Phone::class, 'building_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<Phone, $this> */
+    /** @return HasMany<PhysicalRouter, $this> */
     public function physicalRouters(): HasMany
     {
         return $this->hasMany(PhysicalRouter::class, 'building_id', 'id')->orderBy('name');
