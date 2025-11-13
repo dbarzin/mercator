@@ -89,7 +89,8 @@
                             @foreach($macroProcessuses as $macroProcess)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="MACROPROCESS{{ $macroProcess->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/macro-processuses/{{ $macroProcess->id }}">{{ $macroProcess->name }}</a>
@@ -232,7 +233,8 @@
                             @foreach($processes as $process)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="PROCESS{{ $process->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/processes/{{ $process->id }}">{{ $process->name }}</a>
@@ -398,7 +400,8 @@
                             @foreach($activities as $activity)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="ACTIVITY{{ $activity->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/activities/{{ $activity->id }}">{{ $activity->name }}</a>
@@ -539,7 +542,8 @@
                             @foreach($tasks as $task)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="TASK{{ $task->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/tasks/{{ $task->id }}">{{ $task->name }}</a>
@@ -572,7 +576,8 @@
                             @foreach($actors as $actor)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="ACTOR{{ $actor->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/actors/{{ $actor->id }}">{{ $actor->name }}</a>
@@ -613,7 +618,8 @@
                             @foreach($informations as $information)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               style="max-width: 800px; width: 100%;">
                                             <thead id="INFORMATION{{ $information->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/information/{{ $information->id }}">{{ $information->name }}</a>
