@@ -103,8 +103,7 @@
                                 @foreach($entities as $entity)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover"
-                                                   style="max-width: 800px; width: 100%;">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="ENTITY{{ $entity->id }}">
                                                 <th colspan="2">
                                                     @can('entity_edit')
@@ -240,8 +239,7 @@
                                 @foreach($relations as $relation)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover"
-                                                   style="max-width: 800px; width: 100%;">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="RELATION{{$relation->id}}">
                                                 <th colspan="2">
                                                     @can('relation_edit')

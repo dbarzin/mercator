@@ -52,6 +52,11 @@ body {
     color: #000000;
 }
 
+/* Fix anchor navbar */
+[id] {
+    scroll-margin-top: 70px;
+}
+
 /***************************************************************************/
 /* Left side menu */
 /***************************************************************************/
@@ -614,5 +619,18 @@ table .navbar-brand-full {
     pointer-events: none; /* désactive les clics */
     cursor: not-allowed; /* change le curseur */
 }
+
+/***************************************************************************/
+
+.table-select {
+    max-width: 600px;
+    width: 100%;
+}
+
+.table-report {
+    max-width: 800px;
+    width: 100%;
+}
+
 
 /***************************************************************************/
