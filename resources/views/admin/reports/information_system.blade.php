@@ -789,9 +789,9 @@ digraph  {
         @foreach($activity->operations as $operation)
         A{{ $activity->id }} -> O{{ $operation->id }}
         @endforeach
-        @if($activity->process!=null)
-        A{{ $activity->id }} -> P{{ $operation->process->id }}
-        @endif
+        @foreach($activity->processes as $process)
+        A{{ $activity->id }} -> P{{ $process->id }}
+        @endforeach
         @endforeach
         @foreach($operations as $operation)
         O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]
