@@ -20,7 +20,7 @@
                             <table class="table table-bordered table-striped"
                                    style="max-width: 600px; width: 100%;">
                                 <tr>
-                                    <td style="width: 300px;">
+                                    <td style="width: 50%;">
                                         {{ trans("cruds.site.title_singular") }} :
                                         <select name="site" id="site"
                                                 onchange="this.form.building.value='';this.form.submit()"
@@ -31,7 +31,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td style="width: 300px;">
+                                    <td style="width: 50%;">
                                         {{ trans("cruds.building.title_singular") }} :
                                         <select name="building" id="building" onchange="this.form.submit()"
                                                 class="form-control select2">

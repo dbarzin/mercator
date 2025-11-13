@@ -15,10 +15,11 @@
                             </div>
                         @endif
 
-                        <div class="col-sm-6" style="max-width: 800px;">
-                            <table class="table table-bordered table-striped">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped"
+                                   style="max-width: 600px; width:100%">
                                 <tr>
-                                    <td>
+                                    <td style="width: 50%">
                                         {{ trans('cruds.macroProcessus.title') }} :
                                         <select name="macroprocess" id="macroprocess"
                                                 onchange="this.form.process.value='';this.form.submit()"
@@ -29,7 +30,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td style="width: 50%">
                                         {{ trans('cruds.process.title') }} :
                                         <select name="process" id="process" onchange="this.form.submit()"
                                                 class="form-control select2">
@@ -771,7 +772,7 @@ digraph  {
     @endforeach
         @foreach($processes as $process)
         P{{ $process->id }} [label="{{ $process->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
-            @foreach($process->activities as $activity)
+        @foreach($process->activities as $activity)
         P{{$process->id}} -> A{{$activity->id}}
         @endforeach
         @foreach($process->information as $information)
@@ -789,9 +790,6 @@ digraph  {
         @foreach($activity->operations as $operation)
         A{{ $activity->id }} -> O{{ $operation->id }}
         @endforeach
-        @if($activity->process!=null)
-        A{{ $activity->id }} -> P{{ $operation->process->id }}
-        @endif
         @endforeach
         @foreach($operations as $operation)
         O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]
