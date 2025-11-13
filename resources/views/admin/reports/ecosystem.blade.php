@@ -17,11 +17,12 @@
                             @endif
 
                             <div class="col-sm-6" style="max-width: 800px;">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered table-striped"
+                                       style="max-width: 600px; ">
                                     <tr>
-                                        <td>{{ trans('cruds.entity.filters.title.int/ext') }}
+                                        <td style="width: 300px;">{{ trans('cruds.entity.filters.title.int/ext') }}
                                         </td>
-                                        <td>{{ trans('cruds.entity.filters.title.type') }}
+                                        <td style="width: 300px;">{{ trans('cruds.entity.filters.title.type') }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -101,7 +102,8 @@
                                 @foreach($entities as $entity)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover">
+                                            <table class="table table-bordered table-striped table-hover"
+                                                   style="max-width: 800px; width: 100%;">
                                                 <thead id="ENTITY{{ $entity->id }}">
                                                 <th colspan="2">
                                                     @can('entity_edit')
@@ -237,7 +239,8 @@
                                 @foreach($relations as $relation)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover">
+                                            <table class="table table-bordered table-striped table-hover"
+                                                   style="max-width: 800px; width: 100%;">
                                                 <thead id="RELATION{{$relation->id}}">
                                                 <th colspan="2">
                                                     @can('relation_edit')
