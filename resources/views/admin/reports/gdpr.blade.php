@@ -15,10 +15,11 @@
                             </div>
                         @endif
 
-                        <div class="col-sm-6" style="max-width: 800px;">
-                            <table class="table table-bordered table-striped">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped"
+                                   style="max-width: 600px;">
                                 <tr>
-                                    <td>
+                                    <td style="width: 300px">
                                         {{ trans('cruds.macroProcessus.title') }} :
                                         <select name="macroprocess"
                                                 onchange="this.form.process.value='';this.form.submit()"
@@ -29,7 +30,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td style="width: 300px">
                                         {{ trans('cruds.process.title') }} :
                                         <select name="process" onchange="this.form.submit()"
                                                 class="form-control select2">
@@ -91,7 +92,8 @@
                         @foreach($dataProcessings as $dataProcessing)
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover">
+                                    <table class="table table-bordered table-striped table-hover"
+                                           style="max-width: 800px; width: 100%;">
                                         <thead id="DATAPROCESSING{{ $dataProcessing->id }}">
                                         <th colspan="2">
                                             <a href="/admin/data-processings/{{ $dataProcessing->id }}">{{ $dataProcessing->name }}</a>

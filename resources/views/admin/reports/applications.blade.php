@@ -16,9 +16,10 @@
                         @endif
 
                         <div class="col-sm-5">
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped"
+                                   style="width: 600px;">
                                 <tr>
-                                    <td>
+                                    <td style="width: 300px;">
                                         {{ trans("cruds.applicationBlock.title") }} :
                                         <select name="applicationBlock" id="applicationBlock"
                                                 class="form-control select2"
@@ -29,7 +30,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td style="width: 300px;">
                                         {{ trans("cruds.application.title") }} :
                                         <select name="application" id="application" class="form-control select2"
                                                 onchange="this.form.submit()">
