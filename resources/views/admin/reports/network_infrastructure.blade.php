@@ -16,7 +16,7 @@
                             </div>
                         @endif
 
-                        <div class="col-sm-6" style="width: 800px;">
+                        <div class="col-sm-6" style="max-width: 800px; width: 100%;">
                             <table class="table table-bordered table-striped">
                                 <tr>
                                     <td style="width: 300px;">
@@ -862,6 +862,7 @@
 
                                     <table class="table table-bordered table-striped table-hover"
                                            style="max-width: 800px; width: 100%;">
+                                        <thead>
                                         <th></th>
                                         <th width='40%'>
                                             {{ trans('cruds.physicalLink.fields.src') }}
@@ -885,7 +886,7 @@
                                                 <td>
                                                     @if ($physicalLink->peripheralSrc!=null)
                                                         <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_src_id) }}">
-                                                            {{ $physicalLink->peripheralSrc->name; }}
+                                                            {{ $physicalLink->peripheralSrc->name }}
                                                         </a>
                                                     @elseif ($physicalLink->phoneSrc!=null)
                                                         <a href="{{ route('admin.phones.show', $physicalLink->phone_src_id) }}">
@@ -927,7 +928,7 @@
                                                 <td>
                                                     @if ($physicalLink->peripheralDest!=null)
                                                         <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_dest_id) }}">
-                                                            {{ $physicalLink->peripheralDest->name; }}
+                                                            {{ $physicalLink->peripheralDest->name }}
                                                         </a>
                                                     @elseif ($physicalLink->phoneDest!=null)
                                                         <a href="{{ route('admin.phones.show', $physicalLink->phone_dest_id) }}">

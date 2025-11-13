@@ -29,8 +29,9 @@
                                         <td>
                                             <select name="perimeter" onchange="this.form.submit()"
                                                     class="form-control select2">
-                                                @if (Session::get('perimeter')==null)
-                                                    <option value="All" selected>trans('cruds.entity.filters.all')
+                                                @if (Session::get('perimeter')===null)
+                                                    <option value="All" selected>
+                                                        {{ trans('cruds.entity.filters.all') }}
                                                     </option>
                                                 @else
                                                     @foreach ([
