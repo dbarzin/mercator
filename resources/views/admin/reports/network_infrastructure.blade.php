@@ -88,9 +88,11 @@
                                     <div class="col-sm-6">
                                         <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="SITE{{ $site->id }}">
-                                            <th colspan="2">
-                                                <a href="/admin/sites/{{ $site->id }}">{{ $site->name }}</a>
-                                            </th>
+                                            <tr>
+                                                <th colspan="2">
+                                                    <a href="/admin/sites/{{ $site->id }}">{{ $site->name }}</a>
+                                                </th>
+                                            </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
@@ -138,9 +140,11 @@
                                     <div class="col-sm-6">
                                         <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="BUILDING{{ $building->id }}">
-                                            <th colspan="2">
-                                                <a href="/admin/buildings/{{ $building->id }}">{{ $building->name }}</a>
-                                            </th>
+                                            <tr>
+                                                <th colspan="2">
+                                                    <a href="/admin/buildings/{{ $building->id }}">{{ $building->name }}</a>
+                                                </th>
+                                            </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
