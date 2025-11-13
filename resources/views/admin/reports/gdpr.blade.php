@@ -92,8 +92,7 @@
                         @foreach($dataProcessings as $dataProcessing)
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover"
-                                           style="max-width: 800px; width: 100%;">
+                                    <table class="table table-bordered table-striped table-hover table-report">
                                         <thead id="DATAPROCESSING{{ $dataProcessing->id }}">
                                         <th colspan="2">
                                             <a href="/admin/data-processings/{{ $dataProcessing->id }}">{{ $dataProcessing->name }}</a>
