@@ -17,9 +17,9 @@
 
                         <div class="col-sm-5">
                             <table class="table table-bordered table-striped"
-                                   style="width: 600px;">
+                                   style="max-width: 600px; width: 100%;">
                                 <tr>
-                                    <td style="width: 300px;">
+                                    <td style="min-width: 280px;">
                                         {{ trans("cruds.applicationBlock.title") }} :
                                         <select name="applicationBlock" id="applicationBlock"
                                                 class="form-control select2"
@@ -30,7 +30,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td style="width: 300px;">
+                                    <td style="min-width: 280px;">
                                         {{ trans("cruds.application.title") }} :
                                         <select name="application" id="application" class="form-control select2"
                                                 onchange="this.form.submit()">
@@ -433,7 +433,8 @@
                                                 <td>
                                                     @if ($application->application_block!=null)
                                                         <a href="#APPLICATIONBLOCK{{$application->application_block_id}}">{{$application->application_block->name }}</a>
-                                                @endif
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.application.fields.logical_servers_helper") }}</th>
@@ -761,7 +762,7 @@
                                                     @if ($database->security_need_a==3)
                                                         <span class="mediumRisk">{{ trans('global.strong') }}</span>
                                                     @endif
-                                                    @if ($database->security__a==4)
+                                                    @if ($database->security_need_a==4)
                                                         <span class="highRisk">{{ trans('global.very_strong') }}</span>
                                                     @endif
                                                     &nbsp;

@@ -19,7 +19,7 @@
                             <table class="table table-bordered table-striped"
                                    style="max-width: 600px;">
                                 <tr>
-                                    <td style="width: 300px">
+                                    <td style="min-width: 280px">
                                         {{ trans('cruds.macroProcessus.title') }} :
                                         <select name="macroprocess"
                                                 onchange="this.form.process.value='';this.form.submit()"

@@ -249,9 +249,7 @@
                                                 <td>
                                                     @foreach($application->entities as $entity)
                                                         <a href="/admin/report/ecosystem#ENTITY{{$entity->id}}">{{ $entity->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -291,17 +289,13 @@
                                                     {{ trans('cruds.flux.fields.source') }} :
                                                     @foreach($application->applicationSourceFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                     <br>
                                                     {{ trans('cruds.flux.fields.destination') }} :
                                                     @foreach($application->applicationDestFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -334,9 +328,7 @@
                                                 <td>
                                                     @foreach($application->processes as $process)
                                                         <a href="/admin/report/information_system#PROCESS{{$process->id}}">{{ $process->name }}</a>
-                                                        @if(!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -345,9 +337,7 @@
                                                 <td>
                                                     @foreach($application->services as $service)
                                                         <a href="#SERVICE{{$service->id}}">{{ $service->name }}</a>
-                                                        @if(!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -356,23 +346,17 @@
                                                 <td>
                                                     @foreach($application->databases as $database)
                                                         <a href="#DATABASE{{$database->id}}">{{ $database->name }}</a>
-                                                        @if(!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans('cruds.application.fields.logical_servers') }}</th>
                                                 <td>
-                                                    @if ($application->logical_servers!=null)
-                                                        @foreach($application->logical_servers as $logical_server)
-                                                            <a href="/admin/report/logical_infrastructure#LOGICALERVER{{$logical_server->id}}">{{ $logical_server->name }}</a>
-                                                            @if(!$loop->last)
-                                                                ,
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
+                                                    @foreach($application->logicalServers as $logicalServer)
+                                                        <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">{{ $logicalServer->name }}</a>
+                                                        {{ $loop->last ? '' : ',' }}
+                                                    @endforeach
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -414,9 +398,7 @@
                                                 <td>
                                                     @foreach($applicationService->modules as $module)
                                                         <a href="#MODULE{{ $module->id }}">{{ $module->name }}</a>
-                                                        @if(!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -426,16 +408,12 @@
                                                     {{ trans('cruds.flux.fields.source') }} :
                                                     @foreach($applicationService->serviceSourceFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                     <br>{{ trans('cruds.flux.fields.destination') }} :
                                                     @foreach($applicationService->serviceDestFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -448,9 +426,7 @@
                                                 <td>
                                                     @foreach($applicationService->applications as $application)
                                                         <a href="#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
-                                                        @if(!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -494,9 +470,7 @@
                                                 <td>
                                                     @foreach($applicationModule->applicationServices as $service)
                                                         <a href="#MODULE{{ $service->id }}">{{ $service->name }}</a>
-                                                        @if(!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -506,16 +480,12 @@
                                                     {{ trans('cruds.flux.fields.source') }} :
                                                     @foreach($applicationModule->moduleSourceFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                     <br>{{ trans('cruds.flux.fields.destination') }} :
                                                     @foreach($applicationModule->moduleSourceFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
@@ -586,16 +556,12 @@
                                                     {{ trans('cruds.flux.fields.source') }} :
                                                     @foreach($database->databaseSourceFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                     <br>{{ trans('cruds.flux.fields.destination') }} :
                                                     @foreach($database->databaseDestFluxes as $flux)
                                                         <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
+                                                        {{ $loop->last ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                             </tr>
