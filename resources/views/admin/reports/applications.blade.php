@@ -16,10 +16,9 @@
                         @endif
 
                         <div class="col-sm-5">
-                            <table class="table table-bordered table-striped"
-                                   style="width: 600px;">
+                            <table class="table table-bordered table-striped table-hover table-select">
                                 <tr>
-                                    <td style="width: 300px;">
+                                    <td style="min-width: 280px;">
                                         {{ trans("cruds.applicationBlock.title") }} :
                                         <select name="applicationBlock" id="applicationBlock"
                                                 class="form-control select2"
@@ -30,7 +29,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td style="width: 300px;">
+                                    <td style="min-width: 280px;">
                                         {{ trans("cruds.application.title") }} :
                                         <select name="application" id="application" class="form-control select2"
                                                 onchange="this.form.submit()">
@@ -93,8 +92,7 @@
                             @foreach($applicationBlocks as $ab)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover"
-                                               style="max-width: 800px; width: 100%;">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="APPLICATIONBLOCK{{ $ab->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/application-blocks/{{ $ab->id }}">{{ $ab->name }}</a>
@@ -143,8 +141,7 @@
                             @foreach($applications as $application)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover"
-                                               style="max-width: 800px; width: 100%;">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="APPLICATION{{$application->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/applications/{{ $application->id }}">{{ $application->name }}</a>
@@ -433,7 +430,8 @@
                                                 <td>
                                                     @if ($application->application_block!=null)
                                                         <a href="#APPLICATIONBLOCK{{$application->application_block_id}}">{{$application->application_block->name }}</a>
-                                                @endif
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.application.fields.logical_servers_helper") }}</th>
@@ -469,8 +467,7 @@
                             @foreach($applicationServices as $applicationService)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover"
-                                               style="max-width: 800px; width: 100%;">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="APPLICATIONSERVICE{{$applicationService->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/application-services/{{ $applicationService->id }}">{{ $applicationService->name }}</a>
@@ -549,8 +546,7 @@
                             @foreach($applicationModules as $applicationModule)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover"
-                                               style="max-width: 800px; width: 100%;">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="APPLICATIONMODULE{{$applicationModule->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/application-modules/{{ $applicationModule->id }}">{{ $applicationModule->name }}</a><br>
@@ -614,8 +610,7 @@
                             @foreach($databases as $database)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover"
-                                               style="max-width: 800px; width: 100%;">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="DATABASE{{$database->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/databases/{{ $database->id }}">{{ $database->name }}</a>
@@ -761,7 +756,7 @@
                                                     @if ($database->security_need_a==3)
                                                         <span class="mediumRisk">{{ trans('global.strong') }}</span>
                                                     @endif
-                                                    @if ($database->security__a==4)
+                                                    @if ($database->security_need_a==4)
                                                         <span class="highRisk">{{ trans('global.very_strong') }}</span>
                                                     @endif
                                                     &nbsp;
@@ -829,8 +824,7 @@
                             @foreach($fluxes as $flux)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover"
-                                               style="max-width: 800px; width: 100%;">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="FLUX{{$flux->id}}">
                                             <th colspan="2">
                                                 <a href="/admin/fluxes/{{ $flux->id }}">{{ $flux->name }}</a>

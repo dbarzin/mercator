@@ -62,8 +62,7 @@
                                 @foreach($zones as $zone)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover"
-                                                   style="max-width: 800px; width: 100%;">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="ZONE{{ $zone->id }}">
                                                 <th colspan="2">
                                                     <a href="/admin/zone-admins/{{ $zone->id }}">{{ $zone->name }}</a>
@@ -122,8 +121,7 @@
                                 @foreach($annuaires as $annuaire)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover"
-                                                   style="max-width: 800px; width: 100%;">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="ANNUAIRE{{ $annuaire->id }}">
                                                 <th colspan="2">
                                                     <a href="/admin/annuaires/{{ $annuaire->id }}">{{ $annuaire->name }}</a>
@@ -172,8 +170,7 @@
                                 @foreach($forests as $forest)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover"
-                                                   style="max-width: 800px; width: 100%;">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="FOREST{{ $forest->id }}">
                                                 <th colspan="2">
                                                     <a href="/admin/forest-ads/{{ $forest->id }}">{{ $forest->name }}</a>
@@ -227,8 +224,7 @@
                                 @foreach($domains as $domain)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover"
-                                                   style="max-width: 800px; width: 100%;">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="DOMAIN{{ $domain->id }}">
                                                 <th colspan="2">
                                                     <a href="/admin/domaine-ads/{{ $domain->id }}">{{ $domain->name }}</a>
@@ -304,8 +300,7 @@
                                 @foreach($adminUsers as $adminUser)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover"
-                                                   style="max-width: 800px; width: 100%;">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="USER{{$adminUser->id}}">
                                                 <th colspan="4">
                                                     <a href="/admin/admin-users/{{ $adminUser->id }}">{{ $adminUser->user_id }}</a>

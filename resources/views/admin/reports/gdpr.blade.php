@@ -19,7 +19,7 @@
                             <table class="table table-bordered table-striped"
                                    style="max-width: 600px;">
                                 <tr>
-                                    <td style="width: 300px">
+                                    <td style="min-width: 280px">
                                         {{ trans('cruds.macroProcessus.title') }} :
                                         <select name="macroprocess"
                                                 onchange="this.form.process.value='';this.form.submit()"
@@ -92,8 +92,7 @@
                         @foreach($dataProcessings as $dataProcessing)
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover"
-                                           style="max-width: 800px; width: 100%;">
+                                    <table class="table table-bordered table-striped table-hover table-report">
                                         <thead id="DATAPROCESSING{{ $dataProcessing->id }}">
                                         <th colspan="2">
                                             <a href="/admin/data-processings/{{ $dataProcessing->id }}">{{ $dataProcessing->name }}</a>
