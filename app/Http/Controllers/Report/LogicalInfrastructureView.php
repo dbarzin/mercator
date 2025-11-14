@@ -73,19 +73,19 @@ class LogicalInfrastructureView extends Controller
             $request->session()->put('show_ip', null);
         }
 
-        $all_networks = Network::All()->sortBy('name')->pluck('name', 'id');
+        $all_networks = Network::query()->orderBy('name')->pluck('name', 'id');
         if ($network !== null) {
-            $all_subnetworks = Subnetwork::All()->sortBy('name')
+            $all_subnetworks = Subnetwork::query()->orderBy('name')
                 ->where('network_id', '=', $network)->pluck('name', 'id');
 
-            $networks = Network::All()->sortBy('name')->where('id', '=', $network);
+            $networks = Network::query()->orderBy('name')->where('id', '=', $network)->get();
 
             $externalConnectedEntities = ExternalConnectedEntity::where('network_id', '=', $network)
                 ->orderBy('name')->get();
 
             if ($subnetwork === null) {
-                $subnetworks = Subnetwork::All()->sortBy('name')
-                    ->where('network_id', '=', $network);
+                $subnetworks = Subnetwork::query()->orderBy('name')
+                    ->where('network_id', '=', $network)->get();
             } else {
                 $root = Subnetwork::find($subnetwork);
                 if ($root !== null) {
@@ -109,7 +109,7 @@ class LogicalInfrastructureView extends Controller
             }
 
             // Get Gateways
-            $gateways = Gateway::All()->sortBy('name')
+            $gateways = Gateway::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
                         if ($subnetwork->gateway_id === $item->id) {
@@ -121,13 +121,13 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get VLANS
-            $vlans = Vlan::All()->sortBy('name')
+            $vlans = Vlan::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     return $subnetworks->pluck('vlan_id')->contains($item->id);
                 });
 
             // Get NetworkSwitches
-            $networkSwitches = NetworkSwitch::All()->sortBy('name')
+            $networkSwitches = NetworkSwitch::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks, $vlans) {
                     if ($item->vlans()->count() > 0) {
                         foreach ($item->vlans as $v) {
@@ -149,7 +149,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get Workstations
-            $workstations = Workstation::All()->sortBy('name')
+            $workstations = Workstation::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -163,7 +163,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get WifiTerminals
-            $wifiTerminals = WifiTerminal::All()->sortBy('name')
+            $wifiTerminals = WifiTerminal::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -177,7 +177,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get Phones
-            $phones = Phone::All()->sortBy('name')
+            $phones = Phone::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -191,7 +191,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get peripherals
-            $peripherals = Peripheral::All()->sortBy('name')
+            $peripherals = Peripheral::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -205,7 +205,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get Physical Security Devices
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name')
+            $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -219,7 +219,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get routers
-            $routers = Router::All()->sortBy('name')
+            $routers = Router::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->ip_addresses) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -271,7 +271,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get DNS Servers
-            $dnsservers = Dnsserver::All()->sortBy('name')
+            $dnsservers = Dnsserver::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
                         // foreach (explode(',', $item->address_ip) as $address) {
@@ -284,10 +284,10 @@ class LogicalInfrastructureView extends Controller
                     return false;
                 });
 
-            $clusters = Cluster::All()->sortBy('name');
+            $clusters = Cluster::query()->orderBy('name')->get();
 
             // Get Logical serveurs
-            $logicalServers = LogicalServer::All()->sortBy('name')
+            $logicalServers = LogicalServer::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
                         foreach (explode(',', $item->address_ip) as $address) {
@@ -301,7 +301,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get Certificates
-            $certificates = Certificate::All()->load('logical_servers')->sortBy('name')
+            $certificates = Certificate::query()->with('logical_servers')->orderBy('name')->get()
                 ->filter(function ($item) use ($logicalServers) {
                     foreach ($logicalServers as $logical_server) {
                         foreach ($logical_server->certificates as $cert) {
@@ -315,7 +315,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get Containers
-            $containers = Container::All()->load('logicalServers')->sortBy('name')
+            $containers = Container::query()->with('logicalServers')->orderBy('name')->get()
                 ->filter(function ($item) use ($logicalServers) {
                     foreach ($logicalServers as $logical_server) {
                         foreach ($logical_server->containers as $container) {
@@ -329,29 +329,30 @@ class LogicalInfrastructureView extends Controller
                 });
 
         } else {
-            $all_subnetworks = Subnetwork::All()->sortBy('name')->pluck('name', 'id');
+            $all_subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id');
 
             // all
-            $networks = Network::All()->sortBy('name');
-            $subnetworks = Subnetwork::All()->sortBy('name');
-            $gateways = Gateway::All()->sortBy('name');
-            $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy('name');
-            $networkSwitches = NetworkSwitch::All()->sortBy('name');
-            $workstations = Workstation::All()->sortBy('name');
-            $wifiTerminals = WifiTerminal::All()->sortBy('name');
-            $phones = Phone::All()->sortBy('name');
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name');
-            $peripherals = Peripheral::All()->sortBy('name');
-            $routers = Router::All()->sortBy('name');
-            $securityDevices = SecurityDevice::All()->sortBy('name');
-            $storageDevices = StorageDevice::All()->sortBy('name');
-            $dhcpServers = DhcpServer::All()->sortBy('name');
-            $dnsservers = Dnsserver::All()->sortBy('name');
-            $clusters = Cluster::All()->sortBy('name');
-            $logicalServers = LogicalServer::All()->sortBy('name');
-            $containers = Container::All()->sortBy('name');
-            $certificates = Certificate::All()->sortBy('name');
-            $vlans = Vlan::All()->sortBy('name');
+            $networks = Network::query()->orderBy('name')->get();
+            $subnetworks = Subnetwork::query()->orderBy('name')->get();
+            $gateways = Gateway::query()->orderBy('name')->get();
+            $externalConnectedEntities = ExternalConnectedEntity::query()->orderBy('name')->get();
+            $networkSwitches = NetworkSwitch::query()->orderBy('name')->get();
+            $workstations = Workstation::query()->orderBy('name')->with('site','building')->get();
+            $wifiTerminals = WifiTerminal::query()->orderBy('name')->with('site','building')->get();
+            $phones = Phone::query()->orderBy('name')->with('site','building')->get();
+            $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->with('site','building')->get();
+            $peripherals = Peripheral::query()->orderBy('name')->with('site','building','bay')->get();
+            $routers = Router::query()->orderBy('name')->get();
+            $securityDevices = SecurityDevice::query()->orderBy('name')->get();
+            $storageDevices = StorageDevice::query()->orderBy('name')->with('site','building','bay')->get();
+            $dhcpServers = DhcpServer::query()->orderBy('name')->get();
+            $dnsservers = Dnsserver::query()->orderBy('name')->get();
+            $clusters = Cluster::query()->orderBy('name')->get();
+            $logicalServers = LogicalServer::query()->orderBy('name')->get();
+            $containers = Container::query()->orderBy('name')->get();
+            $certificates = Certificate::query()->orderBy('name')->get();
+            $vlans = Vlan::query()->orderBy('name')->with('subnetworks')->get();
+
         }
 
         return view(

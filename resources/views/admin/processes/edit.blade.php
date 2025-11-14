@@ -193,7 +193,8 @@
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="recommended" for="owner">{{ trans('cruds.process.fields.owner') }}</label>
+                            <label class="label-maturity-1"
+                                   for="owner">{{ trans('cruds.process.fields.owner') }}</label>
                             <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}"
                                     name="owner" id="owner">
                                 @if (!$owner_list->contains(old('owner')))
