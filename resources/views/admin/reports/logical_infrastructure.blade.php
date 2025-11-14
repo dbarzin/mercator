@@ -917,8 +917,8 @@
                                             <tr>
                                                 <th>{{ trans("cruds.phone.fields.site") }}</th>
                                                 <td>
-                                                    @if ($phone->site_id!==null)
-                                                        <a href="{{ route('admin.sites.show', $phone->site_id) }}">{{ $phone->site->name }}</a>
+                                                    @if ($phone->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $phone->site->id) }}">{{ $phone->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -926,7 +926,7 @@
                                                 <th>{{ trans("cruds.phone.fields.building") }}</th>
                                                 <td>
                                                     @if ($phone->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $phone->building_id) }}">{{ $phone->building->name }}</a>
+                                                        <a href="{{ route('admin.buildings.show', $phone->building->id) }}">{{ $phone->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -974,8 +974,8 @@
                                             <tr>
                                                 <th>{{ trans("cruds.physicalSecurityDevice.fields.site") }}</th>
                                                 <td>
-                                                    @if ($physicalSecurityDevice->site_id!==null)
-                                                        <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site_id) }}">{{ $physicalSecurityDevice->site->name }}</a>
+                                                    @if ($physicalSecurityDevice->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site->id) }}">{{ $physicalSecurityDevice->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -983,7 +983,7 @@
                                                 <th>{{ trans("cruds.physicalSecurityDevice.fields.building") }}</th>
                                                 <td>
                                                     @if ($physicalSecurityDevice->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building_id) }}">{{ $physicalSecurityDevice->building->name }}</a>
+                                                        <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">{{ $physicalSecurityDevice->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1031,8 +1031,8 @@
                                             <tr>
                                                 <th>{{ trans("cruds.storageDevice.fields.site") }}</th>
                                                 <td>
-                                                    @if ($storageDevice->site_id!==null)
-                                                        <a href="{{ route('admin.sites.show', $storageDevice->site_id) }}">{{ $storageDevice->site->name }}</a>
+                                                    @if ($storageDevice->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $storageDevice->site->id) }}">{{ $storageDevice->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1040,7 +1040,7 @@
                                                 <th>{{ trans("cruds.storageDevice.fields.building") }}</th>
                                                 <td>
                                                     @if ($storageDevice->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $storageDevice->building_id) }}">{{ $storageDevice->building->name }}</a>
+                                                        <a href="{{ route('admin.buildings.show', $storageDevice->building->id) }}">{{ $storageDevice->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1048,7 +1048,7 @@
                                                 <th>{{ trans("cruds.storageDevice.fields.bay") }}</th>
                                                 <td>
                                                     @if ($storageDevice->bay!=null)
-                                                        <a href="{{ route('admin.bays.show', $storageDevice->bay_id) }}">{{ $storageDevice->bay->name }}</a>
+                                                        <a href="{{ route('admin.bays.show', $storageDevice->bay->id) }}">{{ $storageDevice->bay->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1097,7 +1097,7 @@
                                                 <th>{{ trans("cruds.wifiTerminal.fields.site") }}</th>
                                                 <td>
                                                     @if ($wifiTerminal->site!==null)
-                                                        <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{{ $wifiTerminal->site->name }}</a>
+                                                        <a href="{{ route('admin.sites.show', $wifiTerminal->site->id) }}">{{ $wifiTerminal->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1105,7 +1105,7 @@
                                                 <th>{{ trans("cruds.wifiTerminal.fields.building") }}</th>
                                                 <td>
                                                     @if ($wifiTerminal->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">
+                                                        <a href="{{ route('admin.buildings.show', $wifiTerminal->building->id) }}">
                                                             {{$wifiTerminal->building->name }}</a>
                                                     @endif
                                                 </td>
@@ -1167,7 +1167,7 @@
                                                 <th>{{ trans("cruds.peripheral.fields.building") }}</th>
                                                 <td>
                                                     @if ($peripheral->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $peripheral->building_id) }}">{{ $peripheral->building->name }}</a>
+                                                        <a href="{{ route('admin.buildings.show', $peripheral->building->id) }}">{{ $peripheral->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
