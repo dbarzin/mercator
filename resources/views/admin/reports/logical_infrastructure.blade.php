@@ -861,7 +861,7 @@
                                                 <th>{{ trans("cruds.workstation.fields.site") }}</th>
                                                 <td>
                                                     @if ($workstation->site!=null)
-                                                        <a href="{{ route('admin.sites.show', $workstation->site_id) }}">{{ $workstation->site->name }}</a>
+                                                        <a href="{{ route('admin.sites.show', $workstation->site->id) }}">{{ $workstation->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -869,7 +869,7 @@
                                                 <th>{{ trans("cruds.workstation.fields.building") }}</th>
                                                 <td>
                                                     @if ($workstation->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $workstation->building_id) }}">{{ $workstation->building->name }}</a>
+                                                        <a href="{{ route('admin.buildings.show', $workstation->building->id) }}">{{ $workstation->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1159,7 +1159,7 @@
                                                 <th>{{ trans("cruds.peripheral.fields.site") }}</th>
                                                 <td>
                                                     @if ($peripheral->site!=null)
-                                                        <a href="{{ route('admin.sites.show', $peripheral->site_id) }}">{{ $peripheral->site->name }}</a>
+                                                        <a href="{{ route('admin.sites.show', $peripheral->site->id) }}">{{ $peripheral->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1175,7 +1175,7 @@
                                                 <th>{{ trans("cruds.peripheral.fields.bay") }}</th>
                                                 <td>
                                                     @if ($peripheral->bay!=null)
-                                                        <a href="{{ route('admin.bays.show', $peripheral->bay_id) }}">{{ $peripheral->bay->name }}</a>
+                                                        <a href="{{ route('admin.bays.show', $peripheral->bay->id) }}">{{ $peripheral->bay->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
