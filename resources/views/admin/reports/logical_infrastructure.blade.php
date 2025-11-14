@@ -35,7 +35,7 @@
                                         <select name="subnetwork" id="subnetwork" onchange="this.form.submit()"
                                                 class="form-control select2">
                                             <option value="">-- All subnetworks --</option>
-                                            @if ($all_subnetworks!=null)
+                                            @if ($all_subnetworks!==null)
                                                 @foreach($all_subnetworks as $id => $name)
                                                     <option value="{{$id}}" {{ Session::get('subnetwork')==$id ? "selected" : "" }}>{{ $name }}</option>
                                                 @endforeach
@@ -273,7 +273,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.network") }}</th>
                                                 <td>
-                                                    @if ($subnetwork->network!=null)
+                                                    @if ($subnetwork->network!==null)
                                                         <a href="#NETWORK{{ $subnetwork->network->id }}">{{ $subnetwork->network->name }}</a>
                                                     @endif
                                                 </td>
@@ -281,7 +281,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.subnetwork") }}</th>
                                                 <td>
-                                                    @if ($subnetwork->subnetwork!=null)
+                                                    @if ($subnetwork->subnetwork!==null)
                                                         <a href="#SUBNET{{ $subnetwork->subnetwork->id }}">{{ $subnetwork->subnetwork->name }}</a>
                                                     @endif
                                                 </td>
@@ -302,8 +302,8 @@
                                             <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.vlan") }}</th>
                                                 <td>
-                                                    @if ($subnetwork->vlan!=null)
-                                                        <a href="#VLAN{{ $subnetwork->vlan_id }}">{{ $subnetwork->vlan->name }}</a>
+                                                    @if ($subnetwork->vlan!==null)
+                                                        <a href="#VLAN{{ $subnetwork->vlan->id }}">{{ $subnetwork->vlan->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -860,7 +860,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.workstation.fields.site") }}</th>
                                                 <td>
-                                                    @if ($workstation->site!=null)
+                                                    @if ($workstation->site!==null)
                                                         <a href="{{ route('admin.sites.show', $workstation->site->id) }}">{{ $workstation->site->name }}</a>
                                                     @endif
                                                 </td>
@@ -868,7 +868,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.workstation.fields.building") }}</th>
                                                 <td>
-                                                    @if ($workstation->building!=null)
+                                                    @if ($workstation->building!==null)
                                                         <a href="{{ route('admin.buildings.show', $workstation->building->id) }}">{{ $workstation->building->name }}</a>
                                                     @endif
                                                 </td>
@@ -925,7 +925,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.phone.fields.building") }}</th>
                                                 <td>
-                                                    @if ($phone->building!=null)
+                                                    @if ($phone->building!==null)
                                                         <a href="{{ route('admin.buildings.show', $phone->building->id) }}">{{ $phone->building->name }}</a>
                                                     @endif
                                                 </td>
@@ -982,7 +982,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.physicalSecurityDevice.fields.building") }}</th>
                                                 <td>
-                                                    @if ($physicalSecurityDevice->building!=null)
+                                                    @if ($physicalSecurityDevice->building!==null)
                                                         <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">{{ $physicalSecurityDevice->building->name }}</a>
                                                     @endif
                                                 </td>
@@ -1039,7 +1039,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.storageDevice.fields.building") }}</th>
                                                 <td>
-                                                    @if ($storageDevice->building!=null)
+                                                    @if ($storageDevice->building!==null)
                                                         <a href="{{ route('admin.buildings.show', $storageDevice->building->id) }}">{{ $storageDevice->building->name }}</a>
                                                     @endif
                                                 </td>
@@ -1047,7 +1047,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.storageDevice.fields.bay") }}</th>
                                                 <td>
-                                                    @if ($storageDevice->bay!=null)
+                                                    @if ($storageDevice->bay!==null)
                                                         <a href="{{ route('admin.bays.show', $storageDevice->bay->id) }}">{{ $storageDevice->bay->name }}</a>
                                                     @endif
                                                 </td>
@@ -1158,7 +1158,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.peripheral.fields.site") }}</th>
                                                 <td>
-                                                    @if ($peripheral->site!=null)
+                                                    @if ($peripheral->site!==null)
                                                         <a href="{{ route('admin.sites.show', $peripheral->site->id) }}">{{ $peripheral->site->name }}</a>
                                                     @endif
                                                 </td>
@@ -1166,7 +1166,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.peripheral.fields.building") }}</th>
                                                 <td>
-                                                    @if ($peripheral->building!=null)
+                                                    @if ($peripheral->building!==null)
                                                         <a href="{{ route('admin.buildings.show', $peripheral->building->id) }}">{{ $peripheral->building->name }}</a>
                                                     @endif
                                                 </td>
@@ -1174,7 +1174,7 @@
                                             <tr>
                                                 <th>{{ trans("cruds.peripheral.fields.bay") }}</th>
                                                 <td>
-                                                    @if ($peripheral->bay!=null)
+                                                    @if ($peripheral->bay!==null)
                                                         <a href="{{ route('admin.bays.show', $peripheral->bay->id) }}">{{ $peripheral->bay->name }}</a>
                                                     @endif
                                                 </td>
@@ -1315,7 +1315,7 @@
                                                 <tr>
                                                     <th>{{ trans('cruds.certificate.fields.applications') }}</th>
                                                     <td>
-                                                        @if ($certificate->applications!=null)
+                                                        @if ($certificate->applications!==null)
                                                             @foreach($certificate->applications as $application)
                                                                 <a href="/admin/report/applications#APPLICATION{{ $application->id}}">{{ $application->name }}</a>
                                                                 @if (!$loop->last)
@@ -1405,21 +1405,21 @@ digraph  {
         @can('subnetwork_access')
         @foreach($subnetworks as $subnetwork)
         SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.5' :'1.1' }} image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
-        @if ($subnetwork->vlan_id!=null)
+        @if ($subnetwork->vlan_id!==null)
         SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
-        @if ($subnetwork->subnetwork_id!=null)
+        @if ($subnetwork->subnetwork_id!==null)
         @if ($subnetworks->contains('id', $subnetwork->subnetwork_id))
         SUBNET{{ $subnetwork->subnetwork_id }} -> SUBNET{{ $subnetwork->id }}
         @else
         NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
         @endif
-        @elseif ($subnetwork->network_id!=null)
+        @elseif ($subnetwork->network_id!==null)
         @if ($networks->contains('id', $subnetwork->network_id))
         NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
         @endif
         @endif
-        @if ($subnetwork->gateway_id!=null)
+        @if ($subnetwork->gateway_id!==null)
         SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}
         @endif
         @endforeach
@@ -1427,7 +1427,7 @@ digraph  {
         @can('external_connected_entity_access')
         @foreach($externalConnectedEntities as $entity)
         E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/entity.png" href="#EXTENTITY{{$entity->id}}"]
-        @if($entity->network_id!=null)
+        @if($entity->network_id!==null)
         E{{ $entity->id }} -> NET{{ $entity->network_id }}
         @endif
         @endforeach
@@ -1456,7 +1456,7 @@ digraph  {
         @can('logical_server_access')
         @foreach($logicalServers as $logicalServer)
         LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $logicalServer->icon_id === null ? '/images/lserver.png' : route('admin.documents.show', $logicalServer->icon_id) }}" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
-        @if ($logicalServer->address_ip!=null)
+        @if ($logicalServer->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
         @foreach(explode(',',$logicalServer->address_ip) as $address)
         @if ($subnetwork->contains($address))
@@ -1466,7 +1466,7 @@ digraph  {
         @endforeach
         @endforeach
         @can('cluster_access')
-        @if ($logicalServer->cluster_id!=null)
+        @if ($logicalServer->cluster_id!==null)
         LOGICAL_SERVER{{ $logicalServer->id }} -> CLUSTER{{ $logicalServer->cluster_id }}
         @endif
         @endcan
@@ -1480,7 +1480,7 @@ digraph  {
         @can('dhcp_server_access')
         @foreach($dhcpServers as $dhcpServer)
         DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
-        @if ($dhcpServer->address_ip!=null)
+        @if ($dhcpServer->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($dhcpServer->address_ip))
         SUBNET{{ $subnetwork->id }} -> DHCP_SERVER{{ $dhcpServer->id }}
@@ -1494,7 +1494,7 @@ digraph  {
         @can('dnsserver_access')
         @foreach($dnsservers as $dnsserver)
         DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DNS_SERVER{{$dnsserver->id}}"]
-        @if ($dnsserver->address_ip!=null)
+        @if ($dnsserver->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($dnsserver->address_ip))
         SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }}
@@ -1526,7 +1526,7 @@ digraph  {
 
         @can('workstation_access')
         @foreach($workstations as $workstation)
-        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
+        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
         @foreach(explode(',',$workstation->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1539,7 +1539,7 @@ digraph  {
 
         @can('wifi_terminal_access')
         @foreach($wifiTerminals as $wifiTerminal)
-        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!=null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
+        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!==null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
         @foreach(explode(',',$wifiTerminal->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1552,7 +1552,7 @@ digraph  {
 
         @can('phone_access')
         @foreach($phones as $phone)
-        PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!=null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
+        PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!==null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
         @foreach(explode(',',$phone->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1578,7 +1578,7 @@ digraph  {
 
         @can('peripheral_access')
         @foreach($peripherals as $peripheral)
-        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
         @foreach(explode(',',$peripheral->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1591,7 +1591,7 @@ digraph  {
 
         @can('storage_device_access')
         @foreach($storageDevices as $storageDevice)
-        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
+        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!==null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
         @foreach(explode(',',$storageDevice->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1604,7 +1604,7 @@ digraph  {
 
         @can('router_access')
         @foreach($routers as $router)
-        R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!=null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
+        R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!==null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
         @foreach(explode(',',$router->ip_addresses) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1617,7 +1617,7 @@ digraph  {
 
         @can('network_switch_access')
         @foreach($networkSwitches as $networkSwitch)
-        SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!=null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
+        SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!==null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
         @if ($networkSwitch->vlans->count()>0)
         @foreach($networkSwitch->vlans as $vlan)
         VLAN{{ $vlan->id }} -> SW{{ $networkSwitch->id }}
