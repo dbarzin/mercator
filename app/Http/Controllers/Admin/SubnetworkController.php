@@ -19,7 +19,10 @@ class SubnetworkController extends Controller
     {
         abort_if(Gate::denies('subnetwork_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetwork::all()->sortBy('name');
+        $subnetworks = Subnetwork::query()
+            ->with('network','vlan')
+            ->orderBy('name')
+            ->get();
 
         return view('admin.subnetworks.index', compact('subnetworks'));
     }
