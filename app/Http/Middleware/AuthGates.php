@@ -3,28 +3,42 @@
 namespace App\Http\Middleware;
 
 use App\Models\Role;
+use App\Models\User;
 use Closure;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
 class AuthGates
 {
     public function handle($request, Closure $next)
     {
-        $user = \Auth::user();
+        // ⚠️ Ici, Auth::user() ne doit plus taper la DB
+        // grâce à ton middleware UseCachedAuthUser placé AVANT dans Kernel.php
+        $user = Auth::user();
 
         if ($user) {
-            $roles = Role::with('permissions')->get();
-            $permissionsArray = [];
+            // 🧠 On met en cache le mapping permission → [roles_ids]
+            $permissionsArray = Cache::rememberForever('permissions_roles_map', function () {
+                $roles = Role::with('permissions')->get();
+                $map = [];
 
-            foreach ($roles as $role) {
-                foreach ($role->permissions as $permissions) {
-                    $permissionsArray[$permissions->title][] = $role->id;
+                foreach ($roles as $role) {
+                    foreach ($role->permissions as $permission) {
+                        $map[$permission->title][] = $role->id;
+                    }
                 }
-            }
+
+                return $map;
+            });
 
             foreach ($permissionsArray as $title => $roles) {
-                Gate::define($title, function (\App\Models\User $user) use ($roles) {
-                    return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
+                Gate::define($title, function (User $user) use ($roles) {
+                    // on reste sur ta logique actuelle
+                    return $user->roles
+                        ->pluck('id')
+                        ->intersect($roles)
+                        ->isNotEmpty();
                 });
             }
         }
