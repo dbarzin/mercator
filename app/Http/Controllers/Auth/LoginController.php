@@ -37,17 +37,19 @@ class LoginController extends Controller
      *  - eager-load les rôles / permissions pour éviter le N+1 dans la requête
      *  - stocke l'utilisateur enrichi en session pour un éventuel middleware
      */
-    protected function authenticated(Request $request, $user): void
+    protected function authenticated(Request $request, User $user): void
     {
-        /** @var \App\Models\User $user */
-        $user->loadMissing([
-            'roles:id,title',
-            'roles.permissions:id,title',
-        ]);
+        $user->loadMissing('roles.permissions');
 
-        // Optionnel : mettre l'utilisateur enrichi en session
-        // (utile si tu ajoutes ensuite un middleware qui fait Auth::setUser(session('auth_user')))
-        session(['auth_user' => $user]);
+        session([
+            'auth_role_ids'    => $user->roles->pluck('id')->all(),
+            'auth_permissions' => $user->roles
+                ->flatMap->permissions
+                ->pluck('title')
+                ->unique()
+                ->values()
+                ->all(),
+        ]);
     }
 
     /**

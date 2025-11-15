@@ -19,7 +19,10 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processingRegister = DataProcessing::orderBy('name')->get();
+        $processingRegister = DataProcessing::query()
+            ->with('processes', 'informations', 'applications')
+            ->orderBy('name')
+            ->get();
 
         return view('admin.dataProcessing.index', compact('processingRegister'));
     }
