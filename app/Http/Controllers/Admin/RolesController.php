@@ -10,6 +10,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use Gate;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -96,6 +97,9 @@ class RolesController extends Controller
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
+        // Clean role permissions cache
+        Cache::forget('permissions_roles_map');
+        
         return redirect()->route('admin.roles.index');
     }
 
