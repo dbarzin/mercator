@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UseCachedAuthUser
 {
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next) : mixed
     {
-        // ⚠️ NE PAS APPELER Auth::user() / Auth::check(), ça déclencherait la requête SQL
+        // Warning: Do not call Auth::user() / Auth::check() as it triggers SQL queries
         if (session()->has('auth_user')) {
             Auth::setUser(session('auth_user'));
         }
