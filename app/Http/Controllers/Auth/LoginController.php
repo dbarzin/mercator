@@ -31,6 +31,28 @@ class LoginController extends Controller
     }
 
     /**
+     * Hook appelé APRES un login réussi (LDAP ou local).
+     *
+     * Ici on :
+     *  - eager-load les rôles / permissions pour éviter le N+1 dans la requête
+     *  - stocke l'utilisateur enrichi en session pour un éventuel middleware
+     */
+    protected function authenticated(Request $request, User $user): void
+    {
+        $user->loadMissing('roles.permissions');
+
+        session([
+            'auth_role_ids'    => $user->roles->pluck('id')->all(),
+            'auth_permissions' => $user->roles
+                ->flatMap->permissions
+                ->pluck('title')
+                ->unique()
+                ->values()
+                ->all(),
+        ]);
+    }
+
+    /**
      * LDAP bind (LDAPRecord v2)
      */
     protected function ldapBindAndGetUser(string $appUsername, string $password): ?LdapEntry
@@ -146,6 +168,8 @@ class LoginController extends Controller
                 }
 
                 if ($local) {
+                    // 🔐 Login manuel → AuthenticatesUsers appellera ensuite sendLoginResponse()
+                    // qui déclenchera le hook authenticated()
                     $this->guard()->login($local, $remember);
 
                     return true;
