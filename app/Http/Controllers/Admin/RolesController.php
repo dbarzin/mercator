@@ -76,6 +76,9 @@ class RolesController extends Controller
         $role = Role::create($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
+        // Clean role permissions cache
+        Cache::forget('permissions_roles_map');
+
         return redirect()->route('admin.roles.index');
     }
 
@@ -99,7 +102,7 @@ class RolesController extends Controller
 
         // Clean role permissions cache
         Cache::forget('permissions_roles_map');
-        
+
         return redirect()->route('admin.roles.index');
     }
 
