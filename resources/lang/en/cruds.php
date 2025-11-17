@@ -271,6 +271,16 @@ return [
         'title' => 'Bays',
         'title_singular' => 'Bay',
     ],
+    'bpmn' => [
+        'description' => 'Business Process Management Notation',
+        'fields' => [
+            'name' => 'Name',
+            'name_helper' => 'BPMN name',
+            'type' => 'Type',
+            'types_helper' => 'BPMN type',
+        ],
+        'title' => 'BPMN',
+    ],
     'building' => [
         'description' => 'Location of people or resources within a site.',
         'fields' => [
