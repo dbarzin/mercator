@@ -9,7 +9,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GraphController extends Controller
+class BPMNController extends Controller
 {
     public function index()
     {
