@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label class="label-required" for="name">{{ trans('cruds.bpmn.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.bpmns.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $name) }}" required autofocus
                                    maxlength="64"/>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="type">{{ trans('cruds.bpmn.fields.type') }}</label>
+                            <label for="type">{{ trans('cruds.bpmns.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))

@@ -83,14 +83,12 @@
                         <a class="nav-link dropdown-toggle" href="#" id="menu3" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">{{ trans('panel.menu.tools') }}</a>
                         <ul class="dropdown-menu" aria-labelledby="menu3">
-                            @can('bpmn_access')
+                            @can('graph_access')
                                 @if (config('app.licence'))
-                                    <li><a class="dropdown-item" href="/admin/bpmn">
-                                            <i class="bi bi-easel-fill"></i>{{ trans('cruds.bpmn.title') }}</a>
+                                    <li><a class="dropdown-item" href="/admin/bpmns">
+                                            <i class="bi bi-easel-fill"></i>{{ trans('cruds.bpmns.title') }}</a>
                                     </li>
                                 @endif
-                            @endcan
-                            @can('graph_access')
                                 <li><a class="dropdown-item" href="/admin/graphs">
                                         <i class="bi bi-map-fill"></i>{{ trans('cruds.graph.title') }}</a>
                                 </li>

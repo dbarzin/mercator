@@ -275,7 +275,7 @@ return [
         'title' => 'Racks',
         'title_singular' => 'Rack',
     ],
-    'bpmn' => [
+    'bpmns' => [
         'description' => 'Business Process Management Notation',
         'fields' => [
             'name' => 'Nom',
@@ -284,6 +284,7 @@ return [
             'type_helper' => 'Type de BPMN',
         ],
         'title' => 'BPMN',
+        'title_singular' => 'BPMN',
     ],
     'building' => [
         'description' => 'Localisation des personnes ou ressources à l’intérieur d’un site.',
