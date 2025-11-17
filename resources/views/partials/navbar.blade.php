@@ -84,6 +84,13 @@
                            aria-expanded="false">{{ trans('panel.menu.tools') }}</a>
                         <ul class="dropdown-menu" aria-labelledby="menu3">
                             @can('graph_access')
+                                @if (config('app.licence'))
+                                    <li><a class="dropdown-item" href="/admin/bpmn">
+                                            <i class="bi bi-easel-fill"></i>{{ trans('cruds.bpmn.title') }}</a>
+                                    </li>
+                                @endif
+                            @endcan
+                            @can('graph_access')
                                 <li><a class="dropdown-item" href="/admin/graphs">
                                         <i class="bi bi-map-fill"></i>{{ trans('cruds.graph.title') }}</a>
                                 </li>
