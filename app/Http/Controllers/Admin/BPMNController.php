@@ -19,7 +19,7 @@ class BPMNController extends Controller
             ->where('class','=', 2)
             ->get();
 
-        return view('admin.graphs.index', compact('graphs'));
+        return view('admin.bpmns.index', compact('graphs'));
     }
 
     public function create()
@@ -33,7 +33,7 @@ class BPMNController extends Controller
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
 
         return view(
-            'admin.graphs.edit',
+            'admin.bpmns.edit',
             compact('type_list', 'nodes', 'edges')
         )
             ->with('id', '-1')
@@ -66,7 +66,7 @@ class BPMNController extends Controller
             ->pluck('type');
 
         return view(
-            'admin.graphs.edit',
+            'admin.bpmns.edit',
             compact('type_list', 'nodes', 'edges')
         )
             ->with('id', '-1')
@@ -81,7 +81,7 @@ class BPMNController extends Controller
 
         Graph::create($request->all());
 
-        return redirect()->route('admin.graphs.index');
+        return redirect()->route('admin.bpmns.index');
     }
 
     public function edit(Graph $graph)
@@ -103,7 +103,7 @@ class BPMNController extends Controller
 
         // return
         return view(
-            'admin.graphs.edit',
+            'admin.bpmns.edit',
             compact('type_list', 'nodes', 'edges')
         )
             ->with('id', $graph->id)
@@ -125,7 +125,7 @@ class BPMNController extends Controller
         $graph->class=2;
         $graph->save();
 
-        return redirect()->route('admin.bpmn.index');
+        return redirect()->route('admin.bpmns.index');
     }
 
     public function show(Graph $graph)
@@ -143,7 +143,7 @@ class BPMNController extends Controller
 
         $graph->delete();
 
-        return redirect()->route('admin.bpmn.index');
+        return redirect()->route('admin.bpmns.index');
     }
 
     public function massDestroy(MassDestroyGraphRequest $request)

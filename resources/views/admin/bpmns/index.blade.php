@@ -4,14 +4,14 @@
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a id="btn-new" class="btn btn-success" href="{{ route('admin.bpmns.create') }}">
-                    {{ trans('global.add') }} {{ trans('cruds.bpmn.title_singular') }}
+                    {{ trans('global.add') }} {{ trans('cruds.bpmns.title_singular') }}
                 </a>
             </div>
         </div>
     @endcan
     <div class="card">
         <div class="card-header">
-            {{ trans('cruds.bpmn.title') }} {{ trans('global.list') }}
+            {{ trans('cruds.bpmns.title') }} {{ trans('global.list') }}
         </div>
 
         <div class="card-body">
@@ -22,10 +22,10 @@
                         <th with="10">
                         </th>
                         <th width="80%">
-                            {{ trans('cruds.bpmn.fields.name') }}
+                            {{ trans('cruds.bpmns.fields.name') }}
                         </th>
                         <th width="20%">
-                            {{ trans('cruds.bpmn.fields.type') }}
+                            {{ trans('cruds.bpmns.fields.type') }}
                         </th>
                         <th>
                             &nbsp;
