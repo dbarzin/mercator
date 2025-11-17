@@ -13,16 +13,18 @@ class BPMNController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $graphs = Graph::orderBy('name')->get();
+        $graphs = Graph::orderBy('name')
+            ->where('class','=', 2)
+            ->get();
 
         return view('admin.graphs.index', compact('graphs'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
@@ -42,7 +44,7 @@ class BPMNController extends Controller
 
     public function clone(Request $request)
     {
-        abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get graph
         $graph = Graph::find($request->id);
@@ -50,11 +52,18 @@ class BPMNController extends Controller
         // Graph not found
         abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
+        abort_if($graph->class !== 2, Response::HTTP_NOT_ACCEPTABLE, '406 Not BPMN');
+
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
 
         // Get types
-        $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $type_list = Graph::select('type')
+            ->whereNotNull('type')
+            ->where('class','=', 2)
+            ->distinct()
+            ->orderBy('type')
+            ->pluck('type');
 
         return view(
             'admin.graphs.edit',
@@ -68,7 +77,7 @@ class BPMNController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         Graph::create($request->all());
 
@@ -77,10 +86,17 @@ class BPMNController extends Controller
 
     public function edit(Graph $graph)
     {
-        abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        abort_if($graph->class !== 2, Response::HTTP_NOT_ACCEPTABLE, '406 Not BPMN');
 
         // Get types
-        $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $type_list = Graph::select('type')
+            ->whereNotNull('type')
+            ->where('class','=', 2)
+            ->distinct()
+            ->orderBy('type')
+            ->pluck('type');
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
@@ -98,7 +114,7 @@ class BPMNController extends Controller
 
     public function update(Request $request)
     {
-        abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->id == '-1') {
             $graph = Graph::create($request->all());
@@ -106,27 +122,28 @@ class BPMNController extends Controller
             $graph = Graph::find($request->id);
             $graph->update($request->all());
         }
+        $graph->class=2;
+        $graph->save();
 
-        return redirect()->route('admin.graphs.index');
+        return redirect()->route('admin.bpmn.index');
     }
 
     public function show(Graph $graph)
     {
-        abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // get nodes and edges from the explorer
-        [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
+        abort_if($graph->class !== 2, Response::HTTP_NOT_ACCEPTABLE, '406 Not a graph');
 
-        return view('admin.graphs.show', compact('graph', 'nodes'));
+        return view('admin.bpmn.show', compact('graph', 'nodes'));
     }
 
     public function destroy(Graph $graph)
     {
-        abort_if(Gate::denies('graph_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bpmn_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $graph->delete();
 
-        return redirect()->route('admin.graphs.index');
+        return redirect()->route('admin.bpmn.index');
     }
 
     public function massDestroy(MassDestroyGraphRequest $request)

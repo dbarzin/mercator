@@ -15,7 +15,9 @@ class GraphController extends Controller
     {
         abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $graphs = Graph::orderBy('name')->get();
+        $graphs = Graph::orderBy('name')
+            ->where('class','=', 1)
+            ->get();
 
         return view('admin.graphs.index', compact('graphs'));
     }
@@ -28,7 +30,11 @@ class GraphController extends Controller
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
 
         // Get types
-        $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $type_list = Graph::select('type')
+            ->whereNotNull('type')
+            ->where('class','=', 1)
+            ->distinct()
+            ->orderBy('type')->pluck('type');
 
         return view(
             'admin.graphs.edit',
@@ -54,7 +60,12 @@ class GraphController extends Controller
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
 
         // Get types
-        $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $type_list = Graph::select('type')
+            ->whereNotNull('type')
+            ->where('class','=', 1)
+            ->distinct()
+            ->orderBy('type')
+            ->pluck('type');
 
         return view(
             'admin.graphs.edit',
@@ -80,7 +91,12 @@ class GraphController extends Controller
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get types
-        $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $type_list = Graph::select('type')
+            ->whereNotNull('type')
+            ->where('class','=', 1)
+            ->distinct()
+            ->orderBy('type')
+            ->pluck('type');
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
@@ -106,6 +122,8 @@ class GraphController extends Controller
             $graph = Graph::find($request->id);
             $graph->update($request->all());
         }
+        $graph->class=1;
+        $graph->save();
 
         return redirect()->route('admin.graphs.index');
     }
@@ -113,6 +131,8 @@ class GraphController extends Controller
     public function show(Graph $graph)
     {
         abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        abort_if($graph->class !== 1, Response::HTTP_NOT_ACCEPTABLE, '406 Not a graph');
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
