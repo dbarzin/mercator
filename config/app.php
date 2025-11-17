@@ -144,8 +144,8 @@ return [
     | LICENCE
     |--------------------------------------------------------------------------
     |
-    | Application licence key.
-    | Used to validate the legitimacy of the deployment and enable licensed features.
+    | Licence key required to activate the enterprise modules.
+    | Pulled from the environment variable APP_LICENCE.
     |
     */
     'licence' => env('APP_LICENCE', null),

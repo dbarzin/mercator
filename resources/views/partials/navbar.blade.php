@@ -83,7 +83,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="menu3" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">{{ trans('panel.menu.tools') }}</a>
                         <ul class="dropdown-menu" aria-labelledby="menu3">
-                            @can('graph_access')
+                            @can('bpmn_access')
                                 @if (config('app.licence'))
                                     <li><a class="dropdown-item" href="/admin/bpmn">
                                             <i class="bi bi-easel-fill"></i>{{ trans('cruds.bpmn.title') }}</a>
