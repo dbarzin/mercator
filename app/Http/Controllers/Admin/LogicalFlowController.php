@@ -14,6 +14,7 @@ use App\Models\PhysicalServer;
 use App\Models\Router;
 use App\Models\StorageDevice;
 use App\Models\Workstation;
+use App\Rules\Cidr;
 use Gate;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,6 +96,28 @@ class LogicalFlowController extends Controller
 
     public function store(StoreLogicalFlowRequest $request)
     {
+        $this->validate($request, [
+                'source_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:src_id',
+                ],
+                'src_id' => [
+                    'nullable',
+                    'required_without:source_ip_range',
+                ],
+                'dest_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:dest_id',
+                ],
+                'dest_id' => [
+                    'nullable',
+                    'required_without:dest_ip_range',
+                ]
+            ]
+        );
+
         $link = LogicalFlow::create($request->all());
 
         // Source device
@@ -177,6 +200,28 @@ class LogicalFlowController extends Controller
 
     public function update(UpdateLogicalFlowRequest $request, LogicalFlow $logicalFlow)
     {
+        $this->validate($request, [
+                'source_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:src_id',
+                ],
+                'src_id' => [
+                    'nullable',
+                    'required_without:source_ip_range',
+                ],
+                'dest_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:dest_id',
+                ],
+                'dest_id' => [
+                    'nullable',
+                    'required_without:dest_ip_range',
+                ]
+            ]
+        );
+
         // Source device
         if (str_starts_with($request->src_id, 'LSERVER_')) {
             $logicalFlow->logical_server_source_id = intval(substr($request->src_id, 8));
