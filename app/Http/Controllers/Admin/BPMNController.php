@@ -136,7 +136,7 @@ class BPMNController extends Controller
 
         abort_if($graph->class !== 2, Response::HTTP_NOT_ACCEPTABLE, '406 Not a graph');
 
-        return view('admin.bpmns.show', compact('graph', 'nodes'));
+        return view('admin.bpmns.show', compact('graph'));
     }
 
     public function destroy(Graph $graph)
