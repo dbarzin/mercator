@@ -34,15 +34,14 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // DropZone
 import Dropzone from 'dropzone';
 import "dropzone/dist/dropzone.css";
-// Import fonts
-import pdfMake from 'pdfmake/build/pdfmake';
+// Import fonts for pdfMake
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 DataTable.Buttons.jszip(jszip);
 DataTable.Buttons.pdfMake(pdfmake);
 
 // Save fonts
-pdfMake.vfs = pdfFonts.vfs ?? pdfFonts.default?.vfs;
+pdfmake.vfs = pdfFonts.vfs ?? pdfFonts.default?.vfs;
 
 // Initialize select2
 select2($);
