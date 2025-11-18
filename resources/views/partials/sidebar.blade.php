@@ -510,7 +510,7 @@
                 @can('role_access')
                     <a href="{{ route("admin.roles.index") }}"
                        class="ps-4 {{ request()->is('admin/roles*') ? 'active' : '' }}">
-                        <i class="bi bi-people-fill"></i></i><span
+                        <i class="bi bi-people-fill"></i><span
                                 class="menu-text">{{ trans('cruds.role.title') }}</span>
                     </a>
                 @endcan
@@ -522,12 +522,12 @@
                     </a>
                     <a href="{{ route("admin.config.cert") }}"
                        class="ps-4 {{ request()->is('admin/config/cert*') ? 'active' : '' }}">
-                        <i class="bi bi-shield-lock-fill"></i></i><span
+                        <i class="bi bi-shield-lock-fill"></i><span
                                 class="menu-text">{{ trans('cruds.configuration.certificate.title_short') }}</span>
                     </a>
                     <a href="{{ route("admin.config.cve") }}"
                        class="ps-4 {{ request()->is('admin/config/cve*') ? 'active' : '' }}">
-                        <i class="bi bi-bug-fill"></i></i><span
+                        <i class="bi bi-bug-fill"></i><span
                                 class="menu-text">{{ trans('cruds.configuration.cve.title_short') }}</span>
                     </a>
                     <a href="{{ route("admin.config.import") }}"
@@ -538,20 +538,20 @@
                 @endcan
                 <a href="{{ route("admin.config.documents") }}"
                    class="ps-4 {{ request()->is('admin/config/documents*') ? 'active' : '' }}">
-                    <i class="bi bi-file-earmark-text-fill"></i></i><span
+                    <i class="bi bi-file-earmark-text-fill"></i><span
                             class="menu-text">{{ trans('cruds.configuration.documents.title_short') }}</span>
                 </a>
                 @can('audit_log_access')
                     <a href="{{ route("admin.audit-logs.index") }}"
                        class="ps-4 {{ request()->is('admin/audit-logs*') ? 'active' : '' }}">
-                        <i class="bi bi-archive-fill"></i></i><span
+                        <i class="bi bi-archive-fill"></i><span
                                 class="menu-text">{{ trans('cruds.auditLog.title') }}</span>
                     </a>
                 @endcan
             </div>
         @endcan
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-            <i class="bi bi-box-arrow-right"></i></i><span class="menu-text">{{ trans('global.logout') }}</span>
+            <i class="bi bi-box-arrow-right"></i><span class="menu-text">{{ trans('global.logout') }}</span>
         </a>
     </div>
     <div class="sidebar-footer">
