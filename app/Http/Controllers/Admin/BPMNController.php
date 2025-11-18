@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGraphRequest;
 use App\Models\Graph;
 use Gate;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class BPMNController extends Controller
 {
-    public function index()
+    public function index() : View
     {
         abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -22,7 +24,7 @@ class BPMNController extends Controller
         return view('admin.bpmns.index', compact('graphs'));
     }
 
-    public function create()
+    public function create() : View
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -39,10 +41,10 @@ class BPMNController extends Controller
             ->with('id', '-1')
             ->with('type', '')
             ->with('name', '')
-            ->with('content', '<GraphDataModel></GraphDataModel>');
+            ->with('content', '');
     }
 
-    public function clone(Request $request)
+    public function clone(Request $request) : View
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -75,7 +77,7 @@ class BPMNController extends Controller
             ->with('content', $graph->content);
     }
 
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -134,7 +136,7 @@ class BPMNController extends Controller
 
         abort_if($graph->class !== 2, Response::HTTP_NOT_ACCEPTABLE, '406 Not a graph');
 
-        return view('admin.bpmn.show', compact('graph', 'nodes'));
+        return view('admin.bpmns.show', compact('graph'));
     }
 
     public function destroy(Graph $graph)

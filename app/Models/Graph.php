@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * App\Graph
- * @property int id
- * @property int? class
- * @property string? $name
- * @property string? $type
- */
 class Graph extends Model
 {
     use Auditable, HasFactory, SoftDeletes;

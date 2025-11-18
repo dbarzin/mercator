@@ -72,7 +72,7 @@ describe('show', function () {
 
     test('can display object', function () {
         $name = fake()->word();
-        $graph = Graph::factory()->create(['name' => $name]);
+        $graph = Graph::factory()->create(['name' => $name, 'class' => 1]);
 
         $response = $this->get(route('admin.graphs.show', $graph->id));
 
