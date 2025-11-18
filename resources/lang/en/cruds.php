@@ -277,7 +277,7 @@ return [
             'name' => 'Name',
             'name_helper' => 'BPMN name',
             'type' => 'Type',
-            'types_helper' => 'BPMN type',
+            'type_helper' => 'BPMN type',
         ],
         'title' => 'BPMN',
         'title_singular' => 'BPMN',
