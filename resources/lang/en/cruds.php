@@ -271,7 +271,7 @@ return [
         'title' => 'Bays',
         'title_singular' => 'Bay',
     ],
-    'bpmn' => [
+    'bpmns' => [
         'description' => 'Business Process Management Notation',
         'fields' => [
             'name' => 'Name',
@@ -280,6 +280,7 @@ return [
             'types_helper' => 'BPMN type',
         ],
         'title' => 'BPMN',
+        'title_singular' => 'BPMN',
     ],
     'building' => [
         'description' => 'Location of people or resources within a site.',

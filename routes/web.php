@@ -334,11 +334,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Graphs test
     Route::view('graph/test', 'admin.graphs.test')->name('graphs.test');
 
-    // BPMN
-    Route::resource('bpmn', Admin\BPMNController::class);
-    Route::delete('bpmn-destroy', [Admin\BPMNController::class, 'massDestroy'])->name('graphs.massDestroy');
-    Route::get('bpmn/clone/{id}', [Admin\BPMNController::class, 'clone'])->name('graphs.clone');
-    
+    // BPMNs
+    Route::resource('bpmns', Admin\BPMNController::class);
+    Route::delete('bpmns-destroy', [Admin\BPMNController::class, 'massDestroy'])->name('bpmns.massDestroy');
+    Route::get('bpmns/clone/{id}', [Admin\BPMNController::class, 'clone'])->name('bpmns.clone');
+
     // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class, 'explore'])->name('report.explore');
 

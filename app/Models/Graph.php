@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Graph
+ * @property int id
+ * @property int? class
+ * @property string? $name
+ * @property string? $type
  */
 class Graph extends Model
 {
