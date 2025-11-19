@@ -7,9 +7,8 @@ import {
     Graph,
     RubberBandHandler,
 } from '@maxgraph/core';
-// import { parseBpmn, renderToGraph, sizeFor, styleFor } from './bpmn-import';
-// import { exportGraphToBpmn } from './bpmn-export';
-// import { applyGraphStyles } from './graph-styles';
+
+import DOMPurify from 'dompurify';
 
 console.log('🚀 Initialisation de l\'éditeur BPMN avec MaxGraph');
 console.log('📦 MaxGraph disponible:', typeof maxgraph !== 'undefined');
@@ -19,15 +18,12 @@ void EdgeHandler;
 void ElbowEdgeHandler;
 void ConnectionHandler;
 
-
 type BpmnNodeType = Parameters<typeof sizeFor>[0];
 
 const container = document.getElementById('graph-container') as HTMLElement;
 if (!container) throw new Error('#graph-container introuvable');
 container.tabIndex = 0; // optionnel: focusable
 
-
-//    const { Graph, RubberBandHandler } = maxgraph;
 
 let graph: AbstractGraph;
 let bpmnData: { elements: any; xmlDoc?: any; positions?: {}; } | null = null;
@@ -88,9 +84,9 @@ function parseBPMN(xmlText: string) {
     console.log(`🏊 Participants trouvés: ${participants.length}`);
     for (let p of participants) {
         elements.participants.push({
-            "id": p.getAttribute('id'),
-            "name": p.getAttribute('name'),
-            "processRef": p.getAttribute('processRef')
+            id: p.getAttribute('id'),
+            name: p.getAttribute('name'),
+            processRef: p.getAttribute('processRef')
         });
     }
 
@@ -99,8 +95,8 @@ function parseBPMN(xmlText: string) {
     console.log(`▶️ Start events trouvés: ${startEvents.length}`);
     for (let se of startEvents) {
         elements.startEvents.push({
-            "id": se.getAttribute('id'),
-            "name": se.getAttribute('name')
+            id: se.getAttribute('id'),
+            name: se.getAttribute('name')
         });
     }
 
@@ -333,27 +329,21 @@ function generateBPMN() {
 }
 
 // Afficher un message de statut
-function showStatus(message: string | null, duration = 2000) {
-    let previous;
-    do {
-        previous = xmlText;
-        xmlText = xmlText
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi, '')
-            .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe\s*>/gi, '');
-    } while (xmlText !== previous);
-    return xmlText;
+function showStatus(message, duration = 2000) {
+    const status = document.getElementById('status');
+    status.textContent = message;
+    status.classList.add('show');
+
+    setTimeout(() => {
+        status.classList.remove('show');
+    }, duration);
 }
 
 
 // Défense-in-depth:
 // Sanitize input XML to remove dangerous tags, e.g., <script>, <iframe>—adapt whitelist as needed.
 function sanitizeXml(xmlText: string): string {
-    // Remove all <script>...</script> or <iframe>...</iframe> blocks (case-insensitive), strip any event handler attributes, etc.
-    // For more robust parsing, use an XML library.
-    // Here we use a simple regex filter for defense-in-depth.
-    return xmlText
-        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi, '')
-        .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe\s*>/gi, '');
+    return DOMPurify.sanitize(xmlText, {ALLOWED_TAGS: ['bpmn', 'BPMNShape', 'Bounds'], ALLOWED_ATTR: false});
 }
 
 // Gestion des événements
