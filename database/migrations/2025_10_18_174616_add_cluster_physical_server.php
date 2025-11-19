@@ -21,39 +21,40 @@ return new class extends Migration
     public function up(): void
     {
         // 1) Table pivot
-        Schema::create('cluster_physical_server', function (Blueprint $table) {
-            $table->unsignedInteger('cluster_id');
-            $table->unsignedInteger('physical_server_id');
+        if (!Schema::hasTable("cluster_physical_server")) {
+            Schema::create('cluster_physical_server', function (Blueprint $table) {
+                $table->unsignedInteger('cluster_id');
+                $table->unsignedInteger('physical_server_id');
 
-            $table->primary(['cluster_id', 'physical_server_id']);
-            $table->index('physical_server_id');
+                $table->primary(['cluster_id', 'physical_server_id']);
+                $table->index('physical_server_id');
 
-            $table->foreign('cluster_id')
-                ->references('id')->on('clusters')
-                ->onDelete('cascade');
+                $table->foreign('cluster_id')
+                    ->references('id')->on('clusters')
+                    ->onDelete('cascade');
 
-            $table->foreign('physical_server_id')
-                ->references('id')->on('physical_servers')
-                ->onDelete('cascade');
-        });
-
-        // 2) Backfill depuis physical_servers.cluster_id
-        DB::table('physical_servers')
-            ->whereNotNull('cluster_id')
-            ->orderBy('id')
-            ->chunkById(1000, function ($rows) {
-                $inserts = [];
-                foreach ($rows as $row) {
-                    $inserts[] = [
-                        'cluster_id' => $row->cluster_id,
-                        'physical_server_id' => $row->id,
-                    ];
-                }
-                if ($inserts) {
-                    DB::table('cluster_physical_server')->insertOrIgnore($inserts);
-                }
+                $table->foreign('physical_server_id')
+                    ->references('id')->on('physical_servers')
+                    ->onDelete('cascade');
             });
 
+            // 2) Backfill depuis physical_servers.cluster_id
+            DB::table('physical_servers')
+                ->whereNotNull('cluster_id')
+                ->orderBy('id')
+                ->chunkById(1000, function ($rows) {
+                    $inserts = [];
+                    foreach ($rows as $row) {
+                        $inserts[] = [
+                            'cluster_id' => $row->cluster_id,
+                            'physical_server_id' => $row->id,
+                        ];
+                    }
+                    if ($inserts) {
+                        DB::table('cluster_physical_server')->insertOrIgnore($inserts);
+                    }
+                });
+        }
         // 3) Suppression propre de la FK, des index et de la colonne `cluster_id`
         if (Schema::hasColumn('physical_servers', 'cluster_id')) {
             if (DB::getDriverName() === 'pgsql') {
