@@ -28,15 +28,17 @@ class BPMNController extends Controller
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // get nodes and edges from the explorer
-        [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
-
         // Get types
-        $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $type_list = Graph::select('type')
+            ->whereNotNull('type')
+            ->where('class','=',2)
+            ->distinct()
+            ->orderBy('type')
+            ->pluck('type');
 
         return view(
             'admin.bpmns.edit',
-            compact('type_list', 'nodes', 'edges')
+            compact('type_list')
         )
             ->with('id', '-1')
             ->with('type', '')

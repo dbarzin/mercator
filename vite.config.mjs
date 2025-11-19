@@ -20,15 +20,19 @@ export default defineConfig({
                 'resources/js/chart-maturity.js',
                 'resources/js/chart-relation.js',
                 'resources/js/chart-patching.js',
+                'resources/js/chart-relation.js',
                 // CPE
                 'resources/js/cpe.js',
                 // Mapping TypeScript and styles
-                'resources/js/chart-relation.js',
+                'resources/css/mapping.css',
+                // D3 Viz
+                'resources/js/d3-viz.js',
+                'resources/js/vis-network.js',
+                // Maps
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',
-                'resources/css/mapping.css',
-                'resources/js/d3-viz.js',
-                'resources/js/vis-network.js'
+                // BPMN
+                'resources/js/bpmn.edit.ts'
             ],
             refresh: true,
         }),

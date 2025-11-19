@@ -59,7 +59,7 @@ class PhysicalLinkController extends Controller
 
         $devices = Collection::make();
         foreach ($peripherals as $key => $value) {
-            $devices->put('PER_'.$key, $value);
+            $devices->put('PERIF_'.$key, $value);
         }
         foreach ($phones as $key => $value) {
             $devices->put('PHONE_'.$key, $value);
@@ -104,8 +104,8 @@ class PhysicalLinkController extends Controller
         $link = new PhysicalLink;
 
         // Source device
-        if (str_starts_with($request->src_id, 'PER_')) {
-            $link->peripheral_src_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, 'PERIF_')) {
+            $link->peripheral_src_id = intval(substr($request->src_id, 6));
         } elseif (str_starts_with($request->src_id, 'PHONE_')) {
             $link->phone_src_id = intval(substr($request->src_id, 6));
         } elseif (str_starts_with($request->src_id, 'PROUTER_')) {
@@ -131,8 +131,8 @@ class PhysicalLinkController extends Controller
         }
 
         // Dest device
-        if (str_starts_with($request->dest_id, 'PER_')) {
-            $link->peripheral_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, 'PERIF_')) {
+            $link->peripheral_dest_id = intval(substr($request->dest_id, 6));
         } elseif (str_starts_with($request->dest_id, 'PHONE_')) {
             $link->phone_dest_id = intval(substr($request->dest_id, 6));
         } elseif (str_starts_with($request->dest_id, 'PROUTER_')) {
@@ -284,7 +284,7 @@ class PhysicalLinkController extends Controller
 
         $devices = Collection::make();
         foreach ($peripherals as $key => $value) {
-            $devices->put('PER_'.$key, $value);
+            $devices->put('PERIF_'.$key, $value);
         }
         foreach ($phones as $key => $value) {
             $devices->put('PHONE_'.$key, $value);
@@ -337,8 +337,8 @@ class PhysicalLinkController extends Controller
     public function update(UpdatePhysicalLinkRequest $request, PhysicalLink $link)
     {
         // Source device
-        if (str_starts_with($request->src_id, 'PER_')) {
-            $link->peripheral_src_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, 'PERIF_')) {
+            $link->peripheral_src_id = intval(substr($request->src_id, 6));
         } else {
             $link->peripheral_src_id = null;
         }
@@ -410,8 +410,8 @@ class PhysicalLinkController extends Controller
         }
 
         // Dest device
-        if (str_starts_with($request->dest_id, 'PER_')) {
-            $link->peripheral_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, 'PERIF_')) {
+            $link->peripheral_dest_id = intval(substr($request->dest_id, 6));
         } else {
             $link->peripheral_dest_id = null;
         }
