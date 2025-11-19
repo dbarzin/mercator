@@ -362,7 +362,7 @@ class PhysicalLinkController extends Controller
         }
 
         if (str_starts_with($request->src_id, 'PSERVER_')) {
-            $link->physical_server_src_id = intval(substr($request->src_id, 5));
+            $link->physical_server_src_id = intval(substr($request->src_id, 8));
         } else {
             $link->physical_server_src_id = null;
         }
@@ -404,7 +404,7 @@ class PhysicalLinkController extends Controller
         }
 
         if (str_starts_with($request->src_id, 'LSERVER_')) {
-            $link->logical_server_src_id = intval(substr($request->src_id, 6));
+            $link->logical_server_src_id = intval(substr($request->src_id, 8));
         } else {
             $link->logical_server_src_id = null;
         }
@@ -476,7 +476,7 @@ class PhysicalLinkController extends Controller
         }
 
         if (str_starts_with($request->dest_id, 'LSERVER_')) {
-            $link->logical_server_dest_id = intval(substr($request->dest_id, 6));
+            $link->logical_server_dest_id = intval(substr($request->dest_id, 8));
         } else {
             $link->logical_server_dest_id = null;
         }
