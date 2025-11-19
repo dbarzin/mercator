@@ -61,7 +61,9 @@ function initGraph() {
 function parseBPMN(xmlText: string) {
     console.log('🔧 Début du parsing BPMN');
     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+    const sanitizedXmlText = sanitizeXml(xmlText);
+
+    const xmlDoc = parser.parseFromString(sanitizedXmlText, 'text/xml');
 
     // Vérifier les erreurs de parsing
     const parserError = xmlDoc.getElementsByTagName('parsererror');
@@ -343,6 +345,18 @@ function showStatus(message: string | null, duration = 2000) {
     setTimeout(() => {
         status.classList.remove('show');
     }, duration);
+}
+
+
+// Défense-in-depth:
+// Sanitize input XML to remove dangerous tags, e.g., <script>, <iframe>—adapt whitelist as needed.
+function sanitizeXml(xmlText: string): string {
+    // Remove all <script>...</script> or <iframe>...</iframe> blocks (case-insensitive), strip any event handler attributes, etc.
+    // For more robust parsing, use an XML library.
+    // Here we use a simple regex filter for defense-in-depth.
+    return xmlText
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi, '')
+        .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe\s*>/gi, '');
 }
 
 // Gestion des événements
