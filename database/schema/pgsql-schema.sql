@@ -28,15 +28,15 @@ CREATE TABLE public.activities (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     description text,
-    created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone,
-    deleted_at timestamp(0) without time zone,
     drp text,
     drp_link character varying(255),
     recovery_time_objective integer,
     maximum_tolerable_downtime integer,
     recovery_point_objective integer,
-    maximum_tolerable_data_loss integer
+    maximum_tolerable_data_loss integer,
+    created_at timestamp(0) without time zone,
+    updated_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone
 );
 
 
@@ -486,7 +486,7 @@ CREATE TABLE public.buildings (
     icon_id integer,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
-    deleted_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone
 );
 
 
@@ -1102,9 +1102,9 @@ CREATE TABLE public.documents (
     mimetype character varying(255) NOT NULL,
     size integer NOT NULL,
     hash character varying(255) NOT NULL,
-    deleted_at timestamp(0) without time zone,
     created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone
+    updated_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone
 );
 
 
@@ -2255,7 +2255,7 @@ CREATE TABLE public.phones (
     address_ip character varying(255),
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
-    deleted_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone
 );
 
 
