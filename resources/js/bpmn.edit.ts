@@ -88,9 +88,9 @@ function parseBPMN(xmlText: string) {
     console.log(`🏊 Participants trouvés: ${participants.length}`);
     for (let p of participants) {
         elements.participants.push({
-            id: p.getAttribute('id'),
-            name: p.getAttribute('name'),
-            processRef: p.getAttribute('processRef')
+            "id": p.getAttribute('id'),
+            "name": p.getAttribute('name'),
+            "processRef": p.getAttribute('processRef')
         });
     }
 
@@ -99,8 +99,8 @@ function parseBPMN(xmlText: string) {
     console.log(`▶️ Start events trouvés: ${startEvents.length}`);
     for (let se of startEvents) {
         elements.startEvents.push({
-            id: se.getAttribute('id'),
-            name: se.getAttribute('name')
+            "id": se.getAttribute('id'),
+            "name": se.getAttribute('name')
         });
     }
 
@@ -334,17 +334,14 @@ function generateBPMN() {
 
 // Afficher un message de statut
 function showStatus(message: string | null, duration = 2000) {
-    const status = document.getElementById('status');
-    if (!status) {
-        console.warn('Status element not found in DOM');
-        return;
-    }
-    status.textContent = message;
-    status.classList.add('show');
-
-    setTimeout(() => {
-        status.classList.remove('show');
-    }, duration);
+    let previous;
+    do {
+        previous = xmlText;
+        xmlText = xmlText
+            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi, '')
+            .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe\s*>/gi, '');
+    } while (xmlText !== previous);
+    return xmlText;
 }
 
 
@@ -433,7 +430,7 @@ document.getElementById('zoom-out-btn')?.addEventListener('click', () => {
     console.log('🔍 Zoom out');
 });
 
-document.getElementById('fit-btn-btn')?.addEventListener('click', () => {
+document.getElementById('fit-in-btn')?.addEventListener('click', () => {
     graph.fit();
     graph.center();
     console.log('⬜ Vue ajustée');

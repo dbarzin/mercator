@@ -57,9 +57,9 @@
     gap: 12px; /* espace entre les icônes */"/>
 
 
-                    <label id="file-input" for="file-input" title="Load"
-                           class="mapping-icon bi bi-box-arrow-down }}">
-                        <input type="file" id="" accept=".bpmn,.xml"/>
+                    <label for="file-input" title="Load"
+                           class="mapping-icon bi bi-box-arrow-down">
+                        <input type="file" id="file-input" accept=".bpmn,.xml"/>
                     </label>
                     <i id="undoButton" title="Undo" class="mapping-icon bi bi-arrow-counterclockwise"></i>
                     <i id="redoButton" title="Redo" class="mapping-icon bi bi-arrow-clockwise"></i>
