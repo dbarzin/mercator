@@ -3000,7 +3000,7 @@ CREATE TABLE public.users (
     language character varying(2),
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
-    deleted_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone
 );
 
 
