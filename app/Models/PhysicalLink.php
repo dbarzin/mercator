@@ -186,7 +186,7 @@ class PhysicalLink extends Model
     public function sourceId(): ?string
     {
         if ($this->peripheral_src_id !== null) {
-            return 'PER_'.$this->peripheral_src_id;
+            return 'PERIF_'.$this->peripheral_src_id;
         }
         if ($this->phone_src_id !== null) {
             return 'PHONE_'.$this->phone_src_id;
@@ -229,7 +229,7 @@ class PhysicalLink extends Model
     {
         // dd($this, $this->workstation_dest_id, $this->workstation_dest_id!==null);
         if ($this->peripheral_dest_id !== null) {
-            return 'PER_'.$this->peripheral_dest_id;
+            return 'PERIF_'.$this->peripheral_dest_id;
         }
         if ($this->phone_dest_id !== null) {
             return 'PHONE_'.$this->phone_dest_id;
