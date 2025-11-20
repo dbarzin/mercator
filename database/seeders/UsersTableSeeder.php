@@ -14,7 +14,6 @@ class UsersTableSeeder extends Seeder
         if (DB::table('users')->count() === 0) {
             $users = [
                 [
-                    'id' => 1,
                     'login' => 'admin@admin.com',
                     'name' => 'Admin',
                     'email' => 'admin@admin.com',
