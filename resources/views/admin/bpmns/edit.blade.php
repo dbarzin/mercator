@@ -55,9 +55,7 @@
     flex-direction: column;
     align-items: center; /* centre les icônes */
     gap: 12px; /* espace entre les icônes */"/>
-
-
-                    <label for="file-input" title="Load"
+                    <label for="file-input" title="Import"
                            class="mapping-icon bi bi-box-arrow-down">
                         <input type="file" id="file-input" accept=".bpmn,.xml"/>
                     </label>
