@@ -90,6 +90,8 @@ function parseBPMN(xmlText: string) {
         participants: []
     };
 
+    console.log(xmlDoc);
+
     // Récupérer les participants/lanes
     const participants = xmlDoc.getElementsByTagName('participant');
     console.log(`🏊 Participants trouvés: ${participants.length}`);
