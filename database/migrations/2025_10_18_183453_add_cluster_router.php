@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         // 1) Table pivot
-        if (!Schema::hasTable("cluster_physical_server")) {
+        if (!Schema::hasTable("cluster_router")) {
             Schema::create('cluster_router', function (Blueprint $table) {
                 $table->unsignedInteger('cluster_id');
                 $table->unsignedInteger('router_id');
