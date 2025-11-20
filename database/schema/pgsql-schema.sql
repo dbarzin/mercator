@@ -624,6 +624,16 @@ CREATE TABLE public.cluster_physical_server (
 
 
 --
+-- Name: cluster_router; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.cluster_router (
+    cluster_id integer NOT NULL,
+    router_id integer NOT NULL
+);
+
+
+--
 -- Name: clusters; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2093,6 +2103,118 @@ ALTER SEQUENCE public.networks_id_seq OWNED BY public.networks.id;
 
 
 --
+-- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.oauth_access_tokens (
+    id character varying(100) NOT NULL,
+    user_id bigint,
+    client_id bigint NOT NULL,
+    name character varying(255),
+    scopes text,
+    revoked boolean NOT NULL,
+    created_at timestamp(0) without time zone,
+    updated_at timestamp(0) without time zone,
+    expires_at timestamp(0) without time zone
+);
+
+
+--
+-- Name: oauth_auth_codes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.oauth_auth_codes (
+    id character varying(100) NOT NULL,
+    user_id bigint NOT NULL,
+    client_id bigint NOT NULL,
+    scopes text,
+    revoked boolean NOT NULL,
+    expires_at timestamp(0) without time zone
+);
+
+
+--
+-- Name: oauth_clients; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.oauth_clients (
+    id bigint NOT NULL,
+    user_id bigint,
+    name character varying(255) NOT NULL,
+    secret character varying(100),
+    provider character varying(255),
+    redirect text NOT NULL,
+    personal_access_client boolean NOT NULL,
+    password_client boolean NOT NULL,
+    revoked boolean NOT NULL,
+    created_at timestamp(0) without time zone,
+    updated_at timestamp(0) without time zone
+);
+
+
+--
+-- Name: oauth_clients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.oauth_clients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: oauth_clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.oauth_clients_id_seq OWNED BY public.oauth_clients.id;
+
+
+--
+-- Name: oauth_personal_access_clients; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.oauth_personal_access_clients (
+    id bigint NOT NULL,
+    client_id bigint NOT NULL,
+    created_at timestamp(0) without time zone,
+    updated_at timestamp(0) without time zone
+);
+
+
+--
+-- Name: oauth_personal_access_clients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.oauth_personal_access_clients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: oauth_personal_access_clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.oauth_personal_access_clients_id_seq OWNED BY public.oauth_personal_access_clients.id;
+
+
+--
+-- Name: oauth_refresh_tokens; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.oauth_refresh_tokens (
+    id character varying(100) NOT NULL,
+    access_token_id character varying(100) NOT NULL,
+    revoked boolean NOT NULL,
+    expires_at timestamp(0) without time zone
+);
+
+
+--
 -- Name: operation_task; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3529,6 +3651,20 @@ ALTER TABLE ONLY public.networks ALTER COLUMN id SET DEFAULT nextval('public.net
 
 
 --
+-- Name: oauth_clients id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.oauth_clients ALTER COLUMN id SET DEFAULT nextval('public.oauth_clients_id_seq'::regclass);
+
+
+--
+-- Name: oauth_personal_access_clients id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.oauth_personal_access_clients ALTER COLUMN id SET DEFAULT nextval('public.oauth_personal_access_clients_id_seq'::regclass);
+
+
+--
 -- Name: operations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3840,6 +3976,14 @@ ALTER TABLE ONLY public.cluster_physical_server
 
 
 --
+-- Name: cluster_router cluster_router_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cluster_router
+    ADD CONSTRAINT cluster_router_pkey PRIMARY KEY (cluster_id, router_id);
+
+
+--
 -- Name: clusters clusters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4125,6 +4269,46 @@ ALTER TABLE ONLY public.network_switches
 
 ALTER TABLE ONLY public.networks
     ADD CONSTRAINT networks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: oauth_access_tokens oauth_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.oauth_access_tokens
+    ADD CONSTRAINT oauth_access_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: oauth_auth_codes oauth_auth_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.oauth_auth_codes
+    ADD CONSTRAINT oauth_auth_codes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: oauth_clients oauth_clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.oauth_clients
+    ADD CONSTRAINT oauth_clients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: oauth_personal_access_clients oauth_personal_access_clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.oauth_personal_access_clients
+    ADD CONSTRAINT oauth_personal_access_clients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: oauth_refresh_tokens oauth_refresh_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.oauth_refresh_tokens
+    ADD CONSTRAINT oauth_refresh_tokens_pkey PRIMARY KEY (id);
 
 
 --
@@ -4564,6 +4748,13 @@ CREATE INDEX cluster_logical_server_logical_server_id_index ON public.cluster_lo
 --
 
 CREATE INDEX cluster_physical_server_physical_server_id_index ON public.cluster_physical_server USING btree (physical_server_id);
+
+
+--
+-- Name: cluster_router_router_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX cluster_router_router_id_index ON public.cluster_router USING btree (router_id);
 
 
 --
@@ -5166,6 +5357,34 @@ CREATE INDEX network_switches_dest_id_fk ON public.physical_links USING btree (n
 --
 
 CREATE INDEX network_switches_src_id_fk ON public.physical_links USING btree (network_switch_src_id);
+
+
+--
+-- Name: oauth_access_tokens_user_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX oauth_access_tokens_user_id_index ON public.oauth_access_tokens USING btree (user_id);
+
+
+--
+-- Name: oauth_auth_codes_user_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX oauth_auth_codes_user_id_index ON public.oauth_auth_codes USING btree (user_id);
+
+
+--
+-- Name: oauth_clients_user_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX oauth_clients_user_id_index ON public.oauth_clients USING btree (user_id);
+
+
+--
+-- Name: oauth_refresh_tokens_access_token_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX oauth_refresh_tokens_access_token_id_index ON public.oauth_refresh_tokens USING btree (access_token_id);
 
 
 --
@@ -6112,6 +6331,22 @@ ALTER TABLE ONLY public.cluster_physical_server
 
 ALTER TABLE ONLY public.cluster_physical_server
     ADD CONSTRAINT cluster_physical_server_physical_server_id_foreign FOREIGN KEY (physical_server_id) REFERENCES public.physical_servers(id) ON DELETE CASCADE;
+
+
+--
+-- Name: cluster_router cluster_router_cluster_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cluster_router
+    ADD CONSTRAINT cluster_router_cluster_id_foreign FOREIGN KEY (cluster_id) REFERENCES public.clusters(id) ON DELETE CASCADE;
+
+
+--
+-- Name: cluster_router cluster_router_router_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cluster_router
+    ADD CONSTRAINT cluster_router_router_id_foreign FOREIGN KEY (router_id) REFERENCES public.routers(id) ON DELETE CASCADE;
 
 
 --
@@ -7815,7 +8050,6 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 216	2025_10_17_073218_add_cluster_logical_server	2
 217	2025_10_17_085635_add_fields_to_cluster	2
 218	2025_10_18_174616_add_cluster_physical_server	2
-219	2025_10_18_183453_add_cluster_router	3
 220	2025_10_21_104026_add_lawfullness	3
 221	2025_10_27_095802_add_link_applications_security_devices	3
 222	2025_10_27_104704_add_fields_security_device	3
@@ -7824,6 +8058,12 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 225	2025_11_09_103559_add_network_switch_vlan	3
 226	2025_11_10_090632_add_subnetwork_link	3
 227	2025_11_17_110452_add_graph_class	3
+228	2016_06_01_000001_create_oauth_auth_codes_table	4
+229	2016_06_01_000002_create_oauth_access_tokens_table	4
+230	2016_06_01_000003_create_oauth_refresh_tokens_table	4
+231	2016_06_01_000004_create_oauth_clients_table	4
+232	2016_06_01_000005_create_oauth_personal_access_clients_table	4
+236	2025_10_18_183453_add_cluster_router	5
 \.
 
 
@@ -7831,7 +8071,7 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.migrations_id_seq', 227, true);
+SELECT pg_catalog.setval('public.migrations_id_seq', 236, true);
 
 
 --
