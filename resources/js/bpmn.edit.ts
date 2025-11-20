@@ -49,6 +49,16 @@ function initGraph() {
     graph.gridSize = 10;
     graph.gridEnabled = true;
 
+    // Test
+    const model = graph.model;
+    model.beginUpdate();
+    try {
+        const parent = graph.getDefaultParent();
+        graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30);
+    } finally {
+        model.endUpdate();
+    }
+
     console.log('✅ Graphe MaxGraph initialisé');
     return graph;
 }
@@ -62,12 +72,13 @@ function parseBPMN(xmlText: string) {
     const xmlDoc = parser.parseFromString(sanitizedXmlText, 'text/xml');
 
     // Vérifier les erreurs de parsing
+    /*
     const parserError = xmlDoc.getElementsByTagName('parsererror');
     if (parserError.length > 0) {
         console.error('❌ Erreur de parsing XML:', parserError[0].textContent);
         throw new Error('Erreur de parsing XML');
     }
-
+    */
     console.log('📦 Document XML parsé');
 
     const elements = {
@@ -172,7 +183,7 @@ function drawDiagram(data) {
 
     console.log('🗺️ Parent du graphe:', parent);
 
-    graph.getModel().beginUpdate();
+    graph.model.beginUpdate();
     try {
         graph.removeCells(graph.getChildCells(parent));
         console.log('🧹 Cellules précédentes supprimées');
@@ -282,14 +293,14 @@ function drawDiagram(data) {
             }
         });
     } finally {
-        graph.getModel().endUpdate();
+        graph.model.endUpdate();
     }
 
     console.log('✅ Diagramme dessiné avec succès');
 
     // Ajuster la vue
     setTimeout(() => {
-        graph.fit();
+//        graph.fit();
         graph.center();
         console.log('📐 Vue ajustée et centrée');
     }, 100);
@@ -301,7 +312,7 @@ function generateBPMN() {
 
     console.log('💾 Génération du XML BPMN mis à jour');
     const {xmlDoc, elements} = bpmnData;
-    const model = graph.getModel();
+    const model = graph.model;
 
     // Mettre à jour les positions dans le XML
     const shapes = xmlDoc.getElementsByTagNameNS('*', 'BPMNShape');
@@ -363,6 +374,7 @@ document.getElementById('file-input').addEventListener('change', async (e) => {
 
     try {
         console.log('🔍 Parsing BPMN...');
+        console.log(text);
         bpmnData = parseBPMN(text);
         console.log('✅ Parsing réussi:', bpmnData);
 
@@ -378,8 +390,8 @@ document.getElementById('file-input').addEventListener('change', async (e) => {
 
         console.log(`📊 Total: ${totalElements} éléments, ${bpmnData.elements.flows.length} flux`);
 
-        document.getElementById('info').textContent =
-            `${fileName} - ${totalElements} éléments, ${bpmnData.elements.flows.length} flux`;
+//        document.getElementById('info').textContent =
+//            `${fileName} - ${totalElements} éléments, ${bpmnData.elements.flows.length} flux`;
 
         showStatus('✓ Fichier chargé avec succès');
     } catch (error) {
