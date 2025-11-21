@@ -71,8 +71,8 @@
                         {{ $logicalFlow->interface }}
                     </td>
                     <td>
-                        @if ($logicalFlow->router_id !== null)
-                            <a href="{{ route('admin.routers.show', $logicalFlow->router_id) }}">
+                        @if ($logicalFlow->router !== null)
+                            <a href="{{ route('admin.routers.show', $logicalFlow->router->id) }}">
                                 {{ $logicalFlow->router->name }}
                             </a>
                         @endif
