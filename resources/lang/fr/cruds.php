@@ -789,6 +789,8 @@ return [
         'fields' => [
             'name' => 'Nom',
             'name_helper' => 'Nom du flux',
+            'class' => 'Classe',
+            'class_helper' => '',
             'protocol' => 'Protocole',
             'protocol_helper' => 'ex: TCP, UPD...',
             'source_ip_range' => 'Source',
@@ -810,7 +812,7 @@ return [
             'users' => 'Utilisateurs',
             'users_helper' => 'Utilisateurs auxquels la règle s\'applique. Peut être un seul utilisateur ou un groupe d\'utilisateurs.',
             'interface' => 'Interface',
-            'interface_helper' => 'Interface réseau sur laquelle la règle doit être appliquée.',
+            'interface_helper' => 'Interface réseau concernée',
             'schedule' => 'Période',
             'schedule_helper' => 'Période pendant laquelle la règle est active.',
         ],

@@ -31,18 +31,16 @@ class LogicalFlow extends Model
     protected $fillable = [
         'name',
         'description',
+        'chain',
+        'interface',
+        'router_id',
+        'priority',
+        'protocol',
+        // IP / Range
         'source_ip_range',
         'dest_ip_range',
         'source_port',
         'dest_port',
-        'protocol',
-        'description',
-        'router_id',
-        'priority',
-        'action',
-        'users',
-        'interface',
-        'schedule',
         // Sources
         'logical_server_source_id',
         'peripheral_source_id',
@@ -57,6 +55,10 @@ class LogicalFlow extends Model
         'storage_device_dest_id',
         'workstation_dest_id',
         'physical_security_device_dest_id',
+        // Others
+        'users',
+        'schedule',
+        'action',
     ];
 
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅  Sources  ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
@@ -97,6 +99,12 @@ class LogicalFlow extends Model
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_source_id');
     }
 
+    /** @return BelongsTo<Subnetwork, $this> */
+    public function subnetworkSource(): BelongsTo
+    {
+        return $this->belongsTo(Subnetwork::class, 'subnetwork_source_id');
+    }
+
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ Destinations ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
 
     /** @return BelongsTo<LogicalServer, $this> */
@@ -133,6 +141,12 @@ class LogicalFlow extends Model
     public function physicalSecurityDeviceDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_dest_id');
+    }
+
+    /** @return BelongsTo<Subnetwork, $this> */
+    public function subnetworkDest(): BelongsTo
+    {
+        return $this->belongsTo(Subnetwork::class, 'subnetwork_dest_id');
     }
 
     /* '*~-.,¸¸.-~·*'¨¯'*~-.,¸¸.-~·*'¨¯ IP ¯¨'*·~-.¸¸,.-~*''*~-.,¸¸.-~·*'¨¯ */
@@ -175,7 +189,10 @@ class LogicalFlow extends Model
             return 'WORK_'.$this->workstation_source_id;
         }
         if ($this->physical_security_device_source_id !== null) {
-            return 'PSD_'.$this->physical_security_device_source_id;
+            return 'PSECURITY_'.$this->physical_security_device_source_id;
+        }
+        if ($this->subnetwork_source_id !== null) {
+            return 'SUBNETWORK_'.$this->subnetwork_source_id;
         }
 
         return null;
@@ -199,7 +216,10 @@ class LogicalFlow extends Model
             return 'WORK_'.$this->workstation_dest_id;
         }
         if ($this->physical_security_device_dest_id !== null) {
-            return 'PSD_'.$this->physical_security_device_dest_id;
+            return 'PSECURITY_'.$this->physical_security_device_dest_id;
+        }
+        if ($this->subnetwork_dest_id !== null) {
+            return 'SUBNETWORK_'.$this->subnetwork_dest_id;
         }
 
         return null;
