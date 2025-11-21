@@ -4,7 +4,7 @@
         @csrf
         <div class="card">
             <div class="card-header">
-                {{ trans('global.edit') }} {{ trans('cruds.logicalFlow.title_singular') }}
+                {{ trans('global.create') }} {{ trans('cruds.logicalFlow.title_singular') }}
             </div>
             <div class="card-body">
                 <div class="row">
@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
-                                   name="name" id="name" value="{{ old('name') }}" autofocus maxlengh='64'/>
+                                   name="name" id="name" value="{{ old('name') }}" autofocus maxlength='64'/>
                             @if($errors->has('name'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('name') }}
@@ -89,9 +89,9 @@
                                     <option value="{{$id}}" {{ old('router_id') === $id ? 'selected' : '' }}>{{$name}}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('router'))
+                            @if($errors->has('router_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('router') }}
+                                    {{ $errors->first('router_id') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.logicalFlow.fields.router_helper') }}</span>
@@ -122,7 +122,7 @@
                                 <option {{ old('action')=="Permit" ? 'selected' : '' }}>Permit</option>
                                 <option {{ old('action')=="Deny" ? 'selected' : '' }}>Deny</option>
                                 <option {{ old('action')=="Block" ? 'selected' : '' }}>Block</option>
-                                <option {{ old('action')=="Reditect" ? 'selected' : '' }}>Reditect</option>
+                                <option {{ old('action')=="Redirect" ? 'selected' : '' }}>Redirect</option>
                                 <option {{ old('action')=="Log" ? 'selected' : '' }}>Log</option>
                             </select>
                             @if($errors->has('action'))
@@ -172,7 +172,8 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label for="source_port">{{ trans('cruds.logicalFlow.fields.source_port') }}</label>
-                            <input class="form-control {{ $errors->has('protocol') ? 'is-invalid' : '' }}" type="text"
+                            <input class="form-control {{ $errors->has('source_port') ? 'is-invalid' : '' }}"
+                                   type="text"
                                    name="source_port" id="source_port" value="{{ old('source_port') }}">
                             @if($errors->has('source_port'))
                                 <div class="invalid-feedback">
@@ -186,7 +187,7 @@
                         <div class="form-group">
                             <label class="label-required"
                                    for="dest_ip_range">{{ trans('cruds.logicalFlow.fields.dest_ip_range') }}</label>
-                            <input class="form-control {{ $errors->has('source_ip_range') ? 'is-invalid' : '' }}"
+                            <input class="form-control {{ $errors->has('dest_ip_range') ? 'is-invalid' : '' }}"
                                    type="text" name="dest_ip_range" id="dest_ip_range"
                                    value="{{ old('dest_ip_range') }}">
                             @if($errors->has('dest_ip_range'))
@@ -201,7 +202,7 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label for="dest_port">{{ trans('cruds.logicalFlow.fields.dest_port') }}</label>
-                            <input class="form-control {{ $errors->has('protocol') ? 'is-invalid' : '' }}" type="text"
+                            <input class="form-control {{ $errors->has('dest_port') ? 'is-invalid' : '' }}" type="text"
                                    name="dest_port" id="dest_port" value="{{ old('dest_port') }}">
                             @if($errors->has('dest_port'))
                                 <div class="invalid-feedback">

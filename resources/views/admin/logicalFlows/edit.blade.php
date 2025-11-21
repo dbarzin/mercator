@@ -53,9 +53,9 @@
                             <select class="form-control select2-free {{ $errors->has('class') ? 'is-invalid' : '' }}"
                                     name="class" id="class">
                                 <option></option>
-                                <option {{ $logicalFlow->action=="INPUT" ? 'selected' : '' }}>INPUT</option>
-                                <option {{ $logicalFlow->action=="OUTPUT" ? 'selected' : '' }}>OUTPUT</option>
-                                <option {{ $logicalFlow->action=="FORWARD" ? 'selected' : '' }}>FORWARD</option>
+                                <option {{ $logicalFlow->class=="INPUT" ? 'selected' : '' }}>INPUT</option>
+                                <option {{ $logicalFlow->class=="OUTPUT" ? 'selected' : '' }}>OUTPUT</option>
+                                <option {{ $logicalFlow->class=="FORWARD" ? 'selected' : '' }}>FORWARD</option>
                             </select>
 
                             @if($errors->has('class'))
@@ -72,7 +72,7 @@
                             <label for="interface">{{ trans('cruds.logicalFlow.fields.interface') }}</label>
                             <select class="form-control select2-free {{ $errors->has('interface') ? 'is-invalid' : '' }}"
                                     name="interface" id="interface">
-                                @if (!$protocol_list->contains(old('interface')))
+                                @if (!$interface_list->contains(old('interface')))
                                     <option> {{ old('interface') }}</option>
                                 @endif
                                 @foreach($interface_list as $interface)
@@ -181,7 +181,8 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label for="source_port">{{ trans('cruds.logicalFlow.fields.source_port') }}</label>
-                            <input class="form-control {{ $errors->has('protocol') ? 'is-invalid' : '' }}" type="text"
+                            <input class="form-control {{ $errors->has('source_port') ? 'is-invalid' : '' }}"
+                                   type="text"
                                    name="source_port" id="source_port"
                                    value="{{ old('source_port', $logicalFlow->source_port) }}">
                             @if($errors->has('source_port'))
@@ -211,12 +212,12 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label for="dest_port">{{ trans('cruds.logicalFlow.fields.dest_port') }}</label>
-                            <input class="form-control {{ $errors->has('protocol') ? 'is-invalid' : '' }}" type="text"
+                            <input class="form-control {{ $errors->has('dest_port') ? 'is-invalid' : '' }}" type="text"
                                    name="dest_port" id="dest_port"
                                    value="{{ old('dest_port', $logicalFlow->dest_port) }}">
                             @if($errors->has('dest_port'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('source_port') }}
+                                    {{ $errors->first('dest_port') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.logicalFlow.fields.dest_port_helper') }}</span>
@@ -251,7 +252,7 @@
                                     name="dest_id" id="dest_id">
                                 <option></option>
                                 @foreach($devices as $id => $name)
-                                    <option value="{{ $id }}" {{ ($logicalFlow->destinationId() ? $logicalFlow->destinationId() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ ($logicalFlow->destinationId() ? $logicalFlow->destinationId() : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('dest_id'))
