@@ -13,6 +13,7 @@ use Laravel\Passport\Passport;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
+
     $this->seed([
         PermissionsTableSeeder::class,
         RolesTableSeeder::class,
@@ -20,8 +21,8 @@ beforeEach(function () {
         UsersTableSeeder::class,
         RoleUserTableSeeder::class,
     ]);
-});
 
+});
 // Helper pour créer un payload valide
 function validActivityPayload(): array
 {
@@ -36,17 +37,14 @@ function validActivityPayload(): array
 // ============================================================
 
 it('forbids listing activities without permission', function () {
-    // Créer un utilisateur sans permissions et l'authentifier avec Passport
-    $user = User::factory()->create();
-    Passport::actingAs($user);
+    Passport::actingAs(User::factory()->create());
 
     $this->getJson('/api/activities')
         ->assertForbidden();
 });
 
 it('lists activities when permitted', function () {
-    // Utiliser l'utilisateur admin (id=1) qui a toutes les permissions
-    $user = User::find(1);
+    $user = User::query()->where("login", "=", "admin@admin.com")->first();
     Passport::actingAs($user);
 
     Activity::factory()->count(3)->create();
@@ -57,15 +55,14 @@ it('lists activities when permitted', function () {
 });
 
 it('forbids creating an activity without permission', function () {
-    $user = User::factory()->create();
-    Passport::actingAs($user);
+    Passport::actingAs(User::factory()->create());
 
     $this->postJson('/api/activities', validActivityPayload())
         ->assertForbidden();
 });
 
 it('creates an activity when permitted', function () {
-    $user = User::find(1);
+    $user = User::query()->where("login", "=", "admin@admin.com")->first();
     Passport::actingAs($user);
 
     $this->postJson('/api/activities', validActivityPayload())
@@ -76,7 +73,7 @@ it('creates an activity when permitted', function () {
 });
 
 it('shows a single activity when permitted', function () {
-    $user = User::find(1);
+    $user = User::query()->where("login", "=", "admin@admin.com")->first();
     Passport::actingAs($user);
 
     $activity = Activity::factory()->create(['name' => 'My Activity']);
@@ -87,8 +84,7 @@ it('shows a single activity when permitted', function () {
 });
 
 it('forbids showing an activity without permission', function () {
-    $user = User::factory()->create();
-    Passport::actingAs($user);
+    Passport::actingAs(User::factory()->create());
 
     $activity = Activity::factory()->create();
 
@@ -97,7 +93,7 @@ it('forbids showing an activity without permission', function () {
 });
 
 it('updates an activity when permitted', function () {
-    $user = User::find(1);
+    $user = User::query()->where("login", "=", "admin@admin.com")->first();
     Passport::actingAs($user);
 
     $activity = Activity::factory()->create(['name' => 'Old Name']);
@@ -109,8 +105,7 @@ it('updates an activity when permitted', function () {
 });
 
 it('forbids updating an activity without permission', function () {
-    $user = User::factory()->create();
-    Passport::actingAs($user);
+    Passport::actingAs(User::factory()->create());
 
     $activity = Activity::factory()->create(['name' => 'Old Name']);
 
@@ -119,7 +114,7 @@ it('forbids updating an activity without permission', function () {
 });
 
 it('deletes an activity when permitted', function () {
-    $user = User::find(1);
+    $user = User::query()->where("login", "=", "admin@admin.com")->first();
     Passport::actingAs($user);
 
     $activity = Activity::factory()->create();
@@ -131,8 +126,7 @@ it('deletes an activity when permitted', function () {
 });
 
 it('forbids deleting an activity without permission', function () {
-    $user = User::factory()->create();
-    Passport::actingAs($user);
+    Passport::actingAs(User::factory()->create());
 
     $activity = Activity::factory()->create();
 
@@ -141,7 +135,7 @@ it('forbids deleting an activity without permission', function () {
 });
 
 it('mass destroys activities when permitted', function () {
-    $user = User::find(1);
+    $user = User::query()->where("login", "=", "admin@admin.com")->first();
     Passport::actingAs($user);
 
     $activities = Activity::factory()->count(3)->create();
@@ -157,8 +151,7 @@ it('mass destroys activities when permitted', function () {
 });
 
 it('forbids mass destroy without permission', function () {
-    $user = User::factory()->create();
-    Passport::actingAs($user);
+    Passport::actingAs(User::factory()->create());
 
     $activities = Activity::factory()->count(3)->create();
     $ids = $activities->pluck('id')->toArray();

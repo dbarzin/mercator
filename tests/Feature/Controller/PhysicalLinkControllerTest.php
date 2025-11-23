@@ -23,7 +23,7 @@ beforeEach(function () {
         RoleUserTableSeeder::class,
     ]);
 
-    $this->user = User::query()->find(1);
+    $this->user = User::query()->where('login','admin@admin.com')->first();
     $this->actingAs($this->user);
 
 });
@@ -130,9 +130,9 @@ describe('update', function () {
         $physicalLink = PhysicalLink::factory()->create();
 
         $data = [
-            'src_id' => 'PER_'.$peripheralSrc->id,
+            'src_id' => 'PERIF_'.$peripheralSrc->id,
             'src_port' => $srcPort,
-            'dest_id' => 'PER_'.$peripheralDest->id,
+            'dest_id' => 'PERIF_'.$peripheralDest->id,
             'dest_port' => $destPort,
         ];
 

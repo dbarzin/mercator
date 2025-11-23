@@ -1,17 +1,14 @@
 <?php
 
-// tests/Feature/Console/CPESyncCommandTest.php
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+use Tests\TestCase;
 
+uses(TestCase::class);
 uses(RefreshDatabase::class);
 
 it('test mercator:certificate-expiration', function () {
-    // Force un last_run très ancien pour garantir la présence des filtres
-
-    $exit = $this->artisan('mercator:certificate-expiration', [
-    ])->run();
+    $exit = Artisan::call('mercator:certificate-expiration');
 
     expect($exit)->toBe(0);
-
 });

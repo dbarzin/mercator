@@ -17,9 +17,11 @@ pest()->extend(Tests\TestCase::class)
     ->in('Feature', 'Feature/Api', 'Feature/Controller', 'Unit');
 */
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-uses(TestCase::class)->in('Feature', 'Unit');
+uses(TestCase::class, RefreshDatabase::class)
+    ->in('Feature/Api', 'Feature/Controller', 'Feature/View');
 
 // Grouper automatiquement certains dossiers
 uses()->group('api')->in('Feature/Api');
@@ -56,3 +58,4 @@ function something()
 {
     // ..
 }
+
