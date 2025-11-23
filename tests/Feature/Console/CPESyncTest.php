@@ -1,19 +1,21 @@
 <?php
 
-// tests/Feature/Console/CPESyncCommandTest.php
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
+uses(TestCase::class);
 uses(RefreshDatabase::class);
 
 it('test mercator:cpe-sync --now --max=10', function () {
     // Force un last_run très ancien pour garantir la présence des filtres
 
-    $exit = $this->artisan('mercator:cpe-sync', [
-        '--now' => true,
+    $exit = Artisan::call('mercator:cpe-sync', [
+        '--now'  => true,
         '--full' => true,
-        '--max' => 100,
-    ])->run();
+        '--max'  => 100,
+    ]);
 
     expect($exit)->toBe(0);
 

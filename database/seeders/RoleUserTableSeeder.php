@@ -11,7 +11,13 @@ class RoleUserTableSeeder extends Seeder
     public function run(): void
     {
         if (DB::table('role_user')->count() === 0) {
-            User::findOrFail(1)->roles()->sync([1]);
+
+            $adminRoleId = DB::table('roles')->where('title', 'Admin')->value('id');
+            $admin = User::query()
+                ->where('login', 'admin@admin.com')
+                ->first()
+                ->roles()
+                ->sync([$adminRoleId]);
         }
     }
 }

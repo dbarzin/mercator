@@ -21,8 +21,7 @@ beforeEach(function () {
         RoleUserTableSeeder::class,
     ]);
 
-    // Login as an admin (id=1 seeded by UsersTableSeeder)
-    $this->user = User::query()->find(1);
+    $this->user = User::query()->where('login','admin@admin.com')->first();
     $this->actingAs($this->user);
 });
 

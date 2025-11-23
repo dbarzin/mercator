@@ -22,15 +22,15 @@ beforeEach(function () {
     ]);
 
     // Create user
-    $this->user = User::query()->find(1);
+    $this->user = User::query()->where('login','admin@admin.com')->first();
 
     // Add missing roles (deprecatd)
     DB::table('permission_role')->insert([
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_create')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_edit')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_show')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_delete')->value('id')],
-        ['role_id' => $this->user->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_access')->value('id')],
+        ['role_id' => $this->user->roles[0]->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_create')->value('id')],
+        ['role_id' => $this->user->roles[0]->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_edit')->value('id')],
+        ['role_id' => $this->user->roles[0]->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_show')->value('id')],
+        ['role_id' => $this->user->roles[0]->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_delete')->value('id')],
+        ['role_id' => $this->user->roles[0]->id, 'permission_id' => DB::table('permissions')->where('title', 'dhcp_server_access')->value('id')],
     ]);
 
     // Log the user
