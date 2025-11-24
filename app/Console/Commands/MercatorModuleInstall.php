@@ -20,7 +20,7 @@ class MercatorModuleInstall extends Command
         $meta = $discovery->getMeta($name);
         if (!$meta) {
             $this->error("Module '{$name}' not found in Composer packages.");
-            $this->line("Ensure you have done the following: compose require <vendor>/<package>");
+            $this->line("Ensure you have done the following: composer require <vendor>/<package>");
             return self::FAILURE;
         }
 
