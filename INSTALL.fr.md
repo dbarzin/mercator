@@ -222,9 +222,11 @@ LDAP_PORT=389                     # 389 (StartTLS) ou 636 (LDAPS)
 LDAP_BASE_DN=dc=example,dc=org
 LDAP_USERNAME=cn=admin,dc=example,dc=org   # Compte de service utilisé pour les recherches
 LDAP_PASSWORD=********
+LDAP_USERS_BASE_DN=ou=people,dc=example,dc=org 
 LDAP_TLS=true                     # StartTLS (recommandé avec le port 389)
 LDAP_SSL=false                    # true si vous utilisez ldaps:// sur le port 636
 LDAP_TIMEOUT=5                    # (optionnel)
+LDAP_GROUP=mercator               # LDAP group to which the user must belong to access the application
 
 # Attributs candidats pour identifier l’utilisateur saisi dans le formulaire
 # L’ordre est important : le premier qui correspond est utilisé.
