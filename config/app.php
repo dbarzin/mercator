@@ -202,6 +202,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /* Modules Service Providers */
+        App\Providers\ModulesServiceProvider::class,
     ],
 
     /*
