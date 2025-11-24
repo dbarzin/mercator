@@ -69,7 +69,7 @@ class ModuleDiscovery
             ];
         }
 
-        return $this->cache = $modules;;
+        return $this->cache = $modules;
     }
 
     /**
