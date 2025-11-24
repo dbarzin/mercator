@@ -8,6 +8,8 @@ class ModuleDiscovery
 {
     protected string $installedPath;
 
+    protected ?array $cache = null;
+
     public function __construct(?string $installedPath = null)
     {
         $this->installedPath = $installedPath
@@ -21,7 +23,11 @@ class ModuleDiscovery
      */
     public function discover(): array
     {
-        if (!file_exists($this->installedPath)) {
+        if ($this->cache !== null) {
+            return $this->cache;
+        }
+
+            if (!file_exists($this->installedPath)) {
             return [];
         }
 
@@ -63,7 +69,7 @@ class ModuleDiscovery
             ];
         }
 
-        return $modules;
+        return $this->cache = $modules;;
     }
 
     /**
