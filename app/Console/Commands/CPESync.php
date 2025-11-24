@@ -21,7 +21,7 @@ class CPESync extends Command
                             {--since= : ISO8601 UTC, ex. 2025-09-20T00:00:00Z (override cache)}
                             {--now : Run immediately, skip random delay}';
 
-    protected $description = 'Synchronize the database with the CPE dictionary (vendors, products, versions) from NVD.';
+    protected $description = 'Synchronize the database with the CPE dictionary from NVD.';
 
     /**
      * @throws \Throwable
