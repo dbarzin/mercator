@@ -25,10 +25,19 @@ class ModuleDiscovery
             return [];
         }
 
-        $content = json_decode(file_get_contents($this->installedPath), true);
+        // $content = json_decode(file_get_contents($this->installedPath), true);
+        $content = @file_get_contents($this->installedPath);
+        if ($content === false) {
+            return [];
+        }
+
+        $decoded = json_decode($content, true);
+        if (!is_array($decoded)) {
+            return [];
+        }
 
         // Composer 2 peut mettre les packages dans "packages"
-        $packages = $content['packages'] ?? $content;
+        $packages = $decoded['packages'] ?? $decoded;
 
         $modules = [];
 
