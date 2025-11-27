@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/config/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Configuration - Mercator</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Configuration";
+        var mkdocs_page_input_path = "config.md";
+        var mkdocs_page_url = "/mercator/config/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Mercator
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Configuration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-environment-variables">1. Environment Variables</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-ldap-configuration">2. LDAP Configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#enable-disable-ldap-authentication">Enable / Disable LDAP Authentication</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#allow-local-login-when-ldap-authentication-fails">Allow local login when LDAP authentication fails</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#automatically-create-mercator-users-from-ldap">Automatically create Mercator users from LDAP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#21-ldap-connection-settings">2.1 LDAP Connection Settings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#22-ldap-user-search-base">2.2 LDAP User Search Base</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#23-ldap-login-attributes">2.3 LDAP Login Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#24-ldap-group-restriction">2.4 LDAP Group Restriction</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-nested-group-support-active-directory-only">3. Nested Group Support (Active Directory Only)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#enable-nested-group-lookups">Enable nested group lookups:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#important-limitations">Important limitations</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-email-configuration">4. Email Configuration</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-application-level-settings">5. Application-Level Settings</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#application-name">Application Name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#application-url">Application URL</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#debug-mode">Debug Mode</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#session-lifetime">Session Lifetime</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-logging">6. Logging</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-file-export-import">7. File Export / Import</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-docker-configuration">8. Docker Configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#override-environment-variables-in-docker-composeyml">Override environment variables in docker-compose.yml</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#volumes-required">Volumes required:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9-tips-for-production-deployment">9. Tips for Production Deployment</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#recommended">Recommended:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#10-summary-table">10. Summary Table</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Mercator</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Configuration</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/config.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <ul>
+<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../config.fr/">Français</a></li>
+</ul>
+<h1 id="mercator-configuration-guide"><strong>Mercator Configuration Guide</strong></h1>
+<p>This document describes all configuration options available in Mercator, including LDAP integration, Active Directory
+nested group support, mail settings, caching, and optional features.</p>
+<hr />
+<h2 id="1-environment-variables">1. Environment Variables</h2>
+<p>Mercator relies on environment variables (<code>.env</code>) to configure core features such as authentication, LDAP,
+auto-provisioning, mail, and security.</p>
+<p>Below is the list of supported configuration variables.</p>
+<hr />
+<h2 id="2-ldap-configuration">2. LDAP Configuration</h2>
+<p>Mercator supports both <strong>local authentication</strong> and <strong>LDAP authentication</strong>.
+Local accounts always remain available for fallback if configured.</p>
+<h3 id="enable-disable-ldap-authentication"><strong>Enable / Disable LDAP Authentication</strong></h3>
+<pre><code>LDAP_ENABLED=true
+</code></pre>
+<h3 id="allow-local-login-when-ldap-authentication-fails"><strong>Allow local login when LDAP authentication fails</strong></h3>
+<pre><code>LDAP_FALLBACK_LOCAL=true
+</code></pre>
+<h3 id="automatically-create-mercator-users-from-ldap"><strong>Automatically create Mercator users from LDAP</strong></h3>
+<p>If the LDAP user exists but no matching Mercator user is found, Mercator can auto-create the corresponding local
+account.</p>
+<pre><code>LDAP_AUTO_PROVISION=true
+</code></pre>
+<hr />
+<h3 id="21-ldap-connection-settings">2.1 LDAP Connection Settings</h3>
+<pre><code>LDAP_HOST=ldap.example.com
+LDAP_USERNAME=&quot;CN=ldap-reader,OU=Service Accounts,DC=example,DC=com&quot;
+LDAP_PASSWORD=&quot;secret&quot;
+LDAP_PORT=389
+LDAP_SSL=false
+LDAP_TLS=false
+</code></pre>
+<p>These values are passed directly to Laravel’s LDAPRecord connection layer.</p>
+<hr />
+<h3 id="22-ldap-user-search-base">2.2 LDAP User Search Base</h3>
+<p>Define where users should be searched:</p>
+<pre><code>LDAP_USERS_BASE_DN=&quot;OU=Users,DC=example,DC=com&quot;
+</code></pre>
+<p>If empty, Mercator searches the entire directory.</p>
+<hr />
+<h3 id="23-ldap-login-attributes">2.3 LDAP Login Attributes</h3>
+<p>Defines which LDAP attributes can be used as a login identifier:</p>
+<pre><code>LDAP_LOGIN_ATTRIBUTES=sAMAccountName,uid,mail
+</code></pre>
+<p>Mercator will try these attributes with an OR filter.</p>
+<hr />
+<h3 id="24-ldap-group-restriction">2.4 LDAP Group Restriction</h3>
+<p>You can restrict access to Mercator to members of a specific LDAP group.</p>
+<pre><code>LDAP_GROUP=&quot;CN=Mercator-Users,OU=Groups,DC=example,DC=com&quot;
+</code></pre>
+<p>If empty, all LDAP-authenticated users may log in.</p>
+<hr />
+<h2 id="3-nested-group-support-active-directory-only">3. Nested Group Support (Active Directory Only)</h2>
+<p>Mercator can check recursive (nested) group membership when using <strong>Microsoft Active Directory</strong>.</p>
+<p>This is disabled by default.</p>
+<h3 id="enable-nested-group-lookups">Enable nested group lookups:</h3>
+<pre><code>LDAP_NESTED_GROUPS=true
+</code></pre>
+<h3 id="how-it-works">How it works</h3>
+<p>When enabled, Mercator uses the AD-specific matching rule:</p>
+<pre><code>1.2.840.113556.1.4.1941   (LDAP_MATCHING_RULE_IN_CHAIN)
+</code></pre>
+<p>Example LDAP filter generated:</p>
+<pre><code>(memberOf:1.2.840.113556.1.4.1941:=CN=Mercator-Users,OU=Groups,DC=example,DC=com)
+</code></pre>
+<p>This allows recognition of:</p>
+<ul>
+<li>Direct membership</li>
+<li>Indirect membership</li>
+<li>Deeply nested groups (multi-level)</li>
+</ul>
+<h3 id="important-limitations">Important limitations</h3>
+<ul>
+<li><strong>Supported only on Microsoft Active Directory</strong></li>
+<li>Will <strong>not</strong> work on OpenLDAP or other LDAP servers</li>
+<li>If enabled on non-AD systems, LDAP authentication will fail</li>
+</ul>
+<hr />
+<h2 id="4-email-configuration">4. Email Configuration</h2>
+<p>Mercator sends notifications, password resets (for local accounts), and system emails.</p>
+<pre><code>MAIL_MAILER=smtp
+MAIL_HOST=smtp.example.com
+MAIL_PORT=587
+MAIL_USERNAME=mailer@example.com
+MAIL_PASSWORD=secret
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@example.com
+MAIL_FROM_NAME=&quot;Mercator&quot;
+</code></pre>
+<hr />
+<h2 id="5-application-level-settings">5. Application-Level Settings</h2>
+<h3 id="application-name"><strong>Application Name</strong></h3>
+<p>This name is displayed in the top left corner of each page of the application.</p>
+<pre><code>APP_NAME=&quot;Mercator&quot;
+</code></pre>
+<h3 id="application-url"><strong>Application URL</strong></h3>
+<pre><code>APP_URL=https://mercator.example.com
+</code></pre>
+<p>Used in links, notifications, export URLs, etc.</p>
+<h3 id="debug-mode"><strong>Debug Mode</strong></h3>
+<pre><code>APP_DEBUG=false
+</code></pre>
+<p>When enabled, errors will be shown on screen.
+<strong>Do not enable in production.</strong></p>
+<h3 id="session-lifetime"><strong>Session Lifetime</strong></h3>
+<pre><code>SESSION_LIFETIME=120
+</code></pre>
+<hr />
+<h2 id="6-logging">6. Logging</h2>
+<p>Mercator uses Laravel's logging system.
+To activate LDAPRecord logging:</p>
+<pre><code>LDAP_LOGGING=true
+</code></pre>
+<p>Logs will appear in:</p>
+<pre><code>storage/logs/ldap.log
+</code></pre>
+<p>If no file appears, ensure directory permissions are correct.</p>
+<hr />
+<h2 id="7-file-export-import">7. File Export / Import</h2>
+<p>Mercator supports Excel and PDF export via:</p>
+<ul>
+<li><code>maatwebsite/excel</code></li>
+<li><code>phpoffice/phpword</code></li>
+</ul>
+<p>Ensure <code>storage/</code> and <code>bootstrap/cache/</code> are writable.</p>
+<hr />
+<h2 id="8-docker-configuration">8. Docker Configuration</h2>
+<p>If using Docker:</p>
+<h3 id="override-environment-variables-in-docker-composeyml">Override environment variables in <code>docker-compose.yml</code></h3>
+<pre><code class="language-yaml">environment:
+  - LDAP_ENABLED=true
+  - LDAP_HOST=ad.example.com
+  - LDAP_GROUP=CN=Mercator-Users,OU=Groups,DC=example,DC=com
+  - LDAP_NESTED_GROUPS=true
+</code></pre>
+<h3 id="volumes-required">Volumes required:</h3>
+<pre><code class="language-yaml">volumes:
+  - ./storage:/var/www/mercator/storage
+  - ./bootstrap/cache:/var/www/mercator/bootstrap/cache
+</code></pre>
+<hr />
+<h2 id="9-tips-for-production-deployment">9. Tips for Production Deployment</h2>
+<h3 id="recommended">Recommended:</h3>
+<ul>
+<li>Disable <code>APP_DEBUG</code></li>
+<li>Enable HTTPS</li>
+<li>Use a reverse proxy (Traefik, Nginx)</li>
+<li>Configure automatic backups of the database</li>
+<li>Protect <code>.env</code> and <code>storage/</code> with proper permissions</li>
+<li>Use LDAP nested groups only if you’re on Active Directory</li>
+</ul>
+<hr />
+<h2 id="10-summary-table">10. Summary Table</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Variable</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enable LDAP</td>
+<td><code>LDAP_ENABLED</code></td>
+<td>false</td>
+<td>Activates LDAP login</td>
+</tr>
+<tr>
+<td>Local fallback</td>
+<td><code>LDAP_FALLBACK_LOCAL</code></td>
+<td>false</td>
+<td>Allows local login when LDAP fails</td>
+</tr>
+<tr>
+<td>Auto-provision</td>
+<td><code>LDAP_AUTO_PROVISION</code></td>
+<td>false</td>
+<td>Creates user in DB on first LDAP login</td>
+</tr>
+<tr>
+<td>Nested groups</td>
+<td><code>LDAP_NESTED_GROUPS</code></td>
+<td>false</td>
+<td>AD only</td>
+</tr>
+<tr>
+<td>Required group</td>
+<td><code>LDAP_GROUP</code></td>
+<td>“”</td>
+<td>Restricts login</td>
+</tr>
+<tr>
+<td>LDAP user base</td>
+<td><code>LDAP_USERS_BASE_DN</code></td>
+<td>“”</td>
+<td>Search base</td>
+</tr>
+<tr>
+<td>Login attributes</td>
+<td><code>LDAP_LOGIN_ATTRIBUTES</code></td>
+<td><code>sAMAccountName</code></td>
+<td>CSV list</td>
+</tr>
+<tr>
+<td>LDAP logging</td>
+<td><code>LDAP_LOGGING</code></td>
+<td>false</td>
+<td>Writes to <code>ldap.log</code></td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../admin/" class="btn btn-neutral float-left" title="Administration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../import/" class="btn btn-neutral float-right" title="Import">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dbarzin/mercator" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../admin/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../import/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
