@@ -118,15 +118,83 @@ __Rapport__
 
 Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
-| Requête   | URI              | Action 	                    
-|-----------|------------------|-----------------------------|      
-| GET       | /api/objets      | renvoie la liste des objets |
-| GET       | /api/objets/{id} | renvoie l'objet {id}        |
-| POST 	    | /api/objets 	    | sauve un nouvel objet       |
-| PUT/PATCH | /api/objets/{id} | met à jour l'objet {id}     |
-| DELETE 	  | /api/objets/{id} | supprime l'objet {id}       |
+| Requête   | URI                       | Action 	                             |
+|-----------|---------------------------|---------------------------------------|
+| GET       | /api/objets               | renvoie la liste des objets           |
+| GET       | /api/objets/{id}          | renvoie l'objet {id}                  |
+| POST 	    | /api/objets               | sauve un nouvel objet                 |
+| PUT/PATCH | /api/objets/{id}          | met à jour l'objet {id}               |
+| DELETE 	| /api/objets/{id}          | supprime l'objet {id}                 |
+| POST      | /api/objets/mass-store    | crée plusieurs objets en une requête  |
+| PUT/PATCH | /api/objets/mass-update   | met à jour plusieurs objets à la fois |
+| DELETE    | /api/objets/mass-destroy  | supprime plusieurs objets à la fois   |
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
+
+### Filtrage des résultats
+
+Les endpoints de liste (`GET /api/objets`) supportent un système de filtres via les paramètres de requête (`?param=valeur`).
+
+Pour éviter toute injection (nom de colonne arbitraire), seuls certains champs sont filtrables.
+Pour chaque ressource, les champs filtrables sont constitués :
+
+* des champs déclarés comme *recherchables* dans le modèle (par exemple `Activity::$searchable` pour les activités) ;
+* de quelques champs supplémentaires explicitement autorisés (par exemple `id`, `recovery_time_objective`, `maximum_tolerable_downtime` pour les activités).
+
+Les noms des champs non autorisés sont simplement ignorés.
+
+#### Syntaxe générale
+
+Chaque filtre se présente sous la forme :
+
+```text
+<champ>[__<operateur>]=<valeur>
+```
+
+* Si aucun opérateur n’est précisé, l’opérateur par défaut est `exact`.
+* Exemples de clés de paramètres :
+
+  * `name=Backup quotidien` → filtre exact
+  * `name__contains=backup` → recherche de sous-chaîne
+  * `recovery_time_objective__lte=4` → RTO inférieur ou égal à 4
+
+#### Opérateurs disponibles
+
+Les opérateurs suivants sont supportés :
+
+| Opérateur    | Exemple de paramètre                | Condition SQL approximative       |
+| ------------ | ----------------------------------- | --------------------------------- |
+| `exact`      | `name=Sauvegarde`                   | `name = 'Sauvegarde'`             |
+| `contains`   | `name__contains=save`               | `name LIKE '%save%'`              |
+| `startswith` | `name__startswith=save`             | `name LIKE 'save%'`               |
+| `endswith`   | `name__endswith=prod`               | `name LIKE '%prod'`               |
+| `lt`         | `recovery_time_objective__lt=4`     | `recovery_time_objective < 4`     |
+| `lte`        | `recovery_time_objective__lte=4`    | `recovery_time_objective <= 4`    |
+| `gt`         | `maximum_tolerable_downtime__gt=8`  | `maximum_tolerable_downtime > 8`  |
+| `gte`        | `maximum_tolerable_downtime__gte=8` | `maximum_tolerable_downtime >= 8` |
+
+Si un opérateur inconnu est fourni, il est traité comme `exact`.
+
+#### Exemples
+
+* Lister les activités dont le nom contient “sauvegarde” :
+
+```http
+GET /api/activities?name__contains=sauvegarde
+```
+
+* Lister les activités gérées par un responsable donné, avec un RTO inférieur ou égal à 4 heures :
+
+```http
+GET /api/activities?responsible=DSI&recovery_time_objective__lte=4
+```
+
+* Lister les activités dont l’ID est supérieur ou égal à 100 :
+
+```http
+GET /api/activities?id__gte=100
+```
+
 
 ### Droits d'accès
 
