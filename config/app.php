@@ -138,6 +138,7 @@ return [
     'ldap_users_base_dn' => env('LDAP_USERS_BASE_DN'),
     'ldap_scope' => env('LDAP_SCOPE', null),
     'ldap_group' => env('LDAP_GROUP', null),
+    'ldap_nested_groups' => env('LDAP_NESTED_GROUPS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -203,8 +204,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /* Menu Service Provider */
+        App\Providers\MenuServiceProvider::class,
+
         /* Modules Service Providers */
         App\Providers\ModulesServiceProvider::class,
+
     ],
 
     /*

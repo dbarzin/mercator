@@ -1,12 +1,12 @@
 {
-  "name": "laravel/laravel",
+  "name": "dbarzin/mercator",
   "type": "project",
-  "description": "The skeleton application for the Laravel framework.",
+  "description": "The Mercator application.",
   "keywords": [
     "laravel",
     "framework"
   ],
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "require": {
     "php": "^8.2",
     "directorytree/ldaprecord-laravel": "^3.3",
