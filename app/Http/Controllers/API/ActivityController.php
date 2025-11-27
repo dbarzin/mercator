@@ -27,7 +27,7 @@ class ActivityController extends Controller
         // Champs qu’on autorise dans les filtres (pour éviter l’injection par nom de colonne)
         $allowedFields = array_merge(
             Activity::$searchable,
-            ['id', 'responsible', 'recovery_time_objective', 'maximum_tolerable_downtime']
+            ['id', 'recovery_time_objective', 'maximum_tolerable_downtime'] # <--- exemple de champs de recherche à ajouter
         );
 
         $params = $request->query();
