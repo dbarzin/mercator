@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
-use App\Models\NetworkSwitch;
-use App\Models\PhysicalSwitch;
-use App\Models\Vlan;
+use Mercator\Core\Models\NetworkSwitch;
+use Mercator\Core\Models\PhysicalSwitch;
+use Mercator\Core\Models\Vlan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -92,7 +92,7 @@ class NetworkSwitchController extends Controller
      * and redirects back to the network switches index.
      *
      * @param  \App\Http\Requests\UpdateNetworkSwitchRequest  $request  Validated input for updating the network switch.
-     * @param  \App\Models\NetworkSwitch  $networkSwitch  The network switch instance to update.
+     * @param  \Mercator\Core\Models\NetworkSwitch  $networkSwitch  The network switch instance to update.
      * @return \Illuminate\Http\RedirectResponse Redirect response to the network switches index route.
      */
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)

@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
-use App\Models\Database;
-use App\Models\Entity;
-use App\Models\Information;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

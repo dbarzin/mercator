@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
-use App\Models\Cluster;
+use Mercator\Core\Models\Cluster;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Building;
-use App\Models\Entity;
-use App\Models\Information;
-use App\Models\MApplication;
-use App\Models\Process;
-use App\Models\Site;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
+use Mercator\Core\Models\Site;
 use App\Services\MospService;
 
 class MonarcController extends Controller

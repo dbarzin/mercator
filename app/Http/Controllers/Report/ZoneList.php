@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Subnetwork;
+use Mercator\Core\Models\Subnetwork;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

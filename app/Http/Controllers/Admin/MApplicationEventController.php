@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\MApplication;
-use App\Models\MApplicationEvent;
-use App\Models\User;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\MApplicationEvent;
+use Mercator\Core\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

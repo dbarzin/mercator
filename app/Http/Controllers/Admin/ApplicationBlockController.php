@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
-use App\Models\ApplicationBlock;
-use App\Models\MApplication;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

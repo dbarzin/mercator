@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\LogicalServer;
+use Mercator\Core\Models\LogicalServer;
 use Illuminate\Database\Seeder;
 
 // Logical Server Seeder

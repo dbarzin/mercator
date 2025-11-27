@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
-use App\Models\SecurityControl;
+use Mercator\Core\Models\SecurityControl;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;

@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\MApplication;
-use App\Models\MApplicationEvent;
-use App\Models\User;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\MApplicationEvent;
+use Mercator\Core\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;
