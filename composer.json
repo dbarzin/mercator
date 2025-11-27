@@ -1,7 +1,7 @@
 {
-  "name": "sourcentis/mercator",
+  "name": "dbarzin/mercator",
   "type": "project",
-  "description": "The core Mercator application.",
+  "description": "The Mercator application.",
   "keywords": [
     "laravel",
     "framework"
