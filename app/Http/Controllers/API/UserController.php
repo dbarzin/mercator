@@ -27,6 +27,7 @@ class UserController extends Controller
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user = User::create($request->all());
+        $user->roles()->sync($request->input('roles', []));
 
         return response()->json($user, 201);
     }
@@ -43,6 +44,9 @@ class UserController extends Controller
         abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->update($request->all());
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->input('roles', []));
+        }
 
         return response()->json();
     }
