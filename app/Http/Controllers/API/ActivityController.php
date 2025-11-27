@@ -8,12 +8,10 @@ use App\Http\Requests\MassStoreActivityRequest;
 use App\Http\Requests\MassUpdateActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-use Mercator\Core\Models\Activity;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
+use Mercator\Core\Models\Activity;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
@@ -92,7 +90,7 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activity = Activity::create($request->all());
+        $activity = Activity::query()->create($request->all());
 
         $activity->operations()->sync($request->input('operations', []));
         $activity->processes()->sync($request->input('processes', []));
@@ -156,8 +154,8 @@ class ActivityController extends Controller
                 ->only($fillable)
                 ->toArray();
 
-            /** @var \App\Models\Activity $activity */
-            $activity = Activity::create($attributes);
+            /** @var Activity $activity */
+            $activity = Activity::query()->create($attributes);
 
             // Relations only si la clé était présente dans le JSON d’origine
             if (array_key_exists('operations', $item)) {
@@ -192,8 +190,8 @@ class ActivityController extends Controller
             $operations = $rawItem['operations'] ?? null;
             $processes  = $rawItem['processes'] ?? null;
 
-            /** @var \App\Models\Activity $activity */
-            $activity = Activity::findOrFail($id);
+            /** @var Activity $activity */
+            $activity = Activity::query()->findOrFail($id);
 
             // On ne garde que les colonnes du modèle, sans les relations ni l'id
             $attributes = collect($rawItem)
