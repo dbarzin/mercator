@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44966f40ff5726507cd341144e7e3df0",
+    "content-hash": "e437458b9dfdd25581e069a2fa776928",
     "packages": [
         {
             "name": "brick/math",
@@ -5448,21 +5448,20 @@
         },
         {
             "name": "sourcentis/mercator-core",
-            "version": "v1.0.6",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dbarzin/mercator-core.git",
-                "reference": "ffd957f68b78e1fe774e4d4b3d1a80ee824d5ff6"
+                "reference": "dae82e124ae5a1d43ab593adc25aabbd37fe67e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/ffd957f68b78e1fe774e4d4b3d1a80ee824d5ff6",
-                "reference": "ffd957f68b78e1fe774e4d4b3d1a80ee824d5ff6",
+                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/dae82e124ae5a1d43ab593adc25aabbd37fe67e2",
+                "reference": "dae82e124ae5a1d43ab593adc25aabbd37fe67e2",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^11.46",
-                "illuminate/support": "^11.0",
+                "laravel/framework": "^11.46",
                 "php": "^8.2"
             },
             "type": "library",
@@ -5485,9 +5484,9 @@
             "description": "Mercator core services (modules, licensing, menus, domain models).",
             "support": {
                 "issues": "https://github.com/dbarzin/mercator-core/issues",
-                "source": "https://github.com/dbarzin/mercator-core/tree/v1.0.6"
+                "source": "https://github.com/dbarzin/mercator-core/tree/v1.0.8"
             },
-            "time": "2025-11-27T17:15:57+00:00"
+            "time": "2025-11-27T18:38:58+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

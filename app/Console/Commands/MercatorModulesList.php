@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Modules\ModuleDiscovery;
-use App\Modules\ModuleRegistry;
 use Illuminate\Console\Command;
+use Mercator\Core\Modules\ModuleDiscovery;
+use Mercator\Core\Modules\ModuleRegistry;
 
 class MercatorModulesList extends Command
 {
