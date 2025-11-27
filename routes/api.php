@@ -53,6 +53,8 @@ Route::middleware('auth:api')->group(function (): void {
     Route::resource('actors', API\ActorController::class);
 
     // Activities
+    Route::post('activities/mass-store', [API\ActivityController::class, 'massStore'])->name('activities.mass-store');
+    Route::put('activities/mass-update', [API\ActivityController::class, 'massUpdate'])->name('activities.mass-update');
     Route::delete('activities/mass-destroy', [API\ActivityController::class, 'massDestroy'])->name('activities.mass-destroy');
     Route::resource('activities', API\ActivityController::class);
 
@@ -80,7 +82,7 @@ Route::middleware('auth:api')->group(function (): void {
     Route::delete('application-services/mass-destroy', [API\ApplicationServiceController::class, 'massDestroy'])->name('application-services.mass-destroy');
     Route::resource('application-services', API\ApplicationServiceController::class);
 
-    // Databeses
+    // Databases
     Route::delete('databases/mass-destroy', [API\DatabaseController::class, 'massDestroy'])->name('databases.mass-destroy');
     Route::resource('databases', API\DatabaseController::class);
 

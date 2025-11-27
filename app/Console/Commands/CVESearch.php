@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Mercator\Core\Models\MApplication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Mercator\Core\Models\MApplication;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Random\RandomException;
@@ -284,7 +284,7 @@ class CVESearch extends Command
             $mail->Username = config('mail.mailers.smtp.username'); // env('MAIL_USERNAME');
             $mail->Password = config('mail.mailers.smtp.password'); // env('MAIL_PASSWORD');
             $mail->SMTPSecure = config('mail.mailers.smtp.encryption'); // env('MAIL_SMTP_SECURE', false) ?: false; // 'tls' | 'ssl' | false
-            $mail->SMTPAutoTLS = true; // filter_var(env('MAIL_SMTP_AUTO_TLS', true), FILTER_VALIDATE_BOOLEAN);
+            $mail->SMTPAutoTLS = config('mail.mailers.smtp.auto_tls'); //
             $mail->Port = (int) config('mail.mailers.smtp.port'); // (int) env('MAIL_PORT', 587);
 
             $from = config('mercator-config.cve.mail-from');
