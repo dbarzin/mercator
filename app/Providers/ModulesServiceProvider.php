@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Modules\ModuleRegistry;
 use Illuminate\Support\ServiceProvider;
+use Mercator\Core\Modules\ModuleRegistry;
 
 class ModulesServiceProvider extends ServiceProvider
 {

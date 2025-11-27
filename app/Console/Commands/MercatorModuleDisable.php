@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Modules\ModuleRegistry;
 use Illuminate\Console\Command;
+use Mercator\Core\Modules\ModuleRegistry;
 
 class MercatorModuleDisable extends Command
 {

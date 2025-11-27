@@ -68,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Mercator\Core\Models\User::class,
+            'model' => App\Database\Models\User::class,
         ],
     ],
 
