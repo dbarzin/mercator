@@ -72,11 +72,24 @@ class LoginController extends Controller
                 $query->in($base);
             }
 
+            // Group
             $group = trim((string) config('app.ldap_group'));
-            if ($group !== '') {
-                $query->where('memberOf', $group);
-            }
+            $useNested = (bool) config('app.ldap_nested_groups');
 
+            if ($group !== '') {
+                if ($useNested) {
+                    // Nested groups for Active Directory using LDAP_MATCHING_RULE_IN_CHAIN
+                    // Generates filter: (memberOf:1.2.840.113556.1.4.1941:=<GROUP_DN>)
+                    $query->whereRaw(
+                        'memberOf:1.2.840.113556.1.4.1941:',
+                        '=',
+                        $group
+                    );
+                } else {
+                    // Standard non-recursive group membership
+                    $query->whereEquals('memberOf', $group);
+                }
+            }
             // Attributs de login à tester côté LDAP (uid, sAMAccountName, etc.)
             $attrs = array_values(array_filter(array_map('trim', explode(',', (string) config('app.ldap_login_attributes')))));
             if (empty($attrs)) {

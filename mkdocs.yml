@@ -38,26 +38,28 @@ plugins:
 site_name: Mercator
 site_url: https://dbarzin.githubs.io/mercator/
 nav:
-    - Introduction: index.md
-    - Introduction: index.fr.md
-    - Mapping: cartography.md
-    - Cartographie: cartography.fr.md
-    - Application: application.md
-    - Application: application.fr.md
-    - Use cases: usecases.md
-    - Cas d'utilisation: usecases.fr.md
-    - Data model: model.md
-    - Modèle de données: model.fr.md
-    - Reports: reports.md
-    - Rapports: reports.fr.md
-    - Administration: admin.md
-    - Administration: admin.fr.md
-    - Import: import.md
-    - Import: import.fr.md
-    - API: api.md
-    - API: api.fr.md
-    - References: references.md
-    - Références: references.fr.md
+  - Introduction: index.md
+  - Introduction: index.fr.md
+  - Mapping: cartography.md
+  - Cartographie: cartography.fr.md
+  - Application: application.md
+  - Application: application.fr.md
+  - Use cases: usecases.md
+  - Cas d'utilisation: usecases.fr.md
+  - Data model: model.md
+  - Modèle de données: model.fr.md
+  - Reports: reports.md
+  - Rapports: reports.fr.md
+  - Administration: admin.md
+  - Administration: admin.fr.md
+  - Configuration: config.md
+  - Configuration: config.fr.md
+  - Import: import.md
+  - Import: import.fr.md
+  - API: api.md
+  - API: api.fr.md
+  - References: references.md
+  - Références: references.fr.md
 
 extra:
   # Default mkdocs-material alternate links for untranslated pages
