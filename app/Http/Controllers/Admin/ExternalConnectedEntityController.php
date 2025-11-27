@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
-use App\Models\Entity;
-use App\Models\ExternalConnectedEntity;
-use App\Models\Network;
-use App\Models\Subnetwork;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\ExternalConnectedEntity;
+use Mercator\Core\Models\Network;
+use Mercator\Core\Models\Subnetwork;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

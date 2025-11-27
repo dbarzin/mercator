@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\MApplication;
+use Mercator\Core\Models\MApplication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;

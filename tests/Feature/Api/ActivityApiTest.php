@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Activity;
 use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
@@ -9,6 +8,7 @@ use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Passport;
+use Mercator\Core\Models\Activity;
 
 uses(RefreshDatabase::class);
 

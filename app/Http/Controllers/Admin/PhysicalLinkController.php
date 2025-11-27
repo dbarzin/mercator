@@ -6,19 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalLinkRequest;
 use App\Http\Requests\StorePhysicalLinkRequest;
 use App\Http\Requests\UpdatePhysicalLinkRequest;
-use App\Models\LogicalServer;
-use App\Models\NetworkSwitch;
-use App\Models\Peripheral;
-use App\Models\Phone;
-use App\Models\PhysicalLink;
-use App\Models\PhysicalRouter;
-use App\Models\PhysicalSecurityDevice;
-use App\Models\PhysicalServer;
-use App\Models\PhysicalSwitch;
-use App\Models\Router;
-use App\Models\StorageDevice;
-use App\Models\WifiTerminal;
-use App\Models\Workstation;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\NetworkSwitch;
+use Mercator\Core\Models\Peripheral;
+use Mercator\Core\Models\Phone;
+use Mercator\Core\Models\PhysicalLink;
+use Mercator\Core\Models\PhysicalRouter;
+use Mercator\Core\Models\PhysicalSecurityDevice;
+use Mercator\Core\Models\PhysicalServer;
+use Mercator\Core\Models\PhysicalSwitch;
+use Mercator\Core\Models\Router;
+use Mercator\Core\Models\StorageDevice;
+use Mercator\Core\Models\WifiTerminal;
+use Mercator\Core\Models\Workstation;
 use Gate;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -331,7 +331,7 @@ class PhysicalLinkController extends Controller
      * performs cross-record port conflict checks, and saves the updated link if validation passes.
      *
      * @param  \App\Http\Requests\UpdatePhysicalLinkRequest  $request  Validated input containing prefixed `src_id`, `dest_id`, `src_port`, and `dest_port`.
-     * @param  \App\Models\PhysicalLink  $link  The physical link instance to update.
+     * @param  \Mercator\Core\Models\PhysicalLink  $link  The physical link instance to update.
      * @return \Illuminate\Http\RedirectResponse Redirects to the physical links index on success; redirects back with validation errors and input on failure.
      */
     public function update(UpdatePhysicalLinkRequest $request, PhysicalLink $link)

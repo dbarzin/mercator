@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyForestAdRequest;
 use App\Http\Requests\StoreForestAdRequest;
 use App\Http\Requests\UpdateForestAdRequest;
-use App\Models\ForestAd;
+use Mercator\Core\Models\ForestAd;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;

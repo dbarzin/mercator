@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\HasIcon;
-use App\Models\Document;
+use Mercator\Core\Models\Document;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 

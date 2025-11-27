@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyForestAdRequest;
 use App\Http\Requests\StoreForestAdRequest;
 use App\Http\Requests\UpdateForestAdRequest;
-use App\Models\DomaineAd;
-use App\Models\ForestAd;
-use App\Models\ZoneAdmin;
+use Mercator\Core\Models\DomaineAd;
+use Mercator\Core\Models\ForestAd;
+use Mercator\Core\Models\ZoneAdmin;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

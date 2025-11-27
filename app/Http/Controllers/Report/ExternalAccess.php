@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\ExternalConnectedEntity;
+use Mercator\Core\Models\ExternalConnectedEntity;
 use Carbon\Carbon;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,9 +1,9 @@
 
 <?php
 
-use App\Models\Peripheral;
-use App\Models\PhysicalLink;
-use App\Models\User;
+use Mercator\Core\Models\Peripheral;
+use Mercator\Core\Models\PhysicalLink;
+use Mercator\Core\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;

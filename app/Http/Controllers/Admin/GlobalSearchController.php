@@ -73,7 +73,7 @@ class GlobalSearchController extends Controller
         }
 
         foreach ($this->models as $model => $translation) {
-            $modelClass = 'App\\Models\\'.$model;
+            $modelClass = 'Mercator\\Core\\Models\\'.$model;
             $query = $modelClass::query();
 
             $fields = $modelClass::$searchable;

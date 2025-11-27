@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
-use App\Models\DataProcessing;
-use App\Models\Information;
-use App\Models\MApplication;
-use App\Models\Process;
+use Mercator\Core\Models\DataProcessing;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

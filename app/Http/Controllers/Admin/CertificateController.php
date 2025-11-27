@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCertificateRequest;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
-use App\Models\Certificate;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
+use Mercator\Core\Models\Certificate;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

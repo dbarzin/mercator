@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
-use App\Models\PhysicalServer;
+use Mercator\Core\Models\PhysicalServer;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;

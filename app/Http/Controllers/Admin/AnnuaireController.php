@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Requests\StoreAnnuaireRequest;
 use App\Http\Requests\UpdateAnnuaireRequest;
-use App\Models\Annuaire;
-use App\Models\ZoneAdmin;
+use Mercator\Core\Models\Annuaire;
+use Mercator\Core\Models\ZoneAdmin;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

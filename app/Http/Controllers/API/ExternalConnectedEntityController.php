@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
-use App\Models\ExternalConnectedEntity;
+use Mercator\Core\Models\ExternalConnectedEntity;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;

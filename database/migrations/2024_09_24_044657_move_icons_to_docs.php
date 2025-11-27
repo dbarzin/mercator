@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Document;
-use App\Models\MApplication;
+use Mercator\Core\Models\Document;
+use Mercator\Core\Models\MApplication;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\File;

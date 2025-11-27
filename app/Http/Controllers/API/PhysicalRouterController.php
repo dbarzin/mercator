@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
-use App\Models\PhysicalRouter;
+use Mercator\Core\Models\PhysicalRouter;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;

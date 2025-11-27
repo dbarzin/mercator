@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyInformationRequest;
 use App\Http\Requests\StoreInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
-use App\Models\Information;
-use App\Models\Process;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

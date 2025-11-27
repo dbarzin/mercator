@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-use App\Models\Activity;
-use App\Models\ActivityImpact;
-use App\Models\MApplication;
-use App\Models\Operation;
-use App\Models\Process;
+use Mercator\Core\Models\Activity;
+use Mercator\Core\Models\ActivityImpact;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Operation;
+use Mercator\Core\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

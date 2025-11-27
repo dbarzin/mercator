@@ -1,8 +1,8 @@
 
 <?php
 
-use App\Models\Lan;
-use App\Models\User;
+use Mercator\Core\Models\Lan;
+use Mercator\Core\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;

@@ -1,8 +1,8 @@
 
 <?php
 
-use App\Models\User;
-use App\Models\Vlan;
+use Mercator\Core\Models\User;
+use Mercator\Core\Models\Vlan;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;

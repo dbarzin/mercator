@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\ApplicationBlock;
-use App\Models\ApplicationModule;
-use App\Models\ApplicationService;
-use App\Models\Database;
-use App\Models\Flux;
-use App\Models\MApplication;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\Flux;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

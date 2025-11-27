@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\User;
+use Mercator\Core\Models\User;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +27,7 @@ class UserController extends Controller
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user = User::create($request->all());
+        $user->roles()->sync($request->input('roles', []));
 
         return response()->json($user, 201);
     }
@@ -43,6 +44,9 @@ class UserController extends Controller
         abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->update($request->all());
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->input('roles', []));
+        }
 
         return response()->json();
     }
