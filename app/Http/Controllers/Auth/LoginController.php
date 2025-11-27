@@ -81,8 +81,8 @@ class LoginController extends Controller
                     // Nested groups for Active Directory using LDAP_MATCHING_RULE_IN_CHAIN
                     // Generates filter: (memberOf:1.2.840.113556.1.4.1941:=<GROUP_DN>)
                     $query->whereRaw(
-                        'memberOf:1.2.840.113556.1.4.1941:',
-                        '=',
+                        'memberOf',
+                        ':1.2.840.113556.1.4.1941:=',
                         $group
                     );
                 } else {
