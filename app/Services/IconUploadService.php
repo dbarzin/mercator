@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Contracts\HasIcon;
-use Mercator\Core\Models\Document;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
+use Mercator\Core\Contracts\HasIcon;
+use Mercator\Core\Models\Document;
 
 class IconUploadService
 {
@@ -16,7 +16,7 @@ class IconUploadService
     {
         if ($request->hasFile('iconFile')) {
             $file = $request->file('iconFile');
-            $document = new Document;
+            $document = new Document();
             $document->filename = $file->getClientOriginalName();
             $document->mimetype = $file->getClientMimeType();
             $document->size = $file->getSize();
