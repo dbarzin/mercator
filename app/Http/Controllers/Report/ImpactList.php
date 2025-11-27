@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Report;
 
-use App\Models\Activity;
-use App\Models\ActivityImpact;
+use Mercator\Core\Models\Activity;
+use Mercator\Core\Models\ActivityImpact;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use PhpOffice\PhpSpreadsheet\Exception;

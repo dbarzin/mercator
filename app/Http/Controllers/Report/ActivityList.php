@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Report;
 
-use App\Models\DataProcessing;
+use Mercator\Core\Models\DataProcessing;
 use Carbon\Carbon;
 use Gate;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;

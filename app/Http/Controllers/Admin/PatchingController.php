@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;

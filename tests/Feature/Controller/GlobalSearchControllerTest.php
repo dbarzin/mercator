@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
-use App\Models\ZoneAdmin;
+use Mercator\Core\Models\User;
+use Mercator\Core\Models\ZoneAdmin;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;

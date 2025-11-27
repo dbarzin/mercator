@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
-use App\Models\DataProcessing;
+use Mercator\Core\Models\DataProcessing;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;

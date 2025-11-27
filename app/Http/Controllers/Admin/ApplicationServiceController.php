@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationServiceRequest;
 use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
-use App\Models\ApplicationModule;
-use App\Models\ApplicationService;
-use App\Models\MApplication;
+use Mercator\Core\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

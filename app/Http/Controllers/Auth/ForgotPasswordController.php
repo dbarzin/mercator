@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Mercator\Core\Models\User;
 use Carbon\Carbon;
 use DB;
 use Hash;

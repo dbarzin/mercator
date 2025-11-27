@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
-use App\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationModule;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

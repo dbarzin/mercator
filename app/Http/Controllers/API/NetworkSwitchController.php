@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
-use App\Models\NetworkSwitch;
+use Mercator\Core\Models\NetworkSwitch;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +55,7 @@ class NetworkSwitchController extends Controller
      *
      * Aborts with HTTP 403 if the caller lacks the `network_switch_show` permission.
      *
-     * @param  \App\Models\NetworkSwitch  $networkSwitch  The NetworkSwitch to be returned.
+     * @param  \Mercator\Core\Models\NetworkSwitch  $networkSwitch  The NetworkSwitch to be returned.
      * @return \Illuminate\Http\Resources\Json\JsonResource JSON representation of the given NetworkSwitch.
      */
     public function show(NetworkSwitch $networkSwitch)
@@ -71,7 +71,7 @@ class NetworkSwitchController extends Controller
      * Aborts with HTTP 403 if the current user lacks the `network_switch_edit` permission.
      *
      * @param  \App\Http\Requests\UpdateNetworkSwitchRequest  $request  Request containing fields to update; may include `physicalSwitches` and/or `vlans` arrays to sync relationships.
-     * @param  \App\Models\NetworkSwitch  $networkSwitch  The NetworkSwitch model to update.
+     * @param  \Mercator\Core\Models\NetworkSwitch  $networkSwitch  The NetworkSwitch model to update.
      * @return \Illuminate\Http\JsonResponse An empty JSON response with HTTP 200 status.
      */
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)

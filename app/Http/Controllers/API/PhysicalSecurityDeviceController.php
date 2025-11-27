@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-use App\Models\PhysicalSecurityDevice;
+use Mercator\Core\Models\PhysicalSecurityDevice;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;

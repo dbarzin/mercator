@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Menus\MenuRegistry;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
+use Mercator\Core\Menus\MenuRegistry;
 
 class MenuServiceProvider extends ServiceProvider
 {

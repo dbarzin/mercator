@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\LogicalServer;
-use App\Models\NetworkSwitch;
-use App\Models\PhysicalServer;
-use App\Models\Vlan;
-use App\Models\Workstation;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\NetworkSwitch;
+use Mercator\Core\Models\PhysicalServer;
+use Mercator\Core\Models\Vlan;
+use Mercator\Core\Models\Workstation;
 use Carbon\Carbon;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

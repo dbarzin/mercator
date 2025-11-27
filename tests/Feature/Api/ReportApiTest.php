@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use Mercator\Core\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;

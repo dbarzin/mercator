@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalLinkRequest;
 use App\Http\Requests\StorePhysicalLinkRequest;
-use App\Models\PhysicalLink;
+use Mercator\Core\Models\PhysicalLink;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;

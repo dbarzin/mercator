@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWanRequest;
 use App\Http\Requests\StoreWanRequest;
 use App\Http\Requests\UpdateWanRequest;
-use App\Models\Wan;
+use Mercator\Core\Models\Wan;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;

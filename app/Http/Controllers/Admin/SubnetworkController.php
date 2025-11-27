@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySubnetworkRequest;
 use App\Http\Requests\StoreSubnetworkRequest;
 use App\Http\Requests\UpdateSubnetworkRequest;
-use App\Models\Gateway;
-use App\Models\Network;
-use App\Models\Subnetwork;
-use App\Models\Vlan;
+use Mercator\Core\Models\Gateway;
+use Mercator\Core\Models\Network;
+use Mercator\Core\Models\Subnetwork;
+use Mercator\Core\Models\Vlan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -85,7 +85,7 @@ class SubnetworkController extends Controller
      * Loads the `connected_subnets` and `gateway` relationships on the provided model
      * and prepares lists used to populate select inputs in the edit view.
      *
-     * @param  \App\Models\Subnetwork  $subnetwork  The Subnetwork model to edit.
+     * @param  \Mercator\Core\Models\Subnetwork  $subnetwork  The Subnetwork model to edit.
      * @return \Illuminate\View\View The edit view populated with the subnetwork and selection lists.
      */
     public function edit(Subnetwork $subnetwork)

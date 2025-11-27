@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\LogicalServer;
+use Mercator\Core\Models\LogicalServer;
 use Carbon\Carbon;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\CPEProduct;
-use App\Models\CPEVendor;
-use App\Models\CPEVersion;
+use Mercator\Core\Models\CPEProduct;
+use Mercator\Core\Models\CPEVendor;
+use Mercator\Core\Models\CPEVersion;
 use Illuminate\Http\Request;
 
 class CPEController extends Controller

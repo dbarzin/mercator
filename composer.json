@@ -9,7 +9,6 @@
   "license": "GPL-3.0-or-later",
   "require": {
     "php": "^8.2",
-    "sourcentis/mercator-core": "^1.0",
     "directorytree/ldaprecord-laravel": "^3.3",
     "laravel/framework": "^11.9",
     "laravel/passport": "^12.3",
@@ -20,6 +19,7 @@
     "phpmailer/phpmailer": "^6.9",
     "phpoffice/phpword": "^1.4",
     "socialiteproviders/keycloak": "^5.3",
+    "sourcentis/mercator-core": "*",
     "spatie/laravel-query-builder": "^6.3",
     "yajra/laravel-datatables-oracle": "^11.1"
   },

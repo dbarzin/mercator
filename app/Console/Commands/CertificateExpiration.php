@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Certificate;
+use Mercator\Core\Models\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;

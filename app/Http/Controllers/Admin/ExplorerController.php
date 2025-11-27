@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 // Models
 use App\Http\Controllers\Controller;
-use App\Models\LogicalFlow;
-use App\Models\PhysicalLink;
-use App\Models\Subnetwork;
+use Mercator\Core\Models\LogicalFlow;
+use Mercator\Core\Models\PhysicalLink;
+use Mercator\Core\Models\Subnetwork;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;

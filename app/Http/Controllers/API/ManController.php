@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\StoreManRequest;
 use App\Http\Requests\UpdateManRequest;
-use App\Models\Man;
+use Mercator\Core\Models\Man;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;

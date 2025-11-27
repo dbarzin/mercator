@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Report;
 
 // GDPR
 // ecosystem
-use App\Models\DataProcessing;
+use Mercator\Core\Models\DataProcessing;
 use Carbon\Carbon;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

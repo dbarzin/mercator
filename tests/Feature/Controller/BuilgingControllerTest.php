@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Building;
-use App\Models\User;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;

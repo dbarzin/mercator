@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
-use App\Models\MacroProcessus;
-use App\Models\Process;
+use Mercator\Core\Models\MacroProcessus;
+use Mercator\Core\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

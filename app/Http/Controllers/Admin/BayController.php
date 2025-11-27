@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
-use App\Models\Bay;
-use App\Models\Building;
+use Mercator\Core\Models\Bay;
+use Mercator\Core\Models\Building;
 use Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -86,7 +86,7 @@ class BayController extends Controller
     /**
      * Show the form for editing the specified bay.
      *
-     * @param  \App\Models\Bay  $bay  The bay instance to edit.
+     * @param  \Mercator\Core\Models\Bay  $bay  The bay instance to edit.
      * @return \Illuminate\View\View The edit view populated with the bay and selectable rooms.
      */
     public function edit(Bay $bay): View
@@ -117,7 +117,7 @@ class BayController extends Controller
     /**
      * Display the specified bay with its associated room and hardware collections.
      *
-     * @param  \App\Models\Bay  $bay  The Bay instance to display.
+     * @param  \Mercator\Core\Models\Bay  $bay  The Bay instance to display.
      * @return \Illuminate\View\View The view presenting the Bay and its loaded relationships.
      */
     public function show(Bay $bay): View
@@ -132,7 +132,7 @@ class BayController extends Controller
     /**
      * Delete the given Bay and redirect to the bays index.
      *
-     * @param  \App\Models\Bay  $bay  The Bay model to delete.
+     * @param  \Mercator\Core\Models\Bay  $bay  The Bay model to delete.
      * @return \Illuminate\Http\RedirectResponse Redirects to the admin.bays.index route.
      */
     public function destroy(Bay $bay): RedirectResponse

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Report;
 
-use App\Models\MApplication;
+use Mercator\Core\Models\MApplication;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Support\Facades\DB;
