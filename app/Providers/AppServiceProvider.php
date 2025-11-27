@@ -39,11 +39,12 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Si le logging LDAP est activé, on force l’utilisation du channel "ldap"
-        if (config('ldap.logging')) {
+        if (config('ldap.logging.enabled')) {
             Container::setLogger(
-                \Log::channel('ldap')
+                \Log::channel('ldap.logging.channel')
             );
         }
+
         view()->composer('*', function ($view): void {
             $version = trim(file_get_contents(base_path('version.txt')));
             $view->with('appVersion', $version);
