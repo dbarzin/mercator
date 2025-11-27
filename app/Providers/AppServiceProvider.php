@@ -6,6 +6,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use LdapRecord\Container;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,12 @@ class AppServiceProvider extends ServiceProvider
             });
         }
 
+        // Si le logging LDAP est activé, on force l’utilisation du channel "ldap"
+        if (config('ldap.logging')) {
+            Container::setLogger(
+                \Log::channel('ldap')
+            );
+        }
         view()->composer('*', function ($view): void {
             $version = trim(file_get_contents(base_path('version.txt')));
             $view->with('appVersion', $version);
