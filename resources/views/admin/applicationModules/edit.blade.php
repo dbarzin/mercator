@@ -13,7 +13,8 @@
                 <div class="form-group">
                     <label class="label-required" for="name">{{ trans('cruds.applicationModule.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
-                           id="name" value="{{ old('name', $applicationModule->name) }}" required autofocus/>
+                           id="name" value="{{ old('name', $applicationModule->name) }}" maxlength="64" required
+                           autofocus/>
                     @if($errors->has('name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('name') }}
