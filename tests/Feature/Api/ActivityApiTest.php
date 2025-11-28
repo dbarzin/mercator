@@ -20,6 +20,9 @@ beforeEach(function () {
         UsersTableSeeder::class,
         RoleUserTableSeeder::class,
     ]);
+    $this->user = User::query()->where('login','admin@admin.com')->first();
+    $this->actingAs($this->user);
+
 });
 
 // Helper pour créer un payload valide (création)
@@ -49,12 +52,12 @@ function activitiesFromResponse($response): array
  */
 function ensureDemoActivities(): void
 {
-    if (Activity::where('name', 'Helpdesk')->exists()) {
+    if (Activity::query()->where('name', 'Helpdesk')->exists()) {
         // On suppose que si Helpdesk existe, tout le jeu de démo est déjà là
         return;
     }
 
-    Activity::insert([
+    Activity::query()->insert([
         [
             'id'                             => 5,
             'name'                           => 'Helpdesk',
@@ -155,12 +158,11 @@ it('forbids listing activities without permission', function () {
 });
 
 it('lists activities when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $totalActive = Activity::whereNull('deleted_at')->count();
+    $totalActive = Activity::query()->count();
 
     $response = $this->getJson('/api/activities')
         ->assertOk();
@@ -179,8 +181,7 @@ it('forbids creating an activity without permission', function () {
 });
 
 it('creates an activity when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     $this->postJson('/api/activities', validActivityPayload())
         ->assertCreated()
@@ -190,12 +191,11 @@ it('creates an activity when permitted', function () {
 });
 
 it('shows a single activity when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $activity = Activity::where('name', 'Helpdesk')->firstOrFail();
+    $activity = Activity::query()->where('name', 'Helpdesk')->firstOrFail();
 
     $this->getJson("/api/activities/{$activity->id}")
         ->assertOk()
@@ -215,12 +215,11 @@ it('forbids showing an activity without permission', function () {
 });
 
 it('updates an activity when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $activity = Activity::where('name', 'Helpdesk')->firstOrFail();
+    $activity = Activity::query()->where('name', 'Helpdesk')->firstOrFail();
 
     $this->putJson("/api/activities/{$activity->id}", ['name' => 'Helpdesk – updated'])
         ->assertOk();
@@ -249,12 +248,11 @@ it('forbids updating an activity without permission', function () {
 });
 
 it('deletes an activity when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $activity = Activity::where('name', 'Development')->firstOrFail();
+    $activity = Activity::query()->where('name', 'Development')->firstOrFail();
 
     $this->deleteJson("/api/activities/{$activity->id}")
         ->assertOk();
@@ -268,7 +266,7 @@ it('forbids deleting an activity without permission', function () {
 
     ensureDemoActivities();
 
-    $activity = Activity::where('name', 'Development')->firstOrFail();
+    $activity = Activity::query()->where('name', 'Development')->firstOrFail();
 
     $this->deleteJson("/api/activities/{$activity->id}")
         ->assertForbidden();
@@ -280,12 +278,11 @@ it('forbids deleting an activity without permission', function () {
 });
 
 it('mass destroys activities when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $activities = Activity::whereIn('name', [
+    $activities = Activity::query()->whereIn('name', [
         'Helpdesk',
         'Development',
         'IT monitoring',
@@ -331,8 +328,7 @@ it('forbids mass destroy without permission', function () {
 // ============================================================
 
 it('filters activities by name contains', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
@@ -348,8 +344,7 @@ it('filters activities by name contains', function () {
 });
 
 it('filters activities by exact name', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
@@ -364,13 +359,12 @@ it('filters activities by exact name', function () {
 });
 
 it('filters activities by numeric gte on recovery_time_objective', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $helpdesk    = Activity::where('name', 'Helpdesk')->firstOrFail();
-    $development = Activity::where('name', 'Development')->firstOrFail();
+    $helpdesk    = Activity::query()->where('name', 'Helpdesk')->firstOrFail();
+    $development = Activity::query()->where('name', 'Development')->firstOrFail();
 
     $helpdesk->update(['recovery_time_objective' => 4]);
     $development->update(['recovery_time_objective' => 24]);
@@ -386,12 +380,11 @@ it('filters activities by numeric gte on recovery_time_objective', function () {
 });
 
 it('ignores unknown filter fields', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $totalActive = Activity::whereNull('deleted_at')->count();
+    $totalActive = Activity::query()->whereNull('deleted_at')->count();
 
     $response = $this->getJson('/api/activities?foo=bar')
         ->assertOk();
@@ -406,8 +399,7 @@ it('ignores unknown filter fields', function () {
 // ============================================================
 
 it('mass stores activities when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     $payload = [
         'items' => [
@@ -452,13 +444,12 @@ it('forbids mass store without permission', function () {
 // ============================================================
 
 it('mass updates activities when permitted', function () {
-    $user = User::find(1);
-    Passport::actingAs($user);
+    Passport::actingAs($this->user);
 
     ensureDemoActivities();
 
-    $helpdesk    = Activity::where('name', 'Helpdesk')->firstOrFail();
-    $development = Activity::where('name', 'Development')->firstOrFail();
+    $helpdesk    = Activity::query()->where('name', 'Helpdesk')->firstOrFail();
+    $development = Activity::query()->where('name', 'Development')->firstOrFail();
 
     $payload = [
         'items' => [
@@ -487,8 +478,8 @@ it('forbids mass update without permission', function () {
 
     ensureDemoActivities();
 
-    $helpdesk    = Activity::where('name', 'Helpdesk')->firstOrFail();
-    $development = Activity::where('name', 'Development')->firstOrFail();
+    $helpdesk    = Activity::query()->where('name', 'Helpdesk')->firstOrFail();
+    $development = Activity::query()->where('name', 'Development')->firstOrFail();
 
     $payload = [
         'items' => [
