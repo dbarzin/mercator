@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         // Si le logging LDAP est activé, on force l’utilisation du channel "ldap"
         if (config('ldap.logging.enabled')) {
             Container::setLogger(
-                \Log::channel('ldap.logging.channel')
+                \Log::channel(config('ldap.logging.channel'))
             );
         }
 
