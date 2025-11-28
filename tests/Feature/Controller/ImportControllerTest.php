@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 uses(RefreshDatabase::class);
 
-const ZIP_SIGNATURE = 'PK';
 
 beforeEach(function () {
 
@@ -64,7 +63,7 @@ describe('import', function () {
         expect(strlen($content))->toBeGreaterThan(100);
 
         // DOCX/XLSX sont des ZIP → début "PK"
-        expect(substr($content, 0, 2))->toBe(ZIP_SIGNATURE);
+        expect(substr($content, 0, 2))->toBe('PK');
     });
 
 });
