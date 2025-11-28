@@ -226,7 +226,7 @@ class ImportController extends Controller
 
     private function resolveModelClass($modelName)
     {
-        $modelClass = 'App\\Models\\'.$modelName;
+        $modelClass = 'Mercator\\Core\\Models\\'.$modelName;
 
         \Log::info("Import - {$modelClass}");
 
