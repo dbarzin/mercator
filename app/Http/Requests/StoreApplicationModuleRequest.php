@@ -21,7 +21,7 @@ class StoreApplicationModuleRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('application_modules')->whereNull('deleted_at'),
             ],
