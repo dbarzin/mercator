@@ -27,7 +27,7 @@ class MassStoreNetworkRequest extends FormRequest
 
         // On applique les règles du StoreNetworkRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.roles']   = ['sometimes', 'array'];

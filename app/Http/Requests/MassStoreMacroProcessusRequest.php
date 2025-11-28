@@ -27,7 +27,7 @@ class MassStoreMacroProcessusRequest extends FormRequest
 
         // On applique les règles du StoreMacroProcessusRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.processes']   = ['sometimes', 'array'];

@@ -27,7 +27,7 @@ class MassStoreExternalConnectedEntityRequest extends FormRequest
 
         // On applique les règles du StoreExternalConnectedEntityRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.roles']   = ['sometimes', 'array'];

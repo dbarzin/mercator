@@ -27,7 +27,7 @@ class MassStorePhysicalRouterRequest extends FormRequest
 
         // On applique les règles du StorePhysicalRouterRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.vlans']   = ['sometimes', 'array'];

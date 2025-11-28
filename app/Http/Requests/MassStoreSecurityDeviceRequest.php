@@ -27,7 +27,7 @@ class MassStoreSecurityDeviceRequest extends FormRequest
 
         // On applique les règles du StoreSecurityDeviceRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.roles']   = ['sometimes', 'array'];

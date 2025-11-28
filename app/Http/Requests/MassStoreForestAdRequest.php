@@ -27,7 +27,7 @@ class MassStoreForestAdRequest extends FormRequest
 
         // On applique les règles du StoreForestAdRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         return $rules;

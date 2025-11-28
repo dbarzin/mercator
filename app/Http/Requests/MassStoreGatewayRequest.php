@@ -27,7 +27,7 @@ class MassStoreGatewayRequest extends FormRequest
 
         // On applique les règles du StoreGatewayRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.subnetworks']   = ['sometimes', 'array'];

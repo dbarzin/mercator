@@ -27,7 +27,7 @@ class MassStoreRelationRequest extends FormRequest
 
         // On applique les règles du StoreRelationRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         return $rules;

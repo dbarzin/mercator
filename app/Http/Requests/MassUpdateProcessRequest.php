@@ -29,12 +29,12 @@ class MassUpdateProcessRequest extends FormRequest
             'items'   => ['required', 'array', 'min:1'],
             'items.*' => ['required', 'array'],
             // l'id n'est pas dans UpdateProcessRequest (route model binding),
-            'items.*.id' => ['required', 'integer', "exists:{${DOLLAR}table},id"],
+            'items.*.id' => ['required', 'integer', "exists:{$table},id"],
         ];
 
         // On applique les règles du UpdateProcessRequest à chaque item : items.*.field
         foreach ($updateRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.activities']   = ['sometimes', 'array'];

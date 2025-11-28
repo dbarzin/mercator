@@ -27,7 +27,7 @@ class MassStoreZoneAdminRequest extends FormRequest
 
         // On applique les règles du StoreZoneAdminRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         return $rules;

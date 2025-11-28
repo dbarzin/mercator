@@ -27,7 +27,7 @@ class MassStorePeripheralRequest extends FormRequest
 
         // On applique les règles du StorePeripheralRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.applications']   = ['sometimes', 'array'];

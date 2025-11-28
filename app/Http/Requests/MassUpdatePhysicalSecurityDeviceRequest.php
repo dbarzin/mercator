@@ -29,12 +29,12 @@ class MassUpdatePhysicalSecurityDeviceRequest extends FormRequest
             'items'   => ['required', 'array', 'min:1'],
             'items.*' => ['required', 'array'],
             // l'id n'est pas dans UpdatePhysicalSecurityDeviceRequest (route model binding),
-            'items.*.id' => ['required', 'integer', "exists:{${DOLLAR}table},id"],
+            'items.*.id' => ['required', 'integer', "exists:{$table},id"],
         ];
 
         // On applique les règles du UpdatePhysicalSecurityDeviceRequest à chaque item : items.*.field
         foreach ($updateRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         return $rules;

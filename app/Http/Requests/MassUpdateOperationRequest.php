@@ -29,12 +29,12 @@ class MassUpdateOperationRequest extends FormRequest
             'items'   => ['required', 'array', 'min:1'],
             'items.*' => ['required', 'array'],
             // l'id n'est pas dans UpdateOperationRequest (route model binding),
-            'items.*.id' => ['required', 'integer', "exists:{${DOLLAR}table},id"],
+            'items.*.id' => ['required', 'integer', "exists:{$table},id"],
         ];
 
         // On applique les règles du UpdateOperationRequest à chaque item : items.*.field
         foreach ($updateRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.activities']   = ['sometimes', 'array'];

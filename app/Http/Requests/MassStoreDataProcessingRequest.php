@@ -27,7 +27,7 @@ class MassStoreDataProcessingRequest extends FormRequest
 
         // On applique les règles du StoreDataProcessingRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.applications']   = ['sometimes', 'array'];

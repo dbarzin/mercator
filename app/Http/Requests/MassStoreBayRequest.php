@@ -27,7 +27,7 @@ class MassStoreBayRequest extends FormRequest
 
         // On applique les règles du StoreBayRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         return $rules;

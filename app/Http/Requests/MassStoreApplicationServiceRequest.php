@@ -27,7 +27,7 @@ class MassStoreApplicationServiceRequest extends FormRequest
 
         // On applique les règles du StoreApplicationServiceRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.applications']   = ['sometimes', 'array'];

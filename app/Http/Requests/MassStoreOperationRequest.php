@@ -27,7 +27,7 @@ class MassStoreOperationRequest extends FormRequest
 
         // On applique les règles du StoreOperationRequest à chaque item : items.*.field
         foreach ($storeRules as $field => $rule) {
-            $rules["items.*.{$field}"] = $rule;
+            $rules["items.*.$field"] = $rule;
         }
 
         $rules['items.*.activities']   = ['sometimes', 'array'];
