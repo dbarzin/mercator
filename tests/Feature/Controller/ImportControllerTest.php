@@ -35,7 +35,7 @@ describe('import', function () {
         $response = $this->get(route('admin.config.import'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.import');;
+        $response->assertViewIs('admin.import');
     });
 
     test('can export entities', function () {
