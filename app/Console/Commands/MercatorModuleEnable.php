@@ -13,7 +13,7 @@ class MercatorModuleEnable extends Command
     public function handle(ModuleRegistry $registry): int
     {
         $name = $this->argument('name');
-
+        
         if (!$registry->exists($name)) {
             $this->error("Module '{$name}' not found in DB. Use mercator:module:install first.");
             return self::FAILURE;

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Report;
 
 Route::redirect('/', '/login');
@@ -104,7 +105,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Applications
     Route::resource('applications', Admin\MApplicationController::class);
-    Route::get('application-icon/{id}', [Admin\MApplicationController::class, 'icon'])->name('application-icon');
+    // Route::get('application-icon/{id}', [Admin\MApplicationController::class, 'icon'])->name('application-icon');
     Route::delete('applications-destroy', [Admin\MApplicationController::class, 'massDestroy'])->name('applications.massDestroy');
 
     // Application Services
@@ -423,8 +424,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Configuration page
     Route::get('config', function () {
-        return view('config');
+        return null;
+        // return view('config');
     });
+
+    // Modules
+    Route::prefix('modules')
+        ->name('modules.')
+        ->group(function () {
+            Route::get('/', [ModuleController::class, 'index'])->name('index');
+
+            Route::post('{name}/install', [ModuleController::class, 'install'])->name('install');
+            Route::post('{name}/enable', [ModuleController::class, 'enable'])->name('enable');
+            Route::post('{name}/disable', [ModuleController::class, 'disable'])->name('disable');
+            Route::delete('{name}/uninstall', [ModuleController::class, 'uninstall'])->name('uninstall');
+        });
+
+
 });
 
 // Profile
