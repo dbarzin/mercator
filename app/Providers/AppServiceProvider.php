@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use LdapRecord\Container;
+use Mercator\Core\Menus\MenuRegistry;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,8 +31,7 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // if (env('APP_DEBUG')) {
-        if (config('app.debug')) {
+        if (false && config('app.debug')) {
             // Log SQL Queries
             \DB::listen(function ($query): void {
                 \Log::info($query->time.':'.$query->sql);
@@ -46,8 +46,11 @@ class AppServiceProvider extends ServiceProvider
         }
 
         view()->composer('*', function ($view): void {
+            // Get the current version of the application
             $version = trim(file_get_contents(base_path('version.txt')));
             $view->with('appVersion', $version);
+            // Get the menu
+            $view->with('menu', app(MenuRegistry::class));
         });
     }
 }
