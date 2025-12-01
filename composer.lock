@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82e90ce762c564163919e153a73f4b28",
+    "content-hash": "e437458b9dfdd25581e069a2fa776928",
     "packages": [
         {
             "name": "brick/math",
@@ -5448,11 +5448,11 @@
         },
         {
             "name": "sourcentis/mercator-core",
-            "version": "1.0.x-dev",
+            "version": "1.0.21",
             "dist": {
                 "type": "path",
                 "url": "../mercator-core",
-                "reference": "0670d3258f645a34fcb84c66ace95cf3e978a29a"
+                "reference": "98abfa10a6cb64ba9a0ea7d63a82922968864c77"
             },
             "require": {
                 "laravel/framework": "^11.46",
@@ -5481,43 +5481,6 @@
             ],
             "description": "Mercator core services (modules, licensing, menus, domain models).",
             "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "sourcentis/mercator-dummy",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "../mercator-dummy",
-                "reference": "90a16850dfa53a4f4d4a9748370bf9cd82d77414"
-            },
-            "require": {
-                "php": ">=8.1",
-                "sourcentis/mercator-core": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mercator\\Dummy\\DummyServiceProvider"
-                    ]
-                },
-                "mercator-module": {
-                    "name": "dummy",
-                    "label": "Module Dummy",
-                    "version": "1.0.0"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mercator\\Dummy\\": "src/"
-                }
-            },
-            "description": "Dummy Module for Mercator",
-            "transport-options": {
-                "symlink": true,
                 "relative": true
             }
         },
@@ -14272,10 +14235,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "sourcentis/mercator-core": 20,
-        "sourcentis/mercator-dummy": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

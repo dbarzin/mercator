@@ -19,8 +19,7 @@
     "phpmailer/phpmailer": "^6.9",
     "phpoffice/phpword": "^1.4",
     "socialiteproviders/keycloak": "^5.3",
-    "sourcentis/mercator-core": "^1.0@dev",
-    "sourcentis/mercator-dummy": "dev-main@dev",
+    "sourcentis/mercator-core": "^1.0",
     "spatie/laravel-query-builder": "^6.3",
     "yajra/laravel-datatables-oracle": "^11.1"
   },
@@ -82,22 +81,6 @@
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../mercator-core",
-      "options": {
-        "symlink": true
-      }
-    },
-    {
-      "type": "path",
-      "url": "../mercator-dummy",
-      "options": {
-        "symlink": true
-      }
-    }
-  ],
   "minimum-stability": "stable",
   "prefer-stable": true
 }
