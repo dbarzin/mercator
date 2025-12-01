@@ -47,7 +47,11 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('*', function ($view): void {
             // Get the current version of the application
-            $version = trim(file_get_contents(base_path('version.txt')));
+            $version = '0.0.0'; // default
+            $versionFile = base_path('version.txt');
+            if (file_exists($versionFile) && is_readable($versionFile)) {
+                $version = trim(file_get_contents($versionFile));
+                }
             $view->with('appVersion', $version);
             // Get the menu
             $view->with('menu', app(MenuRegistry::class));
