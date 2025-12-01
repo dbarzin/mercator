@@ -43,8 +43,8 @@ class ModuleController extends Controller
                 'version'    => $meta['version'] ?? null,
 
                 'installed'  => $db !== null,
-                'enabled'    => $db->enabled ?? false,
-                'db_version' => $db->version ?? null,
+                'enabled'    => $db?->enabled ?? false,
+                'db_version' => $db?->version ?? null,
             ];
         })->values();
 
@@ -60,6 +60,14 @@ class ModuleController extends Controller
 
         if (!$meta) {
             return back()->with('error', "Module '{$name}' introuvable.");
+        }
+
+        if (!$meta) {
+            return back()->with('error', "Module '{$name}' introuvable.");
+        }
+        
+        if (!isset($meta['name'])) {
+            return back()->with('error', "Métadonnées de module invalides.");
         }
 
         $registry->install($meta['name'], $meta);
