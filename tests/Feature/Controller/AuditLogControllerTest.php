@@ -65,10 +65,11 @@ describe('show', function () {
 
         // create an object
         $logicalServer = LogicalServer::factory()->create();
-        $id = AuditLog::query()->orderBy('id','desc')->first()->id;
+        $auditLog = AuditLog::query()->orderBy('id','desc')->first();
+        expect($auditLog)->not->toBeNull('No audit log was created for LogicalServer');
 
         // Test audit log page
-        $response = $this->get(route('admin.audit-logs.show', $id));
+        $response = $this->get(route('admin.audit-logs.show',  $auditLog->id));
 
         $response->assertOk();
         $response->assertViewIs('admin.auditLogs.show')
