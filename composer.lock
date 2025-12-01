@@ -5449,10 +5449,16 @@
         {
             "name": "sourcentis/mercator-core",
             "version": "1.0.21",
-            "dist": {
-                "type": "path",
-                "url": "../mercator-core",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dbarzin/mercator-core.git",
                 "reference": "98abfa10a6cb64ba9a0ea7d63a82922968864c77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/98abfa10a6cb64ba9a0ea7d63a82922968864c77",
+                "reference": "98abfa10a6cb64ba9a0ea7d63a82922968864c77",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^11.46",
@@ -5476,13 +5482,16 @@
                     "Mercator\\Core\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
             ],
             "description": "Mercator core services (modules, licensing, menus, domain models).",
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/dbarzin/mercator-core/issues",
+                "source": "https://github.com/dbarzin/mercator-core/tree/v1.0.21"
+            },
+            "time": "2025-12-01T09:45:34+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -9108,16 +9117,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.91.0",
+            "version": "v3.91.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "c4a25f20390337789c26b693ae46faa125040352"
+                "reference": "b075d845594a90763c480589174f7f90b3aec15f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/c4a25f20390337789c26b693ae46faa125040352",
-                "reference": "c4a25f20390337789c26b693ae46faa125040352",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/b075d845594a90763c480589174f7f90b3aec15f",
+                "reference": "b075d845594a90763c480589174f7f90b3aec15f",
                 "shasum": ""
             },
             "require": {
@@ -9199,7 +9208,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.91.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.91.1"
             },
             "funding": [
                 {
@@ -9207,7 +9216,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-28T22:07:42+00:00"
+            "time": "2025-12-01T11:09:57+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
