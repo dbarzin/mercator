@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Modules Mercator
+            {{ trans('cruds.module.title') }}
         </div>
 
         <div class="card-body">
@@ -11,18 +11,17 @@
                 <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                     <thead>
                     <tr>
-                        <th>Nom</th>
-                        <th>Label</th>
-                        <th>Package</th>
-                        <th>Version (package)</th>
-                        <th>Version (DB)</th>
-                        <th>Installé</th>
-                        <th>Activé</th>
-                        <th class="text-end">Actions</th>
+                        <th>{{ trans('cruds.module.fields.name') }}</th>
+                        <th>{{ trans('cruds.module.fields.label') }}</th>
+                        <th>{{ trans('cruds.module.fields.package_version') }}</th>
+                        <th>{{ trans('cruds.module.fields.db_version') }}</th>
+                        <th>{{ trans('cruds.module.fields.installed') }}</th>
+                        <th>{{ trans('cruds.module.fields.activated') }}</th>
+                        <th class="text-end">{{ trans('cruds.module.fields.actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($modules as $module)
+                    @foreach($modules as $module)
                         <tr>
                             <td>{{ $module['name'] }}</td>
                             <td>{{ $module['label'] }}</td>
@@ -31,17 +30,17 @@
                             <td>{{ $module['db_version'] ?? '—' }}</td>
                             <td>
                                 @if($module['installed'])
-                                    <span class="badge bg-success">Installé</span>
+                                    <span class="badge bg-success">{{ trans('cruds.module.labels.installed') }}</span>
                                 @else
-                                    <span class="badge bg-secondary">Non installé</span>
+                                    <span class="badge bg-secondary">{{ trans('cruds.module.labels.not_installed') }}</span>
                                 @endif
                             </td>
                             <td>
                                 @if($module['installed'])
                                     @if($module['enabled'])
-                                        <span class="badge bg-success">Activé</span>
+                                        <span class="badge bg-secondary">{{ trans('cruds.module.labels.activated') }}</span>
                                     @else
-                                        <span class="badge bg-warning text-dark">Désactivé</span>
+                                        <span class="badge bg-secondary">{{ trans('cruds.module.labels.deactivated') }}</span>
                                     @endif
                                 @else
                                     —
@@ -53,7 +52,7 @@
                                     <form action="{{ route('admin.modules.install', $module['name']) }}" method="POST"
                                           class="d-inline">
                                         @csrf
-                                        <button class="btn btn-sm btn-primary">Installer</button>
+                                        <button class="btn btn-sm btn-primary">{{ trans('cruds.module.labels.install') }}</button>
                                     </form>
                                 @endunless
 
@@ -64,14 +63,14 @@
                                               method="POST"
                                               class="d-inline">
                                             @csrf
-                                            <button class="btn btn-sm btn-success">Activer</button>
+                                            <button class="btn btn-sm btn-success">{{ trans('cruds.module.labels.activate') }}</button>
                                         </form>
                                     @else
                                         <form action="{{ route('admin.modules.disable', $module['name']) }}"
                                               method="POST"
                                               class="d-inline">
                                             @csrf
-                                            <button class="btn btn-sm btn-warning">Désactiver</button>
+                                            <button class="btn btn-sm btn-warning">{{ trans('cruds.module.labels.deactivate') }}</button>
                                         </form>
                                     @endif
                                 @endif
@@ -83,18 +82,12 @@
                                           onsubmit="return confirm('{{ trans('cruds.module.confirm_uninstall') }}');">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-outline-danger">Désinstaller</button>
+                                        <button class="btn btn-sm btn-outline-danger">{{ trans('cruds.module.labels.uninstall') }}</button>
                                     </form>
                                 @endif
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center text-muted">
-                                Aucun module détecté. Vérifie ton composer.json.
-                            </td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                     </tbody>
                 </table>
             </div>
