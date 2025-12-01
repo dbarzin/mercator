@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Mercator\Core\Models\AuditLog;
 use Gate;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\AuditLog;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuditLogsController extends Controller
 {

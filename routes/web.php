@@ -392,8 +392,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/config/documents/check', [Admin\DocumentController::class, 'check'])->name('config.documents.check');
 
     // Audit Logs
+    Route::get('audit-logs/history/{type}/{id}', [Admin\AuditLogsController::class, 'history'])->name('audit-logs.history');
     Route::resource('audit-logs', Admin\AuditLogsController::class, ['except' => ['create', 'store', 'update', 'destroy']]);
-    Route::get('history/{type}/{id}', [Admin\AuditLogsController::class, 'history'])->name('history');
 
     // Monarc
     Route::get('monarc', [Admin\MonarcController::class, 'index'])->name('monarc');
