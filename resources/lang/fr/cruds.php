@@ -992,6 +992,30 @@ return [
         'title_short' => 'Commutateurs',
         'title_singular' => 'Commutateur',
     ],
+    'module' => [
+        'title' => 'Gestion des modules',
+        'title_short' => 'Modules',
+        'fields' => [
+            'name'=> 'Nom',
+            'label' => 'Label',
+            'package' => 'Package',
+            'package_version' => 'Version (package)',
+            'db_version' => 'Version (DB)',
+            'installed' => 'Installé',
+            'activated' => 'Activé',
+            'actions' => 'Actions'
+        ],
+        'labels' => [
+            'installed' => 'Installé',
+            'not_installed' => 'Non installé',
+            'activated' => 'Activé',
+            'deactivated' => 'Désactivé',
+            'install' => 'Installer',
+            'activate' => 'Activer',
+            'deactivate' => 'Désactiver',
+            'uninstall' => 'Désinstaller',
+        ]
+    ],
     'operation' => [
         'description' => 'Etape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.',
         'fields' => [

@@ -939,6 +939,30 @@ return [
         'user_management' => ['title' => 'User management', 'title_short' => 'Users'],
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
+    'module' => [
+        'title' => 'Modules management',
+        'title_short' => 'Modules',
+        'fields' => [
+            'name'=> 'Name',
+            'label' => 'Label',
+            'package' => 'Package',
+            'package_version' => 'Version (package)',
+            'db_version' => 'Version (DB)',
+            'installed' => 'Installed',
+            'activated' => 'Activated',
+            'actions' => 'Actions'
+        ],
+        'labels' => [
+            'installed' => 'Installed',
+            'not_installed' => 'Not installed',
+            'activated' => 'Activated',
+            'deactivated' => 'Deactivated',
+            'install' => 'Install',
+            'activate' => 'Activate',
+            'deactivate' => 'Deactivate',
+            'uninstall' => 'Uninstall',
+        ]
+    ],
     'network' => [
         'description' => 'Set of equipment logically linked to each other and which exchange information.',
         'fields' => [

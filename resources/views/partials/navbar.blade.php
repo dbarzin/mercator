@@ -83,12 +83,13 @@
                         <a class="nav-link dropdown-toggle" href="#" id="menu3" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">{{ trans('panel.menu.tools') }}</a>
                         <ul class="dropdown-menu" aria-labelledby="menu3">
+
+                            @if ($menu->getItems('tools')!==null)
+                                <li><a class="dropdown-item" href=" {{ route($item['route']) }}">
+                                        <i class="{{ $item['icon'] }}"></i>{{ $item['label'] }}</a></li>
+                            @endif
+
                             @can('graph_access')
-                                @if (config('app.licence'))
-                                    <li><a class="dropdown-item" href="/admin/bpmns">
-                                            <i class="bi bi-easel-fill"></i>{{ trans('cruds.bpmns.title') }}</a>
-                                    </li>
-                                @endif
                                 <li><a class="dropdown-item" href="/admin/graphs">
                                         <i class="bi bi-map-fill"></i>{{ trans('cruds.graph.title') }}</a>
                                 </li>
@@ -115,6 +116,14 @@
                     <a class="nav-link dropdown-toggle" href="#" id="menu4" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">{{ trans('panel.menu.help') }}</a>
                     <ul class="dropdown-menu" aria-labelledby="menu4">
+
+                        @if ($menu->getItems('help')!==null)
+                            @foreach ($menu->getItems('help') as $item)
+                                <li><a class="dropdown-item" href=" {{ route($item['route']) }}">
+                                        <i class="{{ $item['icon'] }}"></i>{{ $item['label'] }}</a></li>
+                            @endforeach
+                        @endif
+
                         <li><a class="dropdown-item" href="/admin/doc/schema">
                                 <i class="bi bi-database-fill"></i>{{ trans('panel.menu.schema') }}</a>
                         </li>
