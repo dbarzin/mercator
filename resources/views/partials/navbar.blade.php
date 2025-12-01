@@ -85,9 +85,8 @@
                         <ul class="dropdown-menu" aria-labelledby="menu3">
 
                             @if ($menu->getItems('tools')!==null)
-                                @foreach ($menu->getItems('tools') as $section)
-                                    <li>{{ $section->label }}</li>
-                                @endforeach
+                                <li><a class="dropdown-item" href=" {{ route($item['route']) }}">
+                                        <i class="{{ $item['icon'] }}"></i>{{ $item['label'] }}</a></li>
                             @endif
 
                             @can('graph_access')
