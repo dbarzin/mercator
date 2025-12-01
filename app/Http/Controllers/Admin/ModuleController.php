@@ -62,6 +62,14 @@ class ModuleController extends Controller
             return back()->with('error', "Module '{$name}' introuvable.");
         }
 
+        if (!$meta) {
+            return back()->with('error', "Module '{$name}' introuvable.");
+        }
+        
+        if (!isset($meta['name'])) {
+            return back()->with('error', "Métadonnées de module invalides.");
+        }
+
         $registry->install($meta['name'], $meta);
 
         return back()->with('success', "Module '{$meta['name']}' installé.");
