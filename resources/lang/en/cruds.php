@@ -940,7 +940,8 @@ return [
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
     'module' => [
-        'title' => 'Module management',
+        'title' => 'Modules management',
+        'title_short' => 'Modules',
         'fields' => [
             'name'=> 'Name',
             'label' => 'Label',

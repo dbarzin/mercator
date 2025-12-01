@@ -994,6 +994,7 @@ return [
     ],
     'module' => [
         'title' => 'Gestion des modules',
+        'title_short' => 'Modules',
         'fields' => [
             'name'=> 'Nom',
             'label' => 'Label',

@@ -431,6 +431,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Modules
     Route::prefix('modules')
         ->name('modules.')
+        ->middleware('can:module_manage')
         ->group(function () {
             Route::get('/', [ModuleController::class, 'index'])->name('index');
 

@@ -552,7 +552,7 @@
                     <a href="{{ route("admin.modules.index") }}"
                        class="ps-4 {{ request()->is('admin/modules*') ? 'active' : '' }}">
                         <i class="bi bi-plugin"></i><span
-                                class="menu-text">Modules</span>
+                                class="menu-text">{{ trans('cruds.module.title_short') }}</span>
                     </a>
                 @endcan
             </div>
