@@ -548,7 +548,7 @@
                                 class="menu-text">{{ trans('cruds.auditLog.title') }}</span>
                     </a>
                 @endcan
-                @can('configure')
+                @can('module_manage')
                     <a href="{{ route("admin.modules.index") }}"
                        class="ps-4 {{ request()->is('admin/modules*') ? 'active' : '' }}">
                         <i class="bi bi-plugin"></i><span
