@@ -90,11 +90,6 @@
                             @endif
 
                             @can('graph_access')
-                                @if (config('app.licence'))
-                                    <li><a class="dropdown-item" href="/admin/bpmns">
-                                            <i class="bi bi-easel-fill"></i>{{ trans('cruds.bpmns.title') }}</a>
-                                    </li>
-                                @endif
                                 <li><a class="dropdown-item" href="/admin/graphs">
                                         <i class="bi bi-map-fill"></i>{{ trans('cruds.graph.title') }}</a>
                                 </li>
