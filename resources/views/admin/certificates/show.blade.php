@@ -16,7 +16,7 @@
         @endcan
 
         @can('audit_log_show')
-            <a class="btn btn-secondary" href="{{ route('admin.history',
+            <a class="btn btn-secondary" href="{{ route('admin.audit-logs.history',
             ['type' => 'App\Models\Certificate', 'id' => $certificate->id]) }}">
                 {{ trans('global.history') }}
             </a>
