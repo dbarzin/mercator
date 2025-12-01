@@ -26,7 +26,7 @@
                         {{ trans('cruds.auditLog.fields.subject_type') }}
                     </th>
                     <td>
-                        {{ $auditLog->subject_type }}
+                        {{ Str::afterLast($auditLog->subject_type, '\\') }}
                     </td>
                 </tr>
                 <tr>
@@ -34,7 +34,7 @@
                         {{ trans('cruds.auditLog.fields.subject_id') }}
                     </th>
                     <td>
-                        <a href="{{ \App\Models\AuditLog::subjectURL($auditLog->subject_type) }}/{{ $auditLog->subject_id }}">
+                        <a href="{{ $auditLog->subjectURL() }}">
                             {{ $auditLog->subject_id }}
                         </a>
                     </td>
