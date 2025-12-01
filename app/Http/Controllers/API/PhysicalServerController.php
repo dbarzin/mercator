@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
-use Mercator\Core\Models\PhysicalServer;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response;
+use Mercator\Core\Models\PhysicalServer;
+use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalServerController extends Controller
 {
@@ -17,27 +17,31 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalservers = PhysicalServer::all();
+        $physicalServers = PhysicalServer::all();
 
-        return response()->json($physicalservers);
+        return response()->json($physicalServers);
     }
 
     public function store(StorePhysicalServerRequest $request)
     {
         abort_if(Gate::denies('physical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalserver = PhysicalServer::create($request->all());
+        $physicalServer = PhysicalServer::query()->create($request->all());
         if ($request->has('applications')) {
-            $physicalserver->applications()->sync($request->input('applications', []));
+            $physicalServer->applications()->sync($request->input('applications', []));
+        }
+
+        if ($request->has('clusters')) {
+            $physicalServer->clusters()->sync($request->input('clusters', []));
         }
 
         // Support for logical servers association via API
         if ($request->has('logicalServers')) {
             $logicalServerIds = $request->input('logicalServers', []);
-            $physicalserver->logicalServers()->sync($logicalServerIds);
+            $physicalServer->logicalServers()->sync($logicalServerIds);
         }
 
-        return response()->json($physicalserver, 201);
+        return response()->json($physicalServer, 201);
     }
 
     public function show(PhysicalServer $physicalServer)
@@ -56,6 +60,10 @@ class PhysicalServerController extends Controller
 
         if ($request->has('applications')) {
             $physicalServer->applications()->sync($request->input('applications', []));
+        }
+
+        if ($request->has('clusters')) {
+            $physicalServer->clusters()->sync($request->input('clusters', []));
         }
 
         // Handle logical servers association via API
@@ -81,7 +89,7 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        PhysicalServer::whereIn('id', request('ids'))->delete();
+        PhysicalServer::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
