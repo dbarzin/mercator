@@ -11,7 +11,7 @@ class ModuleController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('can:module_manage');
+        $this->middleware('can:module_manage');
     }
 
     public function index(
