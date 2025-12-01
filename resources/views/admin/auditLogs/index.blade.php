@@ -51,10 +51,10 @@
                                 {{ $log->description }}
                             </td>
                             <td>
-                                {{ $log->subject_type }}
+                                {{ Str::afterLast($log->subject_type, '\\') }}
                             </td>
                             <td>
-                                <a href="{{ \App\Models\AuditLog::subjectURL($log->subject_type) }}/{{ $log->subject_id }}">
+                                <a href="{{ \Mercator\Core\Models\AuditLog::URL($log->subject_type, $log->subject_id) }}">
                                     {{ $log->subject_id }}
                                 </a>
                             </td>
@@ -73,7 +73,7 @@
                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
                                     {{ trans('global.view') }}
                                 </a>
-                                <a class="btn btn-xs btn-secondary" href="{{ route('admin.history',
+                                <a class="btn btn-xs btn-secondary" href="{{ route('admin.audit-logs.history',
                                 ['type' => $log->subject_type, 'id' => $log->subject_id]) }}">
                                     {{ trans('global.history') }}
                                 </a>
