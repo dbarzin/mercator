@@ -43,8 +43,8 @@ class ModuleController extends Controller
                 'version'    => $meta['version'] ?? null,
 
                 'installed'  => $db !== null,
-                'enabled'    => $db->enabled ?? false,
-                'db_version' => $db->version ?? null,
+                'enabled'    => $db?->enabled ?? false,
+                'db_version' => $db?->version ?? null,
             ];
         })->values();
 
