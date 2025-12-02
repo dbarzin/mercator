@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
-use Mercator\Core\Models\LogicalServer;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\LogicalServer;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerController extends Controller
@@ -27,15 +27,11 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer = LogicalServer::create($request->all());
-        if ($request->has('physicalServers')) {
-            $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
-        }
-        if ($request->has('applications')) {
-            $logicalServer->applications()->sync($request->input('applications', []));
-        }
-        if ($request->has('databases')) {
-            $logicalServer->databases()->sync($request->input('databases', []));
-        }
+        $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
+        $logicalServer->applications()->sync($request->input('applications', []));
+        $logicalServer->databases()->sync($request->input('databases', []));
+        $logicalServer->clusters()->sync($request->input('databases', []));
+        $logicalServer->containers()->sync($request->input('databases', []));
 
         return response()->json($logicalServer, 201);
     }
@@ -47,6 +43,8 @@ class LogicalServerController extends Controller
         $logicalServer['physicalServers'] = $logicalServer->physicalServers()->pluck('id');
         $logicalServer['applications'] = $logicalServer->applications()->pluck('id');
         $logicalServer['databases'] = $logicalServer->databases()->pluck('id');
+        $logicalServer['clusters'] = $logicalServer->clusters()->pluck('id');
+        $logicalServer['containers'] = $logicalServer->containers()->pluck('id');
 
         return new JsonResource($logicalServer);
     }
@@ -64,6 +62,12 @@ class LogicalServerController extends Controller
         }
         if ($request->has('databases')) {
             $logicalServer->databases()->sync($request->input('databases', []));
+        }
+        if ($request->has('clusters')) {
+            $logicalServer->clusters()->sync($request->input('clusters', []));
+        }
+        if ($request->has('containers')) {
+            $logicalServer->containers()->sync($request->input('containers', []));
         }
 
         return response()->json();
