@@ -28,23 +28,19 @@ class ModuleController extends Controller
 
         // On fusionne les infos pour la vue
         $modules = collect($discovered)->map(function ($meta, string $name) use ($installed) {
-            // $meta peut être array ou stdClass selon ton implémentation
-            if (is_object($meta)) {
-                $meta = (array) $meta;
-            }
 
             // On récupère le module en DB (stdClass ou null)
             $db = $installed->get($name);
 
             return [
-                'name'       => $meta['name']   ?? $name,
-                'label'      => $meta['label']  ?? $name,
-                'package'    => $meta['package'] ?? null,
-                'version'    => $meta['version'] ?? null,
+                'name'       => $meta['name'],
+                'label'      => $meta['label'],
+                'package'    => $meta['package'],
+                'version'    => $meta['version'],
 
                 'installed'  => $db !== null,
-                'enabled'    => $db?->enabled ?? false,
-                'db_version' => $db?->version ?? null,
+                'enabled'    => $db->enabled ?? false,
+                'db_version' => $db->version ?? null,
             ];
         })->values();
 
