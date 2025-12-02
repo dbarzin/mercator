@@ -35,11 +35,10 @@ class ModuleController extends Controller
             $installedFlag = $db !== null;
 
             return [
-                'name'       => $meta['name'],
-                'label'      => $meta['label'],
-                'package'    => $meta['package'],
-                'version'    => $meta['version'],
-
+                'name'       => $meta['name'] ?? $name,
+                'label'      => $meta['label'] ?? $name,
+                'package'    => $meta['package'] ?? '',
+                'version'    => $meta['version'] ?? 'unknown',
                 'installed'  => $installedFlag,
                 'enabled'    => $installedFlag
                     ? ($db->enabled ?? false)
