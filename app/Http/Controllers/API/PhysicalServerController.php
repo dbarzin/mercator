@@ -27,13 +27,8 @@ class PhysicalServerController extends Controller
         abort_if(Gate::denies('physical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalServer = PhysicalServer::query()->create($request->all());
-        if ($request->has('applications')) {
-            $physicalServer->applications()->sync($request->input('applications', []));
-        }
-
-        if ($request->has('clusters')) {
-            $physicalServer->clusters()->sync($request->input('clusters', []));
-        }
+        $physicalServer->applications()->sync($request->input('applications', []));
+        $physicalServer->clusters()->sync($request->input('clusters', []));
 
         // Support for logical servers association via API
         if ($request->has('logicalServers')) {
@@ -47,6 +42,10 @@ class PhysicalServerController extends Controller
     public function show(PhysicalServer $physicalServer)
     {
         abort_if(Gate::denies('physical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $physicalServer['applications'] = $physicalServer->applications()->pluck('id');
+        $physicalServer['clusters'] = $physicalServer->clusters()->pluck('id');
+        $physicalServer['logicalServers'] = $physicalServer->logicalServers()->pluck('id');
 
         return new JsonResource($physicalServer);
     }
