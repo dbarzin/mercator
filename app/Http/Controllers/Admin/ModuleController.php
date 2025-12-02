@@ -20,31 +20,33 @@ class ModuleController extends Controller
     ) {
         // Modules vus via Composer
         $discovered = $discovery->discover();
-        // ex: [ 'dummy' => [ 'name'=>..., 'package'=>..., ...], ... ]
 
         // Modules enregistrés en DB (probablement des stdClass)
         $installed = collect($registry->all())
             ->keyBy('name'); // on indexe par "name" pour lookup facile
 
         // On fusionne les infos pour la vue
-        $modules = collect($discovered)->map(function ($meta, string $name) use ($installed) {
-            // $meta peut être array ou stdClass selon ton implémentation
-            if (is_object($meta)) {
-                $meta = (array) $meta;
-            }
+        $modules = collect($discovered)->map(function (array $meta, string $name) use ($installed) {
 
             // On récupère le module en DB (stdClass ou null)
+            /** @var object|null $db */
             $db = $installed->get($name);
 
-            return [
-                'name'       => $meta['name']   ?? $name,
-                'label'      => $meta['label']  ?? $name,
-                'package'    => $meta['package'] ?? null,
-                'version'    => $meta['version'] ?? null,
+            $installedFlag = $db !== null;
 
-                'installed'  => $db !== null,
-                'enabled'    => $db?->enabled ?? false,
-                'db_version' => $db?->version ?? null,
+            return [
+                'name'       => $meta['name'],
+                'label'      => $meta['label'],
+                'package'    => $meta['package'],
+                'version'    => $meta['version'],
+
+                'installed'  => $installedFlag,
+                'enabled'    => $installedFlag
+                    ? ($db->enabled ?? false)
+                    : false,
+                'db_version' => $installedFlag
+                    ? ($db->version ?? null)
+                    : null,
             ];
         })->values();
 
