@@ -30,8 +30,8 @@ class LogicalServerController extends Controller
         $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
-        $logicalServer->clusters()->sync($request->input('databases', []));
-        $logicalServer->containers()->sync($request->input('databases', []));
+        $logicalServer->clusters()->sync($request->input('clusters', []));
+        $logicalServer->containers()->sync($request->input('containers', []));
 
         return response()->json($logicalServer, 201);
     }
