@@ -1,4 +1,16 @@
+{{-- Loop Protection --}}
+@php
+    /** @var \Mercator\Core\Models\Building $building */
+    $visited = $visited ?? [];
 
+    // Si déjà vu, on coupe pour éviter boucle
+    if (in_array($building->id, $visited, true)) {
+        return;
+    }
+
+    $visited[] = $building->id;
+@endphp
+{{-- Draw Room --}}
 subgraph ROOM_{{ $building->id }} {
 
 cluster=true;
@@ -35,6 +47,7 @@ bgcolor="{{ $tableau20[$idColor++ % 20] }}"
     @endif
 @endforeach
 
+{{-- Draw Bays --}}
 @foreach($building->roomBays as $bay)
     subgraph BAY_{{ $bay->id }} {
     cluster=true;
@@ -71,8 +84,8 @@ bgcolor="{{ $tableau20[$idColor++ % 20] }}"
 @foreach($buildings->where('building_id', $building->id) as $childBuilding)
     @include('admin.reports.network_infrastructure_building', [
         'building'  => $childBuilding,
-        'buildings' => $buildings
+        'buildings' => $buildings,
+        'visited'   => $visited,
     ])
 @endforeach
 }
-

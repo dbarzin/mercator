@@ -1006,6 +1006,7 @@ digraph  {
         @include('admin.reports.network_infrastructure_building', [
             'building'  => $building,
             'buildings' => $siteBuildings,
+            'visited'   => [],
         ])
         @endforeach
         }
