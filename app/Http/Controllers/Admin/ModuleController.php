@@ -26,7 +26,7 @@ class ModuleController extends Controller
             ->keyBy('name'); // on indexe par "name" pour lookup facile
 
         // On fusionne les infos pour la vue
-        $modules = collect($discovered)->map(function ($meta, string $name) use ($installed) {
+        $modules = collect($discovered)->map(function (array $meta, string $name) use ($installed) {
 
             // On récupère le module en DB (stdClass ou null)
             /** @var object|null $db */
@@ -35,10 +35,11 @@ class ModuleController extends Controller
             $installedFlag = $db !== null;
 
             return [
-                'name'       => $meta['name'] ?? $name,
-                'label'      => $meta['label'] ?? $name,
-                'package'    => $meta['package'] ?? '',
-                'version'    => $meta['version'] ?? 'unknown',
+                'name'       => $meta['name'],
+                'label'      => $meta['label'],
+                'package'    => $meta['package'],
+                'version'    => $meta['version'],
+
                 'installed'  => $installedFlag,
                 'enabled'    => $installedFlag
                     ? ($db->enabled ?? false)
