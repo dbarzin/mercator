@@ -20,7 +20,6 @@ class ModuleController extends Controller
     ) {
         // Modules vus via Composer
         $discovered = $discovery->discover();
-        // ex: [ 'dummy' => [ 'name'=>..., 'package'=>..., ...], ... ]
 
         // Modules enregistrés en DB (probablement des stdClass)
         $installed = collect($registry->all())
@@ -30,7 +29,10 @@ class ModuleController extends Controller
         $modules = collect($discovered)->map(function ($meta, string $name) use ($installed) {
 
             // On récupère le module en DB (stdClass ou null)
+            /** @var object|null $db */
             $db = $installed->get($name);
+
+            $installedFlag = $db !== null;
 
             return [
                 'name'       => $meta['name'],
@@ -38,9 +40,13 @@ class ModuleController extends Controller
                 'package'    => $meta['package'],
                 'version'    => $meta['version'],
 
-                'installed'  => $db !== null,
-                'enabled'    => $db?->enabled ?? false,
-                'db_version' => $db?->version ?? null,
+                'installed'  => $installedFlag,
+                'enabled'    => $installedFlag
+                    ? ($db->enabled ?? false)
+                    : false,
+                'db_version' => $installedFlag
+                    ? ($db->version ?? null)
+                    : null,
             ];
         })->values();
 
