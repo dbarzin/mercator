@@ -14,7 +14,7 @@
             <div id="submenu1" class="collapse {{
             (
                 request()->is('admin/data-processing*')||
-                request()->is('admin/security-cotrol*')
+                request()->is('admin/security-control*')
             ) ? 'show' : '' }}">
                 @can('data_processing_access')
                     <a href="{{ route('admin.data-processings.index') }}"
