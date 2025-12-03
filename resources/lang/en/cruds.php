@@ -1421,7 +1421,7 @@ return [
             'type_helper' => '',
             'attributes' => 'Attributes',
             'attributes_helper' => '',
-            'address_ip' => 'Address IP',
+            'address_ip' => 'IP addresses',
             'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'physical_security_devices' => 'Physical devices',
             'physical_security_devices_helper' => 'List of physical security devices on which this logical device is installed',
