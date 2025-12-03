@@ -40,7 +40,12 @@ table = $('{{ $id }}').DataTable({
         order: [[1, 'asc']],
         @endif
         pageLength: 100,
-
+        @if (isset($maxPageLength))
+        lengthMenu: [
+            [10, 25, 50, 100, {{ $maxPageLength }}],
+            [10, 25, 50, 100, {{ $maxPageLength }}],
+        ],
+        @endif
         buttons: [
             {
               extend: 'colvis',
