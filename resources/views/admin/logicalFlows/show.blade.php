@@ -147,6 +147,12 @@
                             <a href="{{ route('admin.physical-security-devices.show',$logicalFlow->physicalSecurityDeviceSource->id) }}">
                                 {{ $logicalFlow->physicalSecurityDeviceSource->name }}
                             </a>)
+                        @elseif ($logicalFlow->securityDeviceSource!==null)
+                            {{ $logicalFlow->securityDeviceSource->address_ip }}
+                            (
+                            <a href="{{ route('admin.security-devices.show',$logicalFlow->securityDeviceSource->id) }}">
+                                {{ $logicalFlow->securityDeviceSource->name }}
+                            </a>)
                         @elseif ($logicalFlow->subnetworkSource!==null)
                             {{ $logicalFlow->subnetworkSource->address }}
                             (<a href="{{ route('admin.subnetworks.show',$logicalFlow->subnetworkSource->id) }}">
@@ -190,6 +196,12 @@
                             (
                             <a href="{{ route('admin.physical-security-devices.show',$logicalFlow->physicalSecurityDeviceDest->id) }}">
                                 {{ $logicalFlow->physicalSecurityDeviceDest->name }}
+                            </a>)
+                        @elseif ($logicalFlow->securityDeviceDest!==null)
+                            {{ $logicalFlow->securityDeviceDest->address_ip }}
+                            (
+                            <a href="{{ route('admin.security-devices.show',$logicalFlow->securityDeviceDest->id) }}">
+                                {{ $logicalFlow->securityDeviceDest->name }}
                             </a>)
                         @elseif ($logicalFlow->subnetworkDest!==null)
                             {{ $logicalFlow->subnetworkDest->address }}

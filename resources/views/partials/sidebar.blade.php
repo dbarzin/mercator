@@ -14,7 +14,7 @@
             <div id="submenu1" class="collapse {{
             (
                 request()->is('admin/data-processing*')||
-                request()->is('admin/security*')
+                request()->is('admin/security-cotrol*')
             ) ? 'show' : '' }}">
                 @can('data_processing_access')
                     <a href="{{ route('admin.data-processings.index') }}"
@@ -25,7 +25,7 @@
                 @endcan
                 @can('security_control_access')
                     <a href="{{ route('admin.security-controls.index') }}"
-                       class="ps-4 {{ request()->is('admin/security*') ? 'active' : '' }}">
+                       class="ps-4 {{ request()->is('admin/security-control*') ? 'active' : '' }}">
                         <i class="bi bi-list-columns"></i><span
                                 class="menu-text">{{ trans('cruds.securityControl.title') }}</span>
                     </a>

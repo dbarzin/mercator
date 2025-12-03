@@ -112,6 +112,21 @@
             <!---------------------------------------------------------------------------------------------------->
             <div class="card-body">
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="address_ip">{{ trans('cruds.securityDevice.fields.address_ip') }}</label>
+                            <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
+                                   name="address_ip" id="address_ip" value="{{ old('address_ip', $securityDevice->address_ip) }}"/>
+                            @if($errors->has('address_ip'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('address_ip') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.securityDevice.fields.address_ip_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-12">
                         <div class="form-group">
                             <label for="applications">{{ trans('cruds.securityDevice.fields.applications') }}</label>
