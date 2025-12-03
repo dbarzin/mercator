@@ -188,7 +188,7 @@ class LogicalFlowController extends Controller
         $storageDevices = StorageDevice::query()->orderBy('name')->pluck('name', 'id');
         $workstations = Workstation::query()->orderBy('name')->pluck('name', 'id');
         $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->pluck('name', 'id');
-        $securityDevices = PhysicalSecurityDevice::query()->orderBy('name')->pluck('name', 'id');
+        $securityDevices = SecurityDevice::query()->orderBy('name')->pluck('name', 'id');
         $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id');
 
         // Build device list
