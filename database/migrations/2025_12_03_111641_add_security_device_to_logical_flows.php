@@ -14,15 +14,13 @@ return new class extends Migration
         Schema::table('logical_flows', function (Blueprint $table) {
             $table->unsignedBigInteger('security_device_source_id')
                 ->nullable()
-                ->after('physical_security_device_source_id');
-            $table->foreign('security_device_source_id')
+                ->after('physical_security_device_source_id')
                 ->references('id')->on('security_devices')
                 ->onDelete('set null');
 
             $table->unsignedBigInteger('security_device_dest_id')
                 ->nullable()
-                ->after('physical_security_device_dest_id');
-            $table->foreign('security_device_dest_id')
+                ->after('physical_security_device_dest_id')
                 ->references('id')->on('security_devices')
                 ->onDelete('set null');
         });
