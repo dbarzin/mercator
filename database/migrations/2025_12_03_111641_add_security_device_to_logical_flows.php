@@ -12,14 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('logical_flows', function (Blueprint $table) {
-            $table->unsignedInteger('security_device_source_id')
+            $table->unsignedBigInteger('security_device_source_id')
                 ->nullable()
-                ->after('physical_security_device_source_id')
-                ->references('id')->on('security_devices');
-            $table->unsignedInteger('security_device_dest_id')
+                ->after('physical_security_device_source_id');
+            $table->foreign('security_device_source_id')
+                ->references('id')->on('security_devices')
+                ->onDelete('set null');
+
+            $table->unsignedBigInteger('security_device_dest_id')
                 ->nullable()
-                ->after('physical_security_device_dest_id')
-                ->references('id')->on('security_devices');
+                ->after('physical_security_device_dest_id');
+            $table->foreign('security_device_dest_id')
+                ->references('id')->on('security_devices')
+                ->onDelete('set null');
         });
     }
 
