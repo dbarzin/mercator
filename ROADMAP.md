@@ -10,25 +10,25 @@ Changements prévus en 2025 et plus :
 - [x] Import de données sur base de fichier Excel ou CSV
 - [x] Générer un annuaire de crise
 - [x] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
+- [x] Améliorer la qualité du code avec LaraStan et PHPStan
 - [ ] Dessin de processus avec BPMN v2.0 (https://github.com/process-analytics)
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Généraliser la notion de cartographe à tous les objets (cf.: https://laravel.com/docs/10.x/authorization)
-- [ ] Langage de requête pour générer des listes ou des graphes
+- [ ] Langage de requête pour générer des listes ou des graphes (
+  https://github.com/dbarzin/mercator/issues/1768 et https://github.com/dbarzin/mercator/discussions/1767 )
 - [ ] Purge de la DB : https://github.com/dbarzin/mercator/discussions/1525
-- [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Utiliser un modèle de document pour les rapports
 - [ ] Identifier les chemins critiques
+- [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
 - [ ] Mettre en place une formation et un guide utilisateur
 - [ ] Configuration des labels, couleurs et niveaux DICT
-- [ ] Améliorer la qualité du code avec LaraStan et PHPStan
 
 ## Evolutions mineurs
 
 - [x] Packaging des librairies JavaScript avec [Laravel Vite](https://laravel-vite.com/).
 - [x] Tests de non-régression avec Pest
-- [ ] Filtrer l'exploration par attributs (https://github.com/dbarzin/mercator/issues/1768)
 - [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
 - [ ] Améliorer (et revue) la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
