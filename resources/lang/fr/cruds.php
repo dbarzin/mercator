@@ -1418,6 +1418,8 @@ return [
             'attributes_helper' => '',
             'description' => 'Caractéristiques techniques',
             'description_helper' => 'Type d’équipement (sonde, pare-feu, SIEM, etc.), modèle, OS et version, version du logiciel embarqué',
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'physical_security_devices' => 'Dispositifs physiques',
             'physical_security_devices_helper' => 'Liste des dispositifs de sécurité physique sur lesquels ce dispositif logique est installé',
             'applications' => 'Applications',

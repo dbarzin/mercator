@@ -77,6 +77,14 @@
                 </tr>
                 <tr>
                     <th>
+                        {{ trans('cruds.securityDevice.fields.address_ip') }}
+                    </th>
+                    <td>
+                        {{ $securityDevice->address_ip}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         {{ trans('cruds.securityDevice.fields.applications') }}
                     </th>
                     <td>
