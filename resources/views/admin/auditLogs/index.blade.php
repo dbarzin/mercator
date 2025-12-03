@@ -82,9 +82,6 @@
                     @endforeach
                     </tbody>
                 </table>
-                <p>
-                    {{ $logs->links() }}
-                </p>
             </div>
         </div>
         @endsection
@@ -97,7 +94,8 @@
                     'title' => trans("cruds.site.title_singular"),
                     'URL' => route('admin.sites.massDestroy'),
                     'canDelete' => false,
-                    'order' => "[7, 'desc']"
-                ));
+                    'order' => "[7, 'desc']",
+                    'maxPageLength' => 1000
+                ))
             </script>
 @endsection
