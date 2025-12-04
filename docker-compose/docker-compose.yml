@@ -1,62 +1,56 @@
-version: '3.7'
 services:
-  reverse-proxy:
-    image: nginx:latest
+  mercator-db:
+    image: mariadb:11
     restart: unless-stopped
-    container_name: reverse-proxy
+    container_name: mercator-db
+    networks:
+      - nextcloud_web
+    environment:
+      MYSQL_ROOT_PASSWORD: MercatorRoot123
+      MYSQL_DATABASE: mercator
+      MYSQL_USER: mercator
+      MYSQL_PASSWORD: MercatorPass123
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     volumes:
-      - ./PV/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./PV/nginx/certs:/etc/nginx/certs
-      ##########################################
-      # uncomment if you need your company's CA root certificate (don't forget to change the certificate name)
-      # - ./PV/nginx/myCompany.crt:/usr/local/share/ca-certificates/myCompagny.crt
-      # - ./PV/nginx/update-ca-certificates.sh:/docker-entrypoint.d/1000-update-ca-certificates.sh
-      ##########################################
+      - mercator_db_data:/var/lib/mysql
 
-    ports:
-      - 443:443
-    depends_on:
-      - mercator
-
-  mercator:
+  mercator-app:
     image: ghcr.io/dbarzin/mercator:latest
     restart: unless-stopped
-    container_name: mercator
+    container_name: mercator-app
     volumes:
-      - ./PV/mercator/db.sqlite/:/var/www/mercator/sql/db.sqlite
-      - ./env/mercator.env:/var/www/mercator/.env
       - ./docs:/var/www/mercator/storage/docs
     expose:
       - 8080
+    ports:
+      - "8081:8080"
+    networks:
+      - nextcloud_web
     environment:
-      ##########################################
-      # CONFIG set to your company's domain name
-      - APP_URL=https://mercator.mycompany.com/
-      - ASSET_URL=https://mercator.mycompany.com/
-      ##########################################
+      APP_ENV: production 
+      APP_DEBUG: false 
+      APP_URL: https://mercator.sourcentis.com
 
-      ##########################################
-      # uncomment if you want to load demo data
-      # - USE_DEMO_DATA=1
-      ##########################################
+      DB_CONNECTION: mariadb
+      DB_HOST: mercator-db
+      DB_PORT: 3306
+      DB_DATABASE: mercator
+      DB_USERNAME: mercator
+      DB_PASSWORD: MercatorPass123 
 
-      # - Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer
-      # - LDAP_TYPE="AD"
-      # - # If true, LDAP actions will be written to the application's default log file
-      # - LDAP_LOGGING=true
-      # - LDAP_CONNECTION=default
-      # - LDAP_HOST=127.0.0.1
-      # - # Identifiers of the user who will connect to the LDAP in order to perform queries
-      # - LDAP_USERNAME="cn=user,dc=local,dc=com"
-      # - LDAP_PASSWORD=secret
-      # - LDAP_PORT=389
-      # - LDAP_BASE_DN="dc=local,dc=com"
-      # - LDAP_TIMEOUT=5
-      # - LDAP_SSL=false
-      # - LDAP_TLS=false
-      # - # Allows you to restrict access to a tree structure
-      # - LDAP_SCOPE="ou=Accounting,ou=Groups,dc=planetexpress,dc=com"
-      # - # Allows you to restrict access to groups
-      # - LDAP_GROUPS="Delivering,Help Desk"
+      CACHE_DRIVER: file
+      SESSION_DRIVER: file
+    command: ["wait-for-db.sh", "php-fpm"]
+    depends_on:
+      - mercator-db
+        condition: service_healthy
+
+volumes:
+  mercator_db_data:
+  mercator_app_data:
 
 
