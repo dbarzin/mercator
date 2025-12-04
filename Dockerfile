@@ -47,8 +47,7 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY docker/wait-for-db.sh /usr/local/bin/wait-for-db.sh
 
-ENTRYPOINT ["wait-for-db.sh"]
-CMD ["php-fpm"]
+ENTRYPOINT ["wait-for-db.sh", "php-fpm"]
 
 # Set permissions and ownership
 RUN chown -R mercator:www /var/www/mercator && \
