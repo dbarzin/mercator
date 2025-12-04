@@ -334,12 +334,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('graphs/clone/{id}', [Admin\GraphController::class, 'clone'])->name('graphs.clone');
     // Graphs test
     Route::view('graph/test', 'admin.graphs.test')->name('graphs.test');
-
-    // BPMNs
-    Route::resource('bpmns', Admin\BPMNController::class);
-    Route::delete('bpmns-destroy', [Admin\BPMNController::class, 'massDestroy'])->name('bpmns.massDestroy');
-    Route::get('bpmns/clone/{id}', [Admin\BPMNController::class, 'clone'])->name('bpmns.clone');
-
+    
     // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class, 'explore'])->name('report.explore');
 
@@ -406,14 +401,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Doc
     Route::get('doc/schema', function () {
         return view('doc/schema');
-    });
+    })->name('doc.schema');
+
     Route::get('doc/guide', function () {
         return view('doc/guide');
-    });
+    })->name('doc.guide');
 
     Route::get('doc/about', function () {
         return view('doc/about');
-    });
+    })->name('doc.about');
 
     // Import
     Route::get('config/import', function () {

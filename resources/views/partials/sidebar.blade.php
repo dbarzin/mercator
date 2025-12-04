@@ -549,11 +549,13 @@
                     </a>
                 @endcan
                 @can('module_manage')
-                    <a href="{{ route("admin.modules.index") }}"
-                       class="ps-4 {{ request()->is('admin/modules*') ? 'active' : '' }}">
-                        <i class="bi bi-plugin"></i><span
-                                class="menu-text">{{ trans('cruds.module.title_short') }}</span>
-                    </a>
+                    @if (config('app.licence'))
+                        <a href="{{ route("admin.modules.index") }}"
+                           class="ps-4 {{ request()->is('admin/modules*') ? 'active' : '' }}">
+                            <i class="bi bi-plugin"></i><span
+                                    class="menu-text">{{ trans('cruds.module.title_short') }}</span>
+                        </a>
+                    @endif
                 @endcan
             </div>
         @endcan
