@@ -406,14 +406,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Doc
     Route::get('doc/schema', function () {
         return view('doc/schema');
-    });
+    })->name('doc.schema');
+
     Route::get('doc/guide', function () {
         return view('doc/guide');
-    });
+    })->name('doc.guide');
 
     Route::get('doc/about', function () {
         return view('doc/about');
-    });
+    })->name('doc.about');
 
     // Import
     Route::get('config/import', function () {

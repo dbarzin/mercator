@@ -44,13 +44,15 @@ Base de données Mysql
 
 ## Reverse-proxy
 
-Deux modèles de configuration du reverse-proxy sont fournis dans le répertoires assets pour Apache et Nginx. D'autre part, la commande permettant de générer le certificat let's Encrypt sera de la forme:
+Deux modèles de configuration du reverse-proxy sont fournis dans le répertoires assets pour Apache et Nginx. D'autre
+part, la commande permettant de générer le certificat let's Encrypt sera de la forme:
 
     certbot --nginx --non-interactive --agree-tos --email admin@mydomain.com --no-eff-email --domain mercator.mydomain.com
 
 ## Start
 
-Avant le démarrage de l'application, il est nécessaire de procéder à un build du container ; ensuite, l'ordre habituel des commandes docker-compose s'enchainent.
+Avant le démarrage de l'application, il est nécessaire de procéder à un build du container ; ensuite, l'ordre habituel
+des commandes docker-compose s'enchainent.
 
 Aller dans le répertoire d'exploitation docker
 
@@ -102,16 +104,18 @@ Il est possible d'ouvrir un shell intéractif sur l'un des deux services app ou 
 
 ouverture d'un shell ; app ou db
 
-    docker-compose exec app /bin/bash
+    docker exec -it app /bin/bash
 
 # Exploitation
 
 ## Backup
 
-- les seules données à sauvegarder résident dans la base Mysql. Des éléments sont fournis sur dans la procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) de Mercator.
-- le script `./bin/mysql/backup` permet de réaliser l'opération de backup simplement ; il est monté dans le container docker par un `bind` (primitive `volumes` dans le docker-compose.yml)
+- les seules données à sauvegarder résident dans la base Mysql. Des éléments sont fournis sur dans la procédure
+  d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) de Mercator.
+- le script `./bin/mysql/backup` permet de réaliser l'opération de backup simplement ; il est monté dans le container
+  docker par un `bind` (primitive `volumes` dans le docker-compose.yml)
 - pour l'activer il suffit d'invoquer : `docker-compose exec db /app/backup`
-- la base de données  est sauvegardée dans un volume local : `./data/backup/sql/mercator.sql.gz`
+- la base de données est sauvegardée dans un volume local : `./data/backup/sql/mercator.sql.gz`
 
 ## Restore
 
@@ -120,5 +124,7 @@ fixme.
 # FIXME
 
 - donner des indications concernant la procédure de MAJ applicative.
-- le fonctionnement de l'application derrière un reverse-proxy ne fonctionne pas ; voir [ticket](https://github.com/mqu/mercator/issues/1) :
-  - bug résiduel concernant le formulaire d'authentification qui passe en HTTP(80) au lieu de HTTPS(443). Le reste du paramétrage semble OK.
+- le fonctionnement de l'application derrière un reverse-proxy ne fonctionne pas ;
+  voir [ticket](https://github.com/mqu/mercator/issues/1) :
+    - bug résiduel concernant le formulaire d'authentification qui passe en HTTP(80) au lieu de HTTPS(443). Le reste du
+      paramétrage semble OK.
