@@ -46,10 +46,10 @@ services:
       SESSION_DRIVER: file
       ENTRYPOINT ["wait-for-db.sh"]
       CMD ["php-fpm"]
-      depends_on:
-        mercator-db:
-          condition: service_healthy
-
+    depends_on:
+      mercator-db:
+        condition: service_healthy
+        
 volumes:
   mercator_db_data:
   mercator_app_data:
