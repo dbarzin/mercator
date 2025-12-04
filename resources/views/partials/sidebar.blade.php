@@ -556,7 +556,7 @@
                                     class="menu-text">{{ trans('cruds.module.title_short') }}</span>
                         </a>
                     @endif
-                @endif
+                @endcan
             </div>
         @endcan
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
