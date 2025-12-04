@@ -13,6 +13,7 @@
                     <tr>
                         <th>{{ trans('cruds.module.fields.name') }}</th>
                         <th>{{ trans('cruds.module.fields.label') }}</th>
+                        <th>{{ trans('cruds.module.fields.package') }}</th>
                         <th>{{ trans('cruds.module.fields.package_version') }}</th>
                         <th>{{ trans('cruds.module.fields.db_version') }}</th>
                         <th>{{ trans('cruds.module.fields.installed') }}</th>
@@ -55,7 +56,6 @@
                                         <button class="btn btn-sm btn-primary">{{ trans('cruds.module.labels.install') }}</button>
                                     </form>
                                 @endunless
-
                                 {{-- Activer / désactiver --}}
                                 @if($module['installed'])
                                     @if(!$module['enabled'])

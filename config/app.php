@@ -43,6 +43,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Trace Database Queries
+    |--------------------------------------------------------------------------
+    |
+    | Enable this to log and display all SQL queries executed by the application.
+    | Useful for debugging performance issues in development. Must be disabled
+    | in production as it exposes sensitive information
+    |
+    */
+
+    'db_trace' => env('APP_DB_TRACE', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |
