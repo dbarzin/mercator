@@ -45,7 +45,7 @@ COPY . .
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY wait-for-db.sh /usr/local/bin/wait-for-db.sh
+COPY docker/wait-for-db.sh /usr/local/bin/wait-for-db.sh
 
 ENTRYPOINT ["wait-for-db.sh"]
 CMD ["php-fpm"]
