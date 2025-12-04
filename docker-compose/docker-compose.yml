@@ -44,10 +44,11 @@ services:
 
       CACHE_DRIVER: file
       SESSION_DRIVER: file
-    command: [ "wait-for-db.sh", "php-fpm" ]
-    depends_on:
-      mercator-db:
-        condition: service_healthy
+      ENTRYPOINT ["wait-for-db.sh"]
+      CMD ["php-fpm"]
+      depends_on:
+        mercator-db:
+          condition: service_healthy
 
 volumes:
   mercator_db_data:
