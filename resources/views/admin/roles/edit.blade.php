@@ -2871,7 +2871,7 @@
                                        data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][0][0] }}"
                                        value="{{ $permission['actions'][0][0] }}" {{ in_array($permission['actions'][0][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][0][0]) ? 'checked' : '' }}>
                                 <label class="form-check-label"
-                                       for="for_{{ $permission['actions'][0][0] }}">{{ $permission['actions'][0][1] }}</label>
+                                       for="perm_{{ $permission['actions'][0][0] }}">{{ $permission['actions'][0][1] }}</label>
                             </div>
                         </div>
                     </div>
