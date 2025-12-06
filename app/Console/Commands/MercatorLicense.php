@@ -23,8 +23,8 @@ class MercatorLicense extends Command
 
         if (! $local) {
             // Pas encore en DB → on regarde dans l’ENV
-            $envToken = env('APP_LICENSE');
-
+            $envToken = config('app.license');
+            
             if (! $envToken) {
                 $this->error('No license token found. Set APP_LICENSE in your .env file.');
                 return self::FAILURE;
