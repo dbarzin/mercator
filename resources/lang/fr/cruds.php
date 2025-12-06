@@ -789,8 +789,8 @@ return [
         'fields' => [
             'name' => 'Nom',
             'name_helper' => 'Nom du flux',
-            'class' => 'Classe',
-            'class_helper' => '',
+            'chain' => 'Classe',
+            'chain_helper' => '',
             'protocol' => 'Protocole',
             'protocol_helper' => 'ex: TCP, UPD...',
             'source_ip_range' => 'Source',

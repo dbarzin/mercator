@@ -54,7 +54,7 @@
 
                 <tr>
                     <th>
-                        {{ trans('cruds.logicalFlow.fields.class') }}
+                        {{ trans('cruds.logicalFlow.fields.chain') }}
                     </th>
                     <th>
                         {{ trans('cruds.logicalFlow.fields.interface') }}
@@ -65,7 +65,7 @@
                 </tr>
                 <tr>
                     <td>
-                        {{ $logicalFlow->class }}
+                        {{ $logicalFlow->chain }}
                     </td>
                     <td>
                         {{ $logicalFlow->interface }}

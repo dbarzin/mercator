@@ -778,8 +778,8 @@ return [
         'fields' => [
             'name' => 'Flow name',
             'name_helper' => '',
-            'class' => 'Class',
-            'class_helper' => '',
+            'chain' => 'Class',
+            'chain_helper' => '',
             'protocol' => 'Protocol',
             'protocol_helper' => 'ex: TCP, UPD...',
             'source_ip_range' => 'Source',
