@@ -43,20 +43,20 @@
                 <div class="row">
                     <div class="col-md-1">
                         <div class="form-group">
-                            <label for="class">{{ trans('cruds.logicalFlow.fields.class') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('class') ? 'is-invalid' : '' }}"
-                                    name="class" id="class">
+                            <label for="chain">{{ trans('cruds.logicalFlow.fields.chain') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('chain') ? 'is-invalid' : '' }}"
+                                    name="chain" id="chain">
                                 <option></option>
-                                <option {{ old('class')=="INPUT" ? 'selected' : '' }}>INPUT</option>
-                                <option {{ old('class')=="OUTPUT" ? 'selected' : '' }}>OUTPUT</option>
-                                <option {{ old('class')=="FORWARD" ? 'selected' : '' }}>FORWARD</option>
+                                <option {{ old('chain')=="INPUT" ? 'selected' : '' }}>INPUT</option>
+                                <option {{ old('chain')=="OUTPUT" ? 'selected' : '' }}>OUTPUT</option>
+                                <option {{ old('chain')=="FORWARD" ? 'selected' : '' }}>FORWARD</option>
                             </select>
-                            @if($errors->has('class'))
+                            @if($errors->has('chain'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('class') }}
+                                    {{ $errors->first('chain') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.logicalFlow.fields.class_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.logicalFlow.fields.chain_helper') }}</span>
                         </div>
                     </div>
                     <div class="col-md-2">

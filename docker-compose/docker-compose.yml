@@ -33,7 +33,7 @@ services:
     environment:
       APP_ENV: production
       APP_DEBUG: false
-      APP_URL: https://mercator.sourcentis.com
+      APP_URL: https://mercator.yourdomain.com
 
       DB_CONNECTION: mariadb
       DB_HOST: mercator-db
