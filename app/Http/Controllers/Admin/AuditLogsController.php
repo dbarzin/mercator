@@ -40,13 +40,20 @@ class AuditLogsController extends Controller
             ->join('users', 'users.id', '=', 'user_id');
 
         if (!empty($search)) {
-            $query->where(function ($q) use ($search) {
-                $q->where('description', 'like', "%{$search}%")
-                    ->orWhere('properties', 'like', "%{$search}%")
-                    ->orWhere('subject_type', 'like', "%{$search}%")
-                    ->orWhere('users.name', 'like', "%{$search}%")
-                    ->orWhere('host', 'like', "%{$search}%");
-            });
+
+            // Découpe la recherche en mots séparés
+            $terms = preg_split('/\s+/', trim($search));
+
+            // Pour chaque mot, on impose une condition (AND)
+            foreach ($terms as $term) {
+                $query->where(function ($q) use ($term) {
+                    $q->where('description', 'like', "%{$term}%")
+                        ->orWhere('properties', 'like', "%{$term}%")
+                        ->orWhere('subject_type', 'like', "%{$term}%")
+                        ->orWhere('users.name', 'like', "%{$term}%")
+                        ->orWhere('host', 'like', "%{$term}%");
+                });
+            }
         }
 
         $logs = $query
