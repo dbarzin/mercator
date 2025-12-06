@@ -11,11 +11,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuditLogsController extends Controller
 {
+
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('audit_log_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logs = DB::table('audit_logs')
+        $search   = $request->input('search');
+        $perPage  = (int) $request->input('per_page', 100);
+
+        // On borne les valeurs possibles pour éviter les conneries
+        $allowedPerPage = [10, 25, 20, 100, 1000];
+        if (! in_array($perPage, $allowedPerPage)) {
+            $perPage = 100;
+        }
+
+         $query = DB::table('audit_logs')
             ->select(
                 'audit_logs.id',
                 'description',
@@ -26,11 +37,35 @@ class AuditLogsController extends Controller
                 'host',
                 'audit_logs.created_at'
             )
-            ->join('users', 'users.id', '=', 'user_id')
-            ->orderBy('audit_logs.id', 'desc')->limit(1000)->get();
+            ->join('users', 'users.id', '=', 'user_id');
 
-        return view('admin.auditLogs.index', ['logs' => $logs]);
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('description', 'like', "%{$search}%")
+                    ->orWhere('properties', 'like', "%{$search}%")
+                    ->orWhere('subject_type', 'like', "%{$search}%")
+                    ->orWhere('users.name', 'like', "%{$search}%")
+                    ->orWhere('host', 'like', "%{$search}%");
+            });
+        }
+
+        $logs = $query
+            ->orderBy('audit_logs.id', 'desc')
+            ->paginate($perPage)
+            ->appends([
+                'search'   => $search,
+                'per_page' => $perPage,
+            ]);
+
+        return view('admin.auditLogs.index', [
+            'logs'      => $logs,
+            'search'    => $search,
+            'perPage'   => $perPage,
+            'perPageOptions' => $allowedPerPage,
+        ]);
     }
+
+
 
     public function show(AuditLog $auditLog)
     {
