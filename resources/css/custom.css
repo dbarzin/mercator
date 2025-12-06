@@ -248,6 +248,10 @@ table.dataTable thead th {
     padding-bottom: 5px !important;
 }
 
+.select2-container {
+    width: auto !important;
+}
+
 /***************************************************************************/
 
 .has-error .invalid-feedback {
