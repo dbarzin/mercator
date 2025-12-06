@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('local_licenses', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->text('license_token');
             $table->timestamp('last_check_at')->nullable();
             $table->string('last_check_status')->nullable();
