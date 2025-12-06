@@ -30,6 +30,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('mercator:certificate-expiracy')->daily();
         $schedule->command('mercator:cve-search')->daily();
         $schedule->command('cpe:sync')->dailyAt('00:30')->withoutOverlapping();
+
+        $schedule->call(function () {
+            app(LicenseService::class)->checkOnline();
+        })->daily();
     }
 
     /**
