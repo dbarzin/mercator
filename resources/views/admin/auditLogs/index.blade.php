@@ -115,9 +115,6 @@
     <script>
         @include('partials.datatable-paginate', array(
             'id' => '#dataTable',
-            'title' => trans("cruds.auditLog.title_singular"),
-            'URL' => route('admin.sites.massDestroy'),
-            'canDelete' => false,
             'order' => "[1, 'desc']"
         ))
     </script>

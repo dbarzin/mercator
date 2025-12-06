@@ -21,12 +21,12 @@ class AuditLogsController extends Controller
         $perPage  = (int) $request->input('per_page', 100);
 
         // On borne les valeurs possibles pour éviter les conneries
-        $allowedPerPage = [10, 25, 20, 100, 1000];
+        $allowedPerPage = [10, 25, 50, 100, 1000];
         if (! in_array($perPage, $allowedPerPage)) {
             $perPage = 100;
         }
 
-         $query = DB::table('audit_logs')
+        $query = DB::table('audit_logs')
             ->select(
                 'audit_logs.id',
                 'description',
