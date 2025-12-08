@@ -155,14 +155,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LICENCE
+    | LICENSE
     |--------------------------------------------------------------------------
     |
-    | Licence key required to activate the enterprise modules.
-    | Pulled from the environment variable APP_LICENCE.
+    | License key required to activate the enterprise modules.
+    | Pulled from the environment variable APP_LICENSE.
     |
     */
-    'licence' => env('APP_LICENCE', null),
+    'license' => env('APP_LICENSE', null),
 
     /*
     |--------------------------------------------------------------------------

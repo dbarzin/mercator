@@ -549,7 +549,7 @@
                     </a>
                 @endcan
                 @can('module_manage')
-                    @if (config('app.licence'))
+                    @if (config('app.license'))
                         <a href="{{ route("admin.modules.index") }}"
                            class="ps-4 {{ request()->is('admin/modules*') ? 'active' : '' }}">
                             <i class="bi bi-plugin"></i><span
@@ -564,7 +564,7 @@
         </a>
     </div>
     <div class="sidebar-footer">
-        @if (config('app.licence'))
+        @if (config('app.license'))
             Enterprise
         @else
             Open Source
