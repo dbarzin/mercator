@@ -32,7 +32,7 @@ return new class extends Migration
             ->on('security_devices')
             ->onDelete('set null');
     });
-    }
+}
 
     /**
      * Reverse the migrations.
