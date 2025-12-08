@@ -11,19 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('logical_flows', function (Blueprint $table) {
-            $table->unsignedBigInteger('security_device_source_id')
-                ->nullable()
-                ->after('physical_security_device_source_id')
-                ->references('id')->on('security_devices')
-                ->onDelete('set null');
+    Schema::table('logical_flows', function (Blueprint $table) {
+        // Ajout des colonnes
+        $table->unsignedInteger('security_device_source_id')
+            ->nullable()
+            ->after('physical_security_device_source_id');
 
-            $table->unsignedBigInteger('security_device_dest_id')
-                ->nullable()
-                ->after('physical_security_device_dest_id')
-                ->references('id')->on('security_devices')
-                ->onDelete('set null');
-        });
+        $table->unsignedInteger('security_device_dest_id')
+            ->nullable()
+            ->after('physical_security_device_dest_id');
+
+        // Définition des clés étrangères
+        $table->foreign('security_device_source_id')
+            ->references('id')
+            ->on('security_devices')
+            ->onDelete('set null');
+
+        $table->foreign('security_device_dest_id')
+            ->references('id')
+            ->on('security_devices')
+            ->onDelete('set null');
+    });
     }
 
     /**
