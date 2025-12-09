@@ -10,8 +10,6 @@ class RolesTableSeeder extends Seeder
 {
     public function run(): void
     {
-        \Log::info('RolesTableSeeder');
-        
         if (DB::table('roles')->count() === 0) {
 
             $roles = [
@@ -30,8 +28,6 @@ class RolesTableSeeder extends Seeder
             ];
 
             Role::query()->insert($roles);
-
-            \Log::info('RolesTableSeeder: Roles inserted');
         }
     }
 }
