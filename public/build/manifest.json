@@ -1,21 +1,7 @@
 {
-  "_Graph-Cv-_2TnX.js": {
-    "file": "assets/Graph-Cv-_2TnX.js",
-    "name": "Graph"
-  },
-  "_ModelXmlSerializer-B5ogpWyY.js": {
-    "file": "assets/ModelXmlSerializer-B5ogpWyY.js",
-    "name": "ModelXmlSerializer",
-    "imports": [
-      "_Graph-Cv-_2TnX.js"
-    ]
-  },
-  "_RubberBandHandler-Cu1jhjEu.js": {
-    "file": "assets/RubberBandHandler-Cu1jhjEu.js",
-    "name": "RubberBandHandler",
-    "imports": [
-      "_Graph-Cv-_2TnX.js"
-    ]
+  "_ModelXmlSerializer-B1iToIRA.js": {
+    "file": "assets/ModelXmlSerializer-B1iToIRA.js",
+    "name": "ModelXmlSerializer"
   },
   "_chart-BctVBgzL.js": {
     "file": "assets/chart-BctVBgzL.js",
@@ -60,16 +46,6 @@
     "isEntry": true,
     "css": [
       "assets/app-nxymF9jp.css"
-    ]
-  },
-  "resources/js/bpmn.edit.ts": {
-    "file": "assets/bpmn.edit-CeMQVCyM.js",
-    "name": "bpmn.edit",
-    "src": "resources/js/bpmn.edit.ts",
-    "isEntry": true,
-    "imports": [
-      "_Graph-Cv-_2TnX.js",
-      "_RubberBandHandler-Cu1jhjEu.js"
     ]
   },
   "resources/js/chart-home.js": {
@@ -125,24 +101,21 @@
     "isEntry": true
   },
   "resources/js/map.edit.ts": {
-    "file": "assets/map.edit-_bM7osHN.js",
+    "file": "assets/map.edit-BH96v7Rd.js",
     "name": "map.edit",
     "src": "resources/js/map.edit.ts",
     "isEntry": true,
     "imports": [
-      "_Graph-Cv-_2TnX.js",
-      "_RubberBandHandler-Cu1jhjEu.js",
-      "_ModelXmlSerializer-B5ogpWyY.js"
+      "_ModelXmlSerializer-B1iToIRA.js"
     ]
   },
   "resources/js/map.show.ts": {
-    "file": "assets/map.show-D_UFT4Ha.js",
+    "file": "assets/map.show-qinQRV72.js",
     "name": "map.show",
     "src": "resources/js/map.show.ts",
     "isEntry": true,
     "imports": [
-      "_Graph-Cv-_2TnX.js",
-      "_ModelXmlSerializer-B5ogpWyY.js"
+      "_ModelXmlSerializer-B1iToIRA.js"
     ]
   },
   "resources/js/vis-network.js": {
