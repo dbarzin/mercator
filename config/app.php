@@ -147,6 +147,7 @@ return [
     'ldap_enabled' => (bool) env('LDAP_ENABLED', false),
     'ldap_fallback_local' => (bool) env('LDAP_FALLBACK_LOCAL', true),
     'ldap_auto_provision' => (bool) env('LDAP_AUTO_PROVISION', false),
+    'ldap_auto_provision_role' => env('LDAP_AUTO_PROVISION_ROLE', null),
     'ldap_login_attributes' => env('LDAP_LOGIN_ATTRIBUTES', 'uid,cn,mail,sAMAccountName,userPrincipalName'),
     'ldap_users_base_dn' => env('LDAP_USERS_BASE_DN'),
     'ldap_scope' => env('LDAP_SCOPE', null),
