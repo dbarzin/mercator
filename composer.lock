@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48f2d9b896c572d9eced99ed78311b95",
+    "content-hash": "70590ee85cdbaf4bd931d1108a6fdb8f",
     "packages": [
         {
             "name": "brick/math",
@@ -5447,18 +5447,50 @@
             "time": "2025-02-24T19:33:30+00:00"
         },
         {
+            "name": "sourcentis/mercator-bpmn",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../mercator-bpmn",
+                "reference": "c415a4b97a7de5b6bd331fb14b8a16c8ae087ac2"
+            },
+            "require": {
+                "sourcentis/mercator-core": "@dev"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mercator\\BPMN\\BPMNServiceProvider"
+                    ]
+                },
+                "mercator-module": {
+                    "name": "bpmn",
+                    "label": "BPMN Module",
+                    "version": "0.0.1"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mercator\\BPMN\\": "src/"
+                }
+            },
+            "scripts": {
+                "build": [
+                    "esbuild resources/ts/bpmn.ts --bundle --platform=browser --outfile=public/js/mercator-bpmn.js"
+                ]
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "sourcentis/mercator-core",
             "version": "1.11.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dbarzin/mercator-core.git",
-                "reference": "c3dff99a05e86d0cd93cafdebe34e30031bae479"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/c3dff99a05e86d0cd93cafdebe34e30031bae479",
-                "reference": "c3dff99a05e86d0cd93cafdebe34e30031bae479",
-                "shasum": ""
+                "type": "path",
+                "url": "../mercator-core",
+                "reference": "90023c7c0d0a888935d99433cddb954f64b808a9"
             },
             "require": {
                 "laravel/framework": "^11.46",
@@ -5482,16 +5514,48 @@
                     "Mercator\\Core\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
             ],
             "description": "Mercator core services (modules, licensing, menus, domain models).",
-            "support": {
-                "issues": "https://github.com/dbarzin/mercator-core/issues",
-                "source": "https://github.com/dbarzin/mercator-core/tree/v1.11.0"
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "sourcentis/mercator-dummy",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../mercator-dummy",
+                "reference": "16b6b905d5afd08e8479530f52ba1e58fd507a3b"
             },
-            "time": "2025-12-08T09:01:03+00:00"
+            "require": {
+                "php": ">=8.1",
+                "sourcentis/mercator-core": "@dev"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mercator\\Dummy\\DummyServiceProvider"
+                    ]
+                },
+                "mercator-module": {
+                    "name": "dummy",
+                    "label": "Dummy Module",
+                    "version": "1.0.0"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mercator\\Dummy\\": "src/"
+                }
+            },
+            "description": "Dummy Module for Mercator",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -14244,7 +14308,11 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "sourcentis/mercator-bpmn": 20,
+        "sourcentis/mercator-core": 20,
+        "sourcentis/mercator-dummy": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
