@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Mercator\Core\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +11,8 @@ use Illuminate\Support\Str;
 use LdapRecord\Auth\BindException;
 use LdapRecord\Container;
 use LdapRecord\Models\Entry as LdapEntry;
+use Mercator\Core\Models\Role;
+use Mercator\Core\Models\User;
 
 class LoginController extends Controller
 {
@@ -178,6 +179,13 @@ class LoginController extends Controller
                         'login' => $identifier,
                         'password' => Hash::make(Str::random(32)), // inutilisable en local par défaut
                     ]);
+
+                    // Get default Role
+                    $roleName = config('app.ldap_auto_provision_role');
+                    if ($roleName !== null) {
+                        $role = Role::query()->where('title', $roleName)->firstOrFail();
+                        $local->roles()->sync([$role->id]);
+                        }
                 }
 
                 if ($local) {

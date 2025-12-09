@@ -12,8 +12,6 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        \Log::info('PermissionsTableSeeder');
-
         if (DB::table('permissions')->count() === 0) {
             DB::table('permissions')->insert([
                 ['id' => 1, 'title' => 'user_management_access'],
