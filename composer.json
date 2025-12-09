@@ -19,9 +19,7 @@
     "phpmailer/phpmailer": "^6.9",
     "phpoffice/phpword": "^1.4",
     "socialiteproviders/keycloak": "^5.3",
-    "sourcentis/mercator-bpmn": "@dev",
-    "sourcentis/mercator-core": "@dev",
-    "sourcentis/mercator-dummy": "@dev",
+    "sourcentis/mercator-core": "^1.11",
     "spatie/laravel-query-builder": "^6.3",
     "yajra/laravel-datatables-oracle": "^11.1"
   },

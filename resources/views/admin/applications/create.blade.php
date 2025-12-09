@@ -215,23 +215,6 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}"
-                                    name="cartographers[]" id="cartographers" multiple>
-                                @foreach($cartographers_list as $key => $cartographer)
-                                    <option value="{{ $key }}" {{ in_array($key, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('cartographers'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('cartographer') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
                             <label for="logical_servers">{{ trans('cruds.application.fields.administrators') }}</label>
                             <select class="form-control select2 {{ $errors->has('administrators') ? 'is-invalid' : '' }}"
                                     name="administrators[]" id="administrators" multiple>
