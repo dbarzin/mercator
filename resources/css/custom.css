@@ -566,44 +566,37 @@ table .navbar-brand-full {
 
 /***************************************************************************/
 
-/*
-.graphviz {
-    overflow-y: auto;
-    min-height: 550px;
-    width: 100%;
-}
 
-.graphviz svg {
-    width: 100%;
-    height: 600px;
-}
-*/
-
-/*
 #graph-container {
-  max-width: calc(100vw - 300px);
-  height: 500px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  box-sizing: border-box;
+    position: relative;
+    height: 300px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column; /* empile graph + barre verticalement */
+    overflow: hidden;
 }
-*/
 
 .graphviz {
-    height: 100%;
-    display: inline-block;
+    flex: 1 1 auto; /* prend tout l'espace dispo */
     white-space: nowrap;
     text-align: left;
+    overflow: auto;
 }
 
 .graphviz svg {
-    width: auto !important; /* Ne force pas l'élargissement */
+    width: auto !important;
     height: 100%;
     max-width: none !important;
     max-height: 500px;
     display: inline-block;
+}
+
+.graph-resize-handle {
+    height: 8px;
+    background: #ddd;
+    cursor: ns-resize;
+    flex: 0 0 8px; /* hauteur fixe */
+    width: 100%;
 }
 
 /* Graph Editor icon styles */

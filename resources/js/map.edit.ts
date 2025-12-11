@@ -327,7 +327,6 @@ graph.setPanning(true); // Active le panning global
 graph.allowAutoPanning = true;
 graph.useScrollbarsForPanning = true; // si le conteneur scrolle
 
-
 //-------------------------------------------------------------------------
 // LOAD / SAVE
 
@@ -378,7 +377,7 @@ async function saveGraphToDatabase(id: number, name: string, type: string, conte
 
 // Fonction pour récupérer le Graph en XML
 function getXMLGraph() {
-    return new ModelXmlSerializer(model).export();
+    return new ModelXmlSerializer(graph.model).export();
 }
 
 // Rendez la fonction getXMLGraph accessible globalement
@@ -390,9 +389,9 @@ function saveGraph() {
 
     // saveGraphToDatabase
     saveGraphToDatabase(
-        document.querySelector('#id').value,
-        document.querySelector('#name').value,
-        document.querySelector('#type').value,
+        windows.document.querySelector('#id')?.value,
+        windows.document.querySelector('#name')?.value,
+        windows.document.querySelector('#type')?.value,
         xml);
 }
 

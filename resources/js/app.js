@@ -482,5 +482,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     })(jQuery);
 
+    /* GRAPHVIZ */
 
+    const container = document.getElementById('graph-container');
+    const handle = document.querySelector('.graph-resize-handle');
+
+    let isDragging = false;
+
+    handle.addEventListener('mousedown', function (e) {
+        isDragging = true;
+        document.body.style.cursor = 'ns-resize';
+    });
+
+    document.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+
+        const newHeight = e.clientY - container.getBoundingClientRect().top;
+
+        // Limites min et max
+        if (newHeight > 100 && newHeight < window.innerHeight - 100) {
+            container.style.height = newHeight + 'px';
+        }
+    });
+
+    document.addEventListener('mouseup', function () {
+        isDragging = false;
+        document.body.style.cursor = 'default';
+    });
+    
 });
