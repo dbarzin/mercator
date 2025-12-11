@@ -1,9 +1,11 @@
 import {
+    Cell,
     CellEditorHandler,
     eventUtils,
     FastOrganicLayout,
     Graph,
     GraphDataModel,
+    type GraphPluginConstructor,
     InternalEvent,
     ModelXmlSerializer,
     Morphing,
@@ -13,21 +15,20 @@ import {
     SelectionHandler,
     styleUtils,
     UndoManager,
-    VertexHandlerConfig
+    VertexHandlerConfig,
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
+// Interfaces métier
 
-// Interface pour une arête (edge)
 interface Edge {
     attachedNodeId: string;
-    name: string,
+    name: string;
     edgeType: string;
     edgeDirection: string;
     bidirectional: boolean;
 }
 
-// Interface pour un nœud (node)
 interface Node {
     id: string;
     vue: string;
@@ -37,15 +38,17 @@ interface Node {
     edges: Edge[];
 }
 
-// Map contenant les nœuds
 type NodeMap = Map<string, Node>;
 
+// Déclaration de globals fournies par ailleurs
 declare const _nodes: NodeMap;
+declare const $: any;
 
 //-----------------------------------------------------------------------
-// Import des plugins
+// Plugins MaxGraph
+
 const plugins: GraphPluginConstructor[] = [
-    // L'ordre d'import est important !
+    // L'ordre est important
     CellEditorHandler,
     SelectionCellsHandler,
     SelectionHandler,
@@ -53,72 +56,73 @@ const plugins: GraphPluginConstructor[] = [
     RubberBandHandler,
 ];
 
-// Initialiser un graphique de base
-const container = document.getElementById('graph-container');
-const div = document.createElement('div');
+// Initialisation du graph
+
+const container = document.getElementById('graph-container') as HTMLDivElement | null;
+if (!container) {
+    throw new Error('#graph-container introuvable');
+}
+
 const graph = new Graph(container, new GraphDataModel(), plugins);
-//const graph = new BaseGraph(container, new GraphDataModel(), plugins);
 const model = graph.getDataModel();
 
 //-----------------------------------------------------------------------
-// Style des liens
+// Style des arêtes
 
-var style = graph.getStylesheet().getDefaultEdgeStyle();
-style.labelBackgroundColor = '#FFFFFF';
-style.strokeWidth = 2;
-style.rounded = true;
-style.entryPerimeter = false;
-//style.entryY = 0.25;
-//style.entryX = 0;
-// After move of "obstacles" nodes, move "finish" node - edge route will be recalculated
-style.edgeStyle = 'manhattanEdgeStyle';
-// style.edgeStyle = EdgeStyle.MANHATTAN; // clé typée
-// Exemple: ajuster la config Manhattan (step, directions, etc.)
-// ManhattanConnectorConfig.step = 20;
+const edgeDefaultStyle = graph.getStylesheet().getDefaultEdgeStyle();
+edgeDefaultStyle.labelBackgroundColor = '#FFFFFF';
+edgeDefaultStyle.strokeWidth = 2;
+edgeDefaultStyle.rounded = true;
+edgeDefaultStyle.entryPerimeter = false;
+edgeDefaultStyle.edgeStyle = 'manhattanEdgeStyle';
 
-// Désactiver les icônes de folding
+// Désactiver le folding
 (graph as any).getFoldingImage = () => null;
 
-// Changes vertex selection colors and size
+// Sélection des sommets
 VertexHandlerConfig.selectionColor = '#00a8ff';
 VertexHandlerConfig.selectionStrokeWidth = 2;
 
 //-----------------------------------------------------------------------
-// Initialiser l'UndoManager
+// Undo / Redo
 
-// wiring UndoManager
 const undoManager = new UndoManager();
-const listener = (_sender, evt) => {
-    undoManager.undoableEditHappened(evt.getProperty('edit'));
+const undoListener = (_sender: unknown, evt: any) => {
+    const edit = evt.getProperty('edit');
+    if (edit) {
+        undoManager.undoableEditHappened(edit);
+    }
 };
-model.addListener(InternalEvent.UNDO, listener);
-graph.getView().addListener(InternalEvent.UNDO, listener);
 
-// Boutons pour Undo/Redo
-const undoButton = document.getElementById('undoButton') as HTMLButtonElement;
-const redoButton = document.getElementById('redoButton') as HTMLButtonElement;
+model.addListener(InternalEvent.UNDO, undoListener);
+graph.getView().addListener(InternalEvent.UNDO, undoListener);
 
-undoButton.addEventListener('click', () => {
-    if (undoManager.canUndo()) {
-        undoManager.undo();
-    }
-});
+const undoButton = document.getElementById('undoButton') as HTMLButtonElement | null;
+const redoButton = document.getElementById('redoButton') as HTMLButtonElement | null;
 
-redoButton.addEventListener('click', () => {
-    if (undoManager.canRedo()) {
-        undoManager.redo();
-    }
-});
+if (undoButton) {
+    undoButton.addEventListener('click', () => {
+        if (undoManager.canUndo()) {
+            undoManager.undo();
+        }
+    });
+}
 
-// Gestionnaire pour les raccourcis clavier
+if (redoButton) {
+    redoButton.addEventListener('click', () => {
+        if (undoManager.canRedo()) {
+            undoManager.redo();
+        }
+    });
+}
+
+// Raccourcis clavier Undo / Redo
 document.addEventListener('keydown', (event: KeyboardEvent) => {
-    // Ctrl+Z pour Undo
     if (event.ctrlKey && event.key === 'z') {
         event.preventDefault();
         if (undoManager.canUndo()) {
             undoManager.undo();
         }
-        // Ctrl+Y pour ReDo
     } else if (event.ctrlKey && event.key === 'y') {
         event.preventDefault();
         if (undoManager.canRedo()) {
@@ -128,97 +132,100 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
 });
 
 // --------------------------------------------------------------------------------
-// Context menu for edges
-const edgeContextMenu = document.getElementById('edge-context-menu');
-const edgeColorSelect = document.getElementById('edge-color-select');
-const thicknessSelect = document.getElementById('edge-thickness-select');
+// Menus contextuels
 
-// text context menu
-const textContextMenu = document.getElementById('text-context-menu');
-const textFontSelect = document.getElementById('text-font-select');
-const textColorSelect = document.getElementById('text-color-select');
-const textSizeSelect = document.getElementById('text-size-select');
-const textBoldSelect = document.getElementById('text-bold-select');
-const textItalicSelect = document.getElementById('text-italic-select');
-const textUnderlineSelect = document.getElementById('text-underline-select');
+const edgeContextMenu = document.getElementById('edge-context-menu') as HTMLDivElement | null;
+const edgeColorSelect = document.getElementById('edge-color-select') as HTMLInputElement | null;
+const thicknessSelect = document.getElementById('edge-thickness-select') as HTMLSelectElement | null;
 
-let selectedEdge = null;
+const textContextMenu = document.getElementById('text-context-menu') as HTMLDivElement | null;
+const textFontSelect = document.getElementById('text-font-select') as HTMLSelectElement | null;
+const textColorSelect = document.getElementById('text-color-select') as HTMLInputElement | null;
+const textSizeSelect = document.getElementById('text-size-select') as HTMLSelectElement | null;
+const textBoldSelect = document.getElementById('text-bold-select') as HTMLButtonElement | null;
+const textItalicSelect = document.getElementById('text-italic-select') as HTMLButtonElement | null;
+const textUnderlineSelect = document.getElementById('text-underline-select') as HTMLButtonElement | null;
 
-graph.container.addEventListener('contextmenu', (event) => {
+let selectedCell: Cell | null = null;
+
+graph.container.addEventListener('contextmenu', (event: MouseEvent) => {
     event.preventDefault();
-    const cell = graph.getCellAt(event.offsetX, event.offsetY);
-    if (cell == null)
-        return;
 
-    // console.log(cell);
+    const cell = graph.getCellAt(event.offsetX, event.offsetY) as Cell | null;
+    if (!cell) return;
 
-    // Vérifier si l'élément cliqué est une arête
+    if (!edgeContextMenu || !textContextMenu) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const currentStyle = graph.getCellStyle(cell) as any;
+
     if (cell.isEdge()) {
-        selectedEdge = cell;
-        // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = (event.clientX - rect.left);
-        const y = (event.clientY - rect.top);
+        selectedCell = cell;
 
-        // Afficher le menu contextuel
         edgeContextMenu.style.display = 'block';
         edgeContextMenu.style.left = `${x + 75}px`;
         edgeContextMenu.style.top = `${y + 100}px`;
 
-        // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
-        const currentStyle = graph.getCellStyle(cell);
-        edgeColorSelect.value = currentStyle.strokeColor || '#000000';
-        thicknessSelect.value = currentStyle.strokeWidth || '1';
+        if (edgeColorSelect && thicknessSelect) {
+            edgeColorSelect.value = currentStyle.strokeColor || '#000000';
+            thicknessSelect.value = String(currentStyle.strokeWidth ?? '1');
+        }
+
+        textContextMenu.style.display = 'none';
     } else if (cell.isVertex()) {
+        // Vertex avec label editable
+        const cellValue = cell.value as string | null;
+        const hasText = !!cellValue && cellValue.trim() !== '';
 
-        if ((cell.value != null) && (cell.value != "")) {
-            selectedEdge = cell;
-            // Obtenir la position de la souris lors du drop
-            const rect = container.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+        const style = cell.style as any;
 
-            // Afficher le menu contextuel
+        if (hasText && textColorSelect && textFontSelect && textSizeSelect) {
+            selectedCell = cell;
+
             textContextMenu.style.display = 'block';
             textContextMenu.style.left = `${x + 75}px`;
             textContextMenu.style.top = `${y + 100}px`;
 
-            // Pré-remplir les valeurs du menu avec les styles actuels du texte
-            const currentStyle = graph.getCellStyle(cell);
+            edgeContextMenu.style.display = 'none';
+
             textColorSelect.value = currentStyle.fontColor || '#000000';
             textFontSelect.value = currentStyle.fontFamily || 'Arial';
-            textSizeSelect.value = currentStyle.fontSize || '12';
+            textSizeSelect.value = String(currentStyle.fontSize ?? '12');
 
-            if (selectedEdge.style.fontStyle & 1)
-                textBoldSelect.classList.add('selected');
-            else
-                textBoldSelect.classList.remove('selected');
+            const fontStyle = style?.fontStyle ?? 0;
 
-            if (selectedEdge.style.fontStyle & 2)
-                textItalicSelect.classList.add('selected');
-            else
-                textItalicSelect.classList.remove('selected');
+            if (textBoldSelect) {
+                if (fontStyle & 1) textBoldSelect.classList.add('selected');
+                else textBoldSelect.classList.remove('selected');
+            }
+            if (textItalicSelect) {
+                if (fontStyle & 2) textItalicSelect.classList.add('selected');
+                else textItalicSelect.classList.remove('selected');
+            }
+            if (textUnderlineSelect) {
+                if (fontStyle & 4) textUnderlineSelect.classList.add('selected');
+                else textUnderlineSelect.classList.remove('selected');
+            }
+        } else if (!style?.image && (!cell.children || cell.children.length === 0)) {
+            // Vertex "simple" → menu arête (couleur/bordure)
+            selectedCell = cell;
 
-            if (selectedEdge.style.fontStyle & 4)
-                textUnderlineSelect.classList.add('selected');
-            else
-                textUnderlineSelect.classList.remove('selected');
-        } else if ((cell.style.image == null) && (cell.children.length == 0)) {
-            selectedEdge = cell;
-            // Obtenir la position de la souris lors du drop
-            const rect = container.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            // Afficher le menu contextuel
             edgeContextMenu.style.display = 'block';
             edgeContextMenu.style.left = `${x + 75}px`;
             edgeContextMenu.style.top = `${y + 100}px`;
 
-            // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
-            const currentStyle = graph.getCellStyle(cell);
-            edgeColorSelect.value = currentStyle.strokeColor || '#000000';
-            thicknessSelect.value = currentStyle.strokeWidth || '1';
+            if (edgeColorSelect && thicknessSelect) {
+                edgeColorSelect.value = currentStyle.strokeColor || '#000000';
+                thicknessSelect.value = String(currentStyle.strokeWidth ?? '1');
+            }
+
+            textContextMenu.style.display = 'none';
+        } else {
+            textContextMenu.style.display = 'none';
+            edgeContextMenu.style.display = 'none';
         }
     } else {
         textContextMenu.style.display = 'none';
@@ -226,132 +233,135 @@ graph.container.addEventListener('contextmenu', (event) => {
     }
 });
 
-// Appliquer les changements de style à l'arête sélectionnée
+// Appliquer style arête / vertex
+
 document.getElementById('apply-edge-style')?.addEventListener('click', (e) => {
-    // console.log("change style")
-    // Do not submit form
     e.preventDefault();
-    // edge selected ?
-    if (selectedEdge) {
-        // console.log(selectedEdge);
-        // console.log("update edge "+colorSelect.value + " "+thicknessSelect.value);
-        graph.batchUpdate(() => {
 
-            const style = graph.getCellStyle(selectedEdge);
-            // console.log(style);
-            if (selectedEdge.isEdge()) {
-                selectedEdge.style.strokeColor = edgeColorSelect.value;
-                selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
-            } else {
-                selectedEdge.style.fillColor = edgeColorSelect.value;
-                selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
-            }
+    if (!selectedCell || !edgeColorSelect || !thicknessSelect) return;
 
-            graph.refresh(selectedEdge);
-        });
-    }
-    // Fermer le menu contextuel
-    edgeContextMenu.style.display = 'none';
+    graph.batchUpdate(() => {
+        const style = (selectedCell?.style ?? {}) as any;
+        const thickness = parseInt(thicknessSelect.value, 10) || 1;
+
+        if (selectedCell?.isEdge()) {
+            style.strokeColor = edgeColorSelect.value;
+            style.strokeWidth = thickness;
+        } else {
+            style.fillColor = edgeColorSelect.value;
+            style.strokeWidth = thickness;
+        }
+
+        selectedCell.style = style;
+        graph.refresh(selectedCell);
+    });
+
+    if (edgeContextMenu) edgeContextMenu.style.display = 'none';
 });
 
-// Appliquer les changements de style au texte sélectionné
+// Appliquer style texte
+
 document.getElementById('apply-text-style')?.addEventListener('click', (e) => {
     e.preventDefault();
 
-    // edge selected ?
-    if (selectedEdge) {
-        graph.batchUpdate(() => {
-            selectedEdge.style.fontFamily = textFontSelect.value;
-            selectedEdge.style.fontColor = textColorSelect.value;
-            selectedEdge.style.fontSize = parseInt(textSizeSelect.value, 10);
+    if (!selectedCell || !textFontSelect || !textColorSelect || !textSizeSelect) return;
 
-            var flag = 0;
-            flag = flag | (
-                textBoldSelect.classList.contains('selected') ? 1 : 0);
-            flag = flag | (
-                textItalicSelect.classList.contains('selected') ? 2 : 0);
-            flag = flag | (
-                textUnderlineSelect.classList.contains('selected') ? 4 : 0);
-            selectedEdge.style.fontStyle = flag;
+    graph.batchUpdate(() => {
+        const style = (selectedCell?.style ?? {}) as any;
 
-            graph.refresh(selectedEdge);
+        style.fontFamily = textFontSelect.value;
+        style.fontColor = textColorSelect.value;
+        style.fontSize = parseInt(textSizeSelect.value, 10) || 12;
 
-        });
-    }
-    // Fermer le menu contextuel
-    textContextMenu.style.display = 'none';
+        let flag = 0;
+        if (textBoldSelect?.classList.contains('selected')) flag |= 1;
+        if (textItalicSelect?.classList.contains('selected')) flag |= 2;
+        if (textUnderlineSelect?.classList.contains('selected')) flag |= 4;
+
+        style.fontStyle = flag;
+
+        selectedCell?.style = style;
+        graph.refresh(selectedCell);
+    });
+
+    if (textContextMenu) textContextMenu.style.display = 'none';
 });
 
-// Sélectionnez tous les boutons
-document.querySelectorAll<HTMLButtonElement>('.button')
+// Boutons avec classe .button → toggle "selected"
 
-    // Ajoutez un écouteur d'événement à chaque bouton
-    ?.forEach(button => {
+document
+    .querySelectorAll<HTMLButtonElement>('.button')
+    .forEach((button) => {
         button.addEventListener('click', () => {
-            toggleSelection(button);
+            button.classList.toggle('selected');
         });
     });
 
-// Fonction pour basculer la sélection du bouton
-function toggleSelection(button: HTMLButtonElement) {
-    const isSelected = button.classList.toggle('selected');
-}
+// Cacher les menus contextuels en cliquant ailleurs
 
-// Cacher le menu contextuel en cliquant ailleurs
 document.addEventListener('click', (event) => {
-    if (!textContextMenu.contains(event.target)) {
+    const target = event.target as Node | null;
+
+    if (textContextMenu && !textContextMenu.contains(target as Node)) {
         textContextMenu.style.display = 'none';
     }
-    if (!edgeContextMenu.contains(event.target)) {
+    if (edgeContextMenu && !edgeContextMenu.contains(target as Node)) {
         edgeContextMenu.style.display = 'none';
     }
 });
 
 // --------------------------------------------------------------------------------
-// Configuration de la grille
-graph.setGridEnabled(true); // Active la grille
-graph.setGridSize(10); // Taille des cellules de la grille
+// Grille
 
-// Personnaliser la grille avec CSS
+graph.setGridEnabled(true);
+graph.setGridSize(10);
+
 container.style.backgroundImage = `
   linear-gradient(to right, #e0e0e0 1px, transparent 1px),
   linear-gradient(to bottom, #e0e0e0 1px, transparent 1px)
 `;
-container.style.backgroundSize = '10px 10px'; // Taille des cellules de la grille
+container.style.backgroundSize = '10px 10px';
 
 // -----------------------------------------------------------------------
 // Panning
 
-// Permettre le déplacement de la grille
-graph.setPanning(true); // Active le panning global
-graph.allowAutoPanning = true;
-graph.useScrollbarsForPanning = true; // si le conteneur scrolle
+graph.setPanning(true);
+(graph as any).allowAutoPanning = true;
+(graph as any).useScrollbarsForPanning = true;
 
 //-------------------------------------------------------------------------
 // LOAD / SAVE
 
-// Fonction pour charger le graphe
 export function loadGraph(xml: string) {
     new ModelXmlSerializer(model).import(xml);
 }
 
-// Rendez la fonction loadGraph accessible globalement
 (window as any).loadGraph = loadGraph;
 
-async function saveGraphToDatabase(id: number, name: string, type: string, content: string): Promise<void> {
-    console.log('saveGraphToDatabase:' + id + ' name:' + name);
+async function saveGraphToDatabase(
+    id: number | string,
+    name: string,
+    type: string,
+    content: string,
+): Promise<void> {
+    const csrfMeta = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement | null;
+    const csrfToken = csrfMeta?.content;
+    if (!csrfToken) {
+        console.error('CSRF token manquant');
+        alert('Token CSRF manquant.');
+        return;
+    }
 
     try {
         const response = await fetch(`/admin/graphs/${id}`, {
-            method: 'POST', // on poste...
-            credentials: 'same-origin', // envoie les cookies de session
+            method: 'POST',
+            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                Accept: 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
                 'X-Requested-With': 'XMLHttpRequest',
             },
-            // ...mais on "spoof" en PUT côté Laravel
             body: JSON.stringify({
                 _method: 'PUT',
                 id,
@@ -361,13 +371,17 @@ async function saveGraphToDatabase(id: number, name: string, type: string, conte
             }),
         });
 
-        console.log('réponse :', response.status);
-        if (response.status != 200) {
-            const error = await response.json();
-            throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
+        if (response.status !== 200) {
+            let errorMessage = 'Erreur lors de la sauvegarde du graphe.';
+            try {
+                const error = await response.json();
+                if (error?.message) errorMessage = error.message;
+            } catch {
+                // ignore
+            }
+            throw new Error(errorMessage);
         }
 
-        // const data = await response.json();
         console.log('Graphe sauvegardé avec succès');
     } catch (error) {
         console.error('Erreur lors de la sauvegarde :', error);
@@ -375,229 +389,202 @@ async function saveGraphToDatabase(id: number, name: string, type: string, conte
     }
 }
 
-// Fonction pour récupérer le Graph en XML
-function getXMLGraph() {
-    return new ModelXmlSerializer(graph.model).export();
+function getXMLGraph(): string {
+    return new ModelXmlSerializer(graph.getDataModel()).export();
 }
 
-// Rendez la fonction getXMLGraph accessible globalement
 (window as any).getXMLGraph = getXMLGraph;
 
-// Fonction pour sauvegarder le graphe
 function saveGraph() {
+    const idInput = document.querySelector('#id') as HTMLInputElement | null;
+    const nameInput = document.querySelector('#name') as HTMLInputElement | null;
+    const typeInput = document.querySelector('#type') as HTMLInputElement | null;
+
+    if (!idInput || !nameInput || !typeInput) {
+        alert('Champs id / name / type manquants');
+        return;
+    }
+
     const xml = new ModelXmlSerializer(model).export();
 
-    // saveGraphToDatabase
-    saveGraphToDatabase(
-        window.document.querySelector('#id')?.value,
-        window.document.querySelector('#name')?.value,
-        window.document.querySelector('#type')?.value,
-        xml);
+    saveGraphToDatabase(idInput.value, nameInput.value, typeInput.value, xml);
 }
 
-// Ajouter un bouton pour sauvegarder
 document.getElementById('saveButton')?.addEventListener('click', saveGraph);
 
 //-------------------------------------------------------------------------
-// Ajout de texte
+// Utilitaire coordonnées
 
-document.getElementById('font-btn')?.addEventListener('dragstart', (event) => {
-    event.dataTransfer.setData('node-type', 'text-node');
-});
+type GraphPoint = { x: number; y: number };
 
-container.addEventListener('dragover', (event) => {
-    event.preventDefault(); // Nécessaire pour autoriser le drop
-});
-
-graph.autoSizeCells = true; // maxGraph expose ce flag
-
-/*****************************************************************/
-
-// utilitaire robuste : clientX/clientY -> coordonnées graphe (scale, translate, pan, scroll)
-function getGraphPointFromEvent(graph: any, evt: MouseEvent | DragEvent) {
-    if (typeof graph.getPointForEvent === 'function') {
-        // ✅ maxGraph gère scale, translate, panDx/panDy, scroll
-        return graph.getPointForEvent(evt as any);
+function getGraphPointFromEvent(graph: Graph, evt: MouseEvent | DragEvent): GraphPoint {
+    if (typeof (graph as any).getPointForEvent === 'function') {
+        const pt = (graph as any).getPointForEvent(evt as any);
+        return {x: pt.x, y: pt.y};
     }
 
-    // Fallback manuel (au cas où)
-    const view = graph.view ?? graph.getView?.();
+    const view = (graph as any).view ?? graph.getView();
     const pt = styleUtils.convertPoint(
         graph.container,
-        eventUtils.getClientX(evt),
-        eventUtils.getClientY(evt)
+        eventUtils.getClientX(evt as any),
+        eventUtils.getClientY(evt as any),
     );
     const tr = view.translate ?? {x: 0, y: 0};
     const scale = view.scale ?? 1;
+    const panDx = (graph as any).panDx ?? 0;
+    const panDy = (graph as any).panDy ?? 0;
 
-    // 🔧 intégrer le pan temporaire (sinon décalage quand on a panné)
-    const panDx = graph.panDx ?? 0;
-    const panDy = graph.panDy ?? 0;
-
-    return [
-        (pt.x - panDx) / scale - tr.x - 20,
-        (pt.y - panDy) / scale - tr.y - 20,
-    ];
+    return {
+        x: (pt.x - panDx) / scale - tr.x - 20,
+        y: (pt.y - panDy) / scale - tr.y - 20,
+    };
 }
 
-/*****************************************************************/
-/* NEW CODE  xxx */
-graph.enterStopsCellEditing = true;  // Entrée valide le texte
+graph.enterStopsCellEditing = true;
 
-container.addEventListener('drop', (event) => {
+//-------------------------------------------------------------------------
+// Drag & drop : texte
+
+const fontBtn = document.getElementById('font-btn') as HTMLElement | null;
+
+if (fontBtn) {
+    fontBtn.addEventListener('dragstart', (event: DragEvent) => {
+        event.dataTransfer?.setData('node-type', 'text-node');
+    });
+}
+
+container.addEventListener('dragover', (event: DragEvent) => {
     event.preventDefault();
+});
 
-    if (event.dataTransfer.getData('node-type') == 'text-node') {
-        // Gets drop location point for vertex
+container.addEventListener('drop', (event: DragEvent) => {
+    event.preventDefault();
+    const type = event.dataTransfer?.getData('node-type');
+
+    if (type === 'text-node') {
         const pt = getGraphPointFromEvent(graph, event);
 
-        // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
             const parent = graph.getDefaultParent();
-            const vertex = graph.insertVertex({
+            graph.insertVertex({
                 parent,
-                value: 'Text', // Texte à afficher
+                value: 'Text',
                 position: [pt.x, pt.y],
-                size: [150, 30], // Taille du nœud
+                size: [150, 30],
                 style: {
-                    fillColor: 'none', // Pas de fond
-                    strokeColor: 'none', // Pas de bordure
-                    fontColor: '#000000', // Couleur du texte
-                    fontSize: 14, // Taille du texte
-                    align: 'left', // Alignement horizontal
-                    verticalAlign: 'middle', // Alignement vertical
+                    fillColor: 'none',
+                    strokeColor: 'none',
+                    fontColor: '#000000',
+                    fontSize: 14,
+                    align: 'left',
+                    verticalAlign: 'middle',
                 },
-//                editable: 'true'
             });
-//            vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
         });
     }
 });
 
-
 //-------------------------------------------------------------------------
-// Ajout de carré
-const squareIcon = document.getElementById('square-btn');
+// Drag & drop : carré
 
-squareIcon.addEventListener('dragstart', (event) => {
-    event.dataTransfer.setData('node-type', 'square-node');
-});
+const squareIcon = document.getElementById('square-btn') as HTMLElement | null;
 
-container.addEventListener('dragover', (event) => {
-    event.preventDefault(); // Nécessaire pour autoriser le drop
-});
+if (squareIcon) {
+    squareIcon.addEventListener('dragstart', (event: DragEvent) => {
+        event.dataTransfer?.setData('node-type', 'square-node');
+    });
+}
 
-container.addEventListener('drop', (event) => {
+container.addEventListener('drop', (event: DragEvent) => {
     event.preventDefault();
+    const type = event.dataTransfer?.getData('node-type');
 
-    if (event.dataTransfer.getData('node-type') == 'square-node') {
-        // Gets drop location point for vertex
+    if (type === 'square-node') {
         const pt = getGraphPointFromEvent(graph, event);
 
-        // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
-
-            // Ajouter le carré
             const parent = graph.getDefaultParent();
-
-            console.log([pt.x, pt.y]);
 
             const vertex = graph.insertVertex({
                 parent,
-                // id: "square", // TODO : générer unique ID
-                value: '', // Pas de texte pour le conteneur
-                position: [pt.x, pt.y], // Position du carré
-                size: [150, 120], // Taille du carré
+                value: '',
+                position: [pt.x, pt.y],
+                size: [150, 120],
                 style: {
-                    fillColor: '#fffacd', // Fond jaune pâle
-                    strokeColor: '#000000', // Bordure noire
-                    strokeWidth: 1, // Épaisseur de la bordure
-                    rounded: 2, // Coins arrondis
+                    fillColor: '#fffacd',
+                    strokeColor: '#000000',
+                    strokeWidth: 1,
+                    rounded: 2,
                 },
             });
 
-            // Mettre en arrière plan
             graph.orderCells(true, [vertex]);
-
-            // vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
         });
     }
 });
 
 //-------------------------------------------------------------------------
-// Ajout d'un noeud
-const nodeIcon = document.getElementById('nodeImage');
-const nodeSelector = document.getElementById('node');
+// Drag & drop : nœud image
 
-nodeIcon.addEventListener('dragstart', (event) => {
-    event.dataTransfer.setData('node-type', 'icon-node'); // Type de nœud
-});
+const nodeIcon = document.getElementById('nodeImage') as HTMLImageElement | null;
+const nodeSelector = document.getElementById('node') as HTMLSelectElement | null;
 
-container.addEventListener('dragover', (event) => {
-    event.preventDefault(); // Nécessaire pour autoriser le drop
-});
+if (nodeIcon) {
+    nodeIcon.addEventListener('dragstart', (event: DragEvent) => {
+        event.dataTransfer?.setData('node-type', 'icon-node');
+    });
+}
 
-container.addEventListener('drop', (event) => {
+container.addEventListener('drop', (event: DragEvent) => {
     event.preventDefault();
+    const type = event.dataTransfer?.getData('node-type');
 
-    if ((event.dataTransfer.getData('node-type') == 'icon-node')
-        && (nodeIcon.src != '')) {
-        // Obtenir la position de la souris lors du drop
+    if (type === 'icon-node' && nodeIcon && nodeIcon.src && nodeSelector) {
         const pt = getGraphPointFromEvent(graph, event);
+        const parent = graph.getDefaultParent();
+        const nodeId = nodeSelector.value;
 
-        // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
-            const parent = graph.getDefaultParent();
+            const existing = model.getCell(nodeId) as Cell | null;
 
-            // Check cell already exists
-            const cell = model.getCell(nodeSelector.value);
-            if (cell != null) {
-                // sélectionne la cell
-                graph.setSelectionCells(cell);
-                //graph.refresh(cell);
+            if (existing) {
+                graph.setSelectionCells([existing]);
             } else {
-                const node = _nodes.get(nodeSelector.value);
+                const node = _nodes.get(nodeId);
+                if (!node) return;
+
                 const newNode = graph.insertVertex({
                     parent,
-                    id: nodeSelector.value,
+                    id: nodeId,
                     value: node.label,
-                    position: [pt.x - 16, pt.y - 16], // center 32x32 icon on cursor
-                    size: [32, 32], // Taille du nœud
+                    position: [pt.x - 16, pt.y - 16],
+                    size: [32, 32],
                     style: {
-                        shape: 'image', // Définir le nœud comme une image
+                        shape: 'image',
                         image: nodeIcon.src,
-                        // image: 'http://127.0.0.1:8000/images/application.png', // URL de l'image
-                        // imageWidth: 32, // Largeur de l'image
-                        // imageHeight: 32, // Hauteur de l'image
-                        editable: false, //  Ne pas autoriser de changer le label
-                        resizable: true, // Ne pas resizer les images
-                        //imageBorder: 0, // Bordure facultative autour de l'image
+                        editable: false,
+                        resizable: true,
                         verticalLabelPosition: 'bottom',
                         spacingTop: -15,
                     },
                 });
-                // Add edges
-                node.edges.forEach(function (edge) {
-                    // console.log(edge);
-                    // Check target cell present
-                    const targetNode = model.getCell(edge.attachedNodeId);
-                    if (targetNode != null) {
-                        // console.log("add edge to "+edge.attachedNodeId+" ");
-                        // add edge
-                        graph.insertEdge(
-                            {
-                                parent,
-                                value: '',
-                                source: newNode,
-                                target: targetNode,
-                                style: {
-                                    editable: false, //  Ne pas autoriser de changer le label
-                                    strokeColor: '#ff0000', // Edge color
-                                    strokeWidth: 1,
-                                    startArrow: 'none', // pas de flèche
-                                    endArrow: 'none' // pas de flèche
-                                },
-                            });
+
+                node.edges.forEach((edge) => {
+                    const targetNode = model.getCell(edge.attachedNodeId) as Cell | null;
+                    if (targetNode) {
+                        graph.insertEdge({
+                            parent,
+                            value: '',
+                            source: newNode,
+                            target: targetNode,
+                            style: {
+                                editable: false,
+                                strokeColor: '#ff0000',
+                                strokeWidth: 1,
+                                startArrow: 'none',
+                                endArrow: 'none',
+                            },
+                        });
                     }
                 });
             }
@@ -606,26 +593,24 @@ container.addEventListener('drop', (event) => {
 });
 
 //-------------------------------------------------------------------------
-// Gestion des boutons de zoom
-const zoomInButton = document.getElementById('zoom-in-btn');
-const zoomOutButton = document.getElementById('zoom-out-btn');
+// Zoom
 
-zoomInButton.addEventListener('click', () => {
-    graph.zoomIn();
-});
+const zoomInButton = document.getElementById('zoom-in-btn') as HTMLButtonElement | null;
+const zoomOutButton = document.getElementById('zoom-out-btn') as HTMLButtonElement | null;
 
-zoomOutButton.addEventListener('click', () => {
-    graph.zoomOut();
-});
+if (zoomInButton) {
+    zoomInButton.addEventListener('click', () => graph.zoomIn());
+}
+if (zoomOutButton) {
+    zoomOutButton.addEventListener('click', () => graph.zoomOut());
+}
 
 //-------------------------------------------------------------------------
-// Activer la suppression avec la touche Delete
-document.addEventListener('keydown', (event) => {
-    if ((event.key === 'Delete') || (event.key === 'Backspace')) {
-        // Récupérer les objets sélectionnés
-        const cells = graph.getSelectionCells();
+// Suppression avec Delete / Backspace
 
-        // Supprimer les objets sélectionnés
+document.addEventListener('keydown', (event: KeyboardEvent) => {
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+        const cells = graph.getSelectionCells();
         if (cells.length > 0) {
             graph.removeCells(cells);
         }
@@ -633,12 +618,10 @@ document.addEventListener('keydown', (event) => {
 });
 
 //-------------------------------------------------------------------------
-// Select all cells
+// CTRL+A : select all (jQuery)
 
-$('body').keydown(function (event) {
-    // console.log(event);
-    // CTRL-a
-    if (event.ctrlKey && (event.keyCode == 65)) {
+$('body').keydown((event: any) => {
+    if (event.ctrlKey && event.keyCode === 65) {
         event.preventDefault();
         event.stopPropagation();
         graph.selectAll();
@@ -646,169 +629,126 @@ $('body').keydown(function (event) {
 });
 
 //-------------------------------------------------------------------------
-// Empêcher les flèches de se déconnecter
+// Connexions / déconnexions
 
-graph.setConnectable(false); // Désactive les nouvelles connexions
-graph.isCellDisconnectable = function () {
-    return false; // Empêche la déconnexion des arêtes existantes
-};
+graph.setConnectable(false);
+(graph as any).isCellDisconnectable = () => false;
 
 //-------------------------------------------------------------------------
-// Empêcher l'édition des points d'attache
-//graph.isCellEditable = function () {
-//    return false; // Désactive la modification des arêtes
-//};
+// Group / ungroup
 
-//-------------------------------------------------------------------------
+const groupButton = document.getElementById('group-btn') as HTMLButtonElement | null;
+const ungroupButton = document.getElementById('ungroup-btn') as HTMLButtonElement | null;
 
-/* A utiliser pour zoom in/out
-// Gérer les actions dans le menu
-const addNodeButton = document.getElementById('add-node-btn');
-if (addNodeButton) {
-    addNodeButton.addEventListener('click', () => {
-        graph.batchUpdate(() => {
+if (groupButton) {
+    groupButton.addEventListener('click', () => {
+        const cells = graph.getSelectionCells();
+        if (cells.length > 1) {
             const parent = graph.getDefaultParent();
-            graph.insertVertex({
+            const group = graph.insertVertex({
                 parent,
-                value: 'New Node',
-                position: [100, 100], // Position par défaut
-                size: [80, 30],
+                style: {
+                    fillColor: 'none',
+                    strokeColor: 'none',
+                },
             });
-        });
+            graph.addCell(group);
+            graph.groupCells(group, 5, cells);
+        }
     });
 }
-*/
 
-//-------------------------------------------------------------------------
-// Gestion des groupes
-const groupButton = document.getElementById('group-btn');
-const ungroupButton = document.getElementById('ungroup-btn');
-
-groupButton.addEventListener('click', () => {
-    // Obtenir les cellules sélectionnées
-    const cells = graph.getSelectionCells();
-
-    if (cells.length > 1) {
-        // Créer un nouveau conteneur pour le groupe
-        const parent = graph.getDefaultParent();
-
-        const group = graph.insertVertex({
-            parent,
-            style: {
-                fillColor: 'none', // transparent
-                strokeColor: 'none', // transparent
-            },
-        });
-
-        // Ajouter le conteneur au graphe
-        graph.addCell(group);
-
-        // Déplacer les cellules sélectionnées dans le conteneur
-        graph.groupCells(group, 5, cells);
-    }
-});
-
-ungroupButton.addEventListener('click', () => {
-    // Obtenir les cellules sélectionnées
-    const cells = graph.getSelectionCells();
-    if (cells.length == 1) {
-        // Dégrouper les cellules sélectionnées
-        graph.ungroupCells(cells);
-
-        // Sélectionner les cellules résultantes après le dégrouper
-        graph.setSelectionCells(cells);
-    }
-});
+if (ungroupButton) {
+    ungroupButton.addEventListener('click', () => {
+        const cells = graph.getSelectionCells();
+        if (cells.length === 1) {
+            graph.ungroupCells(cells);
+            graph.setSelectionCells(cells);
+        }
+    });
+}
 
 //---------------------------------------------------------------------------
-// Fonction pour déplacer une cellule
-function moveSelectedVertex(graph, dx, dy) {
-    const selectedCell = graph.getSelectionCell(); // Obtenir la cellule sélectionnée
-    if (selectedCell && selectedCell.isVertex()) {
+// Déplacement avec flèches
+
+function moveSelectedVertex(graph: Graph, dx: number, dy: number) {
+    const selected = graph.getSelectionCell() as Cell | null;
+    if (selected && selected.isVertex()) {
         graph.batchUpdate(() => {
-            const geo = selectedCell.getGeometry();
+            const geo = selected.getGeometry();
             if (geo) {
-                // Déplace la cellule
                 geo.translate(dx, dy);
-                // Rafraîchit la vue
                 graph.refresh();
             }
         });
     }
 }
 
-// Écouteur pour les touches directionnelles
-document.addEventListener('keydown', (event) => {
-    const step = 1; // Déplacement de 1 pixel
-    // console.log('keydown='+event.key);
+document.addEventListener('keydown', (event: KeyboardEvent) => {
+    const step = 1;
     switch (event.key) {
         case 'ArrowUp':
-            moveSelectedVertex(graph, 0, -step); // Déplacer vers le haut
+            moveSelectedVertex(graph, 0, -step);
             break;
         case 'ArrowDown':
-            moveSelectedVertex(graph, 0, step); // Déplacer vers le bas
+            moveSelectedVertex(graph, 0, step);
             break;
         case 'ArrowLeft':
-            moveSelectedVertex(graph, -step, 0); // Déplacer vers la gauche
+            moveSelectedVertex(graph, -step, 0);
             break;
         case 'ArrowRight':
-            moveSelectedVertex(graph, step, 0); // Déplacer vers la droite
-            break;
-        default:
+            moveSelectedVertex(graph, step, 0);
             break;
     }
 });
 
 //---------------------------------------------------------------------------
-// Double click
+// Fonctions utilitaires pour le double-clic
 
-type Point = {
-    x: number;
-    y: number;
-};
+type Point = { x: number; y: number };
 
-function placeObjectsOnCircle(center: Point, radius: number, numberOfObjects: number): Point[] {
+function placeObjectsOnCircle(center: Point, radius: number, n: number): Point[] {
     const points: Point[] = [];
-    const angleStep = (2 * Math.PI) / numberOfObjects; // Angle between each object
+    const angleStep = (2 * Math.PI) / n;
 
-    for (let i = 0; i < numberOfObjects; i++) {
-        const angle = i * angleStep; // Current angle
-        const objectX = center.x + radius * Math.cos(angle); // X-coordinate
-        const objectY = center.y + radius * Math.sin(angle); // Y-coordinate
-        points.push({x: objectX, y: objectY});
+    for (let i = 0; i < n; i++) {
+        const angle = i * angleStep;
+        points.push({
+            x: center.x + radius * Math.cos(angle),
+            y: center.y + radius * Math.sin(angle),
+        });
     }
-
     return points;
 }
 
-// Get filtered entries
-function getFilter() {
-    let filter = [];
-    for (let option of document.getElementById('filters').options)
-        if (option.selected)
-            filter.push(option.value);
-    return filter
+function getFilter(): string[] {
+    const select = document.getElementById('filters') as HTMLSelectElement | null;
+    if (!select) return [];
+    const filter: string[] = [];
+    for (const option of Array.from(select.options)) {
+        if (option.selected) filter.push(option.value);
+    }
+    return filter;
 }
 
-// Check edge already present
-// function hasEdge(src : Vertex, dest : Vertex, name: string) : boolean {
-function hasEdge(src: Cell | null, dest: Cell | null, name: string): boolean {
-    if ((src == null || dest == null))
-        return false;
+function hasEdge(src: Cell | null, dest: Cell | null, name: string | null): boolean {
+    if (!src || !dest) return false;
     let found = false;
-    const edges = graph.getEdges(src);
-    edges.forEach(edge => {
-        if ((edge.target == dest) && ((name == null) || (edge.value == name))) {
-            found = true;
-            return;
-        }
-    });
-    if (!found) {
-        const edges = graph.getEdges(dest);
-        edges.forEach(edge => {
-            if ((edge.target == src) && ((name == null) || (edge.value == name))) {
+
+    const check = (edges: Cell[]) => {
+        edges.forEach((edge) => {
+            if (edge.target === dest && (name == null || edge.value === name)) {
                 found = true;
-                return;
+            }
+        });
+    };
+
+    check(graph.getEdges(src));
+    if (!found) {
+        const reverseEdges = graph.getEdges(dest);
+        reverseEdges.forEach((edge) => {
+            if (edge.target === src && (name == null || edge.value === name)) {
+                found = true;
             }
         });
     }
@@ -816,157 +756,146 @@ function hasEdge(src: Cell | null, dest: Cell | null, name: string): boolean {
 }
 
 //----------------------------------------------------------------
-// Gestionnaire pour l'événement double-clic sur icône
-graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
-    // Get the cell
-    const cell = evt.getProperty('cell');
-    // Check it is an image
-    if (cell && cell.isVertex() && (cell.style.shape == "image")) {
-        // get the node
-        const node = _nodes.get(cell.id);
-        // node deleted
-        if (node == null)
-            return;
-        // console.log(node);
-        // Batch Update
-        graph.batchUpdate(() => {
-            // Get the new nodes
-            let newEdges: Edge[] = [];
-            //
-            const parent = graph.getDefaultParent();
-            const filter = getFilter();
-            // console.log("filter= "+filter + " filter.includes(8) "+filter.includes("8"));
-            // Loop on edges
-            node.edges.forEach(function (edge) {
-                // Get destination node
-                let targetNode = _nodes.get(edge.attachedNodeId);
-                // Node deleted ?
-                if (targetNode != null) {
-                    // Check node already present and not in the newEdges
-                    const vertex = model.getCell(edge.attachedNodeId);
-                    if ((vertex == null) && !newEdges.some(e => e.attachedNodeId == edge.attachedNodeId)) {
-                        // apply filter on nodes
-                        if (
-                            ((filter.length == 0) || filter.includes(targetNode.vue))
-                            ||
-                            (filter.includes("8") && (edge.edgeType === 'CABLE'))
-                            ||
-                            (filter.includes("9") && (edge.edgeType === 'FLUX'))
-                        ) {
-                            // add it to the new nodes
-                            newEdges.push(edge);
-                            // console.log("add: "+edge.attachedNodeId);
-                        }
-                    } else {
-                        // check edge already present ?
-                        if (!hasEdge(cell, vertex, edge.name)) {
-                            // add edge
-                            graph.insertEdge(
-                                {
-                                    parent,
-                                    value: edge.name,
-                                    source: cell,
-                                    target: vertex,
-                                    style: {
-                                        editable: false, //  Ne pas autoriser de changer le label
-                                        stroke: '#FF', // Edge color
-                                        strokeWidth: 1,
-                                        startArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'FROM'))) ? 'classic' : 'none',
-                                        endArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'TO'))) ? 'classic' : 'none',
-                                    },
-                                });
-                        }
-                    }
+// Double-clic sur icône
+
+graph.addListener(InternalEvent.DOUBLE_CLICK, (_sender, evt) => {
+    const cell = evt.getProperty('cell') as Cell | null;
+
+    if (!cell || !cell.isVertex()) return;
+    const style = cell.style as any;
+    if (style?.shape !== 'image') return;
+
+    const node = _nodes.get(cell.id as string);
+    if (!node) return;
+
+    graph.batchUpdate(() => {
+        const newEdges: Edge[] = [];
+        const parent = graph.getDefaultParent();
+        const filter = getFilter();
+
+        node.edges.forEach((edge) => {
+            const targetNode = _nodes.get(edge.attachedNodeId);
+            if (!targetNode) return;
+
+            const vertex = model.getCell(edge.attachedNodeId) as Cell | null;
+
+            if (!vertex && !newEdges.some((e) => e.attachedNodeId === edge.attachedNodeId)) {
+                // Filtrage
+                if (
+                    filter.length === 0 ||
+                    filter.includes(targetNode.vue) ||
+                    (filter.includes('8') && edge.edgeType === 'CABLE') ||
+                    (filter.includes('9') && edge.edgeType === 'FLUX')
+                ) {
+                    newEdges.push(edge);
                 }
-            });
-            // Compute new nodes positions
-            const rect = container.getBoundingClientRect();
-            const positions = placeObjectsOnCircle({
-                x: cell.getGeometry().x,
-                y: cell.getGeometry().y
-            }, 80, newEdges.length);
-            // console.log(positions);
-
-            // Place les objects
-            for (let i = 0; i < positions.length; i++) {
-                // get new target node
-                const edge = newEdges[i];
-                const newNode = _nodes.get(edge.attachedNodeId);
-                // console.log('add newNode id=' + newNode.id +" label="+ newNode.label);
-                // console.log('add edge type=' + edge.edgeType);
-
-                const vertex = graph.insertVertex({
+            } else if (vertex && !hasEdge(cell, vertex, edge.name)) {
+                graph.insertEdge({
                     parent,
-                    id: newNode.id,
-                    value: newNode.label,
-                    position: [positions[i].x, positions[i].y], // Position de l'image
-                    size: [32, 32], // Taille du nœud
+                    value: edge.name,
+                    source: cell,
+                    target: vertex,
                     style: {
-                        shape: 'image', // Définir le nœud comme une image
-                        image: newNode.image,
-                        // image: 'http://127.0.0.1:8000/images/application.png', // URL de l'image
-                        // imageWidth: 32, // Largeur de l'image
-                        // imageHeight: 32, // Hauteur de l'image
-                        editable: false, //  Ne pas autoriser de changer le label
-                        resizable: true, // Ne pas resizer les images
-                        //imageBorder: 0, // Bordure facultative autour de l'image
-                        verticalLabelPosition: 'bottom',
-                        spacingTop: -15,
+                        editable: false,
+                        stroke: '#FF',
+                        strokeWidth: 1,
+                        startArrow:
+                            edge.edgeType === 'FLUX' &&
+                            (edge.bidirectional || edge.edgeDirection === 'FROM')
+                                ? 'classic'
+                                : 'none',
+                        endArrow:
+                            edge.edgeType === 'FLUX' &&
+                            (edge.bidirectional || edge.edgeDirection === 'TO')
+                                ? 'classic'
+                                : 'none',
                     },
                 });
-
-                // Insert edge with clicked one
-                graph.insertEdge(
-                    {
-                        parent,
-                        value: newEdges[i].name,
-                        source: cell,
-                        target: vertex,
-                        style: {
-                            editable: false, //  Ne pas autoriser de changer le label
-                            stroke: '#FF', // Edge color
-                            strokeWidth: 1,
-                            startArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'FROM'))) ? 'classic' : 'none',
-                            endArrow: ((edge.edgeType == 'FLUX') && ((edge.bidirectional) || (edge.edgeDirection == 'TO'))) ? 'classic' : 'none',
-                        },
-                    });
-
-                // Insert edge with other existing objects
-                // TODO.....
-
             }
         });
-    }
+
+        const geom = cell.getGeometry();
+        if (!geom) return;
+
+        const positions = placeObjectsOnCircle(
+            {x: geom.x, y: geom.y},
+            80,
+            newEdges.length,
+        );
+
+        for (let i = 0; i < positions.length; i++) {
+            const edge = newEdges[i];
+            const newNode = _nodes.get(edge.attachedNodeId);
+            if (!newNode) continue;
+
+            const vertex = graph.insertVertex({
+                parent,
+                id: newNode.id,
+                value: newNode.label,
+                position: [positions[i].x, positions[i].y],
+                size: [32, 32],
+                style: {
+                    shape: 'image',
+                    image: newNode.image,
+                    editable: false,
+                    resizable: true,
+                    verticalLabelPosition: 'bottom',
+                    spacingTop: -15,
+                },
+            });
+
+            graph.insertEdge({
+                parent,
+                value: edge.name,
+                source: cell,
+                target: vertex,
+                style: {
+                    editable: false,
+                    stroke: '#FF',
+                    strokeWidth: 1,
+                    startArrow:
+                        edge.edgeType === 'FLUX' &&
+                        (edge.bidirectional || edge.edgeDirection === 'FROM')
+                            ? 'classic'
+                            : 'none',
+                    endArrow:
+                        edge.edgeType === 'FLUX' &&
+                        (edge.bidirectional || edge.edgeDirection === 'TO')
+                            ? 'classic'
+                            : 'none',
+                },
+            });
+
+            // TODO: insert edges with other existing objects
+        }
+    });
 });
 
 //-------------------------------------------------------------------------
-// Update
+// Update des nœuds depuis _nodes
 
 document.getElementById('update-btn')?.addEventListener('click', () => {
-
     graph.batchUpdate(() => {
         const allCells = graph.getChildCells();
 
         allCells.forEach((cell) => {
-            // Type of cell ?
+            const style = cell.style as any;
             if (cell.isEdge()) {
-                // Not implemented yew
-            } else if (cell.style.image != null) {
-                // Node
-                const node = _nodes.get(cell.id);
-                // console.log(cell);
-                if (node == null) {
-                    // remove cell
+                // Rien pour l'instant
+            } else if (style?.image) {
+                const node = _nodes.get(cell.id as string);
+                if (!node) {
                     graph.removeCells([cell], true);
                 } else {
-                    // update cell
                     cell.value = node.label;
-                    // cell.style.image = node.image;
-                    styleUtils.setCellStyles(graph.getDataModel(), [cell], {shape: 'image', image: node.image});
-
+                    styleUtils.setCellStyles(graph.getDataModel(), [cell], {
+                        shape: 'image',
+                        image: node.image,
+                    });
                 }
             }
         });
+
         graph.refresh();
     });
 });
@@ -974,84 +903,80 @@ document.getElementById('update-btn')?.addEventListener('click', () => {
 //---------------------------------------------------------------------------
 // Export SVG
 
-// Exporter en SVG avec intégration des images
-const svgElement = graph.container.querySelector('svg');
+const svgElement = graph.container.querySelector('svg') as SVGSVGElement | null;
 
-function embedImagesInSVG(svgElement) {
-    const images = svgElement.querySelectorAll('image');
-
+function embedImagesInSVG(svg: SVGSVGElement) {
+    const images = svg.querySelectorAll('image');
     images.forEach((img) => {
         const href = img.getAttribute('xlink:href');
+        if (!href) return;
 
-        // Charger l'image et convertir en base64
         fetch(href)
             .then((response) => response.blob())
             .then((blob) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    img.setAttribute('xlink:href', reader.result); // Intègre l'image base64
+                    const result = reader.result;
+                    if (typeof result === 'string') {
+                        img.setAttribute('xlink:href', result);
+                    }
                 };
                 reader.readAsDataURL(blob);
-            });
+            })
+            .catch((err) => console.error('Erreur embed image SVG', err));
     });
 }
 
-// Fonction de téléchargement
 function downloadSVG() {
+    if (!svgElement) {
+        alert('SVG introuvable');
+        return;
+    }
+
     embedImagesInSVG(svgElement);
 
     setTimeout(() => {
         const serializer = new XMLSerializer();
         const svgString = serializer.serializeToString(svgElement);
-
-        // Créer un blob pour le fichier SVG
         const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
         const url = URL.createObjectURL(blob);
 
-        // Créer un lien pour télécharger
         const link = document.createElement('a');
-        link.href = url;
-
-        // Ajout de la date et de l’heure au nom du fichier
         const now = new Date();
-        const timestamp = now.getFullYear() +
-            String(now.getMonth() + 1).padStart(2, "0") +
-            String(now.getDate()).padStart(2, "0") +
-            String(now.getHours()).padStart(2, "0") +
-            String(now.getMinutes()).padStart(2, "0");
+        const timestamp =
+            now.getFullYear() +
+            String(now.getMonth() + 1).padStart(2, '0') +
+            String(now.getDate()).padStart(2, '0') +
+            String(now.getHours()).padStart(2, '0') +
+            String(now.getMinutes()).padStart(2, '0');
 
+        link.href = url;
         link.download = `graph-${timestamp}.svg`;
         link.click();
 
-        // Nettoyage
         URL.revokeObjectURL(url);
-    }, 1000); // Attendre la conversion des images
+    }, 1000);
 }
 
-// Ajoutez un bouton pour déclencher l'exportation
 document.getElementById('download-btn')?.addEventListener('click', downloadSVG);
 
 //-------------------------------------------------------------------------
-// Organic layout (force-directed)
-export function layout() {
-    // Repositionne les nœuds avec l'algorithme "Organic"
-    const parent = graph.getDefaultParent();
+// Layout organic
 
-    // On ne travaille que sur les sommets (pas les arêtes)
+export function layout() {
+    const parent = graph.getDefaultParent();
     const cells = graph.getChildVertices(parent);
+
     if (!cells || cells.length === 0) return;
 
     const organic = new FastOrganicLayout(graph);
-    // Réglages possibles :
     organic.forceConstant = 60;
     organic.disableEdgeStyle = false;
 
     graph.getDataModel().beginUpdate();
     try {
-        // Calcule les nouvelles positions
         organic.execute(parent, cells);
     } finally {
-        // Animation fluide des déplacements
         const morph = new Morphing(graph);
         morph.addListener(InternalEvent.DONE, () => graph.getDataModel().endUpdate());
         morph.startAnimation();
