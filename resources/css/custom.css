@@ -593,10 +593,15 @@ table .navbar-brand-full {
 
 .graph-resize-handle {
     height: 8px;
-    background: #ddd;
     cursor: ns-resize;
-    flex: 0 0 8px; /* hauteur fixe */
     width: 100%;
+    background: #ddd repeating-linear-gradient(
+            to bottom,
+            #bbb 0,
+            #bbb 2px,
+            transparent 2px,
+            transparent 4px
+    );
 }
 
 /* Graph Editor icon styles */
