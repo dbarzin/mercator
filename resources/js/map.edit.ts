@@ -280,7 +280,10 @@ document.getElementById('apply-text-style')?.addEventListener('click', (e) => {
 
         style.fontStyle = flag;
 
-        selectedCell?.style = style;
+        if (selectedCell) {
+            selectedCell.style = style;
+            graph.refresh(selectedCell);
+        }
         graph.refresh(selectedCell);
     });
 
