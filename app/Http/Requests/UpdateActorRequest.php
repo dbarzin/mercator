@@ -21,7 +21,7 @@ class UpdateActorRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:128',
                 'required',
                 Rule::unique('actors')
                     ->ignore($this->route('actor')->id ?? $this->id)

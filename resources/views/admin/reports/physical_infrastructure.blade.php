@@ -48,6 +48,7 @@
                         </div>
                         <div id="graph-container">
                             <div id="graph" class="graphviz"></div>
+                            <div class="graph-resize-handle"></div>
                         </div>
 
                         <div class="row p-1">

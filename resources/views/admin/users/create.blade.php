@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label class="label-required" for="name">{{ trans('cruds.user.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
-                           id="name" value="{{ old('name', '') }}" required/>
+                           id="name" value="{{ old('name', '') }}" maxlength="128" required/>
                     @if($errors->has('name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('name') }}
