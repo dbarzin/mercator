@@ -40,7 +40,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="lastname">{{ trans('cruds.adminUser.fields.lastname') }}</label>
-                        <input class="form-control {{ $errors->has('lastname') ? 'is-invalid' : '' }}" type="text" name="lastname" id="lastname" maxlength="128" value="{{ old('lastname', '') }}">
+                        <input class="form-control {{ $errors->has('lastname') ? 'is-invalid' : '' }}" type="text" name="lastname" id="lastname" maxlength="64" value="{{ old('lastname', '') }}">
                         @if($errors->has('lastname'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('lastname') }}
