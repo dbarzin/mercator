@@ -389,9 +389,9 @@ function saveGraph() {
 
     // saveGraphToDatabase
     saveGraphToDatabase(
-        windows.document.querySelector('#id')?.value,
-        windows.document.querySelector('#name')?.value,
-        windows.document.querySelector('#type')?.value,
+        window.document.querySelector('#id')?.value,
+        window.document.querySelector('#name')?.value,
+        window.document.querySelector('#type')?.value,
         xml);
 }
 
