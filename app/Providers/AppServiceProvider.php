@@ -27,9 +27,14 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        if (App::environment('production')) {
+        if (
+            (App::environment('production') && (config('app.force_https') === null))
+            ||
+            config('app.force_https')
+        ) {
             URL::forceScheme('https');
         }
+
 
         if (config('app.db_trace')) {
             // Log SQL Queries
