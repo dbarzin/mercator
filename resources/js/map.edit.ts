@@ -702,6 +702,7 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
         case 'ArrowRight':
             moveSelectedVertex(graph, step, 0);
             break;
+
     }
 });
 
