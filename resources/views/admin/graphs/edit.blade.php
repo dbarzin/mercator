@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row resizable-div" id="myDiv">
+                <div class="row resizable-div" id="editor">
                     <div class="col-lg-12">
                         <table width="100%">
                             <tr>
@@ -314,7 +314,7 @@
             //--------------------------------------------------------------
             // Maximisation
             document.getElementById('maximizeBtn').addEventListener('click', function () {
-                const div = document.getElementById('myDiv');
+                const div = document.getElementById('editor');
                 const sidebar = document.getElementById('sidebar');
                 const sidebarFooter = document.querySelector('.sidebar-footer');
 

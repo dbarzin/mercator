@@ -43,6 +43,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Force HTTPS
+    |--------------------------------------------------------------------------
+    |
+    | Force HTTPS in production environment:
+    | - null  => use default: force HTTPS only in production
+    | - true  => always force HTTPS (all environments)
+    | - false => never force HTTPS
+    |
+    */
+    'force_https' => env('APP_FORCE_HTTPS', null),
+
+    /*
+    |--------------------------------------------------------------------------
     | Trace Database Queries
     |--------------------------------------------------------------------------
     |
