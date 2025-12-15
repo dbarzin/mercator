@@ -52,7 +52,7 @@ return [
     | - false => never force HTTPS
     |
     */
-    'force_https' => env('FORCE_HTTPS', null),
+    'force_https' => env('APP_FORCE_HTTPS', null),
 
     /*
     |--------------------------------------------------------------------------

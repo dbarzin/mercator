@@ -27,14 +27,14 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        if (
-            (App::environment('production') && (config('app.force_https') === null))
-            ||
-            config('app.force_https')
-        ) {
+        // Force HTTPS:
+        // null  => default: force HTTPS only in production
+        // true  => always force HTTPS (all environments)
+        // false => never force HTTPS
+        $forceHttps = config('app.force_https');
+        if ($forceHttps === true || ($forceHttps === null && App::environment('production'))) {
             URL::forceScheme('https');
         }
-
 
         if (config('app.db_trace')) {
             // Log SQL Queries
