@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Requests\StorePhoneRequest;
 use App\Http\Requests\UpdatePhoneRequest;
-use App\Http\Resources\Admin\PhoneResource;
-use App\Models\Phone;
+use Mercator\Core\Models\Phone;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends Controller
 {
@@ -36,7 +35,7 @@ class PhoneController extends Controller
     {
         abort_if(Gate::denies('phone_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhoneResource($phone);
+        return new JsonResource($phone);
     }
 
     public function update(UpdatePhoneRequest $request, Phone $phone)

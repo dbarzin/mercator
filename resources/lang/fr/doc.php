@@ -1,4 +1,5 @@
 <?php
+
 return [
     'about' => [
         'title' => 'A propos de Mercator',
@@ -23,7 +24,7 @@ return [
 </ul>
 
 <p>Pour toute question ou demande spécifique, n’hésitez pas à nous contacter via <a href='https://www.sourcentis.com'>Sourcentis</a> ou sur notre dépôt  <a href='https://www.github.com/dbarzin'>GitHub</a>.</p>
-"
+",
     ],
     'guide' => [
         'p1' => 'Les attaques informatiques interviennent dans des environnements en constante évolution. Pour répondre à ces enjeux, il est nécessaire de mettre en place une approche globale de gestion des risques au sein de l’organisation.',

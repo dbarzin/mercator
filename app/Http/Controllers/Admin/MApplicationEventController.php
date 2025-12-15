@@ -1,12 +1,12 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\MApplication;
-use App\Models\MApplicationEvent;
-use App\Models\User;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\MApplicationEvent;
+use Mercator\Core\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MApplicationEventController extends Controller
@@ -14,7 +14,7 @@ class MApplicationEventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): \Illuminate\Http\Response
+    public function index(Request $request): JsonResponse
     {
         $id = $request->query('id');
 
@@ -27,20 +27,23 @@ class MApplicationEventController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create a new event for an application and return the application's events.
+     *
+     * Expects the request to provide the application ID, user ID, and event message.
+     *
+     * @param  \Illuminate\Http\Request  $request  Request containing:
+     *                                             - `m_application_id` (int): ID of the application to attach the event to.
+     *                                             - `user_id` (int): ID of the user who created the event.
+     *                                             - `message` (string): The event message.
+     * @return \Illuminate\Http\JsonResponse JSON with an `events` key containing the application's events.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the application or user cannot be found.
      */
-    public function create(): \Illuminate\Http\Response
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         $user = User::findOrFail($request->get('user_id'));
-        $event = new MApplicationEvent();
+        $event = new MApplicationEvent;
         $event->application()->associate($application);
         $event->user()->associate($user);
         $event->message = $request->get('message');
@@ -50,32 +53,11 @@ class MApplicationEventController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, MApplicationEvent $mApplicationEvent): \Illuminate\Http\Response
-    {
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id  Id de l'évènement
      */
-    public function destroy(Request $request, int $id): \Illuminate\Http\JsonResponse
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         MApplicationEvent::findOrFail($id)->delete();

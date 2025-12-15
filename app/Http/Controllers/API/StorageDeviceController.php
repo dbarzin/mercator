@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyStorageDeviceRequest;
 use App\Http\Requests\StoreStorageDeviceRequest;
 use App\Http\Requests\UpdateStorageDeviceRequest;
-use App\Http\Resources\Admin\StorageDeviceResource;
-use App\Models\StorageDevice;
+use Mercator\Core\Models\StorageDevice;
 use Gate;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class StorageDeviceController extends Controller
@@ -38,7 +37,7 @@ class StorageDeviceController extends Controller
 
         $storagedevice = Storagedevice::where('id', $id)->get();
 
-        return new StorageDeviceResource($storagedevice);
+        return new JsonResource($storagedevice);
     }
 
     public function update(UpdateStorageDeviceRequest $request, StorageDevice $storageDevice)

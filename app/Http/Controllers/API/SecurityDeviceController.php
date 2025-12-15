@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
-use App\Http\Resources\Admin\SecurityDeviceResource;
-use App\Models\SecurityDevice;
+use Mercator\Core\Models\SecurityDevice;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class SecurityDeviceController extends Controller
 {
@@ -28,8 +27,6 @@ class SecurityDeviceController extends Controller
         abort_if(Gate::denies('security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securitydevice = SecurityDevice::create($request->all());
-        // syncs
-        // $securitydevice->roles()->sync($request->input('roles', []));
 
         return response()->json($securitydevice, 201);
     }
@@ -38,7 +35,7 @@ class SecurityDeviceController extends Controller
     {
         abort_if(Gate::denies('security_device_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SecurityDeviceResource($securityDevice);
+        return new JsonResource($securityDevice);
     }
 
     public function update(UpdateSecurityDeviceRequest $request, SecurityDevice $securityDevice)

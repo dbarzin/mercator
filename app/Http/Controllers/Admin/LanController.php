@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLanRequest;
 use App\Http\Requests\StoreLanRequest;
 use App\Http\Requests\UpdateLanRequest;
-use App\Models\Lan;
+use Mercator\Core\Models\Lan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyZoneAdminRequest;
 use App\Http\Requests\StoreZoneAdminRequest;
 use App\Http\Requests\UpdateZoneAdminRequest;
-use App\Models\ZoneAdmin;
+use Mercator\Core\Models\ZoneAdmin;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

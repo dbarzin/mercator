@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.building.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.building.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required maxlength="32"
                                    autofocus/>
@@ -30,7 +30,7 @@
                                     name="type" id="type">
                                 <option></option>
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $type)
                                     <option {{ old('type')==$type ? 'selected' : '' }}>{{ $type }}</option>
@@ -64,7 +64,8 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="form-group">
-                                <label for="description">{{ trans('cruds.building.fields.description') }}</label>
+                                <label class="label-maturity-1"
+                                       for="description">{{ trans('cruds.building.fields.description') }}</label>
                                 <textarea
                                         class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                         name="description" id="description">{!! old('description') !!}</textarea>

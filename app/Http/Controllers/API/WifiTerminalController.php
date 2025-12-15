@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWifiTerminalRequest;
 use App\Http\Requests\StoreWifiTerminalRequest;
 use App\Http\Requests\UpdateWifiTerminalRequest;
-use App\Http\Resources\Admin\WifiTerminalResource;
-use App\Models\WifiTerminal;
+use Mercator\Core\Models\WifiTerminal;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class WifiTerminalController extends Controller
 {
@@ -28,8 +27,6 @@ class WifiTerminalController extends Controller
         abort_if(Gate::denies('wifi_terminal_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wifiterminal = WifiTerminal::create($request->all());
-        // syncs
-        // $wifiterminal->roles()->sync($request->input('roles', []));
 
         return response()->json($wifiterminal, 201);
     }
@@ -38,7 +35,7 @@ class WifiTerminalController extends Controller
     {
         abort_if(Gate::denies('wifi_terminal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WifiTerminalResource($wifiTerminal);
+        return new JsonResource($wifiTerminal);
     }
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)
@@ -46,8 +43,6 @@ class WifiTerminalController extends Controller
         abort_if(Gate::denies('wifi_terminal_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wifiTerminal->update($request->all());
-        // syncs
-        // $wifiTerminal->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

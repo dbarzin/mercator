@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use Gate;
@@ -22,7 +21,7 @@ class UpdateApplicationServiceRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('application_services')
                     ->ignore($this->route('application_service')->id ?? $this->id)

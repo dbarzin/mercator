@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActorRequest;
 use App\Http\Requests\StoreActorRequest;
 use App\Http\Requests\UpdateActorRequest;
-use App\Http\Resources\Admin\ActorResource;
-use App\Models\Actor;
+use Mercator\Core\Models\Actor;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends Controller
 {
@@ -36,7 +35,7 @@ class ActorController extends Controller
     {
         abort_if(Gate::denies('actor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ActorResource($actor);
+        return new JsonResource($actor);
     }
 
     public function update(UpdateActorRequest $request, Actor $actor)

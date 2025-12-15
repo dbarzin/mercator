@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoLanWanTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoLanWanTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('lan_wan')->delete();
-        
-        
-        
+
     }
 }

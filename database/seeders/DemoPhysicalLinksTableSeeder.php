@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoPhysicalLinksTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoPhysicalLinksTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('physical_links')->delete();
-        
-        
-        
+
     }
 }

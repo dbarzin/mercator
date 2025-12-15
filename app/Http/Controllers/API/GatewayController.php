@@ -1,17 +1,16 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGatewayRequest;
 use App\Http\Requests\StoreGatewayRequest;
 use App\Http\Requests\UpdateGatewayRequest;
-use App\Http\Resources\Admin\GatewayResource;
-use App\Models\Gateway;
-use App\Models\Subnetwork;
+use Mercator\Core\Models\Gateway;
+use Mercator\Core\Models\Subnetwork;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class GatewayController extends Controller
 {
@@ -40,7 +39,7 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new GatewayResource($gateway);
+        return new JsonResource($gateway);
     }
 
     public function update(UpdateGatewayRequest $request, Gateway $gateway)

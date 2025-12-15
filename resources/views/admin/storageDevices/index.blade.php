@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-@can('storage_device_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route("admin.storage-devices.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.storageDevice.title_singular') }}
-            </a>
+    @can('storage_device_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a id="btn-new" class="btn btn-success" href="{{ route("admin.storage-devices.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.storageDevice.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.storageDevice.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.storageDevice.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <tr>
                         <th width="10">
 
@@ -44,10 +44,18 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach($storageDevices as $key => $storageDevice)
-                        <tr data-entry-id="{{ $storageDevice->id }}">
+                    </thead>
+                    <tbody>
+                    @foreach($storageDevices as $storageDevice)
+                        <tr data-entry-id="{{ $storageDevice->id }}"
+                            @if (
+                                    ($storageDevice->description===null)||
+                                    ($storageDevice->site_id===null)||
+                                    ($storageDevice->building_id===null)
+                                    )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>
@@ -79,42 +87,47 @@
                             </td>
                             <td nowrap>
                                 @can('storage_device_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.storage-devices.show', $storageDevice->id) }}">
+                                    <a class="btn btn-xs btn-primary"
+                                       href="{{ route('admin.storage-devices.show', $storageDevice->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('storage_device_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.storage-devices.edit', $storageDevice->id) }}">
+                                    <a class="btn btn-xs btn-info"
+                                       href="{{ route('admin.storage-devices.edit', $storageDevice->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('storage_device_delete')
-                                    <form action="{{ route('admin.storage-devices.destroy', $storageDevice->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.storage-devices.destroy', $storageDevice->id) }}"
+                                          method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
-@parent
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.storageDevice.title_singular"),
-    'URL' => route('admin.storage-devices.massDestroy'),
-    'canDelete' => auth()->user()->can('storage_device_delete') ? true : false
-));
-</script>
+    @parent
+    <script>
+        @include('partials.datatable', array(
+            'id' => '#dataTable',
+            'title' => trans("cruds.storageDevice.title_singular"),
+            'URL' => route('admin.storage-devices.massDestroy'),
+            'canDelete' => auth()->user()->can('storage_device_delete') ? true : false
+        ));
+    </script>
 @endsection

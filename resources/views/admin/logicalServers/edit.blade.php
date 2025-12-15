@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $logicalServer->name) }}" required
                                    maxlength='64' autofocus/>
@@ -32,7 +32,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type" maxlength='255'>
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $logicalServer->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.logicalServer.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -120,12 +120,12 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="operating_system">{{ trans('cruds.logicalServer.fields.operating_system') }}</label>
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$operating_system_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $t)
                                     <option {{ (old('operating_system') ? old('operating_system') : $logicalServer->operating_system) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -159,7 +159,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="databases">{{ trans('cruds.logicalServer.fields.clusters') }}</label>
                             <select class="form-control select2 {{ $errors->has('clusters') ? 'is-invalid' : '' }}"
                                     name="clusters[]" id="clusters" multiple>
@@ -177,12 +177,12 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="environment">{{ trans('cruds.logicalServer.fields.environment') }}</label>
                             <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}"
                                     name="environment" id="environment">
                                 @if (!$environment_list->contains(old('environment')))
-                                    <option> {{ old('environment') }}</option>'
+                                    <option> {{ old('environment') }}</option>
                                 @endif
                                 @foreach($environment_list as $t)
                                     <option {{ (old('environment') ? old('environment') : $logicalServer->environment) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -200,7 +200,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="address_ip">{{ trans('cruds.logicalServer.fields.address_ip') }}</label>
                             <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                                    name="address_ip" id="address_ip"
@@ -322,7 +322,7 @@
                     <div class="col-sm">
 
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="applications">{{ trans('cruds.logicalServer.fields.applications') }}</label>
                             <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                                     name="applications[]" id="applications" multiple>
@@ -341,7 +341,7 @@
 
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="databases">{{ trans('cruds.logicalServer.fields.databases') }}</label>
                             <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}"
                                     name="databases[]" id="databases" multiple>
@@ -368,7 +368,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
                             <select class="form-control select2 {{ $errors->has('domains') ? 'is-invalid' : '' }}"
                                     name="domain_id" id="domain_id">
@@ -395,7 +395,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="physicalServers">{{ trans('cruds.logicalServer.fields.servers') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all"

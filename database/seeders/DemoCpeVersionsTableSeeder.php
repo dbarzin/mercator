@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoCpeVersionsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoCpeVersionsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('cpe_versions')->delete();
-        
-        
-        
+
     }
 }

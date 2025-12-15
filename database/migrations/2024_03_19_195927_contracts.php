@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // Add some fields to relations
-        Schema::table('relations', function(Blueprint $table) {
+        Schema::table('relations', function (Blueprint $table) {
             $table->string('attributes')->nullable();
             $table->string('reference')->nullable();
             $table->string('responsible')->nullable();
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->unsignedInteger('relation_id')->index('relation_id_fk_43243244');
             $table->foreign('relation_id', 'relation_id_fk_43243244')->references('id')->on('relations')->onUpdate('NO ACTION')->onDelete('CASCADE');
             $table->date('date_price')->nullable();
-            $table->decimal('price',12,2)->nullable();
+            $table->decimal('price', 12, 2)->nullable();
             // add timestamp
             $table->timestamps();
         });
@@ -46,7 +46,7 @@ return new class extends Migration
         });
 
         // Add some fields to entities
-        Schema::table('entities', function(Blueprint $table) {
+        Schema::table('entities', function (Blueprint $table) {
             $table->string('attributes')->nullable();
             $table->string('reference')->nullable();
         });
@@ -58,7 +58,7 @@ return new class extends Migration
     public function down(): void
     {
         // Remove some fields from relations
-        Schema::table('relations', function(Blueprint $table) {
+        Schema::table('relations', function (Blueprint $table) {
             $table->dropColumn('attributes');
             $table->dropColumn('reference');
             $table->dropColumn('responsible');
@@ -93,7 +93,7 @@ return new class extends Migration
         Schema::dropIfExists('document_relation');
 
         // Remove some fields from entities
-        Schema::table('entities', function(Blueprint $table) {
+        Schema::table('entities', function (Blueprint $table) {
             $table->dropColumn('attributes');
             $table->dropColumn('reference');
         });

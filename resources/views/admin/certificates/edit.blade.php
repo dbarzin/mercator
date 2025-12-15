@@ -10,7 +10,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.certificate.fields.name') }}</label>
+                <label class="label-required" for="name">{{ trans('cruds.certificate.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $certificate->name) }}" required autofocus/>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
@@ -24,7 +24,7 @@
                 <label class="recommended" for="type">{{ trans('cruds.certificate.fields.type') }}</label>
                 <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                     @if (!$type_list->contains(old('type')))
-                        <option> {{ old('type') }}</option>'
+                        <option> {{ old('type') }}</option>
                     @endif
                     @foreach($type_list as $t)
                         <option {{ (old('users') ? old('users') : $certificate->type) == $t ? 'selected' : '' }}>{{$t}}</option>

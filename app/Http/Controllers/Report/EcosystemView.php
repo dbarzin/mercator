@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Entity;
-use App\Models\Relation;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\Relation;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +32,7 @@ class EcosystemView extends Controller
         $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités */
         foreach ($entitiesGroups as $entity_type => $entOfGroup) {
             $entities = $entities->concat($entOfGroup);
-            if ($entity_type !== null) {
+            if ($entity_type != null) {
                 $isTypeExists = $isTypeExists || ($entity_type === $typeFilter);
                 $entityTypes->push($entity_type);
             }

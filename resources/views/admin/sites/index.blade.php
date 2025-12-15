@@ -1,25 +1,25 @@
 @extends('layouts.admin')
 @section('content')
-@can('site_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.sites.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.site.title_singular') }}
-            </a>
+    @can('site_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a id="btn-new" class="btn btn-success" href="{{ route('admin.sites.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.site.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.site.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.site.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <tr>
-                        <th with="10">
+                        <th width="10">
                         </th>
                         <th>
                             {{ trans('cruds.site.fields.name') }}
@@ -34,10 +34,16 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach($sites as $key => $site)
-                        <tr data-entry-id="{{ $site->id }}">
+                    </thead>
+                    <tbody>
+                    @foreach($sites as $site)
+                        <tr data-entry-id="{{ $site->id }}"
+                            @if (
+                                ($site->description===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>
@@ -52,10 +58,10 @@
                             <td>
                                 @foreach($site->buildings as $building)
                                     <a href="{{ route('admin.buildings.show', $building->id) }}">
-                                    {{ $building->name ?? '' }}
+                                        {{ $building->name ?? '' }}
                                     </a>
                                     @if ($site->buildings->last()!=$building)
-                                    ,
+                                        ,
                                     @endif
                                 @endforeach
                             </td>
@@ -73,29 +79,32 @@
                                 @endcan
 
                                 @can('site_delete')
-                                    <form action="{{ route('admin.sites.destroy', $site->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.sites.destroy', $site->id) }}" method="POST"
+                                          onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.site.title_singular"),
-    'URL' => route('admin.sites.massDestroy'),
-    'canDelete' => auth()->user()->can('site_delete') ? true : false
-));
-</script>
+    <script>
+        @include('partials.datatable', array(
+            'id' => '#dataTable',
+            'title' => trans("cruds.site.title_singular"),
+            'URL' => route('admin.sites.massDestroy'),
+            'canDelete' => auth()->user()->can('site_delete') ? true : false
+        ));
+    </script>
 @endsection

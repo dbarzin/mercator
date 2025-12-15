@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\Cidr;
@@ -31,7 +30,7 @@ class UpdateSubnetworkRequest extends FormRequest
             ],
             'address' => [
                 'nullable',
-                new Cidr(),
+                new Cidr,
             ],
             'default_gateway' => [
                 'nullable',

@@ -1,10 +1,9 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\LogicalServer;
+use Mercator\Core\Models\LogicalServer;
 use Carbon\Carbon;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +28,7 @@ class LogicalServers extends Controller
             trans('cruds.applicationBlock.fields.responsible'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoDatabaseEntityTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,38 +13,31 @@ class DemoDatabaseEntityTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('database_entity')->delete();
-        
-        \DB::table('database_entity')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('database_entity')->insert([
+            0 => [
                 'database_id' => 1,
                 'entity_id' => 1,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'database_id' => 3,
                 'entity_id' => 1,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'database_id' => 4,
                 'entity_id' => 1,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'database_id' => 5,
                 'entity_id' => 1,
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'database_id' => 6,
                 'entity_id' => 1,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

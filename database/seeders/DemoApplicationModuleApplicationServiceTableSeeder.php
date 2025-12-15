@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoApplicationModuleApplicationServiceTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,113 +13,91 @@ class DemoApplicationModuleApplicationServiceTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('application_module_application_service')->delete();
-        
-        \DB::table('application_module_application_service')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('application_module_application_service')->insert([
+            0 => [
                 'application_service_id' => 4,
                 'application_module_id' => 1,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'application_service_id' => 4,
                 'application_module_id' => 2,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'application_service_id' => 3,
                 'application_module_id' => 3,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'application_service_id' => 2,
                 'application_module_id' => 4,
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'application_service_id' => 1,
                 'application_module_id' => 5,
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'application_service_id' => 1,
                 'application_module_id' => 6,
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'application_service_id' => 5,
                 'application_module_id' => 2,
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'application_service_id' => 5,
                 'application_module_id' => 3,
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'application_service_id' => 6,
                 'application_module_id' => 2,
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'application_service_id' => 6,
                 'application_module_id' => 3,
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'application_service_id' => 7,
                 'application_module_id' => 2,
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'application_service_id' => 7,
                 'application_module_id' => 3,
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'application_service_id' => 8,
                 'application_module_id' => 2,
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'application_service_id' => 8,
                 'application_module_id' => 3,
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'application_service_id' => 9,
                 'application_module_id' => 2,
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'application_service_id' => 9,
                 'application_module_id' => 3,
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'application_service_id' => 10,
                 'application_module_id' => 2,
-            ),
-            17 => 
-            array (
+            ],
+            17 => [
                 'application_service_id' => 10,
                 'application_module_id' => 3,
-            ),
-            18 => 
-            array (
+            ],
+            18 => [
                 'application_service_id' => 11,
                 'application_module_id' => 2,
-            ),
-            19 => 
-            array (
+            ],
+            19 => [
                 'application_service_id' => 11,
                 'application_module_id' => 3,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" maxlength=64 value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -79,6 +79,56 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.dataProcessing.fields.purpose_helper') }}</span>
                 </div>
+
+                <div class="form-group">
+                    <label class="recommended"
+                           for="lawfulness">{{ trans('cruds.dataProcessing.fields.lawfulness') }}</label>
+
+                    <table width="100%">
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="lawfulness_consent" value="1"
+                                    {{ old('lawfulness_consent') ? "checked" : "" }}>
+                            {{ trans('cruds.dataProcessing.fields.lawfulness_consent') }}
+                        </td>
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="lawfulness_contract" value="1"
+                                    {{ old('lawfulness_contract') ? "checked" : "" }}>
+                            {{ trans('cruds.dataProcessing.fields.lawfulness_contract') }}
+                        </td>
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="lawfulness_legal_obligation" value="1"
+                                    {{ old('lawfulness_legal_obligation') ? "checked" : "" }}>
+                            {{ trans('cruds.dataProcessing.fields.lawfulness_legal_obligation') }}
+                        </td>
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="lawfulness_vital_interest" value="1"
+                                    {{ old('lawfulness_vital_interest') ? "checked" : "" }}>
+                            {{ trans('cruds.dataProcessing.fields.lawfulness_vital_interest') }}
+                        </td>
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="lawfulness_public_interest" value="1"
+                                    {{ old('lawfulness_public_interest') ? "checked" : "" }}>
+                            {{ trans('cruds.dataProcessing.fields.lawfulness_public_interest') }}
+                        </td>
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="lawfulness_legitimate_interest"
+                                   value="1"
+                                    {{ old('lawfulness_legitimate_interest') ? "checked" : "" }}>
+                            {{ trans('cruds.dataProcessing.fields.lawfulness_legitimate_interest') }}
+                        </td>
+                    </table>
+
+                    <textarea class="form-control ckeditor {{ $errors->has('lawfulness') ? 'is-invalid' : '' }}"
+                              name="lawfulness"
+                              id="lawfulness">{!! old('lawfulness') !!}</textarea>
+                    @if($errors->has('lawfulness'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('lawfulness') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.dataProcessing.fields.lawfulness_helper') }}</span>
+                </div>
+
 
                 <div class="form-group">
                     <label class="recommended"

@@ -19,7 +19,7 @@
             <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th with="10">
+                        <th width="10">
                         </th>
                         <th width="80%">
                             {{ trans('cruds.graph.fields.name') }}

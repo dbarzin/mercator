@@ -21,7 +21,7 @@ return new class extends Migration
 
         // Add type
         Schema::table('storage_devices', function (Blueprint $table) {
-            $table->string('type')->after("name")->nullable();
+            $table->string('type')->after('name')->nullable();
         });
 
     }

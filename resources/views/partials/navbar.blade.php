@@ -83,6 +83,14 @@
                         <a class="nav-link dropdown-toggle" href="#" id="menu3" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">{{ trans('panel.menu.tools') }}</a>
                         <ul class="dropdown-menu" aria-labelledby="menu3">
+
+                            @if ($menu->getItems('tools')!==null)
+                                @foreach ($menu->getItems('tools') as $item)
+                                    <li><a class="dropdown-item" href=" {{ route($item['route']) }}">
+                                            <i class="{{ $item['icon'] }}"></i>{{ $item['label'] }}</a></li>
+                                @endforeach
+                            @endif
+
                             @can('graph_access')
                                 <li><a class="dropdown-item" href="/admin/graphs">
                                         <i class="bi bi-map-fill"></i>{{ trans('cruds.graph.title') }}</a>
@@ -110,6 +118,14 @@
                     <a class="nav-link dropdown-toggle" href="#" id="menu4" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">{{ trans('panel.menu.help') }}</a>
                     <ul class="dropdown-menu" aria-labelledby="menu4">
+
+                        @if ($menu->getItems('help')!==null)
+                            @foreach ($menu->getItems('help') as $item)
+                                <li><a class="dropdown-item" href=" {{ route($item['route']) }}">
+                                        <i class="{{ $item['icon'] }}"></i>{{ $item['label'] }}</a></li>
+                            @endforeach
+                        @endif
+
                         <li><a class="dropdown-item" href="/admin/doc/schema">
                                 <i class="bi bi-database-fill"></i>{{ trans('panel.menu.schema') }}</a>
                         </li>

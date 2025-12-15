@@ -52,6 +52,11 @@ body {
     color: #000000;
 }
 
+/* Fix anchor navbar */
+[id] {
+    scroll-margin-top: 70px;
+}
+
 /***************************************************************************/
 /* Left side menu */
 /***************************************************************************/
@@ -63,7 +68,7 @@ body {
     top: 56px;
     left: 0;
     background-color: #ffffff;
-    padding-top: 0px;
+    padding-top: 0;
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -294,8 +299,8 @@ table.dataTable thead .sorting_desc {
 }
 
 table.dataTable tbody th.focus, table.dataTable tbody td.focus {
-    outline: 0px;
-    outline-offset: 0px;
+    outline: 0;
+    outline-offset: 0;
 }
 
 table .navbar-brand-full {
@@ -347,32 +352,27 @@ table .navbar-brand-full {
 }
 
 .select2-results__option {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.form-group .required::after {
+.form-group .label-required::after {
     content: " *";
     color: red;
 }
 
-.form-group .recommended::after {
-    content: " *";
+.form-group .label-maturity-1::after {
+    content: " #";
     color: orange;
 }
 
-.form-group .recommended1::after {
-    content: " *";
+.form-group .label-maturity-2::after {
+    content: " ##";
     color: orange;
 }
 
-.form-group .recommended2::after {
-    content: " **";
-    color: orange;
-}
-
-.form-group .recommended3::after {
-    content: " ***";
+.form-group .label-maturity-3::after {
+    content: " ###";
     color: orange;
 }
 
@@ -566,44 +566,42 @@ table .navbar-brand-full {
 
 /***************************************************************************/
 
-/*
-.graphviz {
-    overflow-y: auto;
-    min-height: 550px;
-    width: 100%;
-}
 
-.graphviz svg {
-    width: 100%;
-    height: 600px;
-}
-*/
-
-/*
 #graph-container {
-  max-width: calc(100vw - 300px);
-  height: 500px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  box-sizing: border-box;
+    position: relative;
+    height: 300px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column; /* empile graph + barre verticalement */
+    overflow: hidden;
 }
-*/
 
 .graphviz {
-    height: 100%;
-    display: inline-block;
+    flex: 1 1 auto; /* prend tout l'espace dispo */
     white-space: nowrap;
     text-align: left;
+    overflow: auto;
 }
 
 .graphviz svg {
-    width: auto !important; /* Ne force pas l'élargissement */
+    width: auto !important;
     height: 100%;
     max-width: none !important;
     max-height: 500px;
     display: inline-block;
+}
+
+.graph-resize-handle {
+    height: 8px;
+    cursor: ns-resize;
+    width: 100%;
+    background: #ddd repeating-linear-gradient(
+            to bottom,
+            #bbb 0,
+            #bbb 2px,
+            transparent 2px,
+            transparent 4px
+    );
 }
 
 /* Graph Editor icon styles */
@@ -619,5 +617,18 @@ table .navbar-brand-full {
     pointer-events: none; /* désactive les clics */
     cursor: not-allowed; /* change le curseur */
 }
+
+/***************************************************************************/
+
+.table-select {
+    max-width: 600px;
+    width: 100%;
+}
+
+.table-report {
+    max-width: 800px;
+    width: 100%;
+}
+
 
 /***************************************************************************/

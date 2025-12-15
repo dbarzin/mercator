@@ -17,9 +17,9 @@
                         @endif
 
                         <div class="col-sm-4">
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped" style="width: 600px;">
                                 <tr>
-                                    <td>
+                                    <td style="width: 300px;">
                                         {{ trans("cruds.network.title_singular") }} :
                                         <select name="network" id="network"
                                                 onchange="this.form.subnetwork.value='';this.form.submit()"
@@ -30,12 +30,12 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td style="width: 300px;">
                                         {{ trans("cruds.subnetwork.title_singular") }} :
                                         <select name="subnetwork" id="subnetwork" onchange="this.form.submit()"
                                                 class="form-control select2">
                                             <option value="">-- All subnetworks --</option>
-                                            @if ($all_subnetworks!=null)
+                                            @if ($all_subnetworks!==null)
                                                 @foreach($all_subnetworks as $id => $name)
                                                     <option value="{{$id}}" {{ Session::get('subnetwork')==$id ? "selected" : "" }}>{{ $name }}</option>
                                                 @endforeach
@@ -52,6 +52,7 @@
                         </div>
                         <div id="graph-container">
                             <div id="graph" class="graphviz"></div>
+                            <div class="graph-resize-handle"></div>
                         </div>
 
                         <div class="row p-1">
@@ -100,7 +101,7 @@
                             @foreach($networks as $network)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="NETWORK{{ $network->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/networks/{{ $network->id }}">{{ $network->name }}</a>
@@ -259,7 +260,7 @@
                             @foreach($subnetworks as $subnetwork)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="SUBNET{{ $subnetwork->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/subnetworks/{{ $subnetwork->id }}">{{ $subnetwork->name }}</a>
@@ -269,6 +270,22 @@
                                             <tr>
                                                 <th width="20%">{{ trans("cruds.subnetwork.fields.description") }}</th>
                                                 <td>{!! $subnetwork->description !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ trans("cruds.subnetwork.fields.network") }}</th>
+                                                <td>
+                                                    @if ($subnetwork->network!==null)
+                                                        <a href="#NETWORK{{ $subnetwork->network->id }}">{{ $subnetwork->network->name }}</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ trans("cruds.subnetwork.fields.subnetwork") }}</th>
+                                                <td>
+                                                    @if ($subnetwork->subnetwork!==null)
+                                                        <a href="#SUBNET{{ $subnetwork->subnetwork->id }}">{{ $subnetwork->subnetwork->name }}</a>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>
@@ -286,8 +303,8 @@
                                             <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.vlan") }}</th>
                                                 <td>
-                                                    @if ($subnetwork->vlan!=null)
-                                                        <a href="#VLAN{{ $subnetwork->vlan_id }}">{{ $subnetwork->vlan->name }}</a>
+                                                    @if ($subnetwork->vlan!==null)
+                                                        <a href="#VLAN{{ $subnetwork->vlan->id }}">{{ $subnetwork->vlan->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -310,16 +327,16 @@
                                                 <td>{{ $subnetwork->ip_allocation_type }}</td>
                                             </tr>
                                             <tr>
-                                                <th>{{ trans("cruds.subnetwork.fields.responsible_exp") }}</th>
-                                                <td>{{ $subnetwork->responsible_exp }}</td>
-                                            </tr>
-                                            <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.dmz") }}</th>
                                                 <td>{{ $subnetwork->dmz }}</td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.subnetwork.fields.wifi") }}</th>
                                                 <td>{{ $subnetwork->wifi }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ trans("cruds.subnetwork.fields.responsible_exp") }}</th>
+                                                <td>{{ $subnetwork->responsible_exp }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -343,7 +360,7 @@
                             @foreach($gateways as $gateway)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="GATEWAY{{ $gateway->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/gateways/{{ $gateway->id }}">{{ $gateway->name }}</a>
@@ -395,7 +412,7 @@
                             @foreach($externalConnectedEntities as $entity)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="EXTENTITY{{ $entity->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/external-connected-entities/{{ $entity->id }}">{{ $entity->name }}</a>
@@ -456,7 +473,7 @@
                             @foreach($routers as $router)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="ROUTER{{ $router->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/routers/{{ $router->id }}">{{ $router->name }}</a>
@@ -497,7 +514,7 @@
                             @foreach($networkSwitches as $networkSwitch)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="SW{{ $networkSwitch->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/network-switches/{{ $networkSwitch->id }}">{{ $networkSwitch->name }}</a>
@@ -507,6 +524,17 @@
                                             <tr>
                                                 <th width="20%">{{ trans("cruds.networkSwitch.fields.description") }}</th>
                                                 <td>{!! $networkSwitch->description !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ trans("cruds.networkSwitch.fields.vlans") }}</th>
+                                                <td>
+                                                    @foreach($networkSwitch->vlans as $vlan)
+                                                        <a href="#VLAN{{ $vlan->id }}">{{ $vlan->name }}</a>
+                                                        @if (!$loop->last)
+                                                            ,
+                                                        @endif
+                                                    @endforeach
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.networkSwitch.fields.ip") }}</th>
@@ -534,7 +562,7 @@
                             @foreach($clusters as $cluster)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="CLUSTER{{ $cluster->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/clusters/{{ $cluster->id }}">{{ $cluster->name }}</a>
@@ -601,7 +629,7 @@
                             @foreach($logicalServers as $logicalServer)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="LOGICAL_SERVER{{ $logicalServer->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/logical-servers/{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
@@ -729,7 +757,7 @@
                             @foreach($containers as $container)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="CONT{{ $container->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/containers/{{ $container->id }}">{{ $container->name }}</a>
@@ -811,7 +839,7 @@
                             @foreach($workstations as $workstation)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="WORKSTATION{{ $workstation->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/workstations/{{ $workstation->id }}">{{ $workstation->name }}</a>
@@ -833,16 +861,16 @@
                                             <tr>
                                                 <th>{{ trans("cruds.workstation.fields.site") }}</th>
                                                 <td>
-                                                    @if ($workstation->site!=null)
-                                                        <a href="{{ route('admin.sites.show', $workstation->site_id) }}">{{ $workstation->site->name }}</a>
+                                                    @if ($workstation->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $workstation->site->id) }}">{{ $workstation->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.workstation.fields.building") }}</th>
                                                 <td>
-                                                    @if ($workstation->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $workstation->building_id) }}">{{ $workstation->building->name }}</a>
+                                                    @if ($workstation->building!==null)
+                                                        <a href="{{ route('admin.buildings.show', $workstation->building->id) }}">{{ $workstation->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -868,7 +896,7 @@
                             @foreach($phones as $phone)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="PHONE{{ $phone->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
@@ -890,16 +918,16 @@
                                             <tr>
                                                 <th>{{ trans("cruds.phone.fields.site") }}</th>
                                                 <td>
-                                                    @if ($phone->site_id!==null)
-                                                        <a href="{{ route('admin.sites.show', $phone->site_id) }}">{{ $phone->site->name }}</a>
+                                                    @if ($phone->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $phone->site->id) }}">{{ $phone->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.phone.fields.building") }}</th>
                                                 <td>
-                                                    @if ($phone->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $phone->building_id) }}">{{ $phone->building->name }}</a>
+                                                    @if ($phone->building!==null)
+                                                        <a href="{{ route('admin.buildings.show', $phone->building->id) }}">{{ $phone->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -925,7 +953,7 @@
                             @foreach($physicalSecurityDevices as $physicalSecurityDevice)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="SECURITY{{ $physicalSecurityDevice->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
@@ -947,16 +975,16 @@
                                             <tr>
                                                 <th>{{ trans("cruds.physicalSecurityDevice.fields.site") }}</th>
                                                 <td>
-                                                    @if ($physicalSecurityDevice->site_id!==null)
-                                                        <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site_id) }}">{{ $physicalSecurityDevice->site->name }}</a>
+                                                    @if ($physicalSecurityDevice->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site->id) }}">{{ $physicalSecurityDevice->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.physicalSecurityDevice.fields.building") }}</th>
                                                 <td>
-                                                    @if ($physicalSecurityDevice->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building_id) }}">{{ $physicalSecurityDevice->building->name }}</a>
+                                                    @if ($physicalSecurityDevice->building!==null)
+                                                        <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">{{ $physicalSecurityDevice->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -982,7 +1010,7 @@
                             @foreach($storageDevices as $storageDevice)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="STOR{{ $storageDevice->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/storage-devices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
@@ -1004,24 +1032,24 @@
                                             <tr>
                                                 <th>{{ trans("cruds.storageDevice.fields.site") }}</th>
                                                 <td>
-                                                    @if ($storageDevice->site_id!==null)
-                                                        <a href="{{ route('admin.sites.show', $storageDevice->site_id) }}">{{ $storageDevice->site->name }}</a>
+                                                    @if ($storageDevice->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $storageDevice->site->id) }}">{{ $storageDevice->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.storageDevice.fields.building") }}</th>
                                                 <td>
-                                                    @if ($storageDevice->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $storageDevice->building_id) }}">{{ $storageDevice->building->name }}</a>
+                                                    @if ($storageDevice->building!==null)
+                                                        <a href="{{ route('admin.buildings.show', $storageDevice->building->id) }}">{{ $storageDevice->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.storageDevice.fields.bay") }}</th>
                                                 <td>
-                                                    @if ($storageDevice->bay!=null)
-                                                        <a href="{{ route('admin.bays.show', $storageDevice->bay_id) }}">{{ $storageDevice->bay->name }}</a>
+                                                    @if ($storageDevice->bay!==null)
+                                                        <a href="{{ route('admin.bays.show', $storageDevice->bay->id) }}">{{ $storageDevice->bay->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1047,7 +1075,7 @@
                             @foreach($wifiTerminals as $wifiTerminal)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="WIFI{{ $wifiTerminal->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
@@ -1070,8 +1098,7 @@
                                                 <th>{{ trans("cruds.wifiTerminal.fields.site") }}</th>
                                                 <td>
                                                     @if ($wifiTerminal->site!==null)
-                                                        <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{!
-                                                            $wifiTerminal->site->name !}</a>
+                                                        <a href="{{ route('admin.sites.show', $wifiTerminal->site->id) }}">{{ $wifiTerminal->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1079,8 +1106,8 @@
                                                 <th>{{ trans("cruds.wifiTerminal.fields.building") }}</th>
                                                 <td>
                                                     @if ($wifiTerminal->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">{!
-                                                            $wifiTerminal->building->name !}</a>
+                                                        <a href="{{ route('admin.buildings.show', $wifiTerminal->building->id) }}">
+                                                            {{$wifiTerminal->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1106,7 +1133,7 @@
                             @foreach($peripherals as $peripheral)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="PERIPHERAL{{ $peripheral->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/peripherals/{{ $peripheral->id }}">{{ $peripheral->name }}</a>
@@ -1132,24 +1159,24 @@
                                             <tr>
                                                 <th>{{ trans("cruds.peripheral.fields.site") }}</th>
                                                 <td>
-                                                    @if ($peripheral->site!=null)
-                                                        <a href="{{ route('admin.sites.show', $peripheral->site_id) }}">{{ $peripheral->site->name }}</a>
+                                                    @if ($peripheral->site!==null)
+                                                        <a href="{{ route('admin.sites.show', $peripheral->site->id) }}">{{ $peripheral->site->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.peripheral.fields.building") }}</th>
                                                 <td>
-                                                    @if ($peripheral->building!=null)
-                                                        <a href="{{ route('admin.buildings.show', $peripheral->building_id) }}">{{ $peripheral->building->name }}</a>
+                                                    @if ($peripheral->building!==null)
+                                                        <a href="{{ route('admin.buildings.show', $peripheral->building->id) }}">{{ $peripheral->building->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.peripheral.fields.bay") }}</th>
                                                 <td>
-                                                    @if ($peripheral->bay!=null)
-                                                        <a href="{{ route('admin.bays.show', $peripheral->bay_id) }}">{{ $peripheral->bay->name }}</a>
+                                                    @if ($peripheral->bay!==null)
+                                                        <a href="{{ route('admin.bays.show', $peripheral->bay->id) }}">{{ $peripheral->bay->name }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -1175,7 +1202,7 @@
                             @foreach($dhcpServers as $dhcpServer)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="DHCP_SERVER{{ $dhcpServer->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/dhcp-servers/{{ $dhcpServer->id }}">{{ $dhcpServer->name }}</a>
@@ -1212,7 +1239,7 @@
                             @foreach($dnsservers as $dnsserver)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="DNS_SERVER{{ $dnsserver->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/dnsservers/{{ $dnsserver->id }}">{{ $dnsserver->name }}</a>
@@ -1249,7 +1276,7 @@
                             @foreach($certificates as $certificate)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="CERT{{ $certificate->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/certificates/{{ $certificate->id }}">{{ $certificate->name }}</a>
@@ -1289,14 +1316,12 @@
                                                 <tr>
                                                     <th>{{ trans('cruds.certificate.fields.applications') }}</th>
                                                     <td>
-                                                        @if ($certificate->applications!=null)
-                                                            @foreach($certificate->applications as $application)
-                                                                <a href="/admin/report/applications#APPLICATION{{ $application->id}}">{{ $application->name }}</a>
-                                                                @if (!$loop->last)
-                                                                    ,
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
+                                                        @foreach($certificate->applications as $application)
+                                                            <a href="/admin/report/applications#APPLICATION{{ $application->id}}">{{ $application->name }}</a>
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
                                                     </td>
                                                 </tr>
                                             @endif
@@ -1322,7 +1347,7 @@
                             @foreach($vlans as $vlan)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="VLAN{{ $vlan->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/vlans/{{ $vlan->id }}">{{ $vlan->name }}</a>
@@ -1379,13 +1404,21 @@ digraph  {
         @can('subnetwork_access')
         @foreach($subnetworks as $subnetwork)
         SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.5' :'1.1' }} image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
-        @if ($subnetwork->vlan_id!=null)
+        @if ($subnetwork->vlan_id!==null)
         SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
-        @if ($subnetwork->network_id!=null)
+        @if ($subnetwork->subnetwork_id!==null)
+        @if ($subnetworks->contains('id', $subnetwork->subnetwork_id))
+        SUBNET{{ $subnetwork->subnetwork_id }} -> SUBNET{{ $subnetwork->id }}
+        @else
         NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
         @endif
-        @if ($subnetwork->gateway_id!=null)
+        @elseif ($subnetwork->network_id!==null)
+        @if ($networks->contains('id', $subnetwork->network_id))
+        NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
+        @endif
+        @endif
+        @if ($subnetwork->gateway_id!==null)
         SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}
         @endif
         @endforeach
@@ -1393,7 +1426,7 @@ digraph  {
         @can('external_connected_entity_access')
         @foreach($externalConnectedEntities as $entity)
         E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/entity.png" href="#EXTENTITY{{$entity->id}}"]
-        @if($entity->network_id!=null)
+        @if($entity->network_id!==null)
         E{{ $entity->id }} -> NET{{ $entity->network_id }}
         @endif
         @endforeach
@@ -1422,7 +1455,7 @@ digraph  {
         @can('logical_server_access')
         @foreach($logicalServers as $logicalServer)
         LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $logicalServer->icon_id === null ? '/images/lserver.png' : route('admin.documents.show', $logicalServer->icon_id) }}" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
-        @if ($logicalServer->address_ip!=null)
+        @if ($logicalServer->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
         @foreach(explode(',',$logicalServer->address_ip) as $address)
         @if ($subnetwork->contains($address))
@@ -1432,7 +1465,7 @@ digraph  {
         @endforeach
         @endforeach
         @can('cluster_access')
-        @if ($logicalServer->cluster_id!=null)
+        @if ($logicalServer->cluster_id!==null)
         LOGICAL_SERVER{{ $logicalServer->id }} -> CLUSTER{{ $logicalServer->cluster_id }}
         @endif
         @endcan
@@ -1446,7 +1479,7 @@ digraph  {
         @can('dhcp_server_access')
         @foreach($dhcpServers as $dhcpServer)
         DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
-        @if ($dhcpServer->address_ip!=null)
+        @if ($dhcpServer->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($dhcpServer->address_ip))
         SUBNET{{ $subnetwork->id }} -> DHCP_SERVER{{ $dhcpServer->id }}
@@ -1460,7 +1493,7 @@ digraph  {
         @can('dnsserver_access')
         @foreach($dnsservers as $dnsserver)
         DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DNS_SERVER{{$dnsserver->id}}"]
-        @if ($dnsserver->address_ip!=null)
+        @if ($dnsserver->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($dnsserver->address_ip))
         SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }}
@@ -1492,7 +1525,7 @@ digraph  {
 
         @can('workstation_access')
         @foreach($workstations as $workstation)
-        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
+        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
         @foreach(explode(',',$workstation->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1505,7 +1538,7 @@ digraph  {
 
         @can('wifi_terminal_access')
         @foreach($wifiTerminals as $wifiTerminal)
-        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!=null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
+        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!==null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
         @foreach(explode(',',$wifiTerminal->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1518,7 +1551,7 @@ digraph  {
 
         @can('phone_access')
         @foreach($phones as $phone)
-        PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!=null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
+        PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!==null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
         @foreach(explode(',',$phone->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1544,7 +1577,7 @@ digraph  {
 
         @can('peripheral_access')
         @foreach($peripherals as $peripheral)
-        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
         @foreach(explode(',',$peripheral->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1557,7 +1590,7 @@ digraph  {
 
         @can('storage_device_access')
         @foreach($storageDevices as $storageDevice)
-        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
+        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!==null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
         @foreach(explode(',',$storageDevice->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1570,7 +1603,7 @@ digraph  {
 
         @can('router_access')
         @foreach($routers as $router)
-        R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!=null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
+        R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!==null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
         @foreach(explode(',',$router->ip_addresses) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1583,7 +1616,12 @@ digraph  {
 
         @can('network_switch_access')
         @foreach($networkSwitches as $networkSwitch)
-        SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!=null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
+        SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!==null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
+        @if ($networkSwitch->vlans->count()>0)
+        @foreach($networkSwitch->vlans as $vlan)
+        VLAN{{ $vlan->id }} -> SW{{ $networkSwitch->id }}
+        @endforeach
+        @else
         @foreach(explode(',',$networkSwitch->ip) as $address)
         @foreach($subnetworks as $subnetwork)
         @if ($subnetwork->contains($address))
@@ -1591,6 +1629,7 @@ digraph  {
         @endif
         @endforeach
         @endforeach
+        @endif
         @endforeach
         @endcan
 

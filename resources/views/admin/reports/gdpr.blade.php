@@ -15,10 +15,11 @@
                             </div>
                         @endif
 
-                        <div class="col-sm-6" style="max-width: 800px;">
-                            <table class="table table-bordered table-striped">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped"
+                                   style="max-width: 600px;">
                                 <tr>
-                                    <td>
+                                    <td style="min-width: 280px">
                                         {{ trans('cruds.macroProcessus.title') }} :
                                         <select name="macroprocess"
                                                 onchange="this.form.process.value='';this.form.submit()"
@@ -29,7 +30,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td style="width: 300px">
                                         {{ trans('cruds.process.title') }} :
                                         <select name="process" onchange="this.form.submit()"
                                                 class="form-control select2">
@@ -44,9 +45,9 @@
                                 </tr>
                             </table>
                         </div>
-
                         <div id="graph-container">
                             <div class="graphviz" id="graph"></div>
+                            <div class="graph-resize-handle"></div>
                         </div>
                         <div class="row p-1">
                             <div class="col-4">
@@ -91,7 +92,7 @@
                         @foreach($dataProcessings as $dataProcessing)
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover">
+                                    <table class="table table-bordered table-striped table-hover table-report">
                                         <thead id="DATAPROCESSING{{ $dataProcessing->id }}">
                                         <th colspan="2">
                                             <a href="/admin/data-processings/{{ $dataProcessing->id }}">{{ $dataProcessing->name }}</a>
@@ -266,6 +267,7 @@ digraph  {
                 .engine("{{ $engine }}")
                 .renderDot(dotSrc);
         });
+
     </script>
     @parent
 @endsection

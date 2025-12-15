@@ -36,10 +36,11 @@ return [
         'redirect' => env('KEYCLOAK_REDIRECT_URI'),
         'base_url' => env('KEYCLOAK_BASE_URL'),
         'realms' => env('KEYCLOAK_REALM'),
+        'auto_provisioning' => env('KEYCLOAK_AUTO_PROVISIONING'),
     ],
 
-    'cpe' => [
-        'api_url' => env('CPE_API_URL', 'https://services.nvd.nist.gov/rest/json/cpes/2.0'),
+    'nvd' => [
+        'api_url' => env('NVD_API_URL', 'https://services.nvd.nist.gov/rest/json/cpes/2.0'),
         'api_key' => env('NVD_API_KEY'), // optionnel
     ],
 

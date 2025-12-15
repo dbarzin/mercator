@@ -1,28 +1,29 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
-use App\Models\Bay;
-use App\Models\Building;
-use App\Models\Cluster;
-use App\Models\Document;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
-use App\Models\PhysicalServer;
-use App\Models\Site;
+use Mercator\Core\Models\Bay;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Cluster;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\PhysicalServer;
+use Mercator\Core\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 // Laravel
 
 class PhysicalServerController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -84,7 +85,7 @@ class PhysicalServerController extends Controller
         $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
 
         // Get PhysicalServer
-        $physicalServer = PhysicalServer::find($request->id);
+        $physicalServer = PhysicalServer::find($request['id']);
 
         // PhysicalServer not found
         abort_if($physicalServer === null, Response::HTTP_NOT_FOUND, '404 Not Found');
@@ -117,32 +118,12 @@ class PhysicalServerController extends Controller
         $physicalServer = PhysicalServer::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $physicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $physicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $physicalServer->icon_id = null;
-        }
+        $this->iconUploadService->handle($request, $physicalServer);
 
         // Save LogicalServer
         $physicalServer->save();
 
-        // Seave Relations
+        // Save Relations
         $physicalServer->applications()->sync($request->input('applications', []));
         $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
         $physicalServer->clusters()->sync($request->input('clusters', []));
@@ -190,29 +171,9 @@ class PhysicalServerController extends Controller
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $physicalServer);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $physicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $physicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $physicalServer->icon_id = null;
-        }
-
-        // Other fields
+        // Update PhysicalServer
         $physicalServer->update($request->all());
 
         // Relations

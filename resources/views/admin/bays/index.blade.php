@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-@can('bay_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.bays.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.bay.title_singular') }}
-            </a>
+    @can('bay_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a id="btn-new" class="btn btn-success" href="{{ route('admin.bays.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.bay.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.bay.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.bay.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <tr>
                         <th width="10">
 
@@ -35,16 +35,22 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach($bays as $key => $bay)
-                        <tr data-entry-id="{{ $bay->id }}">
+                    </thead>
+                    <tbody>
+                    @foreach($bays as $bay)
+                        <tr data-entry-id="{{ $bay->id }}"
+                            @if(
+                                ($bay->description===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>
                             <td>
                                 <a href="{{ route('admin.bays.show', $bay->id) }}">
-                                {{ $bay->name ?? '' }}
+                                    {{ $bay->name ?? '' }}
                                 </a>
                             </td>
                             <td>
@@ -52,9 +58,9 @@
                             </td>
                             <td>
                                 @if ($bay->room!=null)
-                                <a href="{{ route('admin.buildings.show', $bay->room->id) }}">
-                                    {{ $bay->room->name }}
-                                </a>
+                                    <a href="{{ route('admin.buildings.show', $bay->room->id) }}">
+                                        {{ $bay->room->name }}
+                                    </a>
                                 @endif
                             </td>
                             <td nowrap>
@@ -71,30 +77,33 @@
                                 @endcan
 
                                 @can('bay_delete')
-                                    <form action="{{ route('admin.bays.destroy', $bay->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.bays.destroy', $bay->id) }}" method="POST"
+                                          onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
-@parent
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.bay.title_singular"),
-    'URL' => route('admin.bays.massDestroy'),
-    'canDelete' => auth()->user()->can('bay_delete') ? true : false
-));
-</script>
+    @parent
+    <script>
+        @include('partials.datatable', array(
+            'id' => '#dataTable',
+            'title' => trans("cruds.bay.title_singular"),
+            'URL' => route('admin.bays.massDestroy'),
+            'canDelete' => auth()->user()->can('bay_delete') ? true : false
+        ));
+    </script>
 @endsection

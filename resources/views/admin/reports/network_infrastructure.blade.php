@@ -16,10 +16,10 @@
                             </div>
                         @endif
 
-                        <div class="col-sm-6" style="max-width: 800px;">
+                        <div class="col-sm-6" style="max-width: 800px; width: 100%;">
                             <table class="table table-bordered table-striped">
                                 <tr>
-                                    <td>
+                                    <td style="width: 300px;">
                                         {{ trans("cruds.site.title_singular") }} :
                                         <select name="site" id="site" class="form-control select2">
                                             <option></option>
@@ -28,7 +28,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td style="width: 500px;">
                                         {{ trans("cruds.building.title_singular") }} :
                                         <select name="buildings[]" id="buildings" class="form-control select2" multiple>
                                             @if ($all_buildings!=null)
@@ -43,6 +43,7 @@
                         </div>
                         <div id="graph-container">
                             <div id="graph" class="graphviz"></div>
+                            <div class="graph-resize-handle"></div>
                         </div>
                         <div class="row p-1">
                             <div class="col-4">
@@ -86,11 +87,13 @@
                             @foreach($sites as $site)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="SITE{{ $site->id }}">
-                                            <th colspan="2">
-                                                <a href="/admin/sites/{{ $site->id }}">{{ $site->name }}</a>
-                                            </th>
+                                            <tr>
+                                                <th colspan="2">
+                                                    <a href="/admin/sites/{{ $site->id }}">{{ $site->name }}</a>
+                                                </th>
+                                            </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
@@ -136,55 +139,18 @@
                             @foreach($buildings as $building)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table id="BUILDING{{ $building->id }}"
-                                               class="table table-bordered table-striped table-hover">
-                                            <thead>
-                                            <th colspan="2">
-                                                <a href="/admin/buildings/{{ $building->id }}">{{ $building->name }}</a>
-                                            </th>
+                                        <table class="table table-bordered table-striped table-hover table-report">
+                                            <thead id="BUILDING{{ $building->id }}">
+                                            <tr>
+                                                <th colspan="2">
+                                                    <a href="/admin/buildings/{{ $building->id }}">{{ $building->name }}</a>
+                                                </th>
+                                            </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <th>{{ trans("cruds.building.fields.type") }}</th>
-                                                <td>{{ $building->type }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ trans("cruds.building.fields.attributes") }}</th>
-                                                <td>
-                                                    @foreach(explode(" ",$building->attributes) as $attribute)
-                                                        <span class="badge badge-info">{{ $attribute }}</span>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th width="20%">{{ trans("cruds.building.fields.description") }}</th>
+                                                <td width="20%">{{ trans("cruds.building.fields.description") }}</td>
                                                 <td>{!! $building->description !!}</td>
-                                            </tr>
-                                            @if ($building->building!==null)
-                                                <tr>
-                                                    <th>{{ trans("cruds.building.fields.parent") }}</th>
-                                                    <td>
-                                                        <a href="#BUILDING{{$building->building->id}}">{{ $building->building->name }}</a>
-                                                    </td>
-                                                </tr>
-                                            @elseif ($building->site!==null)
-                                                <tr>
-                                                    <th>{{ trans("cruds.building.fields.site") }}</th>
-                                                    <td>
-                                                        <a href="#SITE{{$building->site->id}}">{{ $building->site->name }}</a>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                            <tr>
-                                                <th>{{ trans("cruds.building.fields.children") }}</th>
-                                                <td>
-                                                    @foreach($building->buildings as $b)
-                                                        <a href="#BUILDING{{$b->id}}">{{$b->name}}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
-                                                    @endforeach
-                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>{{ trans("cruds.building.fields.bays") }}</th>
@@ -218,7 +184,7 @@
                             @foreach($bays as $bay)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="BAY{{ $bay->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/bays/{{ $bay->id }}">{{ $bay->name }}</a>
@@ -229,11 +195,11 @@
                                                 <th width="20%">{{ trans("cruds.bay.fields.description") }}</th>
                                                 <td>{!! $bay->description !!}</td>
                                             </tr>
-                                            @if ($bay->bayPhysicalServers->count()>0)
+                                            @if ($bay->physicalServers->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_servers") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalServers as $physicalServer)
+                                                        @foreach($bay->physicalServers as $physicalServer)
                                                             <a href="#PSERVER{{$physicalServer->id}}">{{ $physicalServer->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -242,11 +208,11 @@
                                                     </td>
                                                 </tr>
                                             @endif
-                                            @if ($bay->bayPhysicalRouters->count()>0)
+                                            @if ($bay->physicalRouters->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_routers") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalRouters as $physicalRouter)
+                                                        @foreach($bay->physicalRouters as $physicalRouter)
                                                             <a href="#ROUTER{{$physicalRouter->id}}">{{ $physicalRouter->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -256,11 +222,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayPhysicalSwitches->count()>0)
+                                            @if ($bay->physicalSwitches->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_switches") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch)
+                                                        @foreach($bay->physicalSwitches as $bayPhysicalSwitch)
                                                             <a href="#SWITCH{{$bayPhysicalSwitch->id}}">{{ $bayPhysicalSwitch->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -270,11 +236,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayStorageDevices->count()>0)
+                                            @if ($bay->storageDevices->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.storage_devices") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayStorageDevices as $bayStorageDevice)
+                                                        @foreach($bay->storageDevices as $bayStorageDevice)
                                                             <a href="#STORAGEDEVICE{{$bayStorageDevice->id}}">{{ $bayStorageDevice->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -284,11 +250,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayPhysicalSecurityDevices->count()>0)
+                                            @if ($bay->physicalSecurityDevices->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.physical_security_devices") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice)
+                                                        @foreach($bay->physicalSecurityDevices as $physicalSecurityDevice)
                                                             <a href="#PSD{{$physicalSecurityDevice->id}}">{{ $physicalSecurityDevice->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -298,11 +264,11 @@
                                                 </tr>
                                             @endif
 
-                                            @if ($bay->bayPeripherals->count()>0)
+                                            @if ($bay->peripherals->count()>0)
                                                 <tr>
                                                     <th>{{ trans("cruds.bay.fields.peripherals") }}</th>
                                                     <td>
-                                                        @foreach($bay->bayPeripherals as $peripheral)
+                                                        @foreach($bay->peripherals as $peripheral)
                                                             <a href="#PERIPHERAL{{$peripheral->id}}">{{ $peripheral->name}}</a>
                                                             @if (!$loop->last)
                                                                 ,
@@ -333,7 +299,7 @@
                             @foreach($physicalServers as $pserver)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="PSERVER{{ $pserver->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/physical-servers/{{ $pserver->id }}">{{ $pserver->name }}</a>
@@ -412,7 +378,7 @@
                             @foreach($workstations as $workstation)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="WORKSTATION{{ $workstation->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/workstations/{{ $workstation->id }}">{{ $workstation->name }}</a>
@@ -464,7 +430,7 @@
                             @foreach($storageDevices as $storageDevice)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="STORAGEDEVICE{{ $storageDevice->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/storage-devices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
@@ -522,7 +488,7 @@
                             @foreach($peripherals as $peripheral)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="PERIPHERAL{{ $peripheral->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/peripherals/{{ $peripheral->id }}">{{ $peripheral->name }}</a>
@@ -589,7 +555,7 @@
                             @foreach($phones as $phone)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="PHONE{{ $phone->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
@@ -643,7 +609,7 @@
                             @foreach($physicalSwitches as $switch)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="SWITCH{{ $switch->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/physical-switches/{{ $switch->id }}">{{ $switch->name }}</a>
@@ -706,7 +672,7 @@
                             @foreach($physicalRouters as $router)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="ROUTER{{ $router->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/physical-routers/{{ $router->id }}">{{ $router->name }}</a>
@@ -769,7 +735,7 @@
                             @foreach($wifiTerminals as $wifiTerminal)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="WIFI{{ $wifiTerminal->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
@@ -823,7 +789,7 @@
                             @foreach($physicalSecurityDevices as $physicalSecurityDevice)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="PSD{{ $physicalSecurityDevice->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
@@ -887,7 +853,9 @@
                             <div class="row">
                                 <div class="col-sm-6">
 
-                                    <table class="table table-bordered table-striped table-hover">
+                                    <table class="table table-bordered table-striped table-hover"
+                                           style="max-width: 800px; width: 100%;">
+                                        <thead>
                                         <th></th>
                                         <th width='40%'>
                                             {{ trans('cruds.physicalLink.fields.src') }}
@@ -911,7 +879,7 @@
                                                 <td>
                                                     @if ($physicalLink->peripheralSrc!=null)
                                                         <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_src_id) }}">
-                                                            {{ $physicalLink->peripheralSrc->name; }}
+                                                            {{ $physicalLink->peripheralSrc->name }}
                                                         </a>
                                                     @elseif ($physicalLink->phoneSrc!=null)
                                                         <a href="{{ route('admin.phones.show', $physicalLink->phone_src_id) }}">
@@ -953,7 +921,7 @@
                                                 <td>
                                                     @if ($physicalLink->peripheralDest!=null)
                                                         <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_dest_id) }}">
-                                                            {{ $physicalLink->peripheralDest->name; }}
+                                                            {{ $physicalLink->peripheralDest->name }}
                                                         </a>
                                                     @elseif ($physicalLink->phoneDest!=null)
                                                         <a href="{{ route('admin.phones.show', $physicalLink->phone_dest_id) }}">
@@ -1010,218 +978,43 @@
     <script>
             <?php
             // Lighter colors
-            $tableau20 = [
+            $tableau20 = array(
                 "#99cbed", "#dfe9f6", "#ffcc9f", "#ffe4c9",
                 "#9fe59f", "#d6f2d0", "#efa8a8", "#ffd6d5",
                 "#d4c2e5", "#e8dfee", "#d3b9d6", "#e7d7d4",
                 "#f4c9e7", "#fce2ed", "#cccccc", "#e9e9e9",
-                "#eded9e", "#f1f1d1", "#9aecf4", "#d8f0f5"
-            ];
+                "#eded9e", "#f1f1d1", "#9aecf4", "#d8f0f5");
             $idColor = 0;
-
-            // Build an index of children by parent building_id to avoid N+1 traversal in Blade
-            // Expectation: $buildings is a Collection with site_id, building_id
-            $childrenByParent = $buildings->groupBy('building_id'); // parent_id => [children...]
-
-            /**
-             * Recursively render one building + its contents + its child buildings.
-             * Note: we pass $childrenByParent, $tableau20, and $idColor by reference for color cycling.
-             */
-        function renderBuilding($building, $childrenByParent, &$tableau20, &$idColor) {
-            ob_start();
-            ?>
-            subgraph
-        cluster_ROOM_<?= $building->id ?>
-        {
-            label = "<?= e($building->name) ?>"
-            bgcolor = "<?= $tableau20[$idColor++ % 20] ?>"
-
-                <?php // Phones in this building ?>
-                <?php foreach ($building->buildingPhones as $phone): ?>
-                PHONE<?= $phone->id ?> [label = "<?= e($phone->name) ?>"
-            shape = none
-            labelloc = "b"
-            width = 1
-            height = 1.1
-            image = "/images/phone.png"
-            href = "#PHONE<?= $phone->id ?>"
-        ]
-            <?php endforeach; ?>
-
-                <?php // Workstations ?>
-                <?php foreach ($building->buildingWorkstations as $workstation): ?>
-                WORK<?= $workstation->id ?> [label = "<?= e($workstation->name) ?>"
-            shape = none
-            labelloc = "b"
-            width = 1
-            height = 1.1
-            image = "/images/workstation.png"
-            href = "#WORKSTATION<?= $workstation->id ?>"
-        ]
-            <?php endforeach; ?>
-
-                <?php // Wi-Fi terminals ?>
-                <?php foreach ($building->wifiTerminals as $wifiTerminal): ?>
-                WIFI<?= $wifiTerminal->id ?> [label = "<?= e($wifiTerminal->name) ?>"
-            shape = none
-            labelloc = "b"
-            width = 1
-            height = 1.1
-            image = "/images/wifi.png"
-            href = "#WIFI<?= $wifiTerminal->id ?>"
-        ]
-            <?php endforeach; ?>
-
-                <?php // Standalone switches (no bay) ?>
-                <?php foreach ($building->buildingPhysicalSwitch as $switch): ?>
-                <?php if ($switch->bay_id === null): ?>
-                SWITCH<?= $switch->id ?> [label = "<?= e($switch->name) ?>"
-            shape = none
-            labelloc = "b"
-            width = 1
-            height = 1.1
-            image = "/images/switch.png"
-            href = "#SWITCH<?= $switch->id ?>"
-        ]
-            <?php endif; ?>
-            <?php endforeach; ?>
-
-                <?php // Standalone routers (no bay) ?>
-                <?php foreach ($building->buildingPhysicalRouters as $router): ?>
-                <?php if ($router->bay_id === null): ?>
-                ROUTER<?= $router->id ?> [label = "<?= e($router->name) ?>"
-            shape = none
-            labelloc = "b"
-            width = 1
-            height = 1.1
-            image = "/images/router.png"
-            href = "#ROUTER<?= $router->id ?>"
-        ]
-            <?php endif; ?>
-            <?php endforeach; ?>
-
-                <?php // Standalone peripherals (no bay) ?>
-                <?php foreach ($building->buildingPeripherals as $peripheral): ?>
-                <?php if ($peripheral->bay_id === null): ?>
-                PER<?= $peripheral->id ?> [label = "<?= e($peripheral->name) ?>"
-            shape = none
-            labelloc = "b"
-            width = 1
-            height = 1.1
-            image = "/images/peripheral.png"
-            href = "#PERIPHERAL<?= $peripheral->id ?>"
-        ]
-            <?php endif; ?>
-            <?php endforeach; ?>
-
-                <?php // Bays inside this building ?>
-                <?php foreach ($building->roomBays as $bay): ?>
-                subgraph
-            cluster_BAY_<?= $bay->id ?>
-            {
-                label = "<?= e($bay->name) ?>"
-                bgcolor = "<?= $tableau20[$idColor++ % 20] ?>"
-
-                    <?php foreach ($bay->bayPhysicalServers as $pServer): ?>
-                    PSERVER<?= $pServer->id ?> [label = "<?= e($pServer->name) ?>"
-                shape = none
-                labelloc = "b"
-                width = 1
-                height = 1.1
-                image = "/images/server.png"
-                href = "#PSERVER<?= $pServer->id ?>"
-            ]
-                <?php endforeach; ?>
-
-                    <?php foreach ($bay->bayStorageDevices as $storageDevice): ?>
-                    SD<?= $storageDevice->id ?> [label = "<?= e($storageDevice->name) ?>"
-                shape = none
-                labelloc = "b"
-                width = 1
-                height = 1.1
-                image = "/images/storage.png"
-                href = "#STORAGEDEVICE<?= $storageDevice->id ?>"
-            ]
-                <?php endforeach; ?>
-
-                    <?php foreach ($bay->bayPhysicalSwitches as $switch): ?>
-                    SWITCH<?= $switch->id ?> [label = "<?= e($switch->name) ?>"
-                shape = none
-                labelloc = "b"
-                width = 1
-                height = 1.1
-                image = "/images/switch.png"
-                href = "#SWITCH<?= $switch->id ?>"
-            ]
-                <?php endforeach; ?>
-
-                    <?php foreach ($bay->bayPhysicalSecurityDevices as $psd): ?>
-                    PSD<?= $psd->id ?> [label = "<?= e($psd->name) ?>"
-                shape = none
-                labelloc = "b"
-                width = 1
-                height = 1.1
-                image = "/images/security.png"
-                href = "#PSD<?= $psd->id ?>"
-            ]
-                <?php endforeach; ?>
-
-                    <?php foreach ($bay->bayPhysicalRouters as $router): ?>
-                    ROUTER<?= $router->id ?> [label = "<?= e($router->name) ?>"
-                shape = none
-                labelloc = "b"
-                width = 1
-                height = 1.1
-                image = "/images/router.png"
-                href = "#ROUTER<?= $router->id ?>"
-            ]
-                <?php endforeach; ?>
-
-                    <?php foreach ($bay->bayPeripherals as $peripheral): ?>
-                    PER<?= $peripheral->id ?> [label = "<?= e($peripheral->name) ?>"
-                shape = none
-                labelloc = "b"
-                width = 1
-                height = 1.1
-                image = "/images/peripheral.png"
-                href = "#PERIPHERAL<?= $peripheral->id ?>"
-            ]
-                <?php endforeach; ?>
-            }
-            <?php endforeach; ?>
-
-                <?php
-                // Recurse into child buildings
-                $children = $childrenByParent->get($building->id, collect());
-                foreach ($children as $child) {
-                    echo renderBuilding($child, $childrenByParent, $tableau20, $idColor);
-                }
-                ?>
-        }
-            <?php
-            return ob_get_clean();
-        }
             ?>
 
         let dotSrc = `
-digraph {
+digraph  {
     fontcolor=black;
+
 @foreach($sites as $site)
-    subgraph cluster_SITE_{{ $site->id }} {
-    label="{{ $site->name }}"
-    bgcolor="{{ $tableau20[$idColor++ % 20] }}"
-    <?php
-    // Top-level buildings for this site (no parent)
-    $topBuildings = $buildings->where('site_id', $site->id)->whereNull('building_id');
-    foreach ($topBuildings as $top) {
-        echo renderBuilding($top, $childrenByParent, $tableau20, $idColor);
-    }
-    ?>
-    }
+        subgraph SITE_{{ $site->id }}  {
+        cluster=true;
+        label = "{{ $site->name }}"
+        bgcolor = "{{ $tableau20[$idColor++ % 20] }}"
+
+        <?php
+            // Tous les buildings de ce site
+            $siteBuildings = $buildings->where('site_id', $site->id);
+        ?>
+
+        {{-- Buildings racine : pas de building parent --}}
+        @foreach($siteBuildings->whereNull('building_id') as $building)
+        @include('admin.reports.network_infrastructure_building', [
+            'building'  => $building,
+            'buildings' => $siteBuildings,
+            'visited'   => [],
+        ])
+        @endforeach
+        }
 @endforeach
 
 @foreach($physicalLinks as $link)
-@if (
+    @if (
     // Virtual objects
     ($link->router_src_id === null) &&
     ($link->router_dest_id === null) &&
@@ -1257,56 +1050,56 @@ digraph {
 
     (($link->workstation_src_id === null) || ($workstations->contains("id",$link->workstation_src_id))) &&
     (($link->workstation_dest_id === null) || ($workstations->contains("id",$link->workstation_dest_id)))
-)
+    )
 
-@if($link->peripheral_src_id!=null)
-PER{{$link->peripheral_src_id }}
-@elseif($link->physical_router_src_id!=null)
-ROUTER{{$link->physical_router_src_id}}
-@elseif($link->phone_src_id!=null)
-PHONE{{$link->phone_src_id}}
-@elseif($link->physical_security_device_src_id!=null)
-PSD{{$link->physical_security_device_src_id}}
-@elseif($link->physical_server_src_id!=null)
-PSERVER{{$link->physical_server_src_id}}
-@elseif($link->physical_switch_src_id!=null)
-SWITCH{{$link->physical_switch_src_id}}
-@elseif($link->storage_device_src_id!=null)
-SD{{$link->storage_device_src_id}}
-@elseif($link->wifi_terminal_src_id!=null)
-WIFI{{$link->wifi_terminal_src_id}}
-@elseif($link->workstation_src_id!=null)
-WORK{{$link->workstation_src_id}}
-@endif
-->
-@if($link->peripheral_dest_id!=null)
-PER{{$link->peripheral_dest_id}}
-@elseif($link->physical_router_dest_id!=null)
-ROUTER{{$link->physical_router_dest_id}}
-@elseif($link->phone_dest_id!=null)
-PHONE{{$link->phone_dest_id}}
-@elseif($link->physical_security_device_dest_id!=null)
-PSD{{$link->physical_security_device_dest_id}}
-@elseif($link->physical_server_dest_id!=null)
-PSERVER{{$link->physical_server_dest_id}}
-@elseif($link->physical_switch_dest_id!=null)
-SWITCH{{$link->physical_switch_dest_id}}
-@elseif($link->storage_device_dest_id!=null)
-SD{{$link->storage_device_dest_id}}
-@elseif($link->wifi_terminal_dest_id!=null)
-WIFI{{$link->wifi_terminal_dest_id}}
-@elseif($link->workstation_dest_id!=null)
-WORK{{$link->workstation_dest_id}}
-@endif
-[arrowhead=none, taillabel="{{$link->src_port}}", headlabel="{{$link->dest_port}}", href="{{ route('admin.links.show', $link->id) }}"];
-@endif
+    @if($link->peripheral_src_id!=null)
+    PER{{$link->peripheral_src_id }}
+    @elseif($link->physical_router_src_id!=null)
+    ROUTER{{$link->physical_router_src_id}}
+    @elseif($link->phone_src_id!=null)
+    PHONE{{$link->phone_src_id}}
+    @elseif($link->physical_security_device_src_id!=null)
+    PSD{{$link->physical_security_device_src_id}}
+    @elseif($link->physical_server_src_id!=null)
+    PSERVER{{$link->physical_server_src_id}}
+    @elseif($link->physical_switch_src_id!=null)
+    SWITCH{{$link->physical_switch_src_id}}
+    @elseif($link->storage_device_src_id!=null)
+    SD{{$link->storage_device_src_id}}
+    @elseif($link->wifi_terminal_src_id!=null)
+    WIFI{{$link->wifi_terminal_src_id}}
+    @elseif($link->workstation_src_id!=null)
+    WORK{{$link->workstation_src_id}}
+    @endif
+    ->
+    @if($link->peripheral_dest_id!=null)
+    PER{{$link->peripheral_dest_id}}
+    @elseif($link->physical_router_dest_id!=null)
+    ROUTER{{$link->physical_router_dest_id}}
+    @elseif($link->phone_dest_id!=null)
+    PHONE{{$link->phone_dest_id}}
+    @elseif($link->physical_security_device_dest_id!=null)
+    PSD{{$link->physical_security_device_dest_id}}
+    @elseif($link->physical_server_dest_id!=null)
+    PSERVER{{$link->physical_server_dest_id}}
+    @elseif($link->physical_switch_dest_id!=null)
+    SWITCH{{$link->physical_switch_dest_id}}
+    @elseif($link->storage_device_dest_id!=null)
+    SD{{$link->storage_device_dest_id}}
+    @elseif($link->wifi_terminal_dest_id!=null)
+    WIFI{{$link->wifi_terminal_dest_id}}
+    @elseif($link->workstation_dest_id!=null)
+    WORK{{$link->workstation_dest_id}}
+    @endif
+    [arrowhead=none,taillabel="{{$link->src_port}}", headlabel="{{$link->dest_port}}", href="{{ route('admin.links.show', $link->id) }}"];
+    @endif
 @endforeach
-}
-`;
+}`;
 
         document.addEventListener("DOMContentLoaded", function () {
             $('#site').on('change', function () {
-                if (this.form.building) this.form.building.value = '';
+                if (this.form.building)
+                    this.form.building.value = '';
                 this.form.submit();
             });
 
@@ -1340,6 +1133,7 @@ WORK{{$link->workstation_dest_id}}
                 .engine("{{ $engine }}")
                 .renderDot(dotSrc);
         });
+
     </script>
     @parent
 @endsection

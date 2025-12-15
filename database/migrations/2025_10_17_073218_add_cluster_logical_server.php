@@ -7,6 +7,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Indique si la migration doit être exécutée dans une transaction automatique.
+     *
+     * - true : Laravel exécute la migration dans une transaction si le SGBD le permet (PostgreSQL, SQLite...).
+     *          Cela garantit que toutes les modifications sont annulées en cas d'erreur (atomicité).
+     * - false : Laravel exécute la migration hors transaction.
+     *           Utilisez cette option lorsqu'une opération DDL ou spécifique (ex : certains index ou contraintes sur MySQL)
+     *           n'est pas compatible avec le mode transactionnel, afin d'éviter les erreurs du SGBD.
+     *
+     * Exemple d’usage :
+     *    public $withinTransaction = false; // Désactive la transaction automatique pour cette migration.
+     *
+     * Référence officielle :
+     * https://api.laravel.com/docs/12.x/Illuminate/Database/Migrations/Migration.html
+     */
+    public $withinTransaction = false;
+
+    /**
+     * Move cluster association from logical_servers into a pivot table.
+     *
+     * Creates the cluster_logical_server pivot table with a composite primary key and foreign keys,
+     * backfills it from existing logical_servers.cluster_id values, then removes the foreign key
+     * (and on non-SQLite drivers the cluster_id column) from logical_servers.
+     */
     public function up(): void
     {
 
@@ -37,49 +61,31 @@ return new class extends Migration
                 $inserts = [];
                 foreach ($rows as $row) {
                     $inserts[] = [
-                        'cluster_id'        => $row->cluster_id,
+                        'cluster_id' => $row->cluster_id,
                         'logical_server_id' => $row->id,
                     ];
                 }
-                if (!empty($inserts)) {
+                if (! empty($inserts)) {
                     // insertOrIgnore pour éviter tout doublon éventuel
                     DB::table('cluster_logical_server')->insertOrIgnore($inserts);
                 }
             });
 
         // 3) Suppression contrainte FK/index/colonne cluster_id sur logical_servers
-
-        // Certaines anciennes migrations peuvent avoir des noms de contraintes différents.
-        // On tente proprement : d'abord dropForeign via tableau, sinon on ignore.
-        Schema::table('logical_servers', function (Blueprint $table) {
-            // Si la contrainte existe, ceci fonctionne ; sinon Laravel lèvera une exception.
-            // On encapsule donc dans un try/catch global.
-        });
-
-        try {
-            Schema::table('logical_servers', function (Blueprint $table) {
-                // Essaie de supprimer la contrainte si elle existe
-                $table->dropIndex(['cluster_id_fk_5435359']);
-            });
-        } catch (\Throwable $e) {
-            // pas de FK ou nom différent : on ignore
-        }
-
-        try {
-            Schema::table('logical_servers', function (Blueprint $table) {
-                // Supprime l'index si présent (MUL peut n'être qu'un index)
-                $table->dropForeign('cluster_id_fk_5435359');
-            });
-        } catch (\Throwable $e) {
-            // pas d'index : on ignore
-        }
-
-        // Enfin, suppression de la colonne
         if (Schema::hasColumn('logical_servers', 'cluster_id')) {
-            Schema::table('logical_servers', function (Blueprint $table) {
-                $table->dropColumn('cluster_id');
-            });
+            if (DB::getDriverName() === 'sqlite') {
+                // SQLite ne supporte pas dropColumn avec foreign keys
+                Schema::table('logical_servers', function (Blueprint $table) {
+                    $table->dropForeign(['cluster_id']);
+                });
+            } else {
+                Schema::table('logical_servers', function (Blueprint $table) {
+                    $table->dropForeign('cluster_id_fk_5435359');
+                    $table->dropColumn('cluster_id');
+                });
+            }
         }
+
     }
 
     public function down(): void
@@ -89,7 +95,6 @@ return new class extends Migration
             // link to cluster
             $table->unsignedInteger('cluster_id')->index('cluster_id_fk_5435359')->nullable();
         });
-
 
         // 2) Backfill inverse : si plusieurs clusters, on choisit le MIN(cluster_id)
         // (règle simple et déterministe)

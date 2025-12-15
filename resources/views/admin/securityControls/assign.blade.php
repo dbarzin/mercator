@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required">Application / Processus</label>
+                        <label class="label-required">Application / Processus</label>
                         <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="source" id="source" onchange="">
                             <option></option>
                             <optgroup label="Processes">

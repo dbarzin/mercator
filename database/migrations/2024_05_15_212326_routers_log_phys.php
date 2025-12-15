@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('routers', function(Blueprint $table) {
+        Schema::table('routers', function (Blueprint $table) {
             $table->string('type')->nullable();
         });
 
@@ -35,7 +35,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('routers', function(Blueprint $table) {
+        Schema::table('routers', function (Blueprint $table) {
             $table->dropColumn('type');
         });
 

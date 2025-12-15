@@ -1,42 +1,53 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\ApplicationBlock;
-use App\Models\ApplicationModule;
-use App\Models\ApplicationService;
-use App\Models\Database;
-use App\Models\Flux;
-use App\Models\MApplication;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\Flux;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationView extends Controller
 {
-    public function generate(Request $request)
+    /**
+     * Prepare data for the applications report view based on the requested application block and application.
+     *
+     * Persists selected `applicationBlock` and `application` values in session, applies those selections to filter
+     * application-related collections (blocks, applications, services, modules, databases, and fluxes), and returns
+     * the view used to render the applications report. Access is denied with a 403 response when the current user
+     * lacks the `reports_access` permission.
+     *
+     * @param  \Illuminate\Http\Request  $request  Request that may contain `applicationBlock` and `application` parameters used to filter results; values are stored in session when present.
+     * @return \Illuminate\View\View A view for 'admin/reports/applications' populated with the following keys: `all_applicationBlocks`, `all_applications`, `applicationBlocks`, `applications`, `applicationServices`, `applicationModules`, `databases`, and `fluxes`.
+     */
+    public function generate(Request $request): View
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->applicationBlock === null) {
+        if ($request->applicationBlock == null) {
             $request->session()->put('applicationBlock', null);
             $applicationBlock = null;
             $request->session()->put('application', null);
             $application = null;
         } else {
-            if ($request->applicationBlock !== null) {
+            if ($request->applicationBlock != null) {
                 $applicationBlock = intval($request->applicationBlock);
                 $request->session()->put('applicationBlock', $applicationBlock);
             } else {
                 $applicationBlock = $request->session()->get('applicationBlock');
             }
 
-            if ($request->application === null) {
+            if ($request->application == null) {
                 $request->session()->put('application', null);
                 $application = null;
-            } elseif ($request->application !== null) {
+            } elseif ($request->application != null) {
                 $application = intval($request->application);
                 $request->session()->put('application', $application);
             } else {

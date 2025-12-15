@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.physicalServer.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.physicalServer.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $physicalServer->name) }}" required
                                    autofocus/>
@@ -26,13 +26,13 @@
                             <span class="help-block">{{ trans('cruds.physicalServer.fields.name_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="type">{{ trans('cruds.physicalServer.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $physicalServer->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -50,7 +50,8 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.physicalServer.fields.description') }}</label>
+                            <label class="label-maturity-1"
+                                   for="description">{{ trans('cruds.physicalServer.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description"
@@ -146,6 +147,8 @@
                 <div class="row">
                     <div class="col-lg">
                         <div class="form-group">
+                            <label class="label-maturity-1"
+                                   for="configuration">{{ trans('cruds.physicalServer.fields.configuration') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('configuration') ? 'is-invalid' : '' }}"
                                     name="configuration"
@@ -195,12 +198,12 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="operating_system">{{ trans('cruds.physicalServer.fields.operating_system') }}</label>
+                            <label
+                                    for="operating_system">{{ trans('cruds.physicalServer.fields.operating_system') }}</label>
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$operating_system_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $t)
                                     <option {{ (old('operating_system') ? old('operating_system') : $physicalServer->operating_system) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -238,7 +241,7 @@
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsible" id="responsible">
                                 @if (!$responsible_list->contains(old('responsible')))
-                                    <option> {{ old('responsible') }}</option>'
+                                    <option> {{ old('responsible') }}</option>
                                 @endif
                                 @foreach($responsible_list as $t)
                                     <option {{ (old('responsible') ? old('responsible') : $physicalServer->responsible) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -254,8 +257,8 @@
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
-                                   for="address_ip">{{ trans('cruds.physicalServer.fields.address_ip') }}</label>
+                            <label
+                                    for="address_ip">{{ trans('cruds.physicalServer.fields.address_ip') }}</label>
                             <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                                    name="address_ip" id="address_ip"
                                    value="{{ old('address_ip', $physicalServer->address_ip) }}">
@@ -315,7 +318,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="site_id">{{ trans('cruds.physicalServer.fields.site') }}</label>
+                            <label class="label-maturity-1"
+                                   for="site_id">{{ trans('cruds.physicalServer.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
                                 <option></option>
@@ -333,7 +337,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="building_id">{{ trans('cruds.physicalServer.fields.building') }}</label>
+                            <label class="label-maturity-1"
+                                   for="building_id">{{ trans('cruds.physicalServer.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">
                                 <option></option>

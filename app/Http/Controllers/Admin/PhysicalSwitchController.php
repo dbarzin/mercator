@@ -1,19 +1,18 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
-use App\Models\Bay;
-use App\Models\Building;
-use App\Models\NetworkSwitch;
-use App\Models\PhysicalSwitch;
-use App\Models\Site;
+use Mercator\Core\Models\Bay;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\NetworkSwitch;
+use Mercator\Core\Models\PhysicalSwitch;
+use Mercator\Core\Models\Site;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSwitchController extends Controller
@@ -56,7 +55,7 @@ class PhysicalSwitchController extends Controller
         $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Get PhysicalSwitch
-        $physicalSwitch = PhysicalSwitch::find($request->id);
+        $physicalSwitch = PhysicalSwitch::find($request['id']);
 
         // Vlan not found
         abort_if($physicalSwitch === null, Response::HTTP_NOT_FOUND, '404 Not Found');

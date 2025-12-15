@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyInformationRequest;
 use App\Http\Requests\StoreInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
-use App\Http\Resources\Admin\InformationResource;
-use App\Models\Information;
+use Mercator\Core\Models\Information;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class InformationController extends Controller
 {
@@ -37,7 +36,7 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new InformationResource($information);
+        return new JsonResource($information);
     }
 
     public function update(UpdateInformationRequest $request, Information $information)

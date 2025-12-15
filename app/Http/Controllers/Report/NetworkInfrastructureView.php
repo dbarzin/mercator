@@ -1,24 +1,23 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bay;
-use App\Models\Building;
-use App\Models\Peripheral;
-use App\Models\Phone;
-use App\Models\PhysicalLink;
-use App\Models\PhysicalRouter;
-use App\Models\PhysicalSecurityDevice;
-use App\Models\PhysicalServer;
-use App\Models\PhysicalSwitch;
-use App\Models\Site;
-use App\Models\StorageDevice;
-use App\Models\WifiTerminal;
-use App\Models\Workstation;
 use Gate;
 use Illuminate\Http\Request;
+use Mercator\Core\Models\Bay;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Peripheral;
+use Mercator\Core\Models\Phone;
+use Mercator\Core\Models\PhysicalLink;
+use Mercator\Core\Models\PhysicalRouter;
+use Mercator\Core\Models\PhysicalSecurityDevice;
+use Mercator\Core\Models\PhysicalServer;
+use Mercator\Core\Models\PhysicalSwitch;
+use Mercator\Core\Models\Site;
+use Mercator\Core\Models\StorageDevice;
+use Mercator\Core\Models\WifiTerminal;
+use Mercator\Core\Models\Workstation;
 use Symfony\Component\HttpFoundation\Response;
 
 class NetworkInfrastructureView extends Controller
@@ -27,23 +26,24 @@ class NetworkInfrastructureView extends Controller
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->site === null) {
+        $buildingIds = null;
+        if ($request->site == null) {
             $request->session()->put('site', null);
             $siteId = null;
             $request->session()->put('building', null);
             $building = null;
         } else {
-            if ($request->site !== null) {
+            if ($request->site != null) {
                 $siteId = intval($request->site);
                 $request->session()->put('site', $siteId);
             } else {
                 $siteId = $request->session()->get('site');
             }
 
-            if ($request->buildings === null) {
+            if ($request->buildings == null) {
                 $request->session()->put('buildings', null);
                 $buildingIds = null;
-            } elseif ($request->buildings !== null) {
+            } elseif ($request->buildings != null) {
                 $buildingIds = $request->buildings;
                 $request->session()->put('buildings', $buildingIds);
             } else {
@@ -53,7 +53,7 @@ class NetworkInfrastructureView extends Controller
 
         $all_sites = Site::All()->sortBy('name')->pluck('name', 'id');
 
-        if ($siteId !== null) {
+        if ($siteId != null) {
             $sites = Site::where('id', '=', $siteId)->get();
             $site = $sites->first();
 
@@ -61,7 +61,7 @@ class NetworkInfrastructureView extends Controller
                 ->where('site_id', $siteId)
                 ->pluck('name', 'id');
 
-            if ($buildingIds === null || (count($buildingIds) === 0)) {
+            if ($buildingIds == null || (count($buildingIds) == 0)) {
                 $buildings = Building::where('site_id', '=', $site->id)
                     ->orderBy('name')->get();
             } else {
@@ -210,7 +210,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
             */
-            $workstations = Workstation::All()->sortBy('name')
+            $workstations = Workstation::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings) {
                     if (($item->building_id === null) && ($item->site_id === $site)) {
                         return true;
@@ -224,7 +224,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
 
-            $storageDevices = StorageDevice::All()->sortBy('name')
+            $storageDevices = StorageDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings, $bays) {
                     if (($item->bay_id === null) &&
                         ($item->building_id === null) &&
@@ -248,7 +248,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
 
-            $physicalSwitches = PhysicalSwitch::All()->sortBy('name')
+            $physicalSwitches = PhysicalSwitch::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings, $bays) {
                     if (($item->bay_id === null) &&
                         ($item->building_id === null) &&
@@ -272,7 +272,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
 
-            $peripherals = Peripheral::All()->sortBy('name')
+            $peripherals = Peripheral::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings, $bays) {
                     if (($item->bay_id === null) &&
                         ($item->building_id === null) &&
@@ -296,7 +296,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
 
-            $phones = Phone::All()->sortBy('name')
+            $phones = Phone::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings) {
                     if (($item->building_id === null) && ($item->site_id === $site)) {
                         return true;
@@ -310,7 +310,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
 
-            $physicalRouters = PhysicalRouter::All()->sortBy('name')
+            $physicalRouters = PhysicalRouter::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings, $bays) {
                     if (($item->bay_id === null) &&
                         ($item->building_id === null) &&
@@ -334,7 +334,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
 
-            $wifiTerminals = WifiTerminal::All()->sortBy('name')
+            $wifiTerminals = WifiTerminal::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings) {
                     if (($item->building_id === null) && ($item->site_id === $site)) {
                         return true;
@@ -348,7 +348,7 @@ class NetworkInfrastructureView extends Controller
                     return false;
                 });
 
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name')
+            $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($site, $buildings, $bays) {
                     if (($item->bay_id === null) &&
                         ($item->building_id === null) &&
@@ -373,7 +373,7 @@ class NetworkInfrastructureView extends Controller
                 });
 
             // Filter physicalLinks on selected objects
-            $physicalLinks = PhysicalLink::All()->sortBy('name')
+            $physicalLinks = PhysicalLink::all()
                 ->filter(function ($item) use (
                     $physicalRouters,
                     $physicalServers,
@@ -588,20 +588,20 @@ class NetworkInfrastructureView extends Controller
                     return true;
                 });
         } else {
-            $sites = Site::All()->sortBy('name');
-            $buildings = Building::All()->sortBy('name');
+            $sites = Site::query()->orderBy('name')->get();
+            $buildings = Building::query()->orderBy('name')->get();
             $all_buildings = null;
-            $bays = Bay::All()->sortBy('name');
-            $physicalServers = PhysicalServer::All()->sortBy('name');
-            $workstations = Workstation::All()->sortBy('name');
-            $storageDevices = StorageDevice::All()->sortBy('name');
-            $peripherals = Peripheral::All()->sortBy('name');
-            $phones = Phone::All()->sortBy('name');
-            $physicalSwitches = PhysicalSwitch::All()->sortBy('name');
-            $physicalRouters = PhysicalRouter::All()->sortBy('name');
-            $wifiTerminals = WifiTerminal::All()->sortBy('name');
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name');
-            $physicalLinks = PhysicalLink::All()->sortBy('name');
+            $bays = Bay::query()->orderBy('name')->get();
+            $physicalServers = PhysicalServer::query()->orderBy('name')->get();
+            $workstations = Workstation::query()->orderBy('name')->get();
+            $storageDevices = StorageDevice::query()->orderBy('name')->get();
+            $peripherals = Peripheral::query()->orderBy('name')->get();
+            $phones = Phone::query()->orderBy('name')->get();
+            $physicalSwitches = PhysicalSwitch::query()->orderBy('name')->get();
+            $physicalRouters = PhysicalRouter::query()->orderBy('name')->get();
+            $wifiTerminals = WifiTerminal::query()->orderBy('name')->get();
+            $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->get();
+            $physicalLinks = PhysicalLink::all();
         }
 
         return view('admin/reports/network_infrastructure')

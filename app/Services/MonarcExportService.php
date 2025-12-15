@@ -1,6 +1,5 @@
 <?php
 
-
 // app/Services/MonarcExportService.php
 
 namespace App\Services;
@@ -9,9 +8,7 @@ use Illuminate\Support\Str;
 
 class MonarcExportService
 {
-    public function __construct(private MospService $mosp)
-    {
-    }
+    public function __construct(private MospService $mosp) {}
 
     /**
      * @param  array  $referentialSlugs  ex: ["iso27002"]
@@ -25,11 +22,11 @@ class MonarcExportService
         array $assets
     ): array {
         // 1) Charger référentiels + menaces/vulns/reco (depuis MOSP en mémoire)
-        $referentials = [];
+        $referential = [];
         foreach ($referentialSlugs as $slug) {
             $ref = $this->mosp->getReferential($slug);
             // On attend au moins uuid/title/version/slug
-            $referentials[] = [
+            $referential[] = [
                 'uuid' => $ref['uuid'] ?? (string) Str::uuid(),
                 'title' => $ref['title'] ?? $slug,
                 'version' => $ref['version'] ?? null,
@@ -49,16 +46,19 @@ class MonarcExportService
                 'name' => $a['title'],
                 'type' => $a['type'], // 'primary' | 'supporting'
                 'parent' => $a['parent_id'] ? ($assetUuid[$a['parent_id']] ?? null) : null,
+                '_fallback_parent_uuid' => null,
             ];
         }
 
         // (facultatif) réparation parent si parent non sélectionné
+        /*
         foreach ($assetsJson as &$aj) {
-            if ($aj['parent'] === null && ! empty($aj['_fallback_parent_uuid'])) {
+            if (($aj['parent'] == null) && ! empty($aj['_fallback_parent_uuid'])) {
                 $aj['parent'] = $aj['_fallback_parent_uuid'];
             }
             unset($aj['_fallback_parent_uuid']);
         }
+        */
 
         // 3) Générer scénarios pour chaque asset 'supporting'
         $scenarios = [];
@@ -68,7 +68,7 @@ class MonarcExportService
             }
             $aUuid = $assetUuid[$a['id']];
 
-            foreach ($referentials as $ref) {
+            foreach ($referential as $ref) {
                 foreach ($ref['_threats'] as $t) {
                     $tUuid = $t['uuid'] ?? (string) Str::uuid();
                     $vulns = $t['vulnerabilities'] ?? [];
@@ -92,7 +92,7 @@ class MonarcExportService
             'uuid' => $r['uuid'],
             'title' => $r['title'],
             'version' => $r['version'],
-        ], $referentials);
+        ], $referential);
 
         // 5) Payload final
         return [

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -56,12 +55,11 @@ class GlobalSearchController extends Controller
         'ApplicationModule' => 'cruds.applicationModule.title',
         'MacroProcessus' => 'cruds.macroProcessus.title',
         'Certificate' => 'cruds.certificate.title',
-        'Activity' => 'cruds.activity.title',
         'DataProcessing' => 'cruds.dataProcessing.title',
         'SecurityControl' => 'cruds.securityControl.title',
         'LogicalFlow' => 'cruds.LogicalFlow.title',
         'Graph' => 'cruds.graph.title',
-        'Container' => 'cruds.graph.title',
+        'Container' => 'cruds.container.title',
     ];
 
     public function search(Request $request)
@@ -75,7 +73,7 @@ class GlobalSearchController extends Controller
         }
 
         foreach ($this->models as $model => $translation) {
-            $modelClass = 'App\\Models\\'.$model;
+            $modelClass = 'Mercator\\Core\\Models\\'.$model;
             $query = $modelClass::query();
 
             $fields = $modelClass::$searchable;

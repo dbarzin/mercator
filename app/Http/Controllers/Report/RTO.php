@@ -1,10 +1,9 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\MApplication;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -32,7 +31,7 @@ class RTO extends Controller
                         ($m = $app->rto % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
                     ])),
                     'rpo' => implode(' ', array_filter([
-                        ($d = intdiv($app->ro, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
+                        ($d = intdiv($app->rto, 1440)) ? $d.' '.trans('global.'.($d > 1 ? 'days' : 'day')) : null,
                         ($h = intdiv($app->rto, 60) % 24) ? $h.' '.trans('global.'.($h > 1 ? 'hours' : 'hour')) : null,
                         ($m = $app->rto % 60) ? $m.' '.trans('global.'.($m > 1 ? 'minutes' : 'minute')) : null,
                     ])),
@@ -71,7 +70,7 @@ class RTO extends Controller
         });
 
         // Création Excel
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         $headers = [

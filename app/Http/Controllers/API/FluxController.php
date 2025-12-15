@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyFluxRequest;
 use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
-use App\Http\Resources\Admin\FluxResource;
-use App\Models\Flux;
+use Mercator\Core\Models\Flux;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends Controller
 {
@@ -36,7 +35,7 @@ class FluxController extends Controller
     {
         abort_if(Gate::denies('flux_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FluxResource($flux);
+        return new JsonResource($flux);
     }
 
     public function update(UpdateFluxRequest $request, Flux $flux)

@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tasks', function(Blueprint $table) {
-            $table->renameColumn('nom','name');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->renameColumn('nom', 'name');
         });
 
-        Schema::table('processes', function(Blueprint $table) {
+        Schema::table('processes', function (Blueprint $table) {
             $table->dropColumn('dummy');
         });
     }
@@ -25,11 +25,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tasks', function(Blueprint $table) {
-            $table->renameColumn('name','nom');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->renameColumn('name', 'nom');
         });
 
-        Schema::table('processes', function(Blueprint $table) {
+        Schema::table('processes', function (Blueprint $table) {
             $table->integer('dummy')->nullable();
         });
 

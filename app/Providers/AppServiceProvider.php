@@ -1,12 +1,13 @@
 <?php
 
-
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use LdapRecord\Container;
+use Mercator\Core\Menus\MenuRegistry;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,17 +31,30 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // if (env('APP_DEBUG')) {
-        if (config('app.debug')) {
+        if (config('app.db_trace')) {
             // Log SQL Queries
             \DB::listen(function ($query): void {
                 \Log::info($query->time.':'.$query->sql);
             });
         }
 
+        // Si le logging LDAP est activé, on force l’utilisation du channel "ldap"
+        if (config('ldap.logging.enabled')) {
+            Container::setLogger(
+                \Log::channel(config('ldap.logging.channel'))
+            );
+        }
+
         view()->composer('*', function ($view): void {
-            $version = trim(file_get_contents(base_path('version.txt')));
+            // Get the current version of the application
+            $version = '0.0.0'; // default
+            $versionFile = base_path('version.txt');
+            if (file_exists($versionFile) && is_readable($versionFile)) {
+                $version = trim(file_get_contents($versionFile));
+                }
             $view->with('appVersion', $version);
+            // Get the menu
+            $view->with('menu', app(MenuRegistry::class));
         });
     }
 }

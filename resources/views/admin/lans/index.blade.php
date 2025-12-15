@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-@can('lan_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.lans.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.lan.title_singular') }}
-            </a>
+    @can('lan_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a id="btn-new" class="btn btn-success" href="{{ route('admin.lans.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.lan.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.lan.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="card">
+        <div class="card-header">
+            {{ trans('cruds.lan.title_singular') }} {{ trans('global.list') }}
+        </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
-                <thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+                    <thead>
                     <tr>
                         <th width="10">
 
@@ -32,16 +32,22 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach($lans as $key => $lan)
-                        <tr data-entry-id="{{ $lan->id }}">
+                    </thead>
+                    <tbody>
+                    @foreach($lans as $lan)
+                        <tr data-entry-id="{{ $lan->id }}"
+                            @if (
+                                ($lan->description===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>
                             <td>
                                 <a href="{{ route('admin.lans.show', $lan->id) }}">
-                                {{ $lan->name }}
+                                    {{ $lan->name }}
                                 </a>
                             </td>
                             <td>
@@ -61,30 +67,33 @@
                                 @endcan
 
                                 @can('lan_delete')
-                                    <form action="{{ route('admin.lans.destroy', $lan->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.lans.destroy', $lan->id) }}" method="POST"
+                                          onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
-@parent
-<script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => trans("cruds.lan.title_singular"),
-    'URL' => route('admin.lans.massDestroy'),
-    'canDelete' => auth()->user()->can('lan_delete') ? true : false
-));
-</script>
+    @parent
+    <script>
+        @include('partials.datatable', array(
+            'id' => '#dataTable',
+            'title' => trans("cruds.lan.title_singular"),
+            'URL' => route('admin.lans.massDestroy'),
+            'canDelete' => auth()->user()->can('lan_delete') ? true : false
+        ));
+    </script>
 @endsection

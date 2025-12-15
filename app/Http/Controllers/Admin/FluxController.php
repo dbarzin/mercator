@@ -1,36 +1,22 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyFluxRequest;
 use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
-use App\Models\ApplicationModule;
-use App\Models\ApplicationService;
-use App\Models\Database;
-use App\Models\Flux;
-use App\Models\MApplication;
-use App\Services\CartographerService;
+use Mercator\Core\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\Flux;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService)
-    {
-        $this->cartographerService = $cartographerService;
-    }
-
     public function index()
     {
         abort_if(Gate::denies('flux_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -75,7 +61,7 @@ class FluxController extends Controller
 
     public function store(StoreFluxRequest $request)
     {
-        $flux = new Flux();
+        $flux = new Flux;
         $flux->name = $request->name;
         $flux->nature = $request->nature;
         $flux->description = $request->description;
@@ -142,10 +128,10 @@ class FluxController extends Controller
     {
         abort_if(Gate::denies('flux_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
-        $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
-        $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
-        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $services = ApplicationService::query()->orderBy('name')->pluck('name', 'id');
+        $modules = ApplicationModule::query()->orderBy('name')->pluck('name', 'id');
+        $databases = Database::query()->orderBy('name')->pluck('name', 'id');
 
         // List
         $nature_list = Flux::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
@@ -165,6 +151,7 @@ class FluxController extends Controller
             $items->put('DB_'.$key, $value);
         }
 
+        /*
         // Source item
         if ($flux->application_source_id !== null) {
             $flux->src_id = 'APP_'.$flux->application_source_id;
@@ -186,7 +173,7 @@ class FluxController extends Controller
         } elseif ($flux->database_dest_id !== null) {
             $flux->dest_id = 'DB_'.$flux->database_dest_id;
         }
-
+        */
         return view(
             'admin.fluxes.edit',
             compact('items', 'nature_list', 'attributes_list', 'flux')

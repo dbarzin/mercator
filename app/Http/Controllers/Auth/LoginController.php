@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +11,8 @@ use Illuminate\Support\Str;
 use LdapRecord\Auth\BindException;
 use LdapRecord\Container;
 use LdapRecord\Models\Entry as LdapEntry;
+use Mercator\Core\Models\Role;
+use Mercator\Core\Models\User;
 
 class LoginController extends Controller
 {
@@ -29,6 +29,28 @@ class LoginController extends Controller
     public function username(): string
     {
         return 'login';
+    }
+
+    /**
+     * Hook appelé APRES un login réussi (LDAP ou local).
+     *
+     * Ici on :
+     *  - eager-load les rôles / permissions pour éviter le N+1 dans la requête
+     *  - stocke l'utilisateur enrichi en session pour un éventuel middleware
+     */
+    protected function authenticated(Request $request, User $user): void
+    {
+        $user->loadMissing('roles.permissions');
+
+        session([
+            'auth_role_ids'    => $user->roles->pluck('id')->all(),
+            'auth_permissions' => $user->roles
+                ->flatMap->permissions
+                ->pluck('title')
+                ->unique()
+                ->values()
+                ->all(),
+        ]);
     }
 
     /**
@@ -51,11 +73,24 @@ class LoginController extends Controller
                 $query->in($base);
             }
 
+            // Group
             $group = trim((string) config('app.ldap_group'));
-            if ($group !== '') {
-                $query->where('memberOf', $group);
-            }
+            $useNested = (bool) config('app.ldap_nested_groups');
 
+            if ($group !== '') {
+                if ($useNested) {
+                    // Nested groups for Active Directory using LDAP_MATCHING_RULE_IN_CHAIN
+                    // Generates filter: (memberOf:1.2.840.113556.1.4.1941:=<GROUP_DN>)
+                    $query->whereRaw(
+                        'memberOf',
+                        ':1.2.840.113556.1.4.1941:=',
+                        $group
+                    );
+                } else {
+                    // Standard non-recursive group membership
+                    $query->whereEquals('memberOf', $group);
+                }
+            }
             // Attributs de login à tester côté LDAP (uid, sAMAccountName, etc.)
             $attrs = array_values(array_filter(array_map('trim', explode(',', (string) config('app.ldap_login_attributes')))));
             if (empty($attrs)) {
@@ -144,9 +179,18 @@ class LoginController extends Controller
                         'login' => $identifier,
                         'password' => Hash::make(Str::random(32)), // inutilisable en local par défaut
                     ]);
+
+                    // Get default Role
+                    $roleName = config('app.ldap_auto_provision_role');
+                    if ($roleName !== null) {
+                        $role = Role::query()->where('title', $roleName)->firstOrFail();
+                        $local->roles()->sync([$role->id]);
+                        }
                 }
 
                 if ($local) {
+                    // 🔐 Login manuel → AuthenticatesUsers appellera ensuite sendLoginResponse()
+                    // qui déclenchera le hook authenticated()
                     $this->guard()->login($local, $remember);
 
                     return true;

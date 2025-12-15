@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoDatabaseLogicalServerTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoDatabaseLogicalServerTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('database_logical_server')->delete();
-        
-        
-        
+
     }
 }

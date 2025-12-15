@@ -1,21 +1,25 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 // Models
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
-// Framework
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
-use App\Models\PhysicalSecurityDevice;
-use App\Models\SecurityDevice;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\PhysicalSecurityDevice;
+use Mercator\Core\Models\SecurityDevice;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
+// Framework
+
 class SecurityDeviceController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -30,16 +34,39 @@ class SecurityDeviceController extends Controller
         abort_if(Gate::denies('security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.securityDevices.create', compact('physicalSecurityDevices'));
+        // List
+        $type_list = SecurityDevice::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        // Select icons
+        $icons = SecurityDevice::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        return view('admin.securityDevices.create',
+            compact('physicalSecurityDevices',
+                'applications',
+                'type_list',
+                'attributes_list',
+                'icons'
+            ));
     }
 
     public function store(StoreSecurityDeviceRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $securityDevice = SecurityDevice::create($request->all());
 
         // Relations
-        $securityDevice->physicalSecurityDevices()->sync($request->input('physicalSecurityDevices', []));
+        $securityDevice->physicalSecurityDevices()->sync($request->input('physical_security_devices', []));
+        $securityDevice->applications()->sync($request->input('applications', []));
+
+        // Save icon
+        $this->iconUploadService->handle($request, $securityDevice);
+
+        // Save Security Device
+        $securityDevice->save();
 
         return redirect()->route('admin.security-devices.index');
     }
@@ -49,16 +76,38 @@ class SecurityDeviceController extends Controller
         abort_if(Gate::denies('security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.securityDevices.edit', compact('securityDevice', 'physicalSecurityDevices'));
+        // List
+        $type_list = SecurityDevice::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        // Select icons
+        $icons = SecurityDevice::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        return view('admin.securityDevices.edit',
+            compact('securityDevice',
+                'physicalSecurityDevices',
+                'applications',
+                'type_list',
+                'attributes_list',
+                'icons'
+            ));
     }
 
     public function update(UpdateSecurityDeviceRequest $request, SecurityDevice $securityDevice)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
+        // Save icon
+        $this->iconUploadService->handle($request, $securityDevice);
+
+        // Update Security Device
         $securityDevice->update($request->all());
 
         // Relations
         $securityDevice->physicalSecurityDevices()->sync($request->input('physical_security_devices', []));
+        $securityDevice->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.security-devices.index');
     }
@@ -84,5 +133,24 @@ class SecurityDeviceController extends Controller
         SecurityDevice::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = SecurityDevice::query()
+            ->select('attributes')
+            ->whereNotNull('attributes')
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

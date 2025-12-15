@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoGatewaysTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoGatewaysTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('gateways')->delete();
-        
-        
-        
+
     }
 }

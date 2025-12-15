@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoCartographerMApplicationTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoCartographerMApplicationTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('cartographer_m_application')->delete();
-        
-        
-        
+
     }
 }

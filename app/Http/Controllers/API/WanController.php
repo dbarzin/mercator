@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWanRequest;
 use App\Http\Requests\StoreWanRequest;
 use App\Http\Requests\UpdateWanRequest;
-use App\Http\Resources\Admin\WanResource;
-use App\Models\Wan;
+use Mercator\Core\Models\Wan;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class WanController extends Controller
 {
@@ -28,8 +27,6 @@ class WanController extends Controller
         abort_if(Gate::denies('wan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wan = Wan::create($request->all());
-        // syncs
-        // $wan->roles()->sync($request->input('roles', []));
 
         return response()->json($wan, 201);
     }
@@ -38,7 +35,7 @@ class WanController extends Controller
     {
         abort_if(Gate::denies('wan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WanResource($wan);
+        return new JsonResource($wan);
     }
 
     public function update(UpdateWanRequest $request, Wan $wan)

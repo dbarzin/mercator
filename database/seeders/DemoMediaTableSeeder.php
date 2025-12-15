@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoMediaTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoMediaTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('media')->delete();
-        
-        
-        
+
     }
 }

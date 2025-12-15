@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 // Models
 use App\Http\Controllers\Controller;
-use App\Models\LogicalFlow;
-use App\Models\PhysicalLink;
-use App\Models\Subnetwork;
+use Mercator\Core\Models\LogicalFlow;
+use Mercator\Core\Models\PhysicalLink;
+use Mercator\Core\Models\Subnetwork;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +25,15 @@ class ExplorerController extends Controller
 
     // TODO : return a JSON in place of nodes[] and edges[]
     // TODO : split me in several private functions by views
-    // TODO : check user rights
+    /**
+     * Build node and edge collections representing the system graph across all views.
+     *
+     * The returned nodes represent entities (sites, devices, applications, processes, etc.) annotated with view level and visual metadata.
+     * Each node is an associative array with keys: `vue`, `id`, `label`, `image`, `type` and optionally `title`.
+     * Each edge is an associative array with keys: `name`, `bidirectional`, `from`, `to`, `type`.
+     *
+     * @return array An array with two elements: `[0 => array $nodes, 1 => array $edges]` where `$nodes` is the list of node arrays and `$edges` is the list of edge arrays.
+     */
     public function getData(): array
     {
         $nodes = [];
@@ -150,9 +157,15 @@ class ExplorerController extends Controller
         }
 
         // Physical security devices
-        $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'address_ip', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
+        $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
-            $this->addNode($nodes, 6, $this->formatId('PSECURITY_', $securityDevice->id), $securityDevice->name, '/images/securitydevice.png', 'physical-security-devices', $securityDevice->address_ip);
+            $this->addNode($nodes,
+                6,
+                $this->formatId('PSECURITY_', $securityDevice->id),
+                $securityDevice->name,
+                $securityDevice->icon_id === null ? '/images/security.png' : "/admin/documents/{$securityDevice->icon_id}",
+                'physical-security-devices',
+                $securityDevice->address_ip);
             if ($securityDevice->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
             } elseif ($securityDevice->building_id !== null) {
@@ -346,7 +359,9 @@ class ExplorerController extends Controller
         // Subnetworks
         foreach ($subnetworks as $subnetwork) {
             $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
-            if ($subnetwork->network_id !== null) {
+            if ($subnetwork->subnetwork_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('SUBNETWORK_', $subnetwork->subnetwork_id));
+            } elseif ($subnetwork->network_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('NETWORK_', $subnetwork->network_id));
             }
             if ($subnetwork->vlan_id !== null) {
@@ -398,10 +413,21 @@ class ExplorerController extends Controller
             $this->addNode($nodes, 5, $this->formatId('LSWITCH_', $networkSwitch->id), $networkSwitch->name, '/images/switch.png', 'switches');
         }
 
+        // Network Switches - VLAN
+        $joins = DB::table('network_switch_vlan')->select('network_switch_id', 'vlan_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('LSWITCH_', $join->network_switch_id), $this->formatId('VLAN_', $join->vlan_id));
+        }
+
         // Logical Security Devices
-        $logical_security_devices = DB::table('security_devices')->select('id', 'name')->whereNull('deleted_at')->get();
+        $logical_security_devices = DB::table('security_devices')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($logical_security_devices as $securityDevice) {
-            $this->addNode($nodes, 5, $this->formatId('LSECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'security-devices');
+            $this->addNode(
+                $nodes,
+                5, $this->formatId('LSECURITY_', $securityDevice->id),
+                $securityDevice->name,
+                $securityDevice->icon_id === null ? '/images/securitydevice.png' : "/admin/documents/{$securityDevice->icon_id}",
+                'security-devices');
         }
 
         // Logical Security Devices - Physical Security Device
@@ -695,6 +721,12 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('LSERVER_', $join->logical_server_id));
         }
+        // m_application_security_device
+        $joins = DB::table('m_application_security_device')->select('m_application_id', 'security_device_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('LSECURITY_', $join->security_device_id));
+        }
+
         // Application Services
         $services = DB::table('application_services')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($services as $service) {
@@ -922,6 +954,13 @@ class ExplorerController extends Controller
         }
     }
 
+    /**
+     * Concatenates a prefix and an identifier into a single identifier string, or returns null if the identifier is null.
+     *
+     * @param  string  $prefix  The string prefix to prepend.
+     * @param  mixed|null  $id  The identifier to append; when null, no identifier is produced.
+     * @return string|null The concatenated identifier (`$prefix . $id`) when `$id` is not null, or `null` otherwise.
+     */
     private function formatId($prefix, $id)
     {
         if ($id !== null) {

@@ -1,22 +1,23 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEntityRequest;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
-use App\Models\Database;
-use App\Models\Document;
-use App\Models\Entity;
-use App\Models\MApplication;
-use App\Models\Process;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -51,27 +52,9 @@ class EntityController extends Controller
         $entity = Entity::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $entity);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $entity->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $entity->icon_id = intval($request->iconSelect);
-        } else {
-            $entity->icon_id = null;
-        }
+        // Save entity
         $entity->save();
 
         // Save relations
@@ -110,27 +93,7 @@ class EntityController extends Controller
     public function update(UpdateEntityRequest $request, Entity $entity)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $entity->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $entity->icon_id = intval($request->iconSelect);
-        } else {
-            $entity->icon_id = null;
-        }
+        $this->iconUploadService->handle($request, $entity);
 
         // set is_external
         $request['is_external'] = $request->has('is_external');

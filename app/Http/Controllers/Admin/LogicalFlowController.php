@@ -1,25 +1,28 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
-// Models
-use App\Models\LogicalFlow;
-use App\Models\LogicalServer;
-use App\Models\Peripheral;
-use App\Models\PhysicalSecurityDevice;
-use App\Models\PhysicalServer;
-use App\Models\Router;
-use App\Models\StorageDevice;
-use App\Models\Workstation;
-// Framework
+use App\Rules\Cidr;
 use Gate;
 use Illuminate\Support\Collection;
+use Mercator\Core\Models\LogicalFlow;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\Peripheral;
+use Mercator\Core\Models\PhysicalSecurityDevice;
+use Mercator\Core\Models\PhysicalServer;
+use Mercator\Core\Models\Router;
+use Mercator\Core\Models\SecurityDevice;
+use Mercator\Core\Models\StorageDevice;
+use Mercator\Core\Models\Subnetwork;
+use Mercator\Core\Models\Workstation;
 use Symfony\Component\HttpFoundation\Response;
+
+// Models
+// Framework
 
 class LogicalFlowController extends Controller
 {
@@ -27,7 +30,7 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalFlows = LogicalFlow::with(
+        $logicalFlows = LogicalFlow::with([
             'router',
             'logicalServerSource',
             'peripheralSource',
@@ -35,13 +38,15 @@ class LogicalFlowController extends Controller
             'storageDeviceSource',
             'workstationSource',
             'physicalSecurityDeviceSource',
+            'subnetworkSource',
             'logicalServerDest',
             'peripheralDest',
             'physicalServerDest',
             'storageDeviceDest',
             'workstationDest',
-            'physicalSecurityDeviceDest'
-        )
+            'physicalSecurityDeviceDest',
+            'subnetworkDest',
+            ])
             ->orderby('name')
             ->get();
 
@@ -52,15 +57,17 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $routers = Router::all()->sortBy('name')->pluck('name', 'id');
+        $routers = Router::query()->orderBy('name')->pluck('name', 'id');
 
-        // Get Equipemnts
-        $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $peripherals = Peripheral::all()->sortBy('name')->pluck('name', 'id');
-        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $storageDevices = StorageDevice::all()->sortBy('name')->pluck('name', 'id');
-        $workstations = Workstation::all()->sortBy('name')->pluck('name', 'id');
-        $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+        // Get Equipments
+        $logicalServers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $peripherals = Peripheral::query()->orderBy('name')->pluck('name', 'id');
+        $physicalServers = PhysicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $storageDevices = StorageDevice::query()->orderBy('name')->pluck('name', 'id');
+        $workstations = Workstation::query()->orderBy('name')->pluck('name', 'id');
+        $securityDevices = SecurityDevice::query()->orderBy('name')->pluck('name', 'id');
+        $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id');
 
         // Build device list
         $devices = Collection::make();
@@ -80,20 +87,50 @@ class LogicalFlowController extends Controller
             $devices->put('WORK_'.$key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
-            $devices->put('SECURITY_'.$key, $value);
+            $devices->put('PSECURITY_'.$key, $value);
+        }
+        foreach ($securityDevices as $key => $value) {
+            $devices->put('LSECURITY_'.$key, $value);
+        }
+        foreach ($subnetworks as $key => $value) {
+            $devices->put('SUBNETWORK_'.$key, $value);
         }
 
         // Lists
+        $interface_list = LogicalFlow::select('interface')->whereNotNull('interface')->distinct()->orderBy('interface')->pluck('interface');
         $protocol_list = LogicalFlow::select('protocol')->whereNotNull('protocol')->distinct()->orderBy('protocol')->pluck('protocol');
 
         return view(
             'admin.logicalFlows.create',
-            compact('routers', 'devices', 'protocol_list')
+            compact('routers', 'devices',
+                'interface_list', 'protocol_list')
         );
     }
 
     public function store(StoreLogicalFlowRequest $request)
     {
+        $this->validate($request, [
+                'source_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:src_id',
+                ],
+                'src_id' => [
+                    'nullable',
+                    'required_without:source_ip_range',
+                ],
+                'dest_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:dest_id',
+                ],
+                'dest_id' => [
+                    'nullable',
+                    'required_without:dest_ip_range',
+                ]
+            ]
+        );
+
         $link = LogicalFlow::create($request->all());
 
         // Source device
@@ -107,8 +144,12 @@ class LogicalFlowController extends Controller
             $link->storage_device_source_id = intval(substr($request->src_id, 4));
         } elseif (str_starts_with($request->src_id, 'WORK_')) {
             $link->workstation_source_id = intval(substr($request->src_id, 5));
-        } elseif (str_starts_with($request->src_id, 'SECURITY_')) {
-            $link->physical_security_device_source_id = intval(substr($request->src_id, 9));
+        } elseif (str_starts_with($request->src_id, 'PSECURITY_')) {
+            $link->physical_security_device_source_id = intval(substr($request->src_id, 10));
+        } elseif (str_starts_with($request->src_id, 'LSECURITY_')) {
+            $link->security_device_source_id = intval(substr($request->src_id, 10));
+        } elseif (str_starts_with($request->src_id, 'SUBNETWORK_')) {
+            $link->subnetwork_source_id = intval(substr($request->src_id, 11));
         }
         // Dest device
         if (str_starts_with($request->dest_id, 'LSERVER_')) {
@@ -121,8 +162,12 @@ class LogicalFlowController extends Controller
             $link->storage_device_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'WORK_')) {
             $link->workstation_dest_id = intval(substr($request->dest_id, 5));
-        } elseif (str_starts_with($request->dest_id, 'SECURITY_')) {
-            $link->physical_security_device_dest_id = intval(substr($request->dest_id, 9));
+        } elseif (str_starts_with($request->dest_id, 'PSECURITY_')) {
+            $link->physical_security_device_dest_id = intval(substr($request->dest_id, 10));
+        } elseif (str_starts_with($request->dest_id, 'LSECURITY_')) {
+            $link->security_device_dest_id = intval(substr($request->dest_id, 10));
+        } elseif (str_starts_with($request->dest_id, 'SUBNETWORK_')) {
+            $link->subnetwork_dest_id = intval(substr($request->dest_id, 11));
         }
 
         $link->update();
@@ -134,15 +179,17 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $routers = Router::all()->sortBy('name')->pluck('name', 'id');
+        $routers = Router::query()->orderBy('name')->pluck('name', 'id');
 
-        // Get Equipemnts
-        $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $peripherals = Peripheral::all()->sortBy('name')->pluck('name', 'id');
-        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $storageDevices = StorageDevice::all()->sortBy('name')->pluck('name', 'id');
-        $workstations = Workstation::all()->sortBy('name')->pluck('name', 'id');
-        $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+        // Get Equipments
+        $logicalServers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $peripherals = Peripheral::query()->orderBy('name')->pluck('name', 'id');
+        $physicalServers = PhysicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $storageDevices = StorageDevice::query()->orderBy('name')->pluck('name', 'id');
+        $workstations = Workstation::query()->orderBy('name')->pluck('name', 'id');
+        $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->pluck('name', 'id');
+        $securityDevices = SecurityDevice::query()->orderBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id');
 
         // Build device list
         $devices = Collection::make();
@@ -162,20 +209,50 @@ class LogicalFlowController extends Controller
             $devices->put('WORK_'.$key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
-            $devices->put('SECURITY_'.$key, $value);
+            $devices->put('PSECURITY_'.$key, $value);
+        }
+        foreach ($securityDevices as $key => $value) {
+            $devices->put('LSECURITY_'.$key, $value);
+        }
+        foreach ($subnetworks as $key => $value) {
+            $devices->put('SUBNETWORK_'.$key, $value);
         }
 
         // Lists
+        $interface_list = LogicalFlow::select('interface')->whereNotNull('interface')->distinct()->orderBy('interface')->pluck('interface');
         $protocol_list = LogicalFlow::select('protocol')->whereNotNull('protocol')->distinct()->orderBy('protocol')->pluck('protocol');
 
         return view(
             'admin.logicalFlows.edit',
-            compact('logicalFlow', 'devices', 'routers', 'protocol_list')
+            compact('logicalFlow', 'devices', 'routers',
+                'interface_list', 'protocol_list')
         );
     }
 
     public function update(UpdateLogicalFlowRequest $request, LogicalFlow $logicalFlow)
     {
+        $this->validate($request, [
+                'source_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:src_id',
+                ],
+                'src_id' => [
+                    'nullable',
+                    'required_without:source_ip_range',
+                ],
+                'dest_ip_range' => [
+                    new Cidr,
+                    'nullable',
+                    'required_without:dest_id',
+                ],
+                'dest_id' => [
+                    'nullable',
+                    'required_without:dest_ip_range',
+                ]
+            ]
+        );
+
         // Source device
         if (str_starts_with($request->src_id, 'LSERVER_')) {
             $logicalFlow->logical_server_source_id = intval(substr($request->src_id, 8));
@@ -187,8 +264,12 @@ class LogicalFlowController extends Controller
             $logicalFlow->storage_device_source_id = intval(substr($request->src_id, 8));
         } elseif (str_starts_with($request->src_id, 'WORK_')) {
             $logicalFlow->workstation_source_id = intval(substr($request->src_id, 5));
-        } elseif (str_starts_with($request->src_id, 'SECURITY_')) {
-            $logicalFlow->physical_security_device_source_id = intval(substr($request->src_id, 9));
+        } elseif (str_starts_with($request->src_id, 'PSECURITY_')) {
+            $logicalFlow->physical_security_device_source_id = intval(substr($request->src_id, 10));
+        } elseif (str_starts_with($request->src_id, 'LSECURITY_')) {
+            $logicalFlow->security_device_source_id = intval(substr($request->src_id, 10));
+        } elseif (str_starts_with($request->src_id, 'SUBNETWORK_')) {
+            $logicalFlow->subnetwork_source_id = intval(substr($request->src_id, 11));
         }
         // Dest device
         if (str_starts_with($request->dest_id, 'LSERVER_')) {
@@ -201,8 +282,12 @@ class LogicalFlowController extends Controller
             $logicalFlow->storage_device_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'WORK_')) {
             $logicalFlow->workstation_dest_id = intval(substr($request->dest_id, 5));
-        } elseif (str_starts_with($request->dest_id, 'SECURITY_')) {
-            $logicalFlow->physical_security_device_dest_id = intval(substr($request->dest_id, 9));
+        } elseif (str_starts_with($request->dest_id, 'PSECURITY_')) {
+            $logicalFlow->physical_security_device_dest_id = intval(substr($request->dest_id, 10));
+        } elseif (str_starts_with($request->dest_id, 'LSECURITY_')) {
+            $logicalFlow->security_device_dest_id = intval(substr($request->dest_id, 10));
+        } elseif (str_starts_with($request->dest_id, 'SUBNETWORK_')) {
+            $logicalFlow->subnetwork_dest_id = intval(substr($request->dest_id, 11));
         }
 
         $logicalFlow->update($request->all());

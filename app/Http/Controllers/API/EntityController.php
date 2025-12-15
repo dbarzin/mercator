@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEntityRequest;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
-use App\Http\Resources\Admin\EntityResource;
-use App\Models\Entity;
+use Mercator\Core\Models\Entity;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class EntityController extends Controller
 {
@@ -39,7 +38,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new EntityResource($entity);
+        return new JsonResource($entity);
     }
 
     public function update(UpdateEntityRequest $request, Entity $entity)

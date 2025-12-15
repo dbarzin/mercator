@@ -103,7 +103,7 @@ To import the test database (optional)
 
 ## CPE Database (optional)
 
-An Artisan command **`cpe:sync`**  **synchronizes CPEs (Common Platform Enumeration)** from the NVD (National
+An Artisan command **`mecator:cpe-sync`**  **synchronizes CPEs (Common Platform Enumeration)** from the NVD (National
 Vulnerability Database) and populates the
 `cpe_vendors`, `cpe_products`, and `cpe_versions` tables.
 
@@ -217,9 +217,11 @@ LDAP_PORT=389                     # 389 (StartTLS) or 636 (LDAPS)
 LDAP_BASE_DN=dc=example,dc=org
 LDAP_USERNAME=cn=admin,dc=example,dc=org   # Service account used for searches
 LDAP_PASSWORD=********
+LDAP_USERS_BASE_DN=ou=people,dc=example,dc=org 
 LDAP_TLS=true                     # StartTLS (recommended when using port 389)
 LDAP_SSL=false                    # true if you use ldaps:// on port 636
 LDAP_TIMEOUT=5                    # (optional)
+LDAP_GROUP=mercator               # LDAP group to which the user must belong to access the application
 
 # Candidate attributes to identify the username entered in the form
 # Order matters: the first match wins.
@@ -478,28 +480,74 @@ Empty caches
 
     php artisan config:clear && php artisan view:clear
 
-## Non-regression tests
+## 🧪 Non-Regression Tests
 
-To run Mercator's non-regression tests, you must first install Chromium :
+Mercator uses **[Pest](https://pestphp.com)** for non-regression testing.
+These tests ensure that application features continue to work as expected after updates or refactoring.
 
-    sudo apt install chromium-browser
+### Configure the environment
 
-Install the dusk pluggin
+Create a dedicated testing environment file:
 
-    php artisan dusk:chrome-driver
+```bash
+cp .env .env.testing
+```
 
-Configure the environment
+Then update the database configuration in `.env.testing`, for example:
 
-    cp .env .env.dusk.local
+```env
+APP_ENV=testing
+APP_URL=http://127.0.0.1:8000
 
-Launch the application
+DB_CONNECTION=sqlite
+DB_DATABASE=:memory:
+```
 
-    php artisan serve
+### Execute the test suite
 
-In another terminal, launch the tests
+Run all non-regression tests with Pest:
 
-    php artisan dusk
+```bash
+php artisan test
+```
 
-or to stop on first error
+or directly:
 
-    php artisan dusk --stop-on-error --stop-on-failure
+```bash
+./vendor/bin/pest
+```
+
+### Stop on first failure
+
+To stop execution after the first error or failure:
+
+```bash
+./vendor/bin/pest --stop-on-failure
+```
+
+### Run a specific test file or group
+
+You can target a specific test or directory:
+
+```bash
+./vendor/bin/pest tests/Feature/Api
+```
+
+or use groups/tags:
+
+```bash
+./vendor/bin/pest --group=api
+```
+
+---
+
+✅ **Notes**
+
+* Chromium and Laravel Dusk are **no longer required**.
+* All tests are now handled by **Pest** with Laravel’s built-in testing utilities.
+* Test reports and coverage can be generated with:
+
+```bash
+XDEBUG_MODE=coverage ./vendor/bin/pest --coverage
+```
+

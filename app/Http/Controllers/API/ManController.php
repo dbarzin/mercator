@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\StoreManRequest;
 use App\Http\Requests\UpdateManRequest;
-use App\Http\Resources\Admin\ManResource;
-use App\Models\Man;
+use Mercator\Core\Models\Man;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ManController extends Controller
 {
@@ -36,7 +35,7 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ManResource($man);
+        return new JsonResource($man);
     }
 
     public function update(UpdateManRequest $request, Man $man)

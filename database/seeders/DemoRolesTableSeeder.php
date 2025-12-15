@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoRolesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,45 +13,39 @@ class DemoRolesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('roles')->delete();
-        
-        \DB::table('roles')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('roles')->insert([
+            0 => [
                 'id' => 1,
                 'title' => 'Admin',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            1 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'title' => 'User',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            2 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'title' => 'Auditor',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            3 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'title' => 'Cartographer',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-        ));
-        
-        
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+        ]);
+
     }
 }

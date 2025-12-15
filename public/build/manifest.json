@@ -30,17 +30,17 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-8hlu2ifI.css",
+    "file": "assets/app-DRY9Ttas.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/mapping.css": {
-    "file": "assets/mapping-B03IrhoI.css",
+    "file": "assets/mapping-xOZU8kvR.css",
     "src": "resources/css/mapping.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-E0ssHPZH.js",
+    "file": "assets/app-BNtKciM1.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -101,7 +101,7 @@
     "isEntry": true
   },
   "resources/js/map.edit.ts": {
-    "file": "assets/map.edit-CvE4iiYM.js",
+    "file": "assets/map.edit-qf81pMXR.js",
     "name": "map.edit",
     "src": "resources/js/map.edit.ts",
     "isEntry": true,

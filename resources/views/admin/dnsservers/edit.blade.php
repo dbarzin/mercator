@@ -11,7 +11,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.dnsserver.fields.name') }}</label>
+                <label class="label-required" for="name">{{ trans('cruds.dnsserver.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $dnsserver->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">

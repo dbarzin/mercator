@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('logical_flows', function(Blueprint $table) {
+        Schema::table('logical_flows', function (Blueprint $table) {
             $table->unsignedInteger('router_id')->index('router_id_fk_4382393')->nullable();
-            $table->foreign('router_id','router_id_fk_4382393')->references('id')->on('routers')->onUpdate('NO ACTION')->onDelete('CASCADE');
+            $table->foreign('router_id', 'router_id_fk_4382393')->references('id')->on('routers')->onUpdate('NO ACTION')->onDelete('CASCADE');
             $table->integer('priority')->nullable();
             $table->string('action')->nullable();
             $table->string('users')->nullable();
@@ -27,14 +27,14 @@ return new class extends Migration
      */
     public function down(): void
     {
-        
+
         Schema::table('logical_flows', function (Blueprint $table) {
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('router_id_fk_4382393');
             }
         });
 
-        Schema::table('logical_flows', function(Blueprint $table) {
+        Schema::table('logical_flows', function (Blueprint $table) {
             $table->dropColumn('router_id');
             $table->dropColumn('priority');
             $table->dropColumn('action');

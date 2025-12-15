@@ -17,19 +17,21 @@
                             @endif
 
                             <div class="col-sm-6" style="max-width: 800px;">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered table-striped"
+                                       style="max-width: 600px; ">
                                     <tr>
-                                        <td>{{ trans('cruds.entity.filters.title.int/ext') }}
+                                        <td style="width: 300px;">{{ trans('cruds.entity.filters.title.int/ext') }}
                                         </td>
-                                        <td>{{ trans('cruds.entity.filters.title.type') }}
+                                        <td style="width: 300px;">{{ trans('cruds.entity.filters.title.type') }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <select name="perimeter" onchange="this.form.submit()"
                                                     class="form-control select2">
-                                                @if (Session::get('perimeter')==null)
-                                                    <option value="All" selected>trans('cruds.entity.filters.all')
+                                                @if (Session::get('perimeter')===null)
+                                                    <option value="All" selected>
+                                                        {{ trans('cruds.entity.filters.all') }}
                                                     </option>
                                                 @else
                                                     @foreach ([
@@ -57,6 +59,7 @@
                             </div>
                             <div id="graph-container">
                                 <div class="graphviz" id="graph"></div>
+                                <div class="graph-resize-handle"></div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-4">
@@ -101,7 +104,7 @@
                                 @foreach($entities as $entity)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="ENTITY{{ $entity->id }}">
                                                 <th colspan="2">
                                                     @can('entity_edit')
@@ -237,7 +240,7 @@
                                 @foreach($relations as $relation)
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <table class="table table-bordered table-striped table-hover">
+                                            <table class="table table-bordered table-striped table-hover table-report">
                                                 <thead id="RELATION{{$relation->id}}">
                                                 <th colspan="2">
                                                     @can('relation_edit')

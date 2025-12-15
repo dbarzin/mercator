@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
-use App\Models\DataProcessing;
-use App\Models\Information;
-use App\Models\MApplication;
-use App\Models\Process;
+use Mercator\Core\Models\DataProcessing;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +19,10 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processingRegister = DataProcessing::orderBy('name')->get();
+        $processingRegister = DataProcessing::query()
+            ->with('processes', 'informations', 'applications')
+            ->orderBy('name')
+            ->get();
 
         return view('admin.dataProcessing.index', compact('processingRegister'));
     }
@@ -29,12 +31,13 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::orderBy('name')->get()->pluck('name', 'id');
-        $informations = Information::orderBy('name')->get()->pluck('name', 'id');
-        $applications = MApplication::orderBy('name')->get()->pluck('name', 'id');
+        $processes = Process::query()->orderBy('name')->pluck('name', 'id');
+        $informations = Information::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
 
         // Get Legal Basis
-        $legal_basis_list = DataProcessing::select('legal_basis')
+        $legal_basis_list = DataProcessing::query()
+            ->select('legal_basis')
             ->whereNotNull('legal_basis')
             ->distinct()
             ->orderBy('legal_basis')
@@ -62,13 +65,27 @@ class DataProcessingController extends Controller
     {
         $request->merge(['legal_basis' => implode(', ', $request->legal_bases !== null ? $request->legal_bases : [])]);
 
+        // Create DataProcessing
         $dataProcessing = DataProcessing::create($request->all());
+
+        // Links
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
-
         $dataProcessing->documents()->sync(session()->get('documents'));
 
+        // Booleans
+        $dataProcessing->lawfulness_legitimate_interest = $request->has('lawfulness_legitimate_interest');
+        $dataProcessing->lawfulness_public_interest = $request->has('lawfulness_public_interest');
+        $dataProcessing->lawfulness_vital_interest = $request->has('lawfulness_vital_interest');
+        $dataProcessing->lawfulness_legal_obligation = $request->has('lawfulness_legal_obligation');
+        $dataProcessing->lawfulness_contract = $request->has('lawfulness_contract');
+        $dataProcessing->lawfulness_consent = $request->has('lawfulness_consent');
+
+        // Save
+        $dataProcessing->save();
+
+        // Forget the documents
         session()->forget('documents');
 
         return redirect()->route('admin.data-processings.index');
@@ -104,7 +121,7 @@ class DataProcessingController extends Controller
         // Get Documents
         $documents = [];
         foreach ($dataProcessing->documents as $doc) {
-            array_push($documents, $doc->id);
+            $documents[] = $doc->id;
         }
         session()->put('documents', $documents);
 
@@ -118,12 +135,26 @@ class DataProcessingController extends Controller
     {
         $dataProcessing->legal_basis = implode(', ', $request->legal_bases !== null ? $request->legal_bases : []);
 
+        // Update
         $dataProcessing->update($request->all());
+
+        // Links
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
-
         $dataProcessing->documents()->sync(session()->get('documents'));
+
+        // Booleans
+        $dataProcessing->lawfulness_legitimate_interest = $request->has('lawfulness_legitimate_interest');
+        $dataProcessing->lawfulness_public_interest = $request->has('lawfulness_public_interest');
+        $dataProcessing->lawfulness_vital_interest = $request->has('lawfulness_vital_interest');
+        $dataProcessing->lawfulness_legal_obligation = $request->has('lawfulness_legal_obligation');
+        $dataProcessing->lawfulness_contract = $request->has('lawfulness_contract');
+        $dataProcessing->lawfulness_consent = $request->has('lawfulness_consent');
+
+        $dataProcessing->update();
+
+        // Forget Documents
         session()->forget('documents');
 
         return redirect()->route('admin.data-processings.index');

@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDhcpServerRequest;
 use App\Http\Requests\StoreDhcpServerRequest;
 use App\Http\Requests\UpdateDhcpServerRequest;
-use App\Http\Resources\Admin\DhcpServerResource;
-use App\Models\DhcpServer;
+use Mercator\Core\Models\DhcpServer;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class DhcpServerController extends Controller
 {
@@ -38,7 +37,7 @@ class DhcpServerController extends Controller
     {
         abort_if(Gate::denies('dhcp_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DhcpServerResource($dhcpServer);
+        return new JsonResource($dhcpServer);
     }
 
     public function update(UpdateDhcpServerRequest $request, DhcpServer $dhcpServer)

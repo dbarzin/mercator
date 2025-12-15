@@ -1,25 +1,22 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Building;
-use App\Models\Entity;
-use App\Models\Information;
-use App\Models\MApplication;
-use App\Models\Process;
-use App\Models\Site;
-use App\Services\MonarcExportService;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
+use Mercator\Core\Models\Site;
 use App\Services\MospService;
 
 class MonarcController extends Controller
 {
     public function __construct(
         private MospService $mosp,
-        private MonarcExportService $exporter,
-    ) {
-    }
+        // private MonarcExportService $exporter,
+    ) {}
 
     public function index()
     {
@@ -36,13 +33,13 @@ class MonarcController extends Controller
         // Get all objects
         // https://objects.monarc.lu/api/v2/object
         // curl -X POST "https://objects.monarc.lu/api/v2/object/" -H  "accept: application/json" -H  "X-API-KEY: <your-token>" -H  "Content-Type: application/json" -d $object
-        // $this->getNames();
+        $this->getNames();
 
         $referentials = $this->mosp->getReferentials(); // en mémoire (cache)
         // $assets       = $this->getSelectableAssets();    // à adapter à ton modèle
         // return view('monarc.create', compact(,'assets'));
 
-        dd($referentials);
+        // dd($referentials);
 
         return view(
             'monarc',
@@ -103,14 +100,18 @@ class MonarcController extends Controller
 
         // Décodage de la réponse JSON
         $data = json_decode($response, true);
-        dd($response);
+
+        // dd($response);
 
         // Vérification de la structure de la réponse
         if (! is_array($data)) {
             echo 'Réponse invalide ou non JSON.';
 
-            return null;
+            return;
         }
+
+        // Initialize the collection of names
+        $names = collect();
 
         // Parcours des objets pour extraire les "name"
         foreach ($data as $bloc) {
@@ -123,8 +124,7 @@ class MonarcController extends Controller
                 }
             }
         }
-        dd($names);
+        // dd($names);
 
-        return $names;
     }
 }

@@ -15,10 +15,11 @@
                             </div>
                         @endif
 
-                        <div class="col-sm-6" style="max-width: 800px;">
-                            <table class="table table-bordered table-striped">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped"
+                                   style="max-width: 600px; width:100%">
                                 <tr>
-                                    <td>
+                                    <td style="width: 50%">
                                         {{ trans('cruds.macroProcessus.title') }} :
                                         <select name="macroprocess" id="macroprocess"
                                                 onchange="this.form.process.value='';this.form.submit()"
@@ -29,7 +30,7 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    <td style="width: 50%">
                                         {{ trans('cruds.process.title') }} :
                                         <select name="process" id="process" onchange="this.form.submit()"
                                                 class="form-control select2">
@@ -46,6 +47,7 @@
                         </div>
                         <div id="graph-container">
                             <div class="graphviz" id="graph"></div>
+                            <div class="graph-resize-handle"></div>
                         </div>
                         <div class="row p-1">
                             <div class="col-4">
@@ -89,7 +91,7 @@
                             @foreach($macroProcessuses as $macroProcess)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="MACROPROCESS{{ $macroProcess->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/macro-processuses/{{ $macroProcess->id }}">{{ $macroProcess->name }}</a>
@@ -232,7 +234,7 @@
                             @foreach($processes as $process)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="PROCESS{{ $process->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/processes/{{ $process->id }}">{{ $process->name }}</a>
@@ -398,7 +400,7 @@
                             @foreach($activities as $activity)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="ACTIVITY{{ $activity->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/activities/{{ $activity->id }}">{{ $activity->name }}</a>
@@ -539,7 +541,7 @@
                             @foreach($tasks as $task)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="TASK{{ $task->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/tasks/{{ $task->id }}">{{ $task->name }}</a>
@@ -572,7 +574,7 @@
                             @foreach($actors as $actor)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="ACTOR{{ $actor->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/actors/{{ $actor->id }}">{{ $actor->name }}</a>
@@ -613,7 +615,7 @@
                             @foreach($informations as $information)
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered table-striped table-hover">
+                                        <table class="table table-bordered table-striped table-hover table-report">
                                             <thead id="INFORMATION{{ $information->id }}">
                                             <th colspan="2">
                                                 <a href="/admin/information/{{ $information->id }}">{{ $information->name }}</a>
@@ -771,7 +773,7 @@ digraph  {
     @endforeach
         @foreach($processes as $process)
         P{{ $process->id }} [label="{{ $process->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
-            @foreach($process->activities as $activity)
+        @foreach($process->activities as $activity)
         P{{$process->id}} -> A{{$activity->id}}
         @endforeach
         @foreach($process->information as $information)
@@ -789,9 +791,6 @@ digraph  {
         @foreach($activity->operations as $operation)
         A{{ $activity->id }} -> O{{ $operation->id }}
         @endforeach
-        @if($activity->process!=null)
-        A{{ $activity->id }} -> P{{ $operation->process->id }}
-        @endif
         @endforeach
         @foreach($operations as $operation)
         O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]

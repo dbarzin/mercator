@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine3.22
+FROM php:8.3-fpm-alpine
 
 COPY version.txt ./version.txt
 
@@ -45,6 +45,7 @@ COPY . .
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY docker/wait-for-db.sh /usr/local/bin/wait-for-db.sh
 
 # Set permissions and ownership
 RUN chown -R mercator:www /var/www/mercator && \

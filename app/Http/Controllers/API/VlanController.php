@@ -1,17 +1,16 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyVlanRequest;
 use App\Http\Requests\StoreVlanRequest;
 use App\Http\Requests\UpdateVlanRequest;
-use App\Http\Resources\Admin\VlanResource;
-use App\Models\Vlan;
+use Mercator\Core\Models\Vlan;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class VlanController extends Controller
 {
@@ -62,7 +61,7 @@ class VlanController extends Controller
     {
         abort_if(Gate::denies('vlan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new VlanResource($vlan);
+        return new JsonResource($vlan);
     }
 
     public function destroy(Vlan $vlan)

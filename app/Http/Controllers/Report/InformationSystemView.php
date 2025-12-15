@@ -1,43 +1,64 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Activity;
-use App\Models\Actor;
-use App\Models\Information;
-use App\Models\MacroProcessus;
-use App\Models\Operation;
-use App\Models\Process;
-use App\Models\Task;
-use Gate;
+use Mercator\Core\Models\Activity;
+use Mercator\Core\Models\Actor;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\MacroProcessus;
+use Mercator\Core\Models\Operation;
+use Mercator\Core\Models\Process;
+use Mercator\Core\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationSystemView extends Controller
 {
-    public function generate(Request $request)
+    /**
+     * Prepare data for and render the information system report view.
+     *
+     * Builds collections of macroprocesses, processes, activities, operations, tasks, actors,
+     * and informations filtered by the optional `macroprocess` and `process` request inputs,
+     * stores selected identifiers in session, and returns the report view.
+     *
+     * @param  Request  $request  HTTP request; may include `macroprocess` and `process` inputs used to filter results and persisted to session.
+     * @return View The rendered 'admin/reports/information_system' view with these variables:
+     *              - `all_macroprocess`: all MacroProcessus sorted by name
+     *              - `macroProcessuses`: selected MacroProcessus collection
+     *              - `processes`: filtered Process collection
+     *              - `all_process`: all processes belonging to selected macroprocesses or null
+     *              - `activities`: filtered Activity collection
+     *              - `operations`: filtered Operation collection
+     *              - `tasks`: filtered Task collection
+     *              - `actors`: filtered Actor collection
+     *              - `informations`: filtered Information collection
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If the current user is denied the 'reports_access' permission (responds with 403).
+     */
+    public function generate(Request $request): View
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->macroprocess === null) {
+        if ($request->macroprocess == null) {
             $request->session()->put('macroprocess', null);
             $macroprocess = null;
             $request->session()->put('process', null);
             $process = null;
         } else {
-            if ($request->macroprocess !== null) {
+            if ($request->macroprocess != null) {
                 $macroprocess = intval($request->macroprocess);
                 $request->session()->put('macroprocess', $macroprocess);
             } else {
                 $macroprocess = $request->session()->get('macroprocess');
             }
 
-            if ($request->process === null) {
+            if ($request->process == null) {
                 $request->session()->put('process', null);
                 $process = null;
-            } elseif ($request->process !== null) {
+            } elseif ($request->process != null) {
                 $process = intval($request->process);
                 $request->session()->put('process', $process);
             } else {

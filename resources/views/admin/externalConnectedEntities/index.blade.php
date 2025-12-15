@@ -58,8 +58,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($externalConnectedEntities as $key => $externalConnectedEntity)
-                        <tr data-entry-id="{{ $externalConnectedEntity->id }}">
+                    @foreach($externalConnectedEntities as $externalConnectedEntity)
+                        <tr data-entry-id="{{ $externalConnectedEntity->id }}"
+                            @if(
+                              ($externalConnectedEntity->type==null)||
+                              ($externalConnectedEntity->contact==null)
+                              )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>

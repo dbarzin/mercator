@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\IPList;
@@ -31,7 +30,7 @@ class UpdatePhysicalSecurityDeviceRequest extends FormRequest
             ],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

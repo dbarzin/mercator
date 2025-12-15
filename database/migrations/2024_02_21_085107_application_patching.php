@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('m_applications', function(Blueprint $table) {
+        Schema::table('m_applications', function (Blueprint $table) {
             $table->string('patching_group')->nullable();
             $table->integer('patching_frequency')->nullable();
             $table->date('next_update')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('m_applications', function(Blueprint $table) {
+        Schema::table('m_applications', function (Blueprint $table) {
             $table->dropColumn('patching_group');
             $table->dropColumn('patching_frequency');
             $table->dropColumn('next_update');

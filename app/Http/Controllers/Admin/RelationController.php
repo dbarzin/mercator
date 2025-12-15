@@ -1,14 +1,13 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
-use App\Models\Relation;
-use App\Models\RelationValue;
+use Mercator\Core\Models\Relation;
+use Mercator\Core\Models\RelationValue;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,7 +69,7 @@ class RelationController extends Controller
         $values = $request['values'];
         if ($dates !== null) {
             for ($i = 0; $i < count($dates); $i++) {
-                $relationValue = new RelationValue();
+                $relationValue = new RelationValue;
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->setDatePriceAttribute($dates[$i]);
@@ -136,7 +135,7 @@ class RelationController extends Controller
         $values = $request['values'];
         if ($dates !== null) {
             for ($i = 0; $i < count($dates); $i++) {
-                $relationValue = new RelationValue();
+                $relationValue = new RelationValue;
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->setDatePriceAttribute($dates[$i]);

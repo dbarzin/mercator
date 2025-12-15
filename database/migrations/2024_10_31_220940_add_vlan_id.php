@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('vlans', function(Blueprint $table) {
+        Schema::table('vlans', function (Blueprint $table) {
             $table->integer('vlan_id')->after('description')->nullable();
         });
 
-        Schema::table('audit_logs', function(Blueprint $table) {
+        Schema::table('audit_logs', function (Blueprint $table) {
             $table->string('description')->change();
         });
 
@@ -26,11 +26,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('vlans', function(Blueprint $table) {
+        Schema::table('vlans', function (Blueprint $table) {
             $table->dropColumn('vlan_id');
         });
 
-        Schema::table('audit_logs', function(Blueprint $table) {
+        Schema::table('audit_logs', function (Blueprint $table) {
             $table->text('description')->change();
         });
 

@@ -1,17 +1,16 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
-use App\Http\Resources\Admin\ProcessResource;
-use App\Models\Operation;
-use App\Models\Process;
+use Mercator\Core\Models\Operation;
+use Mercator\Core\Models\Process;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
 {
@@ -43,7 +42,7 @@ class ProcessController extends Controller
     {
         abort_if(Gate::denies('process_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProcessResource($process);
+        return new JsonResource($process);
     }
 
     public function update(UpdateProcessRequest $request, Process $process)

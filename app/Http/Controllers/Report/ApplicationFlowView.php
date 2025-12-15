@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\ApplicationBlock;
-use App\Models\ApplicationModule;
-use App\Models\ApplicationService;
-use App\Models\Database;
-use App\Models\Flux;
-use App\Models\MApplication;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\Flux;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,11 +21,11 @@ class ApplicationFlowView extends Controller
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Blocks
-        if ($request->applicationBlocks === null) {
+        if ($request->applicationBlocks == null) {
             $applicationBlocks = [];
             $request->session()->put('applicationBlocks', []);
         } else {
-            if ($request->applicationBlocks !== null) {
+            if ($request->applicationBlocks != null) {
                 $applicationBlocks = $request->applicationBlocks;
                 $request->session()->put('applicationBlocks', $applicationBlocks);
             } else {
@@ -35,11 +34,11 @@ class ApplicationFlowView extends Controller
         }
 
         // Applications
-        if ($request->applications === null) {
+        if ($request->applications == null) {
             $request->session()->put('applications', []);
             $applications = [];
         } else {
-            if ($request->applications !== null) {
+            if ($request->applications != null) {
                 $applications = $request->applications;
                 $request->session()->put('applications', $applications);
             } else {
@@ -48,11 +47,11 @@ class ApplicationFlowView extends Controller
         }
 
         // Databases
-        if ($request->databases === null) {
+        if ($request->databases == null) {
             $request->session()->put('databases', []);
             $databases = [];
         } else {
-            if ($request->databases !== null) {
+            if ($request->databases != null) {
                 $databases = $request->databases;
                 $request->session()->put('databases', $databases);
             } else {

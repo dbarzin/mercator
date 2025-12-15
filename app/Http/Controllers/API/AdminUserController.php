@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAdminUserRequest;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
-use App\Http\Resources\Admin\AdminUserResource;
-use App\Models\AdminUser;
+use Mercator\Core\Models\AdminUser;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminUserController extends Controller
 {
@@ -36,7 +35,7 @@ class AdminUserController extends Controller
     {
         abort_if(Gate::denies('admin_user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AdminUserResource($adminUser);
+        return new JsonResource($adminUser);
     }
 
     public function update(UpdateAdminUserRequest $request, AdminUser $adminUser)

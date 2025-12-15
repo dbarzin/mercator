@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\DataProcessing;
-use App\Models\MacroProcessus;
-use App\Models\MApplication;
-use App\Models\Process;
+use Mercator\Core\Models\DataProcessing;
+use Mercator\Core\Models\MacroProcessus;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,23 +20,23 @@ class GDPRView extends Controller
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->macroprocess === null) {
+        if ($request->macroprocess == null) {
             $request->session()->put('macroprocess', null);
             $macroprocess = null;
             $request->session()->put('process', null);
             $process = null;
         } else {
-            if ($request->macroprocess !== null) {
+            if ($request->macroprocess != null) {
                 $macroprocess = intval($request->macroprocess);
                 $request->session()->put('macroprocess', $macroprocess);
             } else {
                 $macroprocess = $request->session()->get('macroprocess');
             }
 
-            if ($request->process === null) {
+            if ($request->process == null) {
                 $request->session()->put('process', null);
                 $process = null;
-            } elseif ($request->process !== null) {
+            } elseif ($request->process != null) {
                 $process = intval($request->process);
                 $request->session()->put('process', $process);
             } else {

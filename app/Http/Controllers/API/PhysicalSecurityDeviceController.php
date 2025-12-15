@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-use App\Http\Resources\Admin\PhysicalSecurityDeviceResource;
-use App\Models\PhysicalSecurityDevice;
+use Mercator\Core\Models\PhysicalSecurityDevice;
 use Gate;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class PhysicalSecurityDeviceController extends Controller
@@ -36,7 +35,7 @@ class PhysicalSecurityDeviceController extends Controller
     {
         abort_if(Gate::denies('physical_security_device_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalSecurityDeviceResource($physicalSecurityDevice);
+        return new JsonResource($physicalSecurityDevice);
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)
@@ -44,8 +43,6 @@ class PhysicalSecurityDeviceController extends Controller
         abort_if(Gate::denies('physical_security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSecurityDevice->update($request->all());
-        // syncs
-        // $physicalSecurityDevice->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

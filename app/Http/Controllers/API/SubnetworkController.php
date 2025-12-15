@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySubnetworkRequest;
 use App\Http\Requests\StoreSubnetworkRequest;
 use App\Http\Requests\UpdateSubnetworkRequest;
-use App\Http\Resources\Admin\SubnetworkResource;
-use App\Models\Subnetwork;
+use Mercator\Core\Models\Subnetwork;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubnetworkController extends Controller
 {
@@ -28,8 +27,6 @@ class SubnetworkController extends Controller
         abort_if(Gate::denies('subnetwork_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subnetwork = Subnetwork::create($request->all());
-        // syncs
-        // $subnetwork->roles()->sync($request->input('roles', []));
 
         return response()->json($subnetwork, 201);
     }
@@ -38,7 +35,7 @@ class SubnetworkController extends Controller
     {
         abort_if(Gate::denies('subnetwork_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SubnetworkResource($subnetwork);
+        return new JsonResource($subnetwork);
     }
 
     public function update(UpdateSubnetworkRequest $request, Subnetwork $subnetwork)

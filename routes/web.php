@@ -1,8 +1,8 @@
 <?php
 
-
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Report;
 
 Route::redirect('/', '/login');
@@ -105,7 +105,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Applications
     Route::resource('applications', Admin\MApplicationController::class);
-    Route::get('application-icon/{id}', [Admin\MApplicationController::class, 'icon'])->name('application-icon');
+    // Route::get('application-icon/{id}', [Admin\MApplicationController::class, 'icon'])->name('application-icon');
     Route::delete('applications-destroy', [Admin\MApplicationController::class, 'massDestroy'])->name('applications.massDestroy');
 
     // Application Services
@@ -203,17 +203,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Sites
     Route::resource('sites', Admin\SiteController::class);
-    Route::get('sites-clone/{id}', [Admin\SiteController::class, 'clone'])->name('sites.clone');
+    Route::get('sites/{site}/clone', [Admin\SiteController::class, 'clone'])->name('sites.clone');
     Route::delete('sites-destroy', [Admin\SiteController::class, 'massDestroy'])->name('sites.massDestroy');
 
     // Buildings
     Route::resource('buildings', Admin\BuildingController::class);
-    Route::get('buildings-clone/{id}', [Admin\BuildingController::class, 'clone'])->name('buildings.clone');
+    Route::get('buildings/{building}/clone', [Admin\BuildingController::class, 'clone'])->name('buildings.clone');
     Route::delete('buildings-destroy', [Admin\BuildingController::class, 'massDestroy'])->name('buildings.massDestroy');
 
     // Bays
     Route::resource('bays', Admin\BayController::class);
-    Route::get('bays-clone/{id}', [Admin\BayController::class, 'clone'])->name('bays.clone');
+    Route::get('bays/{bay}/clone', [Admin\BayController::class, 'clone'])->name('bays.clone');
     Route::delete('bays-destroy', [Admin\BayController::class, 'massDestroy'])->name('bays.massDestroy');
 
     // Physical Servers
@@ -330,12 +330,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Graphs
     Route::resource('graphs', Admin\GraphController::class);
-    Route::put('graph/save', [Admin\GraphController::class, 'save']);
     Route::delete('graphs-destroy', [Admin\GraphController::class, 'massDestroy'])->name('graphs.massDestroy');
     Route::get('graphs/clone/{id}', [Admin\GraphController::class, 'clone'])->name('graphs.clone');
     // Graphs test
     Route::view('graph/test', 'admin.graphs.test')->name('graphs.test');
-
+    
     // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class, 'explore'])->name('report.explore');
 
@@ -359,7 +358,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/cve', [Admin\CVEController::class, 'list'])->name('report.view.cve');
 
     // GDPR
-    Route::get('report/activityList', [Report\ActivityList::class, 'generateDocx'])->name('report.activityList');
+    Route::get('report/activityList', [Report\ActivityList::class, 'generateExcel'])->name('report.activityList');
     Route::get('report/activityReport', [Report\ActivityReport::class, 'generateDocx'])->name('report.activityReport');
 
     // CPE
@@ -388,8 +387,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/config/documents/check', [Admin\DocumentController::class, 'check'])->name('config.documents.check');
 
     // Audit Logs
+    Route::get('audit-logs/history/{type}/{id}', [Admin\AuditLogsController::class, 'history'])->name('audit-logs.history');
     Route::resource('audit-logs', Admin\AuditLogsController::class, ['except' => ['create', 'store', 'update', 'destroy']]);
-    Route::get('history/{type}/{id}', [Admin\AuditLogsController::class, 'history'])->name('history');
 
     // Monarc
     Route::get('monarc', [Admin\MonarcController::class, 'index'])->name('monarc');
@@ -402,14 +401,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Doc
     Route::get('doc/schema', function () {
         return view('doc/schema');
-    });
+    })->name('doc.schema');
+
     Route::get('doc/guide', function () {
         return view('doc/guide');
-    });
+    })->name('doc.guide');
 
     Route::get('doc/about', function () {
         return view('doc/about');
-    });
+    })->name('doc.about');
 
     // Import
     Route::get('config/import', function () {
@@ -420,8 +420,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Configuration page
     Route::get('config', function () {
-        return view('config');
+        return null;
+        // return view('config');
     });
+
+    // Modules
+    Route::prefix('modules')
+        ->name('modules.')
+        ->middleware('can:module_manage')
+        ->group(function () {
+            Route::get('/', [ModuleController::class, 'index'])->name('index');
+
+            Route::post('{name}/install', [ModuleController::class, 'install'])->name('install');
+            Route::post('{name}/enable', [ModuleController::class, 'enable'])->name('enable');
+            Route::post('{name}/disable', [ModuleController::class, 'disable'])->name('disable');
+            Route::delete('{name}/uninstall', [ModuleController::class, 'uninstall'])->name('uninstall');
+        });
+
+
 });
 
 // Profile

@@ -1,6 +1,5 @@
 <?php
 
-
 // app/Services/MospService.php
 
 namespace App\Services;
@@ -59,7 +58,7 @@ class MospService
     /** Nombre de menaces par référentiel (compte rapide, mis en cache) */
     public function getThreatsCountForReferential(string $slug): int
     {
-        dd($r['json_object']);
+        // dd($slug['json_object']);
 
         return 0;
     }

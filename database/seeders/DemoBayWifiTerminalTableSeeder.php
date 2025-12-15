@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoBayWifiTerminalTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoBayWifiTerminalTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('bay_wifi_terminal')->delete();
-        
-        
-        
+
     }
 }

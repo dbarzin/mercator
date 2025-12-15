@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
-use App\Http\Resources\Admin\OperationResource;
-use App\Models\Operation;
+use Mercator\Core\Models\Operation;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class OperationController extends Controller
 {
@@ -39,7 +38,7 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new OperationResource($operation);
+        return new JsonResource($operation);
     }
 
     public function update(UpdateOperationRequest $request, Operation $operation)

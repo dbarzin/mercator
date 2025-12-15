@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.peripheral.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.peripheral.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -29,7 +29,7 @@
                                     name="domain" id="domain">
 
                                 @if (!$domain_list->contains(old('domain')))
-                                    <option> {{ old('domain') }}</option>'
+                                    <option> {{ old('domain') }}</option>
                                 @endif
                                 @foreach($domain_list as $domain)
                                     <option {{ old('domain') == $domain ? 'selected' : '' }}>{{$domain}}</option>
@@ -49,7 +49,7 @@
                             <select class="form-control select2-free {{ $errors->has('domain') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $type)
                                     <option {{ old('type') == $type ? 'selected' : '' }}>{{$type}}</option>
@@ -68,7 +68,8 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.peripheral.fields.description') }}</label>
+                            <label class="label-maturity-1"
+                                   for="description">{{ trans('cruds.peripheral.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description" id="description">{!! old('description') !!}</textarea>
@@ -128,11 +129,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="responsible">{{ trans('cruds.peripheral.fields.responsible') }}</label>
+                            <label class="label-maturity-1"
+                                   for="responsible">{{ trans('cruds.peripheral.fields.responsible') }}</label>
                             <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}"
                                     name="responsible" id="responsible">
                                 @if (!$type_list->contains(old('responsible')))
-                                    <option> {{ old('responsible') }}</option>'
+                                    <option> {{ old('responsible') }}</option>
                                 @endif
                                 @foreach($responsible_list as $responsible)
                                     <option {{ old('responsible') == $responsible ? 'selected' : '' }}>{{$responsible}}</option>
@@ -262,7 +264,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="site_id">{{ trans('cruds.peripheral.fields.site') }}</label>
+                            <label class="label-maturity-1"
+                                   for="site_id">{{ trans('cruds.peripheral.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
                                 <option></option>
@@ -280,7 +283,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="building_id">{{ trans('cruds.peripheral.fields.building') }}</label>
+                            <label class="label-maturity-1"
+                                   for="building_id">{{ trans('cruds.peripheral.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">
                                 <option></option>
@@ -489,7 +493,7 @@
                     return true;
                 }
             });
-            
+
         });
     </script>
 @endsection

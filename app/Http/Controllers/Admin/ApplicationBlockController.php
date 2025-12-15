@@ -1,32 +1,18 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
-use App\Models\ApplicationBlock;
-use App\Models\MApplication;
-use App\Services\CartographerService;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationBlockController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService)
-    {
-        $this->cartographerService = $cartographerService;
-    }
-
     public function index()
     {
         abort_if(Gate::denies('application_block_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -41,9 +27,10 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes
-        $applications = $this->cartographerService->filterOnCartographers($applications);
+        $applications = MApplication::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
 
         return view('admin.applicationBlocks.create', compact('applications'));
     }
@@ -62,10 +49,10 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes
-        $applications = $this->cartographerService->filterOnCartographers($applications);
-        $applicationBlock->load('applications');
+        $applications = MApplication::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->pluck('name', 'id');
 
         return view('admin.applicationBlocks.edit', compact('applicationBlock', 'applications'));
     }

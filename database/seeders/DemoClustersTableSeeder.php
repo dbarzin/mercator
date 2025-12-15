@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoClustersTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -16,25 +15,23 @@ class DemoClustersTableSeeder extends Seeder
     {
         \DB::table('clusters')->delete();
 
-        \DB::table('clusters')->insert(array (
-            0 =>
-            array (
+        \DB::table('clusters')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'CLUSTER 01',
                 'description' => '<p>Description of cluster 01</p>',
                 'type' => 'Super Cluster',
                 'created_at' => '2025-01-01 00:00:00',
-                'deleted_at' => NULL,
-            ),
-            1 =>
-            array (
+                'deleted_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'name' => 'CLUSTER 02',
                 'description' => '<p>Description of cluster 02</p>',
                 'type' => 'Super Cluster',
                 'created_at' => '2025-01-01 00:00:00',
-                'deleted_at' => NULL,
-            ),
-        ));
+                'deleted_at' => null,
+            ],
+        ]);
     }
 }

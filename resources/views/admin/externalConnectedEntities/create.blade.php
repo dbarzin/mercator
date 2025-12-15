@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label class="required"
+                            <label class="label-required"
                                    for="name">{{ trans('cruds.externalConnectedEntity.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name','') }}" required autofocus/>
@@ -31,7 +31,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type','') }}</option>'
+                                    <option> {{ old('type','') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>

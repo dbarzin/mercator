@@ -15,7 +15,7 @@
 
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.flux.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.flux.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $flux->name) }}" required autofocus/>
                             @if($errors->has('name'))
@@ -34,7 +34,7 @@
                             <select class="form-control select2-free {{ $errors->has('nature') ? 'is-invalid' : '' }}"
                                     name="nature" id="nature">
                                 @if (!$nature_list->contains(old('nature')))
-                                    <option> {{ old('nature') }}</option>'
+                                    <option> {{ old('nature') }}</option>
                                 @endif
                                 @foreach($nature_list as $nature)
                                     <option {{ (old('nature') ? old('nature') : $flux->nature) == $nature ? 'selected' : '' }}>{{$nature}}</option>
@@ -96,7 +96,7 @@
                                     name="src_id" id="src_id">
                                 <option></option>
                                 @foreach($items as $id => $name)
-                                    <option value="{{ $id }}" {{ ($flux->source_id() ? $flux->source_id() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ ($flux->sourceId() ? $flux->sourceId() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('src_id'))
@@ -114,7 +114,7 @@
                                     name="dest_id" id="dest_id">
                                 <option></option>
                                 @foreach($items as $id => $name)
-                                    <option value="{{ $id }}" {{ ($flux->dest_id() ? $flux->dest_id() : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ ($flux->destId() ? $flux->destId() : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('src_id'))

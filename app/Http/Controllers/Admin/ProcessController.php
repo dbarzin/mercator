@@ -1,24 +1,25 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
-use App\Models\Activity;
-use App\Models\Document;
-use App\Models\Entity;
-use App\Models\Information;
-use App\Models\MacroProcessus;
-use App\Models\MApplication;
-use App\Models\Process;
+use Mercator\Core\Models\Activity;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\MacroProcessus;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -58,27 +59,9 @@ class ProcessController extends Controller
         $process->applications()->sync($request->input('applications', []));
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $process);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $process->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $process->icon_id = intval($request->iconSelect);
-        } else {
-            $process->icon_id = null;
-        }
+        // Save process
         $process->save();
 
         return redirect()->route('admin.processes.index');
@@ -117,29 +100,12 @@ class ProcessController extends Controller
     public function update(UpdateProcessRequest $request, Process $process)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $process);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $process->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $process->icon_id = intval($request->iconSelect);
-        } else {
-            $process->icon_id = null;
-        }
-
+        // Update Process
         $process->update($request->all());
+
+        // Relations
         $process->activities()->sync($request->input('activities', []));
         $process->entities()->sync($request->input('entities', []));
         $process->information()->sync($request->input('informations', []));

@@ -21,17 +21,17 @@ php artisan passport:install
 For each object in the cartography data model, there is an API.
 The list of APIs can be found in /route/api.php
 
-_GDPR view_
+__GDPR view__
 
 - /api/data-processings
 - /api/security-controls
 
-_Ecosystem view_
+__Ecosystem view__
 
 - /api/entities
 - /api/relations
 
-_Information system business view_
+__Information system business view__
 
 - /api/macro-processuses
 - /api/processes
@@ -41,7 +41,7 @@ _Information system business view_
 - /api/actors
 - /api/information
 
-_Application view_
+__Application view__
 
 - /api/application-blocks
 - /api/applications
@@ -50,7 +50,7 @@ _Application view_
 - /api/databases
 - /api/fluxes
 
-_Administration view_
+__Administration view__
 
 - /api/zone-admins
 - /api/annuaires
@@ -58,7 +58,7 @@ _Administration view_
 - /api/domaine-ads
 - /api/admin-users
 
-_Logical infrastructure view_
+__Logical infrastructure view__
 
 - /api/networks
 - /api/subnetworks
@@ -75,7 +75,7 @@ _Logical infrastructure view_
 - /api/certificates
 - /api/vlans
 
-_Physical infrastructure view_
+__Physical infrastructure view__
 
 - /api/sites
 - /api/buildings
@@ -95,19 +95,108 @@ _Physical infrastructure view_
 - /api/physical-links
 - /api/fluxes
 
+__Reports__
+
+- /api/report/cartography
+- /api/report/entities
+- /api/report/applicationsByBlocks
+- /api/report/directory
+- /api/report/logicalServers
+- /api/report/securityNeeds
+- /api/report/logicalServerConfigs
+- /api/report/externalAccess
+- /api/report/physicalInventory
+- /api/report/vlans
+- /api/report/workstations
+- /api/report/cve
+- /api/report/activityList
+- /api/report/activityReport
+- /api/report/impacts
+- /api/report/rto
+
 ### Actions managed by the resource controller
 
 Requests and URIs for each api are shown in the table below.
 
-| Request              | URI                 | Action                      
-|----------------------|---------------------|-----------------------------|      
-| GET                  | /api/objects        | returns the list of objects |
-| GET /api/objets/{id} | returns object {id} |
-| POST                 | /api/objects        | save new object             |
-| PUT/PATCH            | /api/objets/{id}    | update object {id}          |
-| DELETE               | /api/objets/{id}    | delete object {id}          |
+| Request   | URI                       | Action                                       |
+| --------- | ------------------------- | -------------------------------------------- |
+| GET       | /api/objects              | returns the list of objects                  |
+| GET       | /api/objects/{id}         | returns the object with ID `{id}`            |
+| POST      | /api/objects              | creates a new object                         |
+| PUT/PATCH | /api/objects/{id}         | updates the object with ID `{id}`            |
+| DELETE    | /api/objects/{id}         | deletes the object with ID `{id}`            |
+| POST      | /api/objects/mass-store   | creates multiple objects in a single request |
+| PUT/PATCH | /api/objects/mass-update  | updates multiple objects at once             |
+| DELETE    | /api/objects/mass-destroy | deletes multiple objects at once             |
+
 
 The fields to be supplied are those described in the [data model](/mercator/model/).
+
+
+### Filtering Results
+
+List endpoints (`GET /api/objects`) support a filtering system using query parameters (`?param=value`).
+
+To prevent injection (arbitrary column names), only a limited set of fields can be used as filters.
+For each resource, the filterable fields are composed of:
+
+* the fields declared as *searchable* in the model (for example `Activity::$searchable` for activities);
+* additional explicitly allowed fields (for example `id`, `recovery_time_objective`, `maximum_tolerable_downtime` for activities).
+
+Any parameter referring to a field that is not allowed is simply ignored.
+
+#### General Syntax
+
+Each filter is written in the following form:
+
+```text
+<field>[__<operator>]=<value>
+```
+
+* If no operator is specified, the default operator is `exact`.
+* Example parameters:
+
+  * `name=Daily backup` → exact match
+  * `name__contains=backup` → substring search
+  * `recovery_time_objective__lte=4` → RTO less than or equal to 4
+
+#### Available Operators
+
+The following operators are supported:
+
+| Operator     | Example parameter                   | Approximate SQL condition         |
+| ------------ | ----------------------------------- | --------------------------------- |
+| `exact`      | `name=Backup`                       | `name = 'Backup'`                 |
+| `contains`   | `name__contains=save`               | `name LIKE '%save%'`              |
+| `startswith` | `name__startswith=save`             | `name LIKE 'save%'`               |
+| `endswith`   | `name__endswith=prod`               | `name LIKE '%prod'`               |
+| `lt`         | `recovery_time_objective__lt=4`     | `recovery_time_objective < 4`     |
+| `lte`        | `recovery_time_objective__lte=4`    | `recovery_time_objective <= 4`    |
+| `gt`         | `maximum_tolerable_downtime__gt=8`  | `maximum_tolerable_downtime > 8`  |
+| `gte`        | `maximum_tolerable_downtime__gte=8` | `maximum_tolerable_downtime >= 8` |
+
+If an unknown operator is provided, it is treated as an `exact` match.
+
+#### Examples
+
+* List activities whose name contains “backup”:
+
+```http
+GET /api/activities?name__contains=backup
+```
+
+* List activities assigned to a specific responsible team, with an RTO less than or equal to 4 hours:
+
+```http
+GET /api/activities?responsible=DSI&recovery_time_objective__lte=4
+```
+
+* List activities whose ID is greater than or equal to 100:
+
+```http
+GET /api/activities?id__gte=100
+```
+
 
 ### Access rights
 

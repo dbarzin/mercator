@@ -1,22 +1,23 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyContainerRequest;
 use App\Http\Requests\StoreContainerRequest;
 use App\Http\Requests\UpdateContainerRequest;
-use App\Models\Container;
-use App\Models\Database;
-use App\Models\Document;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
+use Mercator\Core\Models\Container;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
+use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContainerController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('container_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -42,33 +43,18 @@ class ContainerController extends Controller
 
     public function store(StoreContainerRequest $request)
     {
+        // Create container
         $container = Container::create($request->all());
+
+        // Save Relations
         $container->applications()->sync($request->input('applications', []));
         $container->logicalServers()->sync($request->input('logical_servers', []));
         $container->databases()->sync($request->input('databases', []));
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $container);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $container->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $container->icon_id = intval($request->iconSelect);
-        } else {
-            $container->icon_id = null;
-        }
+        // Save container
         $container->save();
 
         return redirect()->route('admin.containers.index');
@@ -93,29 +79,12 @@ class ContainerController extends Controller
     public function update(UpdateContainerRequest $request, Container $container)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $container);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $container->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $container->icon_id = intval($request->iconSelect);
-        } else {
-            $container->icon_id = null;
-        }
-
+        // Update container
         $container->update($request->all());
+
+        // Save Relations
         $container->applications()->sync($request->input('applications', []));
         $container->logicalServers()->sync($request->input('logical_servers', []));
         $container->databases()->sync($request->input('databases', []));

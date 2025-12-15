@@ -6,7 +6,7 @@
         </a>
 
         <a class="btn btn-success"
-           href="{{ route('admin.report.explore') }}?node={{$flux->source_id()}},{{$flux->dest_id()}}">
+           href="{{ route('admin.report.explore') }}?node={{$flux->sourceId()}},{{$flux->destId()}}">
             {{ trans('global.explore') }}
         </a>
 

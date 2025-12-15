@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
-use App\Models\MApplication;
-use App\Models\Process;
-use App\Models\SecurityControl;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
+use Mercator\Core\Models\SecurityControl;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -84,7 +83,7 @@ class SecurityControlController extends Controller
         return view('admin.securityControls.assign', compact('apps', 'procs', 'controls'));
     }
 
-    public function associate(Request $request): void
+    public function associate(Request $request): Response
     {
         abort_if(Gate::denies('security_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $controls = [];
@@ -96,10 +95,16 @@ class SecurityControlController extends Controller
 
         $source = $request->get('source');
         if (str_starts_with($source, 'APP_')) {
-            $app = MApplication::where('id', substr($source, 4))->get()->first();
+            $app = MApplication::query()->where('id', substr($source, 4))->first();
+            if ($app === null) {
+                return back()->withErrors(['associate' => 'Application not found'])->setStatusCode(422);
+            }
             $app->securityControls()->sync($controls);
         } elseif (str_starts_with($source, 'PR_')) {
-            $process = Process::where('id', substr($source, 3))->get()->first();
+            $process = Process::query()->where('id', substr($source, 3))->first();
+            if ($process === null) {
+                return back()->withErrors(['associate' => 'Process not found'])->setStatusCode(422);
+            }
             $process->securityControls()->sync($controls);
         } else {
             return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
@@ -108,7 +113,7 @@ class SecurityControlController extends Controller
         return redirect()->route('admin.security-controls.assign');
     }
 
-    public function list(Request $request): void
+    public function list(Request $request): Response
     {
         abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -116,9 +121,9 @@ class SecurityControlController extends Controller
 
         // Get control list of object base on the ID
         if (str_starts_with($request->id, 'APP_')) {
-            $list = MApplication::where('id', substr($request->id, 4))->get()->first()->securityControls;
+            $list = MApplication::query()->where('id', substr($request->id, 4))->first()->securityControls;
         } elseif (str_starts_with($request->id, 'PR_')) {
-            $list = Process::where('id', substr($request->id, 3))->get()->first()->securityControls;
+            $list = Process::query()->where('id', substr($request->id, 3))->first()->securityControls;
         } else {
             // Invalid ID
             return back()->withErrors(['associate' => 'Invalid ID'])->setStatusCode(422);
@@ -127,7 +132,7 @@ class SecurityControlController extends Controller
         // Construct the control list
         $controls = [];
         foreach ($list as $item) {
-            $controls[] = 'CTRL_' . $item->id;
+            $controls[] = 'CTRL_'.$item->id;
         }
 
         // return JSON

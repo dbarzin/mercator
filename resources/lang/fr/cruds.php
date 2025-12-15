@@ -140,7 +140,7 @@ return [
             'logical_servers' => 'Serveurs logiques',
             'logical_servers_helper' => 'Liste des serveurs logiques soutenant l’application',
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => "Nom de l'application",
             'next_update' => 'Date de prochaine mise à jour',
             'next_update_helper' => 'Date prévue pour la prochaine mise à jour',
             'attributes' => 'Attributs',
@@ -179,6 +179,8 @@ return [
             'product_helper' => "Nom de l'application chez l'éditeur",
             'version' => 'CPE Version',
             'version_helper' => "Version de l'application",
+            'security_devices' => 'Dispositifs de sécurité',
+            'security_devices_helper' => "Dispositifs de sécurité logiques sur lesquels l'application est installée",
         ],
         'title' => 'Applications',
         'title_short' => 'Applications',
@@ -272,6 +274,17 @@ return [
         ],
         'title' => 'Racks',
         'title_singular' => 'Rack',
+    ],
+    'bpmns' => [
+        'description' => 'Business Process Management Notation',
+        'fields' => [
+            'name' => 'Nom',
+            'name_helper' => 'Nom du BPMN',
+            'type' => 'Type',
+            'type_helper' => 'Type de BPMN',
+        ],
+        'title' => 'BPMN',
+        'title_singular' => 'BPMN',
     ],
     'building' => [
         'description' => 'Localisation des personnes ou ressources à l’intérieur d’un site.',
@@ -409,8 +422,8 @@ return [
                         <ul>
                             <li>Si une ligne contient un identifiant (ID) et des données, elle est <strong>mise à jour</strong>.</li>
                             <li>Si une ligne contient uniquement l’ID, l’objet correspondant est <strong>supprimé</strong>.</li>
-                            <li>Les collones qui ne sont pas présentes ne sont pas mises à jour.</li>
-                            <li>L'ordre des collones n'a pas d'importance.</li>
+                            <li>Les colonnes qui ne sont pas présentes ne sont pas mises à jour.</li>
+                            <li>L'ordre des colonnes n'a pas d'importance.</li>
                             <li>Si l’ID est vide, une <strong>nouvelle entrée est créée</strong>.</li>
                         </ul>
                         <p>
@@ -471,6 +484,7 @@ return [
         ],
         'title' => 'Bases de données',
         'title_singular' => 'Base de données',
+        'title_security' => 'Sécurité',
     ],
     'dataProcessing' => [
         'description' => 'Registre des activités de traitement',
@@ -505,6 +519,15 @@ return [
             'information_helper' => '',
             'security_controls' => 'Mesures de sécurité',
             'security_controls_helper' => 'Mesures de sécurité appliquées à ce traitement de données',
+            'lawfulness' => 'Licéité du traitement',
+            'lawfulness_helper' => 'Base légale du traitement des données à caractère personnel (article 6 du RGPD)',
+            'lawfulness_helper2' => "Le traitement n'est licite que si, et dans la mesure où, au moins une des conditions suivantes est remplie :",
+            'lawfulness_consent' => 'Consent du traitement',
+            'lawfulness_contract' => "Nécessaire à l'exécution d'un contrat",
+            'lawfulness_legal_obligation' => "Respect d'une obligation légale",
+            'lawfulness_vital_interest' => 'Sauvegarde des intérêts vitaux',
+            'lawfulness_public_interest' => "Mission d'intérêt public",
+            'lawfulness_legitimate_interest' => 'Intérêts légitimes',
         ],
         'report_title' => 'Registre des traitements',
         'title' => 'Registre',
@@ -766,6 +789,8 @@ return [
         'fields' => [
             'name' => 'Nom',
             'name_helper' => 'Nom du flux',
+            'chain' => 'Classe',
+            'chain_helper' => '',
             'protocol' => 'Protocole',
             'protocol_helper' => 'ex: TCP, UPD...',
             'source_ip_range' => 'Source',
@@ -787,7 +812,7 @@ return [
             'users' => 'Utilisateurs',
             'users_helper' => 'Utilisateurs auxquels la règle s\'applique. Peut être un seul utilisateur ou un groupe d\'utilisateurs.',
             'interface' => 'Interface',
-            'interface_helper' => 'Interface réseau sur laquelle la règle doit être appliquée.',
+            'interface_helper' => 'Interface réseau concernée',
             'schedule' => 'Période',
             'schedule_helper' => 'Période pendant laquelle la règle est active.',
         ],
@@ -955,15 +980,41 @@ return [
             'description' => 'Description',
             'description_helper' => 'Caractéristiques techniques',
             'ip' => 'Adresse IP',
-            'ip_helper' => '',
+            'ip_helper' => 'Filtre: x.x.x.x',
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => 'Nom du commutateur réseau',
+            'vlans' => 'VLANs',
+            'vlans_helper' => 'VLANs déployés sur ce commutateur',
             'physical_switches' => 'Commutateurs physiques',
             'physical_switches_helper' => 'Liste des commutateurs physiques',
         ],
         'title' => 'Commutateurs réseau',
         'title_short' => 'Commutateurs',
         'title_singular' => 'Commutateur',
+    ],
+    'module' => [
+        'title' => 'Gestion des modules',
+        'title_short' => 'Modules',
+        'fields' => [
+            'name'=> 'Nom',
+            'label' => 'Label',
+            'package' => 'Package',
+            'package_version' => 'Version (package)',
+            'db_version' => 'Version (DB)',
+            'installed' => 'Installé',
+            'activated' => 'Activé',
+            'actions' => 'Actions'
+        ],
+        'labels' => [
+            'installed' => 'Installé',
+            'not_installed' => 'Non installé',
+            'activated' => 'Activé',
+            'deactivated' => 'Désactivé',
+            'install' => 'Installer',
+            'activate' => 'Activer',
+            'deactivate' => 'Désactiver',
+            'uninstall' => 'Désinstaller',
+        ]
     ],
     'operation' => [
         'description' => 'Etape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.',
@@ -1087,7 +1138,7 @@ return [
         'description' => 'Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.',
         'fields' => [
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => 'Nom de l\'équipement de sécurité',
             'address_ip' => 'Adresse IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Rack',
@@ -1100,6 +1151,8 @@ return [
             'site_helper' => 'Site sur lequel se trouve le dispositif',
             'type' => 'Type',
             'type_helper' => 'Type de dispositif',
+            'attributes' => 'Attributs',
+            'attributes_helper' => '',
             'security_devices' => 'Dispositifs de sécurité logique',
             'security_devices_helper' => 'Liste des dispositifs de sécurité logique',
         ],
@@ -1111,7 +1164,7 @@ return [
         'description' => 'Machine physique exécutant un ensemble de services informatiques.',
         'fields' => [
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => 'Nom du serveur physique',
             'address_ip' => 'Adresse(s) IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Rack',
@@ -1307,7 +1360,7 @@ return [
             'impacts' => "Impacts sur la continuité d'activité",
             'impacts_helper' => 'Mesure des conséquences d’une interruption de service',
             'cve' => 'Trouver les CVE correspondantes',
-            'cve_helper' => "Recherche de CVE en fonction du CPE des applications",
+            'cve_helper' => 'Recherche de CVE en fonction du CPE des applications',
         ],
         'explorer' => [
             'title' => 'Exploration de la cartographie',
@@ -1359,14 +1412,22 @@ return [
         'fields' => [
             'name' => 'Nom',
             'name_helper' => '',
+            'type' => 'Type',
+            'type_helper' => '',
+            'attributes' => 'Attributs',
+            'attributes_helper' => '',
             'description' => 'Caractéristiques techniques',
             'description_helper' => 'Type d’équipement (sonde, pare-feu, SIEM, etc.), modèle, OS et version, version du logiciel embarqué',
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'physical_security_devices' => 'Dispositifs physiques',
-            'physical_security_devices_helper' => 'Liste des dispositis de sécurité physique sur lequel ce dispositif logique est installé',
+            'physical_security_devices_helper' => 'Liste des dispositifs de sécurité physique sur lesquels ce dispositif logique est installé',
+            'applications' => 'Applications',
+            'applications_helper' => 'Liste des applications installées sur le dispositif',
         ],
-        'title' => 'Equipements de sécurité',
-        'title_short' => 'Sécurité',
-        'title_singular' => 'Équipement de sécurité',
+        'title' => 'Équipements de sécurité logiques',
+        'title_short' => 'Équipements de Sécurité',
+        'title_singular' => 'Équipement de sécurité logique',
     ],
     'securityControl' => [
         'fields' => [
@@ -1435,6 +1496,8 @@ return [
             'name_helper' => '',
             'network' => 'Réseau',
             'network_helper' => 'Réseau auquel appartient ce sous-réseau',
+            'subnetwork' => 'Sous-réseau',
+            'subnetwork_helper' => 'Sous-réseau auquel appartient ce sous-réseau',
             'responsible_exp' => "Responsable d'exploitation",
             'responsible_exp_helper' => '',
             'vlan' => 'VLAN',
@@ -1447,6 +1510,10 @@ return [
         'title' => 'Sous-réseaux',
         'title_short' => 'Sous-réseaux',
         'title_singular' => 'Sous-réseau',
+        'title_connexion' => 'Rattachement',
+        'title_addressing' => 'Adressage',
+        'title_classification' => 'Classification réseau',
+        'title_governance' => 'Gouvernance',
     ],
     'task' => [
         'description' => 'Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus.',
@@ -1502,6 +1569,7 @@ return [
             'subnetworks_helper' => 'Sous-réseaux rattachés',
             'vlan_id' => 'VLAN-ID',
             'vlan_id_helper' => 'Identificateur uniquer du VLAN (1-4096)',
+            'network_switches' => 'Commutateurs logiques',
         ],
         'title' => 'VLAN - Virtual Local Area Network',
         'title_short' => 'VLAN',
