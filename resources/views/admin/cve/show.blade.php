@@ -1,84 +1,119 @@
 @extends('layouts.admin')
 @section('content')
-<div style="margin-bottom: 10px;" class="row">
-    <div class="col-lg-12">
-        <a class="btn btn-default" onclick="history.back()">
-            {{ trans('global.back_to_list') }}
-        </a>
+@can('certificate_create')
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route('admin.certificates.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.certificate.title_singular') }}
+            </a>
+        </div>
     </div>
-</div>
-
+@endcan
 <div class="card">
     <div class="card-header">
-
-        CVE List for {{ $cpe }}
+        {{ trans('cruds.certificate.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Entity">
                 <thead>
                     <tr>
-                        <th>
+                        <th width="10">
+
                         </th>
                         <th>
-                            CVE
+                            {{ trans('cruds.certificate.fields.name') }}
                         </th>
                         <th>
-                            Affected Version
+                            {{ trans('cruds.certificate.fields.type') }}
                         </th>
                         <th>
-                            Description
+                            {{ trans('cruds.certificate.fields.description') }}
                         </th>
                         <th>
-                            Date Published
+                            {{ trans('cruds.certificate.fields.start_validity') }}
                         </th>
                         <th>
-                            Date Updated
+                            {{ trans('cruds.certificate.fields.end_validity') }}
                         </th>
                         <th>
-                            Score
+                            {{ trans('cruds.certificate.fields.status') }}
+                        </th>
+                        <th>
+                            &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($cves as $cve)
-                        <tr>
+                    @foreach($certificates as $certificate)
+                        <tr data-entry-id="{{ $certificate->id }}"
+                        @if(($certificate->description==null)||
+                            ($certificate->type==null)||
+                            ($certificate->start_validity==null)||
+                            ($certificate->end_validity==null)||
+                            (
+                            ($certificate->logical_servers->count()==0)&&($certificate->applications->count()==0)
+                            ))
+                                class="table-warning"
+                        @endif
+                          >
                             <td>
+
                             </td>
-                            <td nowrap>
-                                <a href="https://nvd.nist.gov/vuln/detail/{{ $cve->cveId }}">
-                                {{ $cve->cveId }}
+                            <td>
+                                <a href="{{ route('admin.certificates.show', $certificate->id) }}">
+                                {{ $certificate->name ?? '' }}
                                 </a>
                             </td>
                             <td>
-                                {{ $cve->version }}
+                                {!! $certificate->type ?? '' !!}
                             </td>
                             <td>
-                                {{ $cve->description }}
+                                {!! $certificate->description ?? '' !!}
                             </td>
                             <td>
-                                {{ $cve->datePublished }}
-                            </td>
-                            <td>
-                                {{ $cve->dateUpdated }}
-                            </td>
-                            <td nowrap>
-                                @if($cve->baseSeverity=="HIGH")
-                                <span class="badge-high">
-                                @elseif($cve->baseSeverity=="CRITICAL")
-                                <span class="badge-critical">
-                                @elseif($cve->baseSeverity=="MEDIUM")
-                                <span class="badge-medium">
-                                @elseif($cve->baseSeverity=="LOW")
-                                <span class="badge-low">
-                                @else
-                                <span class="label label-default">
+                                @if($certificate->start_validity!=null)
+                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->start_validity)->format('Y-m-d')  ?? '' !!}
                                 @endif
-                                {{ $cve->baseScore }}
-                                {{ $cve->baseSeverity }}
-                                </span>
                             </td>
+                            <td>
+                                @if($certificate->end_validity!=null)
+                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->end_validity)->format('Y-m-d')  ?? '' !!}
+                                @endif                                
+                            </td>
+                            <td>
+                                @if ($certificate->status==0)
+                                    {{ trans('cruds.certificate.fields.status_good') }}
+                                @elseif ($certificate->status==1)
+                                    {{ trans('cruds.certificate.fields.status_revoked') }}
+                                @elseif ($certificate->status==2)
+                                    {{ trans('cruds.certificate.fields.status_unknown') }}
+                                @endif
+                            </td>                            
+                            <td>
+                                @can('certificate_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.certificates.show', $certificate->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('certificate_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.certificates.edit', $certificate->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('certificate_delete')
+                                    <form action="{{ route('admin.certificates.destroy', $certificate->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -91,11 +126,50 @@
 @section('scripts')
 @parent
 <script>
-@include('partials.datatable', array(
-    'id' => '#dataTable',
-    'title' => "CVE",
-    'URL' => null,
-    'canDelete' => false
-));
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('certificate_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('admin.certificates.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
+      });
+
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
+
+        return
+      }
+
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  dtButtons.push(deleteButton)
+@endcan
+
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'asc' ]],
+    pageLength: 100, stateSave: true,
+  });
+  let table = $('.datatable-Entity:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  
+})
+
 </script>
 @endsection
