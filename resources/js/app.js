@@ -75,18 +75,18 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'n') {
             e.preventDefault();
-            document.getElementById('btn-new').click();
+            document.getElementById('btn-new')?.click();
         }
         if (e.ctrlKey && e.key === 's') {
             e.preventDefault();
-            document.getElementById('btn-save').click();
+            document.getElementById('btn-save')?.click();
         }
         if (e.ctrlKey && e.key === 'd') {
             e.preventDefault();
-            document.getElementById('btn-duplicate').click();
+            document.getElementById('btn-duplicate')?.click();
         }
         if (e.key === 'Escape') {
-            document.getElementById('btn-cancel').click();
+            document.getElementById('btn-cancel')?.click();
         }
     });
 
