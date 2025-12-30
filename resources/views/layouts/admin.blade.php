@@ -22,7 +22,7 @@
             @endif
             @if($errors->count() > 0)
                 <div class="alert alert-danger">
-                    <ul class="list-unstyled">
+                    <ul class="list-group-flush">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach

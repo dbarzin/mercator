@@ -1,3 +1,4 @@
+@php use Mercator\Core\Services\LicenseService; @endphp
 <nav id="sidebar" class="sidebar">
     <div class="search-box">
         <form id="search-form" action="/admin/global-search" method="GET">
@@ -549,7 +550,7 @@
                     </a>
                 @endcan
                 @can('module_manage')
-                    @if (config('app.license'))
+                    @if (app(LicenseService::class)->hasValidLicense())
                         <a href="{{ route("admin.modules.index") }}"
                            class="ps-4 {{ request()->is('admin/modules*') ? 'active' : '' }}">
                             <i class="bi bi-plugin"></i><span
@@ -564,11 +565,11 @@
         </a>
     </div>
     <div class="sidebar-footer">
-        @if (config('app.license'))
-            Enterprise
-        @else
-            Open Source
-        @endif
+    @if (app(LicenseService::class)->hasValidLicense())
+        Enterprise
+    @else
+        Open Source
+    @endif
         <br>
         Version {{ $appVersion }}
     </div>

@@ -1,6 +1,33 @@
 @extends('layouts.admin')
 
 @section('content')
+<div style="margin-bottom: 10px;" class="row">
+    <div class="col-lg-6">
+        <a id="btn-new" class="btn btn-success" href="{{ route('admin.modules.check') }}">
+            Check Licence
+        </a>
+    </div>
+</div>
+
+    <div class="card">
+        <div class="card-header">
+            License
+        </div>
+        <div class="card-body">
+            <div class="col-4">
+                <table class="table table-bordered">
+                <tr><th>Status</th><td>{{ $license['status'] }}</td></tr>
+                <tr><th>Key</th><td>{{ $license['license_key'] }}</td></tr>
+                <tr><th>Type</th><td>{{ $license['type'] }}</td></tr>
+                <tr><th>Issued Date</th><td>{{ $license['issued_date'] }}</td></tr>
+                <tr><th>Expiration Date</th><td>{{ $license ['expiration_date'] ?? 'Never' }}</td></tr>
+                <tr><th>Days Until Expiration </th><td>{{ $license['days_until_expiration'] ?? 'N/A' }}</td></tr>
+                <tr><th>Modules</th><td>{{ implode(', ', $license['modules']) }}</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="card">
         <div class="card-header">
             {{ trans('cruds.module.title') }}

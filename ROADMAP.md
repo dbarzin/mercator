@@ -2,15 +2,10 @@
 
 Ce document reprend les changements de l'application Mercator.
 
-Changements prévus en 2025 et plus :
+Changements prévus en 2026 et plus :
 
 ## Evolutions majeures
 
-- [x] Outil de dessin de la cartographie
-- [x] Import de données sur base de fichier Excel ou CSV
-- [x] Générer un annuaire de crise
-- [x] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
-- [x] Améliorer la qualité du code avec LaraStan et PHPStan
 - [ ] Dessin de processus avec BPMN v2.0 (https://github.com/process-analytics)
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
 - [ ] Générer les cartographes dans la gestion des utilisateurs
@@ -27,8 +22,6 @@ Changements prévus en 2025 et plus :
 
 ## Evolutions mineurs
 
-- [x] Packaging des librairies JavaScript avec [Laravel Vite](https://laravel-vite.com/).
-- [x] Tests de non-régression avec Pest
 - [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
 - [ ] Améliorer (et revue) la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
@@ -41,6 +34,21 @@ Changements prévus en 2025 et plus :
 ## Petites évolutions
 
 - [ ] Dark Theme
+
+Changements réalisés en 2025 :
+
+## Evolutions majeures
+
+- [x] Outil de dessin de la cartographie
+- [x] Import de données sur base de fichier Excel ou CSV
+- [x] Générer un annuaire de crise
+- [x] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
+- [x] Améliorer la qualité du code avec LaraStan et PHPStan
+
+## Evolutions mineurs
+
+- [x] Packaging des librairies JavaScript avec [Laravel Vite](https://laravel-vite.com/).
+- [x] Tests de non-régression avec Pest
 
 Changements réalisés en 2024 :
 
