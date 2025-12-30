@@ -26,10 +26,31 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('mercator:cleanup')->daily();
-        $schedule->command('mercator:certificate-expiracy')->daily();
-        $schedule->command('mercator:cve-search')->daily();
-        $schedule->command('cpe:sync')->dailyAt('00:30')->withoutOverlapping();
+        // Cleanup old data
+        $schedule->command('mercator:cleanup')
+            ->name('cleanup-daily')
+            ->daily();
+
+        // Certificate expiration check
+        $schedule->command('mercator:certificate-expiracy')
+            ->daily();
+
+        // CVE search
+        $schedule->command('mercator:cve-search')
+            ->name('cve-search-daily')
+            ->daily();
+
+        // CPE import
+        $schedule->command('cpe:sync')
+            ->name('cpe-sync-daily')
+            ->dailyAt('00:30')
+            ->withoutOverlapping();
+
+        // Check license
+        $schedule->command('license:check')
+            ->dailyAt('00:30')
+            ->name('validate-license-daily')
+            ->withoutOverlapping(60);
     }
 
     /**

@@ -431,6 +431,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         ->group(function () {
             Route::get('/', [ModuleController::class, 'index'])->name('index');
 
+            Route::get('/check', [ModuleController::class, 'check'])->name('check');
+
             Route::post('{name}/install', [ModuleController::class, 'install'])->name('install');
             Route::post('{name}/enable', [ModuleController::class, 'enable'])->name('enable');
             Route::post('{name}/disable', [ModuleController::class, 'disable'])->name('disable');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Mercator\Core\Modules\ModuleDiscovery;
 use Mercator\Core\Modules\ModuleRegistry;
+use Mercator\Core\Services\LicenseService;
 
 class ModuleController extends Controller
 {
@@ -18,6 +19,18 @@ class ModuleController extends Controller
         ModuleDiscovery $discovery,
         ModuleRegistry $registry
     ) {
+        // Get license service
+        $licenseService = app(LicenseService::class);
+        // get the installed license
+        $license = $licenseService->getLicenseInfo();
+
+        if ($license['status'] === 'expiring_soon') {
+            $message = "License is about to expire";
+        }
+        else
+            $message = "";
+
+
         // Modules vus via Composer
         $discovered = $discovery->discover();
 
@@ -50,7 +63,9 @@ class ModuleController extends Controller
             ];
         })->values();
 
-        return view('modules', compact('modules'));
+        return view('modules',
+            compact('license','modules'))
+            ->with('message',$message);
     }
 
     public function install(
@@ -82,6 +97,26 @@ class ModuleController extends Controller
         $registry->enable($name);
 
         return back()->with('success', "Module '{$name}' activé.");
+    }
+
+    public function check(): RedirectResponse
+    {
+        // Get license service
+        $licenseService = app(LicenseService::class);
+        $errors = collect();
+
+        // Validation avec le serveur de licences
+        if ($licenseService->validateWithServer()) {
+            $message = ('License has been validated with the Licence server.');
+
+        } else {
+            $message = "";
+            $errors->add("License could not be verified with the Licence server !");
+        }
+
+        return back()
+            ->with('message', $message)
+            ->with('errors', $errors);
     }
 
     public function disable(string $name, ModuleRegistry $registry): RedirectResponse

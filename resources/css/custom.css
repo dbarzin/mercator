@@ -218,7 +218,6 @@ table.dataTable thead th {
 
 /***************************************************************************/
 
-/* Supprime le soulignement dans les liens dans les card-body */
 .card-body a {
     text-decoration: none;
 }
