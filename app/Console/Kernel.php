@@ -14,11 +14,7 @@ class Kernel extends ConsoleKernel
         Commands\Cleanup::class,
         Commands\CertificateExpiration::class,
         Commands\CVESearch::class,
-        Commands\CPEImport::class,
-        Commands\MercatorModuleInstall::class,
-        Commands\MercatorModuleEnable::class,
-        Commands\MercatorModuleDisable::class,
-        Commands\MercatorModuleUninstall::class,
+        Commands\CPEImport::class
     ];
 
     /**
