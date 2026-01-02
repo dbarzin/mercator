@@ -961,7 +961,8 @@ return [
             'activate' => 'Activate',
             'deactivate' => 'Deactivate',
             'uninstall' => 'Uninstall',
-        ]
+        ],
+        'confirm_uninstall' => "Do you want to uninstall this module?",
     ],
     'network' => [
         'description' => 'Set of equipment logically linked to each other and which exchange information.',

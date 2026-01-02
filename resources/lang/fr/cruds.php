@@ -1014,7 +1014,8 @@ return [
             'activate' => 'Activer',
             'deactivate' => 'Désactiver',
             'uninstall' => 'Désinstaller',
-        ]
+        ],
+        'confirm_uninstall' => "Voulez-vous désinstaller ce module ?",
     ],
     'operation' => [
         'description' => 'Etape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.',
