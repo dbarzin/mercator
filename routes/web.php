@@ -412,11 +412,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     })->name('doc.about');
 
     // Import
-    Route::get('config/import', function () {
-        return view('admin/import');
-    })->name('config.import');
-    Route::post('config/export', [Admin\ImportController::class, 'export'])->name('config.export');
-    Route::post('config/import', [Admin\ImportController::class, 'import'])->name('config.import');
+    Route::get('config/import', [Admin\ImportController::class, 'show'])
+        ->name('config.import.form');
+    Route::post('config/import', [Admin\ImportController::class, 'import'])
+        ->name('config.import');
+
+    // Export
+    Route::post('config/export', [Admin\ImportController::class, 'export'])
+        ->name('config.export');
 
     // Configuration page
     Route::get('config', function () {
