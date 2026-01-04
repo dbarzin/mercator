@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use Mercator\Core\Models\Entity;
 use Carbon\Carbon;
 use Gate;
+use Mercator\Core\Models\Entity;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityList extends Controller
 {
+    /**
+     * @throws Exception
+     */
     public function generateExcel()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -74,6 +78,6 @@ class EntityList extends Controller
 
         $writer->save($path);
 
-        return response()->download($path);
+        return response()->download($path)->deleteFileAfterSend(true);
     }
 }

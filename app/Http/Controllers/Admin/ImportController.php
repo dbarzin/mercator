@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -22,12 +23,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ImportController extends Controller
 {
+
+    public function show(): View
+    {
+        return view('admin/import');
+    }
     /**
      * @throws \ReflectionException
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function export(Request $request)
+    public function export(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         \Log::info('Export - Start');
 
@@ -95,7 +101,7 @@ class ImportController extends Controller
             ->deleteFileAfterSend(true);
     }
 
-    public static function permission($modelName, $action)
+    public static function permission($modelName, $action): string
     {
         return Str::snake($modelName, '_').'_'.$action;
     }
@@ -103,7 +109,7 @@ class ImportController extends Controller
     /**
      * @throws \Throwable
      */
-    public function import(Request $request)
+    public function import(Request $request) : \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx',

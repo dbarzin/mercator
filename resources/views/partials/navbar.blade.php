@@ -89,6 +89,10 @@
                                     <li><a class="dropdown-item" href=" {{ route($item['route']) }}">
                                             <i class="{{ $item['icon'] }}"></i>{{ $item['label'] }}</a></li>
                                 @endforeach
+                            @else
+                                <li><a class="dropdown-item disabled">
+                                    <i class="bi bi-diagram-2"></i>BPMN</a>
+                                </li>
                             @endif
 
                             @can('graph_access')
