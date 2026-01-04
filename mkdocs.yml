@@ -48,8 +48,8 @@ nav:
   - Cas d'utilisation: usecases.fr.md
   - Data model: model.md
   - Modèle de données: model.fr.md
-  - BPMN: bpmn.md
-  - BPMN: bpmn.fr.md
+  - BPMN 2.0: bpmn.md
+  - BPMN 2.0: bpmn.fr.md
   - Reports: reports.md
   - Rapports: reports.fr.md
   - Administration: admin.md
