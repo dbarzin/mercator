@@ -233,6 +233,7 @@ return [
 
         /* Modules Service Providers */
         Mercator\Core\Providers\MercatorServiceProvider::class,
+
     ],
 
     /*
