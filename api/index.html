@@ -60,6 +60,10 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
                 </li>
               </ul>
@@ -83,6 +87,16 @@
     <li class="toctree-l2"><a class="reference internal" href="#apis">APIs</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#actions-managed-by-the-resource-controller">Actions managed by the resource controller</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#filtering-results">Filtering Results</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#general-syntax">General Syntax</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-operators">Available Operators</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#access-rights">Access rights</a>
     </li>
@@ -271,28 +285,137 @@ The list of APIs can be found in /route/api.php</p>
 <td>returns the list of objects</td>
 </tr>
 <tr>
-<td>GET /api/objets/{id}</td>
-<td id="id">returns object</td>
-<td></td>
+<td>GET</td>
+<td>/api/objects/{id}</td>
+<td>returns the object with ID <code>{id}</code></td>
 </tr>
 <tr>
 <td>POST</td>
 <td>/api/objects</td>
-<td>save new object</td>
+<td>creates a new object</td>
 </tr>
 <tr>
 <td>PUT/PATCH</td>
-<td>/api/objets/{id}</td>
-<td id="id">update object</td>
+<td>/api/objects/{id}</td>
+<td>updates the object with ID <code>{id}</code></td>
 </tr>
 <tr>
 <td>DELETE</td>
-<td>/api/objets/{id}</td>
-<td id="id">delete object</td>
+<td>/api/objects/{id}</td>
+<td>deletes the object with ID <code>{id}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/api/objects/mass-store</td>
+<td>creates multiple objects in a single request</td>
+</tr>
+<tr>
+<td>PUT/PATCH</td>
+<td>/api/objects/mass-update</td>
+<td>updates multiple objects at once</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/api/objects/mass-destroy</td>
+<td>deletes multiple objects at once</td>
 </tr>
 </tbody>
 </table>
 <p>The fields to be supplied are those described in the <a href="/mercator/model/">data model</a>.</p>
+<h3 id="filtering-results">Filtering Results</h3>
+<p>List endpoints (<code>GET /api/objects</code>) support a filtering system using query parameters (<code>?param=value</code>).</p>
+<p>To prevent injection (arbitrary column names), only a limited set of fields can be used as filters.
+For each resource, the filterable fields are composed of:</p>
+<ul>
+<li>the fields declared as <em>searchable</em> in the model (for example <code>Activity::$searchable</code> for activities);</li>
+<li>additional explicitly allowed fields (for example <code>id</code>, <code>recovery_time_objective</code>, <code>maximum_tolerable_downtime</code> for activities).</li>
+</ul>
+<p>Any parameter referring to a field that is not allowed is simply ignored.</p>
+<h4 id="general-syntax">General Syntax</h4>
+<p>Each filter is written in the following form:</p>
+<pre><code class="language-text">&lt;field&gt;[__&lt;operator&gt;]=&lt;value&gt;
+</code></pre>
+<ul>
+<li>If no operator is specified, the default operator is <code>exact</code>.</li>
+<li>
+<p>Example parameters:</p>
+</li>
+<li>
+<p><code>name=Daily backup</code> → exact match</p>
+</li>
+<li><code>name__contains=backup</code> → substring search</li>
+<li><code>recovery_time_objective__lte=4</code> → RTO less than or equal to 4</li>
+</ul>
+<h4 id="available-operators">Available Operators</h4>
+<p>The following operators are supported:</p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Example parameter</th>
+<th>Approximate SQL condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exact</code></td>
+<td><code>name=Backup</code></td>
+<td><code>name = 'Backup'</code></td>
+</tr>
+<tr>
+<td><code>contains</code></td>
+<td><code>name__contains=save</code></td>
+<td><code>name LIKE '%save%'</code></td>
+</tr>
+<tr>
+<td><code>startswith</code></td>
+<td><code>name__startswith=save</code></td>
+<td><code>name LIKE 'save%'</code></td>
+</tr>
+<tr>
+<td><code>endswith</code></td>
+<td><code>name__endswith=prod</code></td>
+<td><code>name LIKE '%prod'</code></td>
+</tr>
+<tr>
+<td><code>lt</code></td>
+<td><code>recovery_time_objective__lt=4</code></td>
+<td><code>recovery_time_objective &lt; 4</code></td>
+</tr>
+<tr>
+<td><code>lte</code></td>
+<td><code>recovery_time_objective__lte=4</code></td>
+<td><code>recovery_time_objective &lt;= 4</code></td>
+</tr>
+<tr>
+<td><code>gt</code></td>
+<td><code>maximum_tolerable_downtime__gt=8</code></td>
+<td><code>maximum_tolerable_downtime &gt; 8</code></td>
+</tr>
+<tr>
+<td><code>gte</code></td>
+<td><code>maximum_tolerable_downtime__gte=8</code></td>
+<td><code>maximum_tolerable_downtime &gt;= 8</code></td>
+</tr>
+</tbody>
+</table>
+<p>If an unknown operator is provided, it is treated as an <code>exact</code> match.</p>
+<h4 id="examples">Examples</h4>
+<ul>
+<li>List activities whose name contains “backup”:</li>
+</ul>
+<pre><code class="language-http">GET /api/activities?name__contains=backup
+</code></pre>
+<ul>
+<li>List activities assigned to a specific responsible team, with an RTO less than or equal to 4 hours:</li>
+</ul>
+<pre><code class="language-http">GET /api/activities?responsible=DSI&amp;recovery_time_objective__lte=4
+</code></pre>
+<ul>
+<li>List activities whose ID is greater than or equal to 100:</li>
+</ul>
+<pre><code class="language-http">GET /api/activities?id__gte=100
+</code></pre>
 <h3 id="access-rights">Access rights</h3>
 <p>To access the APIs, you must identify yourself as a Mercator application user.
 This user must have a role in Mercator that allows him/her to access/modify the objects

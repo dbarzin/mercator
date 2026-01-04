@@ -60,6 +60,10 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn.fr/">BPMN</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../reports.fr/">Rapports</a>
                 </li>
               </ul>
@@ -84,11 +88,21 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#filtrage-des-resultats">Filtrage des résultats</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#syntaxe-generale">Syntaxe générale</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operateurs-disponibles">Opérateurs disponibles</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemples">Exemples</a>
+    </li>
+        </ul>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#liaison-entre-les-objets">Liaison entre les objets</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
+    <li class="toctree-l2"><a class="reference internal" href="#exemples_1">Exemples</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
     </li>
@@ -290,9 +304,118 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <td>/api/objets/{id}</td>
 <td id="id">supprime l'objet</td>
 </tr>
+<tr>
+<td>POST</td>
+<td>/api/objets/mass-store</td>
+<td>crée plusieurs objets en une requête</td>
+</tr>
+<tr>
+<td>PUT/PATCH</td>
+<td>/api/objets/mass-update</td>
+<td>met à jour plusieurs objets à la fois</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/api/objets/mass-destroy</td>
+<td>supprime plusieurs objets à la fois</td>
+</tr>
 </tbody>
 </table>
 <p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
+<h3 id="filtrage-des-resultats">Filtrage des résultats</h3>
+<p>Les endpoints de liste (<code>GET /api/objets</code>) supportent un système de filtres via les paramètres de requête (<code>?param=valeur</code>).</p>
+<p>Pour éviter toute injection (nom de colonne arbitraire), seuls certains champs sont filtrables.
+Pour chaque ressource, les champs filtrables sont constitués :</p>
+<ul>
+<li>des champs déclarés comme <em>recherchables</em> dans le modèle (par exemple <code>Activity::$searchable</code> pour les activités) ;</li>
+<li>de quelques champs supplémentaires explicitement autorisés (par exemple <code>id</code>, <code>recovery_time_objective</code>, <code>maximum_tolerable_downtime</code> pour les activités).</li>
+</ul>
+<p>Les noms des champs non autorisés sont simplement ignorés.</p>
+<h4 id="syntaxe-generale">Syntaxe générale</h4>
+<p>Chaque filtre se présente sous la forme :</p>
+<pre><code class="language-text">&lt;champ&gt;[__&lt;operateur&gt;]=&lt;valeur&gt;
+</code></pre>
+<ul>
+<li>Si aucun opérateur n’est précisé, l’opérateur par défaut est <code>exact</code>.</li>
+<li>
+<p>Exemples de clés de paramètres :</p>
+</li>
+<li>
+<p><code>name=Backup quotidien</code> → filtre exact</p>
+</li>
+<li><code>name__contains=backup</code> → recherche de sous-chaîne</li>
+<li><code>recovery_time_objective__lte=4</code> → RTO inférieur ou égal à 4</li>
+</ul>
+<h4 id="operateurs-disponibles">Opérateurs disponibles</h4>
+<p>Les opérateurs suivants sont supportés :</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Exemple de paramètre</th>
+<th>Condition SQL approximative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exact</code></td>
+<td><code>name=Sauvegarde</code></td>
+<td><code>name = 'Sauvegarde'</code></td>
+</tr>
+<tr>
+<td><code>contains</code></td>
+<td><code>name__contains=save</code></td>
+<td><code>name LIKE '%save%'</code></td>
+</tr>
+<tr>
+<td><code>startswith</code></td>
+<td><code>name__startswith=save</code></td>
+<td><code>name LIKE 'save%'</code></td>
+</tr>
+<tr>
+<td><code>endswith</code></td>
+<td><code>name__endswith=prod</code></td>
+<td><code>name LIKE '%prod'</code></td>
+</tr>
+<tr>
+<td><code>lt</code></td>
+<td><code>recovery_time_objective__lt=4</code></td>
+<td><code>recovery_time_objective &lt; 4</code></td>
+</tr>
+<tr>
+<td><code>lte</code></td>
+<td><code>recovery_time_objective__lte=4</code></td>
+<td><code>recovery_time_objective &lt;= 4</code></td>
+</tr>
+<tr>
+<td><code>gt</code></td>
+<td><code>maximum_tolerable_downtime__gt=8</code></td>
+<td><code>maximum_tolerable_downtime &gt; 8</code></td>
+</tr>
+<tr>
+<td><code>gte</code></td>
+<td><code>maximum_tolerable_downtime__gte=8</code></td>
+<td><code>maximum_tolerable_downtime &gt;= 8</code></td>
+</tr>
+</tbody>
+</table>
+<p>Si un opérateur inconnu est fourni, il est traité comme <code>exact</code>.</p>
+<h4 id="exemples">Exemples</h4>
+<ul>
+<li>Lister les activités dont le nom contient “sauvegarde” :</li>
+</ul>
+<pre><code class="language-http">GET /api/activities?name__contains=sauvegarde
+</code></pre>
+<ul>
+<li>Lister les activités gérées par un responsable donné, avec un RTO inférieur ou égal à 4 heures :</li>
+</ul>
+<pre><code class="language-http">GET /api/activities?responsible=DSI&amp;recovery_time_objective__lte=4
+</code></pre>
+<ul>
+<li>Lister les activités dont l’ID est supérieur ou égal à 100 :</li>
+</ul>
+<pre><code class="language-http">GET /api/activities?id__gte=100
+</code></pre>
 <h3 id="droits-dacces">Droits d'accès</h3>
 <p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
 Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
@@ -329,7 +452,7 @@ nous suivons ces étapes :</p>
 </code></pre>
 <p>Les noms de tous les champs supplémentaires
 sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].</p>
-<h3 id="exemples">Exemples</h3>
+<h3 id="exemples_1">Exemples</h3>
 <p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
 <h4 id="authentification">Authentification</h4>
 <pre><code class="language-php">&lt;?php
