@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "881a688a92ab78cf8e9ad0754d73d3bd",
+    "content-hash": "1060e5d2344da22eb67be4d8532a1a02",
     "packages": [
         {
             "name": "brick/math",
@@ -5445,6 +5445,47 @@
                 "source": "https://github.com/socialiteproviders/manager"
             },
             "time": "2025-02-24T19:33:30+00:00"
+        },
+        {
+            "name": "sourcentis/mercator-bpmn",
+            "version": "2026.01.04",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dbarzin/mercator-bpmn.git",
+                "reference": "880c5daf27a2fa327ca6112d9e0d3b73c5527289"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.sourcentis.com/dist/sourcentis/mercator-bpmn/sourcentis-mercator-bpmn-880c5daf27a2fa327ca6112d9e0d3b73c5527289.zip",
+                "reference": "880c5daf27a2fa327ca6112d9e0d3b73c5527289",
+                "shasum": ""
+            },
+            "require": {
+                "sourcentis/mercator-core": "@stable"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mercator\\BPMN\\BPMNServiceProvider"
+                    ]
+                },
+                "mercator-module": {
+                    "name": "bpmn",
+                    "label": "BPMN Module",
+                    "version": "0.0.1"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mercator\\BPMN\\": "src/"
+                }
+            },
+            "support": {
+                "source": "https://github.com/dbarzin/mercator-bpmn/tree/2026.01.04",
+                "issues": "https://github.com/dbarzin/mercator-bpmn/issues"
+            },
+            "time": "2026-01-04T13:55:16+00:00"
         },
         {
             "name": "sourcentis/mercator-core",
