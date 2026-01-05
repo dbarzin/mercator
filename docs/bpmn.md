@@ -1,12 +1,46 @@
-# BPMN Module
+# BPMN 2.0 Module
 
 ## Introduction
 
-The BPMN (Business Process Model and Notation) module, available in the Enterprise version of Mercator,
-allows you to create, edit, and visualize business process diagrams according to the BPMN 2.0 standard.
+The BPMN (Business Process Model and Notation) module, available in the Enterprise version of Mercator, allows you to
+create, edit, and visualize business process diagrams according to the BPMN 2.0 standard.
 
 This module offers complete integration with information system mapping, enabling you to link
 BPMN graphical elements to Mercator entities.
+
+## Integration with Mercator Mapping
+
+### Activities, Tasks, and Operations
+
+BPMN elements integrate with Mercator Mapping objects according to the following correspondences:
+
+- **Activities**: Mercator business activities correspond to high-level BPMN subprocesses
+- **Operations**: Detailed operations can be modeled as specific BPMN subprocesses
+- **Tasks**: BPMN tasks are directly linked to the operational tasks in the mapping
+- **Actors**: Roles and actors are represented in lanes/pools, allowing for clear identification of responsibilities
+- **Information**: BPMN data objects can be associated with information from the ecosystem view
+
+[<img src="/mercator/images/bpmn-1.png" width="500">](/mercator/images/bpmn-1.png)
+
+This integration maintains consistency between business process modeling (BPMN) and
+the Technical mapping of the information system. It allows you to:
+
+- Trace data flows across the organization
+- Identify dependencies between the business view and the technical infrastructure
+- Align business processes with the technical components that support them
+
+### Processes and Macro-processes
+
+BPMN conversation diagrams allow you to model the interactions between business processes,
+
+whether they are defined in Mercator (processes and macro-processes) or represented in other BPMN diagrams.
+
+This ability to link between diagrams provides an overview of inter-process exchanges,
+
+facilitating the understanding of communication flows within the organization, even when these
+processes are documented separately.
+
+[<img src="/mercator/images/bpmn-2.png" width="400">](/mercator/images/bpmn-2.png)
 
 ## Elements of the BPMN Diagram
 
@@ -23,19 +57,19 @@ The BPMN module offers a complete set of elements compliant with the BPMN 2.0 st
 ### Activities
 
 - **Task**: Atomic unit of work
-- **Sub-Process**: Process that can be broken down into tasks
-- **User Task**: Task requiring human interaction
-- **Service Task**: Automated task
-- **Script Task**: Code execution
+- **Sub-Process**: Process Decomposable into tasks
+- **User task**: Task requiring human interaction
+- **Service task**: Automated task
+- **Script task**: Code execution
 
 [<img src="/mercator/images/bpmn-tasks.png" width="500">](/mercator/images/bpmn-tasks.png)
 
 ### Gateways
 
-- **Exclusive Gateway**: Chooses only one path from several
-- **Parallel Gateway**: Executes multiple paths simultaneously
-- **Inclusive Gateway**: Activates one or more paths
-- **Event Gateway**: Waits for multiple events
+- **Exclusive gateway**: Selection of a single path from several
+- **Parallel gateway**: Simultaneous execution of multiple paths
+- **Inclusive gateway**: Activation of one or more paths
+- **Event gateway**: Waiting for multiple events
 
 [<img src="/mercator/images/bpmn-gateways.png" width="400">](/mercator/images/bpmn-gateways.png)
 
@@ -47,9 +81,11 @@ The BPMN module offers a complete set of elements compliant with the BPMN 2.0 st
 
 - **Conditional Flow**: A sequence flow accompanied by an activation condition.
 
-- **Default Flow**: The sequence flow used when no condition of the other outgoing flows is met.
+- **Default Flow**: The sequence flow used when no condition in other outgoing flows is met.
 
 - **Association**: A non-directional link connecting artifacts (annotations, data objects) to elements of the process.
+
+-
 
 [<img src="/mercator/images/bpmn-flows.png" width="400">](/mercator/images/bpmn-flows.png)
 
@@ -64,29 +100,9 @@ The BPMN module offers a complete set of elements compliant with the BPMN 2.0 st
 
 [<img src="/mercator/images/bpmn-annotation.png" width="150">](/mercator/images/bpmn-annotation.png)
 
-## Association with Mercator Mapping
-
-### Business Processes
-
-BPMN elements can be associated with the following entities From the mapping:
-
-- **Processes**: A BPMN diagram represents a Mercator business process.
-- **Activities**: BPMN subprocesses correspond to the activities in the mapping.
-- **Tasks**: BPMN tasks are linked to the operational tasks referenced in Mercator.
-
-[<img src="/mercator/images/bpmn-1.png" width="500">](/mercator/images/bpmn-1.png)
-
-This hierarchy ensures consistency between the BPMN model and the IS mapping.
-
-### Data Objects
-
-BPMN data objects can be associated with information in the ecosystem view.
-
-This association allows you to trace data flows and identify dependencies between processes and systems.
-
 ## Lanes
 
-Lanes allow you to organize responsibilities within a process:
+Lanes allow you to organize responsibilities within a process :
 
 ### Orientation
 
@@ -99,21 +115,7 @@ Each lane can be associated with an actor in the Mercator map:
 
 - **Organizational Entities**: Departments, services, teams
 - **Roles**: Functions and responsibilities
-- **External Actors**: Partners, suppliers, customers
-
-Associating lanes with actors allows you to clearly identify responsibilities and
-automatically generate RACI matrices.
-
-## BPMN Annotations
-
-Annotations enrich process documentation:
-
-- **Explanatory Notes**: Clarifications on complex steps
-- **Business Rules**: Applicable conditions and constraints
-- **References**: Links to external documents or standards
-- **Comments**: Remarks for maintenance and improvement
-
-Annotations can be freely positioned on the diagram and linked to relevant elements via associations.
+- **External Actors**: Partners, suppliers, etc.
 
 ## View and Navigation
 
@@ -121,5 +123,103 @@ Annotations can be freely positioned on the diagram and linked to relevant eleme
 
 Visualization mode offers an interactive experience:
 
-- **Click-to-Navigation**: Clicking on an associated BPMN element redirects to the corresponding record in the diagram
-- **Contextual Information**: Hovering over elements displays
+- **Click-to-navigate**: Clicking on an associated BPMN element redirects to the corresponding record in the
+  map
+- **Contextual information**: Hover over elements to display details
+- **Zoom and pan**: Smooth navigation within complex diagrams
+- **Overview**: Minimap for orientation within major processes
+
+This bidirectional integration between BPMN and mapping facilitates impact analysis and traceability.
+
+### Access from the Map
+
+From the process, activity, and task records in Mercator, a button provides direct access to the
+associated BPMN diagram.
+
+## Conversations and Subprocesses
+
+### Conversation Association
+
+BPMN message flows represent conversations that can point to:
+
+- **Other BPMN Diagrams**: Collaborative processes and inter-process exchanges
+- **External Processes**: Interactions with third-party systems
+- **Detailed Subprocesses**: Hierarchical navigation within complex processes
+
+This feature allows you to model distributed process architectures while maintaining the readability of each diagram.
+
+### Navigation Between Diagrams
+
+Clicking on a message flow associated with another BPMN diagram opens that diagram, allowing for intuitive exploration
+of interconnected processes.
+
+## Import and Export
+
+### BPMN 2.0 XML Format
+
+**Import**:
+
+- Full support for the BPMN 2.0 standard
+- Preserves waypoints and positioning
+- Retrieves existing associations if the identifiers match
+
+**Export**:
+
+- Generates compliant BPMN 2.0 files
+- Preserves metadata and Mercator associations
+- Compatible with standard BPMN tools (Camunda, Bonita, etc.)
+
+### SVG Export
+
+Exporting to SVG allows:
+
+- **Documentation**: Insertion into Word and PDF documents
+- **Presentation**: Vector quality for slides
+- **Publication**: Integration into intranets and wikis
+- **Archiving**: Open and long-lasting format
+
+The generated SVG preserves the formatting, colors, and readability of the original diagram.
+
+## Best Practices
+
+### Modeling
+
+1. **Simplicity**: Prioritize clarity over exhaustiveness
+2. **Consistency**: Use the same naming conventions as the process map
+3. **Systematic Association**: Link all BPMN elements to Mercator entities
+4. **Documentation**: Use annotations for complex business rules
+
+### Organization
+
+1. **Structure**: Create subprocesses for workflows with more than 20 elements
+2. **Lanes**: One lane per main actor; avoid excessive lane duplication
+3. **Data**: Position data objects close to the activities that manipulate them
+4. **Navigation**: Use conversations to link interconnected processes
+
+### Maintenance
+
+1. **Versioning**: Regularly export to BPMN 2.0 for historical data retention
+2. **Review**: Synchronize changes with the process map
+3. **Validation**: Verify that associations remain valid after Reorganization
+
+4. **Archiving**: Preserve SVG exports of major versions
+
+## Use Cases
+
+### Impact Analysis
+
+Quickly identify the systems and stakeholders impacted by a process change using associations.
+
+### Compliance
+
+Demonstrate traceability between business processes and technical controls for GDPR, ISO 27001, etc. audits.
+
+### Onboarding
+
+Facilitate new employees' understanding of the information system through visual diagrams linked to the detailed process
+map.
+
+### Digital Transformation
+
+Map the current state (AS-IS) and model the target state (TO-BE) with visual comparison.
+
