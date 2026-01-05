@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/bpmn.fr/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>BPMN - Mercator</title>
+    <title>BPMN 2.0 - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "BPMN";
+        var mkdocs_page_name = "BPMN 2.0";
         var mkdocs_page_input_path = "bpmn.fr.md";
         var mkdocs_page_url = "/mercator/bpmn.fr/";
       </script>
@@ -51,18 +51,18 @@
                 <li class="toctree-l1"><a class="reference internal" href="../application.fr/">Application</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases.fr/">Cas d'utilisation</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../model.fr/">Modèle de données</a>
-                </li>
-              </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">BPMN</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">BPMN 2.0</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#activites-taches-et-operations">Activités, tâches et opérations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#processus-et-macro-processus">Processus et macro-processus</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#elements-du-diagramme-bpmn">Éléments du diagramme BPMN</a>
         <ul>
@@ -75,14 +75,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#flux-et-connexions">Flux et connexions</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#artefacts">Artefacts</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#processus-metier">Processus métier</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#objets-de-donnees-data-objects">Objets de données (Data Objects)</a>
     </li>
         </ul>
     </li>
@@ -150,6 +142,14 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases.fr/">Cas d'utilisation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model.fr/">Modèle de données</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../admin.fr/">Administration</a>
                 </li>
               </ul>
@@ -183,7 +183,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">BPMN</li>
+      <li class="breadcrumb-item active">BPMN 2.0</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/bpmn.fr.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -196,12 +196,38 @@
                 <ul>
 <li class="i18n-link i18n-link-found i18n-link-en"><a href="../bpmn/">English</a></li>
 </ul>
-<h1 id="module-bpmn">Module BPMN</h1>
+<h1 id="module-bpmn-20">Module BPMN 2.0</h1>
 <h2 id="introduction">Introduction</h2>
 <p>Le module BPMN (Business Process Model and Notation) disponible dans la version Enterprise de Mercator
 permet de créer, éditer et visualiser des diagrammes de processus métier selon la norme BPMN 2.0.</p>
 <p>Ce module offre une intégration complète avec la cartographie du système d'information, permettant de relier
 les éléments graphiques BPMN aux entités de Mercator.</p>
+<h2 id="association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</h2>
+<h3 id="activites-taches-et-operations">Activités, tâches et opérations</h3>
+<p>Les éléments BPMN s'intègrent aux objets de la cartographie Mercator selon les correspondances suivantes :</p>
+<ul>
+<li><strong>Activités</strong> : Les activités métier de Mercator correspondent aux sous-processus BPMN de haut niveau</li>
+<li><strong>Opérations</strong> : Les opérations détaillées peuvent être modélisées comme des sous-processus BPMN spécifiques</li>
+<li><strong>Tâches</strong> : Les tâches BPMN sont directement liées aux tâches opérationnelles de la cartographie</li>
+<li><strong>Acteurs</strong> : Les rôles et acteurs sont représentés dans les couloirs (lanes/pools), permettant d'identifier
+  clairement les responsabilités</li>
+<li><strong>Informations</strong> : Les objets de données BPMN peuvent être associés aux informations de la vue écosystème</li>
+</ul>
+<p><a href="/mercator/images/bpmn-1.png"><img src="/mercator/images/bpmn-1.png" width="500"></a></p>
+<p>Cette intégration maintient une cohérence entre la modélisation des processus métier (BPMN) et
+la cartographie technique du SI. Elle permet de :</p>
+<ul>
+<li>Tracer les flux de données à travers l'organisation</li>
+<li>Identifier les dépendances entre la vue métier et l'infrastructure technique</li>
+<li>Aligner les processus métier avec les composants techniques qui les supportent</li>
+</ul>
+<h3 id="processus-et-macro-processus">Processus et macro-processus</h3>
+<p>Les diagrammes de conversation BPMN permettent de modéliser les interactions entre processus métier,
+qu'ils soient définis dans Mercator (processus et macro-processus) ou représentés dans d'autres cartes BPMN.</p>
+<p>Cette capacité de liaison entre cartes offre une vue d'ensemble des échanges inter-processus,
+facilitant la compréhension des flux de communication au sein de l'organisation, même lorsque ces
+processus sont documentés séparément.</p>
+<p><a href="/mercator/images/bpmn-2.png"><img src="/mercator/images/bpmn-2.png" width="400"></a></p>
 <h2 id="elements-du-diagramme-bpmn">Éléments du diagramme BPMN</h2>
 <p>Le module BPMN propose une palette complète d'éléments conformes à la norme BPMN 2.0 :</p>
 <h3 id="evenements-events">Événements (Events)</h3>
@@ -249,19 +275,6 @@ les éléments graphiques BPMN aux entités de Mercator.</p>
 <li><strong>Annotation</strong> : Commentaires et notes explicatives</li>
 </ul>
 <p><a href="/mercator/images/bpmn-annotation.png"><img src="/mercator/images/bpmn-annotation.png" width="150"></a></p>
-<h2 id="association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</h2>
-<h3 id="processus-metier">Processus métier</h3>
-<p>Les éléments BPMN peuvent être associés aux entités suivantes de la cartographie :</p>
-<ul>
-<li><strong>Processus</strong> : Un diagramme BPMN représente un processus métier de Mercator</li>
-<li><strong>Activités</strong> : Les sous-processus BPMN correspondent aux activités de la cartographie</li>
-<li><strong>Tâches</strong> : Les tâches BPMN sont liées aux tâches opérationnelles référencées dans Mercator</li>
-</ul>
-<p><a href="/mercator/images/bpmn-1.png"><img src="/mercator/images/bpmn-1.png" width="500"></a></p>
-<p>Cette hiérarchie permet de maintenir une cohérence entre la modélisation BPMN et la cartographie du SI.</p>
-<h3 id="objets-de-donnees-data-objects">Objets de données (Data Objects)</h3>
-<p>Les objets de données BPMN peuvent être associés aux information de la vue de l'écosystème.</p>
-<p>Cette association permet de tracer les flux de données et d'identifier les dépendances entre processus et systèmes.</p>
 <h2 id="lanes-couloirs">Lanes (couloirs)</h2>
 <p>Les lanes permettent d'organiser les responsabilités dans un processus :</p>
 <h3 id="orientation">Orientation</h3>
@@ -373,7 +386,7 @@ détaillée.</p>
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../model.fr/" class="btn btn-neutral float-left" title="Modèle de données"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../application.fr/" class="btn btn-neutral float-left" title="Application"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../reports.fr/" class="btn btn-neutral float-right" title="Rapports">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -402,7 +415,7 @@ détaillée.</p>
         </span>
     
     
-      <span><a href="../model.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../application.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../reports.fr/" style="color: #fcfcfc">Next &raquo;</a></span>
