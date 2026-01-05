@@ -44,14 +44,14 @@ nav:
   - Cartographie: cartography.fr.md
   - Application: application.md
   - Application: application.fr.md
-  - Use cases: usecases.md
-  - Cas d'utilisation: usecases.fr.md
-  - Data model: model.md
-  - Modèle de données: model.fr.md
   - BPMN 2.0: bpmn.md
   - BPMN 2.0: bpmn.fr.md
   - Reports: reports.md
   - Rapports: reports.fr.md
+  - Use cases: usecases.md
+  - Cas d'utilisation: usecases.fr.md
+  - Data model: model.md
+  - Modèle de données: model.fr.md
   - Administration: admin.md
   - Administration: admin.fr.md
   - Configuration: config.md

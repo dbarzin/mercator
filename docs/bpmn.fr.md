@@ -1,4 +1,4 @@
-# Module BPMN
+# Module BPMN 2.0
 
 ## Introduction
 
@@ -7,6 +7,39 @@ permet de créer, éditer et visualiser des diagrammes de processus métier selo
 
 Ce module offre une intégration complète avec la cartographie du système d'information, permettant de relier
 les éléments graphiques BPMN aux entités de Mercator.
+
+## Association avec la cartographie Mercator
+
+### Activités, tâches et opérations
+
+Les éléments BPMN s'intègrent aux objets de la cartographie Mercator selon les correspondances suivantes :
+
+- **Activités** : Les activités métier de Mercator correspondent aux sous-processus BPMN de haut niveau
+- **Opérations** : Les opérations détaillées peuvent être modélisées comme des sous-processus BPMN spécifiques
+- **Tâches** : Les tâches BPMN sont directement liées aux tâches opérationnelles de la cartographie
+- **Acteurs** : Les rôles et acteurs sont représentés dans les couloirs (lanes/pools), permettant d'identifier
+  clairement les responsabilités
+- **Informations** : Les objets de données BPMN peuvent être associés aux informations de la vue écosystème
+
+[<img src="/mercator/images/bpmn-1.png" width="500">](/mercator/images/bpmn-1.png)
+
+Cette intégration maintient une cohérence entre la modélisation des processus métier (BPMN) et
+la cartographie technique du SI. Elle permet de :
+
+- Tracer les flux de données à travers l'organisation
+- Identifier les dépendances entre la vue métier et l'infrastructure technique
+- Aligner les processus métier avec les composants techniques qui les supportent
+
+### Processus et macro-processus
+
+Les diagrammes de conversation BPMN permettent de modéliser les interactions entre processus métier,
+qu'ils soient définis dans Mercator (processus et macro-processus) ou représentés dans d'autres cartes BPMN.
+
+Cette capacité de liaison entre cartes offre une vue d'ensemble des échanges inter-processus,
+facilitant la compréhension des flux de communication au sein de l'organisation, même lorsque ces
+processus sont documentés séparément.
+
+[<img src="/mercator/images/bpmn-2.png" width="400">](/mercator/images/bpmn-2.png)
 
 ## Éléments du diagramme BPMN
 
@@ -61,26 +94,6 @@ Le module BPMN propose une palette complète d'éléments conformes à la norme 
 - **Annotation** : Commentaires et notes explicatives
 
   [<img src="/mercator/images/bpmn-annotation.png" width="150">](/mercator/images/bpmn-annotation.png)
-
-## Association avec la cartographie Mercator
-
-### Processus métier
-
-Les éléments BPMN peuvent être associés aux entités suivantes de la cartographie :
-
-- **Processus** : Un diagramme BPMN représente un processus métier de Mercator
-- **Activités** : Les sous-processus BPMN correspondent aux activités de la cartographie
-- **Tâches** : Les tâches BPMN sont liées aux tâches opérationnelles référencées dans Mercator
-
-  [<img src="/mercator/images/bpmn-1.png" width="500">](/mercator/images/bpmn-1.png)
-
-Cette hiérarchie permet de maintenir une cohérence entre la modélisation BPMN et la cartographie du SI.
-
-### Objets de données (Data Objects)
-
-Les objets de données BPMN peuvent être associés aux information de la vue de l'écosystème.
-
-Cette association permet de tracer les flux de données et d'identifier les dépendances entre processus et systèmes.
 
 ## Lanes (couloirs)
 
