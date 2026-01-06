@@ -177,7 +177,7 @@ Vous pouvez également configurer DKIM :
 N'oubliez pas de [configurer](https://dbarzin.github.io/deming/config.fr/#notifications) le contenu et la fréquence
 d'envoi des mails.
 
-## Sheduler
+## Scheduler
 
 Modifier le crontab
 
