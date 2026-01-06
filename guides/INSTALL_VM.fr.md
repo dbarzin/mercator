@@ -272,9 +272,6 @@ php artisan optimize:clear
 
 ---
 
-Veux-tu que je te prépare aussi une version **commentée directement en français** du bloc `.env` (avec des explications
-ligne par ligne) pour l’intégrer dans ta doc interne ?
-
 ## Configuration de Keycloak (optionel)
 
 Pour configurer Keycloak, suivez ces étapes :
