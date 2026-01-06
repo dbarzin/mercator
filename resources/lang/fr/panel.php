@@ -34,7 +34,7 @@ return [
         'options' => 'Options',
         'password' => 'Mot de passe',
         'physical_infrastructure' => 'Infrastructure physique',
-        'preferences' => 'Préferences',
+        'preferences' => 'Préférences',
         'reports' => 'Rapports',
         'schema' => 'Modèle de données',
         'tools' => 'Outils',
