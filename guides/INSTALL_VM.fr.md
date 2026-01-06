@@ -187,8 +187,6 @@ ajouter cette ligne dans le crontab
 
     * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
 
-Voici la traduction en français de la documentation :
-
 ---
 
 ## Configuration LDAP / LDAPRecord (optionnelle)
