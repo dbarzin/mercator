@@ -66,8 +66,8 @@ Reconnu pour sa qualité et sa pertinence opérationnelle, Mercator s’impose a
 ### 🔧 Installation Manuelle
 
 Pour des instructions détaillées, veuillez vous référer aux guides d'installation :
-- [Installation sur Ubuntu](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
-- [Installation sur RedHat](https://github.com/dbarzin/mercator/blob/master/INSTALL.RedHat.md)
+- [Installation sur Ubuntu](https://github.com/dbarzin/mercator/blob/master/guides/INSTALL_VM.fr.md)
+- [Installation sur RedHat](https://github.com/dbarzin/mercator/blob/master/guides/INSTALL.RedHat.fr.md)
 
 ### 🐳 Installation via Docker
 
