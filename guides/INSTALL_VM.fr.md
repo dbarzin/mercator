@@ -177,7 +177,7 @@ Vous pouvez également configurer DKIM :
 N'oubliez pas de [configurer](https://dbarzin.github.io/deming/config.fr/#notifications) le contenu et la fréquence
 d'envoi des mails.
 
-## Sheduler
+## Scheduler
 
 Modifier le crontab
 
@@ -186,8 +186,6 @@ Modifier le crontab
 ajouter cette ligne dans le crontab
 
     * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
-
-Voici la traduction en français de la documentation :
 
 ---
 
@@ -271,9 +269,6 @@ php artisan optimize:clear
 ```
 
 ---
-
-Veux-tu que je te prépare aussi une version **commentée directement en français** du bloc `.env` (avec des explications
-ligne par ligne) pour l’intégrer dans ta doc interne ?
 
 ## Configuration de Keycloak (optionel)
 
