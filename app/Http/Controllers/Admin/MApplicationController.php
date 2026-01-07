@@ -41,104 +41,33 @@ class MApplicationController extends Controller
 
         return view('admin.applications.index', compact('applications'));
     }
-    public function clone(Request $request)
-    {
-        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
-        $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
-        $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
-        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
-        $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
-        $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
-        $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
-        $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
-
-        // lists
-        $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
-        $technology_list = MApplication::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
-        $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
-        $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
-
-        // Get Attributes
-        $attributes_list = MApplication::select('attributes')
-            ->whereNotNull('attributes')
-            ->distinct()
-            ->pluck('attributes');
-        $res = [];
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        sort($res);
-        $attributes_list = array_unique($res);
-
-        // Get Reponsibles
-        $responsible_list = MApplication::select('responsible')
-            ->whereNotNull('responsible')
-            ->distinct()
-            ->orderBy('responsible')
-            ->pluck('responsible');
-        $res = [];
-        foreach ($responsible_list as $i) {
-            foreach (explode(',', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        $responsible_list = array_unique($res);
-
-        $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
-        $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
-        $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
-
-        //============================================
-        // Get Application to clone
-        $application = MApplication::query()->find($request['id']);
-
-        // Workstation not found
-        abort_if($application === null, Response::HTTP_NOT_FOUND, '404 Not Found');
-
-        $request->merge($application->only($application->getFillable()));
-        $request->flash();
-
-        return view(
-            'admin.applications.create',
-            compact(
-                'entities',
-                'processes',
-                'activities',
-                'services',
-                'databases',
-                'logical_servers',
-                'security_devices',
-                'applicationBlocks',
-                'icons',
-                'users',
-                'type_list',
-                'technology_list',
-                'users_list',
-                'external_list',
-                'responsible_list',
-                'referent_list',
-                'editor_list',
-                'cartographers_list',
-                'attributes_list'
-            )
-        );
-
-    }
 
     public function create()
     {
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        return view('admin.applications.create', $this->getCreateFormData());
+    }
+
+    public function clone(Request $request, int $id)
+    {
+        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = $this->getCreateFormData();
+
+        // Get Application to clone
+        $application = MApplication::query()->find($id);
+
+        // Merge data
+        $request->merge($application->only($application->getFillable()));
+        $request->flash();
+
+        return view('admin.applications.create', $data);
+    }
+
+
+    private function getCreateFormData(): array
+    {
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
@@ -172,7 +101,7 @@ class MApplicationController extends Controller
         sort($res);
         $attributes_list = array_unique($res);
 
-        // Get Reponsibles
+        // Get Responsibles
         $responsible_list = MApplication::select('responsible')
             ->whereNotNull('responsible')
             ->distinct()
@@ -192,32 +121,28 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        return view(
-            'admin.applications.create',
-            compact(
-                'entities',
-                'processes',
-                'activities',
-                'services',
-                'databases',
-                'logical_servers',
-                'security_devices',
-                'applicationBlocks',
-                'icons',
-                'users',
-                'type_list',
-                'technology_list',
-                'users_list',
-                'external_list',
-                'responsible_list',
-                'referent_list',
-                'editor_list',
-                'cartographers_list',
-                'attributes_list'
-            )
+        return compact(
+            'entities',
+            'processes',
+            'activities',
+            'services',
+            'databases',
+            'logical_servers',
+            'security_devices',
+            'applicationBlocks',
+            'icons',
+            'users',
+            'type_list',
+            'technology_list',
+            'users_list',
+            'external_list',
+            'responsible_list',
+            'referent_list',
+            'editor_list',
+            'cartographers_list',
+            'attributes_list'
         );
     }
-
     public function store(StoreMApplicationRequest $request)
     {
         $request->merge(['responsible' => implode(', ', $request->responsibles !== null ? $request->responsibles : [])]);
