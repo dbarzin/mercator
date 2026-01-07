@@ -105,7 +105,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Applications
     Route::resource('applications', Admin\MApplicationController::class);
-    // Route::get('application-icon/{id}', [Admin\MApplicationController::class, 'icon'])->name('application-icon');
+    Route::get('applications-clone/{id}', [Admin\MApplicationController::class, 'clone'])->name('applications.clone');
     Route::delete('applications-destroy', [Admin\MApplicationController::class, 'massDestroy'])->name('applications.massDestroy');
 
     // Application Services

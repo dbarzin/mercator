@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMApplicationRequest;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
+use App\Services\IconUploadService;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\AdminUser;
 use Mercator\Core\Models\ApplicationBlock;
@@ -17,9 +21,6 @@ use Mercator\Core\Models\MApplication;
 use Mercator\Core\Models\Process;
 use Mercator\Core\Models\SecurityDevice;
 use Mercator\Core\Models\User;
-use App\Services\IconUploadService;
-use Gate;
-use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationController extends Controller
@@ -45,6 +46,28 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        return view('admin.applications.create', $this->getCreateFormData());
+    }
+
+    public function clone(Request $request, int $id)
+    {
+        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = $this->getCreateFormData();
+
+        // Get Application to clone
+        $application = MApplication::query()->find($id);
+
+        // Merge data
+        $request->merge($application->only($application->getFillable()));
+        $request->flash();
+
+        return view('admin.applications.create', $data);
+    }
+
+
+    private function getCreateFormData(): array
+    {
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
@@ -78,7 +101,7 @@ class MApplicationController extends Controller
         sort($res);
         $attributes_list = array_unique($res);
 
-        // Get Reponsibles
+        // Get Responsibles
         $responsible_list = MApplication::select('responsible')
             ->whereNotNull('responsible')
             ->distinct()
@@ -98,32 +121,28 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        return view(
-            'admin.applications.create',
-            compact(
-                'entities',
-                'processes',
-                'activities',
-                'services',
-                'databases',
-                'logical_servers',
-                'security_devices',
-                'applicationBlocks',
-                'icons',
-                'users',
-                'type_list',
-                'technology_list',
-                'users_list',
-                'external_list',
-                'responsible_list',
-                'referent_list',
-                'editor_list',
-                'cartographers_list',
-                'attributes_list'
-            )
+        return compact(
+            'entities',
+            'processes',
+            'activities',
+            'services',
+            'databases',
+            'logical_servers',
+            'security_devices',
+            'applicationBlocks',
+            'icons',
+            'users',
+            'type_list',
+            'technology_list',
+            'users_list',
+            'external_list',
+            'responsible_list',
+            'referent_list',
+            'editor_list',
+            'cartographers_list',
+            'attributes_list'
         );
     }
-
     public function store(StoreMApplicationRequest $request)
     {
         $request->merge(['responsible' => implode(', ', $request->responsibles !== null ? $request->responsibles : [])]);

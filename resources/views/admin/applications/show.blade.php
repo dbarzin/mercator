@@ -13,6 +13,13 @@
                     {{ trans('global.edit') }}
                 </a>
             @endif
+
+            @can('m_application_create')
+                <a class="btn btn-warning" href="{{ route('admin.applications.clone', $application->id) }}">
+                    {{ trans('global.clone') }}
+                </a>
+            @endcan
+
             @if(auth()->user()->can('m_application_delete'))
                 <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST"
                       onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
