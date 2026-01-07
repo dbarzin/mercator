@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
             ->daily();
 
         // CPE import
-        $schedule->command('cpe:sync')
+        $schedule->command('mercator:cpe-sync')
             ->name('cpe-sync-daily')
             ->dailyAt('00:30')
             ->withoutOverlapping();
