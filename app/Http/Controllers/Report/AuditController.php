@@ -768,7 +768,7 @@ class AuditController extends HomeController
         $writer->save($path);
 
         // Return
-        return response()->download($path);
+        return response()->download($path)->deleteFileAfterSend();
     }
 
     public function changes()
