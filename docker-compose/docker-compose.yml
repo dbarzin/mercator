@@ -24,6 +24,7 @@ services:
     container_name: mercator-app
     volumes:
       - ./docs:/var/www/mercator/storage/docs
+      - ./app:/var/www/mercator/storage/app
     expose:
       - 8080
     ports:
