@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
             ->daily();
 
         // Certificate expiration check
-        $schedule->command('mercator:certificate-expiracy')
+        $schedule->command('mercator:certificate-expiration')
             ->daily();
 
         // CVE search
