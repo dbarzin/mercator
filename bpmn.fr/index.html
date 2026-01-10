@@ -58,9 +58,9 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#activites-taches-et-operations">Activités, tâches et opérations</a>
+    <li class="toctree-l3"><a class="reference internal" href="#vue-du-systeme-dinformation">Vue du système d'information</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#processus-et-macro-processus">Processus et macro-processus</a>
+    <li class="toctree-l3"><a class="reference internal" href="#conversations-bpmn">Conversations BPMN</a>
     </li>
         </ul>
     </li>
@@ -203,8 +203,17 @@ permet de créer, éditer et visualiser des diagrammes de processus métier selo
 <p>Ce module offre une intégration complète avec la cartographie du système d'information, permettant de relier
 les éléments graphiques BPMN aux entités de Mercator.</p>
 <h2 id="association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</h2>
-<h3 id="activites-taches-et-operations">Activités, tâches et opérations</h3>
-<p>Les éléments BPMN s'intègrent aux objets de la cartographie Mercator selon les correspondances suivantes :</p>
+<p>Les diagrammes BPMN permettent de modéliser des processus métier en les reliant aux éléments de la cartographie
+Mercator : processus, macro-processus, activités et acteurs.</p>
+<p>Ces liens bidirectionnels entre les diagrammes BPMN et les objets de cartographie offrent une traçabilité complète. Un
+processus Mercator peut être associé à un ou plusieurs diagrammes BPMN qui en détaillent l'exécution, tandis qu'un
+diagramme BPMN peut référencer plusieurs processus, activités ou acteurs de la cartographie.</p>
+<p>Cette intégration facilite la compréhension des flux métier en permettant de naviguer entre la vue cartographique (qui
+fait quoi) et la vue processus (comment c'est fait), tout en maintenant la cohérence des informations au sein de
+l'organisation.</p>
+<h3 id="vue-du-systeme-dinformation">Vue du système d'information</h3>
+<p>Les éléments BPMN s'intègrent aux objets de la vue du système d'information de Mercator selon les correspondances
+suivantes :</p>
 <ul>
 <li><strong>Activités</strong> : Les activités métier de Mercator correspondent aux sous-processus BPMN de haut niveau</li>
 <li><strong>Opérations</strong> : Les opérations détaillées peuvent être modélisées comme des sous-processus BPMN spécifiques</li>
@@ -221,13 +230,18 @@ la cartographie technique du SI. Elle permet de :</p>
 <li>Identifier les dépendances entre la vue métier et l'infrastructure technique</li>
 <li>Aligner les processus métier avec les composants techniques qui les supportent</li>
 </ul>
-<h3 id="processus-et-macro-processus">Processus et macro-processus</h3>
-<p>Les diagrammes de conversation BPMN permettent de modéliser les interactions entre processus métier,
-qu'ils soient définis dans Mercator (processus et macro-processus) ou représentés dans d'autres cartes BPMN.</p>
-<p>Cette capacité de liaison entre cartes offre une vue d'ensemble des échanges inter-processus,
-facilitant la compréhension des flux de communication au sein de l'organisation, même lorsque ces
-processus sont documentés séparément.</p>
+<h3 id="conversations-bpmn">Conversations BPMN</h3>
+<p>Les diagrammes BPMN dans Mercator supportent les éléments de conversation définis dans la spécification BPMN 2.0. Les
+conversation links permettent de représenter les échanges de messages entre participants (pools), matérialisés
+visuellement par des lignes doubles parallèles.</p>
+<p>Les conversations regroupent logiquement plusieurs conversation links pour modéliser un ensemble cohérent d'échanges
+entre participants. Elles peuvent être représentées soit comme des conversations standards (hexagone simple) pour les
+interactions basiques, soit comme des sub-conversations (hexagone double bordure) lorsqu'elles encapsulent des échanges
+plus complexes nécessitant une décomposition.</p>
 <p><a href="/mercator/images/bpmn-2.png"><img src="/mercator/images/bpmn-2.png" width="400"></a></p>
+<p>Cette notation permet de documenter les protocoles de communication entre différents acteurs métier ou systèmes, en
+complément de la modélisation des processus internes à chaque participant. Les conversations BPMN offrent ainsi une vue
+architecturale des interactions inter-organisationnelles ou inter-départementales.</p>
 <h2 id="elements-du-diagramme-bpmn">Éléments du diagramme BPMN</h2>
 <p>Le module BPMN propose une palette complète d'éléments conformes à la norme BPMN 2.0 :</p>
 <h3 id="evenements-events">Événements (Events)</h3>

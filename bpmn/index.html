@@ -56,11 +56,11 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#integration-with-mercator-mapping">Integration with Mercator Mapping</a>
+    <li class="toctree-l2"><a class="reference internal" href="#association-with-mercator-cartography">Association with Mercator Cartography</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#activities-tasks-and-operations">Activities, Tasks, and Operations</a>
+    <li class="toctree-l3"><a class="reference internal" href="#information-system-view">Information System View</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#processes-and-macro-processes">Processes and Macro-processes</a>
+    <li class="toctree-l3"><a class="reference internal" href="#bpmn-conversations">BPMN Conversations</a>
     </li>
         </ul>
     </li>
@@ -200,31 +200,42 @@
 create, edit, and visualize business process diagrams according to the BPMN 2.0 standard.</p>
 <p>This module offers complete integration with information system mapping, enabling you to link
 BPMN graphical elements to Mercator entities.</p>
-<h2 id="integration-with-mercator-mapping">Integration with Mercator Mapping</h2>
-<h3 id="activities-tasks-and-operations">Activities, Tasks, and Operations</h3>
-<p>BPMN elements integrate with Mercator Mapping objects according to the following correspondences:</p>
+<h2 id="association-with-mercator-cartography">Association with Mercator Cartography</h2>
+<p>BPMN diagrams enable business process modeling by linking them to Mercator cartography elements: processes,
+macro-processes, activities, and actors.</p>
+<p>These bidirectional links between BPMN diagrams and cartography objects provide complete traceability. A Mercator
+process can be associated with one or more BPMN diagrams that detail its execution, while a BPMN diagram can reference
+multiple processes, activities, or actors from the cartography.</p>
+<p>This integration facilitates understanding of business flows by enabling navigation between the cartographic view (who
+does what) and the process view (how it's done), while maintaining information consistency across the organization.</p>
+<h3 id="information-system-view">Information System View</h3>
+<p>BPMN elements integrate with Mercator's information system view objects according to the following correspondences:</p>
 <ul>
-<li><strong>Activities</strong>: Mercator business activities correspond to high-level BPMN subprocesses</li>
-<li><strong>Operations</strong>: Detailed operations can be modeled as specific BPMN subprocesses</li>
-<li><strong>Tasks</strong>: BPMN tasks are directly linked to the operational tasks in the mapping</li>
-<li><strong>Actors</strong>: Roles and actors are represented in lanes/pools, allowing for clear identification of responsibilities</li>
+<li><strong>Activities</strong>: Mercator business activities correspond to high-level BPMN sub-processes</li>
+<li><strong>Operations</strong>: Detailed operations can be modeled as specific BPMN sub-processes</li>
+<li><strong>Tasks</strong>: BPMN tasks are directly linked to operational tasks in the cartography</li>
+<li><strong>Actors</strong>: Roles and actors are represented in lanes/pools, clearly identifying responsibilities</li>
 <li><strong>Information</strong>: BPMN data objects can be associated with information from the ecosystem view</li>
 </ul>
 <p><a href="/mercator/images/bpmn-1.png"><img src="/mercator/images/bpmn-1.png" width="500"></a></p>
-<p>This integration maintains consistency between business process modeling (BPMN) and
-the Technical mapping of the information system. It allows you to:</p>
+<p>This integration maintains consistency between business process modeling (BPMN) and the technical IS cartography.
+It enables:</p>
 <ul>
-<li>Trace data flows across the organization</li>
-<li>Identify dependencies between the business view and the technical infrastructure</li>
-<li>Align business processes with the technical components that support them</li>
+<li>Tracing data flows across the organization</li>
+<li>Identifying dependencies between the business view and technical infrastructure</li>
+<li>Aligning business processes with the technical components that support them</li>
 </ul>
-<h3 id="processes-and-macro-processes">Processes and Macro-processes</h3>
-<p>BPMN conversation diagrams allow you to model the interactions between business processes,</p>
-<p>whether they are defined in Mercator (processes and macro-processes) or represented in other BPMN diagrams.</p>
-<p>This ability to link between diagrams provides an overview of inter-process exchanges,</p>
-<p>facilitating the understanding of communication flows within the organization, even when these
-processes are documented separately.</p>
+<h3 id="bpmn-conversations">BPMN Conversations</h3>
+<p>BPMN diagrams in Mercator support conversation elements as defined in the BPMN 2.0 specification. Conversation links
+represent message exchanges between participants (pools), visually materialized by double parallel lines.</p>
+<p>Conversations logically group multiple conversation links to model a coherent set of exchanges between participants.
+They can be represented either as standard conversations (simple hexagon) for basic interactions, or as
+sub-conversations
+(double-bordered hexagon) when they encapsulate more complex exchanges requiring decomposition.</p>
 <p><a href="/mercator/images/bpmn-2.png"><img src="/mercator/images/bpmn-2.png" width="400"></a></p>
+<p>This notation documents communication protocols between different business actors or systems, complementing the modeling
+of internal processes for each participant. BPMN conversations thus provide an architectural view of
+inter-organizational or inter-departmental interactions.</p>
 <h2 id="elements-of-the-bpmn-diagram">Elements of the BPMN Diagram</h2>
 <p>The BPMN module offers a complete set of elements compliant with the BPMN 2.0 standard:</p>
 <h3 id="events">Events</h3>
