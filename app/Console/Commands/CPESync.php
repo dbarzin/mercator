@@ -60,12 +60,18 @@ class CPESync extends Command
                     $start = Carbon::parse($sinceOpt)->utc();
                 } catch (\Throwable $e) {
                     $this->error("Invalid --since option: {$sinceOpt}");
-
                     return self::FAILURE;
                 }
             } else {
                 $lastRun = cache()->get('cpe_sync.last_run');
-                $start = $lastRun ? Carbon::parse($lastRun)->utc() : $nowUtc->clone()->subDay(); // default 24h back
+                $this->info("Last successful run: {$lastRun->toIso8601String()}");
+                if ($lastRun) {
+                    $this->info("Last successful run: {$lastRun}");
+                    $start = Carbon::parse($lastRun)->utc();
+                } else {
+                    $this->info('No previous run found, using 24-hour lookback window.');
+                    $start = $nowUtc->clone()->subDay();
+                    }
             }
             $end = $nowUtc;
             $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");

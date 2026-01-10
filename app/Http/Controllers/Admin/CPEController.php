@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Mercator\Core\Models\CPEProduct;
 use Mercator\Core\Models\CPEVendor;
 use Mercator\Core\Models\CPEVersion;
-use Illuminate\Http\Request;
 
 class CPEController extends Controller
 {
     public function vendors(Request $request)
     {
-        $query = CPEVendor::limit(100);
+        $query = CPEVendor::query()->limit(100);
 
         $part = $request['part'];
         if ($part !== null) {
