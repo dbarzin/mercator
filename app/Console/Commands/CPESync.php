@@ -64,7 +64,7 @@ class CPESync extends Command
                 }
             } else {
                 $lastRun = cache()->get('cpe_sync.last_run');
-                $this->info("Last successful run: {$lastRun->toIso8601String()}");
+                $this->info("Last successful run: {$lastRun}");
                 if ($lastRun) {
                     $this->info("Last successful run: {$lastRun}");
                     $start = Carbon::parse($lastRun)->utc();
