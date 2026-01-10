@@ -68,8 +68,8 @@ class CPESync extends Command
                     $this->info("Last successful run: {$lastRun}");
                     $start = Carbon::parse($lastRun)->utc();
                 } else {
-                    $this->info('No previous run found, using 24-hour lookback window.');
-                    $start = $nowUtc->clone()->subDay();
+                    $this->info('No previous run found, full sync now.');
+                    $isFull = true;
                     }
             }
             $end = $nowUtc;
