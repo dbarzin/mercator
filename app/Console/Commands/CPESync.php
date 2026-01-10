@@ -73,10 +73,13 @@ class CPESync extends Command
                     }
             }
             $end = $nowUtc;
-            $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");
-        } else {
-            $this->warn('FULL resync mode: ignoring lastMod*, fetching the entire dictionary.');
         }
+        // Message
+        if ($isFull)
+            $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");
+        else
+            $this->warn('FULL resync mode: ignoring lastMod*, fetching the entire dictionary.');
+
 
         // HTTP client with retry & timeout
         $client = Http::timeout(120)
