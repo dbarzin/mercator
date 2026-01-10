@@ -8,39 +8,52 @@ create, edit, and visualize business process diagrams according to the BPMN 2.0 
 This module offers complete integration with information system mapping, enabling you to link
 BPMN graphical elements to Mercator entities.
 
-## Integration with Mercator Mapping
+## Association with Mercator Cartography
 
-### Activities, Tasks, and Operations
+BPMN diagrams enable business process modeling by linking them to Mercator cartography elements: processes,
+macro-processes, activities, and actors.
 
-BPMN elements integrate with Mercator Mapping objects according to the following correspondences:
+These bidirectional links between BPMN diagrams and cartography objects provide complete traceability. A Mercator
+process can be associated with one or more BPMN diagrams that detail its execution, while a BPMN diagram can reference
+multiple processes, activities, or actors from the cartography.
 
-- **Activities**: Mercator business activities correspond to high-level BPMN subprocesses
-- **Operations**: Detailed operations can be modeled as specific BPMN subprocesses
-- **Tasks**: BPMN tasks are directly linked to the operational tasks in the mapping
-- **Actors**: Roles and actors are represented in lanes/pools, allowing for clear identification of responsibilities
+This integration facilitates understanding of business flows by enabling navigation between the cartographic view (who
+does what) and the process view (how it's done), while maintaining information consistency across the organization.
+
+### Information System View
+
+BPMN elements integrate with Mercator's information system view objects according to the following correspondences:
+
+- **Activities**: Mercator business activities correspond to high-level BPMN sub-processes
+- **Operations**: Detailed operations can be modeled as specific BPMN sub-processes
+- **Tasks**: BPMN tasks are directly linked to operational tasks in the cartography
+- **Actors**: Roles and actors are represented in lanes/pools, clearly identifying responsibilities
 - **Information**: BPMN data objects can be associated with information from the ecosystem view
 
 [<img src="/mercator/images/bpmn-1.png" width="500">](/mercator/images/bpmn-1.png)
 
-This integration maintains consistency between business process modeling (BPMN) and
-the Technical mapping of the information system. It allows you to:
+This integration maintains consistency between business process modeling (BPMN) and the technical IS cartography.
+It enables:
 
-- Trace data flows across the organization
-- Identify dependencies between the business view and the technical infrastructure
-- Align business processes with the technical components that support them
+- Tracing data flows across the organization
+- Identifying dependencies between the business view and technical infrastructure
+- Aligning business processes with the technical components that support them
 
-### Processes and Macro-processes
+### BPMN Conversations
 
-BPMN conversation diagrams allow you to model the interactions between business processes,
+BPMN diagrams in Mercator support conversation elements as defined in the BPMN 2.0 specification. Conversation links
+represent message exchanges between participants (pools), visually materialized by double parallel lines.
 
-whether they are defined in Mercator (processes and macro-processes) or represented in other BPMN diagrams.
-
-This ability to link between diagrams provides an overview of inter-process exchanges,
-
-facilitating the understanding of communication flows within the organization, even when these
-processes are documented separately.
+Conversations logically group multiple conversation links to model a coherent set of exchanges between participants.
+They can be represented either as standard conversations (simple hexagon) for basic interactions, or as
+sub-conversations
+(double-bordered hexagon) when they encapsulate more complex exchanges requiring decomposition.
 
 [<img src="/mercator/images/bpmn-2.png" width="400">](/mercator/images/bpmn-2.png)
+
+This notation documents communication protocols between different business actors or systems, complementing the modeling
+of internal processes for each participant. BPMN conversations thus provide an architectural view of
+inter-organizational or inter-departmental interactions.
 
 ## Elements of the BPMN Diagram
 

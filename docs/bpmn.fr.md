@@ -10,9 +10,21 @@ les éléments graphiques BPMN aux entités de Mercator.
 
 ## Association avec la cartographie Mercator
 
-### Activités, tâches et opérations
+Les diagrammes BPMN permettent de modéliser des processus métier en les reliant aux éléments de la cartographie
+Mercator : processus, macro-processus, activités et acteurs.
 
-Les éléments BPMN s'intègrent aux objets de la cartographie Mercator selon les correspondances suivantes :
+Ces liens bidirectionnels entre les diagrammes BPMN et les objets de cartographie offrent une traçabilité complète. Un
+processus Mercator peut être associé à un ou plusieurs diagrammes BPMN qui en détaillent l'exécution, tandis qu'un
+diagramme BPMN peut référencer plusieurs processus, activités ou acteurs de la cartographie.
+
+Cette intégration facilite la compréhension des flux métier en permettant de naviguer entre la vue cartographique (qui
+fait quoi) et la vue processus (comment c'est fait), tout en maintenant la cohérence des informations au sein de
+l'organisation.
+
+### Vue du système d'information
+
+Les éléments BPMN s'intègrent aux objets de la vue du système d'information de Mercator selon les correspondances
+suivantes :
 
 - **Activités** : Les activités métier de Mercator correspondent aux sous-processus BPMN de haut niveau
 - **Opérations** : Les opérations détaillées peuvent être modélisées comme des sous-processus BPMN spécifiques
@@ -30,16 +42,22 @@ la cartographie technique du SI. Elle permet de :
 - Identifier les dépendances entre la vue métier et l'infrastructure technique
 - Aligner les processus métier avec les composants techniques qui les supportent
 
-### Processus et macro-processus
+### Conversations BPMN
 
-Les diagrammes de conversation BPMN permettent de modéliser les interactions entre processus métier,
-qu'ils soient définis dans Mercator (processus et macro-processus) ou représentés dans d'autres cartes BPMN.
+Les diagrammes BPMN dans Mercator supportent les éléments de conversation définis dans la spécification BPMN 2.0. Les
+conversation links permettent de représenter les échanges de messages entre participants (pools), matérialisés
+visuellement par des lignes doubles parallèles.
 
-Cette capacité de liaison entre cartes offre une vue d'ensemble des échanges inter-processus,
-facilitant la compréhension des flux de communication au sein de l'organisation, même lorsque ces
-processus sont documentés séparément.
+Les conversations regroupent logiquement plusieurs conversation links pour modéliser un ensemble cohérent d'échanges
+entre participants. Elles peuvent être représentées soit comme des conversations standards (hexagone simple) pour les
+interactions basiques, soit comme des sub-conversations (hexagone double bordure) lorsqu'elles encapsulent des échanges
+plus complexes nécessitant une décomposition.
 
 [<img src="/mercator/images/bpmn-2.png" width="400">](/mercator/images/bpmn-2.png)
+
+Cette notation permet de documenter les protocoles de communication entre différents acteurs métier ou systèmes, en
+complément de la modélisation des processus internes à chaque participant. Les conversations BPMN offrent ainsi une vue
+architecturale des interactions inter-organisationnelles ou inter-départementales.
 
 ## Éléments du diagramme BPMN
 
