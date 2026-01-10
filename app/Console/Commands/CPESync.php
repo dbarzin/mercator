@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use function PHPUnit\Framework\isEmpty;
 
 class CPESync extends Command
 {
@@ -60,12 +61,12 @@ class CPESync extends Command
                     $start = Carbon::parse($sinceOpt)->utc();
                 } catch (\Throwable $e) {
                     $this->error("Invalid --since option: {$sinceOpt}");
-
                     return self::FAILURE;
                 }
             } else {
                 $lastRun = cache()->get('cpe_sync.last_run');
-                $start = $lastRun ? Carbon::parse($lastRun)->utc() : $nowUtc->clone()->subDay(); // default 24h back
+                $this->info("Last successful run: {$lastRun->toIso8601String()}");
+                $start = isEmpty($lastRun) ? $nowUtc->clone()->subDay() : Carbon::parse($lastRun)->utc();
             }
             $end = $nowUtc;
             $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");
