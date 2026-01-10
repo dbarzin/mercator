@@ -54,7 +54,7 @@ class CPESync extends Command
         $start = null;
         $end = null;
 
-        if (! $isFull) {
+        if (!$isFull) {
             if ($sinceOpt) {
                 try {
                     $start = Carbon::parse($sinceOpt)->utc();
@@ -75,7 +75,7 @@ class CPESync extends Command
             $end = $nowUtc;
         }
         // Message
-        if ($isFull)
+        if (!$isFull)
             $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");
         else
             $this->warn('FULL resync mode: ignoring lastMod*, fetching the entire dictionary.');
