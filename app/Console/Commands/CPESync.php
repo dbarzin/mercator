@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use function PHPUnit\Framework\isEmpty;
 
 class CPESync extends Command
 {
@@ -66,7 +65,13 @@ class CPESync extends Command
             } else {
                 $lastRun = cache()->get('cpe_sync.last_run');
                 $this->info("Last successful run: {$lastRun->toIso8601String()}");
-                $start = isEmpty($lastRun) ? $nowUtc->clone()->subDay() : Carbon::parse($lastRun)->utc();
+                if ($lastRun) {
+                    $this->info("Last successful run: {$lastRun}");
+                    $start = Carbon::parse($lastRun)->utc();
+                } else {
+                    $this->info('No previous run found, using 24-hour lookback window.');
+                    $start = $nowUtc->clone()->subDay();
+                    }
             }
             $end = $nowUtc;
             $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");
