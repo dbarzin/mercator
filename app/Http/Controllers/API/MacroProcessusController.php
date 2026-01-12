@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
-use Mercator\Core\Models\MacroProcessus;
-use Mercator\Core\Models\Process;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\MacroProcessus;
+use Mercator\Core\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class MacroProcessusController extends Controller
@@ -50,7 +50,6 @@ class MacroProcessusController extends Controller
             Process::whereIn('id', $request->input('processes', []))
                 ->update(['macroprocess_id' => $macroProcessus->id]);
         }
-
         return response()->json();
     }
 

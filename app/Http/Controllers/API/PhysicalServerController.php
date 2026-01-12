@@ -55,22 +55,24 @@ class PhysicalServerController extends Controller
         abort_if(Gate::denies('physical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Update all fields except logicalServers (handled separately)
-        $physicalServer->update($request->except('logicalServers'));
+        if ($request->has('logicalServers'))
+            $physicalServer->update($request->except('logicalServers'));
 
-        if ($request->has('applications')) {
+        if ($request->has('applications'))
             $physicalServer->applications()->sync($request->input('applications', []));
-        }
 
-        if ($request->has('clusters')) {
+
+        if ($request->has('clusters'))
             $physicalServer->clusters()->sync($request->input('clusters', []));
-        }
-
+        
         // Handle logical servers association via API
+        /*
         if ($request->has('logicalServers')) {
             $logicalServerIds = $request->input('logicalServers', []);
             \Log::info("Physical server {$physicalServer->name} - syncing logical servers: ".json_encode($logicalServerIds));
             $physicalServer->logicalServers()->sync($logicalServerIds);
         }
+        */
 
         return response()->json();
     }
