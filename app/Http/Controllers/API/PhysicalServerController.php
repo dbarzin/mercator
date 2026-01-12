@@ -31,8 +31,8 @@ class PhysicalServerController extends Controller
         $physicalServer->clusters()->sync($request->input('clusters', []));
 
         // Support for logical servers association via API
-        if ($request->has('logicalServers')) {
-            $logicalServerIds = $request->input('logicalServers', []);
+        if ($request->has('logical_servers')) {
+            $logicalServerIds = $request->input('logical_servers', []);
             $physicalServer->logicalServers()->sync($logicalServerIds);
         }
 
@@ -45,7 +45,7 @@ class PhysicalServerController extends Controller
 
         $physicalServer['applications'] = $physicalServer->applications()->pluck('id');
         $physicalServer['clusters'] = $physicalServer->clusters()->pluck('id');
-        $physicalServer['logicalServers'] = $physicalServer->logicalServers()->pluck('id');
+        $physicalServer['logical_servers'] = $physicalServer->logicalServers()->pluck('id');
 
         return new JsonResource($physicalServer);
     }
@@ -54,24 +54,17 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Update all fields except logicalServers (handled separately)
-        $physicalServer->update($request->except('logicalServers'));
+        $physicalServer->update($request->all());
 
-        if ($request->has('applications')) {
+        if ($request->has('logical_servers'))
+            $physicalServer->logicalServers()->sync($request->input('logical_servers', []));
+
+        if ($request->has('applications'))
             $physicalServer->applications()->sync($request->input('applications', []));
-        }
 
-        if ($request->has('clusters')) {
+        if ($request->has('clusters'))
             $physicalServer->clusters()->sync($request->input('clusters', []));
-        }
-
-        // Handle logical servers association via API
-        if ($request->has('logicalServers')) {
-            $logicalServerIds = $request->input('logicalServers', []);
-            \Log::info("Physical server {$physicalServer->name} - syncing logical servers: ".json_encode($logicalServerIds));
-            $physicalServer->logicalServers()->sync($logicalServerIds);
-        }
-
+        
         return response()->json();
     }
 
