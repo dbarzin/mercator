@@ -94,10 +94,10 @@
                 @foreach($macroProcessus->processes as $process)
                     <a href="{{ route('admin.processes.show', $process->id) }}">
                         {{ $process->name }}
-                        @if(!$loop->last)
-                        ,
-                        @endif
                     </a>
+                    @if(!$loop->last)
+                    ,
+                    @endif
                 @endforeach
             </td>
         </tr>

@@ -9,7 +9,11 @@
                 {{ trans('cruds.activity.fields.name') }}
             </th>
             <td>
+            @if($withLink)
+                <a href="{{ route('admin.activities.show', $activity->id) }}">{{ $activity->name }}</a>
+            @else
                 {{ $activity->name }}
+            @endif
             </td>
         </tr>
         <tr>
