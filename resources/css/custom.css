@@ -631,3 +631,51 @@ table .navbar-brand-full {
 
 
 /***************************************************************************/
+
+/***************************************************************************/
+
+/* Règles CSS pour l'impression */
+@media print {
+    /* Masquer la navbar */
+    .navbar,
+    nav.navbar {
+        display: none !important;
+    }
+
+    /* Masquer la sidebar */
+    #sidebar,
+    .sidebar,
+    .sidebar-footer {
+        display: none !important;
+    }
+
+    /* Masquer le bouton de toggle sidebar */
+    .toggle-sidebar-btn {
+        display: none !important;
+    }
+
+    /* Ajuster le contenu principal pour utiliser toute la largeur */
+    #main,
+    .main,
+    main {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* Optimiser pour l'impression */
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Assurer que le graphique s'affiche correctement */
+    #graph-container,
+    .graph-container {
+        page-break-inside: avoid;
+    }
+}
+
+/***************************************************************************/
+
+
