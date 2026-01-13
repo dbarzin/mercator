@@ -629,24 +629,29 @@ table .navbar-brand-full {
     width: 100%;
 }
 
-
-/***************************************************************************/
-
 /***************************************************************************/
 
 /* Règles CSS pour l'impression */
 @media print {
     /* Masquer la navbar */
     .navbar,
-    nav.navbar {
+    nav.navbar,
+    .navbar.fixed-top {
         display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     /* Masquer la sidebar */
     #sidebar,
     .sidebar,
-    .sidebar-footer {
+    .sidebar-footer,
+    nav.sidebar {
         display: none !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     /* Masquer le bouton de toggle sidebar */
@@ -654,24 +659,41 @@ table .navbar-brand-full {
         display: none !important;
     }
 
-    /* Ajuster le contenu principal pour utiliser toute la largeur */
-    #main,
-    .main,
-    main {
-        margin-left: 0 !important;
-        padding-left: 0 !important;
-        width: 100% !important;
-    }
-
-    /* Optimiser pour l'impression */
+    /* Réinitialiser le body (supprimer le padding créé par fixed-top navbar) */
     body {
         background: white !important;
         color: black !important;
+        padding-top: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Réinitialiser le conteneur flex principal */
+    .d-flex {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Ajuster le conteneur de contenu pour utiliser toute la largeur */
+    #content-home,
+    .content,
+    .flex-grow-1 {
+        margin: 0 !important;
+        padding: 10px !important; /* Un peu de padding pour ne pas coller aux bords */
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
     /* Assurer que le graphique s'affiche correctement */
     #graph-container,
     .graph-container {
+        page-break-inside: avoid;
+        width: 100% !important;
+    }
+
+    /* Ajuster les cartes pour l'impression */
+    .card {
+        border: 1px solid #ddd !important;
         page-break-inside: avoid;
     }
 }
