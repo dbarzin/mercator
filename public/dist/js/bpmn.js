@@ -1,0 +1,2 @@
+import{i,w as r,e as t,s as a}from"./bpmn-edit.js";import{b as n}from"./bpmn-load.js";import{b as o,e as s}from"./bpmn-save.js";console.log("🚀 Initialisation de l'éditeur BPMN");const e=i("graph-container");r(e);t(e.graph);n(e.graph,"file-input");o(e.graph,"save-btn");s(e.graph);a("👋 Bienvenue ! Charge un fichier BPMN",3e3);console.log("✅ Éditeur BPMN initialisé et prêt");
+//# sourceMappingURL=bpmn.js.map
