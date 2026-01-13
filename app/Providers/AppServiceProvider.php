@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
+        // Enregistrer les vues avec un namespace
+        // Pour pouvoir les réutiliser dans les autres packages
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'mercator');
+
         // Force HTTPS:
         // null  => default: force HTTPS only in production
         // true  => always force HTTPS (all environments)
