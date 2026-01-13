@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Enregistrer les vues avec un namespace
         // Pour pouvoir les réutiliser dans les autres packages
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'mercator');
+        $this->loadViewsFrom(resource_path('views'), 'mercator');
 
         // Force HTTPS:
         // null  => default: force HTTPS only in production
