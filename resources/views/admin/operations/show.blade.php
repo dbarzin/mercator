@@ -30,84 +30,11 @@
     </div>
 
     <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th width="10%">
-                            {{ trans('cruds.operation.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $operation->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.operation.fields.description') }}
-                        </th>
-                        <td>
-                            {!! $operation->description !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.operation.fields.process') }}
-                        </th>
-                        <td>
-                            @if ($operation->process!=null)
-                                <a href="{{ route('admin.processes.show',$operation->process->id) }}">
-                                    {{ $operation->process->name ?? '' }}
-                                </a>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.operation.fields.activities') }}
-                        </th>
-                        <td>
-                            @foreach($operation->activities as $activity)
-                                <a href="{{ route('admin.activities.show', $activity->id) }}">
-                                    {{ $activity->name }}
-                                </a>
-                                @if (!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.operation.fields.actors') }}
-                        </th>
-                        <td>
-                            @foreach($operation->actors as $actor)
-                                <a href="{{ route('admin.actors.show', $actor->id) }}">
-                                    {{ $actor->name }}
-                                </a>
-                                @if (!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.operation.fields.tasks') }}
-                        </th>
-                        <td>
-                            @foreach($operation->tasks as $task)
-                                <a href="{{ route('admin.tasks.show', $task->id) }}">
-                                    {{ $task->name }}
-                                </a>
-                                @if (!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @include('admin.operations._details', [
+            'operation' => $operation,
+            'withLink' => false,
+        ])
+    </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $operation->created_at ? $operation->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $operation->updated_at ? $operation->updated_at->format(trans('global.timestamp')) : '' }}
