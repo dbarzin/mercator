@@ -32,66 +32,22 @@
     </div>
 
     <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th width="10%">
-                            {{ trans('cruds.actor.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $actor->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.actor.fields.contact') }}
-                        </th>
-                        <td>
-                            {{ $actor->contact }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.actor.fields.nature') }}
-                        </th>
-                        <td>
-                            {{ $actor->nature }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.actor.fields.type') }}
-                        </th>
-                        <td>
-                            {{ $actor->type }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.actor.fields.operations') }}
-                        </th>
-                        <td>
-                        @foreach($actor->operations as $operation)
-                            <a href="{{ route('admin.operations.show', $operation->id) }}">{{ $operation->name }}</a>
-                            @if(!$loop->last)
-                            ,
-                            @endif
-                        @endforeach
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $actor->created_at ? $actor->created_at->format(trans('global.timestamp')) : '' }} |
-            {{ trans('global.updated_at') }} {{ $actor->updated_at ? $actor->updated_at->format(trans('global.timestamp')) : '' }}
-        </div>
+
+    @include('admin.actors._details', [
+        'actor' => $actor,
+        'withLink' => false,
+    ])
+
     </div>
-    <div class="form-group">
-        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.actors.index') }}">
-            {{ trans('global.back_to_list') }}
-        </a>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $actor->created_at ? $actor->created_at->format(trans('global.timestamp')) : '' }} |
+        {{ trans('global.updated_at') }} {{ $actor->updated_at ? $actor->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
+</div>
+<div class="form-group">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.actors.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
 </div>
 
 
