@@ -38,10 +38,9 @@
                 </thead>
                 <tbody>
                     @foreach($tasks as $key => $task)
-                        <tr data-entry-id="{{ $task->id }}">
-                            <td>
-
-                            </td>
+                        <tr data-entry-id="{{ $task->id }}"
+                         @if ($task->description===null) class="table-warning" @endif >
+                            <td></td>
                             <td>
                                 <a href="{{ route('admin.tasks.show', $task->id) }}">
                                 {{ $task->name ?? '' }}
