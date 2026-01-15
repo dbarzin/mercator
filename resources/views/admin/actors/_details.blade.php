@@ -59,7 +59,7 @@
             <th>
                BPMN Graphs
             </th>
-            <td colspan="5">
+            <td>
                 @foreach($actor->graphs() as $graph)
                     <a href="{{ route('admin.bpmn.show', $graph->id) }}">
                     {{ $graph->name }}
