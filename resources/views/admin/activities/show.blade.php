@@ -33,7 +33,7 @@
 
         @include('admin.activities._details', [
             'activity' => $activity,
-            'withLink' => false,
+            'withLink' => false
         ])
 
     </div>
