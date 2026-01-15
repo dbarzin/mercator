@@ -43,7 +43,7 @@
         @if($task->graphs()->count()>0)
         <tr>
             <th>
-               <i class="bi bi-diagram-2"></i> &nbsp; BPMN
+                <i class="bi bi-diagram-2-fill" style="color: blue; font-size: 1.5em;"></i> &nbsp; BPMN
             </th>
             <td colspan="5">
                 @foreach($task->graphs() as $graph)

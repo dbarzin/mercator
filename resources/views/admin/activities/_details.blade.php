@@ -71,9 +71,20 @@
         @if($activity->graphs()->count()>0)
         <tr>
             <th>
-               <i class="bi bi-diagram-2"></i> &nbsp; BPMN
+                <span style="border: 2px solid grey;
+                     color: darkred;
+                     padding: 6px 14px;
+                     border-radius: 6px;
+                     display: inline-flex;
+                     align-items: center;
+                     gap: 8px;
+                     font-weight: 600;
+                     background: #eff6ff;">
+                    <i class="bi bi-diagram-2-fill" style="font-size: 1.3em;"></i>
+                    <span style="color: black;">BPMN</span>
+                </span>
             </th>
-            <td colspan="5">
+            <td colspan="5" style="vertical-align: middle;">
                 @foreach($activity->graphs() as $graph)
                     <a href="{{ route('admin.bpmn.show', $graph->id) }}">
                     {{ $graph->name }}
