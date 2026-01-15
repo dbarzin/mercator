@@ -34,6 +34,7 @@
         @include('admin.activities._details', [
             'activity' => $activity,
             'withLink' => false,
+            'withBPMNGraphs' => true
         ])
 
     </div>

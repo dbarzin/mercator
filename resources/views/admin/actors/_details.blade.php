@@ -54,5 +54,22 @@
             @endforeach
             </td>
         </tr>
+        @if($actor->graphs()->count()>0)
+        <tr>
+            <th>
+               BPMN Graphs
+            </th>
+            <td colspan="5">
+                @foreach($actor->graphs() as $graph)
+                    <a href="{{ route('admin.bpmn.show', $graph->id) }}">
+                    {{ $graph->name }}
+                    </a>
+                    @if (!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+        @endif
     </tbody>
 </table>
