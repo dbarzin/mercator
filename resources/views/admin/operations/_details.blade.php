@@ -86,7 +86,7 @@
         @if($operation->graphs()->count()>0)
         <tr>
             <th>
-               BPMN Graphs
+               <i class="bi bi-diagram-2"></i> &nbsp; BPMN
             </th>
             <td colspan="5">
                 @foreach($operation->graphs() as $graph)

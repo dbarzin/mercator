@@ -57,7 +57,7 @@
         @if($actor->graphs()->count()>0)
         <tr>
             <th>
-               BPMN Graphs
+               <i class="bi bi-diagram-2"></i> &nbsp; BPMN
             </th>
             <td>
                 @foreach($actor->graphs() as $graph)

@@ -40,5 +40,25 @@
                 @endforeach
             </td>
         </tr>
+        @if($task->graphs()->count()>0)
+        <tr>
+            <th>
+               <i class="bi bi-diagram-2"></i> &nbsp; BPMN
+            </th>
+            <td colspan="5">
+                @foreach($task->graphs() as $graph)
+                    <a href="{{ route('admin.bpmn.show', $graph->id) }}">
+                    {{ $graph->name }}
+                    </a>
+                    @if (!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+        @endif
+
+
+
     </tbody>
 </table>
