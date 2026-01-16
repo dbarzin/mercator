@@ -879,6 +879,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (_sender, evt) => {
 // Update des nœuds depuis _nodes
 
 document.getElementById('update-btn')?.addEventListener('click', () => {
+    // console.log("Update map");
     graph.batchUpdate(() => {
         const allCells = graph.getChildCells();
 
@@ -891,15 +892,17 @@ document.getElementById('update-btn')?.addEventListener('click', () => {
                 if (!node) {
                     graph.removeCells([cell], true);
                 } else {
+                    // console.log("Update node", node.label, node.image);
                     cell.value = node.label;
-                    styleUtils.setCellStyles(graph.getDataModel(), [cell], {
-                        shape: 'image',
-                        image: node.image,
-                    });
+                    styleUtils.setCellStyles(
+                        graph.getDataModel(),
+                        [cell],
+                        'image',
+                        node.image
+                    );
                 }
             }
         });
-
         graph.refresh();
     });
 });
