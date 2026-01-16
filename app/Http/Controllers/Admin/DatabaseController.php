@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
+use Gate;
+use Mercator\Core\Models\Container;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\Entity;
 use Mercator\Core\Models\Information;
 use Mercator\Core\Models\LogicalServer;
 use Mercator\Core\Models\MApplication;
-use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
@@ -37,6 +38,7 @@ class DatabaseController extends Controller
             ->orderBy('name')
             ->pluck('name', 'id');
         $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $containers = Container::query()->orderBy('name')->pluck('name', 'id');
 
         // lists
         $type_list = Database::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -51,6 +53,7 @@ class DatabaseController extends Controller
                 'informations',
                 'applications',
                 'logical_servers',
+                'containers',
                 'type_list',
                 'external_list',
                 'responsible_list'
@@ -65,6 +68,7 @@ class DatabaseController extends Controller
         $database->informations()->sync($request->input('informations', []));
         $database->applications()->sync($request->input('applications', []));
         $database->logicalServers()->sync($request->input('logical_servers', []));
+        $database->containers()->sync($request->input('containers', []));
 
         return redirect()->route('admin.databases.index');
     }
@@ -81,6 +85,7 @@ class DatabaseController extends Controller
             ->orderBy('name')
             ->pluck('name', 'id');
         $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $containers = Container::query()->orderBy('name')->pluck('name', 'id');
 
         // lists
         $type_list = Database::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -97,6 +102,7 @@ class DatabaseController extends Controller
                 'informations',
                 'applications',
                 'logical_servers',
+                'containers',
                 'database',
                 'type_list',
                 'external_list',
@@ -112,6 +118,7 @@ class DatabaseController extends Controller
         $database->informations()->sync($request->input('informations', []));
         $database->applications()->sync($request->input('applications', []));
         $database->logicalServers()->sync($request->input('logical_servers', []));
+        $database->containers()->sync($request->input('containers', []));
 
         return redirect()->route('admin.databases.index');
     }
