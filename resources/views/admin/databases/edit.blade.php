@@ -48,8 +48,8 @@
 
                 <div class="row">
                     <div class="col-9">
-                        <div class="label-maturity-1" class="form-group">
-                            <label class="description"
+                        <div class="form-group">
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.database.fields.description') }}</label>
                             <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                       name="description"

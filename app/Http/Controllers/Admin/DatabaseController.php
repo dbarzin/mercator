@@ -131,15 +131,19 @@ class DatabaseController extends Controller
 
     public function update(UpdateDatabaseRequest $request, Database $database)
     {
-        // Save icon
-        $this->iconUploadService->handle($request, $database);
-
+        // Save request
         $database->update($request->all());
+
+        // Sync lists
         $database->entities()->sync($request->input('entities', []));
         $database->informations()->sync($request->input('informations', []));
         $database->applications()->sync($request->input('applications', []));
         $database->logicalServers()->sync($request->input('logical_servers', []));
         $database->containers()->sync($request->input('containers', []));
+
+        // Save icon
+        $this->iconUploadService->handle($request, $database);
+        $database->save();
 
         return redirect()->route('admin.databases.index');
     }

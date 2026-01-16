@@ -41,7 +41,7 @@
                     <th style="width: 10%;">
                         {{ trans('cruds.database.fields.type') }}
                     </th>
-                    <td style="width: 30%;"colspan="2">
+                    <td style="width: 30%;" colspan="2">
                         {{ $database->type }}
                     </td>
                 </tr>
