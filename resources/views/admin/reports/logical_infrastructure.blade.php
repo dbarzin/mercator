@@ -1391,254 +1391,266 @@
     <script>
         let dotSrc = `
 digraph  {
-    @can('network_access')
-        @foreach($networks as $network)
-        NET{{ $network->id }} [label="{{ $network->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cloud.png" href="#NETWORK{{$network->id}}"]
+@can('network_access')
+    @foreach($networks as $network)
+    NET{{ $network->id }} [label="{{ $network->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cloud.png" href="#NETWORK{{$network->id}}"]
     @endforeach
-        @endcan
-        @can('gateway_access')
-        @foreach($gateways as $gateway)
-        GATEWAY{{ $gateway->id }} [label="{{ $gateway->name }} {{ Session::get('show_ip') ? chr(13) . $gateway->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($gateway->ip!=null) ? '1.5' :'1.1' }} image="/images/gateway.png" href="#GATEWAY{{$gateway->id}}"]
+@endcan
+
+@can('gateway_access')
+    @foreach($gateways as $gateway)
+    GATEWAY{{ $gateway->id }} [label="{{ $gateway->name }} {{ Session::get('show_ip') ? chr(13) . $gateway->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($gateway->ip!=null) ? '1.5' :'1.1' }} image="/images/gateway.png" href="#GATEWAY{{$gateway->id}}"]
     @endforeach
-        @endcan
-        @can('subnetwork_access')
-        @foreach($subnetworks as $subnetwork)
+@endcan
+
+@can('subnetwork_access')
+    @foreach($subnetworks as $subnetwork)
         SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.5' :'1.1' }} image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
         @if ($subnetwork->vlan_id!==null)
-        SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
+            SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
         @if ($subnetwork->subnetwork_id!==null)
-        @if ($subnetworks->contains('id', $subnetwork->subnetwork_id))
-        SUBNET{{ $subnetwork->subnetwork_id }} -> SUBNET{{ $subnetwork->id }}
-        @else
-        NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
-        @endif
+            @if ($subnetworks->contains('id', $subnetwork->subnetwork_id))
+                SUBNET{{ $subnetwork->subnetwork_id }} -> SUBNET{{ $subnetwork->id }}
+            @else
+                NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
+            @endif
         @elseif ($subnetwork->network_id!==null)
-        @if ($networks->contains('id', $subnetwork->network_id))
-        NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
-        @endif
+            @if ($networks->contains('id', $subnetwork->network_id))
+            NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
+            @endif
         @endif
         @if ($subnetwork->gateway_id!==null)
-        SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}
+            SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}
         @endif
-        @endforeach
-        @endcan
-        @can('external_connected_entity_access')
-        @foreach($externalConnectedEntities as $entity)
+    @endforeach
+@endcan
+
+@can('external_connected_entity_access')
+    @foreach($externalConnectedEntities as $entity)
         E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/entity.png" href="#EXTENTITY{{$entity->id}}"]
         @if($entity->network_id!==null)
-        E{{ $entity->id }} -> NET{{ $entity->network_id }}
+            E{{ $entity->id }} -> NET{{ $entity->network_id }}
         @endif
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('cluster_access')
-        @php
-            $usedClusterIds = array();
-        @endphp
+@can('cluster_access')
+    @php
+        $usedClusterIds = array();
+    @endphp
 
-        @foreach($logicalServers as $logicalServer)
+    @foreach($logicalServers as $logicalServer)
         @if (($logicalServer->cluster_id!==null) && (!in_array($logicalServer->cluster_id, $usedClusterIds)))
-        @php
-            array_push($usedClusterIds, $logicalServer->cluster_id);
-        @endphp
+            @php
+                array_push($usedClusterIds, $logicalServer->cluster_id);
+            @endphp
         @endif
-        @endforeach
+    @endforeach
 
-        @foreach($clusters as $cluster)
-        @if (in_array($cluster->id,$usedClusterIds))
-        CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cluster.png" href="#CLUSTER{{$cluster->id}}"]
-            @endif
-        @endforeach
-        @endcan
+    @foreach($clusters as $cluster)
+    @if (in_array($cluster->id,$usedClusterIds))
+    CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cluster.png" href="#CLUSTER{{$cluster->id}}"]
+        @endif
+    @endforeach
+@endcan
 
-        @can('logical_server_access')
-        @foreach($logicalServers as $logicalServer)
+@can('logical_server_access')
+    @foreach($logicalServers as $logicalServer)
         LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $logicalServer->icon_id === null ? '/images/lserver.png' : route('admin.documents.show', $logicalServer->icon_id) }}" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
         @if ($logicalServer->address_ip!==null)
-        @foreach($subnetworks as $subnetwork)
-        @foreach(explode(',',$logicalServer->address_ip) as $address)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> LOGICAL_SERVER{{ $logicalServer->id }}
-        @break
+            @foreach($subnetworks as $subnetwork)
+                @foreach(explode(',',$logicalServer->address_ip) as $address)
+                    @if ($subnetwork->contains($address))
+                        SUBNET{{ $subnetwork->id }} -> LOGICAL_SERVER{{ $logicalServer->id }}
+                        @break(2)
+                    @endif
+                @endforeach
+            @endforeach
         @endif
-        @endforeach
-        @endforeach
         @can('cluster_access')
-        @if ($logicalServer->cluster_id!==null)
-        LOGICAL_SERVER{{ $logicalServer->id }} -> CLUSTER{{ $logicalServer->cluster_id }}
-        @endif
+            @if ($logicalServer->cluster_id!==null)
+            LOGICAL_SERVER{{ $logicalServer->id }} -> CLUSTER{{ $logicalServer->cluster_id }}
+            @endif
         @endcan
-        @endif
+
         @foreach($logicalServer->certificates as $certificate)
-        LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}
+            LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}
         @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('dhcp_server_access')
-        @foreach($dhcpServers as $dhcpServer)
-        DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
-        @if ($dhcpServer->address_ip!==null)
+@can('dhcp_server_access')
+    @foreach($dhcpServers as $dhcpServer)
+    DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
+    @if ($dhcpServer->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($dhcpServer->address_ip))
-        SUBNET{{ $subnetwork->id }} -> DHCP_SERVER{{ $dhcpServer->id }}
-        @break
+            @if ($subnetwork->contains($dhcpServer->address_ip))
+            SUBNET{{ $subnetwork->id }} -> DHCP_SERVER{{ $dhcpServer->id }}
+            @break
         @endif
-        @endforeach
-        @endif
-        @endforeach
-        @endcan
+    @endforeach
+    @endif
+    @endforeach
+@endcan
 
-        @can('dnsserver_access')
-        @foreach($dnsservers as $dnsserver)
-        DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DNS_SERVER{{$dnsserver->id}}"]
+@can('dnsserver_access')
+    @foreach($dnsservers as $dnsserver)
+    DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DNS_SERVER{{$dnsserver->id}}"]
         @if ($dnsserver->address_ip!==null)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($dnsserver->address_ip))
-        SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }}
-        @break
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($dnsserver->address_ip))
+                    SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }}
+                    @break
+                @endif
+            @endforeach
         @endif
-        @endforeach
-        @endif
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('certificate_access')
-        @foreach($certificates as $certificate)
-        @if ($certificate->logical_servers->count()>0)
-        CERT{{ $certificate->id }} [label="{{ $certificate->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="#CERT{{$certificate->id}}"]
-        @endif
-        @endforeach
-        @endcan
+@can('certificate_access')
+    @foreach($certificates as $certificate)
+    @if ($certificate->logical_servers->count()>0)
+    CERT{{ $certificate->id }} [label="{{ $certificate->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="#CERT{{$certificate->id}}"]
+    @endif
+    @endforeach
+@endcan
 
-        @can('container_access')
-        @foreach($containers as $container)
+@can('container_access')
+    @foreach($containers as $container)
         @if ($container->logicalServers->count()>0)
-        CONT{{ $container->id }} [label="{{ $container->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $container->icon_id === null ? '/images/container.png' : route('admin.documents.show', $container->icon_id) }}" href="#CONT{{$container->id}}"]
+            CONT{{ $container->id }} [label="{{ $container->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $container->icon_id === null ? '/images/container.png' : route('admin.documents.show', $container->icon_id) }}" href="#CONT{{$container->id}}"]
             @foreach($container->logicalServers as $logicalServer)
-        LOGICAL_SERVER{{ $logicalServer->id }} -> CONT{{ $container->id }}
-        @endforeach
+                LOGICAL_SERVER{{ $logicalServer->id }} -> CONT{{ $container->id }}
+            @endforeach
         @endif
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('workstation_access')
+    @can('workstation_access')
         @foreach($workstations as $workstation)
-        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
-        @foreach(explode(',',$workstation->address_ip) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> WS{{ $workstation->id }}
-        @endif
+            WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
+            @foreach(explode(',',$workstation->address_ip) as $address)
+                @foreach($subnetworks as $subnetwork)
+                    @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> WS{{ $workstation->id }}
+                    @break(2)
+                    @endif
+           @endforeach
         @endforeach
-        @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('wifi_terminal_access')
-        @foreach($wifiTerminals as $wifiTerminal)
+@can('wifi_terminal_access')
+    @foreach($wifiTerminals as $wifiTerminal)
         WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!==null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
         @foreach(explode(',',$wifiTerminal->address_ip) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> WIFI{{ $wifiTerminal->id }}
-        @endif
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                SUBNET{{ $subnetwork->id }} -> WIFI{{ $wifiTerminal->id }}
+                @break(2)
+                @endif
+            @endforeach
         @endforeach
-        @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('phone_access')
-        @foreach($phones as $phone)
-        PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!==null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
-        @foreach(explode(',',$phone->address_ip) as $address)
+@can('phone_access')
+    @foreach($phones as $phone)
+    PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!==null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
+    @foreach(explode(',',$phone->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> PHONE{{ $phone->id }}
-        @endif
+            @if ($subnetwork->contains($address))
+            SUBNET{{ $subnetwork->id }} -> PHONE{{ $phone->id }}
+            @break(2)
+            @endif
+            @endforeach
         @endforeach
-        @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('physical_security_device_access')
-        @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+@can('physical_security_device_access')
+    @foreach($physicalSecurityDevices as $physicalSecurityDevice)
         SECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $physicalSecurityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#SECURITY{{$physicalSecurityDevice->id}}"]
         @foreach(explode(',',$physicalSecurityDevice->address_ip) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> SECURITY{{ $physicalSecurityDevice->id }}
-        @endif
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                SUBNET{{ $subnetwork->id }} -> SECURITY{{ $physicalSecurityDevice->id }}
+                @break(2)
+                @endif
+            @endforeach
         @endforeach
-        @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('peripheral_access')
-        @foreach($peripherals as $peripheral)
+@can('peripheral_access')
+    @foreach($peripherals as $peripheral)
         PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
         @foreach(explode(',',$peripheral->address_ip) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> PER{{ $peripheral->id }}
-        @endif
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                SUBNET{{ $subnetwork->id }} -> PER{{ $peripheral->id }}
+                @break(2)
+                @endif
+            @endforeach
         @endforeach
-        @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('storage_device_access')
-        @foreach($storageDevices as $storageDevice)
+@can('storage_device_access')
+    @foreach($storageDevices as $storageDevice)
         STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!==null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
         @foreach(explode(',',$storageDevice->address_ip) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> STOR{{ $storageDevice->id }}
-        @endif
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                SUBNET{{ $subnetwork->id }} -> STOR{{ $storageDevice->id }}
+                @break(2)
+                @endif
+            @endforeach
         @endforeach
-        @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('router_access')
-        @foreach($routers as $router)
+@can('router_access')
+    @foreach($routers as $router)
         R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!==null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
         @foreach(explode(',',$router->ip_addresses) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> R{{ $router->id }}
-        @endif
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                SUBNET{{ $subnetwork->id }} -> R{{ $router->id }}
+                @break(2)
+                @endif
+            @endforeach
         @endforeach
-        @endforeach
-        @endforeach
-        @endcan
+    @endforeach
+@endcan
 
-        @can('network_switch_access')
-        @foreach($networkSwitches as $networkSwitch)
+@can('network_switch_access')
+    @foreach($networkSwitches as $networkSwitch)
         SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!==null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
         @if ($networkSwitch->vlans->count()>0)
-        @foreach($networkSwitch->vlans as $vlan)
-        VLAN{{ $vlan->id }} -> SW{{ $networkSwitch->id }}
-        @endforeach
+            @foreach($networkSwitch->vlans as $vlan)
+                VLAN{{ $vlan->id }} -> SW{{ $networkSwitch->id }}
+            @endforeach
         @else
-        @foreach(explode(',',$networkSwitch->ip) as $address)
-        @foreach($subnetworks as $subnetwork)
-        @if ($subnetwork->contains($address))
-        SUBNET{{ $subnetwork->id }} -> SW{{ $networkSwitch->id }}
+            @foreach(explode(',',$networkSwitch->ip) as $address)
+                @foreach($subnetworks as $subnetwork)
+                    @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> SW{{ $networkSwitch->id }}
+                    @break(2)
+                    @endif
+                @endforeach
+            @endforeach
         @endif
-        @endforeach
-        @endforeach
-        @endif
-        @endforeach
-        @endcan
-
-        @can('vlan_access')
-        @foreach($vlans as $vlan)
-        VLAN{{ $vlan->id }} [label="{{ $vlan->name }}" shape=none labelloc="b" width=1 height=1.1 image="/images/vlan.png" href="#VLAN{{$vlan->id}}"]
     @endforeach
-        @endcan
-        }`;
+@endcan
+
+@can('vlan_access')
+    @foreach($vlans as $vlan)
+    VLAN{{ $vlan->id }} [label="{{ $vlan->name }}" shape=none labelloc="b" width=1 height=1.1 image="/images/vlan.png" href="#VLAN{{$vlan->id}}"]
+    @endforeach
+@endcan
+}`;
 
 
         document.addEventListener('DOMContentLoaded', () => {

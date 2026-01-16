@@ -524,6 +524,19 @@
                 </tr>
                 <tr>
                     <th width="10%">
+                        {{ trans('cruds.application.fields.containers') }}
+                    </th>
+                    <td>
+                        @foreach($application->containers as $container)
+                            <a href='{{ route("admin.containers.show", $container->id) }}'>{{ $container->name }}</a>
+                            @if(!$loop->last)
+                                ,
+                            @endif
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <th width="10%">
                         {{ trans('cruds.application.fields.security_devices') }}
                     </th>
                     <td>

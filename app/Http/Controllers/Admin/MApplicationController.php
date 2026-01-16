@@ -14,6 +14,7 @@ use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\AdminUser;
 use Mercator\Core\Models\ApplicationBlock;
 use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\Container;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\Entity;
 use Mercator\Core\Models\LogicalServer;
@@ -55,16 +56,45 @@ class MApplicationController extends Controller
 
         $data = $this->getCreateFormData();
 
-        // Get Application to clone
-        $application = MApplication::query()->find($id);
+        // Récupérer l'application avec ses relations
+        $application = MApplication::query()
+            ->with([
+                'entities',
+                'processes',
+                'activities',
+                'services',
+                'databases',
+                'workstations',
+                'logicalServers',
+                'containers',
+                'securityDevices',
+                'administrators',
+                'securityControls',
+            ])
+            ->findOrFail($id);
 
-        // Merge data
-        $request->merge($application->only($application->getFillable()));
+        // Préparer les données du formulaire
+        $formData = $application->only($application->getFillable());
+        $formData['name'] = $application->name . ' (copy)';
+
+        // Ajouter les IDs des relations pour pré-sélection
+        $formData['entities'] = $application->entities->pluck('id')->toArray();
+        $formData['processes'] = $application->processes->pluck('id')->toArray();
+        $formData['activities'] = $application->activities->pluck('id')->toArray();
+        $formData['services'] = $application->services->pluck('id')->toArray();
+        $formData['databases'] = $application->databases->pluck('id')->toArray();
+        $formData['workstations'] = $application->workstations->pluck('id')->toArray();
+        $formData['logical_servers'] = $application->logicalServers->pluck('id')->toArray();
+        $formData['containers'] = $application->containers->pluck('id')->toArray();
+        $formData['security_devices'] = $application->securityDevices->pluck('id')->toArray();
+        $formData['administrators'] = $application->administrators->pluck('id')->toArray();
+        $formData['security_controls'] = $application->securityControls->pluck('id')->toArray();
+
+        $request->merge($formData);
         $request->flash();
 
         return view('admin.applications.create', $data);
     }
-
 
     private function getCreateFormData(): array
     {
@@ -74,6 +104,7 @@ class MApplicationController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $containers = Container::all()->sortBy('name')->pluck('name', 'id');
         $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
@@ -128,6 +159,7 @@ class MApplicationController extends Controller
             'services',
             'databases',
             'logical_servers',
+            'containers',
             'security_devices',
             'applicationBlocks',
             'icons',
@@ -168,6 +200,7 @@ class MApplicationController extends Controller
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->containers()->sync($request->input('containers', []));
         $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
@@ -190,6 +223,7 @@ class MApplicationController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $containers = Container::all()->sortBy('name')->pluck('name', 'id');
         $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
@@ -253,6 +287,7 @@ class MApplicationController extends Controller
                 'services',
                 'databases',
                 'logical_servers',
+                'containers',
                 'security_devices',
                 'applicationBlocks',
                 'icons',
@@ -293,6 +328,7 @@ class MApplicationController extends Controller
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->containers()->sync($request->input('containers', []));
         $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
@@ -314,8 +350,6 @@ class MApplicationController extends Controller
     public function destroy(MApplication $application): Response
     {
         abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // Check for cartographers
-        // LaravelGate::authorize('is-cartographer-m-application', $application);
 
         $application->delete();
 
@@ -324,7 +358,7 @@ class MApplicationController extends Controller
 
     public function massDestroy(MassDestroyMApplicationRequest $request): Response
     {
-        MApplication::whereIn('id', request('ids'))->delete();
+        MApplication::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
