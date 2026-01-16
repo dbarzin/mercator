@@ -19,7 +19,7 @@
             <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th with="10">
+                        <th width="10">
                         </th>
                         <th>
                             {{ trans('cruds.container.fields.name') }}
@@ -56,9 +56,7 @@
                                     class="table-warning"
                             @endif
                             >
-                            <td>
-
-                            </td>
+                            <td></td>
                             <td>
                                 <a href="{{ route('admin.containers.show', $container->id) }}">
                                     {{ $container->name ?? '' }}
