@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col-9">
                         <div class="form-group">
                             <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.database.fields.description') }}</label>
@@ -63,7 +63,27 @@
                             <span class="help-block">{{ trans('cruds.database.fields.description_helper') }}</span>
                         </div>
                     </div>
+
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="iconSelect">{{ trans('global.icon_select') }}</label>
+                            <select id="iconSelect"
+                                    name="iconSelect"
+                                    class="form-control js-icon-picker"
+                                    data-icons='@json($icons)'
+                                    data-selected="-1"
+                                    data-default-img="{{ asset('images/database.png') }}"
+                                    data-url-template="{{ route('admin.documents.show', ':id') }}"
+                                    data-upload="#iconFile">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="iconFile" name="iconFile" accept="image/png"/>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
             <!------------------------------------------------------------------------------------------------------------->
             <div class="card-header">

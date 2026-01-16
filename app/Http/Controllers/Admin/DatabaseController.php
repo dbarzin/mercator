@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
+use App\Services\IconUploadService;
 use Gate;
 use Mercator\Core\Models\Container;
 use Mercator\Core\Models\Database;
@@ -17,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
 {
+
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('database_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -40,6 +44,9 @@ class DatabaseController extends Controller
         $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
         $containers = Container::query()->orderBy('name')->pluck('name', 'id');
 
+        // Select icons
+        $icons = Database::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
         // lists
         $type_list = Database::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $external_list = Database::query()->select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
@@ -49,6 +56,7 @@ class DatabaseController extends Controller
             'admin.databases.create',
             compact(
                 'entities',
+                'icons',
                 'entity_resps',
                 'informations',
                 'applications',
@@ -70,6 +78,12 @@ class DatabaseController extends Controller
         $database->logicalServers()->sync($request->input('logical_servers', []));
         $database->containers()->sync($request->input('containers', []));
 
+        // Save icon
+        $this->iconUploadService->handle($request, $database);
+
+        // Save Database
+        $database->save();
+
         return redirect()->route('admin.databases.index');
     }
 
@@ -87,6 +101,9 @@ class DatabaseController extends Controller
         $logical_servers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
         $containers = Container::query()->orderBy('name')->pluck('name', 'id');
 
+        // Select icons
+        $icons = Database::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
         // lists
         $type_list = Database::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $external_list = Database::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
@@ -98,6 +115,7 @@ class DatabaseController extends Controller
             'admin.databases.edit',
             compact(
                 'entities',
+                'icons',
                 'entity_resps',
                 'informations',
                 'applications',
@@ -113,6 +131,9 @@ class DatabaseController extends Controller
 
     public function update(UpdateDatabaseRequest $request, Database $database)
     {
+        // Save icon
+        $this->iconUploadService->handle($request, $database);
+
         $database->update($request->all());
         $database->entities()->sync($request->input('entities', []));
         $database->informations()->sync($request->input('informations', []));

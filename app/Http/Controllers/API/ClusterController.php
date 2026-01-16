@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
-use Mercator\Core\Models\Cluster;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
+use Mercator\Core\Models\Cluster;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClusterController extends Controller
@@ -29,9 +29,11 @@ class ClusterController extends Controller
 
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $cluster = Cluster::create($request->all());
-        // $cluster->servers()->sync($request->input('servers', []));
-        // $cluster->applications()->sync($request->input('applications', []));
+        $cluster = Cluster::query()->create($request->all());
+
+        $cluster->logicalServers()->sync($request->input('logical_servers', []));
+        $cluster->physicalServers()->sync($request->input('physical_servers', []));
+        $cluster->routers()->sync($request->input('routers', []));
 
         Log::Debug('ClusterController:store Done');
 
@@ -50,8 +52,13 @@ class ClusterController extends Controller
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $cluster->update($request->all());
-        // $cluster->servers()->sync($request->input('servers', []));
-        // $cluster->applications()->sync($request->input('applications', []));
+
+        if ($request->has('logical_servers'))
+            $cluster->logicalServers()->sync($request->input('logical_servers', []));
+        if ($request->has('physical_servers'))
+            $cluster->physicalServers()->sync($request->input('physical_servers', []));
+        if ($request->has('routers'))
+           $cluster->routers()->sync($request->input('routers', []));
 
         return response()->json();
     }

@@ -46,21 +46,42 @@
                     </div>
                 </div>
 
-
-                <div class="form-group">
-                    <label class="label-maturity-1"
-                           for="description">{{ trans('cruds.database.fields.description') }}</label>
-                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                              name="description"
-                              id="description">{!! old('description', $database->description) !!}</textarea>
-                    @if($errors->has('description'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('description') }}
+                <div class="row">
+                    <div class="col-9">
+                        <div class="label-maturity-1" class="form-group">
+                            <label class="description"
+                                   for="description">{{ trans('cruds.database.fields.description') }}</label>
+                            <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                      name="description"
+                                      id="description">{!! old('description', $database->description) !!}</textarea>
+                            @if($errors->has('description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.database.fields.description_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.database.fields.description_helper') }}</span>
-                </div>
+                    </div>
 
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="iconSelect">{{ trans('global.icon_select') }}</label>
+                            <select id="iconSelect"
+                                    name="iconSelect"
+                                    class="form-control js-icon-picker"
+                                    data-icons='@json($icons)'
+                                    data-selected="{{ $database->icon_id ?? '-1' }}"
+                                    data-default-img="{{ asset('images/database.png') }}"
+                                    data-url-template="{{ route('admin.documents.show', ':id') }}"
+                                    data-upload="#iconFile">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="iconFile" name="iconFile" accept="image/png"/>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <!------------------------------------------------------------------------------------------------------------->
             <div class="card-header">
