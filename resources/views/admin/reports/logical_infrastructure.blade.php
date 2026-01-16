@@ -1501,7 +1501,7 @@ digraph  {
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($dnsserver->address_ip))
                     SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }}
-                    @break(2)
+                    @break
                 @endif
             @endforeach
         @endif
