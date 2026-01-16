@@ -656,7 +656,7 @@
 
                 <div class="col-md-2">
                     <div class="form-check">
-                        <label>{{ trans('cruds.adminUsers.title') }}</label>
+                        <label>{{ trans('cruds.adminUser.title') }}</label>
                         @php($permission = $permissions_sorted['admin_user'])
                         <div class="form-switch form-switch-lg">
                             <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][4][0] }}" value="{{ $permission['actions'][4][0] }}" {{ in_array($permission['actions'][4][0], old('permissions', [])) ? 'checked' : '' }}>
@@ -855,8 +855,13 @@
                             <label class="form-check-label" for="for_{{ $permission['actions'][2][0] }}">{{ $permission['actions'][2][1] }}</label>
                         </div>
                     </div>
+                        <div class="form-switch form-switch-lg">
+                            &nbsp;
+                        </div>
                 </div>
+            </div>
 
+            <div class="row">
                 <div class="col-md-2">
                     <div class="form-check">
                         <label>{{ trans('cruds.securityDevice.title') }}</label>
@@ -994,7 +999,7 @@
 
                 <div class="col-md-2">
                     <div class="form-check">
-                        <label>{{ trans('cruds.container.title_short') }}</label>
+                        <label>{{ trans('cruds.container.title') }}</label>
                         @php($permission = $permissions_sorted['container'])
                         <div class="form-switch form-switch-lg">
                             <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][4][0] }}" value="{{ $permission['actions'][4][0] }}" {{ in_array($permission['actions'][4][0], old('permissions', [])) ? 'checked' : '' }}>
