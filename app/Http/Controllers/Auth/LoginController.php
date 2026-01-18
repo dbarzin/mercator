@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -227,7 +229,7 @@ class LoginController extends Controller
         );
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse | Response
     {
         $userId = auth()->id();
 
@@ -235,18 +237,22 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        AuditLog::query()->create([
-            'description'  => 'Logout',
-            'subject_id'   => $userId,
-            'subject_type' => User::class,
-            'user_id'      => $userId,
-            'properties'   => [
-                'user_agent' => $request->userAgent(),
-                'method'     => $request->method(),
-                'url'        => $request->fullUrl(),
-            ],
-            'host'         => $request->ip(),
-        ]);
+        try {
+            AuditLog::query()->create([
+                'description'  => 'Logout',
+                'subject_id'   => $userId,
+                'subject_type' => User::class,
+                'user_id'      => $userId,
+                'properties'   => [
+                    'user_agent' => $request->userAgent(),
+                    'method'     => $request->method(),
+                    'url'        => $request->fullUrl(),
+                ],
+                'host'         => $request->ip(),
+            ]);
+        } catch (\Throwable $e) {
+            Log::warning('Failed to create logout audit log', ['error' => $e->getMessage()]);
+        }
 
         return $this->loggedOut($request) ?: redirect('/');
     }
