@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use LdapRecord\Auth\BindException;
 use LdapRecord\Container;
 use LdapRecord\Models\Entry as LdapEntry;
+use Mercator\Core\Models\AuditLog;
 use Mercator\Core\Models\Role;
 use Mercator\Core\Models\User;
 
@@ -50,6 +51,19 @@ class LoginController extends Controller
                 ->unique()
                 ->values()
                 ->all(),
+        ]);
+
+        AuditLog::query()->create([
+            'description'  => 'Login',
+            'subject_id'   => $user->id,
+            'subject_type' => User::class,
+            'user_id'      => $user->id,
+            'properties'   => [
+                'user_agent' => $request->userAgent(),
+                'method'     => $request->method(),
+                'url'        => $request->fullUrl(),
+            ],
+            'host'         => $request->ip(),
         ]);
     }
 
@@ -212,4 +226,29 @@ class LoginController extends Controller
             $remember
         );
     }
+
+    public function logout(Request $request)
+    {
+        $userId = auth()->id();
+
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        AuditLog::query()->create([
+            'description'  => 'Logout',
+            'subject_id'   => $userId,
+            'subject_type' => User::class,
+            'user_id'      => $userId,
+            'properties'   => [
+                'user_agent' => $request->userAgent(),
+                'method'     => $request->method(),
+                'url'        => $request->fullUrl(),
+            ],
+            'host'         => $request->ip(),
+        ]);
+
+        return $this->loggedOut($request) ?: redirect('/');
+    }
+
 }
