@@ -67,10 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
     moment.updateLocale('en', {
         week: {dow: 1} // Monday is the first day of the week
     })
-
-    // Initialiser DataTables sur les éléments ayant la classe .datatable
-    $(".datatable").DataTable();
-
+    
     // Shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'n') {
@@ -123,14 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
     $(".select2-free").select2({
         placeholder: "...",
         allowClear: true,
-        tags: true
-    });
-
-    // pour les tags, séparés automatiquement par un espace
-    $(".select2-free-tags").select2({
-        placeholder: "...",
-        allowClear: true,
-        tokenSeparators: [',', ' '],
         tags: true
     });
 

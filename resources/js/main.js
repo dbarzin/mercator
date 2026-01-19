@@ -1,3 +1,4 @@
+/*
 $(document).ready(function () {
   window._token = $('meta[name="csrf-token"]').attr('content')
 
@@ -69,9 +70,7 @@ $(document).ready(function () {
       }, 275);
   })
 
-  /**
-   * Accordion JS toggle
-   */
+   // Accordion JS toggle
   $('.accordion').click(function () {
       $(this).toggleClass('active');
       $(this).next('.panel').toggleClass('active');
@@ -85,3 +84,4 @@ $(document).ready(function () {
       });
   });
 })
+*/

@@ -28,7 +28,7 @@ table = $('{{ $id }}').DataTable({
         },
 
         select: {
-            style: 'os',
+            style: 'multi',
             selector: 'td:first-child',
             headerCheckbox: 'select-page',
             items: 'row'
