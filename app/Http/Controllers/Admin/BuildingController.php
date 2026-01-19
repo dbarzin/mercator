@@ -147,7 +147,7 @@ class BuildingController extends Controller
 
         // due to soft delete, also set null to all children
         Building::query()
-            ->whereLike("building_id", $building->id)
+            ->where("building_id", $building->id)
             ->update(['building_id' => null]);
 
         return redirect()->route('admin.buildings.index');

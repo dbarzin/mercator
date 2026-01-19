@@ -26,7 +26,7 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $services = ApplicationService::all()->pluck('name', 'id');
+        $services = ApplicationService::query()->pluck('name', 'id');
 
         return view('admin.applicationModules.create', compact('services'));
     }
