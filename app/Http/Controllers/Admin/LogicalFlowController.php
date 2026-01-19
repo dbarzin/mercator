@@ -115,6 +115,10 @@ class LogicalFlowController extends Controller
                     'nullable',
                     'required_without:src_id',
                 ],
+                'priority' => [
+                    'nullable',
+                    'integer',
+                ],
                 'src_id' => [
                     'nullable',
                     'required_without:source_ip_range',
@@ -236,6 +240,10 @@ class LogicalFlowController extends Controller
                     new Cidr,
                     'nullable',
                     'required_without:src_id',
+                ],
+                'priority' => [
+                    'nullable',
+                    'integer',
                 ],
                 'src_id' => [
                     'nullable',
