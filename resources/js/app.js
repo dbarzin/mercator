@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
     moment.updateLocale('en', {
         week: {dow: 1} // Monday is the first day of the week
     })
-    
+
     // Shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'n') {
@@ -121,6 +121,13 @@ document.addEventListener("DOMContentLoaded", function () {
         placeholder: "...",
         allowClear: true,
         tags: true
+    });
+
+    $(".select2-free-tags").select2({
+        placeholder: "...",
+        allowClear: true,
+        tags: true,
+        tokenSeparators: [' ']
     });
 
     $('.select-all').click(function () {

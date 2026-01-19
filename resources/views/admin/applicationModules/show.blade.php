@@ -47,6 +47,21 @@
                         {!! $applicationModule->description !!}
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.applicationModule.fields.services') }}
+                    </th>
+                    <td>
+                        @foreach($applicationModule->applicationServices as $service)
+                            <a href="{{ route('admin.application-services.show', $service->id) }}">
+                            {{ $service->name }}
+                            </a>
+                            @if (!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
