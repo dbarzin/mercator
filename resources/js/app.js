@@ -126,6 +126,14 @@ document.addEventListener("DOMContentLoaded", function () {
         tags: true
     });
 
+    // pour les tags, séparés automatiquement par un espace
+    $(".select2-free-tags").select2({
+        placeholder: "...",
+        allowClear: true,
+        tokenSeparators: [',', ' '],
+        tags: true
+    });
+
     $('.select-all').click(function () {
         let $select2 = $(this).parent().siblings('.select2')
         $select2.find('option').prop('selected', 'selected')

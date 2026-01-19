@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
-use Mercator\Core\Models\Building;
-use Mercator\Core\Models\Site;
 use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
@@ -144,6 +144,11 @@ class BuildingController extends Controller
         abort_if(Gate::denies('building_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $building->delete();
+
+        // due to soft delete, also set null to all children
+        Building::query()
+            ->whereLike("building_id", $building->id)
+            ->update(['building_id' => null]);
 
         return redirect()->route('admin.buildings.index');
     }

@@ -45,8 +45,8 @@
                     <div class="col-sm">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.relation.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
-                                    name="attributes[]" id="attributes[]" multiple>
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ str_contains(old('attributes'), $a) ? 'selected' : '' }}>{{$a}}</option>
                                 @endforeach

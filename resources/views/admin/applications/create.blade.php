@@ -38,7 +38,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
                                     name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ str_contains(old('attributes'), $a) ? 'selected' : '' }}>{{$a}}</option>
