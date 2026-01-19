@@ -42,7 +42,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+                            <select class="form-control select2-free-tags {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
                                     name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || in_array($a, explode(' ',$application->attributes)) ? 'selected' : '' }}>{{$a}}</option>

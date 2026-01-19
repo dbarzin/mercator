@@ -53,8 +53,8 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.flux.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
-                                    name="attributes[]" id="attributes[]" multiple>
+                            <select class="form-control select2-free-tags {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || str_contains($flux->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
                                 @endforeach
