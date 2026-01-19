@@ -22,6 +22,10 @@ class StoreLogicalFlowRequest extends FormRequest
                 'min:0',
                 'max:64',
             ],
+            'priority' => [
+                'integer',
+                'nullable'
+            ]
         ];
     }
 }
