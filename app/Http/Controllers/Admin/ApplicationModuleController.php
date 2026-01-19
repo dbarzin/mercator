@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
-use Mercator\Core\Models\ApplicationModule;
 use Gate;
+use Mercator\Core\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationService;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationModuleController extends Controller
@@ -25,12 +26,15 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.applicationModules.create');
+        $services = ApplicationService::all()->pluck('name', 'id');
+
+        return view('admin.applicationModules.create', compact('services'));
     }
 
     public function store(StoreApplicationModuleRequest $request)
     {
-        ApplicationModule::create($request->all());
+        $module = ApplicationModule::query()->create($request->all());
+        $module->applicationServices()->sync($request->input('services', []));
 
         return redirect()->route('admin.application-modules.index');
     }
@@ -39,12 +43,15 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.applicationModules.edit', compact('applicationModule'));
+        $services = ApplicationService::query()->pluck('name', 'id');
+
+        return view('admin.applicationModules.edit', compact('applicationModule', 'services'));
     }
 
     public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationModule)
     {
         $applicationModule->update($request->all());
+        $applicationModule->applicationServices()->sync($request->input('services', []));
 
         return redirect()->route('admin.application-modules.index');
     }

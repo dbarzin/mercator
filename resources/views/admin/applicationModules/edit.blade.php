@@ -35,6 +35,23 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.applicationModule.fields.description_helper') }}</span>
                 </div>
+
+                <div class="form-group">
+                    <label for="services">{{ trans('cruds.applicationModule.fields.services') }}</label>
+                    <select class="form-control select2 {{ $errors->has('services') ? 'is-invalid' : '' }}"
+                            name="services[]" id="services" multiple>
+                        @foreach($services as $id => $name)
+                            <option value="{{ $id }}" {{ (in_array($id, old('services', [])) || $applicationModule->applicationServices->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('services'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('services') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.applicationModule.fields.services_helper') }}</span>
+                </div>
+
             </div>
         </div>
         <div class="form-group">
