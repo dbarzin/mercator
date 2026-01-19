@@ -7,11 +7,14 @@
     <title>{{ trans('panel.site_title') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
-    
     <script>
+    try {
         if (localStorage.getItem('sidebar_hidden') === 'true') {
             document.documentElement.classList.add('sidebar-preload-hidden');
         }
+    } catch (_) {
+        // Storage unavailable; no-op
+    }
     </script>
 </head>
 <body>
