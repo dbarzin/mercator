@@ -148,8 +148,8 @@
                                     <a href="{{ route('admin.logical-servers.show',$logicalFlow->logicalServerDest->id) }}">
                                         {{ $logicalFlow->logicalServerDest->name }}
                                     </a>)
-                                @elseif ($logicalFlow->logicalServerDest!==null)
-                                    {{ $logicalFlow->logicalServerDest->address_ip }}
+                                @elseif` ($logicalFlow->peripheralDest!==null)
+                                    {{ $logicalFlow->peripheralDest->address_ip }}
                                     (<a href="{{ route('admin.peripherals.show',$logicalFlow->peripheralDest->id) }}">
                                         {{ $logicalFlow->peripheralDest->name }}
                                     </a>)
