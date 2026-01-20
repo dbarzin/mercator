@@ -131,7 +131,7 @@
                                 @elseif ($logicalFlow->subnetworkSource!==null)
                                     {{ $logicalFlow->subnetworkSource->address }}
                                     (
-                                    <a href="{{ route('admin.physical-security-devices.show',$logicalFlow->subnetworkSource->id) }}">
+                                    <a href="{{ route('admin.subnetworks.show',$logicalFlow->subnetworkSource->id) }}">
                                         {{ $logicalFlow->subnetworkSource->name }}
                                     </a>)
                                 @endif
@@ -179,7 +179,7 @@
                                 @elseif ($logicalFlow->subnetworkDest!==null)
                                     {{ $logicalFlow->subnetworkDest->address }}
                                     (
-                                    <a href="{{ route('admin.physical-security-devices.show',$logicalFlow->subnetworkDest->id) }}">
+                                    <a href="{{ route('admin.subnetworks.show',$logicalFlow->subnetworkDest->id) }}">
                                         {{ $logicalFlow->subnetworkDest->name }}
                                     </a>)
                                 @endif
