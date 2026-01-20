@@ -306,6 +306,9 @@ return [
             'children' => 'Bâtiments / salles enfant',
             'children_helper' => '',
         ],
+        'errors' => [
+            'cycle_detected' => 'Cette opération créerait une boucle dans la hiérarchie des bâtiments. Un bâtiment ne peut pas être son propre parent, direct ou indirect.',
+        ],
         'title' => 'Bâtiments / Salles',
         'title_singular' => 'Bâtiment / Salle',
     ],
