@@ -50,7 +50,7 @@
                             <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
                                     name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
-                                    <option {{ str_contains(old('attributes'), $a) ? 'selected' : '' }}>{{$a}}</option>
+                                    <option {{ in_array($a, old('attributes', []))  ? 'selected' : '' }}>{{$a}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('attributes'))

@@ -302,6 +302,9 @@ return [
             'children' => 'Children Buildings/Rooms',
             'children_helper' => '',
         ],
+        'errors' => [
+            'cycle_detected' => 'This operation would create a loop in the building hierarchy. A building cannot be its own parent, direct or indirect.',
+        ],
         'title' => 'Buildings / Rooms',
         'title_singular' => 'Building / Room',
     ],
