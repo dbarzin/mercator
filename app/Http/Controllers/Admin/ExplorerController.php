@@ -353,7 +353,7 @@ class ExplorerController extends Controller
         // Gateways
         $gateways = DB::table('gateways')->select('id', 'name', 'ip')->whereNull('deleted_at')->get();
         foreach ($gateways as $gateway) {
-            $this->addNode($nodes, 5, $this->formatId('GW_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
+            $this->addNode($nodes, 5, $this->formatId('GATEWAY_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
         }
 
         // Subnetworks
@@ -368,7 +368,7 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('VLAN_', $subnetwork->vlan_id));
             }
             if ($subnetwork->gateway_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('GW_', $subnetwork->gateway_id));
+                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('GATEWAY_', $subnetwork->gateway_id));
             }
             /*
              * TODO : fixme
