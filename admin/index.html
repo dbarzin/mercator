@@ -76,7 +76,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#certificate-management">Certificate management</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#cve-management">CVE management</a>
+    <li class="toctree-l2"><a class="reference internal" href="#vulnerabilities-management">Vulnerabilities management</a>
     </li>
     </ul>
                 </li>
@@ -195,7 +195,7 @@
 </tbody>
 </table>
 <p>Passwords are hashed using Laravel's standard hash function.</p>
-<p>Mercator can be connected to an LDAP directory (see LoginController.php). </p>
+<p>Mercator can be connected to an LDAP directory (see LoginController.php).</p>
 <h3 id="role-management">Role management</h3>
 <p>For each object in the cartography, there is a :</p>
 <ul>
@@ -211,15 +211,16 @@
 <li>Auditor: auditors have the right to access and display all objects except users and configuration.</li>
 <li>Administrator: the administrator has all rights without exception.</li>
 </ul>
-<p>New roles can be created as required. </p>
+<p>New roles can be created as required.</p>
 <h3 id="certificate-management">Certificate management</h3>
 <p>Certificate expiry notifications can be sent at set times.</p>
 <p>The configuration screen can be accessed via the "Configuration" -&gt; "Certificates" menu.</p>
 <p><a href="/mercator/images/certificates.png"><img src="/mercator/images/certificates.png" width="600"></a></p>
 <p>The "Test" button sends a test e-mail to the specified notification address.</p>
-<h3 id="cve-management">CVE management</h3>
-<p>CVE detection notifications based on application names can be sent at set times.</p>
-<p>CVEs are retrieved using the [CVE-Search] project (https://github.com/cve-search/cve-search). The search is performed locally.</p>
+<h3 id="vulnerabilities-management">Vulnerabilities management</h3>
+<p>Vulnerability detection notifications based on application names and CPE can be sent at set times.</p>
+<p>CVEs are retrieved using the <a href="github.com/vulnerability-lookup/vulnerability-lookup">Vulnerability Lookup</a> project. The
+search is performed locally.</p>
 <p>The configuration screen can be accessed via the "Configuration" -&gt; "CVE" menu.</p>
 <p><a href="/mercator/images/cve.png"><img src="/mercator/images/cve.png" width="600"></a></p>
 <p>The "Test Mail" button sends a test mail to the specified notification address and tests access to the CVE provider.</p>

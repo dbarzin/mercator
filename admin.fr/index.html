@@ -76,7 +76,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#gestion-des-certificats">Gestion des certificats</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gestion-des-cve">Gestion des CVE</a>
+    <li class="toctree-l2"><a class="reference internal" href="#gestion-des-vulnerabilites">Gestion des vulnérabilités</a>
     </li>
     </ul>
                 </li>
@@ -195,7 +195,7 @@
 </tbody>
 </table>
 <p>Les mots de passe sont hashés par la fonction fournie en standard dans Laravel.</p>
-<p>Il est possible de connecter Mercator à un annuaire LDAP (voir LoginController.php). </p>
+<p>Il est possible de connecter Mercator à un annuaire LDAP (voir LoginController.php).</p>
 <h3 id="gestion-des-roles">Gestion des rôles</h3>
 <p>Pour chaque objet de la cartographie, il existe un droit en :</p>
 <ul>
@@ -207,22 +207,27 @@
 </ul>
 <p>Trois rôles sont encodés par défaut :</p>
 <ul>
-<li>Utilisateur : les utilisateurs ont tous les droits sur tous les objets à l'exception des utilisateurs et de la configuation.</li>
-<li>Auditeur : l'auditeur a le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la configutation.</li>
+<li>Utilisateur : les utilisateurs ont tous les droits sur tous les objets à l'exception des utilisateurs et de la
+  configuation.</li>
+<li>Auditeur : l'auditeur a le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la
+  configutation.</li>
 <li>Administrateur : l'administrateur a tous les droits sans exception.</li>
 </ul>
-<p>Il est possible de créer de nouveaux rôles selon les besoins. </p>
+<p>Il est possible de créer de nouveaux rôles selon les besoins.</p>
 <h3 id="gestion-des-certificats">Gestion des certificats</h3>
 <p>Des notifications d'expiration des certificats peuvent être envoyés à des périodes définies.</p>
 <p>L'écran de configuration est accessible via le menu "Configuration" -&gt; "Certificats".</p>
 <p><a href="/mercator/images/certificates.png"><img src="/mercator/images/certificates.png" width="600"></a></p>
 <p>Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification spécifiée.</p>
-<h3 id="gestion-des-cve">Gestion des CVE</h3>
-<p>Des notifications de détection de CVE sur base du nom des applications peuvent être envoyées à des périodes définies.</p>
-<p>Les CVE sont récupérées avec le projet <a href="https://github.com/cve-search/cve-search">CVE-Search</a>. La rechecrhe est faite localement.</p>
+<h3 id="gestion-des-vulnerabilites">Gestion des vulnérabilités</h3>
+<p>Des notifications de détection de CVE sur base du nom des applications et des CPE peuvent être envoyées à des périodes
+définies.</p>
+<p>Les CVE sont récupérées avec le projet <a href="github.com/vulnerability-lookup/vulnerability-lookup">Vulnerability Lookup</a>. La
+rechecrhe est faite localement.</p>
 <p>L'écran de configuration est accessible via le menu "Configuration" -&gt; "CVE"</p>
 <p><a href="/mercator/images/cve.png"><img src="/mercator/images/cve.png" width="600"></a></p>
-<p>Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au provider de CVE.</p>
+<p>Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au
+provider de CVE.</p>
 <p>Le bouton "Test Provider" permet de tester l'accès au provider du projet CVE-Search.</p>
               
             </div>
