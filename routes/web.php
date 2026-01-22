@@ -4,6 +4,7 @@ use App\Http\Controllers;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Report;
+use App\Http\Controllers\Report\AuditController;
 
 Route::redirect('/', '/login');
 
@@ -376,8 +377,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/patching/dashboard', [Admin\PatchingController::class, 'dashboard'])->name('patching.dashboard');
 
     // Auditing
-    Route::get('audit/maturity', [Admin\AuditController::class, 'maturity'])->name('audit.maturity');
-    Route::get('audit/changes', [Admin\AuditController::class, 'changes'])->name('audit.changes');
+    Route::get('audit/maturity', [AuditController::class, 'maturity'])->name('audit.maturity');
+    Route::get('audit/changes', [AuditController::class, 'changes'])->name('audit.changes');
 
     // Documents
     Route::post('/documents/store', [Admin\DocumentController::class, 'store'])->name('documents.store');

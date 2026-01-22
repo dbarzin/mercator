@@ -1,13 +1,13 @@
 <?php
 
-use Mercator\Core\Models\User;
-use Mercator\Core\Models\ZoneAdmin;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;
 use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mercator\Core\Models\User;
+use Mercator\Core\Models\ZoneAdmin;
 
 uses(RefreshDatabase::class);
 
@@ -67,6 +67,6 @@ describe('GlobalSearchController', function () {
         $response = $this->get(route('admin.globalSearch'));
 
         $response->assertStatus(302);
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/login?locale=en');
     });
 });

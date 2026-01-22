@@ -1,13 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Report;
 
-// Ccosystem
-// Information System
-// Applications
-// Administration
-// Logique
-// Physique
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
