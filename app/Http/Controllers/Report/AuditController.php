@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Report;
 
+use App\Http\Controllers\Admin\HomeController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 

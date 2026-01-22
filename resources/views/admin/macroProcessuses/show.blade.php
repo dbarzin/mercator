@@ -29,14 +29,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.macroProcessus.title') }}
     </div>
-
     <div class="card-body">
-
         @include('admin.macroProcessuses._details', [
             'macroProcessus' => $macroProcessus,
             'withLink' => false,
         ])
-
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $macroProcessus->created_at ? $macroProcessus->created_at->format(trans('global.timestamp')) : '' }} |

@@ -30,14 +30,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.task.title') }}
     </div>
-
     <div class="card-body">
-
         @include('admin.tasks._details', [
             'task' => $task,
             'withLink' => false,
         ])
-
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $task->created_at ? $task->created_at->format(trans('global.timestamp')) : '' }} |

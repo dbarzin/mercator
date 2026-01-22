@@ -29,49 +29,10 @@
         {{ trans('global.show') }} {{ trans('cruds.applicationService.title') }}
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width='10%'>
-                        {{ trans('cruds.applicationService.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $applicationService->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationService.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $applicationService->description !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationService.fields.exposition') }}
-                    </th>
-                    <td>
-                        {{ $applicationService->exposition }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationService.fields.modules') }}
-                    </th>
-                    <td>
-                        @foreach($applicationService->modules as $module)
-                            <a href="{{ route('admin.application-modules.show', $module->id) }}">
-                            {{ $module->name }}
-                            </a>
-                            @if ($applicationService->modules->last()!=$module)
-                            ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        @include('admin.applicationServices._details', [
+            'applicationService' => $applicationService,
+            'withLink' => false,
+        ])
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $applicationService->created_at ? $applicationService->created_at->format(trans('global.timestamp')) : '' }} |

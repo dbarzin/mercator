@@ -22,29 +22,13 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.lan.title') }}
     </div>
-
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width='10%'>
-                        {{ trans('cruds.lan.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $lan->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.lan.fields.description') }}
-                    </th>
-                    <td>
-                        {{ $lan->description }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+   <div class="card-body">
+        @include('admin.lans._details', [
+            'lan' => $lan,
+            'withLink' => false,
+        ])
+     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $lan->created_at ? $lan->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $lan->updated_at ? $lan->updated_at->format(trans('global.timestamp')) : '' }}
