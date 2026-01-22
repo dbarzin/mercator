@@ -25,38 +25,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.dnsserver.title') }}
     </div>
-
     <div class="card-body">
-        <div class="form-group">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th width="10%">
-                            {{ trans('cruds.dnsserver.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $dnsserver->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.dnsserver.fields.description') }}
-                        </th>
-                        <td>
-                            {!! $dnsserver->description !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th width="10%">
-                            {{ trans('cruds.dnsserver.fields.address_ip') }}
-                        </th>
-                        <td>
-                            {{ $dnsserver->address_ip }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @include('admin.dnsservers._details', [
+            'dnsserver' => $dnsserver,
+            'withLink' => false,
+        ])
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $dnsserver->created_at ? $dnsserver->created_at->format(trans('global.timestamp')) : '' }} |

@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEntityRequest;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
+use App\Services\IconUploadService;
+use Gate;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\Entity;
 use Mercator\Core\Models\MApplication;
 use Mercator\Core\Models\Process;
-use App\Services\IconUploadService;
-use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityController extends Controller
@@ -22,7 +22,10 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entities = Entity::with('processes', 'applications', 'databases')
+
+        $entities = Entity::query()
+            ->with('processes')
+        // $entities = Entity::with('processes', 'applications', 'databases')
             ->orderBy('name')->get();
 
         return view('admin.entities.index', compact('entities'));

@@ -30,14 +30,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.process.title') }}
     </div>
-
     <div class="card-body">
-
         @include('admin.processes._details', [
             'process' => $process,
             'withLink' => false,
         ])
-
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $process->created_at ? $process->created_at->format(trans('global.timestamp')) : '' }} |
