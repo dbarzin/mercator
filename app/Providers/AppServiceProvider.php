@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use LdapRecord\Container;
@@ -75,7 +75,7 @@ class AppServiceProvider extends ServiceProvider
             if ($request->user()?->isAdmin()) {
                 return Limit::none();
             }
-            
+
             $limit = (int) config('api.rate_limit', 60);
             $decay = (int) config('api.rate_limit_decay', 1);
 
