@@ -38,8 +38,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         // Middlewares spécifiques au groupe 'api' avec throttle configurable
-        $apiRateLimit = config('api.rate_limit', 60);
-        $apiRateLimitDecay = config('api.rate_limit_decay', 1) ;
+        $apiRateLimit = (int) env('API_RATE_LIMIT', 60);
+        $apiRateLimitDecay = (int) env('API_RATE_LIMIT_DECAY', 1);
 
         $middleware->api(prepend: [
             "throttle:{$apiRateLimit},{$apiRateLimitDecay}",
