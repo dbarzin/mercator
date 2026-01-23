@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Gate;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -184,6 +185,7 @@ class CVEController extends Controller
      * @return array<int,object> // liste d'objets CVE normalisés
      *
      * @throws \RuntimeException // en cas d'erreur
+     * @throws ConnectionException
      */
     protected function getCVEs(string $provider, string $cpe): array
     {
@@ -195,8 +197,12 @@ class CVEController extends Controller
 
         // Appel HTTP avec timeouts et gestion d’erreurs
         $resp = Http::timeout(10)
+            ->retry(3, 1000) // 3 tentatives, backoff 1s
             ->acceptJson()
-            ->withHeaders(['User-Agent' => "Mercator/{$appVersion}"])
+            ->withHeaders([
+                'User-Agent' => "Mercator/{$appVersion}",
+                'Accept' => 'application/json',
+                ])
             ->get($url);
 
         if ($resp->failed()) {
