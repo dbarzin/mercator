@@ -529,6 +529,8 @@
             }
         });
 
+        /*
+        // Disable due to https://github.com/dbarzin/mercator/issues/1921
         // Toggle physics by keypress "p"
         document.addEventListener('keypress', togglePhysicsOnP);
 
@@ -540,6 +542,7 @@
                 physicsCheckbox.dispatchEvent(new Event('change'));
             }
         }
+         */
 
         // Deploys all edges and nodes from a selected node, until it reaches a #depth value
         function deployAll() {
