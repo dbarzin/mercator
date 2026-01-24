@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyFluxRequest;
 use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
+use Gate;
+use Illuminate\Support\Collection;
 use Mercator\Core\Models\ApplicationModule;
 use Mercator\Core\Models\ApplicationService;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\Flux;
+use Mercator\Core\Models\Information;
 use Mercator\Core\Models\MApplication;
-use Gate;
-use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends Controller
@@ -34,6 +35,7 @@ class FluxController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
+        $informations = Information::query()->orderBy('name')->pluck('name', 'id');
 
         // List
         $nature_list = Flux::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
@@ -55,7 +57,7 @@ class FluxController extends Controller
 
         return view(
             'admin.fluxes.create',
-            compact('items', 'nature_list', 'attributes_list')
+            compact('items', 'nature_list', 'informations', 'attributes_list')
         );
     }
 
@@ -121,6 +123,8 @@ class FluxController extends Controller
         $flux->bidirectional = $request->has('bidirectional');
         $flux->save();
 
+        $flux->informations()->sync($request->get('informations'));
+
         return redirect()->route('admin.fluxes.index');
     }
 
@@ -132,6 +136,7 @@ class FluxController extends Controller
         $services = ApplicationService::query()->orderBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::query()->orderBy('name')->pluck('name', 'id');
         $databases = Database::query()->orderBy('name')->pluck('name', 'id');
+        $informations = Information::query()->orderBy('name')->pluck('name', 'id');
 
         // List
         $nature_list = Flux::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
@@ -151,32 +156,9 @@ class FluxController extends Controller
             $items->put('DB_'.$key, $value);
         }
 
-        /*
-        // Source item
-        if ($flux->application_source_id !== null) {
-            $flux->src_id = 'APP_'.$flux->application_source_id;
-        } elseif ($flux->service_source_id !== null) {
-            $flux->src_id = 'SRV_'.$flux->service_source_id;
-        } elseif ($flux->module_source_id !== null) {
-            $flux->src_id = 'MOD_'.$flux->module_source_id;
-        } elseif ($flux->database_source_id !== null) {
-            $flux->src_id = 'DB_'.$flux->database_source_id;
-        }
-
-        // Dest item
-        if ($flux->application_dest_id !== null) {
-            $flux->dest_id = 'APP_'.$flux->application_dest_id;
-        } elseif ($flux->service_dest_id !== null) {
-            $flux->dest_id = 'SRV_'.$flux->service_dest_id;
-        } elseif ($flux->module_dest_id !== null) {
-            $flux->dest_id = 'MOD_'.$flux->module_dest_id;
-        } elseif ($flux->database_dest_id !== null) {
-            $flux->dest_id = 'DB_'.$flux->database_dest_id;
-        }
-        */
         return view(
             'admin.fluxes.edit',
-            compact('items', 'nature_list', 'attributes_list', 'flux')
+            compact('items', 'nature_list', 'informations', 'attributes_list', 'flux')
         );
     }
 
@@ -236,10 +218,12 @@ class FluxController extends Controller
         } else {
             $flux->database_dest_id = null;
         }
-
+        
         $flux->crypted = $request->has('crypted');
         $flux->bidirectional = $request->has('bidirectional');
         $flux->update();
+
+        $flux->informations()->sync($request->get('informations'));
 
         return redirect()->route('admin.fluxes.index');
     }
