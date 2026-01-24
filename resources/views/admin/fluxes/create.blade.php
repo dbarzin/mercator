@@ -154,7 +154,7 @@
                     </div>
                     <div class="col-sm-2">
                         <div class="form-check">
-                            <label for="crypted">{{ trans('cruds.flux.fields.bidirectional') }}</label>
+                            <label for="bidirectional">{{ trans('cruds.flux.fields.bidirectional') }}</label>
                             <div class="form-switch">
                                 <input class="form-check-input" type="checkbox" id="bidirectional" name="bidirectional"
                                        value="1" {{ old('bidirectional') ? 'checked' : '' }}>
