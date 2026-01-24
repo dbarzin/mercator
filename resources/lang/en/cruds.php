@@ -689,6 +689,8 @@ return [
             'source' => 'Source',
             'attributes' => 'Attributes',
             'attributes_helper' => 'List of attributes',
+            'information' => 'Information',
+            'information_helper' => 'Information transmitted in this flow',
         ],
         'title' => 'Application Flows',
         'title_short' => 'Flow',

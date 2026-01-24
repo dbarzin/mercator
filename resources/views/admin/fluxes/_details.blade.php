@@ -7,17 +7,13 @@
         <td>
             {{ $flux->name }}
         </td>
-    </tr>
-    <tr>
         <th width="10%">
             {{ trans('cruds.flux.fields.nature') }}
         </th>
         <td>
             {{ $flux->nature }}
         </td>
-    </tr>
-    <tr>
-        <th>
+        <th width="10%">
             {{ trans('cruds.flux.fields.attributes') }}
         </th>
         <td>
@@ -30,7 +26,7 @@
         <th>
             {{ trans('cruds.flux.fields.description') }}
         </th>
-        <td>
+        <td colspan="5">
             {!! $flux->description !!}
         </td>
     </tr>
@@ -39,7 +35,7 @@
         <th>
             {{ trans('cruds.flux.fields.source') }}
         </th>
-        <td>
+        <td colspan="1">
             @if ($flux->application_source!=null)
                 <a href="{{ route('admin.applications.show',$flux->application_source->id) }}">
                     {{ $flux->application_source->name }}
@@ -63,13 +59,11 @@
                 </a>
             @endif
         </td>
-    </tr>
 
-    <tr>
         <th>
             {{ trans('cruds.flux.fields.destination') }}
         </th>
-        <td>
+        <td colspan="3">
             @if ($flux->application_dest!=null)
                 <a href="{{ route('admin.applications.show',$flux->application_dest->id) }}">
                     {{ $flux->application_dest->name }}
@@ -96,6 +90,17 @@
     </tr>
     <tr>
         <th>
+            {{ trans('cruds.flux.fields.information') }}
+        </th>
+        <td colspan="5">
+            @foreach($flux->informations as $info)
+                <a href="{{ route('admin.information.show',$info->id) }}">{{$info->name}}</a>
+                @if (!$loop->last) , @endif
+            @endforeach
+        </td>
+    </tr>
+    <tr>
+        <th>
             {{ trans('cruds.flux.fields.crypted') }}
         </th>
         <td>
@@ -105,12 +110,10 @@
                 Oui
             @endif
         </td>
-    </tr>
-    <tr>
         <th>
             {{ trans('cruds.flux.fields.bidirectional') }}
         </th>
-        <td>
+        <td colspan="3">
             @if ($flux->bidirectional==0)
                 Non
             @elseif ($flux->bidirectional==1)

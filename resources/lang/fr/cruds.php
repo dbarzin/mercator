@@ -700,6 +700,8 @@ return [
             'service_dest_helper' => '',
             'service_source' => 'Service Source',
             'service_source_helper' => '',
+            'information' => 'Informations',
+            'information_helper' => 'Informations transmises dans ce flux',
         ],
         'title' => 'Flux applicatifs',
         'title_short' => 'Flux',
