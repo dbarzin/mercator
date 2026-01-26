@@ -94,6 +94,7 @@ class ActivityController extends Controller
 
         $activity->operations()->sync($request->input('operations', []));
         $activity->processes()->sync($request->input('processes', []));
+        $activity->applications()->sync($request->input('applications', []));
 
         return response()->json($activity, 201);
     }
@@ -101,6 +102,10 @@ class ActivityController extends Controller
     public function show(Activity $activity)
     {
         abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $activity['operations'] = $activity->operations()->pluck('id');
+        $activity['processes'] = $activity->processes()->pluck('id');
+        $activity['applications'] = $activity->applications()->pluck('id');
 
         return new JsonResource($activity);
     }
@@ -111,8 +116,12 @@ class ActivityController extends Controller
 
         $activity->update($request->all());
 
-        $activity->operations()->sync($request->input('operations', []));
-        $activity->processes()->sync($request->input('processes', []));
+        if ($request->has('operations'))
+            $activity->operations()->sync($request->input('operations', []));
+        if ($request->has('processes'))
+            $activity->processes()->sync($request->input('processes', []));
+        if ($request->has('applications'))
+            $activity->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }

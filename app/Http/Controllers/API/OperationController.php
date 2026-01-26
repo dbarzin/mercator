@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
-use Mercator\Core\Models\Operation;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Operation;
 use Symfony\Component\HttpFoundation\Response;
 
 class OperationController extends Controller
@@ -37,6 +37,10 @@ class OperationController extends Controller
     public function show(Operation $operation)
     {
         abort_if(Gate::denies('operation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $operation['actors'] = $operation->actors()->pluck('id');
+        $operation['tasks'] = $operation->tasks()->pluck('id');
+        $operation['activities'] = $operation->activities()->pluck('id');
 
         return new JsonResource($operation);
     }
