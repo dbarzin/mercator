@@ -121,7 +121,7 @@ class ActivityController extends Controller
         if ($request->has('processes'))
             $activity->processes()->sync($request->input('processes', []));
         if ($request->has('applications'))
-            $activity->processes()->sync($request->input('applications', []));
+            $activity->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
