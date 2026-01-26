@@ -61,6 +61,9 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 # Copy application source (après composer pour meilleur cache)
 COPY --chown=mercator:www . .
 
+# For Openshift environment
+RUN chmod -R g=u /var/www/mercator
+
 # Copy version file et environment file
 COPY --chown=mercator:www version.txt ./version.txt
 RUN cp .env.sqlite .env
