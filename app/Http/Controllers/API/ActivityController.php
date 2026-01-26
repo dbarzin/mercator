@@ -114,9 +114,9 @@ class ActivityController extends Controller
 
         $activity->update($request->all());
 
-        if ($request->input('operations', false))
+        if ($request->has('operations'))
             $activity->operations()->sync($request->input('operations', []));
-        if ($request->input('processes', false))
+        if ($request->has('processes'))
             $activity->processes()->sync($request->input('processes', []));
 
         return response()->json();
