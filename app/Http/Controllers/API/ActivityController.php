@@ -102,6 +102,9 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $activity['operations'] = $activity->operations()->pluck('id');
+        $activity['processes'] = $activity->processes()->pluck('id');
+
         return new JsonResource($activity);
     }
 
@@ -111,8 +114,10 @@ class ActivityController extends Controller
 
         $activity->update($request->all());
 
-        $activity->operations()->sync($request->input('operations', []));
-        $activity->processes()->sync($request->input('processes', []));
+        if ($request->input('operations', false))
+            $activity->operations()->sync($request->input('operations', []));
+        if ($request->input('processes', false))
+            $activity->processes()->sync($request->input('processes', []));
 
         return response()->json();
     }

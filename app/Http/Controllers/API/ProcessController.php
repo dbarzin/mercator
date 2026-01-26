@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
-use Mercator\Core\Models\Operation;
-use Mercator\Core\Models\Process;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Operation;
+use Mercator\Core\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
@@ -42,6 +42,12 @@ class ProcessController extends Controller
     {
         abort_if(Gate::denies('process_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $process['activities'] = $process->activities()->pluck('id');
+        $process['entities'] = $process->entities()->pluck('id');
+        $process['informations'] = $process->information()->pluck('id');
+        $process['applications'] = $process->applications()->pluck('id');
+        $process['operations'] = $process->operations()->pluck('id');
+        
         return new JsonResource($process);
     }
 

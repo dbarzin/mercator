@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActorRequest;
 use App\Http\Requests\StoreActorRequest;
 use App\Http\Requests\UpdateActorRequest;
-use Mercator\Core\Models\Actor;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Actor;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends Controller
@@ -27,6 +27,7 @@ class ActorController extends Controller
         abort_if(Gate::denies('actor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $actor = Actor::create($request->all());
+        $actor->operations()->sync($request->input('operations', []));
 
         return response()->json($actor, 201);
     }
@@ -34,6 +35,8 @@ class ActorController extends Controller
     public function show(Actor $actor)
     {
         abort_if(Gate::denies('actor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $actor['operations'] = $actor->operations()->pluck('id');
 
         return new JsonResource($actor);
     }
@@ -43,6 +46,8 @@ class ActorController extends Controller
         abort_if(Gate::denies('actor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $actor->update($request->all());
+        if ($request['operations'] !== null)
+            $actor->operations()->sync($request->input('operations', []));
 
         return response()->json();
     }
