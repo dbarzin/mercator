@@ -24,7 +24,7 @@ class NetworkInfrastructureView extends Controller
 {
     public function generate(Request $request)
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $buildingIds = null;
         if ($request->site == null) {

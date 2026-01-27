@@ -42,7 +42,7 @@ class LogicalInfrastructureView extends Controller
      */
     public function generate(Request $request): View|RedirectResponse
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->network == null) {
             $request->session()->put('network', null);
