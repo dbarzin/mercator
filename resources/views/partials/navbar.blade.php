@@ -9,6 +9,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-3">
+                @can('explore_access')
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="menu1" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">{{ trans('panel.menu.views') }}</a>
@@ -64,6 +65,7 @@
                         @endcan
                     </ul>
                 </li>
+                @endcan
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="menu2" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">{{ trans('panel.menu.preferences') }}</a>

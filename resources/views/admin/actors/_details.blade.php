@@ -54,6 +54,7 @@
             @endforeach
             </td>
         </tr>
+        @hasModule('bpmn')
         @if($actor->graphs()->count()>0)
         <tr>
             <th>
@@ -82,5 +83,6 @@
             </td>
         </tr>
         @endif
+        @endhasModule
     </tbody>
 </table>

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 use Mercator\Core\Models\AdminUser;
 use Mercator\Core\Models\Annuaire;
 use Mercator\Core\Models\DomaineAd;
 use Mercator\Core\Models\ForestAd;
 use Mercator\Core\Models\ZoneAdmin;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdministrationView extends Controller
@@ -28,7 +28,7 @@ class AdministrationView extends Controller
      */
     public function generate(): View
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $zones = ZoneAdmin::All();
         $annuaires = Annuaire::All();

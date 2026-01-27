@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
 use Mercator\Core\Models\Information;
@@ -10,9 +13,6 @@ use Mercator\Core\Models\MacroProcessus;
 use Mercator\Core\Models\Operation;
 use Mercator\Core\Models\Process;
 use Mercator\Core\Models\Task;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationSystemView extends Controller
@@ -40,7 +40,7 @@ class InformationSystemView extends Controller
      */
     public function generate(Request $request): View
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->macroprocess == null) {
             $request->session()->put('macroprocess', null);
