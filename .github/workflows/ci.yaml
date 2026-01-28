@@ -1,17 +1,13 @@
 name: Continuous Integration
-
 on:
   push:
     branches:
       - master
   pull_request:
     branches: [ master, develop ]
-
 jobs:
-
   deploy:
     runs-on: ubuntu-22.04
-
     services:
       mysql:
         image: mysql:8.0.21
@@ -20,9 +16,7 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     timeout-minutes: 30
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,16 +24,16 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
           extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
 
       - name: Install dependencies
-        run: composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --with-all-dependencies
 
       - name: Create Database
         run: mysql --host 127.0.0.1 --port 3306 -uroot -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
-      - name: Configrue Storage Permission
+      - name: Configure Storage Permission
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Prepare the application
@@ -65,42 +59,3 @@ jobs:
       - name: Insert test data
         run: |
           mysql mercator --host 127.0.0.1 --port 3306 -uroot < database/data/mercator_data_en.sql
-
-# SKIP Test on GitHub
-#
-#      - name: Install Chrome Driver
-#        run: php artisan dusk:chrome-driver --detect
-#
-#      - name: Check Chrome Driver version
-#        run: ./vendor/laravel/dusk/bin/chromedriver-linux -v
-#
-#      - name: Start Chrome Driver
-#        run: ./vendor/laravel/dusk/bin/chromedriver-linux --port=9515 &
-#
-#      - name: Run Laravel Server
-#        run: php artisan serve --no-reload &
-#
-#      - name: Run Dusk Tests
-#        env:
-#          APP_ENV: local
-#          APP_URL: "http://127.0.0.1:8000"
-#          DB_CONNECTION: mysql
-#          DB_DATABASE: mercator
-#          DB_PORT: ${{ job.services.mysql.ports[3306] }}
-#          DB_USER: root
-#        run: |
-#
-#          php artisan dusk --stop-on-error --stop-on-failure
-#      - name: Upload Screenshots
-#        if: failure()
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: screenshots
-#          path: tests/Browser/screenshots
-#
-#      - name: Upload Console Logs
-#        if: failure()
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: console
-#          path: tests/Browser/console
