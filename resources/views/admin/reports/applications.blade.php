@@ -977,16 +977,20 @@ document.addEventListener('DOMContentLoaded', () => {
         .addImage("/images/applicationmodule.png", "64px", "64px")
         .addImage("/images/database.png", "64px", "64px")
         .addImage("/images/applicationblock.png", "64px", "64px")
+        @can('application_access')
         @foreach($applications as $application)
         @if ($application->icon_id!==null)
         .addImage("{{ route('admin.documents.show', $application->icon_id) }}", "64px", "64px")
         @endif
         @endforeach
+        @endcan
+        @can('database_access')
         @foreach($databases as $database)
         @if ($database->icon_id!==null)
         .addImage("{{ route('admin.documents.show', $database->icon_id) }}", "64px", "64px")
         @endif
         @endforeach
+        @endcan
         .engine("{{ $engine }}")
         .renderDot(dotSrc);
 });
