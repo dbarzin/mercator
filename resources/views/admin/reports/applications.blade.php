@@ -922,63 +922,75 @@
             <script>
                 const dotSrc = `
 digraph  {
-    @can('application_block_access')
-                @if (auth()->user()->granularity>=2)
-                @foreach($applicationBlocks as $ab)
-                AB{{ $ab->id }} [label="{{ $ab->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationblock.png" href="#APPLICATIONBLOCK{{$ab->id}}"]
-        @endforEach
-                @endif
-                @endcan
-                @can('application_access')
-                @foreach($applications as $application)
-                A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id) }}" href="#APPLICATION{{$application->id}}"]
-        @foreach($application->services as $service)
-                A{{ $application->id }} -> AS{{ $service->id}}
-                @endforeach
-                @foreach($application->databases as $database)
-                A{{ $application->id }} -> DB{{ $database->id}}
-                @endforeach
-                @if (auth()->user()->granularity>=2)
-                @if ($application->application_block_id!=null)
-                AB{{ $application->application_block_id }} -> A{{ $application->id}}
-                @endif
-                @endif
-                @endforEach
-                @endcan
-                @can('application_service_access')
-                @foreach($applicationServices as $service)
-                AS{{ $service->id }} [label="{{ $service->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationservice.png" href="#APPLICATIONSERVICE{{$service->id}}"]
-        @foreach($service->modules as $module)
-                AS{{ $service->id }} -> M{{$module->id}}
-                @endforeach
-                @endforeach
-                @foreach($applicationModules as $module)
-                M{{ $module->id }} [label="{{ $module->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationmodule.png" href="#APPLICATIONMODULE{{$module->id}}"]
-    @endforeach
-                @endcan
-                @can('database_access')
-                @foreach($databases as $database)
-                DB{{ $database->id }} [label="{{ $database->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/database.png" href="#DATABASE{{$database->id}}"]
-    @endforeach
-                @endcan
-                }`;
+@can('application_block_access')
+    @foreach($applicationBlocks as $ab)
+    AB{{ $ab->id }} [label="{{ $ab->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationblock.png" href="#APPLICATIONBLOCK{{$ab->id}}"]
+    @endforEach
+@endcan
 
-                document.addEventListener('DOMContentLoaded', () => {
-                    d3.select("#graph").graphviz()
-                        .addImage("/images/applicationblock.png", "64px", "64px")
-                        .addImage("/images/application.png", "64px", "64px")
-                        .addImage("/images/applicationservice.png", "64px", "64px")
-                        .addImage("/images/applicationmodule.png", "64px", "64px")
-                        .addImage("/images/database.png", "64px", "64px")
-                        .addImage("/images/applicationblock.png", "64px", "64px")
-                        @foreach($applications as $application)
-                        @if ($application->icon_id!==null)
-                        .addImage("{{ route('admin.documents.show', $application->icon_id) }}", "64px", "64px")
-                        @endif
-                        @endforeach
-                        .engine("{{ $engine }}")
-                        .renderDot(dotSrc);
-                });
-            </script>
-    @parent
+@can('application_access')
+    @foreach($applications as $application)
+    A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id) }}" href="#APPLICATION{{$application->id}}"]
+    @can('application_service_access')
+    @foreach($application->services as $service)
+        A{{ $application->id }} -> AS{{ $service->id}}
+    @endforeach
+    @endcan
+    @can('database_access')
+    @foreach($application->databases as $database)
+        A{{ $application->id }} -> DB{{ $database->id}}
+    @endforeach
+    @endcan
+    @can('application_block_access')
+    @if ($application->application_block_id!=null)
+        AB{{ $application->application_block_id }} -> A{{ $application->id}}
+    @endif
+    @endcan
+    @endforeach
+@endcan
+@can('application_service_access')
+    @foreach($applicationServices as $service)
+    AS{{ $service->id }} [label="{{ $service->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationservice.png" href="#APPLICATIONSERVICE{{$service->id}}"]
+    @can('application_module_access')
+    @foreach($service->modules as $module)
+        AS{{ $service->id }} -> M{{$module->id}}
+    @endforeach
+    @endcan
+    @endforeach
+@endcan
+@can('application_module_access')
+    @foreach($applicationModules as $module)
+    M{{ $module->id }} [label="{{ $module->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationmodule.png" href="#APPLICATIONMODULE{{$module->id}}"]
+    @endforeach
+@endcan
+@can('database_access')
+    @foreach($databases as $database)
+    DB{{ $database->id }} [label="{{ $database->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $database->icon_id === null ? '/images/database.png' : route('admin.documents.show', $database->icon_id) }}" href="#DATABASE{{$database->id}}"]
+    @endforeach
+@endcan
+}`;
+
+document.addEventListener('DOMContentLoaded', () => {
+    d3.select("#graph").graphviz()
+        .addImage("/images/applicationblock.png", "64px", "64px")
+        .addImage("/images/application.png", "64px", "64px")
+        .addImage("/images/applicationservice.png", "64px", "64px")
+        .addImage("/images/applicationmodule.png", "64px", "64px")
+        .addImage("/images/database.png", "64px", "64px")
+        .addImage("/images/applicationblock.png", "64px", "64px")
+        @foreach($applications as $application)
+        @if ($application->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $application->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
+        @foreach($databases as $database)
+        @if ($database->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $database->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
+        .engine("{{ $engine }}")
+        .renderDot(dotSrc);
+});
+</script>
+@parent
 @endsection
