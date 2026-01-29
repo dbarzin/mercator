@@ -118,12 +118,14 @@
                                         </tr>
 
                                         @if ($entity->parentEntity!=null)
+                                        <tr>
                                             <th>
                                                 {{ trans('cruds.entity.fields.parent_entity') }}
                                             </th>
                                             <td>
                                                 <a href="{{ route('admin.entities.show', $entity->parentEntity->id) }}">{{ $entity->parentEntity->name }}</a>
                                             </td>
+                                        </tr>
                                         @endif
 
                                         @if ($entity->entities()->count()>0)
