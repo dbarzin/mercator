@@ -14,7 +14,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "require": {
-    "php": "^8.2",
+    "php": "^8.4",
     "directorytree/ldaprecord-laravel": "^3.3",
     "laravel/framework": "^11.9",
     "laravel/passport": "^12.3",
