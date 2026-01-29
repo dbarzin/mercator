@@ -924,7 +924,7 @@ const dotSrc = `digraph  {
 @can('application_block_access')
     @foreach($applicationBlocks as $ab)
     AB{{ $ab->id }} [label="{{ $ab->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationblock.png" href="#APPLICATIONBLOCK{{$ab->id}}"]
-    @endforEach
+    @endforeach
 @endcan
 
 @can('application_access')
