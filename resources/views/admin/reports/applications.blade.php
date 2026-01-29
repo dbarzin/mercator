@@ -917,11 +917,10 @@
         </div>
         @endsection
 
-        @section('scripts')
-            @vite(['resources/js/d3-viz.js'])
-            <script>
-                const dotSrc = `
-digraph  {
+@section('scripts')
+@vite(['resources/js/d3-viz.js'])
+<script>
+const dotSrc = `digraph  {
 @can('application_block_access')
     @foreach($applicationBlocks as $ab)
     AB{{ $ab->id }} [label="{{ $ab->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationblock.png" href="#APPLICATIONBLOCK{{$ab->id}}"]
@@ -992,5 +991,4 @@ document.addEventListener('DOMContentLoaded', () => {
         .renderDot(dotSrc);
 });
 </script>
-@parent
 @endsection
