@@ -965,6 +965,9 @@ Table *mans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les WAN et LAN rattachés à un MAN.
+Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN. Un LAN peut être rattaché à un MAN depuis les objets MAN.
+
 #### LAN
 
 Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.
@@ -975,7 +978,10 @@ Table *lans* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du LAN |
-| description          | longtext     | Description du LAN |
+| description          | varchar(255) | Description du LAN |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les MAN et les WAN rattachés à un LAN. 
+Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
