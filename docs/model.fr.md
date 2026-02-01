@@ -966,6 +966,7 @@ Table *mans* :
 | deleted_at           | timestamp    | Date de suppression |
 
 L'export du modèle de données référence les WAN et LAN rattachés à un MAN.
+
 Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN. Un LAN peut être rattaché à un MAN depuis les objets MAN.
 
 #### LAN
@@ -983,5 +984,6 @@ Table *lans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les MAN et les WAN rattachés à un LAN. 
+L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.
+
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
