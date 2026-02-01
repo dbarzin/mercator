@@ -605,6 +605,7 @@ Table *security_devices* :
 #### Serveurs DHCP
 
 Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.
+Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide de l'ANSSI (cf. Références).
 
 Table *dhcp_servers* :
 
@@ -613,13 +614,15 @@ Table *dhcp_servers* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du serveur |
 | description          | longtext     | Description du serveur |
+| address_ip           | varchar(255) | Adresse(s) IP du serveur |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
 #### Serveurs DNS
 
-Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant la conversion d’un nom de domaine en adresse IP.
+Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant la conversion d’un nom de domaine en adresse IP.  
+Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide de l'ANSSI (cf. Références).
 
 Table *dnsservers* :
 
@@ -628,6 +631,7 @@ Table *dnsservers* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du serveur |
 | description          | longtext     | Description du serveur |
+| address_ip           | varchar(255) | Adresse(s) IP du serveur |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
