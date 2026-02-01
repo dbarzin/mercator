@@ -873,12 +873,20 @@ Table *physical_switches* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du commutateur physique |
 | description          | longtext     | Description du commutateur physique |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle du commutateur physique |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | unsigned int | Référence vers la baie |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et donc absent dans l'application.\
+L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.\
+Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs réseau") depuis ces deux types d'objets.
 
 #### Routeurs physiques
 
@@ -902,9 +910,9 @@ Table *physical_routers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et donc absent dans l'application.\
 L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.\
-Dans l'application, un routeur physique peut être rattaché à un routeur logique depuis ces deux types d'objets.\
+Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux types d'objets.\
 Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.
 
 #### Bornes WiFi
