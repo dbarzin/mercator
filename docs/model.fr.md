@@ -731,10 +731,13 @@ Table *sites* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du site |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | description          | longtext     | Description du site |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Dans l'application, un bâtiment / salle peut être rattaché à un site depuis un objet bâtiment / salle.
 
 #### Bâtiments / Salles
 
@@ -756,6 +759,8 @@ Table *buildings* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+Dans l'application, un bâtiment / salle ou un site peut être rattaché à un bâtiment / salle depuis un objet bâtiment / salle.
+
 #### Baies
 
 Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.
@@ -771,6 +776,8 @@ Table *bays* :
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Dans l'application, une baie peut être rattachée à un bâtiment/ baie depuis un objet baie. 
 
 #### Serveurs physiques
 
