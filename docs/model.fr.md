@@ -780,16 +780,42 @@ Table *physical_servers* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du serveur |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | description          | longtext     | Description du serveur |
 | type                 | varchar(255) | Type / modèle du serveur |
-| responsible          | varchar(255) | Responsable du serveur |
+| cpu                  | varchar(255) | Processeur(s) du serveur |
+| memory               | varchar(255) | RAM / mémoive vive du serveur |
+| disk                 | varchar(255) | Stockage du serveur | 
+| disk_used            | varchar(255) | Stockage utilisé du serveur |
 | configuration        | longtext     | Configuration du serveur |
+| operating_system     | varchar(255) | Système d'exploitaion du serveur |
+| install_date         | datetime     | Date d'installation du serveur |
+| update_date          | datetime     | Date de mise à jour du serveur |
+| responsible          | varchar(255) | Responsable d'exploitation du serveur |
+| address_ip           | varchar      | Adresse(s) IP du serveur |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | bay_id               | int unsigned | Référence vers la baie |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs logiques rattachés à un serveur physique.\
+Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.\
+Un cluster peut être rattachée à un serveur physique depuis ces deux types d'objets.\
+Un serveur logique peut être rattachée à un serveur physique depuis ces deux types d'objets.
+
+Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans l'application pour la table *physical_servers* ont été regroupés dans le tableau suivant :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
+| patching_group       | varchar(255) | Groupe de mise à jour |
+| patching_frequency   | varchar(255) | Fréquence des mises à jour |
+| next_update          | date         | Date de la prochaine mise à jour |
+| physical_swicth_id   | int unsigned | Référence vers le commutateur physique|
 
 #### Postes de travail
 
@@ -826,10 +852,10 @@ Table *workstations* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les applications utilisant un poste de travail.\
+L'export du modèle de données référence les applications rattachées à un poste de travail.\
 Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.
 
-Pour une question de lisibilité, les champs définis mais inutilisés pour le moment dans l'application pour la table "workstations" ont été regroupés dans le tableau suivant :
+Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans l'application pour la table *workstations* ont été regroupés dans le tableau suivant :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -837,12 +863,12 @@ Pour une question de lisibilité, les champs définis mais inutilisés pour le m
 | product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
 | version              | varchar(255) | Version d'un produit pour recherche CPE |
 | warranty             | varchar(255) | Contrat de garantie |
-| warranty_start_date  | datetime     | Date de début de la garantie |
-| warranty_end_date    | datetime     | Date de fin de la garantie |
-| warranty_period      | datetime     | Période de garantie |
-| purchase_date        | datetime     | Date d'achat |
+| warranty_start_date  | date         | Date de début de la garantie |
+| warranty_end_date    | date         | Date de fin de la garantie |
+| warranty_period      | date         | Période de garantie |
+| purchase_date        | date         | Date d'achat |
 | fin_value            | decimal      | Valeur financière. Borne sup. : `$`10^11`$` | 
-| last_inventory_date  | datetime     | Date du dernier inventaire |
+| last_inventory_date  | date         | Date du dernier inventaire |
 | update_source        | varchar(255) | Source de la mise à jour / inventaire |
 | agent_version        | varchar(255) | Version de l'agent d'inventaire |
 | physical_swicth_id   | int unsigned | Référence vers le commutateur physique|
