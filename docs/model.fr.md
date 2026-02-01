@@ -1081,20 +1081,21 @@ Principe général :
 | deleted_at           | timestamp    | Date de suppression |
 
 Les actifs sources et destination peuvent être :
+
 | Actif                           | Source   | Destination  |
 |:--------------------------------|:---------|:-------------|
-| Périphérique                    | oui | oui |
-| Téléphone                       | oui | oui |
-| Routeur physique                | oui | oui |
-| Equipement de sécurité physique | oui | oui |
-| Serveur physique                | oui | oui |
-| Commutateur physique            | oui | oui |
-| Infrastructure de stockage      | oui | oui |
-| Borne Wifi                      | oui | oui |
-| Poste de travail                | oui | oui |
-| Serveur logique                 | oui | oui |
-| Commutateur logique             | oui | oui |
-| Routeur logique                 | oui | oui |
+| Périphérique                    | oui      | oui |
+| Téléphone                       | oui      | oui |
+| Routeur physique                | oui      | oui |
+| Equipement de sécurité physique | oui      | oui |
+| Serveur physique                | oui      | oui |
+| Commutateur physique            | oui      | oui |
+| Infrastructure de stockage      | oui      | oui |
+| Borne Wifi                      | oui      | oui |
+| Poste de travail                | oui      | oui |
+| Serveur logique                 | oui      | oui |
+| Commutateur logique             | oui      | oui |
+| Routeur logique                 | oui      | oui |
 
 #### WAN
 
