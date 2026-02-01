@@ -687,7 +687,8 @@ Table *certificates* :
 | type                 | varchar(255) | Type de certificat (SSL, HTTPS ...) |
 | start_validity       | date         | Date de début de validité |
 | end_validity         | date         | Date de fin de validité |
-| status               | int          | Etat du certificat (RFC 6960) |
+| status               | int signed   | Etat du certificat (RFC 6960) |
+| last_notification    | datetime     | Date d'envoi de la dernière notification |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
@@ -696,6 +697,10 @@ Table *certificates* :
     * status = 0 : "Bon"
     * status = 1 : "Révoqué"
     * status = 2 : "Inconnu"
+ 
+Le champ "last_notification" n'est pas utilisé pour le moment et est donc absent de l'application.  
+L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.  
+Dans l'application, un certificat peut être rattaché à une application ou un serveur logique depuis un objet certificat.
 
 #### VLAN
 
