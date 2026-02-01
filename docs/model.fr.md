@@ -746,10 +746,12 @@ Table *buildings* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du site |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| type                 | varchar(255) | Type de salle / bâtiment |
+| attributes           | varchar(255) | Attributs du building / salle |
 | description          | longtext     | Description du site |
 | site_id              | int unsigned | Référence vers le site |
-| camera               | tinyint(1)   | Le building / salle est protégé par une caméra |
-| badge                | tinyint(1)   | Le building / salle nécessite un accès par badge |
+| building_id          | int unsigned | Référence vers le building / salle (gestion parenté)|
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
