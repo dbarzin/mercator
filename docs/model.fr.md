@@ -777,7 +777,7 @@ Table *bays* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-Dans l'application, une baie peut être rattachée à un bâtiment/ baie depuis un objet baie. 
+Dans l'application, une baie peut être rattachée à un bâtiment / baie depuis un objet baie. 
 
 #### Serveurs physiques
 
@@ -809,10 +809,10 @@ Table *physical_servers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs logiques rattachés à un serveur physique.\
-Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.\
-Un cluster peut être rattachée à un serveur physique depuis ces deux types d'objets.\
-Un serveur logique peut être rattachée à un serveur physique depuis ces deux types d'objets.
+L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs logiques rattachés à un serveur physique.  
+Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.  
+Un cluster peut être rattaché à un serveur physique depuis ces deux types d'objets.  
+Un serveur logique peut être rattaché à un serveur physique depuis ces deux types d'objets.
 
 Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans l'application pour la table *physical_servers* ont été regroupés dans le tableau suivant :
 
@@ -861,7 +861,7 @@ Table *workstations* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les applications rattachées à un poste de travail.\
+L'export du modèle de données référence les applications rattachées à un poste de travail.  
 Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.
 
 Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans l'application pour la table *workstations* ont été regroupés dans le tableau suivant :
@@ -876,7 +876,7 @@ Pour une question de lisibilité, les champs définis dans le modèle de donnée
 | warranty_end_date    | date         | Date de fin de la garantie |
 | warranty_period      | date         | Période de garantie |
 | purchase_date        | date         | Date d'achat |
-| fin_value            | decimal      | Valeur financière. Borne sup. : $10^{11}$ | 
+| fin_value            | decimal      | Valeur financière. Borne sup. : 10^11 | 
 | last_inventory_date  | date         | Date du dernier inventaire |
 | update_source        | varchar(255) | Source de la mise à jour / inventaire |
 | agent_version        | varchar(255) | Version de l'agent d'inventaire |
@@ -934,7 +934,7 @@ Table *peripherals* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les applications utilisant un périphérique.\
+L'export du modèle de données référence les applications utilisant un périphérique.  
 Dans l'application, un périphérique peut être rattaché à une application depuis un objet périphérique.
 
 #### Téléphones
@@ -958,7 +958,7 @@ Les téléphones fixes ou portables appartenant à l’organisation.
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.  
 Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien physique.
 
 #### Commutateurs physiques
@@ -983,8 +983,8 @@ Table *physical_switches* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
-L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.  
+L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.  
 Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs réseau") depuis ces deux types d'objets.
 
 #### Routeurs physiques
@@ -1009,9 +1009,9 @@ Table *physical_routers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
-L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.\
-Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux types d'objets.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.  
+L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.  
+Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux types d'objets.  
 Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.
 
 #### Bornes WiFi
@@ -1060,7 +1060,7 @@ Table *physical_security_devices* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité physiques.\
+L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité physiques.  
 Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux types d'objets.
 
 #### Liens physiques
@@ -1110,7 +1110,7 @@ Table *wans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les MAN et LAN rattachés à un WAN.\
+L'export du modèle de données référence les MAN et LAN rattachés à un WAN.  
 Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.
 
 #### MAN
@@ -1127,8 +1127,8 @@ Table *mans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les WAN et LAN rattachés à un MAN.\
-Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.\
+L'export du modèle de données référence les WAN et LAN rattachés à un MAN.  
+Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.  
 Un LAN peut être rattaché à un MAN depuis les objets MAN.
 
 #### LAN
@@ -1146,5 +1146,5 @@ Table *lans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.\
+L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.  
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
