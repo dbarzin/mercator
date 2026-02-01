@@ -642,9 +642,19 @@ Table *clusters* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du serveur |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | type                 | varchar(255) | Type de cluster |
+| attributes           | varchar(255) | Attributs du cluster |
 | description          | longtext     | Description du cluster |
 | address_ip           | varchar(255) | Adresses IP du cluster |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les routeurs logiques, les serveurs logiques et physiques rattachés à un cluster.  
+Dans l'application, un routeur logique peut être rattaché à un cluster depuis un objet cluster.  
+Un serveur logique peut être rattaché à un cluster depuis ces deux objets.  
+Un serveur physique peut être rattaché à un cluster depuis ces deux objets.
 
 #### Serveurs logiques
 
