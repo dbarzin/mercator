@@ -820,12 +820,20 @@ Table *storage_devices* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de l'infrastructure de stockage |
+| type                 | varchar(255) | Type de l'infractructure de stockage |
 | description          | longtext     | Description de l'infrastructure de stockage |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
+| address_ip           | varchar(255) | Adresse IP de l'infrastructure de stockage |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.
 
 #### Périphériques
 
@@ -879,7 +887,7 @@ Les téléphones fixes ou portables appartenant à l’organisation.
 | deleted_at           | timestamp    | Date de suppression |
 
 Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.\
-Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien phyique.
+Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien physique.
 
 #### Commutateurs physiques
 
