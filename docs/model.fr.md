@@ -656,20 +656,49 @@ Table *logical_servers* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du serveur |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| type                 | varchar(255) | Type du serveur (appli, DB, etc.) |
+| active               | tinyint(1)   | Serveur actif (1) ou obsolète (0) |
+| attributes           | varchar(255) | Attributs (tages) du serveur |
 | description          | longtext     | Description du serveur |
-| net_services         | varchar(255) | Services réseau actifs |
-| configuration        | longtext     | Configuration du serveur |
 | operating_system     | varchar(255) | Système d'exploitation |
+| install_date         | date         | Date d'installation du serveur |
+| update_date          | date         | Date de mise à jour du serveur |
+| environment          | varchar(255) | Environnement (prod, dev, test, ...) |
+| net_services         | varchar(255) | Services réseau actifs |
 | address_ip           | varchar(255) | Adresses IP du serveur |
+| domain_id            | int unsigned | Domaine d'administration du serveur |
 | cpu                  | varchar(255) | Nombre de CPU |
 | memory               | varchar(255) | Quantité de mémoire |
-| environment          | varchar(255) | Environnement (prod, dev, test, ...) |
 | disk                 | int          | Espace disque alloué |
-| install_date         | datetime     | Date d'installation du serveur |
-| update_date          | datetime     | Date de mise à jour du serveur |
+| disk_used            | int          | Espace disque utilisé |
+| configuration        | longtext     | Configuration du serveur |
+| patching_frequency   | int signed   | Fréquence des mises à jour |
+| next_update          | date         | Date de la prochaine mise à jour |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absents de l'application.  
+L'export du modèle de données référence : 
+- les applications,
+- les serveurs physiques,
+- les documents,
+- les bases de données,
+- les clusters,
+- les certificats,
+- et les conteneurs
+
+rattachés à un serveur logique.  
+
+Dans l'application, une application peut être rattachée à un serveur logique depuis ces deux objets.  
+Une base de données peut être rattachée à un serveur logique depuis ces deux objets.  
+Un cluster peut être rattaché à un serveur logique depuis ces deux objets.  
+Un serveur physique peut être rattaché à un serveur logique depuis ces deux objets.  
+Un certificat peut être rattaché à un serveur logique depuis un objet certificat.  
+Un conteneur peut être rattaché à un serveur logique depuis un objet conteneur.
+
+Le champ "documents" ne semble pas utilisé dans le modèle de données d'un serveur logique.
 
 #### Certificats
 
