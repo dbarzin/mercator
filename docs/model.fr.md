@@ -909,7 +909,11 @@ Table *wifi_terminals* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de la borne wifi |
 | description          | longtext     | Description de la bornes wifi |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle de la bornes wifi |
+| address_ip           | varchar(255) | Adresse IP de la borne wifi |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | created_at           | timestamp    | Date de création |
@@ -939,6 +943,10 @@ Table *physical_security_devices* :
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité physiques.
+
+Dans m'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux types d'objets.
 
 #### WAN
 
