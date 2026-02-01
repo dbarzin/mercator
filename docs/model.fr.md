@@ -876,7 +876,7 @@ Pour une question de lisibilité, les champs définis dans le modèle de donnée
 | warranty_end_date    | date         | Date de fin de la garantie |
 | warranty_period      | date         | Période de garantie |
 | purchase_date        | date         | Date d'achat |
-| fin_value            | decimal      | Valeur financière. Borne sup. : $10^11$ | 
+| fin_value            | decimal      | Valeur financière. Borne sup. : $10^{11}$ | 
 | last_inventory_date  | date         | Date du dernier inventaire |
 | update_source        | varchar(255) | Source de la mise à jour / inventaire |
 | agent_version        | varchar(255) | Version de l'agent d'inventaire |
