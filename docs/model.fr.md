@@ -731,10 +731,13 @@ Table *sites* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du site |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | description          | longtext     | Description du site |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Dans l'application, un bâtiment / salle peut être rattaché à un site depuis un objet bâtiment / salle.
 
 #### Bâtiments / Salles
 
@@ -746,13 +749,17 @@ Table *buildings* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du site |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| type                 | varchar(255) | Type de salle / bâtiment |
+| attributes           | varchar(255) | Attributs du building / salle |
 | description          | longtext     | Description du site |
 | site_id              | int unsigned | Référence vers le site |
-| camera               | tinyint(1)   | Le building / salle est protégé par une caméra |
-| badge                | tinyint(1)   | Le building / salle nécessite un accès par badge |
+| building_id          | int unsigned | Référence vers le building / salle (gestion parenté)|
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Dans l'application, un bâtiment / salle ou un site peut être rattaché à un bâtiment / salle depuis un objet bâtiment / salle.
 
 #### Baies
 
@@ -770,6 +777,8 @@ Table *bays* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+Dans l'application, une baie peut être rattachée à un bâtiment/ baie depuis un objet baie. 
+
 #### Serveurs physiques
 
 Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.
@@ -780,16 +789,42 @@ Table *physical_servers* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du serveur |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | description          | longtext     | Description du serveur |
 | type                 | varchar(255) | Type / modèle du serveur |
-| responsible          | varchar(255) | Responsable du serveur |
+| cpu                  | varchar(255) | Processeur(s) du serveur |
+| memory               | varchar(255) | RAM / mémoive vive du serveur |
+| disk                 | varchar(255) | Stockage du serveur | 
+| disk_used            | varchar(255) | Stockage utilisé du serveur |
 | configuration        | longtext     | Configuration du serveur |
+| operating_system     | varchar(255) | Système d'exploitaion du serveur |
+| install_date         | datetime     | Date d'installation du serveur |
+| update_date          | datetime     | Date de mise à jour du serveur |
+| responsible          | varchar(255) | Responsable d'exploitation du serveur |
+| address_ip           | varchar      | Adresse(s) IP du serveur |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | bay_id               | int unsigned | Référence vers la baie |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs logiques rattachés à un serveur physique.\
+Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.\
+Un cluster peut être rattachée à un serveur physique depuis ces deux types d'objets.\
+Un serveur logique peut être rattachée à un serveur physique depuis ces deux types d'objets.
+
+Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans l'application pour la table *physical_servers* ont été regroupés dans le tableau suivant :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
+| patching_group       | varchar(255) | Groupe de mise à jour |
+| patching_frequency   | varchar(255) | Fréquence des mises à jour |
+| next_update          | date         | Date de la prochaine mise à jour |
+| physical_swicth_id   | int unsigned | Référence vers le commutateur physique|
 
 #### Postes de travail
 
@@ -801,14 +836,51 @@ Table *workstations* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du poste de travail |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| status               | varchar(255) | Status du poste (cyle de vie, incident) |
 | description          | longtext     | Description du poste de travail |
 | type                 | varchar(255) | Type / modèle du poste de travail |
+| entity_id            | int unsigned | Référence vers l'entité utilisatrice du poste |
+| domain_id            | int unsigned | Référence vers le domaine d'identification des utilisateurs |
+| user_id              | int unsigned | Référence vers les utilisateurs du poste si intégrés au domaine |
+| other_user           | int unsigned | Utilisateurs du poste, si non intégrés au domaine |
+| manufacturer         | varchar(255) | Fabriquant du poste |
+| model                | varchar(255) | Modèle du poste |
+| serial_number        | varchar(255) | Numéro de série |
+| cpu                  | varchar(255) | Processeur(s) du poste |
+| memory               | varchar(255) | RAM / mémoive vive du poste |
+| disk                 | int signed   | Quantité de stockage interne du poste |
+| operating_system     | varchar(255) | Système d'exploitaion du poste |
+| network_id           | int unsigned | Référence vers le réseau d'appartenance du poste |
+| address_ip           | varchar(255) | Adresse(s) IP du poste |
+| mac_address          | varchar(255) | Adresse(s) MAC / physique(s) du poste |
+| network_port_type    | varchar(255) | Format du connecteur réseau (RJ45, USB, SFP, etc.) |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les applications rattachées à un poste de travail.\
+Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.
+
+Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans l'application pour la table *workstations* ont été regroupés dans le tableau suivant :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
+| warranty             | varchar(255) | Contrat de garantie |
+| warranty_start_date  | date         | Date de début de la garantie |
+| warranty_end_date    | date         | Date de fin de la garantie |
+| warranty_period      | date         | Période de garantie |
+| purchase_date        | date         | Date d'achat |
+| fin_value            | decimal      | Valeur financière. Borne sup. : $10^{11}$ | 
+| last_inventory_date  | date         | Date du dernier inventaire |
+| update_source        | varchar(255) | Source de la mise à jour / inventaire |
+| agent_version        | varchar(255) | Version de l'agent d'inventaire |
+| physical_swicth_id   | int unsigned | Référence vers le commutateur physique|
 
 #### Infrastructures de stockage
 
@@ -820,12 +892,20 @@ Table *storage_devices* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de l'infrastructure de stockage |
+| type                 | varchar(255) | Type de l'infractructure de stockage |
 | description          | longtext     | Description de l'infrastructure de stockage |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
+| address_ip           | varchar(255) | Adresse IP de l'infrastructure de stockage |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.
 
 #### Périphériques
 
@@ -839,12 +919,23 @@ Table *peripherals* :
 | name                 | varchar(255) | Nom du périphérique |
 | description          | longtext     | Description du périphérique |
 | type                 | varchar(255) | Type / modèle du périphérique |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
+| responsible          | varchar(255) | Responsable interne de la gestion de l'équipement |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | bay_id               | int unsigned | Référence vers la baie |
+| address_ip           | varchar(255) | Adresse IP de l'équipement |
+| domain               | varchar(255) | Domaine général d'appartenance (IT, OT, IOT, etc.) |
+| provider_id          | int unsigned | Référence vers l'entité fournisseuse |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les applications utilisant un périphérique.\
+Dans l'application, un périphérique peut être rattaché à une application depuis un objet périphérique.
 
 #### Téléphones
 
@@ -855,12 +946,20 @@ Les téléphones fixes ou portables appartenant à l’organisation.
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du téléphone |
 | description          | longtext     | Description du téléphone |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle du téléphone |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| physical_switch_id   | int unsigned | Référence vers le commutateur physique |
+| address_ip           | varchar(255) | Adresse IP du téléphone |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.\
+Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien physique.
 
 #### Commutateurs physiques
 
@@ -873,12 +972,20 @@ Table *physical_switches* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du commutateur physique |
 | description          | longtext     | Description du commutateur physique |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle du commutateur physique |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | unsigned int | Référence vers la baie |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
+L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.\
+Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs réseau") depuis ces deux types d'objets.
 
 #### Routeurs physiques
 
@@ -891,12 +998,21 @@ Table *physical_routers* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du routeur physique |
 | description          | longtext     | Description du routeur physique |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle du routeur physique |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
+L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.\
+Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux types d'objets.\
+Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.
 
 #### Bornes WiFi
 
@@ -909,7 +1025,11 @@ Table *wifi_terminals* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de la borne wifi |
 | description          | longtext     | Description de la bornes wifi |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle de la bornes wifi |
+| address_ip           | varchar(255) | Adresse IP de la borne wifi |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | created_at           | timestamp    | Date de création |
@@ -928,13 +1048,53 @@ Table *physical_security_devices* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de l'équipement de sécurité |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | description          | longtext     | Description de l'équipement de sécurité |
 | type                 | varchar(255) | Type / modèle de l'équipement de sécurité |
+| attributes           | varchar(255) | Attributs (#tags...)|
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
+| address_ip           | varchar(255) | Adresse(s) IP de l'équipement |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité physiques.\
+Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux types d'objets.
+
+#### Liens physiques
+
+Table *physical_links* :
+
+Principe général :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| *device*_src_id      | int unsigned | Actif source |
+| src_id               | varchar(255) | Port physique de l'actif source |
+| *device*_dst_id      | int unsigned | Actif de destination |
+| dst_port             | varchar(255) | Port physique de l'actif de destination |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+Les actifs sources et destination peuvent être :
+| Actif                           | Source   | Destination  |
+|:--------------------------------|:---------|:-------------|
+| Périphérique                    | oui | oui |
+| Téléphone                       | oui | oui |
+| Routeur physique                | oui | oui |
+| Equipement de sécurité physique | oui | oui |
+| Serveur physique                | oui | oui |
+| Commutateur physique            | oui | oui |
+| Infrastructure de stockage      | oui | oui |
+| Borne Wifi                      | oui | oui |
+| Poste de travail                | oui | oui |
+| Serveur logique                 | oui | oui |
+| Commutateur logique             | oui | oui |
+| Routeur logique                 | oui | oui |
 
 #### WAN
 
@@ -950,6 +1110,8 @@ Table *wans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les MAN et LAN rattachés à un WAN.\
+Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.
 
 #### MAN
 
@@ -965,6 +1127,10 @@ Table *mans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les WAN et LAN rattachés à un MAN.\
+Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.\
+Un LAN peut être rattaché à un MAN depuis les objets MAN.
+
 #### LAN
 
 Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.
@@ -975,7 +1141,10 @@ Table *lans* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du LAN |
-| description          | longtext     | Description du LAN |
+| description          | varchar(255) | Description du LAN |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.\
+Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
