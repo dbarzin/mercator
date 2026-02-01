@@ -1065,6 +1065,11 @@ Dans l'application, un équipement de sécurité physique peut être rattaché �
 
 #### Liens physiques
 
+Les liens physiques représentent les câbles entre les objets physiques ou logiques.  
+Les objets logiques peuvent disposer de liens physiques, par exemple au sein d'un réseau virtualisé.  
+Un lien physique est différent d'un flux logique. Un lien physique décrit une relation au niveau des couches 1 ou 2 du modèle OSI.  
+Un flux logique écrit une relation au niveau des couches 3 et 4 du modèle OSI.
+
 Table *physical_links* :
 
 Principe général :
@@ -1073,16 +1078,16 @@ Principe général :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | *device*_src_id      | int unsigned | Actif source |
-| src_id               | varchar(255) | Port physique de l'actif source |
+| src_port             | varchar(255) | Port physique ou logique de l'actif source |
 | *device*_dst_id      | int unsigned | Actif de destination |
-| dst_port             | varchar(255) | Port physique de l'actif de destination |
+| dst_port             | varchar(255) | Port physique ou logique de l'actif de destination |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
 Les actifs sources et destination peuvent être :
 
-| Actif                           | Source   | Destination  |
+| Actif (*device*)                | Source   | Destination  |
 |:--------------------------------|:---------|:-------------|
 | Périphérique                    | oui      | oui |
 | Téléphone                       | oui      | oui |
