@@ -950,6 +950,9 @@ Table *wans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les MAN et LAN rattachés à un WAN.
+
+Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.
 
 #### MAN
 
