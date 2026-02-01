@@ -891,12 +891,21 @@ Table *physical_routers* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du routeur physique |
 | description          | longtext     | Description du routeur physique |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle du routeur physique |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment.\
+L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.\
+Dans l'application, un routeur physique peut être rattaché à un routeur logique depuis ces deux types d'objets.\
+Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.
 
 #### Bornes WiFi
 
@@ -944,9 +953,8 @@ Table *physical_security_devices* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité physiques.
-
-Dans m'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux types d'objets.
+L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité physiques.\
+Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux types d'objets.
 
 #### WAN
 
@@ -962,8 +970,7 @@ Table *wans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les MAN et LAN rattachés à un WAN.
-
+L'export du modèle de données référence les MAN et LAN rattachés à un WAN.\
 Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.
 
 #### MAN
@@ -980,9 +987,9 @@ Table *mans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les WAN et LAN rattachés à un MAN.
-
-Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN. Un LAN peut être rattaché à un MAN depuis les objets MAN.
+L'export du modèle de données référence les WAN et LAN rattachés à un MAN.\
+Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.\
+Un LAN peut être rattaché à un MAN depuis les objets MAN.
 
 #### LAN
 
@@ -999,6 +1006,5 @@ Table *lans* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.
-
+L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.\
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
