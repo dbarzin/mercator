@@ -801,14 +801,51 @@ Table *workstations* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du poste de travail |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| status               | varchar(255) | Status du poste (cyle de vie, incident) |
 | description          | longtext     | Description du poste de travail |
 | type                 | varchar(255) | Type / modèle du poste de travail |
+| entity_id            | int unsigned | Référence vers l'entité utilisatrice du poste |
+| domain_id            | int unsigned | Référence vers le domaine d'identification des utilisateurs |
+| user_id              | int unsigned | Référence vers les utilisateurs du poste si intégrés au domaine |
+| other_user           | int unsigned | Utilisateurs du poste, si non intégrés au domaine |
+| manufacturer         | varchar(255) | Fabriquant du poste |
+| model                | varchar(255) | Modèle du poste |
+| serial_number        | varchar(255) | Numéro de série |
+| cpu                  | varchar(255) | Processeur(s) du poste |
+| memory               | varchar(255) | RAM / mémoive vive du poste |
+| disk                 | int signed   | Quantité de stockage interne du poste |
+| operating_system     | varchar(255) | Système d'exploitaion du poste |
+| network_id           | int unsigned | Référence vers le réseau d'appartenance du poste |
+| address_ip           | varchar(255) | Adresse(s) IP du poste |
+| mac_address          | varchar(255) | Adresse(s) MAC / physique(s) du poste |
+| network_port_type    | varchar(255) | Format du connecteur réseau (RJ45, USB, SFP, etc.) |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les applications utilisant un poste de travail.\
+Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.
+
+Pour une question de lisibilité, les champs définis mais inutilisés pour le moment dans l'application pour la table "workstations" ont été regroupés dans le tableau suivant :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
+| warranty             | varchar(255) | Contrat de garantie |
+| warranty_start_date  | datetime     | Date de début de la garantie |
+| warranty_end_date    | datetime     | Date de fin de la garantie |
+| warranty_period      | datetime     | Période de garantie |
+| purchase_date        | datetime     | Date d'achat |
+| fin_value            | decimal      | Valeur financière. Borne sup. : `$`10^11`$` | 
+| last_inventory_date  | datetime     | Date du dernier inventaire |
+| update_source        | varchar(255) | Source de la mise à jour / inventaire |
+| agent_version        | varchar(255) | Version de l'agent d'inventaire |
+| physical_swicth_id   | int unsigned | Référence vers le commutateur physique|
 
 #### Infrastructures de stockage
 
