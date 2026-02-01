@@ -855,12 +855,20 @@ Les téléphones fixes ou portables appartenant à l’organisation.
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du téléphone |
 | description          | longtext     | Description du téléphone |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | type                 | varchar(255) | Type / modèle du téléphone |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| physical_switch_id   | int unsigned | Référence vers le commutateur physique |
+| address_ip           | varchar(255) | Adresse IP du téléphone |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.\
+Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien phyique.
 
 #### Commutateurs physiques
 
@@ -884,7 +892,7 @@ Table *physical_switches* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et donc absent dans l'application.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
 L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.\
 Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs réseau") depuis ces deux types d'objets.
 
@@ -910,7 +918,7 @@ Table *physical_routers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et donc absent dans l'application.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
 L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.\
 Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux types d'objets.\
 Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.
