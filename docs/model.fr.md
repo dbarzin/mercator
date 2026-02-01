@@ -876,7 +876,7 @@ Pour une question de lisibilité, les champs définis dans le modèle de donnée
 | warranty_end_date    | date         | Date de fin de la garantie |
 | warranty_period      | date         | Période de garantie |
 | purchase_date        | date         | Date d'achat |
-| fin_value            | decimal      | Valeur financière. Borne sup. : `$`10^11`$` | 
+| fin_value            | decimal      | Valeur financière. Borne sup. : $10^11$ | 
 | last_inventory_date  | date         | Date du dernier inventaire |
 | update_source        | varchar(255) | Source de la mise à jour / inventaire |
 | agent_version        | varchar(255) | Version de l'agent d'inventaire |
@@ -1062,6 +1062,39 @@ Table *physical_security_devices* :
 
 L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité physiques.\
 Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux types d'objets.
+
+#### Liens physiques
+
+Table *physical_links* :
+
+Principe général :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| *device*_src_id      | int unsigned | Actif source |
+| src_id               | varchar(255) | Port physique de l'actif source |
+| *device*_dst_id      | int unsigned | Actif de destination |
+| dst_port             | varchar(255) | Port physique de l'actif de destination |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+Les actifs sources et destination peuvent être :
+| Actif                           | Source   | Destination  |
+|:--------------------------------|:---------|:-------------|
+| Périphérique                    | oui | oui |
+| Téléphone                       | oui | oui |
+| Routeur physique                | oui | oui |
+| Equipement de sécurité physique | oui | oui |
+| Serveur physique                | oui | oui |
+| Commutateur physique            | oui | oui |
+| Infrastructure de stockage      | oui | oui |
+| Borne Wifi                      | oui | oui |
+| Poste de travail                | oui | oui |
+| Serveur logique                 | oui | oui |
+| Commutateur logique             | oui | oui |
+| Routeur logique                 | oui | oui |
 
 #### WAN
 
