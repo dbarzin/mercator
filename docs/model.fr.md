@@ -712,11 +712,15 @@ Table *vlans* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du VLAN |
-| description          | longtext     | Description du VLAN |
+| description          | varchar(255) | Description du VLAN |
+| vlan_id              | int signed   | Numéro du VLAN |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les routeurs physiques et les commutateurs logiques ("commutateurs réseau") rattachés à un VLAN.
+Dans l'application, un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.  
+Dans l'application, un VLAN peut être rattaché à un sous-réseau ou un commutateur logique depuis ces deux objets.
 
 ### L’infrastructure physique
 
