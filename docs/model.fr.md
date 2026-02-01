@@ -839,12 +839,23 @@ Table *peripherals* :
 | name                 | varchar(255) | Nom du périphérique |
 | description          | longtext     | Description du périphérique |
 | type                 | varchar(255) | Type / modèle du périphérique |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
+| responsible          | varchar(255) | Responsable interne de la gestion de l'équipement |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | bay_id               | int unsigned | Référence vers la baie |
+| address_ip           | varchar(255) | Adresse IP de l'équipement |
+| domain               | varchar(255) | Domaine général d'appartenance (IT, OT, IOT, etc.) |
+| provider_id          | int unsigned | Référence vers l'entité fournisseuse |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les applications utilisant un périphérique.\
+Dans l'application, un périphérique peut être rattaché à une application depuis un objet périphérique.
 
 #### Téléphones
 
@@ -957,7 +968,7 @@ Table *physical_security_devices* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de l'équipement de sécurité |
-| icon_id              | int unsigned | Référence vers une image |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | description          | longtext     | Description de l'équipement de sécurité |
 | type                 | varchar(255) | Type / modèle de l'équipement de sécurité |
 | attributes           | varchar(255) | Attributs (#tags...)|
