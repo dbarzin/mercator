@@ -928,10 +928,14 @@ Table *physical_security_devices* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de l'équipement de sécurité |
+| icon_id              | int unsigned | Référence vers une image |
 | description          | longtext     | Description de l'équipement de sécurité |
 | type                 | varchar(255) | Type / modèle de l'équipement de sécurité |
+| attributes           | varchar(255) | Attributs (#tags...)|
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
+| address_ip           | varchar(255) | Adresse(s) IP de l'équipement |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
