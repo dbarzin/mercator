@@ -753,6 +753,26 @@ Un conteneur peut être rattaché à un serveur logique depuis un objet conteneu
 
 Le champ "documents" ne semble pas utilisé dans le modèle de données d'un serveur logique.
 
+#### Conteneurs
+
+Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément, sur des serveurs logiques internes ou externes (cloud).
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du conteneur |
+| description          | longtext     | Description du conteneur |
+| type                 | varchar(255) | Type du conteneur (docker, kubernetes, etc.) |
+| icon_id              | int unsigned | Référence vers une image spécifique |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les applications, les bases de données et les serveurs logiques rattachés à un conteneur.  
+Dans l'application, une application peut être rattachée à un conteneur depuis ces deux objets.  
+Une base de données peut être rattachée à un conteneur depuis ces deux objets.  
+Un serveur logique peut être rattaché à un conteneur depuis un objet conteneur.
+
 #### Certificats
 
 Les certificats électroniques sont utilisés pour identifier et authentifier des services, des personnes physiques ou morales, mais aussi pour chiffrer des échanges.  
