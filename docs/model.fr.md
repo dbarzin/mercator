@@ -757,6 +757,8 @@ Le champ "documents" ne semble pas utilisé dans le modèle de données d'un ser
 
 Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément, sur des serveurs logiques internes ou externes (cloud).
 
+Table *containers* :
+
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
@@ -772,6 +774,50 @@ L'export du modèle de données référence les applications, les bases de donn�
 Dans l'application, une application peut être rattachée à un conteneur depuis ces deux objets.  
 Une base de données peut être rattachée à un conteneur depuis ces deux objets.  
 Un serveur logique peut être rattaché à un conteneur depuis un objet conteneur.
+
+#### Flux logiques
+
+Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.  
+
+Table *logical_flows* :
+
+Principe général :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du flux logique |
+| description          | text         | Description du flux logique |
+| chain                | varchar(255) | INPUT / OUTPUT / FORWARD |
+| interface            | varchar(255) | interface réseau concernée |
+| router_id            | int unsigned | Lien vers le routeur implémentant le flux |
+| priority             | int signed   | Priorité de la règle / du flux |
+| action               | varchar(255) | Action de la règle (autoriser, refuser, etc.) |
+| protocol             | varchar(255) | Protocole(s) dans le flux |
+| source_ip_range      | varchar(255) | Plage IP source |
+| dest_ip_range        | varchar(255) | Plage IP de destination |
+| source_port          | varchar(255) | Port logique source |
+| dest_port            | varchar(255) | Port logique de destination |
+| *device*_source_id   | int unsigned | Actif source |
+| *device*_dest_id     | int unsigned | Actif de destination |
+| users                | varchar(255) | Utilisateurs concernés par la règle / le flux |
+| schedule             | varchar(255) | Période d'activité de la règle / du flux |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+Les actifs sources et destination peuvent être :
+
+| Actif (*device*)                | Source   | Destination  |
+|:--------------------------------|:---------|:-------------|
+| Périphérique                    | oui      | oui |
+| Equipement de sécurité physique | oui      | oui |
+| Serveur physique                | oui      | oui |
+| Infrastructure de stockage      | oui      | oui |
+| Poste de travail                | oui      | oui |
+| Equipement de sécurité logique  | oui      | oui |
+| Serveur logique                 | oui      | oui |
+| Sous-réseaux                    | oui      | oui |
 
 #### Certificats
 
@@ -1179,7 +1225,7 @@ Dans l'application, un équipement de sécurité physique peut être rattaché �
 Les liens physiques représentent les câbles entre les objets physiques ou logiques.  
 Les objets logiques peuvent disposer de liens physiques, par exemple au sein d'un réseau virtualisé.  
 Un lien physique est différent d'un flux logique. Un lien physique décrit une relation au niveau des couches 1 ou 2 du modèle OSI.  
-Un flux logique écrit une relation au niveau des couches 3 et 4 du modèle OSI.
+Un flux logique décrit une relation au niveau des couches 3 et 4 du modèle OSI.
 
 Table *physical_links* :
 
