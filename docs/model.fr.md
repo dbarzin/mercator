@@ -487,9 +487,13 @@ Table *networks* :
 | security_need_i | int          | Intégrité |
 | security_need_a | int          | Disponibilité |
 | security_need_t | int          | Traçabilité |
+| security_need_auth | int       | Authentification |
 | created_at      | timestamp    | Date de création |
 | updated_at      | timestamp    | Date de mise à jour |
 | deleted_at      | timestamp    | Date de suppression |
+
+Dans l'application, le besoin en authentification est masqué par défaut. Il est obligatoire dans le cas d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'actif depuis le menu Configuration > Paramètres.
 
 #### Sous-réseaux
 
@@ -502,20 +506,23 @@ table *subnetworks* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du réseau |
 | description          | longtext     | Description du réseau |
+| network_id           | int unsigned | Lien vers le réseau associé |
+| subnetwork_id        | int unsigned | Sous-réseaux connectés |
+| connected_subnets_id | int unsigned | Sous-réseaux connectés |
 | address              | varchar(255) | Plage d'adresse du sous-réseau |
 | default_gateway      | varchar(255) | Adresse de la passerelle par défaut |
+| gateway_id           | int unsigned | Lien vers la passerelle |
+| vlan_id              | int unsigned | Lien vers le VLAN associé |
 | ip_allocation_type   | varchar(255) | Type d'allocation des adresses |
-| responsible_exp      | varchar(255) | Responsable de l'exploitation |
 | zone                 | varchar(255) | Nom de la zone firewall associée |
 | dmz                  | varchar(255) | Zone démilitarisée |
 | wifi                 | varchar(255) | Réseau WiFi |
-| connected_subnets_id | int unsigned | Sous-réseaux connectés |
-| gateway_id           | int unsigned | Lien vars la passerelle |
-| vlan_id              | int unsigned | Lien vers le VLAN associé |
-| network_id           | int unsigned | Lien vers le réseau associé |
+| responsible_exp      | varchar(255) | Responsable de l'exploitation |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Le champ "connected_subnets_id" sert à définir une clé étrangère. Cependant, celle-ci ne semble pas utilisée.
 
 #### Passerelles d’entrées depuis l’extérieur
 
@@ -528,12 +535,13 @@ Table *gateways* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de la passerelle |
 | description          | longtext     | Description de la passerelle |
-| ip                   | varchar(255) | Adress IP de la passerelle |
+| ip                   | varchar(255) | Adresse(s) IP publique et privée de la passerelle |
 | authentification     | varchar(255) | Mode d'authentification |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+Dans l'application, un sous-réseau peut être rattaché à une passerelle depuis ces objets.
 
 #### Entités extérieures connectées
 
