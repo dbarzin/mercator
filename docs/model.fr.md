@@ -545,13 +545,23 @@ Table *external_connected_entities* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de l'entité |
-| description          | longtext     | Description de l'entié |
-| responsible_sec      | varchar(255) | Responsable de la sécurité de l'entité |
+| type                 | varchar(255) | Type de connexion |
+| description          | longtext     | Raison de la connexion de l'entité |
+| entity_id            | int unsigned | Référence vers l'entité extérieure connectée |
+| network_id           | int unsigned | Référence vers le réseau interne connecté à l'entité |
 | contacts             | varchar(255) | Contacts de l'entité |
+| src                  | varchar(255) | Adresse(s) IP de connexion de l'entité |
+| src_desc             | varchar(255) | Description de la source de la connexion de l'entité |
+| dst                  | varchar(255) | Adresse(s) IP ou plage de destination de la connexion |
+| dst_desc             | varchar(255) | Description de la description de la connexion de l'entité |
+| security             | text         | Exigences de sécurité du système |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les sous-réseaux et documents rattachés à une entité extérieure connectées.  
+Dans l'application, un sous-réseau peut être rattaché à une entité extérieure connectée depuis un objet entité extérieure connectée.  
+Un document peut être rattaché à une entité extérieure connectée depuis un objet entité extérieure connectée.
 
 #### Commutateurs réseau
 
