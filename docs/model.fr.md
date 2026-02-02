@@ -461,6 +461,57 @@ Table *forest_ads* :
 | updated_at            | timestamp    | Date de mise à jour |
 | deleted_at            | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les domaines rattachés à une forêt AD / Arborescence LDAP.  
+Dans l'application, un domaine peut être rattaché à une forêt AD / arborescence LDAP depuis ces deux objets.
+
+
+#### Domaines Active Directory / LDAP
+
+Les domaines Active Directory / LDAP sont des annuaires informatique d'entreprise. Ils contiennent les comptes utilisateurs et machines, les contacts, une partie des configurations de la gestion des SI (politiques de groupes, GPO, par exemple) ainsi que les droits des objets.
+
+Table *domaines_ads* :
+
+| Champ                 | Type         | Description      |
+|:----------------------|:-------------|:-----------------|
+| id                    | int unsigned | auto_increment |
+| name                  | varchar(255) | Nom du domaine AD / LDAP |
+| description           | longtext     | Description du domaine |
+| domain_ctrl_cnt       | int signed   | Nombre de contrôleurs de domaine |
+| user_count            | int signed   | Nombre d'utilisateurs du domaine |
+| machine_count         | int signed   | Nombre de machines du domaine |
+| relation_inter_domaine | varchar(255) | Description des relations inter-domaines |
+| created_at            | timestamp    | Date de création |
+| updated_at            | timestamp    | Date de mise à jour |
+| deleted_at            | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les forêts AD / arborescence LDAP rattachées à un domaine AD / LDAP.  
+Dans l'application, une forêt AD / arborescence LDAP peut être rattachée à un domaine AD / LDAP depuis ces deux objets.  
+Un serveur logique peut être rattaché à un domaine AD / LDAP depuis ces deux objets.
+
+#### Utilisateurs
+
+Les utilisateurs représentent les comptes ayant des droits privilégiés sur les SI.
+
+Table *admin_users* :
+
+| Champ                 | Type         | Description      |
+|:----------------------|:-------------|:-----------------|
+| id                    | int unsigned | auto_increment |
+| user_id               | varchar(255) | ID unique / matricule / autre d'un utilisateur | 
+| firstname             | varchar(255) | Prénom d'un utilisateur |
+| lastname              | varchar(255) | Nom d'un utilisateur |
+| type                  | varchar(255) | Type d'un utilisateur |
+| attributes            | varchar(255) | Attribut d'un utilisateur |
+| icon_id               | int unsigned | Référence vers une image spécifique |
+| description           | longtext     | Description de l'utilisateur |
+| domain_id             | int unsigned | Référence vers le domaine d'appartenance |
+| created_at            | timestamp    | Date de création |
+| updated_at            | timestamp    | Date de mise à jour |
+| deleted_at            | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les applications dont un utilisateur est administrateur.  
+Dans l'application, un utilisateur peut être défini comme administrateur d'une application depuis un objet application.
+
 ### L’infrastructure logique
 
 La vue de l'infrastructure logique correspond à la répartition logique du réseau.
