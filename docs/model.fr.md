@@ -569,6 +569,10 @@ Table *network_switches* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les commutateurs physiques et les VLAN rattachés à un commutateur réseau.  
+Dans l'application, un VLAN peut être rattaché à un commutateur réseau depuis ces deux objets.  
+Un commutateur physique peut être rattaché à un commutateur réseau depuis ces deux objets.
+
 #### Routeurs logiques
 
 Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.
