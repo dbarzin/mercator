@@ -597,10 +597,22 @@ Table *security_devices* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom de l'équipement |
+| type                 | varchar(255) | Type de l'équipement |
+| attributes           | varchar(255) | Attributs de l'équipement |
+| icon_id              | int unsigned | Référence vers une image spécifique |
 | description          | longtext     | Description de l'équipement |
+| address_ip           | varchar(255) | Adresse(s) IP de l'équipement |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
+| version              | varchar(255) | Version d'un produit pour recherche CPE |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.  
+L'export du modèle de données référence les équipements de sécurité physiques et les applications rattachées à un équipement de sécurité logique.  
+Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux objets.
+Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.
 
 #### Serveurs DHCP
 
