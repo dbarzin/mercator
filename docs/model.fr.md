@@ -487,12 +487,12 @@ Table *networks* :
 | security_need_i | int          | Intégrité |
 | security_need_a | int          | Disponibilité |
 | security_need_t | int          | Traçabilité |
-| security_need_auth | int       | Authentification |
+| security_need_auth | int       | Authenticité |
 | created_at      | timestamp    | Date de création |
 | updated_at      | timestamp    | Date de mise à jour |
 | deleted_at      | timestamp    | Date de suppression |
 
-Dans l'application, le besoin en authentification est masqué par défaut. Il est obligatoire dans le cas d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas d'une entité soumise à la directive UE 2022/2554 (DORA).  
 Il s'actif depuis le menu Configuration > Paramètres.
 
 #### Sous-réseaux
