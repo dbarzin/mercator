@@ -493,7 +493,7 @@ Table *networks* :
 | deleted_at      | timestamp    | Date de suppression |
 
 Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas d'une entité soumise à la directive UE 2022/2554 (DORA).  
-Il s'actif depuis le menu Configuration > Paramètres.
+Il s'active depuis le menu Configuration > Paramètres.
 
 #### Sous-réseaux
 
@@ -734,6 +734,7 @@ Table *logical_servers* :
 
 Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absents de l'application.  
 L'export du modèle de données référence : 
+
 - les applications,
 - les serveurs physiques,
 - les documents,
