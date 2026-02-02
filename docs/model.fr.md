@@ -579,11 +579,16 @@ Table *routers* :
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du routeur |
+| type                 | varchar(255) | Type du routeur |
+| ip_addresses         | text         | Adresse(s) IP du routeur |
 | description          | longtext     | Description du routeur |
 | rules                | longtext     | Règles de filtrage |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+L'export du modèle de données référence les routeurs physiques rattachés à un routeur logique.  
+Dans l'application, un routeur physique peut être rattaché à un routeur logique depuis ces deux objets.
 
 #### Équipements de sécurité
 
@@ -611,7 +616,7 @@ Table *security_devices* :
 
 Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.  
 L'export du modèle de données référence les équipements de sécurité physiques et les applications rattachées à un équipement de sécurité logique.  
-Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux objets.
+Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces deux objets.  
 Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.
 
 #### Serveurs DHCP
