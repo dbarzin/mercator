@@ -365,22 +365,38 @@ Une base de données est un ensemble structuré et ordonné d’informations des
 
 Table *databases* :
 
-| Champ           | Type         | Description                      |
-|:----------------|:-------------|:---------------------------------|
-| id              | int unsigned | auto_increment                   |
-| name            | varchar(255) | Nom du service applicatif        |
-| description     | longtext     | Description du module applicatif |
-| responsible     | varchar(255) | Responsable de l'application     |
-| type            | varchar(255) | Responsable de l'application     |
-| security_need_c | int          | Confidentialité                  |
-| security_need_i | int          | Intégrité                        |
-| security_need_a | int          | Disponibilité                    |
-| security_need_t | int          | Traçabilité                      |
-| external        | varchar(255) | Externe                          |
-| entity_resp_id  | int unsigned | Entité responsable               |
-| created_at      | timestamp    | Date de création                 |
-| updated_at      | timestamp    | Date de mise à jour              |
-| deleted_at      | timestamp    | Date de suppression              |
+| Champ              | Type         | Description                               |
+|:-------------------|:-------------|:------------------------------------------|
+| id                 | int unsigned | auto_increment                            |
+| name               | varchar(255) | Nom de la base de données                 |
+| description        | longtext     | Description de la base de données         |
+| type               | varchar(255) | Type de technologie de la base de données |
+| entity_resp_id     | int unsigned | Entité responsable de la base de données  |
+| responsible        | varchar(255) | Responsable SSI de la base de données     |
+| security_need_c    | int          | Confidentialité                           |
+| security_need_i    | int          | Intégrité                                 |
+| security_need_a    | int          | Disponibilité                             |
+| security_need_t    | int          | Traçabilité                               |
+| security_need_auth | int          | Authenticité                              |
+| external           | varchar(255) | Externe                                   |
+| created_at         | timestamp    | Date de création                          |
+| updated_at         | timestamp    | Date de mise à jour                       |
+| deleted_at         | timestamp    | Date de suppression                       |
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres.   
+
+L'export du modèle de données référence l'image spécifique d'une base de données.  
+Dans l'application, une image spécifique peut être rattachée à une base de données depuis un objet base de données.  
+
+L'export du modèle de données référence les entités utilisatrices, les applications, les informations, les serveurs 
+logiques et les conteneurs rattachés à une base de données.  
+Dans l'application, une entité utilisatrice peut être rattachée à une base de données depuis un objet base de données.  
+Dans l'application, une information peut être rattachée à une base de données depuis un objet base de données.  
+Dans l'application, une application peut être rattachée à une base de données depuis ces deux objets.  
+Dans l'application, un serveur logique peut être rattaché à une base de données depuis ces deux objets.  
+Dans l'application, un conteneur peut être rattaché à une base de données depuis ces deux objets.
 
 #### Flux
 
