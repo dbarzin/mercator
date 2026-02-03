@@ -359,6 +359,9 @@ Table *application_modules* :
 | updated_at  | timestamp    | Date de mise à jour              |
 | deleted_at  | timestamp    | Date de suppression              |
 
+L'export du modèle de données référence les services applicatifs rattachés à un module applicatif.  
+Dans l'application, un service applicatif peut être rattaché à un module applicatif depuis ces deux objets.
+
 #### Base de données
 
 Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.
@@ -390,8 +393,8 @@ Il s'active depuis le menu Configuration > Paramètres.
 L'export du modèle de données référence l'image spécifique d'une base de données.  
 Dans l'application, une image spécifique peut être rattachée à une base de données depuis un objet base de données.  
 
-L'export du modèle de données référence les entités utilisatrices, les applications, les informations, les serveurs 
-logiques et les conteneurs rattachés à une base de données.  
+L'export du modèle de données référence les entités utilisatrices (champ *entities*), les applications, les informations,
+les serveurs logiques et les conteneurs rattachés à une base de données.  
 Dans l'application, une entité utilisatrice peut être rattachée à une base de données depuis un objet base de données.  
 Dans l'application, une information peut être rattachée à une base de données depuis un objet base de données.  
 Dans l'application, une application peut être rattachée à une base de données depuis ces deux objets.  
