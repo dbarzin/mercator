@@ -1014,84 +1014,63 @@ digraph  {
 @endforeach
 
 @foreach($physicalLinks as $link)
-    @if (
-    // Virtual objects
-    ($link->router_src_id === null) &&
-    ($link->router_dest_id === null) &&
-    ($link->logical_server_src_id === null) &&
-    ($link->logical_server_dest_id === null) &&
-    ($link->network_switch_src_id === null) &&
-    ($link->network_switch_dest_id === null) &&
+        <?php
+        // Déterminer la source
+        $srcNode = null;
+        if($link->peripheral_src_id && $peripherals->contains("id", $link->peripheral_src_id)) {
+            $srcNode = "PER{$link->peripheral_src_id}";
+        } elseif($link->physical_router_src_id && $physicalRouters->contains("id", $link->physical_router_src_id)) {
+            $srcNode = "ROUTER{$link->physical_router_src_id}";
+        } elseif($link->phone_src_id && $phones->contains("id", $link->phone_src_id)) {
+            $srcNode = "PHONE{$link->phone_src_id}";
+        } elseif($link->physical_security_device_src_id && $physicalSecurityDevices->contains("id", $link->physical_security_device_src_id)) {
+            $srcNode = "PSD{$link->physical_security_device_src_id}";
+        } elseif($link->physical_server_src_id && $physicalServers->contains("id", $link->physical_server_src_id)) {
+            $srcNode = "PSERVER{$link->physical_server_src_id}";
+        } elseif($link->physical_switch_src_id && $physicalSwitches->contains("id", $link->physical_switch_src_id)) {
+            $srcNode = "SWITCH{$link->physical_switch_src_id}";
+        } elseif($link->storage_device_src_id && $storageDevices->contains("id", $link->storage_device_src_id)) {
+            $srcNode = "SD{$link->storage_device_src_id}";
+        } elseif($link->wifi_terminal_src_id && $wifiTerminals->contains("id", $link->wifi_terminal_src_id)) {
+            $srcNode = "WIFI{$link->wifi_terminal_src_id}";
+        } elseif($link->workstation_src_id && $workstations->contains("id", $link->workstation_src_id)) {
+            $srcNode = "WORK{$link->workstation_src_id}";
+        }
 
-    // Physical Objects
-    (($link->peripheral_src_id === null) || ($peripherals->contains("id",$link->peripheral_src_id))) &&
-    (($link->peripheral_dest_id === null) || ($peripherals->contains("id",$link->peripheral_dest_id))) &&
+        // Déterminer la destination
+        $destNode = null;
+        if($link->peripheral_dest_id && $peripherals->contains("id", $link->peripheral_dest_id)) {
+            $destNode = "PER{$link->peripheral_dest_id}";
+        } elseif($link->physical_router_dest_id && $physicalRouters->contains("id", $link->physical_router_dest_id)) {
+            $destNode = "ROUTER{$link->physical_router_dest_id}";
+        } elseif($link->phone_dest_id && $phones->contains("id", $link->phone_dest_id)) {
+            $destNode = "PHONE{$link->phone_dest_id}";
+        } elseif($link->physical_security_device_dest_id && $physicalSecurityDevices->contains("id", $link->physical_security_device_dest_id)) {
+            $destNode = "PSD{$link->physical_security_device_dest_id}";
+        } elseif($link->physical_server_dest_id && $physicalServers->contains("id", $link->physical_server_dest_id)) {
+            $destNode = "PSERVER{$link->physical_server_dest_id}";
+        } elseif($link->physical_switch_dest_id && $physicalSwitches->contains("id", $link->physical_switch_dest_id)) {
+            $destNode = "SWITCH{$link->physical_switch_dest_id}";
+        } elseif($link->storage_device_dest_id && $storageDevices->contains("id", $link->storage_device_dest_id)) {
+            $destNode = "SD{$link->storage_device_dest_id}";
+        } elseif($link->wifi_terminal_dest_id && $wifiTerminals->contains("id", $link->wifi_terminal_dest_id)) {
+            $destNode = "WIFI{$link->wifi_terminal_dest_id}";
+        } elseif($link->workstation_dest_id && $workstations->contains("id", $link->workstation_dest_id)) {
+            $destNode = "WORK{$link->workstation_dest_id}";
+        }
 
-    (($link->physical_router_src_id === null) || ($physicalRouters->contains("id",$link->physical_router_src_id))) &&
-    (($link->physical_router_dest_id === null) || ($physicalRouters->contains("id",$link->physical_router_dest_id))) &&
+        // Vérifier qu'on a bien une source ET une destination, et pas de liens virtuels
+        $isPhysicalLink =
+            $link->router_src_id === null &&
+            $link->router_dest_id === null &&
+            $link->logical_server_src_id === null &&
+            $link->logical_server_dest_id === null &&
+            $link->network_switch_src_id === null &&
+            $link->network_switch_dest_id === null;
+        ?>
 
-    (($link->phone_src_id === null) || ($phones->contains("id",$link->phone_src_id))) &&
-    (($link->phone_dest_id === null) || ($phones->contains("id",$link->phone_dest_id))) &&
-
-    (($link->physical_security_device_src_id === null) || ($physicalSecurityDevices->contains("id",$link->physical_security_device_src_id))) &&
-    (($link->physical_security_device_dest_id === null) || ($physicalSecurityDevices->contains("id",$link->physical_security_device_dest_id))) &&
-
-    (($link->physical_server_src_id === null) || ($physicalServers->contains("id",$link->physical_server_src_id))) &&
-    (($link->physical_server_dest_id === null) || ($physicalServers->contains("id",$link->physical_server_dest_id))) &&
-
-    (($link->physical_switch_src_id === null) || ($physicalSwitches->contains("id",$link->physical_switch_src_id))) &&
-    (($link->physical_switch_dest_id === null) || ($physicalSwitches->contains("id",$link->physical_switch_dest_id))) &&
-
-    (($link->storage_device_src_id === null) || ($storageDevices->contains("id",$link->storage_device_src_id))) &&
-    (($link->storage_device_dest_id === null) || ($storageDevices->contains("id",$link->storage_device_dest_id))) &&
-
-    (($link->wifi_terminal_src_id === null) || ($wifiTerminals->contains("id",$link->wifi_terminal_src_id))) &&
-    (($link->wifi_terminal_dest_id === null) || ($wifiTerminals->contains("id",$link->wifi_terminal_dest_id))) &&
-
-    (($link->workstation_src_id === null) || ($workstations->contains("id",$link->workstation_src_id))) &&
-    (($link->workstation_dest_id === null) || ($workstations->contains("id",$link->workstation_dest_id)))
-    )
-
-    @if($link->peripheral_src_id!=null)
-    PER{{$link->peripheral_src_id }}
-    @elseif($link->physical_router_src_id!=null)
-    ROUTER{{$link->physical_router_src_id}}
-    @elseif($link->phone_src_id!=null)
-    PHONE{{$link->phone_src_id}}
-    @elseif($link->physical_security_device_src_id!=null)
-    PSD{{$link->physical_security_device_src_id}}
-    @elseif($link->physical_server_src_id!=null)
-    PSERVER{{$link->physical_server_src_id}}
-    @elseif($link->physical_switch_src_id!=null)
-    SWITCH{{$link->physical_switch_src_id}}
-    @elseif($link->storage_device_src_id!=null)
-    SD{{$link->storage_device_src_id}}
-    @elseif($link->wifi_terminal_src_id!=null)
-    WIFI{{$link->wifi_terminal_src_id}}
-    @elseif($link->workstation_src_id!=null)
-    WORK{{$link->workstation_src_id}}
-    @endif
-    ->
-    @if($link->peripheral_dest_id!=null)
-    PER{{$link->peripheral_dest_id}}
-    @elseif($link->physical_router_dest_id!=null)
-    ROUTER{{$link->physical_router_dest_id}}
-    @elseif($link->phone_dest_id!=null)
-    PHONE{{$link->phone_dest_id}}
-    @elseif($link->physical_security_device_dest_id!=null)
-    PSD{{$link->physical_security_device_dest_id}}
-    @elseif($link->physical_server_dest_id!=null)
-    PSERVER{{$link->physical_server_dest_id}}
-    @elseif($link->physical_switch_dest_id!=null)
-    SWITCH{{$link->physical_switch_dest_id}}
-    @elseif($link->storage_device_dest_id!=null)
-    SD{{$link->storage_device_dest_id}}
-    @elseif($link->wifi_terminal_dest_id!=null)
-    WIFI{{$link->wifi_terminal_dest_id}}
-    @elseif($link->workstation_dest_id!=null)
-    WORK{{$link->workstation_dest_id}}
-    @endif
-    [arrowhead=none,taillabel="{{$link->src_port}}", headlabel="{{$link->dest_port}}", href="{{ route('admin.links.show', $link->id) }}"];
+    @if($isPhysicalLink && $srcNode && $destNode)
+    {{ $srcNode }} -> {{ $destNode }} [arrowhead=none,taillabel="{{ $link->src_port }}", headlabel="{{ $link->dest_port }}", href="{{ route('admin.links.show', $link->id) }}"];
     @endif
 @endforeach
 }`;
