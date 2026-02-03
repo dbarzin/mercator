@@ -836,9 +836,12 @@ Table *physical_servers* :
 | deleted_at       | timestamp    | Date de suppression                   |
 
 L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs logiques rattachés à
-un serveur physique.\
-Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.\
-Un cluster peut être rattaché à un serveur physique depuis ces deux types d'objets.\
+un serveur physique.
+
+Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.
+
+Un cluster peut être rattaché à un serveur physique depuis ces deux types d'objets.
+
 Un serveur logique peut être rattaché à un serveur physique depuis ces deux types d'objets.
 
 Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans
@@ -889,7 +892,8 @@ Table *workstations* :
 | updated_at        | timestamp    | Date de mise à jour                                             |
 | deleted_at        | timestamp    | Date de suppression                                             |
 
-L'export du modèle de données référence les applications rattachées à un poste de travail.\
+L'export du modèle de données référence les applications rattachées à un poste de travail.
+
 Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.
 
 Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans
@@ -965,7 +969,8 @@ Table *peripherals* :
 | updated_at  | timestamp    | Date de mise à jour                                |
 | deleted_at  | timestamp    | Date de suppression                                |
 
-L'export du modèle de données référence les applications utilisant un périphérique.\
+L'export du modèle de données référence les applications utilisant un périphérique.
+
 Dans l'application, un périphérique peut être rattaché à une application depuis un objet périphérique.
 
 #### Téléphones
@@ -989,7 +994,8 @@ Les téléphones fixes ou portables appartenant à l’organisation.
 | updated_at         | timestamp    | Date de mise à jour                     |
 | deleted_at         | timestamp    | Date de suppression                     |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.
+
 Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un
 téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien physique.
 
@@ -1016,8 +1022,10 @@ Table *physical_switches* :
 | updated_at  | timestamp    | Date de mise à jour                     |
 | deleted_at  | timestamp    | Date de suppression                     |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
-L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.
+
+L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.
+
 Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs
 réseau") depuis ces deux types d'objets.
 
@@ -1043,10 +1051,13 @@ Table *physical_routers* :
 | updated_at  | timestamp    | Date de mise à jour                     |
 | deleted_at  | timestamp    | Date de suppression                     |
 
-Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.\
-L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.\
+Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.
+
+L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.
+
 Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux
-types d'objets).\
+types d'objets).
+
 Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.
 
 #### Bornes WiFi
@@ -1097,7 +1108,8 @@ Table *physical_security_devices* :
 | deleted_at  | timestamp    | Date de suppression                       |
 
 L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité
-physiques.\
+physiques.
+
 Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces
 deux types d'objets.
 
@@ -1119,20 +1131,21 @@ Principe général :
 | deleted_at      | timestamp    | Date de suppression                     |
 
 Les actifs sources et destination peuvent être :
-| Actif | Source | Destination |
-|:--------------------------------|:---------|:-------------|
-| Périphérique | oui | oui |
-| Téléphone | oui | oui |
-| Routeur physique | oui | oui |
-| Equipement de sécurité physique | oui | oui |
-| Serveur physique | oui | oui |
-| Commutateur physique | oui | oui |
-| Infrastructure de stockage | oui | oui |
-| Borne Wifi | oui | oui |
-| Poste de travail | oui | oui |
-| Serveur logique | oui | oui |
-| Commutateur logique | oui | oui |
-| Routeur logique | oui | oui |
+
+| Actif                           | Source | Destination |
+|:--------------------------------|:-------|:------------|
+| Périphérique                    | oui    | oui         |
+| Téléphone                       | oui    | oui         |
+| Routeur physique                | oui    | oui         |
+| Equipement de sécurité physique | oui    | oui         |
+| Serveur physique                | oui    | oui         |
+| Commutateur physique            | oui    | oui         |
+| Infrastructure de stockage      | oui    | oui         |
+| Borne Wifi                      | oui    | oui         |
+| Poste de travail                | oui    | oui         |
+| Serveur logique                 | oui    | oui         |
+| Commutateur logique             | oui    | oui         |
+| Routeur logique                 | oui    | oui         |
 
 #### WAN
 
@@ -1149,7 +1162,8 @@ Table *wans* :
 | updated_at | timestamp    | Date de mise à jour |
 | deleted_at | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les MAN et LAN rattachés à un WAN.\
+L'export du modèle de données référence les MAN et LAN rattachés à un WAN.
+
 Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.
 
 #### MAN
@@ -1167,8 +1181,10 @@ Table *mans* :
 | updated_at | timestamp    | Date de mise à jour |
 | deleted_at | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les WAN et LAN rattachés à un MAN.\
-Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.\
+L'export du modèle de données référence les WAN et LAN rattachés à un MAN.
+
+Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.
+
 Un LAN peut être rattaché à un MAN depuis les objets MAN.
 
 #### LAN
@@ -1186,5 +1202,6 @@ Table *lans* :
 | updated_at  | timestamp    | Date de mise à jour |
 | deleted_at  | timestamp    | Date de suppression |
 
-L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.\
+L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.
+
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
