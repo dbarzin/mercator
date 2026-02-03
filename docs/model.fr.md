@@ -288,6 +288,8 @@ Table *application_blocks* :
 | updated_at  | timestamp    | Date de mise à jour            |
 | deleted_at  | timestamp    | Date de suppression            |
 
+Dans l'application, une application peut être rattachée à un bloc applicatif depuis ces deux objets.
+
 #### Application
 
 Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un
@@ -369,12 +371,12 @@ Une mesure de sécurité peut être rattachée à une application depuis le bout
 Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.  
 
 Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.  
-Dans l'application, le champ *évènement majeurs* est géré dans une table à part.
+Dans l'application, le champ *évènements majeurs* est géré dans une table à part.
 
 #### Evènements majeurs
 
 Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.  
-Les évènements majeurs ne sont accessible qu'à travers les objets applications.
+Les évènements majeurs ne sont accessibles qu'à travers les objets applications.
 
 Table *m_application_events* :
 
