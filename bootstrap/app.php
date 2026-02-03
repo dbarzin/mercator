@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpFoundation\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -60,6 +61,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         ]);
+
+        // Configurer les trusted proxies
+        $middleware->trustProxies(
+            at: '*', 
+            headers: Request::HEADER_X_FORWARDED_FOR |
+            Request::HEADER_X_FORWARDED_HOST |
+            Request::HEADER_X_FORWARDED_PORT |
+            Request::HEADER_X_FORWARDED_PROTO
+        );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
