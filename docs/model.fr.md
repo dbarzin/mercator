@@ -343,6 +343,15 @@ Table *application_services* :
 | updated_at  | timestamp    | Date de mise à jour               |
 | deleted_at  | timestamp    | Date de suppression               |
 
+L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif.
+Dans l'application, une application peut être rattachée à un service applicatif depuis ces deux objets.  
+Dans l'application, un module applicatif peut être rattaché à un service applicatif depuis ces deux objets.  
+
+Il y a deux champs comportant les mêmes informations dans l'export du modèle de données, *servicesApplications* et 
+*applications*.  
+La liaison avec les objets applications se fait par le champ *applications*. 
+
+
 #### Module applicatif
 
 Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière
