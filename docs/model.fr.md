@@ -300,29 +300,92 @@ a un serveur logique par serveur physique.
 
 Table *m_applications* :
 
-| Champ                | Type         | Description                          |
-|:---------------------|:-------------|:-------------------------------------|
-| id                   | int unsigned | auto_increment                       |
-| name                 | varchar(255) | Nom de l'application                 |
-| version              | varchar(255) | Version de l'application             |        
-| description          | longtext     | Description de l'application         |
-| security_need_c      | int          | Confidentialité                      |
-| security_need_i      | int          | Intégrité                            |
-| security_need_a      | int          | Disponibilité                        |
-| security_need_t      | int          | Traçabilité                          |
-| type                 | varchar(255) | Type d'application                   |
-| technology           | varchar(255) | Technologie                          |
-| external             | varchar(255) | Externe                              |
-| users                | varchar(255) | Nombre d'utilisateurs et type        |
-| documentation        | varchar(255) | Lien vers la documentation           |
-| entity_resp_id       | int unsigned | Entité responsable de l'exploitation |
-| responsible          | varchar(255) | Responsable de l'application         |
-| application_block_id | int unsigned | Lien vers la bloc applicatif         |
-| install_date         | datetime     | Date d'installation de l'application |
-| update_date          | datetime     | Date de mise à jour de l'application |
-| created_at           | timestamp    | Date de création                     |
-| updated_at           | timestamp    | Date de mise à jour                  |
-| deleted_at           | timestamp    | Date de suppression                  |
+| Champ                | Type         | Description                                     |
+|:---------------------|:-------------|:------------------------------------------------|
+| id                   | int unsigned | auto_increment                                  |
+| name                 | varchar(255) | Nom de l'application                            |
+| application_block_id | int unsigned | Lien vers la bloc applicatif                    |
+| attributes           | varchar(255) | Attributs (tags) d'une application              |
+| description          | longtext     | Description de l'application                    |
+| icon_id              | int unsigned | Référence vers une image spécifique             |
+| responsible          | varchar(255) | Responsable de l'application                    | 
+| entity_resp_id       | int unsigned | Entité responsable de l'exploitation            |
+| functional_referent  | varchar(255) | Référent fonctionnel / métier de l'application  |
+| editor               | varchar(255) | Editeur de l'application                        |
+| users                | varchar(255) | Nombre d'utilisateurs et type                   |
+| technology           | varchar(255) | Technologie                                     |
+| type                 | varchar(255) | Type d'application                              |
+| external             | varchar(255) | Externe                                         |
+| install_date         | datetime     | Date d'installation de l'application            |
+| update_date          | datetime     | Date de mise à jour de l'application            |
+| documentation        | varchar(255) | Lien vers la documentation                      |
+| security_need_c      | int          | Confidentialité                                 |
+| security_need_i      | int          | Intégrité                                       |
+| security_need_a      | int          | Disponibilité                                   |
+| security_need_t      | int          | Traçabilité                                     |
+| security_need_auth   | int          | Authenticité                                    |
+| rto                  | int          | Temps cible de rétablissement de l'application  |
+| rpo                  | int          | Point temporel de restauration des données      |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE            |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE         |
+| version              | varchar(255) | Version d'un produit pour recherche CPE         |
+| patching_frequency   | int          | Fréquence des mises à jour en part. de sécurité |
+| next_update          | date         | Date de prochaine mise à jour                   |
+| created_at           | timestamp    | Date de création                                |
+| updated_at           | timestamp    | Date de mise à jour                             |
+| deleted_at           | timestamp    | Date de suppression                             |
+
+RTO : *Recovery Time Objective*  
+RPO : *Recovery Point Objective*  
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres. 
+
+L'export du modèle de données référence :
+- les entités utilisatrices (champ *entities*),
+- les processus soutenus,
+- les activités soutenues,
+- les services applicatifs,
+- les bases de données,
+- les postes de travail,
+- les serveurs logiques,
+- les équipements de sécurité logiques,
+- les administrateurs (objet Utilisateurs de la vue de l'administration),
+- et les mesures de sécurité
+
+rattachées à une application.
+
+Dans l'application, une entité utilisatrice peut être rattachée à une application depuis un objet application.  
+Un processus peut être rattaché à une application depuis ces deux objets.  
+Une activité peut être rattachée à une application depuis ces deux objets. 
+Un service applicatif peut être rattaché à une application depuis ces deux objets.  
+Une base de données peut être rattachée à une application depuis ces deux objets.  
+Un poste de travail peut être rattaché à une application depuis un objet poste de travail.  
+Un serveur logique peut être rattaché à une application depuis ces deux objets.  
+Un équipement de sécurité logique peut être rattaché à une application depuis ces deux objets.  
+Un administrateur peut être rattaché à une application depuis un objet application.
+Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".
+Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.  
+
+Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.  
+Dans l'application, le champ *évènement majeurs* est géré dans une table à part.
+
+#### Evènements majeurs
+
+Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.  
+Les évènements majeurs ne sont accessible qu'à travers les objets applications.
+
+Table *m_application_events* :
+
+| Champ            | Type         | Description                                         |
+|:-----------------|:-------------|:----------------------------------------------------|
+| id               | int unsigned | auto_increment                                      |
+| user_id          | int unsigned | Utilisateur de Mercator ayant renseigné l'évènement |
+| m_application_id | varchar(255) | Référence vers l'application ayant subi l'évènement |
+| message          | longtext     | Description de l'évènement                          |
+| created_at       | timestamp    | Date de création                                    |
+| updated_at       | timestamp    | Date de mise à jour                                 |
 
 #### Service applicatif
 
@@ -349,8 +412,7 @@ Dans l'application, un module applicatif peut être rattaché à un service appl
 
 Il y a deux champs comportant les mêmes informations dans l'export du modèle de données, *servicesApplications* et 
 *applications*.  
-La liaison avec les objets applications se fait par le champ *applications*. 
-
+La liaison avec les objets applications se fait par le champ *applications*.
 
 #### Module applicatif
 
@@ -527,18 +589,18 @@ GPO, par exemple) ainsi que les droits des objets.
 
 Table *domaines_ads* :
 
-| Champ                 | Type         | Description                               |
-|:----------------------|:-------------|:------------------------------------------|
-| id                    | int unsigned | auto_increment                            |
-| name                  | varchar(255) | Nom du domaine AD / LDAP                  |
-| description           | longtext     | Description du domaine                    |
-| domain_ctrl_cnt       | int signed   | Nombre de contrôleurs de domaine          |
-| user_count            | int signed   | Nombre d'utilisateurs du domaine          |
-| machine_count         | int signed   | Nombre de machines du domaine             |
+| Champ                  | Type         | Description                              |
+|:-----------------------|:-------------|:-----------------------------------------|
+| id                     | int unsigned | auto_increment                           |
+| name                   | varchar(255) | Nom du domaine AD / LDAP                 |
+| description            | longtext     | Description du domaine                   |
+| domain_ctrl_cnt        | int signed   | Nombre de contrôleurs de domaine         |
+| user_count             | int signed   | Nombre d'utilisateurs du domaine         |
+| machine_count          | int signed   | Nombre de machines du domaine            |
 | relation_inter_domaine | varchar(255) | Description des relations inter-domaines |
-| created_at            | timestamp    | Date de création                          |
-| updated_at            | timestamp    | Date de mise à jour                       |
-| deleted_at            | timestamp    | Date de suppression                       |
+| created_at             | timestamp    | Date de création                         |
+| updated_at             | timestamp    | Date de mise à jour                      |
+| deleted_at             | timestamp    | Date de suppression                      |
 
 L'export du modèle de données référence les forêts AD / arborescence LDAP rattachées à un domaine AD / LDAP.  
 Dans l'application, une forêt AD / arborescence LDAP peut être rattachée à un domaine AD / LDAP depuis ces deux objets.  
