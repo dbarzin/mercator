@@ -398,20 +398,28 @@ Table *fluxes* :
 |:----------------------|:-------------|:------------------------------------------|
 | id                    | int unsigned | auto_increment                            |
 | name                  | varchar(255) | Nom du flux                               |
+| attributes            | varchar(255) | Attributs (tags) du flux                  |
 | description           | longtext     | Description du flux                       |
-| application_source_id | int unsigned | Lien vers l'application source            |
-| service_source_id     | int unsigned | Lien vers le service source               |
-| module_source_id      | int unsigned | Lien vers le module source                |
-| database_source_id    | int unsigned | Lien vers la base de données source       |
-| application_dest_id   | int unsigned | Lien vers l'application destinataire      |
-| service_dest_id       | int unsigned | Lien vers le service destinataire         |
-| module_dest_id        | int unsigned | Lien vers le module destinataire          |
-| database_dest_id      | int unsigned | Lien vers la base de données destinataire |
+| *device*_source_id    | int unsigned | Lien vers l'actif source                  |
+| *device*_dest_id      | int unsigned | Lien vers l'actif destinataire            |
 | crypted               | tinyint(1)   | Le flux est chiffré (1=oui, O=non)        |
 | bidirectional         | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non) |
+| nature                | varcahr(255) | Nature du flux applicatif                 |
 | created_at            | timestamp    | Date de création                          |
 | updated_at            | timestamp    | Date de mise à jour                       |
 | deleted_at            | timestamp    | Date de suppression                       |
+
+
+Les actifs sources et destination peuvent être :
+
+| Actif (*device*)                | Source   | Destination  |
+|:--------------------------------|:---------|:-------------|
+| Application                     | oui      | oui          |
+| Service applicatif              | oui      | oui          |
+| Module applicatif               | oui      | oui          |
+| Base de données                 | oui      | oui          |
+
+Dans l'application, une information peut être rattaché à un flux applicatif depuis un objet flux applicatif.
 
 ### L’administration
 
