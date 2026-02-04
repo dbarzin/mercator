@@ -90,6 +90,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#activites">Activités</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#impacts">Impacts</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#operations">Opérations</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#taches">Tâches</a>
@@ -105,6 +107,8 @@
     <li class="toctree-l3"><a class="reference internal" href="#bloc-applicatif">Bloc applicatif</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application">Application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#evenements-majeurs">Evènements majeurs</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#service-applicatif">Service applicatif</a>
     </li>
@@ -123,6 +127,10 @@
     <li class="toctree-l3"><a class="reference internal" href="#service-dannuaire-dadministration">Service d’annuaire d’administration</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#foret-active-directory-arborescence-ldap">Forêt Active Directory / Arborescence LDAP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#domaines-active-directory-ldap">Domaines Active Directory / LDAP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utilisateurs">Utilisateurs</a>
     </li>
         </ul>
     </li>
@@ -149,6 +157,10 @@
     <li class="toctree-l3"><a class="reference internal" href="#clusters">Clusters</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#serveurs-logiques">Serveurs logiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#conteneurs">Conteneurs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#flux-logiques">Flux logiques</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#certificats">Certificats</a>
     </li>
@@ -276,6 +288,11 @@ les processus, applications et informations utilisées par le système d'informa
 <td style="text-align: left;">Description du traitement</td>
 </tr>
 <tr>
+<td style="text-align: left;">legal_basis</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Base légale du traitement</td>
+</tr>
+<tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Responsable du traitement</td>
@@ -284,6 +301,41 @@ les processus, applications et informations utilisées par le système d'informa
 <td style="text-align: left;">purpose</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Finalités du traitement</td>
+</tr>
+<tr>
+<td style="text-align: left;">lawfulness</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Licéité du traitement</td>
+</tr>
+<tr>
+<td style="text-align: left;">lawfulness_consent</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Licéité basée sur le consentement</td>
+</tr>
+<tr>
+<td style="text-align: left;">lawfulness_contract</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Licéité contractuelle</td>
+</tr>
+<tr>
+<td style="text-align: left;">lawfulness_legal_obligation</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Licéité basée sur une obligation légale</td>
+</tr>
+<tr>
+<td style="text-align: left;">lawfulness_vital_interest</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Licéité basée sur un intérêt vital</td>
+</tr>
+<tr>
+<td style="text-align: left;">lawfulness_public_interest</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Licéité basée sur un intérêt public</td>
+</tr>
+<tr>
+<td style="text-align: left;">lawfulness_legitimate_interest</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Licéité basée sur un intérêt légitime</td>
 </tr>
 <tr>
 <td style="text-align: left;">categories</td>
@@ -306,6 +358,11 @@ les processus, applications et informations utilisées par le système d'informa
 <td style="text-align: left;">Durées de rétention</td>
 </tr>
 <tr>
+<td style="text-align: left;">controls</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Mesures de sécurité</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -322,6 +379,14 @@ les processus, applications et informations utilisées par le système d'informa
 </tr>
 </tbody>
 </table>
+<p>Le champ "controls" n'est pas utilisé et est donc absent de l'application.  </p>
+<p>L'export du modèle de données référence les processus, les informations, les applications et les documents 
+rattachés à un traitement de données.  </p>
+<p>Dans l'application, un processus peut être rattaché à un traitement de données depuis un objet traitement 
+de données.<br />
+Une information peut être rattachée à un traitement de données depuis un objet traitement de données.  </p>
+<p>Une application peut être rattachée à un traitement de données depuis un objet traitement de données.<br />
+Un document peut être rattaché à un traitement de données depuis un objet traitement de données.  </p>
 <h4 id="mesures-de-securite">Mesures de sécurité</h4>
 <p>Cette table permet d'identifier les mesures de sécurité appliquées aux processus et applications.</p>
 <p>Par défaut cette table est complétée avec les mesures de sécurité de la norme ISO 27001:2022.</p>
@@ -399,6 +464,11 @@ travers de relations.</p>
 <td style="text-align: left;">Nom de l'entité</td>
 </tr>
 <tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
 <td style="text-align: left;">entity_type</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Type d'entité</td>
@@ -439,6 +509,11 @@ travers de relations.</p>
 <td style="text-align: left;">Point de contact</td>
 </tr>
 <tr>
+<td style="text-align: left;">external_ref_id</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Lien vers une entité extérieure connectée</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -455,6 +530,12 @@ travers de relations.</p>
 </tr>
 </tbody>
 </table>
+<p>Le champ "external_ref_id" n'est pas utilisé et est donc absent de l'application.  </p>
+<p>L'export du modèle de données référence les processus et applications rattachées à une entité.  </p>
+<p>Dans l'application, un processus peut être rattaché à une entité depuis ces deux objets.<br />
+Une application peut être rattachée à une entité (en tant que responsable de l'exploitation) depuis ces deux objets.  </p>
+<p>Dans l'application, une base de données peut être rattachée à une entité (en tant que responsable de l'exploitation)
+depuis ces deux objets.  </p>
 <h4 id="relations">Relations</h4>
 <p>Les relations représentent un lien entre deux entités ou systèmes.</p>
 <p>Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système
@@ -482,12 +563,17 @@ d’information.</p>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type de la relation</td>
+<td style="text-align: left;">Type (Nature) de la relation</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description de la relation</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributs (tags) de la relation</td>
 </tr>
 <tr>
 <td style="text-align: left;">source_id</td>
@@ -560,6 +646,11 @@ d’information.</p>
 <td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticité</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -576,6 +667,12 @@ d’information.</p>
 </tr>
 </tbody>
 </table>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
+Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
+<p>L'export du modèle de données référence les documents de référence rattachés à une relation.<br />
+Dans l'application, un document peut être rattaché à une relation depuis un objet relations. </p>
+<p>Les valeurs financières d'un contrat peuvent être indiquées dans des champs dédiés.  </p>
 <h3 id="vue-metier-du-systeme-dinformation">Vue métier du système d’information</h3>
 <p>La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y
 participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition.</p>
@@ -635,6 +732,11 @@ et ainsi de comprendre leur contexte d’emploi.</p>
 <td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticité</td>
+</tr>
+<tr>
 <td style="text-align: left;">owner</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Propriétaire</td>
@@ -656,6 +758,10 @@ et ainsi de comprendre leur contexte d’emploi.</p>
 </tr>
 </tbody>
 </table>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
+Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
+<p>Dans l'application, un processus peut être rattaché à un macro-processus depuis ces deux objets.</p>
 <h4 id="processus">Processus</h4>
 <p>Les processus sont un ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à
 valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.</p>
@@ -677,7 +783,7 @@ celui-ci.</p>
 <td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td style="text-align: left;">identifiant</td>
+<td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Nom du processus</td>
 </tr>
@@ -685,6 +791,11 @@ celui-ci.</p>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description du processus</td>
+</tr>
+<tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
 </tr>
 <tr>
 <td style="text-align: left;">owner</td>
@@ -717,6 +828,11 @@ celui-ci.</p>
 <td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticité</td>
+</tr>
+<tr>
 <td style="text-align: left;">macroprocess_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Référence vers le macro-processus</td>
@@ -738,6 +854,26 @@ celui-ci.</p>
 </tr>
 </tbody>
 </table>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
+Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
+<p>L'export du modèle de données référence les :</p>
+<ul>
+<li>entités,</li>
+<li>activités,</li>
+<li>informations,</li>
+<li>applications,</li>
+<li>traitements de données,</li>
+<li>et mesures de sécurité</li>
+</ul>
+<p>rattachées à un processus.</p>
+<p>Dans l'application, une entité associée à un processus peut être rattachée à un processus depuis ces deux objets.<br />
+Une activité peut être rattachée à un processus depuis ces deux objets.<br />
+Une information peut être rattachée à un processus depuis ces deux objets.  </p>
+<p>Une application peut être rattachée à un processus depuis ces deux objets.<br />
+Un traitement du registre RGPD peut être rattachée à un processus depuis un objet traitement du registre.  </p>
+<p>Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".<br />
+Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.</p>
 <h4 id="activites">Activités</h4>
 <p>Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et
 pas forcément à une structure organisationnelle de l’entreprise.</p>
@@ -767,6 +903,36 @@ pas forcément à une structure organisationnelle de l’entreprise.</p>
 <td style="text-align: left;">Description de l'activité</td>
 </tr>
 <tr>
+<td style="text-align: left;">recovery_time_objective</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">RTO, Temps cible de rétablissement de l'activité</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_tolerable_downtime</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Durée Maximale Tolérable de perturbation (DMTP)</td>
+</tr>
+<tr>
+<td style="text-align: left;">recovery_point_objective</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">RPO, Point temporel de restauration des données</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_tolerable_data_loss</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Perte de Données Maximale Admissble (PDMA)</td>
+</tr>
+<tr>
+<td style="text-align: left;">drp</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Description du plan de reprise d'activité (PRA)</td>
+</tr>
+<tr>
+<td style="text-align: left;">drp_link</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Lien (URL) vers le PRA</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -780,6 +946,59 @@ pas forcément à une structure organisationnelle de l’entreprise.</p>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>DMTP : Temps d'interruption maximale avant que les conséquences ne se soient critiques ou ne deviennent innaceptables.<br />
+PDMA : perte de données maximales avant des conséquences critiques ou innaceptables.  </p>
+<p>L'export du modèle de données référence les processus, opérations et applications rattachées à une activité.  </p>
+<p>Dans l'application, un processus peut être rattaché à une activité depuis ces deux objets.<br />
+Une opération peut être rattachée à une activité depuis ces deux objets.<br />
+Une application peut être rattachée à une activité depuis ces deux objets.</p>
+<p>Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans une table à part.</p>
+<h4 id="impacts">Impacts</h4>
+<p>Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.<br />
+Les impacts ne sont accessibles qu'à travers les objets activités.  </p>
+<p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.  </p>
+<p>Table <em>activity_impact</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">bigint signed</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">activity_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers l'activité liée à l'impact</td>
+</tr>
+<tr>
+<td style="text-align: left;">impact_type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type d'impact (financier, image, environnement, etc.)</td>
+</tr>
+<tr>
+<td style="text-align: left;">severity</td>
+<td style="text-align: left;">tinyint(4)</td>
+<td style="text-align: left;">Description de l'impact</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 </tbody>
 </table>
@@ -811,6 +1030,11 @@ pas forcément à une structure organisationnelle de l’entreprise.</p>
 <td style="text-align: left;">Description de l'opération</td>
 </tr>
 <tr>
+<td style="text-align: left;">process_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le processus dont fait partie l'opération</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -827,6 +1051,10 @@ pas forcément à une structure organisationnelle de l’entreprise.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les activités, les acteurs et les tâches rattachées à une opération.  </p>
+<p>Dans l'application, une activité peut être rattachée à une opération depuis ces deux objets.<br />
+Un acteur peut être rattaché à une opération depuis l'objet opérations.<br />
+Une tâche peut être rattachée à une opération depuis l'objet opérations.  </p>
 <h4 id="taches">Tâches</h4>
 <p>Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible
 de travail dans la chaîne de valeur ajoutée d’un processus.</p>
@@ -872,6 +1100,8 @@ de travail dans la chaîne de valeur ajoutée d’un processus.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les opérations rattachées à une tâche.  </p>
+<p>Dans l'application, une opération peut être rattachée à une tâche depuis l'objet opérations.  </p>
 <h4 id="acteurs">Acteurs</h4>
 <p>Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des
 décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.</p>
@@ -927,6 +1157,8 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les opérations rattachées à un acteur.  </p>
+<p>Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.  </p>
 <h4 id="informations">Informations</h4>
 <p>Une information est une donnée faisant l’objet d’un traitement informatique.</p>
 <p>Table <em>information</em> :</p>
@@ -965,6 +1197,11 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 <td style="text-align: left;">Administrateur de l'information</td>
 </tr>
 <tr>
+<td style="text-align: left;">sensitivity</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Sensibilité de l'information</td>
+</tr>
+<tr>
 <td style="text-align: left;">storage</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Stockage de l'information</td>
@@ -990,14 +1227,19 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 <td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
-<td style="text-align: left;">sensitivity</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Sensibilité de l'information</td>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticité</td>
 </tr>
 <tr>
 <td style="text-align: left;">constraints</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Contraintes légales et réglementaires</td>
+</tr>
+<tr>
+<td style="text-align: left;">retention</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Durée de rétention de l'information</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1016,6 +1258,13 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 </tr>
 </tbody>
 </table>
+<p>Le champ "retention" n'est pas utilisé pour le moment et est donc absent de l'application.  </p>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
+Il s'active depuis le menu Configuration &gt; Paramètres. </p>
+<p>L'export du modèle de données référence les bases de données et processus rattachés à une information.<br />
+Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.<br />
+Un processus peut être rattachée à une information depuis ces deux objets. </p>
 <h3 id="la-vue-des-applications">La vue des applications</h3>
 <p>La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ».</p>
 <p><a href="/mercator/images/applications.png"><img src="/mercator/images/applications.png" width="600"></a></p>
@@ -1070,6 +1319,7 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 </tr>
 </tbody>
 </table>
+<p>Dans l'application, une application peut être rattachée à un bloc applicatif depuis ces deux objets.</p>
 <h4 id="application">Application</h4>
 <p>Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un
 regroupement de services applicatifs.</p>
@@ -1097,14 +1347,79 @@ a un serveur logique par serveur physique.</p>
 <td style="text-align: left;">Nom de l'application</td>
 </tr>
 <tr>
-<td style="text-align: left;">version</td>
+<td style="text-align: left;">application_block_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers la bloc applicatif</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Version de l'application</td>
+<td style="text-align: left;">Attributs (tags) d'une application</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">entity_resp_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Entité responsable de l'exploitation</td>
+</tr>
+<tr>
+<td style="text-align: left;">functional_referent</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Référent fonctionnel / métier de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">editor</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Editeur de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">users</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nombre d'utilisateurs et type</td>
+</tr>
+<tr>
+<td style="text-align: left;">technology</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Technologie</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type d'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">external</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Externe</td>
+</tr>
+<tr>
+<td style="text-align: left;">install_date</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date d'installation de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">update_date</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date de mise à jour de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">documentation</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Lien vers la documentation</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_c</td>
@@ -1127,54 +1442,44 @@ a un serveur logique par serveur physique.</p>
 <td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
-<td style="text-align: left;">type</td>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticité</td>
+</tr>
+<tr>
+<td style="text-align: left;">rto</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Temps cible de rétablissement de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">rpo</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Point temporel de restauration des données</td>
+</tr>
+<tr>
+<td style="text-align: left;">vendor</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type d'application</td>
+<td style="text-align: left;">Vendeur / éditeur pour recherche CPE</td>
 </tr>
 <tr>
-<td style="text-align: left;">technology</td>
+<td style="text-align: left;">product</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Technologie</td>
+<td style="text-align: left;">Produit d'un éditeur pour recherche CPE</td>
 </tr>
 <tr>
-<td style="text-align: left;">external</td>
+<td style="text-align: left;">version</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Externe</td>
+<td style="text-align: left;">Version d'un produit pour recherche CPE</td>
 </tr>
 <tr>
-<td style="text-align: left;">users</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nombre d'utilisateurs et type</td>
+<td style="text-align: left;">patching_frequency</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Fréquence des mises à jour en part. de sécurité</td>
 </tr>
 <tr>
-<td style="text-align: left;">documentation</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Lien vers la documentation</td>
-</tr>
-<tr>
-<td style="text-align: left;">entity_resp_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Entité responsable de l'exploitation</td>
-</tr>
-<tr>
-<td style="text-align: left;">responsible</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'application</td>
-</tr>
-<tr>
-<td style="text-align: left;">application_block_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers la bloc applicatif</td>
-</tr>
-<tr>
-<td style="text-align: left;">install_date</td>
-<td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date d'installation de l'application</td>
-</tr>
-<tr>
-<td style="text-align: left;">update_date</td>
-<td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date de mise à jour de l'application</td>
+<td style="text-align: left;">next_update</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de prochaine mise à jour</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1190,6 +1495,85 @@ a un serveur logique par serveur physique.</p>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>RTO : <em>Recovery Time Objective</em><br />
+RPO : <em>Recovery Point Objective</em>  </p>
+<p>Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absent de l'application.  </p>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
+Il s'active depuis le menu Configuration &gt; Paramètres. </p>
+<p>L'export du modèle de données référence :</p>
+<ul>
+<li>les entités utilisatrices (champ <em>entities</em>),</li>
+<li>les processus soutenus,</li>
+<li>les activités soutenues,</li>
+<li>les services applicatifs,</li>
+<li>les bases de données,</li>
+<li>les postes de travail,</li>
+<li>les serveurs logiques,</li>
+<li>les équipements de sécurité logiques,</li>
+<li>les administrateurs (objet Utilisateurs de la vue de l'administration),</li>
+<li>et les mesures de sécurité</li>
+</ul>
+<p>rattachées à une application.</p>
+<p>Dans l'application, une entité utilisatrice peut être rattachée à une application depuis un objet application.<br />
+Un processus peut être rattaché à une application depuis ces deux objets.<br />
+Une activité peut être rattachée à une application depuis ces deux objets.  </p>
+<p>Un service applicatif peut être rattaché à une application depuis ces deux objets.<br />
+Une base de données peut être rattachée à une application depuis ces deux objets.<br />
+Un poste de travail peut être rattaché à une application depuis un objet poste de travail.  </p>
+<p>Un serveur logique peut être rattaché à une application depuis ces deux objets.<br />
+Un équipement de sécurité logique peut être rattaché à une application depuis ces deux objets.<br />
+Un administrateur peut être rattaché à une application depuis un objet application.  </p>
+<p>Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".<br />
+Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.  </p>
+<p>Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.<br />
+Dans l'application, le champ <em>évènements majeurs</em> est géré dans une table à part.</p>
+<h4 id="evenements-majeurs">Evènements majeurs</h4>
+<p>Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.<br />
+Les évènements majeurs ne sont accessibles qu'à travers les objets applications.  </p>
+<p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.  </p>
+<p>Table <em>m_application_events</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">user_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Utilisateur de Mercator ayant renseigné l'évènement</td>
+</tr>
+<tr>
+<td style="text-align: left;">m_application_id</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Référence vers l'application ayant subi l'évènement</td>
+</tr>
+<tr>
+<td style="text-align: left;">message</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'évènement</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 </tbody>
 </table>
@@ -1244,6 +1628,12 @@ cadre de son travail.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif. </p>
+<p>Dans l'application, une application peut être rattachée à un service applicatif depuis ces deux objets.<br />
+Dans l'application, un module applicatif peut être rattaché à un service applicatif depuis ces deux objets.  </p>
+<p>Il y a deux champs comportant les mêmes informations dans l'export du modèle de données, <em>servicesApplications</em> et 
+<em>applications</em>.<br />
+La liaison avec les objets applications se fait par le champ <em>applications</em>.</p>
 <h4 id="module-applicatif">Module applicatif</h4>
 <p>Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière
 d’informatique et une homogénéité technologique.</p>
@@ -1289,6 +1679,8 @@ d’informatique et une homogénéité technologique.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les services applicatifs rattachés à un module applicatif.<br />
+Dans l'application, un service applicatif peut être rattaché à un module applicatif depuis ces deux objets.</p>
 <h4 id="base-de-donnees">Base de données</h4>
 <p>Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.</p>
 <p>Table <em>databases</em> :</p>
@@ -1309,22 +1701,27 @@ d’informatique et une homogénéité technologique.</p>
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du service applicatif</td>
+<td style="text-align: left;">Nom de la base de données</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du module applicatif</td>
-</tr>
-<tr>
-<td style="text-align: left;">responsible</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'application</td>
+<td style="text-align: left;">Description de la base de données</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'application</td>
+<td style="text-align: left;">Type de technologie de la base de données</td>
+</tr>
+<tr>
+<td style="text-align: left;">entity_resp_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Entité responsable de la base de données</td>
+</tr>
+<tr>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable SSI de la base de données</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_c</td>
@@ -1347,14 +1744,14 @@ d’informatique et une homogénéité technologique.</p>
 <td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticité</td>
+</tr>
+<tr>
 <td style="text-align: left;">external</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Externe</td>
-</tr>
-<tr>
-<td style="text-align: left;">entity_resp_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Entité responsable</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1373,6 +1770,18 @@ d’informatique et une homogénéité technologique.</p>
 </tr>
 </tbody>
 </table>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
+Il s'active depuis le menu Configuration &gt; Paramètres.   </p>
+<p>L'export du modèle de données référence l'image spécifique d'une base de données.<br />
+Dans l'application, une image spécifique peut être rattachée à une base de données depuis un objet base de données.  </p>
+<p>L'export du modèle de données référence les entités utilisatrices (champ <em>entities</em>), les applications, les informations,
+les serveurs logiques et les conteneurs rattachés à une base de données.<br />
+Dans l'application, une entité utilisatrice peut être rattachée à une base de données depuis un objet base de données.<br />
+Dans l'application, une information peut être rattachée à une base de données depuis un objet base de données.<br />
+Dans l'application, une application peut être rattachée à une base de données depuis ces deux objets.<br />
+Dans l'application, un serveur logique peut être rattaché à une base de données depuis ces deux objets.<br />
+Dans l'application, un conteneur peut être rattaché à une base de données depuis ces deux objets.</p>
 <h4 id="flux">Flux</h4>
 <p>Un flux est un échange d’informations entre un émetteur ou un récepteur (application, service applicatif, module
 applicatif ou base de données).</p>
@@ -1400,49 +1809,24 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 <td style="text-align: left;">Nom du flux</td>
 </tr>
 <tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributs (tags) du flux</td>
+</tr>
+<tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description du flux</td>
 </tr>
 <tr>
-<td style="text-align: left;">application_source_id</td>
+<td style="text-align: left;"><em>device</em>_source_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers l'application source</td>
+<td style="text-align: left;">Lien vers l'actif source</td>
 </tr>
 <tr>
-<td style="text-align: left;">service_source_id</td>
+<td style="text-align: left;"><em>device</em>_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le service source</td>
-</tr>
-<tr>
-<td style="text-align: left;">module_source_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le module source</td>
-</tr>
-<tr>
-<td style="text-align: left;">database_source_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers la base de données source</td>
-</tr>
-<tr>
-<td style="text-align: left;">application_dest_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers l'application destinataire</td>
-</tr>
-<tr>
-<td style="text-align: left;">service_dest_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le service destinataire</td>
-</tr>
-<tr>
-<td style="text-align: left;">module_dest_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le module destinataire</td>
-</tr>
-<tr>
-<td style="text-align: left;">database_dest_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers la base de données destinataire</td>
+<td style="text-align: left;">Lien vers l'actif destinataire</td>
 </tr>
 <tr>
 <td style="text-align: left;">crypted</td>
@@ -1453,6 +1837,11 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 <td style="text-align: left;">bidirectional</td>
 <td style="text-align: left;">tinyint(1)</td>
 <td style="text-align: left;">Le flux est bidirectionnel (1=oui, O=non)</td>
+</tr>
+<tr>
+<td style="text-align: left;">nature</td>
+<td style="text-align: left;">varcahr(255)</td>
+<td style="text-align: left;">Nature du flux applicatif</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1471,6 +1860,39 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 </tr>
 </tbody>
 </table>
+<p>Les actifs sources et destination peuvent être :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Actif (<em>device</em>)</th>
+<th style="text-align: left;">Source</th>
+<th style="text-align: left;">Destination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Application</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Service applicatif</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Module applicatif</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Base de données</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+</tbody>
+</table>
+<p>Dans l'application, une information peut être rattaché à un flux applicatif depuis un objet flux applicatif.</p>
 <h3 id="ladministration">L’administration</h3>
 <p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des
 utilisateurs du système d’information.</p>
@@ -1630,6 +2052,153 @@ comme Mercator.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les domaines rattachés à une forêt AD / Arborescence LDAP.<br />
+Dans l'application, un domaine peut être rattaché à une forêt AD / arborescence LDAP depuis ces deux objets.</p>
+<h4 id="domaines-active-directory-ldap">Domaines Active Directory / LDAP</h4>
+<p>Les domaines Active Directory / LDAP sont des annuaires informatique d'entreprise. Ils contiennent les comptes 
+utilisateurs et machines, les contacts, une partie des configurations de la gestion des SI (politiques de groupes,
+GPO, par exemple) ainsi que les droits des objets.</p>
+<p>Table <em>domaines_ads</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du domaine AD / LDAP</td>
+</tr>
+<tr>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du domaine</td>
+</tr>
+<tr>
+<td style="text-align: left;">domain_ctrl_cnt</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Nombre de contrôleurs de domaine</td>
+</tr>
+<tr>
+<td style="text-align: left;">user_count</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Nombre d'utilisateurs du domaine</td>
+</tr>
+<tr>
+<td style="text-align: left;">machine_count</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Nombre de machines du domaine</td>
+</tr>
+<tr>
+<td style="text-align: left;">relation_inter_domaine</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Description des relations inter-domaines</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>L'export du modèle de données référence les forêts AD / arborescence LDAP rattachées à un domaine AD / LDAP.<br />
+Dans l'application, une forêt AD / arborescence LDAP peut être rattachée à un domaine AD / LDAP depuis ces deux objets.<br />
+Un serveur logique peut être rattaché à un domaine AD / LDAP depuis ces deux objets.</p>
+<h4 id="utilisateurs">Utilisateurs</h4>
+<p>Les utilisateurs représentent les comptes ayant des droits privilégiés sur les SI.</p>
+<p>Table <em>admin_users</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">user_id</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">ID unique / matricule / autre d'un utilisateur</td>
+</tr>
+<tr>
+<td style="text-align: left;">firstname</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Prénom d'un utilisateur</td>
+</tr>
+<tr>
+<td style="text-align: left;">lastname</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom d'un utilisateur</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type d'un utilisateur</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attribut d'un utilisateur</td>
+</tr>
+<tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'utilisateur</td>
+</tr>
+<tr>
+<td style="text-align: left;">domain_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le domaine d'appartenance</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>L'export du modèle de données référence les applications dont un utilisateur est administrateur.<br />
+Dans l'application, un utilisateur peut être défini comme administrateur d'une application depuis un objet application.</p>
 <h3 id="linfrastructure-logique">L’infrastructure logique</h3>
 <p>La vue de l'infrastructure logique correspond à la répartition logique du réseau.</p>
 <p><a href="/mercator/images/logical.png"><img src="/mercator/images/logical.png" width="400"></a></p>
@@ -1698,6 +2267,11 @@ réseau en charge du trafic.</p>
 <td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticité</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -1714,6 +2288,9 @@ réseau en charge du trafic.</p>
 </tr>
 </tbody>
 </table>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
+Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <h4 id="sous-reseaux">Sous-réseaux</h4>
 <p>Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.</p>
 <p>table <em>subnetworks</em> :</p>
@@ -1742,6 +2319,21 @@ réseau en charge du trafic.</p>
 <td style="text-align: left;">Description du réseau</td>
 </tr>
 <tr>
+<td style="text-align: left;">network_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le réseau associé</td>
+</tr>
+<tr>
+<td style="text-align: left;">subnetwork_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Sous-réseaux connectés</td>
+</tr>
+<tr>
+<td style="text-align: left;">connected_subnets_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Sous-réseaux connectés</td>
+</tr>
+<tr>
 <td style="text-align: left;">address</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Plage d'adresse du sous-réseau</td>
@@ -1752,14 +2344,19 @@ réseau en charge du trafic.</p>
 <td style="text-align: left;">Adresse de la passerelle par défaut</td>
 </tr>
 <tr>
+<td style="text-align: left;">gateway_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers la passerelle</td>
+</tr>
+<tr>
+<td style="text-align: left;">vlan_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le VLAN associé</td>
+</tr>
+<tr>
 <td style="text-align: left;">ip_allocation_type</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Type d'allocation des adresses</td>
-</tr>
-<tr>
-<td style="text-align: left;">responsible_exp</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'exploitation</td>
 </tr>
 <tr>
 <td style="text-align: left;">zone</td>
@@ -1777,24 +2374,9 @@ réseau en charge du trafic.</p>
 <td style="text-align: left;">Réseau WiFi</td>
 </tr>
 <tr>
-<td style="text-align: left;">connected_subnets_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Sous-réseaux connectés</td>
-</tr>
-<tr>
-<td style="text-align: left;">gateway_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vars la passerelle</td>
-</tr>
-<tr>
-<td style="text-align: left;">vlan_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le VLAN associé</td>
-</tr>
-<tr>
-<td style="text-align: left;">network_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le réseau associé</td>
+<td style="text-align: left;">responsible_exp</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de l'exploitation</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1813,6 +2395,7 @@ réseau en charge du trafic.</p>
 </tr>
 </tbody>
 </table>
+<p>Le champ "connected_subnets_id" sert à définir une clé étrangère. Cependant, celle-ci ne semble pas utilisée.</p>
 <h4 id="passerelles-dentrees-depuis-lexterieur">Passerelles d’entrées depuis l’extérieur</h4>
 <p>Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.</p>
 <p>Table <em>gateways</em> :</p>
@@ -1843,7 +2426,7 @@ réseau en charge du trafic.</p>
 <tr>
 <td style="text-align: left;">ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adress IP de la passerelle</td>
+<td style="text-align: left;">Adresse(s) IP publique et privée de la passerelle</td>
 </tr>
 <tr>
 <td style="text-align: left;">authentification</td>
@@ -1867,6 +2450,7 @@ réseau en charge du trafic.</p>
 </tr>
 </tbody>
 </table>
+<p>Dans l'application, un sous-réseau peut être rattaché à une passerelle depuis ces objets.</p>
 <h4 id="entites-exterieures-connectees">Entités extérieures connectées</h4>
 <p>Les entités extérieures connectées représentent les entités externes connectées au réseau.</p>
 <p>Table <em>external_connected_entities</em> :</p>
@@ -1890,19 +2474,54 @@ réseau en charge du trafic.</p>
 <td style="text-align: left;">Nom de l'entité</td>
 </tr>
 <tr>
-<td style="text-align: left;">description</td>
-<td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de l'entié</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type de connexion</td>
 </tr>
 <tr>
-<td style="text-align: left;">responsible_sec</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de la sécurité de l'entité</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Raison de la connexion de l'entité</td>
+</tr>
+<tr>
+<td style="text-align: left;">entity_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers l'entité extérieure connectée</td>
+</tr>
+<tr>
+<td style="text-align: left;">network_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le réseau interne connecté à l'entité</td>
 </tr>
 <tr>
 <td style="text-align: left;">contacts</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Contacts de l'entité</td>
+</tr>
+<tr>
+<td style="text-align: left;">src</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresse(s) IP de connexion de l'entité</td>
+</tr>
+<tr>
+<td style="text-align: left;">src_desc</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Description de la source de la connexion de l'entité</td>
+</tr>
+<tr>
+<td style="text-align: left;">dst</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresse(s) IP ou plage de destination de la connexion</td>
+</tr>
+<tr>
+<td style="text-align: left;">dst_desc</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Description de la description de la connexion de l'entité</td>
+</tr>
+<tr>
+<td style="text-align: left;">security</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Exigences de sécurité du système</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1921,6 +2540,9 @@ réseau en charge du trafic.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les sous-réseaux et documents rattachés à une entité extérieure connectées.<br />
+Dans l'application, un sous-réseau peut être rattaché à une entité extérieure connectée depuis un objet entité extérieure connectée.<br />
+Un document peut être rattaché à une entité extérieure connectée depuis un objet entité extérieure connectée.</p>
 <h4 id="commutateurs-reseau">Commutateurs réseau</h4>
 <p>Les commutateurs réseau sont les composants gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
 <p>Table <em>network_switches</em> :</p>
@@ -1970,6 +2592,9 @@ réseau en charge du trafic.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les commutateurs physiques et les VLAN rattachés à un commutateur réseau.<br />
+Dans l'application, un VLAN peut être rattaché à un commutateur réseau depuis ces deux objets.<br />
+Un commutateur physique peut être rattaché à un commutateur réseau depuis ces deux objets.</p>
 <h4 id="routeurs-logiques">Routeurs logiques</h4>
 <p>Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.</p>
 <p>Table <em>routers</em> :</p>
@@ -1991,6 +2616,16 @@ réseau en charge du trafic.</p>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Nom du routeur</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type du routeur</td>
+</tr>
+<tr>
+<td style="text-align: left;">ip_addresses</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Adresse(s) IP du routeur</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -2019,6 +2654,8 @@ réseau en charge du trafic.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les routeurs physiques rattachés à un routeur logique.<br />
+Dans l'application, un routeur physique peut être rattaché à un routeur logique depuis ces deux objets.</p>
 <h4 id="equipements-de-securite">Équipements de sécurité</h4>
 <p>Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la
 protection des équipements ou ayant une fonction de sécurisation du système d’information.</p>
@@ -2046,9 +2683,44 @@ systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), de
 <td style="text-align: left;">Nom de l'équipement</td>
 </tr>
 <tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type de l'équipement</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributs de l'équipement</td>
+</tr>
+<tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description de l'équipement</td>
+</tr>
+<tr>
+<td style="text-align: left;">address_ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresse(s) IP de l'équipement</td>
+</tr>
+<tr>
+<td style="text-align: left;">vendor</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Vendeur / éditeur pour recherche CPE</td>
+</tr>
+<tr>
+<td style="text-align: left;">product</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Produit d'un éditeur pour recherche CPE</td>
+</tr>
+<tr>
+<td style="text-align: left;">version</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Version d'un produit pour recherche CPE</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2067,8 +2739,17 @@ systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), de
 </tr>
 </tbody>
 </table>
+<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc 
+absent de l'application.<br />
+L'export du modèle de données référence les équipements de sécurité physiques et les applications 
+rattachées à un équipement de sécurité logique.<br />
+Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité 
+logique depuis ces deux objets.<br />
+Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.</p>
 <h4 id="serveurs-dhcp">Serveurs DHCP</h4>
-<p>Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.</p>
+<p>Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.
+Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide de
+l'ANSSI (cf. Références).</p>
 <p>Table <em>dhcp_servers</em> :</p>
 <table>
 <thead>
@@ -2095,6 +2776,11 @@ systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), de
 <td style="text-align: left;">Description du serveur</td>
 </tr>
 <tr>
+<td style="text-align: left;">address_ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresse(s) IP du serveur</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -2112,8 +2798,10 @@ systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), de
 </tbody>
 </table>
 <h4 id="serveurs-dns">Serveurs DNS</h4>
-<p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant la conversion
-d’un nom de domaine en adresse IP.</p>
+<p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant 
+la conversion d’un nom de domaine en adresse IP.<br />
+Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide 
+de l'ANSSI (cf. Références).</p>
 <p>Table <em>dnsservers</em> :</p>
 <table>
 <thead>
@@ -2138,6 +2826,11 @@ d’un nom de domaine en adresse IP.</p>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description du serveur</td>
+</tr>
+<tr>
+<td style="text-align: left;">address_ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresse(s) IP du serveur</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2179,9 +2872,19 @@ d’un nom de domaine en adresse IP.</p>
 <td style="text-align: left;">Nom du serveur</td>
 </tr>
 <tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Type de cluster</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributs du cluster</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -2193,8 +2896,27 @@ d’un nom de domaine en adresse IP.</p>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Adresses IP du cluster</td>
 </tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
+</tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les routeurs logiques, les serveurs logiques et physiques rattachés à un cluster.<br />
+Dans l'application, un routeur logique peut être rattaché à un cluster depuis un objet cluster.<br />
+Un serveur logique peut être rattaché à un cluster depuis ces deux objets.<br />
+Un serveur physique peut être rattaché à un cluster depuis ces deux objets.</p>
 <h4 id="serveurs-logiques">Serveurs logiques</h4>
 <p>Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il
 est découpé en un seul serveur logique.</p>
@@ -2219,19 +2941,29 @@ est découpé en un seul serveur logique.</p>
 <td style="text-align: left;">Nom du serveur</td>
 </tr>
 <tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type du serveur (appli, DB, etc.)</td>
+</tr>
+<tr>
+<td style="text-align: left;">active</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Serveur actif (1) ou obsolète (0)</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributs (tages) du serveur</td>
+</tr>
+<tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description du serveur</td>
-</tr>
-<tr>
-<td style="text-align: left;">net_services</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Services réseau actifs</td>
-</tr>
-<tr>
-<td style="text-align: left;">configuration</td>
-<td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Configuration du serveur</td>
 </tr>
 <tr>
 <td style="text-align: left;">operating_system</td>
@@ -2239,9 +2971,34 @@ est découpé en un seul serveur logique.</p>
 <td style="text-align: left;">Système d'exploitation</td>
 </tr>
 <tr>
+<td style="text-align: left;">install_date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date d'installation du serveur</td>
+</tr>
+<tr>
+<td style="text-align: left;">update_date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de mise à jour du serveur</td>
+</tr>
+<tr>
+<td style="text-align: left;">environment</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Environnement (prod, dev, test, ...)</td>
+</tr>
+<tr>
+<td style="text-align: left;">net_services</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Services réseau actifs</td>
+</tr>
+<tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Adresses IP du serveur</td>
+</tr>
+<tr>
+<td style="text-align: left;">domain_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Domaine d'administration du serveur</td>
 </tr>
 <tr>
 <td style="text-align: left;">cpu</td>
@@ -2254,24 +3011,29 @@ est découpé en un seul serveur logique.</p>
 <td style="text-align: left;">Quantité de mémoire</td>
 </tr>
 <tr>
-<td style="text-align: left;">environment</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Environnement (prod, dev, test, ...)</td>
-</tr>
-<tr>
 <td style="text-align: left;">disk</td>
 <td style="text-align: left;">int</td>
 <td style="text-align: left;">Espace disque alloué</td>
 </tr>
 <tr>
-<td style="text-align: left;">install_date</td>
-<td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date d'installation du serveur</td>
+<td style="text-align: left;">disk_used</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Espace disque utilisé</td>
 </tr>
 <tr>
-<td style="text-align: left;">update_date</td>
-<td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date de mise à jour du serveur</td>
+<td style="text-align: left;">configuration</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Configuration du serveur</td>
+</tr>
+<tr>
+<td style="text-align: left;">patching_frequency</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Fréquence des mises à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">next_update</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de la prochaine mise à jour</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2287,6 +3049,252 @@ est découpé en un seul serveur logique.</p>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absents de l'application.<br />
+L'export du modèle de données référence : </p>
+<ul>
+<li>les applications,</li>
+<li>les serveurs physiques,</li>
+<li>les documents,</li>
+<li>les bases de données,</li>
+<li>les clusters,</li>
+<li>les certificats,</li>
+<li>et les conteneurs</li>
+</ul>
+<p>rattachés à un serveur logique.  </p>
+<p>Dans l'application, une application peut être rattachée à un serveur logique depuis ces deux objets.<br />
+Une base de données peut être rattachée à un serveur logique depuis ces deux objets.<br />
+Un cluster peut être rattaché à un serveur logique depuis ces deux objets.<br />
+Un serveur physique peut être rattaché à un serveur logique depuis ces deux objets.<br />
+Un certificat peut être rattaché à un serveur logique depuis un objet certificat.<br />
+Un conteneur peut être rattaché à un serveur logique depuis un objet conteneur.</p>
+<p>Le champ "documents" ne semble pas utilisé dans le modèle de données d'un serveur logique.</p>
+<h4 id="conteneurs">Conteneurs</h4>
+<p>Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément,
+sur des serveurs logiques internes ou externes (cloud).</p>
+<p>Table <em>containers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du conteneur</td>
+</tr>
+<tr>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du conteneur</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type du conteneur (docker, kubernetes, etc.)</td>
+</tr>
+<tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>L'export du modèle de données référence les applications, les bases de données et les serveurs
+logiques rattachés à un conteneur.<br />
+Dans l'application, une application peut être rattachée à un conteneur depuis ces deux objets.<br />
+Une base de données peut être rattachée à un conteneur depuis ces deux objets.<br />
+Un serveur logique peut être rattaché à un conteneur depuis un objet conteneur.</p>
+<h4 id="flux-logiques">Flux logiques</h4>
+<p>Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.  </p>
+<p>Table <em>logical_flows</em> :</p>
+<p>Principe général :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du flux logique</td>
+</tr>
+<tr>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Description du flux logique</td>
+</tr>
+<tr>
+<td style="text-align: left;">chain</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">INPUT / OUTPUT / FORWARD</td>
+</tr>
+<tr>
+<td style="text-align: left;">interface</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">interface réseau concernée</td>
+</tr>
+<tr>
+<td style="text-align: left;">router_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le routeur implémentant le flux</td>
+</tr>
+<tr>
+<td style="text-align: left;">priority</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Priorité de la règle / du flux</td>
+</tr>
+<tr>
+<td style="text-align: left;">action</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Action de la règle (autoriser, refuser, etc.)</td>
+</tr>
+<tr>
+<td style="text-align: left;">protocol</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Protocole(s) dans le flux</td>
+</tr>
+<tr>
+<td style="text-align: left;">source_ip_range</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Plage IP source</td>
+</tr>
+<tr>
+<td style="text-align: left;">dest_ip_range</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Plage IP de destination</td>
+</tr>
+<tr>
+<td style="text-align: left;">source_port</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Port logique source</td>
+</tr>
+<tr>
+<td style="text-align: left;">dest_port</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Port logique de destination</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>device</em>_source_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Actif source</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>device</em>_dest_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Actif de destination</td>
+</tr>
+<tr>
+<td style="text-align: left;">users</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Utilisateurs concernés par la règle / le flux</td>
+</tr>
+<tr>
+<td style="text-align: left;">schedule</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Période d'activité de la règle / du flux</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>Les actifs sources et destination peuvent être :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Actif (<em>device</em>)</th>
+<th style="text-align: left;">Source</th>
+<th style="text-align: left;">Destination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Périphérique</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Equipement de sécurité physique</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Serveur physique</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Infrastructure de stockage</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Poste de travail</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Equipement de sécurité logique</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Serveur logique</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sous-réseaux</td>
+<td style="text-align: left;">oui</td>
+<td style="text-align: left;">oui</td>
 </tr>
 </tbody>
 </table>
@@ -2337,8 +3345,13 @@ applications.</p>
 </tr>
 <tr>
 <td style="text-align: left;">status</td>
-<td style="text-align: left;">int</td>
+<td style="text-align: left;">int signed</td>
 <td style="text-align: left;">Etat du certificat (RFC 6960)</td>
+</tr>
+<tr>
+<td style="text-align: left;">last_notification</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date d'envoi de la dernière notification</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2365,6 +3378,9 @@ applications.</p>
 </ul>
 </li>
 </ul>
+<p>Le champ "last_notification" n'est pas utilisé pour le moment et est donc absent de l'application.<br />
+L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.<br />
+Dans l'application, un certificat peut être rattaché à une application ou un serveur logique depuis un objet certificat.</p>
 <h4 id="vlan">VLAN</h4>
 <p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements
 en s’affranchissant des contraintes physiques.</p>
@@ -2390,8 +3406,13 @@ en s’affranchissant des contraintes physiques.</p>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
-<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Description du VLAN</td>
+</tr>
+<tr>
+<td style="text-align: left;">vlan_id</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Numéro du VLAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2410,6 +3431,10 @@ en s’affranchissant des contraintes physiques.</p>
 </tr>
 </tbody>
 </table>
+<p>L'export du modèle de données référence les routeurs physiques et les commutateurs logiques ("commutateurs réseau")
+rattachés à un VLAN.
+Dans l'application, un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.<br />
+Dans l'application, un VLAN peut être rattaché à un sous-réseau ou un commutateur logique depuis ces deux objets.</p>
 <h3 id="linfrastructure-physique">L’infrastructure physique</h3>
 <p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont
 utilisés par celui-ci.</p>
@@ -2585,7 +3610,7 @@ salle.</p>
 </tr>
 </tbody>
 </table>
-<p>Dans l'application, une baie peut être rattachée à un bâtiment/ baie depuis un objet baie.</p>
+<p>Dans l'application, une baie peut être rattachée à un bâtiment / baie depuis un objet baie. </p>
 <h4 id="serveurs-physiques">Serveurs physiques</h4>
 <p>Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.</p>
 <p>Table <em>physical_servers</em> :</p>
@@ -2705,13 +3730,13 @@ salle.</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs logiques rattachés à
-un serveur physique.</p>
-<p>Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.</p>
-<p>Un cluster peut être rattaché à un serveur physique depuis ces deux types d'objets.</p>
-<p>Un serveur logique peut être rattaché à un serveur physique depuis ces deux types d'objets.</p>
-<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans
-l'application pour la table <em>physical_servers</em> ont été regroupés dans le tableau suivant :</p>
+<p>L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs 
+logiques rattachés à un serveur physique.<br />
+Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.<br />
+Un cluster peut être rattaché à un serveur physique depuis ces deux types d'objets.<br />
+Un serveur logique peut être rattaché à un serveur physique depuis ces deux types d'objets.</p>
+<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le 
+moment dans l'application pour la table <em>physical_servers</em> ont été regroupés dans le tableau suivant :</p>
 <table>
 <thead>
 <tr>
@@ -2752,7 +3777,7 @@ l'application pour la table <em>physical_servers</em> ont été regroupés dans 
 <td style="text-align: left;">Date de la prochaine mise à jour</td>
 </tr>
 <tr>
-<td style="text-align: left;">physical_switch_id</td>
+<td style="text-align: left;">physical_swicth_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Référence vers le commutateur physique</td>
 </tr>
@@ -2902,10 +3927,10 @@ l'application pour la table <em>physical_servers</em> ont été regroupés dans 
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les applications rattachées à un poste de travail.</p>
-<p>Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.</p>
-<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment dans
-l'application pour la table <em>workstations</em> ont été regroupés dans le tableau suivant :</p>
+<p>L'export du modèle de données référence les applications rattachées à un poste de travail.<br />
+Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.</p>
+<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment 
+dans l'application pour la table <em>workstations</em> ont été regroupés dans le tableau suivant :</p>
 <table>
 <thead>
 <tr>
@@ -2958,7 +3983,7 @@ l'application pour la table <em>workstations</em> ont été regroupés dans le t
 <tr>
 <td style="text-align: left;">fin_value</td>
 <td style="text-align: left;">decimal</td>
-<td style="text-align: left;">Valeur financière. Borne sup. : $10^{11}$</td>
+<td style="text-align: left;">Valeur financière. Borne sup. : 10^11</td>
 </tr>
 <tr>
 <td style="text-align: left;">last_inventory_date</td>
@@ -2976,7 +4001,7 @@ l'application pour la table <em>workstations</em> ont été regroupés dans le t
 <td style="text-align: left;">Version de l'agent d'inventaire</td>
 </tr>
 <tr>
-<td style="text-align: left;">physical_switch_id</td>
+<td style="text-align: left;">physical_swicth_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Référence vers le commutateur physique</td>
 </tr>
@@ -3173,8 +4198,8 @@ fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les applications utilisant un périphérique.</p>
-<p>Dans l'application, un périphérique peut être rattaché à une application depuis un objet périphérique.</p>
+<p>L'export du modèle de données référence les applications utilisant un périphérique.<br />
+Dans l'application, un périphérique peut être rattaché à une application depuis un objet périphérique.</p>
 <h4 id="telephones">Téléphones</h4>
 <p>Les téléphones fixes ou portables appartenant à l’organisation.</p>
 <table>
@@ -3258,8 +4283,8 @@ fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
 </tr>
 </tbody>
 </table>
-<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.</p>
-<p>Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un
+<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent de l'application.<br />
+Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un
 téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien physique.</p>
 <h4 id="commutateurs-physiques">Commutateurs physiques</h4>
 <p>Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein
@@ -3341,10 +4366,10 @@ d’un réseau.</p>
 </tr>
 </tbody>
 </table>
-<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.</p>
-<p>L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.</p>
-<p>Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs
-réseau") depuis ces deux types d'objets.</p>
+<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.<br />
+L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.<br />
+Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs réseau")
+depuis ces deux types d'objets.</p>
 <h4 id="routeurs-physiques">Routeurs physiques</h4>
 <p>Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.</p>
 <p>Table <em>physical_routers</em> :</p>
@@ -3424,11 +4449,10 @@ réseau") depuis ces deux types d'objets.</p>
 </tr>
 </tbody>
 </table>
-<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.</p>
-<p>L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.</p>
-<p>Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux
-types d'objets).</p>
-<p>Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.</p>
+<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.<br />
+L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.<br />
+Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux types d'objets.<br />
+Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.</p>
 <h4 id="bornes-wifi">Bornes WiFi</h4>
 <p>Les bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.</p>
 <p>Table <em>wifi_terminals</em> :</p>
@@ -3590,10 +4614,14 @@ la protection des équipements ou ayant une fonction de sécurisation du systèm
 </tbody>
 </table>
 <p>L'export du modèle de données référence les équipements de sécurité logiques rattachés aux équipements de sécurité
-physiques.</p>
-<p>Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces
+physiques.<br />
+Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces
 deux types d'objets.</p>
 <h4 id="liens-physiques">Liens physiques</h4>
+<p>Les liens physiques représentent les câbles entre les objets physiques ou logiques.<br />
+Les objets logiques peuvent disposer de liens physiques, par exemple au sein d'un réseau virtualisé.<br />
+Un lien physique est différent d'un flux logique. Un lien physique décrit une relation au niveau des couches 1 ou 2 du modèle OSI.<br />
+Un flux logique décrit une relation au niveau des couches 3 et 4 du modèle OSI.</p>
 <p>Table <em>physical_links</em> :</p>
 <p>Principe général :</p>
 <table>
@@ -3759,8 +4787,8 @@ interconnectent généralement des MAN ou LAN entre eux.</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les MAN et LAN rattachés à un WAN.</p>
-<p>Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.</p>
+<p>L'export du modèle de données référence les MAN et LAN rattachés à un WAN.<br />
+Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.</p>
 <h4 id="man">MAN</h4>
 <p>Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement
 importantes. Ils interconnectent généralement des LAN entre eux.</p>
@@ -3801,9 +4829,9 @@ importantes. Ils interconnectent généralement des LAN entre eux.</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les WAN et LAN rattachés à un MAN.</p>
-<p>Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.</p>
-<p>Un LAN peut être rattaché à un MAN depuis les objets MAN.</p>
+<p>L'export du modèle de données référence les WAN et LAN rattachés à un MAN.<br />
+Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.<br />
+Un LAN peut être rattaché à un MAN depuis les objets MAN.</p>
 <h4 id="lan">LAN</h4>
 <p>Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.</p>
 <p>Table <em>lans</em> :</p>
@@ -3848,8 +4876,8 @@ importantes. Ils interconnectent généralement des LAN entre eux.</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.</p>
-<p>Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.</p>
+<p>L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.<br />
+Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.</p>
               
             </div>
           </div><footer>
