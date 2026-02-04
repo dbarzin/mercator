@@ -132,20 +132,27 @@ Les macro-processus représentent des ensembles de processus.
 
 Table *macro_processuses* :
 
-| Champ           | Type         | Description                    |
-|:----------------|:-------------|:-------------------------------|
-| id              | int unsigned | auto_increment                 |
-| name            | varchar(255) | Nom du macro processus         |
-| description     | longtext     | Description du macro-processus |
-| io_elements     | longtext     | Elements entrant et sortants   |
-| security_need_c | int          | Confidentialité                |
-| security_need_i | int          | Intégrité                      |
-| security_need_a | int          | Disponibilité                  |
-| security_need_t | int          | Traçabilité                    |
-| owner           | varchar(255) | Propriétaire                   |
-| created_at      | timestamp    | Date de création               |
-| updated_at      | timestamp    | Date de mise à jour            |
-| deleted_at      | timestamp    | Date de suppression            |
+| Champ              | Type         | Description                    |
+|:-------------------|:-------------|:-------------------------------|
+| id                 | int unsigned | auto_increment                 |
+| name               | varchar(255) | Nom du macro processus         |
+| description        | longtext     | Description du macro-processus |
+| io_elements        | longtext     | Elements entrant et sortants   |
+| security_need_c    | int          | Confidentialité                |
+| security_need_i    | int          | Intégrité                      |
+| security_need_a    | int          | Disponibilité                  |
+| security_need_t    | int          | Traçabilité                    |
+| security_need_auth | int          | Authenticité                   |
+| owner              | varchar(255) | Propriétaire                   |
+| created_at         | timestamp    | Date de création               |
+| updated_at         | timestamp    | Date de mise à jour            |
+| deleted_at         | timestamp    | Date de suppression            |
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres.  
+
+Dans l'application, un processus peut être rattaché à un macro-processus depuis ces deux objets.
 
 #### Processus
 
@@ -157,21 +164,48 @@ celui-ci.
 
 Table *processes* :
 
-| Champ           | Type         | Description                       |
-|:----------------|:-------------|:----------------------------------|
-| id              | int unsigned | auto_increment                    |
-| identifiant     | varchar(255) | Nom du processus                  |
-| description     | longtext     | Description du processus          |
-| owner           | varchar(255) | Propriétaire du processus         |
-| in_out          | longtext     | Elements entrant et sortants      |
-| security_need_c | int          | Confidentialité                   |
-| security_need_i | int          | Intégrité                         |
-| security_need_a | int          | Disponibilité                     |
-| security_need_t | int          | Traçabilité                       |
-| macroprocess_id | int unsigned | Référence vers le macro-processus |
-| created_at      | timestamp    | Date de création                  |
-| updated_at      | timestamp    | Date de mise à jour               |
-| deleted_at      | timestamp    | Date de suppression               |
+| Champ              | Type         | Description                         |
+|:-------------------|:-------------|:------------------------------------|
+| id                 | int unsigned | auto_increment                      |
+| name               | varchar(255) | Nom du processus                    |
+| description        | longtext     | Description du processus            |
+| icon_id            | int unsigned | Référence vers une image spécifique |
+| owner              | varchar(255) | Propriétaire du processus           |
+| in_out             | longtext     | Elements entrant et sortants        |
+| security_need_c    | int          | Confidentialité                     |
+| security_need_i    | int          | Intégrité                           |
+| security_need_a    | int          | Disponibilité                       |
+| security_need_t    | int          | Traçabilité                         |
+| security_need_auth | int          | Authenticité                        |
+| macroprocess_id    | int unsigned | Référence vers le macro-processus   |
+| created_at         | timestamp    | Date de création                    |
+| updated_at         | timestamp    | Date de mise à jour                 |
+| deleted_at         | timestamp    | Date de suppression                 |
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres.  
+
+L'export du modèle de données référence les :
+
+- entités,
+- activités,
+- informations,
+- applications,
+- traitements de données,
+- et mesures de sécurité
+
+rattachées à un processus.
+
+Dans l'application, une entité associée à un processus peut être rattachée à un processus depuis ces deux objets.  
+Une activité peut être rattachée à un processus depuis ces deux objets.  
+Une information peut être rattachée à un processus depuis ces deux objets.  
+
+Une application peut être rattachée à un processus depuis ces deux objets.  
+Un traitement du registre RGPD peut être rattachée à un processus depuis un objet traitement du registre.  
+
+Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".  
+Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.
 
 #### Activités
 
@@ -180,14 +214,50 @@ pas forcément à une structure organisationnelle de l’entreprise.
 
 Table *activities* :
 
-| Champ       | Type         | Description               |
-|:------------|:-------------|:--------------------------|
-| id          | int unsigned | auto_increment            |
-| name        | varchar(255) | Nom de l'activité         |
-| description | longtext     | Description de l'activité |
-| created_at  | timestamp    | Date de création          |
-| updated_at  | timestamp    | Date de mise à jour       |
-| deleted_at  | timestamp    | Date de suppression       |
+| Champ                       | Type         | Description                                      |
+|:----------------------------|:-------------|:-------------------------------------------------|
+| id                          | int unsigned | auto_increment                                   |
+| name                        | varchar(255) | Nom de l'activité                                |
+| description                 | longtext     | Description de l'activité                        |
+| recovery_time_objective     | int signed   | RTO, Temps cible de rétablissement de l'activité |
+| maximum_tolerable_downtime  | int signed   | Durée Maximale Tolérable de perturbation (DMTP)  |
+| recovery_point_objective    | int signed   | RPO, Point temporel de restauration des données  |
+| maximum_tolerable_data_loss | int signed   | Perte de Données Maximale Admissble (PDMA)       |
+| drp                         | text         | Description du plan de reprise d'activité (PRA)  |
+| drp_link                    | varchar(255) | Lien (URL) vers le PRA                           |
+| created_at                  | timestamp    | Date de création                                 |
+| updated_at                  | timestamp    | Date de mise à jour                              |
+| deleted_at                  | timestamp    | Date de suppression                              |
+
+DMTP : Temps d'interruption maximale avant que les conséquences ne se soient critiques ou ne deviennent innaceptables.  
+PDMA : perte de données maximales avant des conséquences critiques ou innaceptables.  
+
+L'export du modèle de données référence les processus, opérations et applications rattachées à une activité.  
+
+Dans l'application, un processus peut être rattaché à une activité depuis ces deux objets.  
+Une opération peut être rattachée à une activité depuis ces deux objets.  
+Une application peut être rattachée à une activité depuis ces deux objets.
+
+Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans une table à part.
+
+#### Impacts
+
+Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.  
+Les impacts ne sont accessibles qu'à travers les objets activités.  
+
+Ils ne sont ni importables, ni exportables à travers l'outil graphique.  
+
+Table *activity_impact* :
+
+| Champ            | Type          | Description                                           |
+|:-----------------|:--------------|:------------------------------------------------------|
+| id               | bigint signed | auto_increment                                        |
+| activity_id      | int unsigned  | Référence vers l'activité liée à l'impact             |
+| impact_type      | varchar(255)  | Type d'impact (financier, image, environnement, etc.) |
+| severity         | tinyint(4)    | Description de l'impact                               |
+| created_at       | timestamp     | Date de création                                      |
+| updated_at       | timestamp     | Date de mise à jour                                   |
+
 
 #### Opérations
 
@@ -195,14 +265,21 @@ Une opération est composée d’acteurs et de tâches.
 
 Table *operations* :
 
-| Champ       | Type         | Description                |
-|:------------|:-------------|:---------------------------|
-| id          | int unsigned | auto_increment             |
-| name        | varchar(255) | Nom de l'opération         |
-| description | longtext     | Description de l'opération |
-| created_at  | timestamp    | Date de création           |
-| updated_at  | timestamp    | Date de mise à jour        |
-| deleted_at  | timestamp    | Date de suppression        |
+| Champ       | Type         | Description                                              |
+|:------------|:-------------|:---------------------------------------------------------|
+| id          | int unsigned | auto_increment                                           |
+| name        | varchar(255) | Nom de l'opération                                       |
+| description | longtext     | Description de l'opération                               |
+| process_id  | int unsigned | Référence vers le processus dont fait partie l'opération | 
+| created_at  | timestamp    | Date de création                                         |
+| updated_at  | timestamp    | Date de mise à jour                                      |
+| deleted_at  | timestamp    | Date de suppression                                      |
+
+L'export du modèle de données référence les activités, les acteurs et les tâches rattachées à une opération.  
+
+Dans l'application, une activité peut être rattachée à une opération depuis ces deux objets.  
+Un acteur peut être rattaché à une opération depuis l'objet opérations.  
+Une tâche peut être rattachée à une opération depuis l'objet opérations.  
 
 #### Tâches
 
@@ -219,6 +296,10 @@ Table *tasks* :
 | created_at  | timestamp    | Date de création     |
 | updated_at  | timestamp    | Date de mise à jour  |
 | deleted_at  | timestamp    | Date de suppression  |
+
+L'export du modèle de données référence les opérations rattachées à une tâche.  
+
+Dans l'application, une opération peut être rattachée à une tâche depuis l'objet opérations.  
 
 #### Acteurs
 
@@ -238,29 +319,45 @@ Table *actors* :
 | updated_at | timestamp    | Date de mise à jour |
 | deleted_at | timestamp    | Date de suppression |
 
+L'export du modèle de données référence les opérations rattachées à un acteur.  
+
+Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.  
+
 #### Informations
 
 Une information est une donnée faisant l’objet d’un traitement informatique.
 
 Table *information* :
 
-| Champ           | Type         | Description                           |
-|:----------------|:-------------|:--------------------------------------|
-| id              | int unsigned | auto_increment                        |
-| name            | varchar(255) | Nom de l'information                  |
-| description     | longtext     | Description de l'information          |
-| owner           | varchar(255) | Propriétaire de l'information         |
-| administrator   | varchar(255) | Administrateur de l'information       |
-| storage         | varchar(255) | Stockage de l'information             |
-| security_need_c | int          | Confidentialité                       |
-| security_need_i | int          | Intégrité                             |
-| security_need_a | int          | Disponibilité                         |
-| security_need_t | int          | Traçabilité                           |
-| sensitivity     | varchar(255) | Sensibilité de l'information          |
-| constraints     | longtext     | Contraintes légales et réglementaires |
-| created_at      | timestamp    | Date de création                      |
-| updated_at      | timestamp    | Date de mise à jour                   |
-| deleted_at      | timestamp    | Date de suppression                   |
+| Champ              | Type         | Description                           |
+|:-------------------|:-------------|:--------------------------------------|
+| id                 | int unsigned | auto_increment                        |
+| name               | varchar(255) | Nom de l'information                  |
+| description        | longtext     | Description de l'information          |
+| owner              | varchar(255) | Propriétaire de l'information         |
+| administrator      | varchar(255) | Administrateur de l'information       |
+| sensitivity        | varchar(255) | Sensibilité de l'information          |
+| storage            | varchar(255) | Stockage de l'information             |
+| security_need_c    | int          | Confidentialité                       |
+| security_need_i    | int          | Intégrité                             |
+| security_need_a    | int          | Disponibilité                         |
+| security_need_t    | int          | Traçabilité                           |
+| security_need_auth | int          | Authenticité                          |
+| constraints        | longtext     | Contraintes légales et réglementaires |
+| retention          | varchar(255) | Durée de rétention de l'information   |
+| created_at         | timestamp    | Date de création                      |
+| updated_at         | timestamp    | Date de mise à jour                   |
+| deleted_at         | timestamp    | Date de suppression                   |
+
+Le champ "retention" n'est pas utilisé pour le moment et est donc absent de l'application.  
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres. 
+
+L'export du modèle de données référence les bases de données et processus rattachés à une information.  
+Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.  
+Un processus peut être rattachée à une information depuis ces deux objets. 
 
 ### La vue des applications
 
@@ -288,6 +385,8 @@ Table *application_blocks* :
 | updated_at  | timestamp    | Date de mise à jour            |
 | deleted_at  | timestamp    | Date de suppression            |
 
+Dans l'application, une application peut être rattachée à un bloc applicatif depuis ces deux objets.
+
 #### Application
 
 Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un
@@ -300,29 +399,104 @@ a un serveur logique par serveur physique.
 
 Table *m_applications* :
 
-| Champ                | Type         | Description                          |
-|:---------------------|:-------------|:-------------------------------------|
-| id                   | int unsigned | auto_increment                       |
-| name                 | varchar(255) | Nom de l'application                 |
-| version              | varchar(255) | Version de l'application             |        
-| description          | longtext     | Description de l'application         |
-| security_need_c      | int          | Confidentialité                      |
-| security_need_i      | int          | Intégrité                            |
-| security_need_a      | int          | Disponibilité                        |
-| security_need_t      | int          | Traçabilité                          |
-| type                 | varchar(255) | Type d'application                   |
-| technology           | varchar(255) | Technologie                          |
-| external             | varchar(255) | Externe                              |
-| users                | varchar(255) | Nombre d'utilisateurs et type        |
-| documentation        | varchar(255) | Lien vers la documentation           |
-| entity_resp_id       | int unsigned | Entité responsable de l'exploitation |
-| responsible          | varchar(255) | Responsable de l'application         |
-| application_block_id | int unsigned | Lien vers la bloc applicatif         |
-| install_date         | datetime     | Date d'installation de l'application |
-| update_date          | datetime     | Date de mise à jour de l'application |
-| created_at           | timestamp    | Date de création                     |
-| updated_at           | timestamp    | Date de mise à jour                  |
-| deleted_at           | timestamp    | Date de suppression                  |
+| Champ                | Type         | Description                                     |
+|:---------------------|:-------------|:------------------------------------------------|
+| id                   | int unsigned | auto_increment                                  |
+| name                 | varchar(255) | Nom de l'application                            |
+| application_block_id | int unsigned | Lien vers la bloc applicatif                    |
+| attributes           | varchar(255) | Attributs (tags) d'une application              |
+| description          | longtext     | Description de l'application                    |
+| icon_id              | int unsigned | Référence vers une image spécifique             |
+| responsible          | varchar(255) | Responsable de l'application                    | 
+| entity_resp_id       | int unsigned | Entité responsable de l'exploitation            |
+| functional_referent  | varchar(255) | Référent fonctionnel / métier de l'application  |
+| editor               | varchar(255) | Editeur de l'application                        |
+| users                | varchar(255) | Nombre d'utilisateurs et type                   |
+| technology           | varchar(255) | Technologie                                     |
+| type                 | varchar(255) | Type d'application                              |
+| external             | varchar(255) | Externe                                         |
+| install_date         | datetime     | Date d'installation de l'application            |
+| update_date          | datetime     | Date de mise à jour de l'application            |
+| documentation        | varchar(255) | Lien vers la documentation                      |
+| security_need_c      | int          | Confidentialité                                 |
+| security_need_i      | int          | Intégrité                                       |
+| security_need_a      | int          | Disponibilité                                   |
+| security_need_t      | int          | Traçabilité                                     |
+| security_need_auth   | int          | Authenticité                                    |
+| rto                  | int          | Temps cible de rétablissement de l'application  |
+| rpo                  | int          | Point temporel de restauration des données      |
+| vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE            |
+| product              | varchar(255) | Produit d'un éditeur pour recherche CPE         |
+| version              | varchar(255) | Version d'un produit pour recherche CPE         |
+| patching_frequency   | int          | Fréquence des mises à jour en part. de sécurité |
+| next_update          | date         | Date de prochaine mise à jour                   |
+| created_at           | timestamp    | Date de création                                |
+| updated_at           | timestamp    | Date de mise à jour                             |
+| deleted_at           | timestamp    | Date de suppression                             |
+
+RTO : *Recovery Time Objective*  
+RPO : *Recovery Point Objective*  
+
+Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absent de l'application.  
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres. 
+
+L'export du modèle de données référence :
+
+- les entités utilisatrices (champ *entities*),
+- les processus soutenus,
+- les activités soutenues,
+- les services applicatifs,
+- les bases de données,
+- les postes de travail,
+- les serveurs logiques,
+- les équipements de sécurité logiques,
+- les administrateurs (objet Utilisateurs de la vue de l'administration),
+- et les mesures de sécurité
+
+rattachées à une application.
+
+Dans l'application, une entité utilisatrice peut être rattachée à une application depuis un objet application.  
+Un processus peut être rattaché à une application depuis ces deux objets.  
+Une activité peut être rattachée à une application depuis ces deux objets.  
+
+
+Un service applicatif peut être rattaché à une application depuis ces deux objets.  
+Une base de données peut être rattachée à une application depuis ces deux objets.  
+Un poste de travail peut être rattaché à une application depuis un objet poste de travail.  
+
+
+Un serveur logique peut être rattaché à une application depuis ces deux objets.  
+Un équipement de sécurité logique peut être rattaché à une application depuis ces deux objets.  
+Un administrateur peut être rattaché à une application depuis un objet application.  
+
+
+Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".  
+Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.  
+
+
+Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.  
+Dans l'application, le champ *évènements majeurs* est géré dans une table à part.
+
+#### Evènements majeurs
+
+Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.  
+Les évènements majeurs ne sont accessibles qu'à travers les objets applications.  
+
+Ils ne sont ni importables, ni exportables à travers l'outil graphique.  
+
+Table *m_application_events* :
+
+| Champ            | Type         | Description                                         |
+|:-----------------|:-------------|:----------------------------------------------------|
+| id               | int unsigned | auto_increment                                      |
+| user_id          | int unsigned | Utilisateur de Mercator ayant renseigné l'évènement |
+| m_application_id | varchar(255) | Référence vers l'application ayant subi l'évènement |
+| message          | longtext     | Description de l'évènement                          |
+| created_at       | timestamp    | Date de création                                    |
+| updated_at       | timestamp    | Date de mise à jour                                 |
 
 #### Service applicatif
 
@@ -343,6 +517,15 @@ Table *application_services* :
 | updated_at  | timestamp    | Date de mise à jour               |
 | deleted_at  | timestamp    | Date de suppression               |
 
+L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif. 
+
+Dans l'application, une application peut être rattachée à un service applicatif depuis ces deux objets.  
+Dans l'application, un module applicatif peut être rattaché à un service applicatif depuis ces deux objets.  
+
+Il y a deux champs comportant les mêmes informations dans l'export du modèle de données, *servicesApplications* et 
+*applications*.  
+La liaison avec les objets applications se fait par le champ *applications*.
+
 #### Module applicatif
 
 Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière
@@ -359,28 +542,47 @@ Table *application_modules* :
 | updated_at  | timestamp    | Date de mise à jour              |
 | deleted_at  | timestamp    | Date de suppression              |
 
+L'export du modèle de données référence les services applicatifs rattachés à un module applicatif.  
+Dans l'application, un service applicatif peut être rattaché à un module applicatif depuis ces deux objets.
+
 #### Base de données
 
 Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.
 
 Table *databases* :
 
-| Champ           | Type         | Description                      |
-|:----------------|:-------------|:---------------------------------|
-| id              | int unsigned | auto_increment                   |
-| name            | varchar(255) | Nom du service applicatif        |
-| description     | longtext     | Description du module applicatif |
-| responsible     | varchar(255) | Responsable de l'application     |
-| type            | varchar(255) | Responsable de l'application     |
-| security_need_c | int          | Confidentialité                  |
-| security_need_i | int          | Intégrité                        |
-| security_need_a | int          | Disponibilité                    |
-| security_need_t | int          | Traçabilité                      |
-| external        | varchar(255) | Externe                          |
-| entity_resp_id  | int unsigned | Entité responsable               |
-| created_at      | timestamp    | Date de création                 |
-| updated_at      | timestamp    | Date de mise à jour              |
-| deleted_at      | timestamp    | Date de suppression              |
+| Champ              | Type         | Description                               |
+|:-------------------|:-------------|:------------------------------------------|
+| id                 | int unsigned | auto_increment                            |
+| name               | varchar(255) | Nom de la base de données                 |
+| description        | longtext     | Description de la base de données         |
+| type               | varchar(255) | Type de technologie de la base de données |
+| entity_resp_id     | int unsigned | Entité responsable de la base de données  |
+| responsible        | varchar(255) | Responsable SSI de la base de données     |
+| security_need_c    | int          | Confidentialité                           |
+| security_need_i    | int          | Intégrité                                 |
+| security_need_a    | int          | Disponibilité                             |
+| security_need_t    | int          | Traçabilité                               |
+| security_need_auth | int          | Authenticité                              |
+| external           | varchar(255) | Externe                                   |
+| created_at         | timestamp    | Date de création                          |
+| updated_at         | timestamp    | Date de mise à jour                       |
+| deleted_at         | timestamp    | Date de suppression                       |
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres.   
+
+L'export du modèle de données référence l'image spécifique d'une base de données.  
+Dans l'application, une image spécifique peut être rattachée à une base de données depuis un objet base de données.  
+
+L'export du modèle de données référence les entités utilisatrices (champ *entities*), les applications, les informations,
+les serveurs logiques et les conteneurs rattachés à une base de données.  
+Dans l'application, une entité utilisatrice peut être rattachée à une base de données depuis un objet base de données.  
+Dans l'application, une information peut être rattachée à une base de données depuis un objet base de données.  
+Dans l'application, une application peut être rattachée à une base de données depuis ces deux objets.  
+Dans l'application, un serveur logique peut être rattaché à une base de données depuis ces deux objets.  
+Dans l'application, un conteneur peut être rattaché à une base de données depuis ces deux objets.
 
 #### Flux
 
@@ -398,20 +600,28 @@ Table *fluxes* :
 |:----------------------|:-------------|:------------------------------------------|
 | id                    | int unsigned | auto_increment                            |
 | name                  | varchar(255) | Nom du flux                               |
+| attributes            | varchar(255) | Attributs (tags) du flux                  |
 | description           | longtext     | Description du flux                       |
-| application_source_id | int unsigned | Lien vers l'application source            |
-| service_source_id     | int unsigned | Lien vers le service source               |
-| module_source_id      | int unsigned | Lien vers le module source                |
-| database_source_id    | int unsigned | Lien vers la base de données source       |
-| application_dest_id   | int unsigned | Lien vers l'application destinataire      |
-| service_dest_id       | int unsigned | Lien vers le service destinataire         |
-| module_dest_id        | int unsigned | Lien vers le module destinataire          |
-| database_dest_id      | int unsigned | Lien vers la base de données destinataire |
+| *device*_source_id    | int unsigned | Lien vers l'actif source                  |
+| *device*_dest_id      | int unsigned | Lien vers l'actif destinataire            |
 | crypted               | tinyint(1)   | Le flux est chiffré (1=oui, O=non)        |
 | bidirectional         | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non) |
+| nature                | varcahr(255) | Nature du flux applicatif                 |
 | created_at            | timestamp    | Date de création                          |
 | updated_at            | timestamp    | Date de mise à jour                       |
 | deleted_at            | timestamp    | Date de suppression                       |
+
+
+Les actifs sources et destination peuvent être :
+
+| Actif (*device*)                | Source   | Destination  |
+|:--------------------------------|:---------|:-------------|
+| Application                     | oui      | oui          |
+| Service applicatif              | oui      | oui          |
+| Module applicatif               | oui      | oui          |
+| Base de données                 | oui      | oui          |
+
+Dans l'application, une information peut être rattaché à un flux applicatif depuis un objet flux applicatif.
 
 ### L’administration
 
@@ -491,18 +701,18 @@ GPO, par exemple) ainsi que les droits des objets.
 
 Table *domaines_ads* :
 
-| Champ                 | Type         | Description                               |
-|:----------------------|:-------------|:------------------------------------------|
-| id                    | int unsigned | auto_increment                            |
-| name                  | varchar(255) | Nom du domaine AD / LDAP                  |
-| description           | longtext     | Description du domaine                    |
-| domain_ctrl_cnt       | int signed   | Nombre de contrôleurs de domaine          |
-| user_count            | int signed   | Nombre d'utilisateurs du domaine          |
-| machine_count         | int signed   | Nombre de machines du domaine             |
+| Champ                  | Type         | Description                              |
+|:-----------------------|:-------------|:-----------------------------------------|
+| id                     | int unsigned | auto_increment                           |
+| name                   | varchar(255) | Nom du domaine AD / LDAP                 |
+| description            | longtext     | Description du domaine                   |
+| domain_ctrl_cnt        | int signed   | Nombre de contrôleurs de domaine         |
+| user_count             | int signed   | Nombre d'utilisateurs du domaine         |
+| machine_count          | int signed   | Nombre de machines du domaine            |
 | relation_inter_domaine | varchar(255) | Description des relations inter-domaines |
-| created_at            | timestamp    | Date de création                          |
-| updated_at            | timestamp    | Date de mise à jour                       |
-| deleted_at            | timestamp    | Date de suppression                       |
+| created_at             | timestamp    | Date de création                         |
+| updated_at             | timestamp    | Date de mise à jour                      |
+| deleted_at             | timestamp    | Date de suppression                      |
 
 L'export du modèle de données référence les forêts AD / arborescence LDAP rattachées à un domaine AD / LDAP.  
 Dans l'application, une forêt AD / arborescence LDAP peut être rattachée à un domaine AD / LDAP depuis ces deux objets.  
