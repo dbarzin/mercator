@@ -71,6 +71,7 @@ Table *entities* :
 |:-----------------|:-------------|:----------------------------------------------|
 | id               | int unsigned | auto_increment                                |
 | name             | varchar(255) | Nom de l'entité                               |
+| icon_id          | int unsigned | Référence vers une image spécifique           |
 | entity_type      | varchar(255) | Type d'entité                                 |
 | attributes       | varchar(255) | Attributs (#tag...)                           |
 | description      | longtext     | Description de l'entité                       |
@@ -79,9 +80,20 @@ Table *entities* :
 | is_external      | boolean      | Entité externe                                |
 | security_level   | longtext     | Niveau de sécurité                            |
 | contact_point    | longtext     | Point de contact                              |
+| external_ref_id  | varchar(255) | Lien vers une entité extérieure connectée     |
 | created_at       | timestamp    | Date de création                              |
 | updated_at       | timestamp    | Date de mise à jour                           |
 | deleted_at       | timestamp    | Date de suppression                           |
+
+Le champ "external_ref_id" n'est pas utilisé et est donc absent de l'application.  
+
+L'export du modèle de données référence les processus et applications rattachées à une entité.  
+
+Dans l'application, un processus peut être rattaché à une entité depuis ces deux objets.  
+Une application peut être rattachée à une entité (en tant que responsable de l'exploitation) depuis ces deux objets.  
+
+Dans l'application, une base de données peut être rattachée à une entité (en tant que responsable de l'exploitation)
+depuis ces deux objets.  
 
 #### Relations
 
@@ -92,29 +104,40 @@ d’information.
 
 Table *relations* :
 
-| Champ           | Type         | Description                                      |
-|:----------------|:-------------|:-------------------------------------------------|
-| id              | int unsigned | auto_increment                                   |
-| name            | varchar(255) | Nom de la relation                               |
-| type            | varchar(255) | Type de la relation                              |
-| description     | longtext     | Description de la relation                       |
-| source_id       | int unsigned | Référence vers l'entité source                   |
-| destination_id  | int unsigned | Référence vers l'entité destinataire             |
-| reference       | varchar(255) | Numéro de référence de la relation (facturation) |
-| responsible     | varchar(255) | Responsable de la relation                       |
-| order_number    | varchar(255) | Numéro de commande (facturation)                 |
-| active          | tinyint(1)   | La relation est encore active                    |
-| start_date      | date         | Début de la relation                             |
-| end_date        | date         | Fin de la relation                               |
-| comments        | text         | Commentaires sur l'état de la relation           |
-| importance      | int          | Importance de la relation                        |
-| security_need_c | int          | Confidentialité                                  |
-| security_need_i | int          | Intégrité                                        |
-| security_need_a | int          | Disponibilité                                    |
-| security_need_t | int          | Traçabilité                                      |
-| created_at      | timestamp    | Date de création                                 |
-| updated_at      | timestamp    | Date de mise à jour                              |
-| deleted_at      | timestamp    | Date de suppression                              |
+| Champ              | Type         | Description                                      |
+|:-------------------|:-------------|:-------------------------------------------------|
+| id                 | int unsigned | auto_increment                                   |
+| name               | varchar(255) | Nom de la relation                               |
+| type               | varchar(255) | Type (Nature) de la relation                     |
+| description        | longtext     | Description de la relation                       |
+| attributes         | varchar(255) | Attributs (tags) de la relation                  |
+| source_id          | int unsigned | Référence vers l'entité source                   |
+| destination_id     | int unsigned | Référence vers l'entité destinataire             |
+| reference          | varchar(255) | Numéro de référence de la relation (facturation) |
+| responsible        | varchar(255) | Responsable de la relation                       |
+| order_number       | varchar(255) | Numéro de commande (facturation)                 |
+| active             | tinyint(1)   | La relation est encore active                    |
+| start_date         | date         | Début de la relation                             |
+| end_date           | date         | Fin de la relation                               |
+| comments           | text         | Commentaires sur l'état de la relation           |
+| importance         | int          | Importance de la relation                        |
+| security_need_c    | int          | Confidentialité                                  |
+| security_need_i    | int          | Intégrité                                        |
+| security_need_a    | int          | Disponibilité                                    |
+| security_need_t    | int          | Traçabilité                                      |
+| security_need_auth | int          | Authenticité                                     |
+| created_at         | timestamp    | Date de création                                 |
+| updated_at         | timestamp    | Date de mise à jour                              |
+| deleted_at         | timestamp    | Date de suppression                              |
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres.  
+
+L'export du modèle de données référence les documents de référence rattachés à une relation.  
+Dans l'application, un document peut être rattaché à une relation depuis un objet relations. 
+
+Les valeurs financières d'un contrat peuvent être indiquées dans des champs dédiés.  
 
 ### Vue métier du système d’information
 
