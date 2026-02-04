@@ -157,21 +157,48 @@ celui-ci.
 
 Table *processes* :
 
-| Champ           | Type         | Description                       |
-|:----------------|:-------------|:----------------------------------|
-| id              | int unsigned | auto_increment                    |
-| identifiant     | varchar(255) | Nom du processus                  |
-| description     | longtext     | Description du processus          |
-| owner           | varchar(255) | Propriétaire du processus         |
-| in_out          | longtext     | Elements entrant et sortants      |
-| security_need_c | int          | Confidentialité                   |
-| security_need_i | int          | Intégrité                         |
-| security_need_a | int          | Disponibilité                     |
-| security_need_t | int          | Traçabilité                       |
-| macroprocess_id | int unsigned | Référence vers le macro-processus |
-| created_at      | timestamp    | Date de création                  |
-| updated_at      | timestamp    | Date de mise à jour               |
-| deleted_at      | timestamp    | Date de suppression               |
+| Champ              | Type         | Description                         |
+|:-------------------|:-------------|:------------------------------------|
+| id                 | int unsigned | auto_increment                      |
+| name               | varchar(255) | Nom du processus                    |
+| description        | longtext     | Description du processus            |
+| icon_id            | int unsigned | Référence vers une image spécifique |
+| owner              | varchar(255) | Propriétaire du processus           |
+| in_out             | longtext     | Elements entrant et sortants        |
+| security_need_c    | int          | Confidentialité                     |
+| security_need_i    | int          | Intégrité                           |
+| security_need_a    | int          | Disponibilité                       |
+| security_need_t    | int          | Traçabilité                         |
+| security_need_auth | int          | Authenticité                        |
+| macroprocess_id    | int unsigned | Référence vers le macro-processus   |
+| created_at         | timestamp    | Date de création                    |
+| updated_at         | timestamp    | Date de mise à jour                 |
+| deleted_at         | timestamp    | Date de suppression                 |
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres.  
+
+L'export du modèle de données référence les :
+
+- entités,
+- activités
+- informations,
+- applications,
+- traitements de données,
+- et mesures de sécurité
+
+rattachées à un processus.
+
+Dans l'application, une entité associée à un processus peut être rattachée à un processus depuis ces deux objets.  
+Une activité peut être rattachée à un processus depuis ces deux objets.  
+Une information peut être rattachée à un processus depuis ces deux objets.  
+
+Une application peut être rattachée à un processus depuis ces deux objets.  
+Un traitement du registre RGPD peut être rattachée à un processus depuis un objet traitement du registre.  
+
+Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".  
+Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.
 
 #### Activités
 
