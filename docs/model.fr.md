@@ -244,23 +244,35 @@ Une information est une donnée faisant l’objet d’un traitement informatique
 
 Table *information* :
 
-| Champ           | Type         | Description                           |
-|:----------------|:-------------|:--------------------------------------|
-| id              | int unsigned | auto_increment                        |
-| name            | varchar(255) | Nom de l'information                  |
-| description     | longtext     | Description de l'information          |
-| owner           | varchar(255) | Propriétaire de l'information         |
-| administrator   | varchar(255) | Administrateur de l'information       |
-| storage         | varchar(255) | Stockage de l'information             |
-| security_need_c | int          | Confidentialité                       |
-| security_need_i | int          | Intégrité                             |
-| security_need_a | int          | Disponibilité                         |
-| security_need_t | int          | Traçabilité                           |
-| sensitivity     | varchar(255) | Sensibilité de l'information          |
-| constraints     | longtext     | Contraintes légales et réglementaires |
-| created_at      | timestamp    | Date de création                      |
-| updated_at      | timestamp    | Date de mise à jour                   |
-| deleted_at      | timestamp    | Date de suppression                   |
+| Champ              | Type         | Description                           |
+|:-------------------|:-------------|:--------------------------------------|
+| id                 | int unsigned | auto_increment                        |
+| name               | varchar(255) | Nom de l'information                  |
+| description        | longtext     | Description de l'information          |
+| owner              | varchar(255) | Propriétaire de l'information         |
+| administrator      | varchar(255) | Administrateur de l'information       |
+| sensitivity        | varchar(255) | Sensibilité de l'information          |
+| storage            | varchar(255) | Stockage de l'information             |
+| security_need_c    | int          | Confidentialité                       |
+| security_need_i    | int          | Intégrité                             |
+| security_need_a    | int          | Disponibilité                         |
+| security_need_t    | int          | Traçabilité                           |
+| security_need_auth | int          | Authenticité                          |
+| constraints        | longtext     | Contraintes légales et réglementaires |
+| retention          | varchar(255) | Durée de rétention de l'information   |
+| created_at         | timestamp    | Date de création                      |
+| updated_at         | timestamp    | Date de mise à jour                   |
+| deleted_at         | timestamp    | Date de suppression                   |
+
+Le champ "retention" n'est pas utilisé pour le moment et est donc absent de l'application.  
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres. 
+
+L'export du modèle de données référence les bases de données et processus rattachés à une information.  
+Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.  
+Un processus peut être rattachée à une information depuis ces deux objets. 
 
 ### La vue des applications
 
@@ -339,6 +351,8 @@ Table *m_applications* :
 
 RTO : *Recovery Time Objective*  
 RPO : *Recovery Point Objective*  
+
+Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absent de l'application.  
 
 Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
 d'une entité soumise à la directive UE 2022/2554 (DORA).  
