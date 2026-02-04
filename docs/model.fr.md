@@ -180,14 +180,50 @@ pas forcément à une structure organisationnelle de l’entreprise.
 
 Table *activities* :
 
-| Champ       | Type         | Description               |
-|:------------|:-------------|:--------------------------|
-| id          | int unsigned | auto_increment            |
-| name        | varchar(255) | Nom de l'activité         |
-| description | longtext     | Description de l'activité |
-| created_at  | timestamp    | Date de création          |
-| updated_at  | timestamp    | Date de mise à jour       |
-| deleted_at  | timestamp    | Date de suppression       |
+| Champ                       | Type         | Description                                      |
+|:----------------------------|:-------------|:-------------------------------------------------|
+| id                          | int unsigned | auto_increment                                   |
+| name                        | varchar(255) | Nom de l'activité                                |
+| description                 | longtext     | Description de l'activité                        |
+| recovery_time_objective     | int signed   | RTO, Temps cible de rétablissement de l'activité |
+| maximum_tolerable_downtime  | int signed   | Durée Maximale Tolérable de perturbation (DMTP)  |
+| recovery_point_objective    | int signed   | RPO, Point temporel de restauration des données  |
+| maximum_tolerable_data_loss | int signed   | Perte de Données Maximale Admissble (PDMA)       |
+| drp                         | text         | Description du plan de reprise d'activité (PRA)  |
+| drp_link                    | varchar(255) | Lien (URL) vers le PRA                           |
+| created_at                  | timestamp    | Date de création                                 |
+| updated_at                  | timestamp    | Date de mise à jour                              |
+| deleted_at                  | timestamp    | Date de suppression                              |
+
+DMTP : Temps d'interruption maximale avant que les conséquences ne se soient critiques ou ne deviennent innaceptables.  
+PDMA : perte de données maximales avant des conséquences critiques ou innaceptables.  
+
+L'export du modèle de données référence les processus, opérations et applications rattachées à une activité.  
+
+Dans l'application, un processus peut être rattaché à une activité depuis ces deux objets.  
+Une opération peut être rattachée à une activité depuis ces deux objets.  
+Une application peut être rattachée à une activité depuis ces deux objets.
+
+Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans une table à part.
+
+#### Impacts
+
+Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.  
+Les impacts ne sont accessibles qu'à travers les objets activités.  
+
+Ils ne sont ni importables, ni exportables à travers l'outil graphique.  
+
+Table *activity_impact* :
+
+| Champ            | Type          | Description                                           |
+|:-----------------|:--------------|:------------------------------------------------------|
+| id               | bigint signed | auto_increment                                        |
+| activity_id      | int unsigned  | Référence vers l'activité liée à l'impact             |
+| impact_type      | varchar(255)  | Type d'impact (financier, image, environnement, etc.) |
+| severity         | tinyint(4)    | Description de l'impact                               |
+| created_at       | timestamp     | Date de création                                      |
+| updated_at       | timestamp     | Date de mise à jour                                   |
+
 
 #### Opérations
 
@@ -413,7 +449,9 @@ Dans l'application, le champ *évènements majeurs* est géré dans une table à
 #### Evènements majeurs
 
 Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.  
-Les évènements majeurs ne sont accessibles qu'à travers les objets applications.
+Les évènements majeurs ne sont accessibles qu'à travers les objets applications.  
+
+Ils ne sont ni importables, ni exportables à travers l'outil graphique.  
 
 Table *m_application_events* :
 
