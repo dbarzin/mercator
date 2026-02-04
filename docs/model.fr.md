@@ -376,13 +376,16 @@ rattachées à une application.
 Dans l'application, une entité utilisatrice peut être rattachée à une application depuis un objet application.  
 Un processus peut être rattaché à une application depuis ces deux objets.  
 Une activité peut être rattachée à une application depuis ces deux objets.  
+
 Un service applicatif peut être rattaché à une application depuis ces deux objets.  
 Une base de données peut être rattachée à une application depuis ces deux objets.  
 Un poste de travail peut être rattaché à une application depuis un objet poste de travail.  
+
 Un serveur logique peut être rattaché à une application depuis ces deux objets.  
 Un équipement de sécurité logique peut être rattaché à une application depuis ces deux objets.  
-Un administrateur peut être rattaché à une application depuis un objet application.
-Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".
+Un administrateur peut être rattaché à une application depuis un objet application.  
+
+Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".  
 Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.  
 
 Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.  
