@@ -220,6 +220,10 @@ Table *tasks* :
 | updated_at  | timestamp    | Date de mise à jour  |
 | deleted_at  | timestamp    | Date de suppression  |
 
+L'export du modèle de données référence les opérations rattachées à une tâche.  
+
+Dans l'application, une opération peut être rattachée à une tâche depuis l'objet opérations.  
+
 #### Acteurs
 
 Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des
