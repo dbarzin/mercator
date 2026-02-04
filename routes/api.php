@@ -150,6 +150,10 @@ Route::middleware('auth:api')->group(function (): void {
     Route::delete('clusters/mass-destroy', [API\ClusterController::class, 'massDestroy'])->name('clusters.mass-destroy');
     Route::resource('clusters', API\ClusterController::class);
 
+    // Containers
+    Route::delete('containers/mass-destroy', [API\ContainerController::class, 'massDestroy'])->name('containers.mass-destroy');
+    Route::resource('containers', API\ContainerController::class);
+
     // Logical Servers
     Route::delete('logical-servers/mass-destroy', [API\LogicalServerController::class, 'massDestroy'])->name('logical-servers.mass-destroy');
     Route::resource('logical-servers', API\LogicalServerController::class);

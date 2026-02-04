@@ -16,18 +16,18 @@ class ClusterController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('cluster_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalservers = Cluster::all();
+        $clusters = Cluster::all();
 
-        return response()->json($logicalservers);
+        return response()->json($clusters);
     }
 
     public function store(StoreClusterRequest $request)
     {
         Log::Debug('ClusterController:store Start');
 
-        abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('cluster_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $cluster = Cluster::query()->create($request->all());
 
@@ -42,14 +42,14 @@ class ClusterController extends Controller
 
     public function show(Cluster $cluster)
     {
-        abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('cluster_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new JsonResource($cluster);
     }
 
     public function update(UpdateClusterRequest $request, Cluster $cluster)
     {
-        abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('cluster_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $cluster->update($request->all());
 
@@ -65,7 +65,7 @@ class ClusterController extends Controller
 
     public function destroy(Cluster $cluster)
     {
-        abort_if(Gate::denies('logical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('cluster_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $cluster->delete();
 
@@ -74,9 +74,9 @@ class ClusterController extends Controller
 
     public function massDestroy(MassDestroyClusterRequest $request)
     {
-        abort_if(Gate::denies('logical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('cluster_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Cluster::whereIn('id', request('ids'))->delete();
+        Cluster::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

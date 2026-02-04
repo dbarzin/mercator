@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
-use Mercator\Core\Models\ApplicationModule;
 use Gate;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\ApplicationModule;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationModuleController extends Controller
@@ -26,7 +26,9 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationModule = ApplicationModule::create($request->all());
+        $applicationModule = ApplicationModule::query()->create($request->all());
+
+        $applicationModule->applicationServices()->sync($request->input('application_services', []));
 
         return response()->json($applicationModule, 201);
     }
@@ -34,6 +36,8 @@ class ApplicationModuleController extends Controller
     public function show(ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('application_module_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $applicationModule['application_services'] = $applicationModule->applicationServices()->pluck('id');
 
         return new JsonResource($applicationModule);
     }
@@ -43,6 +47,9 @@ class ApplicationModuleController extends Controller
         abort_if(Gate::denies('application_module_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationModule->update($request->all());
+
+        if ($request->has('application_services'))
+            $applicationModule->applicationServices()->sync($request->input('application_services', []));
 
         return response()->json();
     }
@@ -60,7 +67,7 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        ApplicationModule::whereIn('id', request('ids'))->delete();
+        ApplicationModule::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
