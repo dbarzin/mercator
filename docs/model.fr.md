@@ -44,12 +44,12 @@ Le champ "controls" n'est pas utilisé et est donc absent de l'application.
 L'export du modèle de données référence les processus, les informations, les applications et les documents 
 rattachés à un traitement de données.  
 
-Dans l'application, un processus peut être rattaché à un traitement de donnés depuis un objet traitement 
+Dans l'application, un processus peut être rattaché à un traitement de données depuis un objet traitement 
 de données.  
-Une information peut être rattachée à un traitement de donnés depuis un objet traitement de données.  
+Une information peut être rattachée à un traitement de données depuis un objet traitement de données.  
 
-Une application peut être rattachée à un traitement de donnés depuis un objet traitement de données.  
-Un document peut être rattaché à un traitement de donnés depuis un objet traitement de données.  
+Une application peut être rattachée à un traitement de données depuis un objet traitement de données.  
+Un document peut être rattaché à un traitement de données depuis un objet traitement de données.  
 
 #### Mesures de sécurité
 
