@@ -132,20 +132,27 @@ Les macro-processus représentent des ensembles de processus.
 
 Table *macro_processuses* :
 
-| Champ           | Type         | Description                    |
-|:----------------|:-------------|:-------------------------------|
-| id              | int unsigned | auto_increment                 |
-| name            | varchar(255) | Nom du macro processus         |
-| description     | longtext     | Description du macro-processus |
-| io_elements     | longtext     | Elements entrant et sortants   |
-| security_need_c | int          | Confidentialité                |
-| security_need_i | int          | Intégrité                      |
-| security_need_a | int          | Disponibilité                  |
-| security_need_t | int          | Traçabilité                    |
-| owner           | varchar(255) | Propriétaire                   |
-| created_at      | timestamp    | Date de création               |
-| updated_at      | timestamp    | Date de mise à jour            |
-| deleted_at      | timestamp    | Date de suppression            |
+| Champ              | Type         | Description                    |
+|:-------------------|:-------------|:-------------------------------|
+| id                 | int unsigned | auto_increment                 |
+| name               | varchar(255) | Nom du macro processus         |
+| description        | longtext     | Description du macro-processus |
+| io_elements        | longtext     | Elements entrant et sortants   |
+| security_need_c    | int          | Confidentialité                |
+| security_need_i    | int          | Intégrité                      |
+| security_need_a    | int          | Disponibilité                  |
+| security_need_t    | int          | Traçabilité                    |
+| security_need_auth | int          | Authenticité                   |
+| owner              | varchar(255) | Propriétaire                   |
+| created_at         | timestamp    | Date de création               |
+| updated_at         | timestamp    | Date de mise à jour            |
+| deleted_at         | timestamp    | Date de suppression            |
+
+Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+d'une entité soumise à la directive UE 2022/2554 (DORA).  
+Il s'active depuis le menu Configuration > Paramètres.  
+
+Dans l'application, un processus peut être rattaché à un macro-processus depuis ces deux objets.
 
 #### Processus
 
@@ -182,7 +189,7 @@ Il s'active depuis le menu Configuration > Paramètres.
 L'export du modèle de données référence les :
 
 - entités,
-- activités
+- activités,
 - informations,
 - applications,
 - traitements de données,
