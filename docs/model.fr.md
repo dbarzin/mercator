@@ -15,20 +15,41 @@ Le registre des activités de traitement contient les informations prévues à l
 
 Table *data_processing* :
 
-| Champ       | Type         | Description                 |
-|:------------|:-------------|:----------------------------|
-| id          | int unsigned | auto_increment              |
-| name        | varchar(255) | Nom du traitement           |
-| description | longtext     | Description du traitement   |
-| responsible | longtext     | Responsable du traitement   |
-| purpose     | longtext     | Finalités du traitement     |
-| categories  | longtext     | Catégories de destinataires |
-| recipients  | longtext     | Destinataires des données   |
-| transfert   | longtext     | Transferts de données       |
-| retention   | longtext     | Durées de rétention         |
-| created_at  | timestamp    | Date de création            |
-| updated_at  | timestamp    | Date de mise à jour         |
-| deleted_at  | timestamp    | Date de suppression         |
+| Champ                          | Type         | Description                             |
+|:-------------------------------|:-------------|:----------------------------------------|
+| id                             | int unsigned | auto_increment                          |
+| name                           | varchar(255) | Nom du traitement                       |
+| description                    | longtext     | Description du traitement               |
+| legal_basis                    | varchar(255) | Base légale du traitement               |
+| responsible                    | longtext     | Responsable du traitement               |
+| purpose                        | longtext     | Finalités du traitement                 |
+| lawfulness                     | text         | Licéité du traitement                   |
+| lawfulness_consent             | tinyint(1)   | Licéité basée sur le consentement       |
+| lawfulness_contract            | tinyint(1)   | Licéité contractuelle                   |
+| lawfulness_legal_obligation    | tinyint(1)   | Licéité basée sur une obligation légale |
+| lawfulness_vital_interest      | tinyint(1)   | Licéité basée sur un intérêt vital      |
+| lawfulness_public_interest     | tinyint(1)   | Licéité basée sur un intérêt public     |
+| lawfulness_legitimate_interest | tinyint(1)   | Licéité basée sur un intérêt légitime   |
+| categories                     | longtext     | Catégories de destinataires             |
+| recipients                     | longtext     | Destinataires des données               |
+| transfert                      | longtext     | Transferts de données                   |
+| retention                      | longtext     | Durées de rétention                     |
+| controls                       | longtext     | Mesures de sécurité                     |
+| created_at                     | timestamp    | Date de création                        |
+| updated_at                     | timestamp    | Date de mise à jour                     |
+| deleted_at                     | timestamp    | Date de suppression                     |
+
+Le champ "controls" n'est pas utilisé et est donc absent de l'application.  
+
+L'export du modèle de données référence les processus, les informations, les applications et les documents 
+rattachés à un traitement de données.  
+
+Dans l'application, un processus peut être rattaché à un traitement de donnés depuis un objet traitement 
+de données.  
+Une information peut être rattachée à un traitement de donnés depuis un objet traitement de données.  
+
+Une application peut être rattachée à un traitement de donnés depuis un objet traitement de données.  
+Un document peut être rattaché à un traitement de donnés depuis un objet traitement de données.  
 
 #### Mesures de sécurité
 
