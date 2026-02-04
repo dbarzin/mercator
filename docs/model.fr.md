@@ -195,14 +195,21 @@ Une opération est composée d’acteurs et de tâches.
 
 Table *operations* :
 
-| Champ       | Type         | Description                |
-|:------------|:-------------|:---------------------------|
-| id          | int unsigned | auto_increment             |
-| name        | varchar(255) | Nom de l'opération         |
-| description | longtext     | Description de l'opération |
-| created_at  | timestamp    | Date de création           |
-| updated_at  | timestamp    | Date de mise à jour        |
-| deleted_at  | timestamp    | Date de suppression        |
+| Champ       | Type         | Description                                              |
+|:------------|:-------------|:---------------------------------------------------------|
+| id          | int unsigned | auto_increment                                           |
+| name        | varchar(255) | Nom de l'opération                                       |
+| description | longtext     | Description de l'opération                               |
+| process_id  | int unsigned | Référence vers le processus dont fait partie l'opération | 
+| created_at  | timestamp    | Date de création                                         |
+| updated_at  | timestamp    | Date de mise à jour                                      |
+| deleted_at  | timestamp    | Date de suppression                                      |
+
+L'export du modèle de données référence les activités, les acteurs et les tâches rattachées à une opération.  
+
+Dans l'application, une activité peut être rattachée à une opération depuis ces deux objets.  
+Un acteur peut être rattaché à une opération depuis l'objet opérations.  
+Une tâche peut être rattachée à une opération depuis l'objet opérations.  
 
 #### Tâches
 
