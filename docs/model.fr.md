@@ -359,6 +359,7 @@ d'une entité soumise à la directive UE 2022/2554 (DORA).
 Il s'active depuis le menu Configuration > Paramètres. 
 
 L'export du modèle de données référence :
+
 - les entités utilisatrices (champ *entities*),
 - les processus soutenus,
 - les activités soutenues,
@@ -374,7 +375,7 @@ rattachées à une application.
 
 Dans l'application, une entité utilisatrice peut être rattachée à une application depuis un objet application.  
 Un processus peut être rattaché à une application depuis ces deux objets.  
-Une activité peut être rattachée à une application depuis ces deux objets. 
+Une activité peut être rattachée à une application depuis ces deux objets.  
 Un service applicatif peut être rattaché à une application depuis ces deux objets.  
 Une base de données peut être rattachée à une application depuis ces deux objets.  
 Un poste de travail peut être rattaché à une application depuis un objet poste de travail.  
@@ -422,7 +423,8 @@ Table *application_services* :
 | updated_at  | timestamp    | Date de mise à jour               |
 | deleted_at  | timestamp    | Date de suppression               |
 
-L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif.
+L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif. 
+
 Dans l'application, une application peut être rattachée à un service applicatif depuis ces deux objets.  
 Dans l'application, un module applicatif peut être rattaché à un service applicatif depuis ces deux objets.  
 
