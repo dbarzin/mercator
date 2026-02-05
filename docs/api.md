@@ -72,6 +72,7 @@ __Logical infrastructure view__
 - /api/clusters
 - /api/logical-servers
 - /api/logical-flows
+- /api/containers
 - /api/certificates
 - /api/vlans
 
