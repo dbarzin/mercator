@@ -89,8 +89,10 @@
     <li class="toctree-l3"><a class="reference internal" href="#processus">Processus</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#activites">Activités</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#impacts">Impacts</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#impacts">Impacts</a>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#operations">Opérations</a>
     </li>
@@ -107,8 +109,10 @@
     <li class="toctree-l3"><a class="reference internal" href="#bloc-applicatif">Bloc applicatif</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application">Application</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#evenements-majeurs">Evènements majeurs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#evenements-majeurs">Evènements majeurs</a>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#service-applicatif">Service applicatif</a>
     </li>
@@ -673,6 +677,7 @@ Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
 <p>L'export du modèle de données référence les documents de référence rattachés à une relation.<br />
 Dans l'application, un document peut être rattaché à une relation depuis un objet relations. </p>
 <p>Les valeurs financières d'un contrat peuvent être indiquées dans des champs dédiés.  </p>
+<hr />
 <h3 id="vue-metier-du-systeme-dinformation">Vue métier du système d’information</h3>
 <p>La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y
 participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition.</p>
@@ -838,6 +843,31 @@ celui-ci.</p>
 <td style="text-align: left;">Référence vers le macro-processus</td>
 </tr>
 <tr>
+<td style="text-align: left;">activities</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des activitées liées</td>
+</tr>
+<tr>
+<td style="text-align: left;">entities</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des entitées liées</td>
+</tr>
+<tr>
+<td style="text-align: left;">informations</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des informations liées</td>
+</tr>
+<tr>
+<td style="text-align: left;">applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des applications liées</td>
+</tr>
+<tr>
+<td style="text-align: left;">operations</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des operations liées</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -956,7 +986,7 @@ PDMA : perte de données maximales avant des conséquences critiques ou innacept
 Une opération peut être rattachée à une activité depuis ces deux objets.<br />
 Une application peut être rattachée à une activité depuis ces deux objets.</p>
 <p>Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans une table à part.</p>
-<h4 id="impacts">Impacts</h4>
+<h5 id="impacts">Impacts</h5>
 <p>Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.<br />
 Les impacts ne sont accessibles qu'à travers les objets activités.  </p>
 <p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.  </p>
@@ -1033,6 +1063,21 @@ Les impacts ne sont accessibles qu'à travers les objets activités.  </p>
 <td style="text-align: left;">process_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Référence vers le processus dont fait partie l'opération</td>
+</tr>
+<tr>
+<td style="text-align: left;">actors</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des acteurs liés</td>
+</tr>
+<tr>
+<td style="text-align: left;">tasks</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des taches liées</td>
+</tr>
+<tr>
+<td style="text-align: left;">activities</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des activitées liées</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1139,6 +1184,11 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 <td style="text-align: left;">contact</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Contact de l'acteur</td>
+</tr>
+<tr>
+<td style="text-align: left;">operations</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des operations liées</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1265,6 +1315,7 @@ Il s'active depuis le menu Configuration &gt; Paramètres. </p>
 <p>L'export du modèle de données référence les bases de données et processus rattachés à une information.<br />
 Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.<br />
 Un processus peut être rattachée à une information depuis ces deux objets. </p>
+<hr />
 <h3 id="la-vue-des-applications">La vue des applications</h3>
 <p>La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ».</p>
 <p><a href="/mercator/images/applications.png"><img src="/mercator/images/applications.png" width="600"></a></p>
@@ -1372,11 +1423,6 @@ a un serveur logique par serveur physique.</p>
 <td style="text-align: left;">Responsable de l'application</td>
 </tr>
 <tr>
-<td style="text-align: left;">entity_resp_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Entité responsable de l'exploitation</td>
-</tr>
-<tr>
 <td style="text-align: left;">functional_referent</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Référent fonctionnel / métier de l'application</td>
@@ -1415,6 +1461,11 @@ a un serveur logique par serveur physique.</p>
 <td style="text-align: left;">update_date</td>
 <td style="text-align: left;">datetime</td>
 <td style="text-align: left;">Date de mise à jour de l'application</td>
+</tr>
+<tr>
+<td style="text-align: left;">next_update</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de prochaine mise à jour</td>
 </tr>
 <tr>
 <td style="text-align: left;">documentation</td>
@@ -1477,9 +1528,34 @@ a un serveur logique par serveur physique.</p>
 <td style="text-align: left;">Fréquence des mises à jour en part. de sécurité</td>
 </tr>
 <tr>
-<td style="text-align: left;">next_update</td>
-<td style="text-align: left;">date</td>
-<td style="text-align: left;">Date de prochaine mise à jour</td>
+<td style="text-align: left;"> entities</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) entitée(s) liée(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">processes</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) proces(ses) lié(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">services</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) service(s) lié(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">databases</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) database(s) liée(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">logical_servers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) serveur(s) logique(s) servant(s) cette application</td>
+</tr>
+<tr>
+<td style="text-align: left;">activities</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) activitée(s) associée(s)</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1531,7 +1607,7 @@ Un administrateur peut être rattaché à une application depuis un objet applic
 Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.  </p>
 <p>Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.<br />
 Dans l'application, le champ <em>évènements majeurs</em> est géré dans une table à part.</p>
-<h4 id="evenements-majeurs">Evènements majeurs</h4>
+<h5 id="evenements-majeurs">Evènements majeurs</h5>
 <p>Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.<br />
 Les évènements majeurs ne sont accessibles qu'à travers les objets applications.  </p>
 <p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.  </p>
@@ -1612,6 +1688,16 @@ cadre de son travail.</p>
 <td style="text-align: left;">Exposition du service applicatif</td>
 </tr>
 <tr>
+<td style="text-align: left;"> modules</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liens vers les applications-modules</td>
+</tr>
+<tr>
+<td style="text-align: left;"> applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liens vers les applications</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -1661,6 +1747,11 @@ d’informatique et une homogénéité technologique.</p>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description du module applicatif</td>
+</tr>
+<tr>
+<td style="text-align: left;"> application_services</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liens vers les applications-services</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1722,6 +1813,11 @@ Dans l'application, un service applicatif peut être rattaché à un module appl
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Responsable SSI de la base de données</td>
+</tr>
+<tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers une image spécifique</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_c</td>
@@ -1819,12 +1915,12 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 <td style="text-align: left;">Description du flux</td>
 </tr>
 <tr>
-<td style="text-align: left;"><em>device</em>_source_id</td>
+<td style="text-align: left;"><strong><em>device</em></strong>_source_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Lien vers l'actif source</td>
 </tr>
 <tr>
-<td style="text-align: left;"><em>device</em>_dest_id</td>
+<td style="text-align: left;"><strong><em>device</em></strong>_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Lien vers l'actif destinataire</td>
 </tr>
@@ -1860,39 +1956,40 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 </tr>
 </tbody>
 </table>
-<p>Les actifs sources et destination peuvent être :</p>
+<p>Les <strong><em>device</em></strong> sources et destination peuvent être :</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Actif (<em>device</em>)</th>
-<th style="text-align: left;">Source</th>
-<th style="text-align: left;">Destination</th>
+<th style="text-align: center;">Source</th>
+<th style="text-align: center;">Destination</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;">Application</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Service applicatif</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Module applicatif</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Base de données</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
 <p>Dans l'application, une information peut être rattaché à un flux applicatif depuis un objet flux applicatif.</p>
+<hr />
 <h3 id="ladministration">L’administration</h3>
 <p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des
 utilisateurs du système d’information.</p>
@@ -2199,6 +2296,7 @@ Un serveur logique peut être rattaché à un domaine AD / LDAP depuis ces deux 
 </table>
 <p>L'export du modèle de données référence les applications dont un utilisateur est administrateur.<br />
 Dans l'application, un utilisateur peut être défini comme administrateur d'une application depuis un objet application.</p>
+<hr />
 <h3 id="linfrastructure-logique">L’infrastructure logique</h3>
 <p>La vue de l'infrastructure logique correspond à la répartition logique du réseau.</p>
 <p><a href="/mercator/images/logical.png"><img src="/mercator/images/logical.png" width="400"></a></p>
@@ -2516,7 +2614,7 @@ Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <tr>
 <td style="text-align: left;">dst_desc</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Description de la description de la connexion de l'entité</td>
+<td style="text-align: left;">Description de la connexion de l'entité</td>
 </tr>
 <tr>
 <td style="text-align: left;">security</td>
@@ -2981,6 +3079,16 @@ est découpé en un seul serveur logique.</p>
 <td style="text-align: left;">Date de mise à jour du serveur</td>
 </tr>
 <tr>
+<td style="text-align: left;">patching_frequency</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Fréquence des mises à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">next_update</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de la prochaine mise à jour</td>
+</tr>
+<tr>
 <td style="text-align: left;">environment</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Environnement (prod, dev, test, ...)</td>
@@ -3026,14 +3134,29 @@ est découpé en un seul serveur logique.</p>
 <td style="text-align: left;">Configuration du serveur</td>
 </tr>
 <tr>
-<td style="text-align: left;">patching_frequency</td>
-<td style="text-align: left;">int signed</td>
-<td style="text-align: left;">Fréquence des mises à jour</td>
+<td style="text-align: left;">databases</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) database(s) liée(s)</td>
 </tr>
 <tr>
-<td style="text-align: left;">next_update</td>
-<td style="text-align: left;">date</td>
-<td style="text-align: left;">Date de la prochaine mise à jour</td>
+<td style="text-align: left;">cluster_id</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) lien(s) cluster(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">physical_servers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) serveur(s) physiques(s) associés</td>
+</tr>
+<tr>
+<td style="text-align: left;">applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) aplication(s) hebergée(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">containers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) containers hebergé(s)</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -3251,50 +3374,50 @@ Un serveur logique peut être rattaché à un conteneur depuis un objet conteneu
 <thead>
 <tr>
 <th style="text-align: left;">Actif (<em>device</em>)</th>
-<th style="text-align: left;">Source</th>
-<th style="text-align: left;">Destination</th>
+<th style="text-align: center;">Source</th>
+<th style="text-align: center;">Destination</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;">Périphérique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Equipement de sécurité physique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Serveur physique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Infrastructure de stockage</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Poste de travail</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Equipement de sécurité logique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Serveur logique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Sous-réseaux</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
@@ -3435,6 +3558,7 @@ en s’affranchissant des contraintes physiques.</p>
 rattachés à un VLAN.
 Dans l'application, un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.<br />
 Dans l'application, un VLAN peut être rattaché à un sous-réseau ou un commutateur logique depuis ces deux objets.</p>
+<hr />
 <h3 id="linfrastructure-physique">L’infrastructure physique</h3>
 <p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont
 utilisés par celui-ci.</p>
@@ -3712,6 +3836,16 @@ salle.</p>
 <td style="text-align: left;">bay_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Référence vers la baie</td>
+</tr>
+<tr>
+<td style="text-align: left;">clusters</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste des id de(s) cluster(s) associé(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">logical_servers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste des id de(s) logical(s) serveurs(s) associé(s)</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -4680,70 +4814,70 @@ Un flux logique décrit une relation au niveau des couches 3 et 4 du modèle OSI
 <thead>
 <tr>
 <th style="text-align: left;">Actif</th>
-<th style="text-align: left;">Source</th>
-<th style="text-align: left;">Destination</th>
+<th style="text-align: center;">Source</th>
+<th style="text-align: center;">Destination</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;">Périphérique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Téléphone</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Routeur physique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Equipement de sécurité physique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Serveur physique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Commutateur physique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Infrastructure de stockage</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Borne Wifi</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Poste de travail</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Serveur logique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Commutateur logique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td style="text-align: left;">Routeur logique</td>
-<td style="text-align: left;">oui</td>
-<td style="text-align: left;">oui</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
