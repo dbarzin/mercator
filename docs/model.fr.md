@@ -160,6 +160,8 @@ Dans l'application, un document peut être rattaché à une relation depuis un o
 
 Les valeurs financières d'un contrat peuvent être indiquées dans des champs dédiés.  
 
+---
+
 ### Vue métier du système d’information
 
 La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y
@@ -222,6 +224,11 @@ Table *processes* :
 | security_need_t    | int          | Traçabilité                         |
 | security_need_auth | int          | Authenticité                        |
 | macroprocess_id    | int unsigned | Référence vers le macro-processus   |
+| activities         | List int [,] | Liste d'id des activitées liées     |
+| entities           | List int [,] | Liste d'id des entitées liées       |
+| informations       | List int [,] | Liste d'id des informations liées   |
+| applications       | List int [,] | Liste d'id des applications liées   |
+| operations         | List int [,] | Liste d'id des operations liées     |
 | created_at         | timestamp    | Date de création                    |
 | updated_at         | timestamp    | Date de mise à jour                 |
 | deleted_at         | timestamp    | Date de suppression                 |
@@ -284,7 +291,7 @@ Une application peut être rattachée à une activité depuis ces deux objets.
 
 Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans une table à part.
 
-#### Impacts
+##### Impacts
 
 Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.  
 Les impacts ne sont accessibles qu'à travers les objets activités.  
@@ -314,7 +321,10 @@ Table *operations* :
 | id          | int unsigned | auto_increment                                           |
 | name        | varchar(255) | Nom de l'opération                                       |
 | description | longtext     | Description de l'opération                               |
-| process_id  | int unsigned | Référence vers le processus dont fait partie l'opération | 
+| process_id  | int unsigned | Référence vers le processus dont fait partie l'opération |
+| actors      | List int [,] | Liste d'id des acteurs liés                              |
+| tasks       | List int [,] | Liste d'id des taches liées                              |
+| activities  | List int [,] | Liste d'id des activitées liées                          |
 | created_at  | timestamp    | Date de création                                         |
 | updated_at  | timestamp    | Date de mise à jour                                      |
 | deleted_at  | timestamp    | Date de suppression                                      |
@@ -352,16 +362,17 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 
 Table *actors* :
 
-| Champ      | Type         | Description         |
-|:-----------|:-------------|:--------------------|
-| id         | int unsigned | auto_increment      |
-| name       | varchar(255) | Nom de l'acteur     |
-| nature     | varchar(255) | Nature de l'acteur  |
-| type       | varchar(255) | Type d'acteur       |
-| contact    | varchar(255) | Contact de l'acteur |
-| created_at | timestamp    | Date de création    |
-| updated_at | timestamp    | Date de mise à jour |
-| deleted_at | timestamp    | Date de suppression |
+| Champ      | Type         | Description                       |
+|:-----------|:-------------|:----------------------------------|
+| id         | int unsigned | auto_increment                    |
+| name       | varchar(255) | Nom de l'acteur                   |
+| nature     | varchar(255) | Nature de l'acteur                |
+| type       | varchar(255) | Type d'acteur                     |
+| contact    | varchar(255) | Contact de l'acteur               |
+| operations | List int [,] | Liste d'id des operations liées   |
+| created_at | timestamp    | Date de création                  |
+| updated_at | timestamp    | Date de mise à jour               |
+| deleted_at | timestamp    | Date de suppression               |
 
 L'export du modèle de données référence les opérations rattachées à un acteur.  
 
@@ -402,6 +413,8 @@ Il s'active depuis le menu Configuration > Paramètres.
 L'export du modèle de données référence les bases de données et processus rattachés à une information.  
 Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.  
 Un processus peut être rattachée à une information depuis ces deux objets. 
+
+---
 
 ### La vue des applications
 
@@ -452,7 +465,6 @@ Table *m_applications* :
 | description          | longtext     | Description de l'application                    |
 | icon_id              | int unsigned | Référence vers une image spécifique             |
 | responsible          | varchar(255) | Responsable de l'application                    | 
-| entity_resp_id       | int unsigned | Entité responsable de l'exploitation            |
 | functional_referent  | varchar(255) | Référent fonctionnel / métier de l'application  |
 | editor               | varchar(255) | Editeur de l'application                        |
 | users                | varchar(255) | Nombre d'utilisateurs et type                   |
@@ -461,6 +473,7 @@ Table *m_applications* :
 | external             | varchar(255) | Externe                                         |
 | install_date         | datetime     | Date d'installation de l'application            |
 | update_date          | datetime     | Date de mise à jour de l'application            |
+| next_update          | date         | Date de prochaine mise à jour                   |
 | documentation        | varchar(255) | Lien vers la documentation                      |
 | security_need_c      | int          | Confidentialité                                 |
 | security_need_i      | int          | Intégrité                                       |
@@ -473,7 +486,12 @@ Table *m_applications* :
 | product              | varchar(255) | Produit d'un éditeur pour recherche CPE         |
 | version              | varchar(255) | Version d'un produit pour recherche CPE         |
 | patching_frequency   | int          | Fréquence des mises à jour en part. de sécurité |
-| next_update          | date         | Date de prochaine mise à jour                   |
+| entities             | List int [,] | Liste d'id de(s) entitée(s) liée(s)             |
+| processes            | List int [,] | Liste d'id de(s) proces(ses) lié(s)             |
+| services             | List int [,] | Liste d'id de(s) service(s) lié(s)              |
+| databases            | List int [,] | Liste d'id de(s) database(s) liée(s)            |
+| logical_servers      | List int [,] | Liste d'id de(s) serveur(s) logique(s) servant(s) cette application  |
+| activities           | List int [,] | Liste d'id de(s) activitée(s) associée(s)       |
 | created_at           | timestamp    | Date de création                                |
 | updated_at           | timestamp    | Date de mise à jour                             |
 | deleted_at           | timestamp    | Date de suppression                             |
@@ -524,7 +542,7 @@ Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets M
 Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.  
 Dans l'application, le champ *évènements majeurs* est géré dans une table à part.
 
-#### Evènements majeurs
+##### Evènements majeurs
 
 Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.  
 Les évènements majeurs ne sont accessibles qu'à travers les objets applications.  
@@ -551,15 +569,17 @@ Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).
 
 Table *application_services* :
 
-| Champ       | Type         | Description                       |
-|:------------|:-------------|:----------------------------------|
-| id          | int unsigned | auto_increment                    |
-| name        | varchar(255) | Nom du service applicatif         |
-| description | longtext     | Description du service applicatif |
-| exposition  | varchar(255) | Exposition du service applicatif  |
-| created_at  | timestamp    | Date de création                  |
-| updated_at  | timestamp    | Date de mise à jour               |
-| deleted_at  | timestamp    | Date de suppression               |
+| Champ       | Type         | Description                         |
+|:------------|:-------------|:------------------------------------|
+| id          | int unsigned | auto_increment                      |
+| name        | varchar(255) | Nom du service applicatif           |
+| description | longtext     | Description du service applicatif   |
+| exposition  | varchar(255) | Exposition du service applicatif    |
+| modules     | List int [,] | Liens vers les applications-modules |
+| applications | List int [,] | Liens vers les applications        |
+| created_at  | timestamp    | Date de création                    |
+| updated_at  | timestamp    | Date de mise à jour                 |
+| deleted_at  | timestamp    | Date de suppression                 |
 
 L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif. 
 
@@ -577,14 +597,15 @@ d’informatique et une homogénéité technologique.
 
 Table *application_modules* :
 
-| Champ       | Type         | Description                      |
-|:------------|:-------------|:---------------------------------|
-| id          | int unsigned | auto_increment                   |
-| name        | varchar(255) | Nom du service applicatif        |
-| description | longtext     | Description du module applicatif |
-| created_at  | timestamp    | Date de création                 |
-| updated_at  | timestamp    | Date de mise à jour              |
-| deleted_at  | timestamp    | Date de suppression              |
+| Champ                | Type         | Description                          |
+|:---------------------|:-------------|:-------------------------------------|
+| id                   | int unsigned | auto_increment                       |
+| name                 | varchar(255) | Nom du service applicatif            |
+| description          | longtext     | Description du module applicatif     |
+| application_services | List int [,] | Liens vers les applications-services |
+| created_at           | timestamp    | Date de création                     |
+| updated_at           | timestamp    | Date de mise à jour                  |
+| deleted_at           | timestamp    | Date de suppression                  |
 
 L'export du modèle de données référence les services applicatifs rattachés à un module applicatif.  
 Dans l'application, un service applicatif peut être rattaché à un module applicatif depuis ces deux objets.
@@ -603,6 +624,7 @@ Table *databases* :
 | type               | varchar(255) | Type de technologie de la base de données |
 | entity_resp_id     | int unsigned | Entité responsable de la base de données  |
 | responsible        | varchar(255) | Responsable SSI de la base de données     |
+| icon_id            | int unsigned | Référence vers une image spécifique     |
 | security_need_c    | int          | Confidentialité                           |
 | security_need_i    | int          | Intégrité                                 |
 | security_need_a    | int          | Disponibilité                             |
@@ -646,8 +668,8 @@ Table *fluxes* :
 | name                  | varchar(255) | Nom du flux                               |
 | attributes            | varchar(255) | Attributs (tags) du flux                  |
 | description           | longtext     | Description du flux                       |
-| *device*_source_id    | int unsigned | Lien vers l'actif source                  |
-| *device*_dest_id      | int unsigned | Lien vers l'actif destinataire            |
+| ***device***_source_id    | int unsigned | Lien vers l'actif source                  |
+| ***device***_dest_id      | int unsigned | Lien vers l'actif destinataire            |
 | crypted               | tinyint(1)   | Le flux est chiffré (1=oui, O=non)        |
 | bidirectional         | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non) |
 | nature                | varcahr(255) | Nature du flux applicatif                 |
@@ -656,16 +678,18 @@ Table *fluxes* :
 | deleted_at            | timestamp    | Date de suppression                       |
 
 
-Les actifs sources et destination peuvent être :
+Les ***device*** sources et destination peuvent être :
 
-| Actif (*device*)                | Source   | Destination  |
-|:--------------------------------|:---------|:-------------|
-| Application                     | oui      | oui          |
-| Service applicatif              | oui      | oui          |
-| Module applicatif               | oui      | oui          |
-| Base de données                 | oui      | oui          |
+| Actif (*device*)                | Source | Destination |
+|:--------------------------------|:------:|:-----------:|
+| Application                     | ✅     | ✅          |
+| Service applicatif              | ✅     | ✅          |
+| Module applicatif               | ✅     | ✅          |
+| Base de données                 | ✅     | ✅          |
 
 Dans l'application, une information peut être rattaché à un flux applicatif depuis un objet flux applicatif.
+
+---
 
 ### L’administration
 
@@ -786,6 +810,8 @@ Table *admin_users* :
 L'export du modèle de données référence les applications dont un utilisateur est administrateur.  
 Dans l'application, un utilisateur peut être défini comme administrateur d'une application depuis un objet application.
 
+---
+
 ### L’infrastructure logique
 
 La vue de l'infrastructure logique correspond à la répartition logique du réseau.
@@ -888,7 +914,7 @@ Table *external_connected_entities* :
 | src                  | varchar(255) | Adresse(s) IP de connexion de l'entité                    |
 | src_desc             | varchar(255) | Description de la source de la connexion de l'entité      |
 | dst                  | varchar(255) | Adresse(s) IP ou plage de destination de la connexion     |
-| dst_desc             | varchar(255) | Description de la description de la connexion de l'entité |
+| dst_desc             | varchar(255) | Description de la connexion de l'entité                   |
 | security             | text         | Exigences de sécurité du système                          |
 | created_at           | timestamp    | Date de création                                          |
 | updated_at           | timestamp    | Date de mise à jour                                       |
@@ -1042,32 +1068,37 @@ est découpé en un seul serveur logique.
 
 Table *logical_servers* :
 
-| Champ                | Type         | Description                          |
-|:---------------------|:-------------|:-------------------------------------|
-| id                   | int unsigned | auto_increment                       |
-| name                 | varchar(255) | Nom du serveur                       |
-| icon_id              | int unsigned | Référence vers une image spécifique  |
-| type                 | varchar(255) | Type du serveur (appli, DB, etc.)    |
-| active               | tinyint(1)   | Serveur actif (1) ou obsolète (0)    |
-| attributes           | varchar(255) | Attributs (tages) du serveur         |
-| description          | longtext     | Description du serveur               |
-| operating_system     | varchar(255) | Système d'exploitation               |
-| install_date         | date         | Date d'installation du serveur       |
-| update_date          | date         | Date de mise à jour du serveur       |
-| environment          | varchar(255) | Environnement (prod, dev, test, ...) |
-| net_services         | varchar(255) | Services réseau actifs               |
-| address_ip           | varchar(255) | Adresses IP du serveur               |
-| domain_id            | int unsigned | Domaine d'administration du serveur  |
-| cpu                  | varchar(255) | Nombre de CPU                        |
-| memory               | varchar(255) | Quantité de mémoire                  |
-| disk                 | int          | Espace disque alloué                 |
-| disk_used            | int          | Espace disque utilisé                |
-| configuration        | longtext     | Configuration du serveur             |
-| patching_frequency   | int signed   | Fréquence des mises à jour           |
-| next_update          | date         | Date de la prochaine mise à jour     |
-| created_at           | timestamp    | Date de création                     |
-| updated_at           | timestamp    | Date de mise à jour                  |
-| deleted_at           | timestamp    | Date de suppression                  |
+| Champ                | Type         | Description                                       |
+|:---------------------|:-------------|:--------------------------------------------------|
+| id                   | int unsigned | auto_increment                                    |
+| name                 | varchar(255) | Nom du serveur                                    |
+| icon_id              | int unsigned | Référence vers une image spécifique               |
+| type                 | varchar(255) | Type du serveur (appli, DB, etc.)                 |
+| active               | tinyint(1)   | Serveur actif (1) ou obsolète (0)                 |
+| attributes           | varchar(255) | Attributs (tages) du serveur                      |
+| description          | longtext     | Description du serveur                            |
+| operating_system     | varchar(255) | Système d'exploitation                            |
+| install_date         | date         | Date d'installation du serveur                    |
+| update_date          | date         | Date de mise à jour du serveur                    |
+| patching_frequency   | int signed   | Fréquence des mises à jour                        |
+| next_update          | date         | Date de la prochaine mise à jour                  |
+| environment          | varchar(255) | Environnement (prod, dev, test, ...)              |
+| net_services         | varchar(255) | Services réseau actifs                            |
+| address_ip           | varchar(255) | Adresses IP du serveur                            |
+| domain_id            | int unsigned | Domaine d'administration du serveur               |
+| cpu                  | varchar(255) | Nombre de CPU                                     |
+| memory               | varchar(255) | Quantité de mémoire                               |
+| disk                 | int          | Espace disque alloué                              |
+| disk_used            | int          | Espace disque utilisé                             |
+| configuration        | longtext     | Configuration du serveur                          |
+| databases            | List int [,] | Liste d'id de(s) database(s) liée(s)              |
+| cluster_id           | List int [,] | Liste d'id de(s) lien(s) cluster(s)               |
+| physical_servers     | List int [,] | Liste d'id de(s) serveur(s) physiques(s) associés |
+| applications         | List int [,] | Liste d'id de(s) aplication(s) hebergée(s)        |
+| containers           | List int [,] | Liste d'id de(s) containers hebergé(s)            |
+| created_at           | timestamp    | Date de création                                  |
+| updated_at           | timestamp    | Date de mise à jour                               |
+| deleted_at           | timestamp    | Date de suppression                               |
 
 Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absents de l'application.  
 L'export du modèle de données référence : 
@@ -1148,16 +1179,16 @@ Principe général :
 
 Les actifs sources et destination peuvent être :
 
-| Actif (*device*)                | Source   | Destination  |
-|:--------------------------------|:---------|:-------------|
-| Périphérique                    | oui      | oui          |
-| Equipement de sécurité physique | oui      | oui          |
-| Serveur physique                | oui      | oui          |
-| Infrastructure de stockage      | oui      | oui          |
-| Poste de travail                | oui      | oui          |
-| Equipement de sécurité logique  | oui      | oui          |
-| Serveur logique                 | oui      | oui          |
-| Sous-réseaux                    | oui      | oui          |
+| Actif (*device*)                | Source  | Destination |
+|:--------------------------------|:-------:|:-----------:|
+| Périphérique                    | ✅      | ✅          |
+| Equipement de sécurité physique | ✅      | ✅          |
+| Serveur physique                | ✅      | ✅          |
+| Infrastructure de stockage      | ✅      | ✅          |
+| Poste de travail                | ✅      | ✅          |
+| Equipement de sécurité logique  | ✅      | ✅          |
+| Serveur logique                 | ✅      | ✅          |
+| Sous-réseaux                    | ✅      | ✅          |
 
 #### Certificats
 
@@ -1213,6 +1244,8 @@ L'export du modèle de données référence les routeurs physiques et les commut
 rattachés à un VLAN.
 Dans l'application, un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.  
 Dans l'application, un VLAN peut être rattaché à un sous-réseau ou un commutateur logique depuis ces deux objets.
+
+---
 
 ### L’infrastructure physique
 
@@ -1288,29 +1321,31 @@ Les serveurs physiques sont des machines physiques exécutant un ensemble de ser
 
 Table *physical_servers* :
 
-| Champ                | Type         | Description                           |
-|:---------------------|:-------------|:--------------------------------------|
-| id                   | int unsigned | auto_increment                        |
-| name                 | varchar(255) | Nom du serveur                        |
-| icon_id              | int unsigned | Référence vers une image spécifique   |
-| description          | longtext     | Description du serveur                |
-| type                 | varchar(255) | Type / modèle du serveur              |
-| cpu                  | varchar(255) | Processeur(s) du serveur              |
-| memory               | varchar(255) | RAM / mémoive vive du serveur         |
-| disk                 | varchar(255) | Stockage du serveur                   | 
-| disk_used            | varchar(255) | Stockage utilisé du serveur           |
-| configuration        | longtext     | Configuration du serveur              |
-| operating_system     | varchar(255) | Système d'exploitaion du serveur      |
-| install_date         | datetime     | Date d'installation du serveur        |
-| update_date          | datetime     | Date de mise à jour du serveur        |
-| responsible          | varchar(255) | Responsable d'exploitation du serveur |
-| address_ip           | varchar      | Adresse(s) IP du serveur              |
-| site_id              | int unsigned | Référence vers le site                |
-| building_id          | int unsigned | Référence vers le building / salle    |
-| bay_id               | int unsigned | Référence vers la baie                |
-| created_at           | timestamp    | Date de création                      |
-| updated_at           | timestamp    | Date de mise à jour                   |
-| deleted_at           | timestamp    | Date de suppression                   |
+| Champ                | Type         | Description                                          |
+|:---------------------|:-------------|:-----------------------------------------------------|
+| id                   | int unsigned | auto_increment                                       |
+| name                 | varchar(255) | Nom du serveur                                       |
+| icon_id              | int unsigned | Référence vers une image spécifique                  |
+| description          | longtext     | Description du serveur                               |
+| type                 | varchar(255) | Type / modèle du serveur                             |
+| cpu                  | varchar(255) | Processeur(s) du serveur                             |
+| memory               | varchar(255) | RAM / mémoive vive du serveur                        |
+| disk                 | varchar(255) | Stockage du serveur                                  | 
+| disk_used            | varchar(255) | Stockage utilisé du serveur                          |
+| configuration        | longtext     | Configuration du serveur                             |
+| operating_system     | varchar(255) | Système d'exploitaion du serveur                     |
+| install_date         | datetime     | Date d'installation du serveur                       |
+| update_date          | datetime     | Date de mise à jour du serveur                       |
+| responsible          | varchar(255) | Responsable d'exploitation du serveur                |
+| address_ip           | varchar      | Adresse(s) IP du serveur                             |
+| site_id              | int unsigned | Référence vers le site                               |
+| building_id          | int unsigned | Référence vers le building / salle                   |
+| bay_id               | int unsigned | Référence vers la baie                               |
+| clusters             | List int [,] | Liste des id de(s) cluster(s) associé(s)             |
+| logical_servers      | List int [,] | Liste des id de(s) logical(s) serveurs(s) associé(s) |
+| created_at           | timestamp    | Date de création                                     |
+| updated_at           | timestamp    | Date de mise à jour                                  |
+| deleted_at           | timestamp    | Date de suppression                                  |
 
 L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs 
 logiques rattachés à un serveur physique.  
@@ -1601,20 +1636,20 @@ Principe général :
 
 Les actifs sources et destination peuvent être :
 
-| Actif                           | Source | Destination |
-|:--------------------------------|:-------|:------------|
-| Périphérique                    | oui    | oui         |
-| Téléphone                       | oui    | oui         |
-| Routeur physique                | oui    | oui         |
-| Equipement de sécurité physique | oui    | oui         |
-| Serveur physique                | oui    | oui         |
-| Commutateur physique            | oui    | oui         |
-| Infrastructure de stockage      | oui    | oui         |
-| Borne Wifi                      | oui    | oui         |
-| Poste de travail                | oui    | oui         |
-| Serveur logique                 | oui    | oui         |
-| Commutateur logique             | oui    | oui         |
-| Routeur logique                 | oui    | oui         |
+| Actif                           | Source  | Destination |
+|:--------------------------------|:-------:|:-----------:|
+| Périphérique                    | ✅      | ✅          |
+| Téléphone                       | ✅      | ✅          |
+| Routeur physique                | ✅      | ✅          |
+| Equipement de sécurité physique | ✅      | ✅          |
+| Serveur physique                | ✅      | ✅          |
+| Commutateur physique            | ✅      | ✅          |
+| Infrastructure de stockage      | ✅      | ✅          |
+| Borne Wifi                      | ✅      | ✅          |
+| Poste de travail                | ✅      | ✅          |
+| Serveur logique                 | ✅      | ✅          |
+| Commutateur logique             | ✅      | ✅          |
+| Routeur logique                 | ✅      | ✅          |
 
 #### WAN
 
