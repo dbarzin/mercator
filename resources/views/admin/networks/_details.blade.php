@@ -1,11 +1,20 @@
-<table class="table table-bordered table-striped">
+@props([
+    'network',
+    'withLink' => false,
+])
+
+<table class="table table-bordered table-striped table-report" id="{{ $network->getUID() }}">
     <tbody>
         <tr>
             <th width="10%">
                 {{ trans('cruds.network.fields.name') }}
             </th>
             <td>
+            @if ($withLink)
+            <a href="{{ route('admin.networks.show', $network->id) }}">{{ $network->name }}</a>
+            @else
                 {{ $network->name }}
+            @endif
             </td>
         </tr>
         <tr>

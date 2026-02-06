@@ -1,11 +1,20 @@
-<table class="table table-bordered table-striped">
+@props([
+    'certificate',
+    'withLink' => false,
+])
+
+<table class="table table-bordered table-striped table-report" id="{{ $certificate->getUID() }}">
     <tbody>
     <tr>
         <th width="10%">
             {{ trans('cruds.certificate.fields.name') }}
         </th>
         <td>
+        @if($withLink)
+            <a href="{{ route('admin.certificates.show', $certificate->id) }}">{{ $certificate->name }}</a>
+        @else
             {{ $certificate->name }}
+        @endif
         </td>
     </tr>
     <tr>

@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-report" id="{{ $router->getUID() }}">
     <tbody>
     <tr>
         <th width="10%">

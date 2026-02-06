@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-report" id="{{ $wifiTerminal->getUID() }}">
     <tbody>
     <tr>
         <th width="10%">
