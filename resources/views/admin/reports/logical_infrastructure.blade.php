@@ -1405,7 +1405,7 @@ digraph  {
 
 @can('subnetwork_access')
     @foreach($subnetworks as $subnetwork)
-        SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.5' :'1.1' }} image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
+        SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.7' :'1.1' }} image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
         @if ($subnetwork->vlan_id!==null)
             SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
@@ -1437,20 +1437,20 @@ digraph  {
 
 @can('cluster_access')
     @php
-        $usedClusterIds = array();
+        $usedClusterIds = collect($logicalServers)
+            ->flatMap(fn($logicalServer) => $logicalServer->clusters->pluck('id'))
+            ->unique()
+            ->toArray();
     @endphp
 
-    @foreach($logicalServers as $logicalServer)
-        @if (($logicalServer->cluster_id!==null) && (!in_array($logicalServer->cluster_id, $usedClusterIds)))
-            @php
-                array_push($usedClusterIds, $logicalServer->cluster_id);
-            @endphp
-        @endif
-    @endforeach
-
     @foreach($clusters as $cluster)
-    @if (in_array($cluster->id,$usedClusterIds))
-    CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cluster.png" href="#CLUSTER{{$cluster->id}}"]
+        @if (in_array($cluster->id, $usedClusterIds))
+            CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }} {{ Session::get('show_ip') ? chr(13) . $cluster->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($cluster->address_ip!==null) ? '1.7' :'1.1' }} image="/images/cluster.png" href="#CLUSTER{{$cluster->id}}"]
+            @can('logical_server_access')
+                @foreach($cluster->logicalServers as $logicalServer)
+                    LOGICAL_SERVER{{ $logicalServer->id }} -> CLUSTER{{ $cluster->id }}
+                @endforeach
+            @endcan
         @endif
     @endforeach
 @endcan
@@ -1652,49 +1652,48 @@ digraph  {
 @endcan
 }`;
 
-
-        document.addEventListener('DOMContentLoaded', () => {
-            d3.select("#graph").graphviz()
-                .addImage("/images/cloud.png", "64px", "64px")
-                .addImage("/images/network.png", "64px", "64px")
-                .addImage("/images/gateway.png", "64px", "64px")
-                .addImage("/images/entity.png", "64px", "64px")
-                .addImage("/images/lserver.png", "64px", "64px")
-                .addImage("/images/router.png", "64px", "64px")
-                .addImage("/images/switch.png", "64px", "64px")
-                .addImage("/images/cluster.png", "64px", "64px")
-                .addImage("/images/container.png", "64px", "64px")
-                .addImage("/images/certificate.png", "64px", "64px")
-                .addImage("/images/workstation.png", "64px", "64px")
-                .addImage("/images/phone.png", "64px", "64px")
-                .addImage("/images/securitydevice.png", "64px", "64px")
-                .addImage("/images/storagedev.png", "64px", "64px")
-                .addImage("/images/peripheral.png", "64px", "64px")
-                .addImage("/images/wifi.png", "64px", "64px")
-                .addImage("/images/vlan.png", "64px", "64px")
-                @foreach($containers as $container)
-                @if ($container->icon_id!==null)
-                .addImage("{{ route('admin.documents.show', $container->icon_id) }}", "64px", "64px")
-                @endif
-                @endforeach
-                @foreach($logicalServers as $logicalServer)
-                @if ($logicalServer->icon_id!==null)
-                .addImage("{{ route('admin.documents.show', $logicalServer->icon_id) }}", "64px", "64px")
-                @endif
-                @endforeach
-                @foreach($peripherals as $peripheral)
-                @if ($peripheral->icon_id!==null)
-                .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
-                @endif
-                @endforeach
-                @foreach($workstations as $workstation)
-                @if ($workstation->icon_id!==null)
-                .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
-                @endif
-                @endforeach
-                .engine("{{ $engine }}")
-                .renderDot(dotSrc);
-        });
-    </script>
-    @parent
+document.addEventListener('DOMContentLoaded', () => {
+    d3.select("#graph").graphviz()
+        .addImage("/images/cloud.png", "64px", "64px")
+        .addImage("/images/network.png", "64px", "64px")
+        .addImage("/images/gateway.png", "64px", "64px")
+        .addImage("/images/entity.png", "64px", "64px")
+        .addImage("/images/lserver.png", "64px", "64px")
+        .addImage("/images/router.png", "64px", "64px")
+        .addImage("/images/switch.png", "64px", "64px")
+        .addImage("/images/cluster.png", "64px", "64px")
+        .addImage("/images/container.png", "64px", "64px")
+        .addImage("/images/certificate.png", "64px", "64px")
+        .addImage("/images/workstation.png", "64px", "64px")
+        .addImage("/images/phone.png", "64px", "64px")
+        .addImage("/images/securitydevice.png", "64px", "64px")
+        .addImage("/images/storagedev.png", "64px", "64px")
+        .addImage("/images/peripheral.png", "64px", "64px")
+        .addImage("/images/wifi.png", "64px", "64px")
+        .addImage("/images/vlan.png", "64px", "64px")
+        @foreach($containers as $container)
+        @if ($container->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $container->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
+        @foreach($logicalServers as $logicalServer)
+        @if ($logicalServer->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $logicalServer->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
+        @foreach($peripherals as $peripheral)
+        @if ($peripheral->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
+        @foreach($workstations as $workstation)
+        @if ($workstation->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
+        .engine("{{ $engine }}")
+        .renderDot(dotSrc);
+    });
+</script>
+@parent
 @endsection

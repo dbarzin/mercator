@@ -141,12 +141,12 @@ Table *relations* :
 | security_need_i    | int          | Integrity level need                       |
 | security_need_a    | int          | Available level need                       |
 | security_need_t    | int          | Traceability level need                    |
-| security_need_auth | int          | Need for authenticity                      |
+| security_need_auth | int          | Need for authentication                      |
 | created_at         | timestamp    | Date of creation                           |
 | updated_at         | timestamp    | Date of update                             |
 | deleted_at         | timestamp    | Date of deletion                           |
 
-In the app, the need for authenticity, "security_need_auth", is hidden by default. It is mandatory in the case 
+In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).  
 It is activated from the Configuration > Settings menu.  
 
@@ -181,13 +181,13 @@ Table *macro_processuses* :
 | security_need_i | int | Integrity |
 | security_need_a | int | Availability |
 | security_need_t | int | Traceability |
-| security_need_auth | int          | Authenticité                   |
+| security_need_auth | int          | Authentication                   |
 | owner | varchar(255) | Owner |
 | created_at | timestamp | Date of creation |
 | updated_at | timestamp | Date of update |
 | deleted_at | timestamp | Date of deletion |
 
-In the app, the need for authenticity, "security_need_auth", is hidden by default. It is mandatory in the case 
+In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).  
 It is activated from the Configuration > Settings menu.  
 
@@ -223,7 +223,7 @@ Table *processes* :
 | updated_at         | timestamp    | Date of update                      |
 | deleted_at         | timestamp    | Date of deletion                    |
 
-In the app, the need for authenticity, "security_need_auth", is hidden by default. It is mandatory in the case 
+In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).  
 It is activated from the Configuration > Settings menu.  
 
@@ -374,7 +374,7 @@ Table *information* :
 | security_need_i    | int          | Integrity |
 | security_need_a    | int          | Availability |
 | security_need_t    | int          | Traceability |
-| security_need_auth | int          | Authenticité                     |
+| security_need_auth | int          | Authentication                    |
 | constraints        | longtext     | Legal and regulatory constraints |
 | retention          | varchar(255) | Information retention period     |
 | created_at         | timestamp    | Date of creation |
@@ -383,7 +383,7 @@ Table *information* :
 
 The "retention" field is not used at the moment and is therefore absent from the application. 
 
-In the app, the need for authenticity is hidden by default. It is mandatory in the case from an entity subject to EU Directive 2022/2554 (DORA).
+In the app, the need for authentication is hidden by default. It is mandatory in the case from an entity subject to EU Directive 2022/2554 (DORA).
 It is activated from the Configuration > Settings menu. 
 
 The export of the data model references the databases and processes attached to information. In the application, a database can be attached to information from the database object. A process can be linked to information from these two objects.
@@ -450,7 +450,7 @@ Table *m_applications* :
 | security_need_i      | int          | Integrity |
 | security_need_a      | int          | Availability |
 | security_need_t      | int          | Traceability |
-| ecurity_need_auth    | int          | Authenticity |
+| ecurity_need_auth    | int          | authentication |
 | rto                  | int          | Recovery Time Objective |
 | rpo                  | int          | Recovery Point Objective |
 | vendor               | varchar(255) | Application's vendor |
@@ -463,6 +463,7 @@ Table *m_applications* :
 | databases            | List int [,] | IDs list of related dataabses        |
 | logical_servers      | List int [,] | IDs list of related logical_servers  |
 | activities           | List int [,] | IDs list of related activities       |
+| containers           | List int [,] | IDs list of related containers       |
 | created_at           | timestamp    | Date of creation |
 | updated_at           | timestamp    | Date of update |
 | deleted_at           | timestamp    | Date of deletion |
@@ -472,7 +473,7 @@ RPO : *Recovery Point Objective*
 
 The "patching_frequency" and "next_update" fields are not used at the moment and are therefore missing from the application.  
 
-In the app, the need for authenticity is hidden by default. It is mandatory in the case 
+In the app, the need for authentication is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).  
 It is activated from the Configuration > Settings menu. 
 
@@ -528,9 +529,9 @@ Table *m_application_events* :
 | id               | int unsigned | auto_increment                                      |
 | user_id          | int unsigned | Mercator user id who has register the event            |
 | m_application_id | varchar(255) | Reference to the id of the application that suffered the event |
-| message          | longtext     | Description of the event                          |
-| created_at       | timestamp    | Date de création                                    |
-| updated_at       | timestamp    | Date de mise à jour                                 |
+| message          | longtext     | Description of the event                            |
+| created_at       | timestamp    | Date of creation                                    |
+| updated_at       | timestamp    | Date of update                                      |
 
 
 #### Application services
@@ -593,20 +594,20 @@ Table *databases* :
 | name               | varchar(255) | Name of the database |
 | description        | longtext     | Description of the database |
 | type               | varchar(255) | Technology used |
-| entity_resp_id     | int unsigned | Entité responsable  |
+| entity_resp_id     | int unsigned | Entity responsible  |
 | responsible        | varchar(255) | Responsible entity |
 | icon_id            | int unsigned | Reference to a specific image            |
 | security_need_c    | int          | Confidentiality |
 | security_need_i    | int          | Integrity |
 | security_need_a    | int          | Availability |
 | security_need_t    | int          | Traceability |
-| security_need_auth | int          | Authenticité                              |
+| security_need_auth | int          | authentication                              |
 | external           | varchar(255) | External |
 | created_at         | timestamp    | Date of creation |
 | updated_at         | timestamp    | Date of update |
 | deleted_at         | timestamp    | Date of deletion |
 
-In the app, the need for authenticity is hidden by default. It is mandatory in the case 
+In the app, the need for authentication is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).  
 It is activated from the Configuration > Settings menu. 
 
@@ -704,7 +705,7 @@ Table *annuaires*;
 
 #### Active Directory forest / LDAP tree structure
 
-Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.
+These objects represent an organized grouping of Active Directory domains or LDAP trees.
 
 Table *forest_ads* :
 
@@ -746,12 +747,12 @@ Table *networks* :
 | security_need_i | int          | Integrity |
 | security_need_a | int          | Availability |
 | security_need_t | int          | Traceability |
-| security_need_auth | int       | Authenticité                  |
+| security_need_auth | int       | Authentication                  |
 | created_at      | timestamp    | Date of creation |
 | updated_at      | timestamp    | Date of update |
 | deleted_at      | timestamp    | Date of deletion |
 
-In the app, the need for authenticity is hidden by default. It is mandatory in the case 
+In the app, the need for authentication is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).  
 It is activated from the Configuration > Settings menu. 
 
@@ -817,7 +818,7 @@ Table *external_connected_entities* :
 | type                 | varchar(255) | Connexion type                    |
 | description          | longtext     | Description of the entity/company |
 | entity_id            | int unsigned | Reference to the connected external                       |
-| network_id           | int unsigned | Référence to theinternal neetwork connected to the entity |
+| network_id           | int unsigned | Reference to the internal neetwork connected to the entity |
 | contacts             | varchar(255) | Contacts within the entity/company|
 | src                  | varchar(255) | IP Adress(es) of entity connection                          |
 | src_desc             | varchar(255) | Description de Entity source connection                   |
@@ -1050,11 +1051,11 @@ A logical server can be attached to a container from a containing object.
 
 #### Logical flows
 
-Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.  
+Logical flows describe relationships at layers 3 and 4 of the OSI model.
 
 Table *logical_flows* :
 
-Principe général :
+General principle :
 
 | Champ                | Type         | Description                                   |
 |:---------------------|:-------------|:----------------------------------------------|
@@ -1537,18 +1538,18 @@ Les ***devices***** sources or destination might be :
 
 | Actif                            | Source  | Destination |
 |:---------------------------------|:-------:|:-----------:|
-| Périphérique                     | ✅      | ✅          |
-| Téléphone                        | ✅      | ✅          |
-| Routeur physique                 | ✅      | ✅          |
-| Equipement de sécurité physique  | ✅      | ✅          |
-| Serveur physique                 | ✅      | ✅          |
-| Commutateur physique             | ✅      | ✅          |
-| Infrastructure de stockage       | ✅      | ✅          |
-| Borne Wifi                       | ✅      | ✅          |
-| Poste de travail                 | ✅      | ✅          |
-| Serveur logique                  | ✅      | ✅          |
-| Commutateur logique              | ✅      | ✅          |
-| Routeur logique                  | ✅      | ✅          |
+| Peripheral                       | ✅      | ✅          |
+| Phonehone                        | ✅      | ✅          |
+| Physical Router                  | ✅      | ✅          |
+| Physical Security equipment      | ✅      | ✅          |
+| Physical server                  | ✅      | ✅          |
+| Physical switch                  | ✅      | ✅          |
+| Storage infrastructure           | ✅      | ✅          |
+| Wifi terminal                    | ✅      | ✅          |
+| Workstation                      | ✅      | ✅          |
+| Logical server                   | ✅      | ✅          |
+| Logical switch                   | ✅      | ✅          |
+| Logical router                   | ✅      | ✅          |
 
 
 
