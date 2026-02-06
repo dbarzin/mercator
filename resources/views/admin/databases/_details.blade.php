@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-report" id="{{ $database->getUID() }}">
     <tbody>
         <tr>
             <th style="width: 10%;">

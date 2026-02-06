@@ -100,145 +100,11 @@
 
                         @foreach($networks as $network)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="NETWORK{{ $network->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/networks/{{ $network->id }}">{{ $network->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.network.fields.description") }}</th>
-                                            <td>{!! $network->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.network.fields.protocol_type") }}</th>
-                                            <td>{{ $network->protocol_type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.network.fields.security_need') }}</th>
-                                            <td>
-                                                {{ trans('global.confidentiality_short') }} :
-                                                @if ($network->security_need_c==0)
-                                                    {{ trans('global.none') }}
-                                                @endif
-                                                @if ($network->security_need_c==1)
-                                                    <span class="veryLowRisk">{{ trans('global.low') }}</span>
-                                                @endif
-                                                @if ($network->security_need_c==2)
-                                                    <span class="lowRisk">{{ trans('global.medium') }}</span>
-                                                @endif
-                                                @if ($network->security_need_c==3)
-                                                    <span class="mediumRisk">{{ trans('global.strong') }}</span>
-                                                @endif
-                                                @if ($network->security_need_c==4)
-                                                    <span class="highRisk">{{ trans('global.very_strong') }}</span>
-                                                @endif
-                                                &nbsp;
-                                                {{ trans('global.integrity_short') }} :
-                                                @if ($network->security_need_i==0)
-                                                    {{ trans('global.none') }}
-                                                @endif
-                                                @if ($network->security_need_i==1)
-                                                    <span class="veryLowRisk">{{ trans('global.low') }}</span>
-                                                @endif
-                                                @if ($network->security_need_i==2)
-                                                    <span class="lowRisk">{{ trans('global.medium') }}</span>
-                                                @endif
-                                                @if ($network->security_need_i==3)
-                                                    <span class="mediumRisk">{{ trans('global.strong') }}</span>
-                                                @endif
-                                                @if ($network->security_need_i==4)
-                                                    <span class="highRisk">{{ trans('global.very_strong') }}</span>
-                                                @endif
-                                                &nbsp;
-                                                {{ trans('global.availability_short') }} :
-                                                @if ($network->security_need_a==0)
-                                                    {{ trans('global.none') }}
-                                                @endif
-                                                @if ($network->security_need_a==1)
-                                                    <span class="veryLowRisk">{{ trans('global.low') }}</span>
-                                                @endif
-                                                @if ($network->security_need_a==2)
-                                                    <span class="lowRisk">{{ trans('global.medium') }}</span>
-                                                @endif
-                                                @if ($network->security_need_a==3)
-                                                    <span class="mediumRisk">{{ trans('global.strong') }}</span>
-                                                @endif
-                                                @if ($network->security_need_a==4)
-                                                    <span class="highRisk">{{ trans('global.very_strong') }}</span>
-                                                @endif
-                                                &nbsp;
-                                                {{ trans('global.tracability_short') }} :
-                                                @if ($network->security_need_t==0)
-                                                    {{ trans('global.none') }}
-                                                @endif
-                                                @if ($network->security_need_t==1)
-                                                    <span class="veryLowRisk">{{ trans('global.low') }}</span>
-                                                @endif
-                                                @if ($network->security_need_t==2)
-                                                    <span class="lowRisk">{{ trans('global.medium') }}</span>
-                                                @endif
-                                                @if ($network->security_need_t==3)
-                                                    <span class="mediumRisk">{{ trans('global.strong') }}</span>
-                                                @endif
-                                                @if ($network->security_need_t==4)
-                                                    <span class="highRisk">{{ trans('global.very_strong') }}</span>
-                                                @endif
-                                                @if (config('mercator-config.parameters.security_need_auth'))
-                                                    &nbsp;
-                                                    {{ trans('global.authenticity_short') }} :
-                                                    @if ($network->security_need_auth==0)
-                                                        {{ trans('global.none') }}
-                                                    @endif
-                                                    @if ($network->security_need_auth==1)
-                                                        <span class="veryLowRisk">{{ trans('global.low') }}</span>
-                                                    @endif
-                                                    @if ($network->security_need_auth==2)
-                                                        <span class="lowRisk">{{ trans('global.medium') }}</span>
-                                                    @endif
-                                                    @if ($network->security_need_auth==3)
-                                                        <span class="mediumRisk">{{ trans('global.strong') }}</span>
-                                                    @endif
-                                                    @if ($network->security_need_auth==4)
-                                                        <span class="highRisk">{{ trans('global.very_strong') }}</span>
-                                                    @endif
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.network.fields.responsible') }}</th>
-                                            <td>{{ $network->responsible }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.network.fields.responsible_sec') }}</th>
-                                            <td>{{ $network->responsible_sec }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.network.fields.subnetworks') }}</th>
-                                            <td>
-                                                @foreach($network->subnetworks as $subnetwork)
-                                                    <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.network.fields.externalConnectedEntities') }}</th>
-                                            <td>
-                                                @foreach($network->externalConnectedEntities as $entity)
-                                                    <a href="#EXTENTITY{{$entity->id}}">{{$entity->name}}</a>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.networks._details', [
+                                        'network' => $network,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -259,87 +125,11 @@
 
                         @foreach($subnetworks as $subnetwork)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="SUBNET{{ $subnetwork->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/subnetworks/{{ $subnetwork->id }}">{{ $subnetwork->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.subnetwork.fields.description") }}</th>
-                                            <td>{!! $subnetwork->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.network") }}</th>
-                                            <td>
-                                                @if ($subnetwork->network!==null)
-                                                    <a href="#NETWORK{{ $subnetwork->network->id }}">{{ $subnetwork->network->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.subnetwork") }}</th>
-                                            <td>
-                                                @if ($subnetwork->subnetwork!==null)
-                                                    <a href="#SUBNET{{ $subnetwork->subnetwork->id }}">{{ $subnetwork->subnetwork->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {{ trans("cruds.subnetwork.fields.address") }}
-                                                -
-                                                {{ trans("cruds.subnetwork.fields.default_gateway") }}
-                                            </th>
-                                            <td>
-                                                {{ $subnetwork->address }}
-                                                ( {{ $subnetwork->ipRange() }} )
-                                                -
-                                                {{ $subnetwork->default_gateway }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.vlan") }}</th>
-                                            <td>
-                                                @if ($subnetwork->vlan!==null)
-                                                    <a href="#VLAN{{ $subnetwork->vlan->id }}">{{ $subnetwork->vlan->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.zone") }}</th>
-                                            <td>
-                                                {{ $subnetwork->zone }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.gateway") }}</th>
-                                            <td>
-                                                @if ($subnetwork->gateway!=null)
-                                                    <a href="#GATEWAY{{$subnetwork->gateway->id}}">{{ $subnetwork->gateway->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.ip_allocation_type") }}</th>
-                                            <td>{{ $subnetwork->ip_allocation_type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.dmz") }}</th>
-                                            <td>{{ $subnetwork->dmz }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.wifi") }}</th>
-                                            <td>{{ $subnetwork->wifi }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.subnetwork.fields.responsible_exp") }}</th>
-                                            <td>{{ $subnetwork->responsible_exp }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.subnetworks._details', [
+                                        'subnetwork' => $subnetwork,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -359,39 +149,11 @@
                         <p>{{ trans("cruds.gateway.description") }}</p>
                         @foreach($gateways as $gateway)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="GATEWAY{{ $gateway->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/gateways/{{ $gateway->id }}">{{ $gateway->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.gateway.fields.description") }}</th>
-                                            <td>{!! $gateway->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.gateway.fields.authentification") }}</th>
-                                            <td>{{ $gateway->authentification }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.gateway.fields.ip") }}</th>
-                                            <td>{{ $gateway->ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.gateway.fields.subnetworks") }}</th>
-                                            <td>
-                                                @foreach($gateway->subnetworks as $subnetwork)
-                                                    <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.gateways._details', [
+                                        'gateway' => $gateway,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -411,48 +173,11 @@
                         <p>{{ trans("cruds.externalConnectedEntity.description") }}</p>
                         @foreach($externalConnectedEntities as $entity)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="EXTENTITY{{ $entity->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/external-connected-entities/{{ $entity->id }}">{{ $entity->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th>{{ trans("cruds.externalConnectedEntity.fields.entity") }}</th>
-                                            <td>
-                                                @if($entity->entity!=null)
-                                                    <a href="#ENTITY{{$entity->entity->id}}">{{$entity->entity->name}}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.externalConnectedEntity.fields.type") }}</th>
-                                            <td>{{ $entity->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.externalConnectedEntity.fields.contacts") }}</th>
-                                            <td>{{ $entity->contacts }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.externalConnectedEntity.fields.network") }}</th>
-                                            <td>
-                                                @if($entity->network!=null)
-                                                    <a href="#NETWORK{{$entity->network->id}}">{{$entity->network->name}}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.externalConnectedEntity.fields.src") }}</th>
-                                            <td>{{ $entity->src }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.externalConnectedEntity.fields.dest") }}</th>
-                                            <td>{{ $entity->dest }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.externalConnectedEntities._details', [
+                                        'externalConnectedEntity' => $entity,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -472,28 +197,11 @@
                         <p>{{ trans("cruds.router.description") }}</p>
                         @foreach($routers as $router)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="ROUTER{{ $router->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/routers/{{ $router->id }}">{{ $router->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.router.fields.description") }}</th>
-                                            <td>{!! $router->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.router.fields.ip_addresses") }}</th>
-                                            <td>{!! $router->ip_addresses !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.router.fields.rules") }}</th>
-                                            <td>{!! $router->rules !!}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.routers._details', [
+                                        'router' => $router,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -513,35 +221,11 @@
                         <p>{{ trans("cruds.networkSwitch.description") }}</p>
                         @foreach($networkSwitches as $networkSwitch)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="SW{{ $networkSwitch->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/network-switches/{{ $networkSwitch->id }}">{{ $networkSwitch->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.networkSwitch.fields.description") }}</th>
-                                            <td>{!! $networkSwitch->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.networkSwitch.fields.vlans") }}</th>
-                                            <td>
-                                                @foreach($networkSwitch->vlans as $vlan)
-                                                    <a href="#VLAN{{ $vlan->id }}">{{ $vlan->name }}</a>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.networkSwitch.fields.ip") }}</th>
-                                            <td>{!! $networkSwitch->ip !!}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.networkSwitches._details', [
+                                        'networkSwitch' => $networkSwitch,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -561,54 +245,11 @@
                         <p>{{ trans("cruds.cluster.description") }}</p>
                         @foreach($clusters as $cluster)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="CLUSTER{{ $cluster->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/clusters/{{ $cluster->id }}">{{ $cluster->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.cluster.fields.description") }}</th>
-                                            <td>{!! $cluster->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.cluster.fields.type") }}</th>
-                                            <td>{{ $cluster->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.cluster.fields.logical_servers') }}
-                                            </th>
-                                            <td>
-                                                @foreach($cluster->logicalServers as $server)
-                                                    <a href="{{ route('admin.logical-servers.show', $server->id) }}">
-                                                        {{ $server->name }}
-                                                    </a>
-                                                    @if(!$loop->last)
-                                                        <br>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.cluster.fields.physical_servers') }}
-                                            </th>
-                                            <td>
-                                                @foreach($cluster->physicalServers as $server)
-                                                    <a href="{{ route('admin.physical-servers.show', $server->id) }}">
-                                                        {{ $server->name }}
-                                                    </a>
-                                                    @if(!$loop->last)
-                                                        <br>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.clusters._details', [
+                                        'cluster' => $cluster,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -628,115 +269,11 @@
                         <p>{{ trans("cruds.logicalServer.description") }}</p>
                         @foreach($logicalServers as $logicalServer)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="LOGICAL_SERVER{{ $logicalServer->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/logical-servers/{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.logicalServer.fields.type") }}</th>
-                                            <td>{{ $logicalServer->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.logicalServer.fields.description") }}</th>
-                                            <td>{!! $logicalServer->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.operating_system') }}</th>
-                                            <td>{{ $logicalServer->operating_system }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.address_ip') }}</th>
-                                            <td>{{ $logicalServer->address_ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.cpu') }}</th>
-                                            <td>{{ $logicalServer->cpu }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.memory') }}</th>
-                                            <td>{{ $logicalServer->memory }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.disk') }}</th>
-                                            <td>{{ $logicalServer->disk }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.environment') }}</th>
-                                            <td>{{ $logicalServer->environment }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.net_services') }}</th>
-                                            <td>{{ $logicalServer->net_services }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.logicalServer.fields.configuration') }}</th>
-                                            <td>{!! $logicalServer->configuration !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.logicalServer.fields.applications') }}
-                                            </th>
-                                            <td>
-                                                @foreach($logicalServer->applications as $application)
-                                                    <a href="/admin/report/applications#APPLICATION{{ $application->id}}">{{ $application->name }}</a>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.logicalServer.fields.databases') }}
-                                            </th>
-                                            <td colspan="10">
-                                                @foreach($logicalServer->databases as $database)
-                                                    <a href="/admin/report/applications#DATABASE{{ $database->id}}">
-                                                        {{ $database->name }}
-                                                    </a>
-                                                    @if(!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.logicalServer.fields.servers') }}
-                                            </th>
-                                            <td>
-                                                @foreach($logicalServer->physicalServers as $server)
-                                                    <a href="/admin/report/physical_infrastructure#PSERVER{{ $server->id}}">{{ $server->name }}</a>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        @if ($logicalServer->certificates->count()>0)
-                                            <tr>
-                                                <th>
-                                                    {{ trans('cruds.logicalServer.fields.certificates') }}
-                                                </th>
-                                                <td>
-                                                    @foreach($logicalServer->certificates as $certificate)
-                                                        <a href="/admin/report/logical_infrastructure#CERT{{ $certificate->id}}">{{ $certificate->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        @endif
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.logicalServers._details', [
+                                        'logicalServer' => $logicalServer,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -756,69 +293,11 @@
                         <p>{{ trans("cruds.container.description") }}</p>
                         @foreach($containers as $container)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="CONT{{ $container->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/containers/{{ $container->id }}">{{ $container->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.container.fields.type") }}</th>
-                                            <td>{{ $container->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.container.fields.description") }}</th>
-                                            <td>{!! $container->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.container.fields.applications') }}
-                                            </th>
-                                            <td>
-                                                @foreach($container->applications as $application)
-                                                    <a href="{{ route('admin.applications.show', $application->id) }}">
-                                                        {{ $application->name }}
-                                                    </a>
-                                                    @if(!$loop->last)
-                                                        <br>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.container.fields.databases') }}
-                                            </th>
-                                            <td>
-                                                @foreach($container->databases as $database)
-                                                    <a href="{{ route('admin.databases.show', $database->id) }}">
-                                                        {{ $database->name }}
-                                                    </a>
-                                                    @if(!$loop->last)
-                                                        <br>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {{ trans('cruds.container.fields.logical_servers') }}
-                                            </th>
-                                            <td>
-                                                @foreach($container->logicalServers as $server)
-                                                    <a href="{{ route('admin.logical-servers.show', $server->id) }}">
-                                                        {{ $server->name }}
-                                                    </a>
-                                                    @if(!$loop->last)
-                                                        <br>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.containers._details', [
+                                        'container' => $container,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -838,44 +317,11 @@
                         <p>{{ trans("cruds.workstation.description") }}</p>
                         @foreach($workstations as $workstation)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="WORKSTATION{{ $workstation->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/workstations/{{ $workstation->id }}">{{ $workstation->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.workstation.fields.type") }}</th>
-                                            <td>{{ $workstation->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.workstation.fields.description") }}</th>
-                                            <td>{!! $workstation->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.peripheral.fields.address_ip") }}</th>
-                                            <td>{{ $workstation->address_ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.workstation.fields.site") }}</th>
-                                            <td>
-                                                @if ($workstation->site!==null)
-                                                    <a href="{{ route('admin.sites.show', $workstation->site->id) }}">{{ $workstation->site->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.workstation.fields.building") }}</th>
-                                            <td>
-                                                @if ($workstation->building!==null)
-                                                    <a href="{{ route('admin.buildings.show', $workstation->building->id) }}">{{ $workstation->building->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.workstations._details', [
+                                        'workstation' => $workstation,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -895,44 +341,11 @@
                         <p>{{ trans("cruds.phones.description") }}</p>
                         @foreach($phones as $phone)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="PHONE{{ $phone->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.phone.fields.type") }}</th>
-                                            <td>{{ $phone->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.phone.fields.description") }}</th>
-                                            <td>{!! $phone->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.phone.fields.address_ip") }}</th>
-                                            <td>{{ $phone->address_ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.phone.fields.site") }}</th>
-                                            <td>
-                                                @if ($phone->site!==null)
-                                                    <a href="{{ route('admin.sites.show', $phone->site->id) }}">{{ $phone->site->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.phone.fields.building") }}</th>
-                                            <td>
-                                                @if ($phone->building!==null)
-                                                    <a href="{{ route('admin.buildings.show', $phone->building->id) }}">{{ $phone->building->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.phones._details', [
+                                        'phone' => $phone,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -952,44 +365,11 @@
                         <p>{{ trans("cruds.physicalSecurityDevice.description") }}</p>
                         @foreach($physicalSecurityDevices as $physicalSecurityDevice)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="SECURITY{{ $physicalSecurityDevice->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.physicalSecurityDevice.fields.type") }}</th>
-                                            <td>{{ $physicalSecurityDevice->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.physicalSecurityDevice.fields.description") }}</th>
-                                            <td>{!! $physicalSecurityDevice->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.physicalSecurityDevice.fields.address_ip") }}</th>
-                                            <td>{{ $physicalSecurityDevice->address_ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.physicalSecurityDevice.fields.site") }}</th>
-                                            <td>
-                                                @if ($physicalSecurityDevice->site!==null)
-                                                    <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site->id) }}">{{ $physicalSecurityDevice->site->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.physicalSecurityDevice.fields.building") }}</th>
-                                            <td>
-                                                @if ($physicalSecurityDevice->building!==null)
-                                                    <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">{{ $physicalSecurityDevice->building->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.physicalSwitches._details', [
+                                        'physicalSecurityDevice' => $physicalSecurityDevice,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1009,52 +389,11 @@
                         <p>{{ trans("cruds.storageDevice.description") }}</p>
                         @foreach($storageDevices as $storageDevice)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="STOR{{ $storageDevice->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/storage-devices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.storageDevice.fields.type") }}</th>
-                                            <td>{{ $storageDevice->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.storageDevice.fields.description") }}</th>
-                                            <td>{!! $storageDevice->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.storageDevice.fields.address_ip") }}</th>
-                                            <td>{{ $storageDevice->address_ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.storageDevice.fields.site") }}</th>
-                                            <td>
-                                                @if ($storageDevice->site!==null)
-                                                    <a href="{{ route('admin.sites.show', $storageDevice->site->id) }}">{{ $storageDevice->site->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.storageDevice.fields.building") }}</th>
-                                            <td>
-                                                @if ($storageDevice->building!==null)
-                                                    <a href="{{ route('admin.buildings.show', $storageDevice->building->id) }}">{{ $storageDevice->building->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.storageDevice.fields.bay") }}</th>
-                                            <td>
-                                                @if ($storageDevice->bay!==null)
-                                                    <a href="{{ route('admin.bays.show', $storageDevice->bay->id) }}">{{ $storageDevice->bay->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.storageDevices._details', [
+                                        'storageDevice' => $storageDevice,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1074,45 +413,11 @@
                         <p>{{ trans("cruds.workstation.description") }}</p>
                         @foreach($wifiTerminals as $wifiTerminal)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="WIFI{{ $wifiTerminal->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.wifiTerminal.fields.type") }}</th>
-                                            <td>{{ $wifiTerminal->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.wifiTerminal.fields.description") }}</th>
-                                            <td>{!! $wifiTerminal->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.wifiTerminal.fields.address_ip") }}</th>
-                                            <td>{{ $wifiTerminal->address_ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.wifiTerminal.fields.site") }}</th>
-                                            <td>
-                                                @if ($wifiTerminal->site!==null)
-                                                    <a href="{{ route('admin.sites.show', $wifiTerminal->site->id) }}">{{ $wifiTerminal->site->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.wifiTerminal.fields.building") }}</th>
-                                            <td>
-                                                @if ($wifiTerminal->building!=null)
-                                                    <a href="{{ route('admin.buildings.show', $wifiTerminal->building->id) }}">
-                                                        {{$wifiTerminal->building->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.physicalSwitches._details', [
+                                        'wifiTerminal' => $wifiTerminal,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1133,55 +438,10 @@
                         @foreach($peripherals as $peripheral)
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="PERIPHERAL{{ $peripheral->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/peripherals/{{ $peripheral->id }}">{{ $peripheral->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.peripheral.fields.description") }}</th>
-                                            <td>{!! $peripheral->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.peripheral.fields.type") }}</th>
-                                            <td>{{ $peripheral->type }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.peripheral.fields.responsible") }}</th>
-                                            <td>{{ $peripheral->responsible }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.peripheral.fields.address_ip") }}</th>
-                                            <td>{{ $peripheral->address_ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.peripheral.fields.site") }}</th>
-                                            <td>
-                                                @if ($peripheral->site!==null)
-                                                    <a href="{{ route('admin.sites.show', $peripheral->site->id) }}">{{ $peripheral->site->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.peripheral.fields.building") }}</th>
-                                            <td>
-                                                @if ($peripheral->building!==null)
-                                                    <a href="{{ route('admin.buildings.show', $peripheral->building->id) }}">{{ $peripheral->building->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.peripheral.fields.bay") }}</th>
-                                            <td>
-                                                @if ($peripheral->bay!==null)
-                                                    <a href="{{ route('admin.bays.show', $peripheral->bay->id) }}">{{ $peripheral->bay->name }}</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    @include('admin.peripherals._details', [
+                                        'peripheral' => $peripheral,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1201,24 +461,11 @@
                         <p>{{ trans("cruds.dhcpServer.description") }}</p>
                         @foreach($dhcpServers as $dhcpServer)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="DHCP_SERVER{{ $dhcpServer->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/dhcp-servers/{{ $dhcpServer->id }}">{{ $dhcpServer->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.dhcpServer.fields.description") }}</th>
-                                            <td>{!! $dhcpServer->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.dhcpServer.fields.address_ip') }}</th>
-                                            <td>{{ $dhcpServer->address_ip }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.dhcpServers._details', [
+                                        'dhcpServer' => $dhcpServer,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1238,24 +485,11 @@
                         <p>{{ trans("cruds.dnsserver.description") }}</p>
                         @foreach($dnsservers as $dnsserver)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="DNS_SERVER{{ $dnsserver->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/dnsservers/{{ $dnsserver->id }}">{{ $dnsserver->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.dnsserver.fields.description") }}</th>
-                                            <td>{!! $dnsserver->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.dnsserver.fields.address_ip') }}</th>
-                                            <td>{{ $dnsserver->address_ip }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.dnsservers._details', [
+                                        'dnsserver' => $dnsserver,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1275,58 +509,11 @@
                         <p>{{ trans("cruds.certificate.description") }}</p>
                         @foreach($certificates as $certificate)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="CERT{{ $certificate->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/certificates/{{ $certificate->id }}">{{ $certificate->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans('cruds.certificate.fields.type') }}</th>
-                                            <td>{!! $certificate->type !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.certificate.fields.description') }}</th>
-                                            <td>{!! $certificate->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.certificate.fields.start_validity') }}</th>
-                                            <td>{{ $certificate->start_validity }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('cruds.certificate.fields.end_validity') }}</th>
-                                            <td>{{ $certificate->end_validity }}</td>
-                                        </tr>
-                                        @if($certificate->logical_servers->count()>0)
-                                            <tr>
-                                                <th>{{ trans('cruds.certificate.fields.logical_servers') }}</th>
-                                                <td>
-                                                    @foreach($certificate->logical_servers as $logical_server)
-                                                        <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logical_server->id}}">{{ $logical_server->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        @endif
-                                        @if($certificate->applications->count()>0)
-                                            <tr>
-                                                <th>{{ trans('cruds.certificate.fields.applications') }}</th>
-                                                <td>
-                                                    @foreach($certificate->applications as $application)
-                                                        <a href="/admin/report/applications#APPLICATION{{ $application->id}}">{{ $application->name }}</a>
-                                                        @if (!$loop->last)
-                                                            ,
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        @endif
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.certificates._details', [
+                                        'certificate' => $certificate,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1346,35 +533,11 @@
                         <p>{{ trans("cruds.vlan.description") }}</p>
                         @foreach($vlans as $vlan)
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered table-striped table-hover table-report">
-                                        <thead id="VLAN{{ $vlan->id }}">
-                                        <th colspan="2">
-                                            <a href="/admin/vlans/{{ $vlan->id }}">{{ $vlan->name }}</a>
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.vlan.fields.vlan_id") }}</th>
-                                            <td>{{ $vlan->vlan_id }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th width="20%">{{ trans("cruds.vlan.fields.description") }}</th>
-                                            <td>{!! $vlan->description !!}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans("cruds.vlan.fields.subnetworks") }}</th>
-                                            <td>
-                                                @foreach($vlan->subnetworks as $subnetwork)
-                                                    <a href="/admin/report/logical_infrastructure#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col">
+                                    @include('admin.vlans._details', [
+                                        'vlan' => $vlan,
+                                        'withLink' => true,
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -1393,19 +556,19 @@
 digraph  {
 @can('network_access')
     @foreach($networks as $network)
-    NET{{ $network->id }} [label="{{ $network->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cloud.png" href="#NETWORK{{$network->id}}"]
+    NET{{ $network->id }} [label="{{ $network->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cloud.png" href="#{{$network->getUID()}}"]
     @endforeach
 @endcan
 
 @can('gateway_access')
     @foreach($gateways as $gateway)
-    GATEWAY{{ $gateway->id }} [label="{{ $gateway->name }} {{ Session::get('show_ip') ? chr(13) . $gateway->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($gateway->ip!=null) ? '1.5' :'1.1' }} image="/images/gateway.png" href="#GATEWAY{{$gateway->id}}"]
+    GATEWAY{{ $gateway->id }} [label="{{ $gateway->name }} {{ Session::get('show_ip') ? chr(13) . $gateway->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($gateway->ip!=null) ? '1.5' :'1.1' }} image="/images/gateway.png" href="#{{$gateway->getUID()}}"]
     @endforeach
 @endcan
 
 @can('subnetwork_access')
     @foreach($subnetworks as $subnetwork)
-        SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.7' :'1.1' }} image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
+        SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.7' :'1.1' }} image="/images/network.png" href="#{{$subnetwork->getUID()}}"]
         @if ($subnetwork->vlan_id!==null)
             SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
@@ -1428,7 +591,7 @@ digraph  {
 
 @can('external_connected_entity_access')
     @foreach($externalConnectedEntities as $entity)
-        E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/entity.png" href="#EXTENTITY{{$entity->id}}"]
+        E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/entity.png" href="#{{$entity->getUID()}}"]
         @if($entity->network_id!==null)
             E{{ $entity->id }} -> NET{{ $entity->network_id }}
         @endif
@@ -1445,7 +608,7 @@ digraph  {
 
     @foreach($clusters as $cluster)
         @if (in_array($cluster->id, $usedClusterIds))
-            CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }} {{ Session::get('show_ip') ? chr(13) . $cluster->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($cluster->address_ip!==null) ? '1.7' :'1.1' }} image="/images/cluster.png" href="#CLUSTER{{$cluster->id}}"]
+            CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }} {{ Session::get('show_ip') ? chr(13) . $cluster->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($cluster->address_ip!==null) ? '1.7' :'1.1' }} image="/images/cluster.png" href="#{{$cluster->getUID()}}"]
             @can('logical_server_access')
                 @foreach($cluster->logicalServers as $logicalServer)
                     LOGICAL_SERVER{{ $logicalServer->id }} -> CLUSTER{{ $cluster->id }}
@@ -1457,7 +620,7 @@ digraph  {
 
 @can('logical_server_access')
     @foreach($logicalServers as $logicalServer)
-        LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $logicalServer->icon_id === null ? '/images/lserver.png' : route('admin.documents.show', $logicalServer->icon_id) }}" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
+        LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $logicalServer->icon_id === null ? '/images/lserver.png' : route('admin.documents.show', $logicalServer->icon_id) }}" href="#{{$logicalServer->getUID()}}"]
         @if ($logicalServer->address_ip!==null)
             @foreach($subnetworks as $subnetwork)
                 @foreach(explode(',',$logicalServer->address_ip) as $address)
@@ -1482,7 +645,7 @@ digraph  {
 
 @can('dhcp_server_access')
     @foreach($dhcpServers as $dhcpServer)
-    DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
+    DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#{{$dhcpServer->getUID()}}"]
     @if ($dhcpServer->address_ip!==null)
         @foreach($subnetworks as $subnetwork)
             @if ($subnetwork->contains($dhcpServer->address_ip))
@@ -1496,7 +659,7 @@ digraph  {
 
 @can('dnsserver_access')
     @foreach($dnsservers as $dnsserver)
-    DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#DNS_SERVER{{$dnsserver->id}}"]
+    DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/lserver.png" href="#{{$dnsserver->getUID()}}"]
         @if ($dnsserver->address_ip!==null)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($dnsserver->address_ip))
@@ -1519,7 +682,7 @@ digraph  {
 @can('container_access')
     @foreach($containers as $container)
         @if ($container->logicalServers->count()>0)
-            CONT{{ $container->id }} [label="{{ $container->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $container->icon_id === null ? '/images/container.png' : route('admin.documents.show', $container->icon_id) }}" href="#CONT{{$container->id}}"]
+            CONT{{ $container->id }} [label="{{ $container->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $container->icon_id === null ? '/images/container.png' : route('admin.documents.show', $container->icon_id) }}" href="#{{$container->getUID()}}"]
             @foreach($container->logicalServers as $logicalServer)
                 LOGICAL_SERVER{{ $logicalServer->id }} -> CONT{{ $container->id }}
             @endforeach
@@ -1529,7 +692,7 @@ digraph  {
 
     @can('workstation_access')
         @foreach($workstations as $workstation)
-            WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
+            WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#{{$workstation->getUID()}}"]
             @foreach(explode(',',$workstation->address_ip) as $address)
                 @foreach($subnetworks as $subnetwork)
                     @if ($subnetwork->contains($address))
@@ -1571,7 +734,7 @@ digraph  {
 
 @can('physical_security_device_access')
     @foreach($physicalSecurityDevices as $physicalSecurityDevice)
-        SECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $physicalSecurityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#SECURITY{{$physicalSecurityDevice->id}}"]
+        SECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $physicalSecurityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#{{$physicalSecurityDevice->getUID()}}"]
         @foreach(explode(',',$physicalSecurityDevice->address_ip) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
@@ -1585,7 +748,7 @@ digraph  {
 
 @can('peripheral_access')
     @foreach($peripherals as $peripheral)
-        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($peripheral->address_ip!==null) ? '1.5' :'1.1' }} image="{{ $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#{{$peripheral->getUID()}}"]
         @foreach(explode(',',$peripheral->address_ip) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
@@ -1599,7 +762,7 @@ digraph  {
 
 @can('storage_device_access')
     @foreach($storageDevices as $storageDevice)
-        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!==null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
+        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!==null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#{{$storageDevice->getUID()}}"]
         @foreach(explode(',',$storageDevice->address_ip) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
@@ -1613,7 +776,7 @@ digraph  {
 
 @can('router_access')
     @foreach($routers as $router)
-        R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!==null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
+        R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!==null) ? '1.5' :'1.1' }} image="/images/router.png" href="#{{$router->getUID()}}"]
         @foreach(explode(',',$router->ip_addresses) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
@@ -1627,7 +790,7 @@ digraph  {
 
 @can('network_switch_access')
     @foreach($networkSwitches as $networkSwitch)
-        SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!==null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
+        SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!==null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#{{$networkSwitch->getUID()}}"]
         @if ($networkSwitch->vlans->count()>0)
             @foreach($networkSwitch->vlans as $vlan)
                 VLAN{{ $vlan->id }} -> SW{{ $networkSwitch->id }}
@@ -1647,7 +810,7 @@ digraph  {
 
 @can('vlan_access')
     @foreach($vlans as $vlan)
-    VLAN{{ $vlan->id }} [label="{{ $vlan->name }}" shape=none labelloc="b" width=1 height=1.1 image="/images/vlan.png" href="#VLAN{{$vlan->id}}"]
+    VLAN{{ $vlan->id }} [label="{{ $vlan->name }}" shape=none labelloc="b" width=1 height=1.1 image="/images/vlan.png" href="#{{$vlan->getUID()}}"]
     @endforeach
 @endcan
 }`;

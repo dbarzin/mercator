@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-report" id="{{ $application->getUID() }}">
     <tbody>
     <tr>
         <th width="10%">{{ trans('cruds.application.fields.name') }}</th>

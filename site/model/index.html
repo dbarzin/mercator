@@ -635,7 +635,7 @@ from these two objects. </p>
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Need for authenticity</td>
+<td style="text-align: left;">Need for authentication</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -654,7 +654,7 @@ from these two objects. </p>
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authenticity, "security_need_auth", is hidden by default. It is mandatory in the case 
+<p>In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).<br />
 It is activated from the Configuration &gt; Settings menu.  </p>
 <p>exporting the data model references the reference documents attached to a relationship.<br />
@@ -720,7 +720,7 @@ In the application, a document can be attached to a relationship from a relation
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authenticité</td>
+<td style="text-align: left;">Authentication</td>
 </tr>
 <tr>
 <td style="text-align: left;">owner</td>
@@ -744,7 +744,7 @@ In the application, a document can be attached to a relationship from a relation
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authenticity, "security_need_auth", is hidden by default. It is mandatory in the case 
+<p>In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).<br />
 It is activated from the Configuration &gt; Settings menu.  </p>
 <p>In the application, a process can be attached to a macro-process from these two objects.</p>
@@ -858,7 +858,7 @@ It is activated from the Configuration &gt; Settings menu.  </p>
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authenticity, "security_need_auth", is hidden by default. It is mandatory in the case 
+<p>In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).<br />
 It is activated from the Configuration &gt; Settings menu.  </p>
 <p>The export of the data model references:</p>
@@ -1242,7 +1242,7 @@ A task can be attached to an operation from the operations object.  </p>
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authenticité</td>
+<td style="text-align: left;">Authentication</td>
 </tr>
 <tr>
 <td style="text-align: left;">constraints</td>
@@ -1272,7 +1272,7 @@ A task can be attached to an operation from the operations object.  </p>
 </tbody>
 </table>
 <p>The "retention" field is not used at the moment and is therefore absent from the application. </p>
-<p>In the app, the need for authenticity is hidden by default. It is mandatory in the case from an entity subject to EU Directive 2022/2554 (DORA).
+<p>In the app, the need for authentication is hidden by default. It is mandatory in the case from an entity subject to EU Directive 2022/2554 (DORA).
 It is activated from the Configuration &gt; Settings menu. </p>
 <p>The export of the data model references the databases and processes attached to information. In the application, a database can be attached to information from the database object. A process can be linked to information from these two objects.</p>
 <hr />
@@ -1452,7 +1452,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">ecurity_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authenticity</td>
+<td style="text-align: left;">authentication</td>
 </tr>
 <tr>
 <td style="text-align: left;">rto</td>
@@ -1515,6 +1515,11 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <td style="text-align: left;">IDs list of related activities</td>
 </tr>
 <tr>
+<td style="text-align: left;">containers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related containers</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -1534,7 +1539,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <p>RTO : <em>Recovery Time Objective</em><br />
 RPO : <em>Recovery Point Objective</em>  </p>
 <p>The "patching_frequency" and "next_update" fields are not used at the moment and are therefore missing from the application.  </p>
-<p>In the app, the need for authenticity is hidden by default. It is mandatory in the case 
+<p>In the app, the need for authentication is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).<br />
 It is activated from the Configuration &gt; Settings menu. </p>
 <p>'export of reference data model:</p>
@@ -1601,12 +1606,12 @@ Major events are only accessible through application objects.  </p>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 </tbody>
 </table>
@@ -1762,7 +1767,7 @@ In the application, an application service can be attached to an application mod
 <tr>
 <td style="text-align: left;">entity_resp_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Entité responsable</td>
+<td style="text-align: left;">Entity responsible</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
@@ -1797,7 +1802,7 @@ In the application, an application service can be attached to an application mod
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authenticité</td>
+<td style="text-align: left;">authentication</td>
 </tr>
 <tr>
 <td style="text-align: left;">external</td>
@@ -1821,7 +1826,7 @@ In the application, an application service can be attached to an application mod
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authenticity is hidden by default. It is mandatory in the case 
+<p>In the app, the need for authentication is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).<br />
 It is activated from the Configuration &gt; Settings menu. </p>
 <p>Exporting the data model references the specific image of a database.<br />
@@ -2042,7 +2047,7 @@ In the application, a container can be attached to a database from these two obj
 </tbody>
 </table>
 <h4 id="active-directory-forest-ldap-tree-structure">Active Directory forest / LDAP tree structure</h4>
-<p>Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.</p>
+<p>These objects represent an organized grouping of Active Directory domains or LDAP trees.</p>
 <p>Table <em>forest_ads</em> :</p>
 <table>
 <thead>
@@ -2160,7 +2165,7 @@ In the application, a container can be attached to a database from these two obj
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authenticité</td>
+<td style="text-align: left;">Authentication</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2179,7 +2184,7 @@ In the application, a container can be attached to a database from these two obj
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authenticity is hidden by default. It is mandatory in the case 
+<p>In the app, the need for authentication is hidden by default. It is mandatory in the case 
 from an entity subject to EU Directive 2022/2554 (DORA).<br />
 It is activated from the Configuration &gt; Settings menu. </p>
 <h4 id="subnetworks">Subnetworks</h4>
@@ -2382,7 +2387,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">network_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence to theinternal neetwork connected to the entity</td>
+<td style="text-align: left;">Reference to the internal neetwork connected to the entity</td>
 </tr>
 <tr>
 <td style="text-align: left;">contacts</td>
@@ -3037,9 +3042,9 @@ In the application, an application can be attached to a container from these two
 A database can be attached to a container from these two objects.<br />
 A logical server can be attached to a container from a containing object.</p>
 <h4 id="logical-flows">Logical flows</h4>
-<p>Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.  </p>
+<p>Logical flows describe relationships at layers 3 and 4 of the OSI model.</p>
 <p>Table <em>logical_flows</em> :</p>
-<p>Principe général :</p>
+<p>General principle :</p>
 <table>
 <thead>
 <tr>
@@ -4580,62 +4585,62 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Périphérique</td>
+<td style="text-align: left;">Peripheral</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Téléphone</td>
+<td style="text-align: left;">Phonehone</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Routeur physique</td>
+<td style="text-align: left;">Physical Router</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Equipement de sécurité physique</td>
+<td style="text-align: left;">Physical Security equipment</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Serveur physique</td>
+<td style="text-align: left;">Physical server</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Commutateur physique</td>
+<td style="text-align: left;">Physical switch</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Infrastructure de stockage</td>
+<td style="text-align: left;">Storage infrastructure</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Borne Wifi</td>
+<td style="text-align: left;">Wifi terminal</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Poste de travail</td>
+<td style="text-align: left;">Workstation</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Serveur logique</td>
+<td style="text-align: left;">Logical server</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Commutateur logique</td>
+<td style="text-align: left;">Logical switch</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Routeur logique</td>
+<td style="text-align: left;">Logical router</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
