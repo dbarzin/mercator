@@ -33,6 +33,7 @@ class ApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
         $application->activities()->sync($request->input('activities', []));
+        $application->containers()->sync($request->input('containers', []));
 
         return response()->json($application, 201);
     }
