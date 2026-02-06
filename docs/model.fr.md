@@ -492,6 +492,7 @@ Table *m_applications* :
 | databases            | List int [,] | Liste d'id de(s) database(s) liée(s)            |
 | logical_servers      | List int [,] | Liste d'id de(s) serveur(s) logique(s) servant(s) cette application  |
 | activities           | List int [,] | Liste d'id de(s) activitée(s) associée(s)       |
+| containers           | List int [,] | Liste d'id de(s) containers associé(s)          |
 | created_at           | timestamp    | Date de création                                |
 | updated_at           | timestamp    | Date de mise à jour                             |
 | deleted_at           | timestamp    | Date de suppression                             |
@@ -1094,7 +1095,7 @@ Table *logical_servers* :
 | databases            | List int [,] | Liste d'id de(s) database(s) liée(s)              |
 | cluster_id           | List int [,] | Liste d'id de(s) lien(s) cluster(s)               |
 | physical_servers     | List int [,] | Liste d'id de(s) serveur(s) physiques(s) associés |
-| applications         | List int [,] | Liste d'id de(s) aplication(s) hebergée(s)        |
+| applications         | List int [,] | Liste d'id de(s) application(s) hebergée(s)        |
 | containers           | List int [,] | Liste d'id de(s) containers hebergé(s)            |
 | created_at           | timestamp    | Date de création                                  |
 | updated_at           | timestamp    | Date de mise à jour                               |
