@@ -48,22 +48,22 @@
                 <div class="row">
                     <div class="col-md-1">
                         <div class="form-group">
-                            <label for="class">{{ trans('cruds.logicalFlow.fields.class') }}</label>
+                            <label for="chain">{{ trans('cruds.logicalFlow.fields.chain') }}</label>
 
-                            <select class="form-control select2-free {{ $errors->has('class') ? 'is-invalid' : '' }}"
-                                    name="class" id="class">
+                            <select class="form-control select2-free {{ $errors->has('chain') ? 'is-invalid' : '' }}"
+                                    name="chain" id="chain">
                                 <option></option>
-                                <option {{ $logicalFlow->class=="INPUT" ? 'selected' : '' }}>INPUT</option>
-                                <option {{ $logicalFlow->class=="OUTPUT" ? 'selected' : '' }}>OUTPUT</option>
-                                <option {{ $logicalFlow->class=="FORWARD" ? 'selected' : '' }}>FORWARD</option>
+                                <option {{ $logicalFlow->chain=="INPUT" ? 'selected' : '' }}>INPUT</option>
+                                <option {{ $logicalFlow->chain=="OUTPUT" ? 'selected' : '' }}>OUTPUT</option>
+                                <option {{ $logicalFlow->chain=="FORWARD" ? 'selected' : '' }}>FORWARD</option>
                             </select>
 
-                            @if($errors->has('class'))
+                            @if($errors->has('chain'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('class') }}
+                                    {{ $errors->first('chain') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.logicalFlow.fields.class_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.logicalFlow.fields.chain_helper') }}</span>
                         </div>
 
                     </div>

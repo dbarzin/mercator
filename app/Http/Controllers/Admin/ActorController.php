@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActorRequest;
 use App\Http\Requests\StoreActorRequest;
 use App\Http\Requests\UpdateActorRequest;
-use Mercator\Core\Models\Actor;
 use Gate;
+use Mercator\Core\Models\Actor;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends Controller
@@ -52,6 +52,7 @@ class ActorController extends Controller
     public function show(Actor $actor)
     {
         abort_if(Gate::denies('actor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
 
         return view('admin.actors.show', compact('actor'));
     }

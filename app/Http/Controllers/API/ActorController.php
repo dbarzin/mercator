@@ -91,6 +91,7 @@ class ActorController extends Controller
         abort_if(Gate::denies('actor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $actor = Actor::create($request->all());
+        $actor->operations()->sync($request->input('operations', []));
 
         return response()->json($actor, Response::HTTP_CREATED);
     }
@@ -98,6 +99,8 @@ class ActorController extends Controller
     public function show(Actor $actor)
     {
         abort_if(Gate::denies('actor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $actor['operations'] = $actor->operations()->pluck('id');
 
         return new JsonResource($actor);
     }
@@ -107,6 +110,8 @@ class ActorController extends Controller
         abort_if(Gate::denies('actor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $actor->update($request->all());
+        if ($request['operations'] !== null)
+            $actor->operations()->sync($request->input('operations', []));
 
         return response()->json();
     }

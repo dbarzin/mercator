@@ -88,7 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="iconSelect">{{ trans('global.icon_select') }}</label>
                             <select id="iconSelect"
@@ -115,20 +115,37 @@
             <!---------------------------------------------------------------------------------------------------->
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group">
-                        <label for="applications">{{ trans('cruds.securityDevice.fields.applications') }}</label>
-                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
-                                name="applications[]" id="applications" multiple>
-                            @foreach($applications as $id => $name)
-                                <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('applications'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('applications') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.securityDevice.fields.applications_helper') }}</span>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="address_ip">{{ trans('cruds.securityDevice.fields.address_ip') }}</label>
+                            <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
+                                   name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}"/>
+                            @if($errors->has('address_ip'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('address_ip') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.securityDevice.fields.address_ip_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="applications">{{ trans('cruds.securityDevice.fields.applications') }}</label>
+                            <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
+                                    name="applications[]" id="applications" multiple>
+                                @foreach($applications as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('applications'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('applications') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.securityDevice.fields.applications_helper') }}</span>
+                        </div>
                     </div>
                 </div>
             </div>

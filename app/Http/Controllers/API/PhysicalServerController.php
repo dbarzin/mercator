@@ -20,67 +20,7 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = PhysicalServer::query();
-
-        // Champs explicitement autorisés pour le filtrage
-        $allowedFields = array_merge(
-            PhysicalServer::$searchable ?? [],
-            ['id'] // Ajouter ici d'autres champs explicitement autorisés si nécessaire
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // Ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $physicalServers = $query->get();
+        $physicalServers = PhysicalServer::all();
 
         return response()->json($physicalServers);
     }
@@ -89,16 +29,13 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var PhysicalServer $physicalServer */
         $physicalServer = PhysicalServer::query()->create($request->all());
+        $physicalServer->applications()->sync($request->input('applications', []));
+        $physicalServer->clusters()->sync($request->input('clusters', []));
 
-        if ($request->has('applications')) {
-            $physicalServer->applications()->sync($request->input('applications', []));
-        }
-
-        // Association des serveurs logiques via l’API
-        if ($request->has('logicalServers')) {
-            $logicalServerIds = $request->input('logicalServers', []);
+        // Support for logical servers association via API
+        if ($request->has('logical_servers')) {
+            $logicalServerIds = $request->input('logical_servers', []);
             $physicalServer->logicalServers()->sync($logicalServerIds);
         }
 
@@ -109,6 +46,10 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $physicalServer['applications'] = $physicalServer->applications()->pluck('id');
+        $physicalServer['clusters'] = $physicalServer->clusters()->pluck('id');
+        $physicalServer['logical_servers'] = $physicalServer->logicalServers()->pluck('id');
+
         return new JsonResource($physicalServer);
     }
 
@@ -116,20 +57,17 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Met à jour les champs simples; les relations sont gérées séparément
-        $physicalServer->update($request->except('logicalServers'));
+        $physicalServer->update($request->all());
 
-        if ($request->has('applications')) {
+        if ($request->has('logical_servers'))
+            $physicalServer->logicalServers()->sync($request->input('logical_servers', []));
+
+        if ($request->has('applications'))
             $physicalServer->applications()->sync($request->input('applications', []));
-        }
 
-        // Association des serveurs logiques via l’API
-        if ($request->has('logicalServers')) {
-            $logicalServerIds = $request->input('logicalServers', []);
-            \Log::info("Physical server {$physicalServer->name} - syncing logical servers: " . json_encode($logicalServerIds));
-            $physicalServer->logicalServers()->sync($logicalServerIds);
-        }
-
+        if ($request->has('clusters'))
+            $physicalServer->clusters()->sync($request->input('clusters', []));
+        
         return response()->json();
     }
 
@@ -146,7 +84,7 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        PhysicalServer::whereIn('id', $request->input('ids', []))->delete();
+        PhysicalServer::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

@@ -21,7 +21,7 @@ class StoreActorRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:128',
                 'required',
                 Rule::unique('actors')->whereNull('deleted_at'),
             ],

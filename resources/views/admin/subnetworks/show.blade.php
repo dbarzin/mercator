@@ -29,29 +29,11 @@
         <div class="card-header">
             {{ trans('global.show') }} {{ trans('cruds.subnetwork.title') }}
         </div>
-
         <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th width='10%'>
-                        {{ trans('cruds.subnetwork.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $subnetwork->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.subnetwork.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $subnetwork->description !!}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
+            @include('admin.subnetworks._details', [
+                'subnetwork' => $subnetwork,
+                'withLink' => false,
+            ])
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-header">
@@ -59,7 +41,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width='10%'>
@@ -92,7 +74,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width='10%'>
@@ -141,7 +123,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width='10%'>
@@ -173,7 +155,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width='10%'>

@@ -54,24 +54,32 @@ class CPESync extends Command
         $start = null;
         $end = null;
 
-        if (! $isFull) {
+        if (!$isFull) {
             if ($sinceOpt) {
                 try {
                     $start = Carbon::parse($sinceOpt)->utc();
                 } catch (\Throwable $e) {
                     $this->error("Invalid --since option: {$sinceOpt}");
-
                     return self::FAILURE;
                 }
             } else {
                 $lastRun = cache()->get('cpe_sync.last_run');
-                $start = $lastRun ? Carbon::parse($lastRun)->utc() : $nowUtc->clone()->subDay(); // default 24h back
+                if ($lastRun) {
+                    $this->info("Last successful run: {$lastRun}");
+                    $start = Carbon::parse($lastRun)->utc();
+                } else {
+                    $this->info('No previous run found, full sync now.');
+                    $isFull = true;
+                    }
             }
             $end = $nowUtc;
-            $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");
-        } else {
-            $this->warn('FULL resync mode: ignoring lastMod*, fetching the entire dictionary.');
         }
+        // Message
+        if (!$isFull)
+            $this->line("Incremental window: {$start->toIso8601String()} -> {$end->toIso8601String()}");
+        else
+            $this->warn('FULL resync mode: ignoring lastMod*, fetching the entire dictionary.');
+
 
         // HTTP client with retry & timeout
         $client = Http::timeout(120)

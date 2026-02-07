@@ -13,6 +13,13 @@
                     {{ trans('global.edit') }}
                 </a>
             @endif
+
+            @can('m_application_create')
+                <a class="btn btn-warning" href="{{ route('admin.applications.clone', $application->id) }}">
+                    {{ trans('global.clone') }}
+                </a>
+            @endcan
+
             @if(auth()->user()->can('m_application_delete'))
                 <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST"
                       onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
@@ -31,47 +38,10 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th width="10%">{{ trans('cruds.application.fields.name') }}</th>
-                    <td>
-                        {{ $application->name }}
-                    </td>
-                    <th width="10%">
-                        {{ trans('cruds.application.fields.application_block') }}
-                    </th>
-                    <td width="10%">
-                        @if ($application->applicationBlock!=null)
-                            <a href='{{ route("admin.application-blocks.show", $application->applicationBlock->id) }}'>{{ $application->applicationBlock->name }}</a>
-                        @endif
-                    </td>
-                    <th width="10%">
-                        {{ trans('cruds.application.fields.attributes') }}
-                    </th>
-                    <td width="10%">
-                        {{ $application->attributes }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.application.fields.description') }}
-                    </th>
-                    <td colspan="4">
-                        {!! $application->description !!}
-                    </td>
-                    <td width="10%">
-                        @if ($application->icon_id === null)
-                            <img src='/images/application.png' width='120' height='120'
-                                 alt="{{ $application->name }} icon"/>
-                        @else
-                            <img src='{{ route('admin.documents.show', $application->icon_id) }}' width='100'
-                                 height='100' alt="{{ $application->name }} icon"/>
-                        @endif
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            @include('admin.applications._details', [
+                'application' => $application,
+                'withLink' => false,
+            ])
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-header">
@@ -79,7 +49,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -151,7 +121,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -240,7 +210,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="60%">
@@ -424,7 +394,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -500,7 +470,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -509,6 +479,19 @@
                     <td>
                         @foreach($application->logicalServers as $logical_server)
                             <a href='{{ route("admin.logical-servers.show", $logical_server->id) }}'>{{ $logical_server->name }}</a>
+                            @if(!$loop->last)
+                                ,
+                            @endif
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <th width="10%">
+                        {{ trans('cruds.application.fields.containers') }}
+                    </th>
+                    <td>
+                        @foreach($application->containers as $container)
+                            <a href='{{ route("admin.containers.show", $container->id) }}'>{{ $container->name }}</a>
                             @if(!$loop->last)
                                 ,
                             @endif

@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -214,7 +216,7 @@ class CVESearch extends Command
     /**
      * Client HTTP préconfiguré avec headers, timeout, retry & base URL.
      */
-    protected function http(): \Illuminate\Http\Client\PendingRequest|\Illuminate\Http\Client\Factory
+    protected function http(): PendingRequest|Factory
     {
         return Http::baseUrl($this->provider)
             ->withHeaders([

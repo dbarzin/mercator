@@ -68,25 +68,22 @@ document.addEventListener("DOMContentLoaded", function () {
         week: {dow: 1} // Monday is the first day of the week
     })
 
-    // Initialiser DataTables sur les éléments ayant la classe .datatable
-    $(".datatable").DataTable();
-
     // Shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'n') {
             e.preventDefault();
-            document.getElementById('btn-new').click();
+            document.getElementById('btn-new')?.click();
         }
         if (e.ctrlKey && e.key === 's') {
             e.preventDefault();
-            document.getElementById('btn-save').click();
+            document.getElementById('btn-save')?.click();
         }
         if (e.ctrlKey && e.key === 'd') {
             e.preventDefault();
-            document.getElementById('btn-duplicate').click();
+            document.getElementById('btn-duplicate')?.click();
         }
         if (e.key === 'Escape') {
-            document.getElementById('btn-cancel').click();
+            document.getElementById('btn-cancel')?.click();
         }
     });
 
@@ -124,6 +121,13 @@ document.addEventListener("DOMContentLoaded", function () {
         placeholder: "...",
         allowClear: true,
         tags: true
+    });
+
+    $(".select2-free-tags").select2({
+        placeholder: "...",
+        allowClear: true,
+        tags: true,
+        tokenSeparators: [' ']
     });
 
     $('.select-all').click(function () {
@@ -482,5 +486,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     })(jQuery);
 
+    /*******************/
+    /* GRAPHVIZ HANDLE */
+    /*******************/
+    const container = document.getElementById('graph-container');
+
+    if (container) {
+        const handle = document.querySelector('.graph-resize-handle');
+        let isDragging = false;
+
+        handle?.addEventListener('mousedown', function (e) {
+            isDragging = true;
+            document.body.style.cursor = 'ns-resize';
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!isDragging) return;
+
+            const newHeight = e.clientY - container.getBoundingClientRect().top;
+
+            // Limites min et max
+            if (newHeight > 100 && newHeight < window.innerHeight - 100) {
+                container.style.height = newHeight + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', function () {
+            isDragging = false;
+            document.body.style.cursor = 'default';
+        });
+    }
 
 });

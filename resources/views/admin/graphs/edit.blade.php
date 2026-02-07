@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row resizable-div" id="myDiv">
+                <div class="row resizable-div" id="editor">
                     <div class="col-lg-12">
                         <table width="100%">
                             <tr>
@@ -301,7 +301,7 @@
             $('#node')
                 .on('select2:select', function (e) {
                     // Get current filter
-                    cur_node = $('#node').val();
+                    const cur_node = $('#node').val();
                     // console.log(cur_node);
                     document.getElementById('nodeImage').src = _nodes.get(cur_node).image;
                 });
@@ -314,7 +314,7 @@
             //--------------------------------------------------------------
             // Maximisation
             document.getElementById('maximizeBtn').addEventListener('click', function () {
-                const div = document.getElementById('myDiv');
+                const div = document.getElementById('editor');
                 const sidebar = document.getElementById('sidebar');
                 const sidebarFooter = document.querySelector('.sidebar-footer');
 
@@ -332,11 +332,11 @@
             });
             //--------------------------------------------------------------
             // Chargement du graphe
-            loadGraph(`{!! $content !!}`);
+            loadGraph(@json($content));
 
             //--------------------------------------------------------------
             // Save graph
-            form = document.getElementById('grahForm');
+            const form = document.getElementById('grahForm');
             form.addEventListener('submit', function (event) {
                 console.log("save called !");
                 // Prevent the form from submitting immediately

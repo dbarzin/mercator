@@ -116,8 +116,8 @@ return [
             'application_block_helper' => 'Bloc applicatif dont fait partie cette application',
             'administrators' => 'Administrateurs',
             'administrators_helper' => "Administrateurs de l'application",
-            'cartographers' => 'Cartographe(s)',
-            'cartographers_helper' => "Cartographe(s) de l'application",
+            'containers' => 'Conteneurs',
+            'containers_helper' => 'Conteneurs dans lesquels l\'application est déployée',
             'databases' => 'Bases de données',
             'databases_helper' => 'Liste des bases de données utilisées par l’application',
             'description' => 'Description',
@@ -306,6 +306,9 @@ return [
             'children' => 'Bâtiments / salles enfant',
             'children_helper' => '',
         ],
+        'errors' => [
+            'cycle_detected' => 'Cette opération créerait une boucle dans la hiérarchie des bâtiments. Un bâtiment ne peut pas être son propre parent, direct ou indirect.',
+        ],
         'title' => 'Bâtiments / Salles',
         'title_singular' => 'Bâtiment / Salle',
     ],
@@ -422,8 +425,8 @@ return [
                         <ul>
                             <li>Si une ligne contient un identifiant (ID) et des données, elle est <strong>mise à jour</strong>.</li>
                             <li>Si une ligne contient uniquement l’ID, l’objet correspondant est <strong>supprimé</strong>.</li>
-                            <li>Les collones qui ne sont pas présentes ne sont pas mises à jour.</li>
-                            <li>L'ordre des collones n'a pas d'importance.</li>
+                            <li>Les colonnes qui ne sont pas présentes ne sont pas mises à jour.</li>
+                            <li>L'ordre des colonnes n'a pas d'importance.</li>
                             <li>Si l’ID est vide, une <strong>nouvelle entrée est créée</strong>.</li>
                         </ul>
                         <p>
@@ -697,6 +700,8 @@ return [
             'service_dest_helper' => '',
             'service_source' => 'Service Source',
             'service_source_helper' => '',
+            'information' => 'Informations',
+            'information_helper' => 'Informations transmises dans ce flux',
         ],
         'title' => 'Flux applicatifs',
         'title_short' => 'Flux',
@@ -789,8 +794,8 @@ return [
         'fields' => [
             'name' => 'Nom',
             'name_helper' => 'Nom du flux',
-            'class' => 'Classe',
-            'class_helper' => '',
+            'chain' => 'Classe',
+            'chain_helper' => '',
             'protocol' => 'Protocole',
             'protocol_helper' => 'ex: TCP, UPD...',
             'source_ip_range' => 'Source',
@@ -991,6 +996,31 @@ return [
         'title' => 'Commutateurs réseau',
         'title_short' => 'Commutateurs',
         'title_singular' => 'Commutateur',
+    ],
+    'module' => [
+        'title' => 'Gestion des modules',
+        'title_short' => 'Modules',
+        'fields' => [
+            'name'=> 'Nom',
+            'label' => 'Label',
+            'package' => 'Package',
+            'package_version' => 'Version (package)',
+            'db_version' => 'Version (DB)',
+            'installed' => 'Installé',
+            'activated' => 'Activé',
+            'actions' => 'Actions'
+        ],
+        'labels' => [
+            'installed' => 'Installé',
+            'not_installed' => 'Non installé',
+            'activated' => 'Activé',
+            'deactivated' => 'Désactivé',
+            'install' => 'Installer',
+            'activate' => 'Activer',
+            'deactivate' => 'Désactiver',
+            'uninstall' => 'Désinstaller',
+        ],
+        'confirm_uninstall' => "Voulez-vous désinstaller ce module ?",
     ],
     'operation' => [
         'description' => 'Etape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.',
@@ -1394,6 +1424,8 @@ return [
             'attributes_helper' => '',
             'description' => 'Caractéristiques techniques',
             'description_helper' => 'Type d’équipement (sonde, pare-feu, SIEM, etc.), modèle, OS et version, version du logiciel embarqué',
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'physical_security_devices' => 'Dispositifs physiques',
             'physical_security_devices_helper' => 'Liste des dispositifs de sécurité physique sur lesquels ce dispositif logique est installé',
             'applications' => 'Applications',

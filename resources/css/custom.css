@@ -218,7 +218,6 @@ table.dataTable thead th {
 
 /***************************************************************************/
 
-/* Supprime le soulignement dans les liens dans les card-body */
 .card-body a {
     text-decoration: none;
 }
@@ -566,44 +565,42 @@ table .navbar-brand-full {
 
 /***************************************************************************/
 
-/*
-.graphviz {
-    overflow-y: auto;
-    min-height: 550px;
-    width: 100%;
-}
 
-.graphviz svg {
-    width: 100%;
-    height: 600px;
-}
-*/
-
-/*
 #graph-container {
-  max-width: calc(100vw - 300px);
-  height: 500px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  box-sizing: border-box;
+    position: relative;
+    height: 300px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column; /* empile graph + barre verticalement */
+    overflow: hidden;
 }
-*/
 
 .graphviz {
-    height: 100%;
-    display: inline-block;
+    flex: 1 1 auto; /* prend tout l'espace dispo */
     white-space: nowrap;
     text-align: left;
+    overflow: auto;
 }
 
 .graphviz svg {
-    width: auto !important; /* Ne force pas l'élargissement */
+    width: auto !important;
     height: 100%;
     max-width: none !important;
     max-height: 500px;
     display: inline-block;
+}
+
+.graph-resize-handle {
+    height: 8px;
+    cursor: ns-resize;
+    width: 100%;
+    background: #ddd repeating-linear-gradient(
+            to bottom,
+            #bbb 0,
+            #bbb 2px,
+            transparent 2px,
+            transparent 4px
+    );
 }
 
 /* Graph Editor icon styles */
@@ -628,9 +625,79 @@ table .navbar-brand-full {
 }
 
 .table-report {
-    max-width: 800px;
+    max-width: 1200px;
     width: 100%;
 }
 
+/***************************************************************************/
+
+/* Règles CSS pour l'impression */
+@media print {
+    /* Masquer la navbar */
+    .navbar,
+    nav.navbar,
+    .navbar.fixed-top {
+        display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Masquer la sidebar */
+    #sidebar,
+    .sidebar,
+    .sidebar-footer,
+    nav.sidebar {
+        display: none !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Masquer le bouton de toggle sidebar */
+    .toggle-sidebar-btn {
+        display: none !important;
+    }
+
+    /* Réinitialiser le body (supprimer le padding créé par fixed-top navbar) */
+    body {
+        background: white !important;
+        color: black !important;
+        padding-top: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Réinitialiser le conteneur flex principal */
+    .d-flex {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Ajuster le conteneur de contenu pour utiliser toute la largeur */
+    #content-home,
+    .content,
+    .flex-grow-1 {
+        margin: 0 !important;
+        padding: 10px !important; /* Un peu de padding pour ne pas coller aux bords */
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Assurer que le graphique s'affiche correctement */
+    #graph-container,
+    .graph-container {
+        page-break-inside: avoid;
+        width: 100% !important;
+    }
+
+    /* Ajuster les cartes pour l'impression */
+    .card {
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+    }
+}
 
 /***************************************************************************/
+
+

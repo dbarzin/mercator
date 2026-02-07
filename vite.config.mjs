@@ -31,8 +31,6 @@ export default defineConfig({
                 // Maps
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',
-                // BPMN
-                'resources/js/bpmn.edit.ts'
             ],
             refresh: true,
         }),

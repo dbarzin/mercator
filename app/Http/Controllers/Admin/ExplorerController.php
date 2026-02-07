@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 // Models
 use App\Http\Controllers\Controller;
+use Gate;
+use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\LogicalFlow;
 use Mercator\Core\Models\PhysicalLink;
 use Mercator\Core\Models\Subnetwork;
-use Gate;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -353,7 +353,7 @@ class ExplorerController extends Controller
         // Gateways
         $gateways = DB::table('gateways')->select('id', 'name', 'ip')->whereNull('deleted_at')->get();
         foreach ($gateways as $gateway) {
-            $this->addNode($nodes, 5, $this->formatId('GW_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
+            $this->addNode($nodes, 5, $this->formatId('GATEWAY_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
         }
 
         // Subnetworks
@@ -368,7 +368,7 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('VLAN_', $subnetwork->vlan_id));
             }
             if ($subnetwork->gateway_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('GW_', $subnetwork->gateway_id));
+                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('GATEWAY_', $subnetwork->gateway_id));
             }
             /*
              * TODO : fixme
@@ -754,9 +754,16 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('CERT_', $join->certificate_id));
         }
         // Databases
-        $databases = DB::table('databases')->select('id', 'name')->whereNull('deleted_at')->get();
+        $databases = DB::table('databases')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($databases as $database) {
-            $this->addNode($nodes, 3, $this->formatId('DATABASE_', $database->id), $database->name, '/images/database.png', 'databases');
+            $this->addNode(
+                $nodes,
+                3,
+                $this->formatId('DATABASE_', $database->id),
+                $database->name,
+                $database->icon_id === null ? '/images/database.png' : "/admin/documents/{$database->icon_id}",
+                'databases'
+            );
         }
         // database_m_application
         $joins = DB::table('database_m_application')->select('m_application_id', 'database_id')->get();

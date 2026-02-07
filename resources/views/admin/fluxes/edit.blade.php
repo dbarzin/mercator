@@ -53,8 +53,8 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.flux.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
-                                    name="attributes[]" id="attributes[]" multiple>
+                            <select class="form-control select2-free-tags {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || str_contains($flux->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
                                 @endforeach
@@ -126,24 +126,49 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <label for="informations">{{ trans('cruds.flux.fields.information') }}</label>
+                            <select class="form-control select2 {{ $errors->has('informations') ? 'is-invalid' : '' }}"
+                                    name="informations[]" id="informations" multiple>
+                                @foreach($informations as $id => $name)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('informations', [])) || $flux->informations->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('informations'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('informations') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.flux.fields.information_helper') }}</span>
+                        </div>
 
-                <div class="form-check">
-                    <label for="crypted">{{ trans('cruds.flux.fields.crypted') }}</label>
-                    <div class="form-switch">
-                        <input class="form-check-input" type="checkbox" id="crypted" name="crypted"
-                               value="1" {{ $flux->crypted ? "checked" : "" }}>
-                        <label class="form-check-label"
-                               for="crypted">{{ trans('cruds.flux.fields.crypted_helper') }}</label>
                     </div>
                 </div>
 
-                <div class="form-check">
-                    <label for="crypted">{{ trans('cruds.flux.fields.bidirectional') }}</label>
-                    <div class="form-switch">
-                        <input class="form-check-input" type="checkbox" id="bidirectional" name="bidirectional"
-                               value="1" {{ $flux->bidirectional ? "checked" : "" }} >
-                        <label class="form-check-label"
-                               for="bidirectional">{{ trans('cruds.flux.fields.bidirectional_helper') }}</label>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-check">
+                            <label for="crypted">{{ trans('cruds.flux.fields.crypted') }}</label>
+                            <div class="form-switch">
+                                <input class="form-check-input" type="checkbox" id="crypted" name="crypted"
+                                       value="1" {{ $flux->crypted ? "checked" : "" }}>
+                                <label class="form-check-label"
+                                       for="crypted">{{ trans('cruds.flux.fields.crypted_helper') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-check">
+                            <label for="bidirectional">{{ trans('cruds.flux.fields.bidirectional') }}</label>
+                            <div class="form-switch">
+                                <input class="form-check-input" type="checkbox" id="bidirectional" name="bidirectional"
+                                       value="1" {{ $flux->bidirectional ? "checked" : "" }} >
+                                <label class="form-check-label"
+                                       for="bidirectional">{{ trans('cruds.flux.fields.bidirectional_helper') }}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

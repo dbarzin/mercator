@@ -212,6 +212,10 @@ Route::middleware('auth:api')->group(function (): void {
     Route::delete('clusters/mass-destroy', [API\ClusterController::class, 'massDestroy'])->name('clusters.mass-destroy');
     Route::resource('clusters', API\ClusterController::class);
 
+    // Containers
+    Route::delete('containers/mass-destroy', [API\ContainerController::class, 'massDestroy'])->name('containers.mass-destroy');
+    Route::resource('containers', API\ContainerController::class);
+
     // Logical Servers
     Route::post('logical-servers/mass-store', [API\LogicalServerController::class, 'massStore'])->name('logical-servers.mass-store');
     Route::put('logical-servers/mass-update', [API\LogicalServerController::class, 'massUpdate'])->name('logical-servers.mass-update');

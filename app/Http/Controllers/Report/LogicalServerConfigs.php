@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use Mercator\Core\Models\LogicalServer;
 use Carbon\Carbon;
 use Gate;
+use Mercator\Core\Models\LogicalServer;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerConfigs extends Controller
@@ -98,6 +98,6 @@ class LogicalServerConfigs extends Controller
 
         $writer->save($path);
 
-        return response()->download($path);
+        return response()->download($path)->deleteFileAfterSend(true);
     }
 }

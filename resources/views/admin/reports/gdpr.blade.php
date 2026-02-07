@@ -45,9 +45,9 @@
                                 </tr>
                             </table>
                         </div>
-
                         <div id="graph-container">
                             <div class="graphviz" id="graph"></div>
+                            <div class="graph-resize-handle"></div>
                         </div>
                         <div class="row p-1">
                             <div class="col-4">
@@ -267,6 +267,7 @@ digraph  {
                 .engine("{{ $engine }}")
                 .renderDot(dotSrc);
         });
+
     </script>
     @parent
 @endsection

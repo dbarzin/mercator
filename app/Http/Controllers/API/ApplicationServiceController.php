@@ -8,10 +8,10 @@ use App\Http\Requests\MassStoreApplicationServiceRequest;
 use App\Http\Requests\MassUpdateApplicationServiceRequest;
 use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
-use Mercator\Core\Models\ApplicationService;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\ApplicationService;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationServiceController extends Controller
@@ -90,8 +90,7 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var ApplicationService $applicationService */
-        $applicationService = ApplicationService::create($request->all());
+        $applicationService = ApplicationService::query()->create($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
         $applicationService->applications()->sync($request->input('applications', []));
 
@@ -102,6 +101,9 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $applicationService['modules'] = $applicationService->modules()->pluck('id');
+        $applicationService['applications'] = $applicationService->applications()->pluck('id');
+
         return new JsonResource($applicationService);
     }
 
@@ -110,8 +112,10 @@ class ApplicationServiceController extends Controller
         abort_if(Gate::denies('application_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationService->update($request->all());
-        $applicationService->modules()->sync($request->input('modules', []));
-        $applicationService->applications()->sync($request->input('applications', []));
+        if ($request['modules'] !== null)
+            $applicationService->modules()->sync($request->input('modules', []));
+        if ($request['applications'] !== null)
+            $applicationService->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
@@ -129,7 +133,7 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        ApplicationService::whereIn('id', $request->input('ids', []))->delete();
+        ApplicationService::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

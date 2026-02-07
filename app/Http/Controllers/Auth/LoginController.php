@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Mercator\Core\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LdapRecord\Auth\BindException;
 use LdapRecord\Container;
 use LdapRecord\Models\Entry as LdapEntry;
+use Mercator\Core\Models\AuditLog;
+use Mercator\Core\Models\Role;
+use Mercator\Core\Models\User;
 
 class LoginController extends Controller
 {
@@ -49,6 +53,19 @@ class LoginController extends Controller
                 ->unique()
                 ->values()
                 ->all(),
+        ]);
+
+        AuditLog::query()->create([
+            'description'  => 'Login',
+            'subject_id'   => $user->id,
+            'subject_type' => User::class,
+            'user_id'      => $user->id,
+            'properties'   => [
+                'user_agent' => $request->userAgent(),
+                'method'     => $request->method(),
+                'url'        => $request->fullUrl(),
+            ],
+            'host'         => $request->ip(),
         ]);
     }
 
@@ -178,6 +195,13 @@ class LoginController extends Controller
                         'login' => $identifier,
                         'password' => Hash::make(Str::random(32)), // inutilisable en local par défaut
                     ]);
+
+                    // Get default Role
+                    $roleName = config('app.ldap_auto_provision_role');
+                    if ($roleName !== null) {
+                        $role = Role::query()->where('title', $roleName)->firstOrFail();
+                        $local->roles()->sync([$role->id]);
+                        }
                 }
 
                 if ($local) {
@@ -204,4 +228,33 @@ class LoginController extends Controller
             $remember
         );
     }
+
+    public function logout(Request $request): RedirectResponse | Response
+    {
+        $userId = auth()->id();
+
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        try {
+            AuditLog::query()->create([
+                'description'  => 'Logout',
+                'subject_id'   => $userId,
+                'subject_type' => User::class,
+                'user_id'      => $userId,
+                'properties'   => [
+                    'user_agent' => $request->userAgent(),
+                    'method'     => $request->method(),
+                    'url'        => $request->fullUrl(),
+                ],
+                'host'         => $request->ip(),
+            ]);
+        } catch (\Throwable $e) {
+            Log::warning('Failed to create logout audit log', ['error' => $e->getMessage()]);
+        }
+
+        return $this->loggedOut($request) ?: redirect('/');
+    }
+
 }

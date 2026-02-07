@@ -8,10 +8,10 @@ use App\Http\Requests\MassStoreDatabaseRequest;
 use App\Http\Requests\MassUpdateDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
-use Mercator\Core\Models\Database;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Database;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
@@ -90,13 +90,12 @@ class DatabaseController extends Controller
     {
         abort_if(Gate::denies('database_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var Database $database */
-        $database = Database::create($request->all());
+        $database = Database::query()->create($request->all());
+        
         $database->entities()->sync($request->input('entities', []));
         $database->informations()->sync($request->input('informations', []));
         $database->applications()->sync($request->input('applications', []));
         $database->logicalServers()->sync($request->input('logical_servers', []));
-        // $database->roles()->sync($request->input('roles', []));
 
         return response()->json($database, Response::HTTP_CREATED);
     }
@@ -113,11 +112,15 @@ class DatabaseController extends Controller
         abort_if(Gate::denies('database_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $database->update($request->all());
-        $database->entities()->sync($request->input('entities', []));
-        $database->informations()->sync($request->input('informations', []));
-        $database->applications()->sync($request->input('applications', []));
-        $database->logicalServers()->sync($request->input('logical_servers', []));
-        // $database->roles()->sync($request->input('roles', []));
+
+        if ($request->has('entities'))
+            $database->entities()->sync($request->input('entities', []));
+        if ($request->has('informations'))
+            $database->informations()->sync($request->input('informations', []));
+        if ($request->has('applications'))
+            $database->applications()->sync($request->input('applications', []));
+        if ($request->has('logical_servers'))
+            $database->logicalServers()->sync($request->input('logical_servers', []));
 
         return response()->json();
     }
@@ -135,7 +138,7 @@ class DatabaseController extends Controller
     {
         abort_if(Gate::denies('database_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Database::whereIn('id', $request->input('ids', []))->delete();
+        Database::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

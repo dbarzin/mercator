@@ -2,7 +2,9 @@
 
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Report;
+use App\Http\Controllers\Report\AuditController;
 
 Route::redirect('/', '/login');
 
@@ -104,7 +106,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Applications
     Route::resource('applications', Admin\MApplicationController::class);
-    Route::get('application-icon/{id}', [Admin\MApplicationController::class, 'icon'])->name('application-icon');
+    Route::get('applications-clone/{id}', [Admin\MApplicationController::class, 'clone'])->name('applications.clone');
     Route::delete('applications-destroy', [Admin\MApplicationController::class, 'massDestroy'])->name('applications.massDestroy');
 
     // Application Services
@@ -333,12 +335,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('graphs/clone/{id}', [Admin\GraphController::class, 'clone'])->name('graphs.clone');
     // Graphs test
     Route::view('graph/test', 'admin.graphs.test')->name('graphs.test');
-
-    // BPMNs
-    Route::resource('bpmns', Admin\BPMNController::class);
-    Route::delete('bpmns-destroy', [Admin\BPMNController::class, 'massDestroy'])->name('bpmns.massDestroy');
-    Route::get('bpmns/clone/{id}', [Admin\BPMNController::class, 'clone'])->name('bpmns.clone');
-
+    
     // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class, 'explore'])->name('report.explore');
 
@@ -380,8 +377,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/patching/dashboard', [Admin\PatchingController::class, 'dashboard'])->name('patching.dashboard');
 
     // Auditing
-    Route::get('audit/maturity', [Admin\AuditController::class, 'maturity'])->name('audit.maturity');
-    Route::get('audit/changes', [Admin\AuditController::class, 'changes'])->name('audit.changes');
+    Route::get('audit/maturity', [AuditController::class, 'maturity'])->name('audit.maturity');
+    Route::get('audit/changes', [AuditController::class, 'changes'])->name('audit.changes');
 
     // Documents
     Route::post('/documents/store', [Admin\DocumentController::class, 'store'])->name('documents.store');
@@ -391,8 +388,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/config/documents/check', [Admin\DocumentController::class, 'check'])->name('config.documents.check');
 
     // Audit Logs
+    Route::get('audit-logs/history/{type}/{id}', [Admin\AuditLogsController::class, 'history'])->name('audit-logs.history');
     Route::resource('audit-logs', Admin\AuditLogsController::class, ['except' => ['create', 'store', 'update', 'destroy']]);
-    Route::get('history/{type}/{id}', [Admin\AuditLogsController::class, 'history'])->name('history');
 
     // Monarc
     Route::get('monarc', [Admin\MonarcController::class, 'index'])->name('monarc');
@@ -405,26 +402,48 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Doc
     Route::get('doc/schema', function () {
         return view('doc/schema');
-    });
+    })->name('doc.schema');
+
     Route::get('doc/guide', function () {
         return view('doc/guide');
-    });
+    })->name('doc.guide');
 
     Route::get('doc/about', function () {
         return view('doc/about');
-    });
+    })->name('doc.about');
 
     // Import
-    Route::get('config/import', function () {
-        return view('admin/import');
-    })->name('config.import');
-    Route::post('config/export', [Admin\ImportController::class, 'export'])->name('config.export');
-    Route::post('config/import', [Admin\ImportController::class, 'import'])->name('config.import');
+    Route::get('config/import', [Admin\ImportController::class, 'show'])
+        ->name('config.import.form');
+    Route::post('config/import', [Admin\ImportController::class, 'import'])
+        ->name('config.import');
+
+    // Export
+    Route::post('config/export', [Admin\ImportController::class, 'export'])
+        ->name('config.export');
 
     // Configuration page
     Route::get('config', function () {
-        return view('config');
+        return null;
+        // return view('config');
     });
+
+    // Modules
+    Route::prefix('modules')
+        ->name('modules.')
+        ->middleware('can:module_manage')
+        ->group(function () {
+            Route::get('/', [ModuleController::class, 'index'])->name('index');
+
+            Route::get('/check', [ModuleController::class, 'check'])->name('check');
+
+            Route::post('{name}/install', [ModuleController::class, 'install'])->name('install');
+            Route::post('{name}/enable', [ModuleController::class, 'enable'])->name('enable');
+            Route::post('{name}/disable', [ModuleController::class, 'disable'])->name('disable');
+            Route::delete('{name}/uninstall', [ModuleController::class, 'uninstall'])->name('uninstall');
+        });
+
+
 });
 
 // Profile

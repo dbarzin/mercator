@@ -67,7 +67,7 @@ class DemoActivityProcessTableSeeder extends Seeder
             ],
             12 => [
                 'process_id' => 1,
-                'activity_id' => 10,
+                'activity_id' => 5,
             ],
         ]);
 

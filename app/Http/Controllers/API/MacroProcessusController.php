@@ -116,7 +116,6 @@ class MacroProcessusController extends Controller
             Process::whereIn('id', $request->input('processes', []))
                 ->update(['macroprocess_id' => $macroProcessus->id]);
         }
-
         return response()->json();
     }
 

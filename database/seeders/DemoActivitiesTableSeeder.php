@@ -45,9 +45,9 @@ class DemoActivitiesTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             4 => [
-                'name' => 'Activité 0',
-                'description' => '<p>Description de l\'activité quatre</p>',
-                'created_at' => null,
+                'name' => 'Activité 5',
+                'description' => '<p>Description de l\'activité 5</p>',
+                'created_at' => '2021-05-15 09:40:16',
                 'updated_at' => '2021-05-15 09:40:16',
                 'deleted_at' => null,
             ],

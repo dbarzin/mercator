@@ -108,6 +108,12 @@ class ProcessController extends Controller
     {
         abort_if(Gate::denies('process_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $process['activities'] = $process->activities()->pluck('id');
+        $process['entities'] = $process->entities()->pluck('id');
+        $process['informations'] = $process->information()->pluck('id');
+        $process['applications'] = $process->applications()->pluck('id');
+        $process['operations'] = $process->operations()->pluck('id');
+        
         return new JsonResource($process);
     }
 

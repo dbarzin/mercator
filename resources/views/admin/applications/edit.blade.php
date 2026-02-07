@@ -42,7 +42,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+                            <select class="form-control select2-free-tags {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
                                     name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || in_array($a, explode(' ',$application->attributes)) ? 'selected' : '' }}>{{$a}}</option>
@@ -220,23 +220,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}"
-                                    name="cartographers[]" id="cartographers" multiple>
-                                @foreach($cartographers_list as $id => $cartographer)
-                                    <option value="{{ $id }}" {{ in_array($id, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('cartographers'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('cartographer') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
-                        </div>
-                    </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="logical_servers">{{ trans('cruds.application.fields.administrators') }}</label>
@@ -689,7 +672,7 @@
             <!------------------------------------------------------------------------------------------------------------->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="logical_servers">{{ trans('cruds.application.fields.logical_servers') }}</label>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
@@ -706,7 +689,26 @@
                             <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="logical_servers">{{ trans('cruds.application.fields.containers') }}</label>
+                            <select class="form-control select2 {{ $errors->has('containers') ? 'is-invalid' : '' }}"
+                                    name="containers[]" id="containers" multiple>
+                                @foreach($containers as $id => $name)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('containers', [])) || $application->containers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('containers'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('containers') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.application.fields.containers_helper') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="logical_servers">{{ trans('cruds.application.fields.security_devices') }}</label>
                             <select class="form-control select2 {{ $errors->has('security_devices') ? 'is-invalid' : '' }}"

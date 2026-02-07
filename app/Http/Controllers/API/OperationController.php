@@ -103,6 +103,10 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $operation['actors'] = $operation->actors()->pluck('id');
+        $operation['tasks'] = $operation->tasks()->pluck('id');
+        $operation['activities'] = $operation->activities()->pluck('id');
+
         return new JsonResource($operation);
     }
 

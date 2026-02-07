@@ -46,21 +46,42 @@
                     </div>
                 </div>
 
-
-                <div class="form-group">
-                    <label class="label-maturity-1"
-                           for="description">{{ trans('cruds.database.fields.description') }}</label>
-                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                              name="description"
-                              id="description">{!! old('description', $database->description) !!}</textarea>
-                    @if($errors->has('description'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('description') }}
+                <div class="row">
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label class="label-maturity-1"
+                                   for="description">{{ trans('cruds.database.fields.description') }}</label>
+                            <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                      name="description"
+                                      id="description">{!! old('description', $database->description) !!}</textarea>
+                            @if($errors->has('description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.database.fields.description_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.database.fields.description_helper') }}</span>
-                </div>
+                    </div>
 
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="iconSelect">{{ trans('global.icon_select') }}</label>
+                            <select id="iconSelect"
+                                    name="iconSelect"
+                                    class="form-control js-icon-picker"
+                                    data-icons='@json($icons)'
+                                    data-selected="{{ $database->icon_id ?? '-1' }}"
+                                    data-default-img="{{ asset('images/database.png') }}"
+                                    data-url-template="{{ route('admin.documents.show', ':id') }}"
+                                    data-upload="#iconFile">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="iconFile" name="iconFile" accept="image/png"/>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <!------------------------------------------------------------------------------------------------------------->
             <div class="card-header">
@@ -172,15 +193,9 @@
             <div class="card-body">
                 <div class="row">
 
-                    <div class="col-sm">
+                    <div class="col-8">
                         <div class="form-group">
                             <label for="applications">{{ trans('cruds.database.fields.applications') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
                             <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                                     name="applications[]" id="applications" multiple>
                                 @foreach($applications as $id => $applications)
@@ -195,6 +210,29 @@
                             <span class="help-block">{{ trans('cruds.database.fields.applications_helper') }}</span>
                         </div>
                     </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="external">{{ trans('cruds.database.fields.external') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}"
+                                    name="external" id="external">
+                                @if (!$external_list->contains(old('external')))
+                                    <option> {{ old('external') }}</option>
+                                @endif
+                                @foreach($external_list as $t)
+                                    <option {{ (old('external') ? old('external') : $database->external) == $t ? 'selected' : '' }}>{{$t}}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('external'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('external') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.database.fields.external_helper') }}</span>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
             <!------------------------------------------------------------------------------------------------------------->
@@ -204,7 +242,7 @@
             <!------------------------------------------------------------------------------------------------------------->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="applications">{{ trans('cruds.database.fields.logical_servers') }}</label>
                             <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}"
@@ -226,26 +264,29 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-6">
                         <div class="form-group">
-                            <label for="external">{{ trans('cruds.database.fields.external') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}"
-                                    name="external" id="external">
-                                @if (!$external_list->contains(old('external')))
-                                    <option> {{ old('external') }}</option>
-                                @endif
-                                @foreach($external_list as $t)
-                                    <option {{ (old('external') ? old('external') : $database->external) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            <label for="applications">{{ trans('cruds.database.fields.containers') }}</label>
+                            <select class="form-control select2 {{ $errors->has('containers') ? 'is-invalid' : '' }}"
+                                    name="containers[]" id="containers" multiple>
+                                @foreach($containers as $id => $name)
+                                    <option
+                                            value="{{ $id }}"
+                                            {{ (in_array($id, old('containers', [])) || $database->containers->contains($id)) ? 'selected' : '' }}
+                                    >{{ $name }}
+                                    </option>
                                 @endforeach
                             </select>
-                            @if($errors->has('external'))
+                            @if($errors->has('containers'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('external') }}
+                                    {{ $errors->first('containers') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.database.fields.external_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.database.fields.containers_helper') }}</span>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <!------------------------------------------------------------------------------------------------------------->

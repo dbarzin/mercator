@@ -30,86 +30,25 @@
     </div>
 
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.activity.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $activity->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.activity.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $activity->description !!}
-                    </td>
-                </tr>
 
-                <tr>
-                    <th>
-                        {{ trans('cruds.activity.fields.processes') }}
-                    </th>
-                    <td>
-                        @foreach($activity->processes as $process)
-                            <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->name }}</a>
-                            @if (!$loop->last)
-                                ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
+        @include('admin.activities._details', [
+            'activity' => $activity,
+            'withLink' => false
+        ])
 
-                <tr>
-                    <th>
-                        {{ trans('cruds.activity.fields.operations') }}
-                    </th>
-                    <td>
-                        @foreach($activity->operations as $operation)
-                            <a href="{{ route('admin.operations.show', $operation->id) }}">{{ $operation->name }}</a>
-                            @if (!$loop->last)
-                                ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>
-                        {{ trans('cruds.activity.fields.applications') }}
-                    </th>
-                    <td colspan="5">
-                        @foreach($activity->applications as $application)
-                            <a href="{{ route('admin.applications.show', $application->id) }}">
-                            {{ $application->name }}
-                            </a>
-                            @if (!$loop->last)
-                            ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-
-
-
-            </tbody>
-        </table>
     </div>
+
     <div class="card-header">
         {{ trans('cruds.activity.bia') }}
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped table-report">
             <tbody>
-
                 <tr>
-                    <th width="10%">
+                    <th width="20%">
                         {{ trans('cruds.activity.fields.maximum_tolerable_downtime') }}
                     </th>
-                    <td width="20%">
+                    <td>
                         @if (intdiv($activity->maximum_tolerable_downtime,60 * 24) > 0)
                             {{ intdiv($activity->maximum_tolerable_downtime,60 * 24) }}
                             @if (intdiv($activity->maximum_tolerable_downtime,60 * 24) > 1)
@@ -135,7 +74,7 @@
                             @endif
                         @endif
                     </td>
-                    <th width="10%">
+                    <th width="20%">
                         {{ trans('cruds.activity.fields.maximum_tolerable_data_loss') }}
                     </th>
                     <td>
@@ -167,10 +106,10 @@
                 </tr>
 
                 <tr>
-                    <th width="10%">
+                    <th>
                         {{ trans('cruds.activity.fields.recovery_time_objective') }}
                     </th>
-                    <td width="20%">
+                    <td>
                         @if (intdiv($activity->recovery_time_objective,60 * 24) > 0)
                             {{ intdiv($activity->recovery_time_objective,60 * 24) }}
                             @if (intdiv($activity->recovery_time_objective,60 * 24) > 1)
@@ -196,7 +135,7 @@
                             @endif
                         @endif
                     </td>
-                    <th width="10%">
+                    <th>
                         {{ trans('cruds.activity.fields.recovery_point_objective') }}
                     </th>
                     <td>
@@ -228,7 +167,7 @@
                 </tr>
             </tbody>
         </table>
-        <b>{{  trans('cruds.activity.impacts') }}</b>
+    <b>{{  trans('cruds.activity.impacts') }}</b>
         <table class="table table-bordered table-striped">
         @foreach($activity->impacts as $impact)
         <tr>
@@ -252,7 +191,7 @@
         {{ trans('cruds.activity.drp') }}
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped table-report">
             <tbody>
                 <tr>
                     <th width="10%">

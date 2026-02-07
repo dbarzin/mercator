@@ -44,12 +44,14 @@ nav:
   - Cartographie: cartography.fr.md
   - Application: application.md
   - Application: application.fr.md
+  - BPMN 2.0: bpmn.md
+  - BPMN 2.0: bpmn.fr.md
+  - Reports: reports.md
+  - Rapports: reports.fr.md
   - Use cases: usecases.md
   - Cas d'utilisation: usecases.fr.md
   - Data model: model.md
   - Modèle de données: model.fr.md
-  - Reports: reports.md
-  - Rapports: reports.fr.md
   - Administration: admin.md
   - Administration: admin.fr.md
   - Configuration: config.md
@@ -70,5 +72,5 @@ extra:
       lang: en
 
     - name: Français
-      link: index.fr/
+      link: index.fr.md
       lang: fr

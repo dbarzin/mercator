@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use Gate;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Mercator\Core\Models\Certificate;
 use Mercator\Core\Models\Cluster;
 use Mercator\Core\Models\Container;
@@ -23,10 +27,6 @@ use Mercator\Core\Models\Subnetwork;
 use Mercator\Core\Models\Vlan;
 use Mercator\Core\Models\WifiTerminal;
 use Mercator\Core\Models\Workstation;
-use Gate;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalInfrastructureView extends Controller
@@ -42,7 +42,7 @@ class LogicalInfrastructureView extends Controller
      */
     public function generate(Request $request): View|RedirectResponse
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->network == null) {
             $request->session()->put('network', null);
@@ -107,6 +107,9 @@ class LogicalInfrastructureView extends Controller
                     return redirect()->back()->with('error', 'Subnetwork not found');
                 }
             }
+            $subnetworks = $subnetworks->sortByDesc(function($subnet) {
+                return $subnet->getMaskLength();
+            });
 
             // Get Gateways
             $gateways = Gateway::query()->orderBy('name')->get()
@@ -334,6 +337,9 @@ class LogicalInfrastructureView extends Controller
             // all
             $networks = Network::query()->orderBy('name')->get();
             $subnetworks = Subnetwork::query()->orderBy('name')->get();
+            $subnetworks = $subnetworks->sortByDesc(function($subnet) {
+                return $subnet->getMaskLength();
+            });
             $gateways = Gateway::query()->orderBy('name')->get();
             $externalConnectedEntities = ExternalConnectedEntity::query()->orderBy('name')->get();
             $networkSwitches = NetworkSwitch::query()->orderBy('name')->get();

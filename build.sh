@@ -26,6 +26,12 @@ else
   echo "[✔] package.json updated with sed"
 fi
 
+### --- 2b. composer update
+composer config --global --unset repositories.mercator-core
+composer config --global --unset repositories.mercator-dummy
+composer update
+echo "[✔] composer updated"
+
 ### --- 3. Build frontend ---
 export APP_VERSION=$VERSION
 npm install

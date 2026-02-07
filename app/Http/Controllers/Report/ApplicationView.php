@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Mercator\Core\Models\ApplicationBlock;
 use Mercator\Core\Models\ApplicationModule;
 use Mercator\Core\Models\ApplicationService;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\Flux;
 use Mercator\Core\Models\MApplication;
-use Gate;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationView extends Controller
@@ -29,7 +29,7 @@ class ApplicationView extends Controller
      */
     public function generate(Request $request): View
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->applicationBlock == null) {
             $request->session()->put('applicationBlock', null);

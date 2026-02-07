@@ -26,7 +26,7 @@
                             {{ trans('cruds.logicalFlow.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.logicalFlow.fields.class') }}
+                            {{ trans('cruds.logicalFlow.fields.chain') }}
                         </th>
                         <th>
                             {{ trans('cruds.logicalFlow.fields.interface') }}
@@ -72,7 +72,7 @@
                                 </a>
                             </td>
                             <td>
-                                {{ $logicalFlow->class }}
+                                {{ $logicalFlow->chain }}
                             </td>
                             <td>
                                 {{ $logicalFlow->interface }}
@@ -131,7 +131,7 @@
                                 @elseif ($logicalFlow->subnetworkSource!==null)
                                     {{ $logicalFlow->subnetworkSource->address }}
                                     (
-                                    <a href="{{ route('admin.physical-security-devices.show',$logicalFlow->subnetworkSource->id) }}">
+                                    <a href="{{ route('admin.subnetworks.show',$logicalFlow->subnetworkSource->id) }}">
                                         {{ $logicalFlow->subnetworkSource->name }}
                                     </a>)
                                 @endif
@@ -148,8 +148,8 @@
                                     <a href="{{ route('admin.logical-servers.show',$logicalFlow->logicalServerDest->id) }}">
                                         {{ $logicalFlow->logicalServerDest->name }}
                                     </a>)
-                                @elseif ($logicalFlow->logicalServerDest!==null)
-                                    {{ $logicalFlow->logicalServerDest->address_ip }}
+                                @elseif ($logicalFlow->peripheralDest!==null)
+                                    {{ $logicalFlow->peripheralDest->address_ip }}
                                     (<a href="{{ route('admin.peripherals.show',$logicalFlow->peripheralDest->id) }}">
                                         {{ $logicalFlow->peripheralDest->name }}
                                     </a>)
@@ -179,7 +179,7 @@
                                 @elseif ($logicalFlow->subnetworkDest!==null)
                                     {{ $logicalFlow->subnetworkDest->address }}
                                     (
-                                    <a href="{{ route('admin.physical-security-devices.show',$logicalFlow->subnetworkDest->id) }}">
+                                    <a href="{{ route('admin.subnetworks.show',$logicalFlow->subnetworkDest->id) }}">
                                         {{ $logicalFlow->subnetworkDest->name }}
                                     </a>)
                                 @endif

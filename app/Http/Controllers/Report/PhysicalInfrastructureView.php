@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use Gate;
+use Illuminate\Http\Request;
 use Mercator\Core\Models\Bay;
 use Mercator\Core\Models\Building;
 use Mercator\Core\Models\Peripheral;
@@ -15,15 +17,13 @@ use Mercator\Core\Models\Site;
 use Mercator\Core\Models\StorageDevice;
 use Mercator\Core\Models\WifiTerminal;
 use Mercator\Core\Models\Workstation;
-use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalInfrastructureView extends Controller
 {
     public function generate(Request $request)
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->site == null) {
             $request->session()->put('site', null);

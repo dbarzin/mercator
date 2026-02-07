@@ -27,35 +27,11 @@
         <div class="card-header">
             {{ trans('global.show') }} {{ trans('cruds.externalConnectedEntity.title') }}
         </div>
-
         <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.externalConnectedEntity.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $externalConnectedEntity->name }}
-                    </td>
-                    <th width="10%">
-                        {{ trans('cruds.externalConnectedEntity.fields.type') }}
-                    </th>
-                    <td>
-                        {{ $externalConnectedEntity->type }}
-                    </td>
-                </tr>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.externalConnectedEntity.fields.description') }}
-                    </th>
-                    <td colspan="3">
-                        {!! $externalConnectedEntity->description !!}
-                    </td>
-
-                </tr>
-                </tbody>
-            </table>
+            @include('admin.externalConnectedEntities._details', [
+                'externalConnectedEntity' => $externalConnectedEntity,
+                'withLink' => false,
+            ])
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-header">
@@ -70,7 +46,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -150,7 +126,7 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">

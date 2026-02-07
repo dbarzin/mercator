@@ -8,10 +8,10 @@ use App\Http\Requests\MassStoreMApplicationRequest;
 use App\Http\Requests\MassUpdateMApplicationRequest;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
-use Mercator\Core\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationController extends Controller
@@ -98,6 +98,7 @@ class ApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
         $application->activities()->sync($request->input('activities', []));
+        $application->containers()->sync($request->input('containers', []));
 
         return response()->json($application, Response::HTTP_CREATED);
     }
@@ -111,7 +112,8 @@ class ApplicationController extends Controller
         $application['services']       = $application->services()->pluck('id');
         $application['databases']      = $application->databases()->pluck('id');
         $application['logicalServers'] = $application->logicalServers()->pluck('id');
-        $application['activities']     = $application->activities()->pluck('id');
+        $application['activities'] = $application->activities()->pluck('id');
+        $application['containers'] = $application->containers()->pluck('id');
 
         return new JsonResource($application);
     }
@@ -139,6 +141,9 @@ class ApplicationController extends Controller
         }
         if ($request->has('application_services')) {
             $application->services()->sync($request->input('application_services', []));
+        }
+        if ($request->has('containers')) {
+            $application->containers()->sync($request->input('containers', []));
         }
 
         return response()->json();

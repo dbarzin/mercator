@@ -3,6 +3,7 @@
 // ------------------------------------------------
 $('#vendor-selector').select2({
     placeholder: 'Start typing to search',
+    allowClear: true,
     tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
     ajax: {
         url: '/admin/cpe/search/vendors',
@@ -36,6 +37,7 @@ $('#vendor-selector').select2({
 $('#product-selector').select2({
     placeholder: 'Start typing to search',
     tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
+    allowClear: true,
     ajax: {
         url: '/admin/cpe/search/products',
         dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
@@ -66,6 +68,7 @@ $('#product-selector').select2({
 $('#version-selector').select2({
     placeholder: 'Start typing to search',
     tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
+    allowClear: true,
     ajax: {
         url: '/admin/cpe/search/versions',
         dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON

@@ -16,6 +16,7 @@
                         @endif
                         <div id="graph-container">
                             <div class="graphviz" id="graph"></div>
+                            <div class="graph-resize-handle"></div>
                         </div>
                     </div>
                     <div class="row p-1">
