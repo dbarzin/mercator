@@ -64,6 +64,18 @@ return Application::configure(basePath: dirname(__DIR__))
             'gates' => \App\Http\Middleware\AuthGates::class,  // ✅ Alias pour utilisation manuelle
         ]);
 
+        // Groupes de middlewares personnalisés
+        $middleware->appendToGroup('api.protected', [
+            'web',
+            'auth.multi',
+            'gates',
+        ]);
+
+        $middleware->appendToGroup('web.protected', [
+            'auth',
+            'gates',
+        ]);
+        
         // Configurer les trusted proxies
         $middleware->trustProxies(
             at: '*',

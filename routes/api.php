@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('login', [API\AuthController::class, 'login']);
 
-Route::middleware(['web', 'auth.multi', 'gates'])->group(function () {
+Route::middleware(['api.protected'])->group(function () {
     // Data Processing & Security
     Route::post('data-processings/mass-store', [API\DataProcessingController::class, 'massStore'])->name('data-processings.mass-store');
     Route::put('data-processings/mass-update', [API\DataProcessingController::class, 'massUpdate'])->name('data-processings.mass-update');

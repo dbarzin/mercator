@@ -40,7 +40,7 @@ Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class, 'r
 Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class, 'handleKeycloakCallback']);
 
 // Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth','gates']], function (): void {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.protected']], function (): void {
     // Dashboard
     Route::get('/', [Admin\HomeController::class, 'index'])->name('home');
 
