@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWanRequest;
 use App\Http\Requests\MassStoreWanRequest;
 use App\Http\Requests\MassUpdateWanRequest;
@@ -14,73 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Wan;
 use Symfony\Component\HttpFoundation\Response;
 
-class WanController extends Controller
+class WanController extends APIController
 {
+    protected string $modelClass = Wan::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('wan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = Wan::query();
-
-        // Champs autorisés pour le filtrage afin d’éviter toute injection
-        $allowedFields = array_merge(
-            Wan::$searchable ?? [],   // si le modèle définit $searchable
-            ['id']                    // champs supplémentaires autorisés
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // Format "field" ou "field__operator"
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue;
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', "%{$value}%");
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', "{$value}%");
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', "%{$value}");
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        return response()->json($query->get());
+        return $this->indexResource($request);
     }
 
     public function store(StoreWanRequest $request)

@@ -2,88 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\MassStoreDomaineAdRequest;
 use App\Http\Requests\MassUpdateDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
-use Mercator\Core\Models\DomaineAd;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\DomaineAd;
 use Symfony\Component\HttpFoundation\Response;
 
-class DomaineAdController extends Controller
+class DomaineAdController extends APIController
 {
+    protected string $modelClass = DomaineAd::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('domaine_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = DomaineAd::query();
-
-        // Champs autorisés pour les filtres (évite l’injection par nom de colonne)
-        $allowedFields = array_merge(
-            DomaineAd::$searchable ?? [],
-            ['id'] // Champs supplémentaires filtrables
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    // Opérateur inconnu → filtre exact
-                    $query->where($field, $value);
-            }
-        }
-
-        $domaineAd = $query->get();
-
-        return response()->json($domaineAd);
+        return $this->indexResource($request);
     }
 
     public function store(StoreDomaineAdRequest $request)

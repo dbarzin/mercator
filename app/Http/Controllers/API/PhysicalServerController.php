@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\MassStorePhysicalServerRequest;
 use App\Http\Requests\MassUpdatePhysicalServerRequest;
@@ -14,15 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\PhysicalServer;
 use Symfony\Component\HttpFoundation\Response;
 
-class PhysicalServerController extends Controller
+class PhysicalServerController extends APIController
 {
+    protected string $modelClass = PhysicalServer::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServers = PhysicalServer::all();
-
-        return response()->json($physicalServers);
+        return $this->indexResource($request);
     }
 
     public function store(StorePhysicalServerRequest $request)

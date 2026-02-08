@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\MassStoreClusterRequest;
 use App\Http\Requests\MassUpdateClusterRequest;
@@ -15,15 +14,15 @@ use Illuminate\Support\Facades\Log;
 use Mercator\Core\Models\Cluster;
 use Symfony\Component\HttpFoundation\Response;
 
-class ClusterController extends Controller
+class ClusterController extends APIController
 {
+    protected string $modelClass = Cluster::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('cluster_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clusters = Cluster::all();
-
-        return response()->json($clusters);
+        return $this->indexResource($request);
     }
 
     public function store(StoreClusterRequest $request)

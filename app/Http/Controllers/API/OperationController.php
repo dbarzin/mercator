@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\MassStoreOperationRequest;
 use App\Http\Requests\MassUpdateOperationRequest;
@@ -14,75 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Operation;
 use Symfony\Component\HttpFoundation\Response;
 
-class OperationController extends Controller
+class OperationController extends APIController
 {
+    protected string $modelClass = Operation::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('operation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = Operation::query();
-
-        // Explicitly allowed fields for filtering
-        $allowedFields = array_merge(
-            Operation::$searchable ?? [],
-            ['id'] // Add more fields here if needed
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field or field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // Ignore non-authorized fields
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $operations = $query->get();
-
-        return response()->json($operations);
+        return $this->indexResource($request);
     }
 
     public function store(StoreOperationRequest $request)

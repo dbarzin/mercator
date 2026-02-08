@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Requests\MassStorePhoneRequest;
 use App\Http\Requests\MassUpdatePhoneRequest;
@@ -14,75 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Phone;
 use Symfony\Component\HttpFoundation\Response;
 
-class PhoneController extends Controller
+class PhoneController extends APIController
 {
+    protected string $modelClass = Phone::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('phone_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = Phone::query();
-
-        // Champs explicitement autorisés pour le filtrage
-        $allowedFields = array_merge(
-            Phone::$searchable ?? [],
-            ['id'] // Ajouter ici d'autres champs explicitement autorisés si nécessaire
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // Ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $phones = $query->get();
-
-        return response()->json($phones);
+        return $this->indexResource($request);
     }
 
     public function store(StorePhoneRequest $request)

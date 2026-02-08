@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPermissionRequest;
 use App\Http\Requests\MassStorePermissionRequest;
 use App\Http\Requests\MassUpdatePermissionRequest;
@@ -14,75 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Permission;
 use Symfony\Component\HttpFoundation\Response;
 
-class PermissionController extends Controller
+class PermissionController extends APIController
 {
+    protected string $modelClass = Permission::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('permission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = Permission::query();
-
-        // Explicitly allowed fields for filtering
-        $allowedFields = array_merge(
-            Permission::$searchable ?? [],
-            ['id'] // Add more fields here if needed
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field or field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // Ignore non-authorized fields
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $permissions = $query->get();
-
-        return response()->json($permissions);
+        return $this->indexResource($request);
     }
 
     public function store(StorePermissionRequest $request)

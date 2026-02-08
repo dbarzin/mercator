@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\MassStoreManRequest;
 use App\Http\Requests\MassUpdateManRequest;
@@ -14,75 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Man;
 use Symfony\Component\HttpFoundation\Response;
 
-class ManController extends Controller
+class ManController extends APIController
 {
-    public function index(Request $request)
+    protected string $modelClass = Man::class;
+
+   public function index(Request $request)
     {
         abort_if(Gate::denies('man_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = Man::query();
-
-        // Champs explicitement autorisés pour le filtrage
-        $allowedFields = array_merge(
-            Man::$searchable ?? [],
-            ['id'] // Ajouter ici d'autres champs explicitement autorisés si nécessaire
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // Ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $mans = $query->get();
-
-        return response()->json($mans);
+        return $this->indexResource($request);
     }
 
     public function store(StoreManRequest $request)

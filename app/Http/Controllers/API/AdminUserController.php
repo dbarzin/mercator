@@ -2,88 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAdminUserRequest;
 use App\Http\Requests\MassStoreAdminUserRequest;
 use App\Http\Requests\MassUpdateAdminUserRequest;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
-use Mercator\Core\Models\AdminUser;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\AdminUser;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminUserController extends Controller
+class AdminUserController extends APIController
 {
+    protected string $modelClass = AdminUser::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('admin_user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = AdminUser::query();
-
-        // Champs autorisés pour les filtres (évite l’injection par nom de colonne)
-        $allowedFields = array_merge(
-            AdminUser::$searchable ?? [],
-            ['id'] // Exemple de champs supplémentaires à rendre filtrables
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    // Opérateur inconnu → traité comme un filtre exact
-                    $query->where($field, $value);
-            }
-        }
-
-        $users = $query->get();
-
-        return response()->json($users);
+        return $this->indexResource($request);
     }
 
     public function store(StoreAdminUserRequest $request)

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWifiTerminalRequest;
 use App\Http\Requests\MassStoreWifiTerminalRequest;
 use App\Http\Requests\MassUpdateWifiTerminalRequest;
@@ -14,75 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\WifiTerminal;
 use Symfony\Component\HttpFoundation\Response;
 
-class WifiTerminalController extends Controller
+class WifiTerminalController extends APIController
 {
+    protected string $modelClass = WifiTerminal::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('wifi_terminal_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = WifiTerminal::query();
-
-        // Champs autorisés pour le filtrage afin d’éviter toute injection
-        $allowedFields = array_merge(
-            WifiTerminal::$searchable ?? [],
-            ['id']
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // Format "field" ou "field__operator"
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue;
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $wifiTerminals = $query->get();
-
-        return response()->json($wifiTerminals);
+        return $this->indexResource($request);
     }
 
     public function store(StoreWifiTerminalRequest $request)

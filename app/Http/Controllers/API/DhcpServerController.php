@@ -2,88 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDhcpServerRequest;
 use App\Http\Requests\MassStoreDhcpServerRequest;
 use App\Http\Requests\MassUpdateDhcpServerRequest;
 use App\Http\Requests\StoreDhcpServerRequest;
 use App\Http\Requests\UpdateDhcpServerRequest;
-use Mercator\Core\Models\DhcpServer;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\DhcpServer;
 use Symfony\Component\HttpFoundation\Response;
 
-class DhcpServerController extends Controller
+class DhcpServerController extends APIController
 {
+    protected string $modelClass = DhcpServer::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('dhcp_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = DhcpServer::query();
-
-        // Champs autorisés pour les filtres (évite l’injection par nom de colonne)
-        $allowedFields = array_merge(
-            DhcpServer::$searchable ?? [],
-            ['id'] // Champs supplémentaires filtrables
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    // Opérateur inconnu → filtre exact
-                    $query->where($field, $value);
-            }
-        }
-
-        $dhcpservers = $query->get();
-
-        return response()->json($dhcpservers);
+        return $this->indexResource($request);
     }
 
     public function store(StoreDhcpServerRequest $request)

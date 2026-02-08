@@ -2,88 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Requests\MassStoreExternalConnectedEntityRequest;
 use App\Http\Requests\MassUpdateExternalConnectedEntityRequest;
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
-use Mercator\Core\Models\ExternalConnectedEntity;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\ExternalConnectedEntity;
 use Symfony\Component\HttpFoundation\Response;
 
-class ExternalConnectedEntityController extends Controller
+class ExternalConnectedEntityController extends APIController
 {
+    protected string $modelClass = ExternalConnectedEntity::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('external_connected_entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = ExternalConnectedEntity::query();
-
-        // Champs autorisés pour les filtres (évite l’injection par nom de colonne)
-        $allowedFields = array_merge(
-            ExternalConnectedEntity::$searchable ?? [],
-            ['id'] // Champs supplémentaires filtrables
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    // Opérateur inconnu → filtre exact
-                    $query->where($field, $value);
-            }
-        }
-
-        $entities = $query->get();
-
-        return response()->json($entities);
+        return $this->indexResource($request);
     }
 
     public function store(StoreExternalConnectedEntityRequest $request)

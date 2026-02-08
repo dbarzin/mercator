@@ -2,88 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\MassStoreDataProcessingRequest;
 use App\Http\Requests\MassUpdateDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
-use Mercator\Core\Models\DataProcessing;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\DataProcessing;
 use Symfony\Component\HttpFoundation\Response;
 
-class DataProcessingController extends Controller
+class DataProcessingController extends APIController
 {
+    protected string $modelClass = DataProcessing::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('data_processing_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = DataProcessing::query();
-
-        // Champs autorisés pour les filtres (évite l’injection par nom de colonne)
-        $allowedFields = array_merge(
-            DataProcessing::$searchable ?? [],
-            ['id'] // Champs supplémentaires filtrables
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    // Opérateur inconnu → filtre exact
-                    $query->where($field, $value);
-            }
-        }
-
-        $dataProcessings = $query->get();
-
-        return response()->json($dataProcessings);
+        return $this->indexResource($request);
     }
 
     public function store(StoreDataProcessingRequest $request)

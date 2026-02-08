@@ -2,88 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDnsserverRequest;
 use App\Http\Requests\MassStoreDnsserverRequest;
 use App\Http\Requests\MassUpdateDnsserverRequest;
 use App\Http\Requests\StoreDnsserverRequest;
 use App\Http\Requests\UpdateDnsserverRequest;
-use Mercator\Core\Models\Dnsserver;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Dnsserver;
 use Symfony\Component\HttpFoundation\Response;
 
-class DnsserverController extends Controller
+class DnsserverController extends APIController
 {
+    protected string $modelClass = Dnsserver::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('dnsserver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = Dnsserver::query();
-
-        // Champs autorisés pour les filtres (évite l’injection par nom de colonne)
-        $allowedFields = array_merge(
-            Dnsserver::$searchable ?? [],
-            ['id'] // Champs supplémentaires filtrables
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    // Opérateur inconnu → filtre exact
-                    $query->where($field, $value);
-            }
-        }
-
-        $dnsservers = $query->get();
-
-        return response()->json($dnsservers);
+        return $this->indexResource($request);
     }
 
     public function store(StoreDnsserverRequest $request)

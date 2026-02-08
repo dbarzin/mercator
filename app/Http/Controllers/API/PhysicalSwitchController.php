@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\MassStorePhysicalSwitchRequest;
 use App\Http\Requests\MassUpdatePhysicalSwitchRequest;
@@ -14,73 +13,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\PhysicalSwitch;
 use Symfony\Component\HttpFoundation\Response;
 
-class PhysicalSwitchController extends Controller
+class PhysicalSwitchController extends APIController
 {
+    protected string $modelClass = PhysicalSwitch::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('physical_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = PhysicalSwitch::query();
-
-        $allowedFields = array_merge(
-            PhysicalSwitch::$searchable ?? [],
-            ['id']
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue;
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $physicalSwitches = $query->get();
-
-        return response()->json($physicalSwitches);
+        return $this->indexResource($request);
     }
 
     public function store(StorePhysicalSwitchRequest $request)

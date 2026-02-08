@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\MassStoreProcessRequest;
 use App\Http\Requests\MassUpdateProcessRequest;
@@ -15,75 +14,15 @@ use Mercator\Core\Models\Operation;
 use Mercator\Core\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProcessController extends Controller
+class ProcessController extends APIController
 {
+    protected string $modelClass = Process::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = Process::query();
-
-        // Champs explicitement autorisés pour le filtrage
-        $allowedFields = array_merge(
-            Process::$searchable ?? [],
-            ['id'] // Ajouter ici d'autres champs explicitement autorisés si nécessaire
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // Ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    $query->where($field, $value);
-            }
-        }
-
-        $processes = $query->get();
-
-        return response()->json($processes);
+        return $this->indexResource($request);
     }
 
     public function store(StoreProcessRequest $request)

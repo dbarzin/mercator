@@ -2,89 +2,27 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\MassStoreApplicationBlockRequest;
 use App\Http\Requests\MassUpdateApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
-use Mercator\Core\Models\ApplicationBlock;
-use Mercator\Core\Models\MApplication;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApplicationBlockController extends Controller
+class ApplicationBlockController extends APIController
 {
+    protected string $modelClass = ApplicationBlock::class;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('application_block_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = ApplicationBlock::query();
-
-        // Champs autorisés pour les filtres (évite l’injection par nom de colonne)
-        $allowedFields = array_merge(
-            ApplicationBlock::$searchable ?? [],
-            ['id'] // Champs supplémentaires filtrables
-        );
-
-        $params = $request->query();
-
-        foreach ($params as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            // field ou field__operator
-            [$field, $operator] = array_pad(explode('__', $key, 2), 2, 'exact');
-
-            if (! in_array($field, $allowedFields, true)) {
-                continue; // ignore les champs non autorisés
-            }
-
-            switch ($operator) {
-                case 'exact':
-                    $query->where($field, $value);
-                    break;
-
-                case 'contains':
-                    $query->where($field, 'LIKE', '%' . $value . '%');
-                    break;
-
-                case 'startswith':
-                    $query->where($field, 'LIKE', $value . '%');
-                    break;
-
-                case 'endswith':
-                    $query->where($field, 'LIKE', '%' . $value);
-                    break;
-
-                case 'lt':
-                    $query->where($field, '<', $value);
-                    break;
-
-                case 'lte':
-                    $query->where($field, '<=', $value);
-                    break;
-
-                case 'gt':
-                    $query->where($field, '>', $value);
-                    break;
-
-                case 'gte':
-                    $query->where($field, '>=', $value);
-                    break;
-
-                default:
-                    // Opérateur inconnu → traité comme un filtre exact
-                    $query->where($field, $value);
-            }
-        }
-
-        $applicationBlocks = $query->get();
-
-        return response()->json($applicationBlocks);
+        return $this->indexResource($request);
     }
 
     public function store(StoreApplicationBlockRequest $request)
