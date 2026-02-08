@@ -15,11 +15,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::post('login', [API\AuthController::class, 'login']);
 
-Route::middleware('auth:api')->group(function (): void {
-
+Route::middleware(['web', 'auth.multi', 'gates'])->group(function () {
     // Data Processing & Security
     Route::post('data-processings/mass-store', [API\DataProcessingController::class, 'massStore'])->name('data-processings.mass-store');
     Route::put('data-processings/mass-update', [API\DataProcessingController::class, 'massUpdate'])->name('data-processings.mass-update');

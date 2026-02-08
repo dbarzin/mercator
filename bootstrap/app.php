@@ -13,9 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Active les sessions partagées entre web et API
+        $middleware->statefulApi();
+
         // Middleware globaux
         $middleware->use([
-            // \App\Http\Middleware\TrustProxies::class,
             \Illuminate\Http\Middleware\HandleCors::class,
             \Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
             \Illuminate\Http\Middleware\ValidatePostSize::class,
@@ -33,11 +35,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UseCachedAuthUser::class,
-            \App\Http\Middleware\AuthGates::class,
+            // \App\Http\Middleware\AuthGates::class,  // ✅ Actif pour la sécurité
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\LicenseWarning::class,
         ]);
-
 
         $middleware->api(prepend: [
             "throttle:api",
@@ -46,7 +47,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(append: [
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UseCachedAuthUser::class,
-            \App\Http\Middleware\AuthGates::class,
         ]);
 
         // Alias de middlewares
@@ -60,11 +60,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
             'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+            'auth.multi' => \App\Http\Middleware\AuthenticateApiOrWeb::class,
+            'gates' => \App\Http\Middleware\AuthGates::class,  // ✅ Alias pour utilisation manuelle
         ]);
 
         // Configurer les trusted proxies
         $middleware->trustProxies(
-            at: '*', 
+            at: '*',
             headers: Request::HEADER_X_FORWARDED_FOR |
             Request::HEADER_X_FORWARDED_HOST |
             Request::HEADER_X_FORWARDED_PORT |

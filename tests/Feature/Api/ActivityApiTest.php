@@ -21,8 +21,7 @@ beforeEach(function () {
         RoleUserTableSeeder::class,
     ]);
     $this->user = User::query()->where('login','admin@admin.com')->first();
-    $this->actingAs($this->user);
-
+    Passport::actingAs($this->user);
 });
 
 // Helper pour créer un payload valide (création)
