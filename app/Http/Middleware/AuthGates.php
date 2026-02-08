@@ -2,47 +2,51 @@
 
 namespace App\Http\Middleware;
 
-use Mercator\Core\Models\Role;
-use Mercator\Core\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Mercator\Core\Models\Role;
+use Mercator\Core\Models\User;
 
 class AuthGates
 {
     public function handle($request, Closure $next)
     {
-        // ⚠️ Ici, Auth::user() ne doit plus taper la DB
-        // grâce à ton middleware UseCachedAuthUser placé AVANT dans Kernel.php
         $user = Auth::user();
 
         if ($user) {
-            // 🧠 On met en cache le mapping permission → [roles_ids]
-            $permissionsArray = Cache::rememberForever('permissions_roles_map', function () {
-                $roles = Role::with('permissions')->get();
-                $map = [];
-
-                foreach ($roles as $role) {
-                    foreach ($role->permissions as $permission) {
-                        $map[$permission->title][] = $role->id;
-                    }
-                }
-
-                return $map;
-            });
-
-            foreach ($permissionsArray as $title => $roles) {
-                Gate::define($title, function (User $user) use ($roles) {
-                    // on reste sur ta logique actuelle
-                    return $user->roles
-                        ->pluck('id')
-                        ->intersect($roles)
-                        ->isNotEmpty();
-                });
-            }
+            $this->defineGates();
         }
 
         return $next($request);
+    }
+
+    /**
+     * Définir les Gates basés sur les permissions et rôles
+     */
+    private function defineGates(): void
+    {
+        $permissionsArray = Cache::rememberForever('permissions_roles_map', function () {
+            $roles = Role::with('permissions')->get();
+            $map = [];
+
+            foreach ($roles as $role) {
+                foreach ($role->permissions as $permission) {
+                    $map[$permission->title][] = $role->id;
+                }
+            }
+
+            return $map;
+        });
+
+        foreach ($permissionsArray as $title => $roleIds) {
+            Gate::define($title, function (User $user) use ($roleIds) {
+                return $user->roles
+                    ->pluck('id')
+                    ->intersect($roleIds)
+                    ->isNotEmpty();
+            });
+        }
     }
 }

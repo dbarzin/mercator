@@ -9,6 +9,11 @@ class SetLocale
 {
     public function handle($request, Closure $next)
     {
+        // Ignorer pour les routes API
+        if ($request->is('api/*')) {
+            return $next($request);
+        }
+        
         if (request('change_language')) {
             session()->put('language', request('change_language'));
             $language = request('change_language');

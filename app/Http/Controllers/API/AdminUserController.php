@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAdminUserRequest;
+use App\Http\Requests\MassStoreAdminUserRequest;
+use App\Http\Requests\MassUpdateAdminUserRequest;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
-use Mercator\Core\Models\AdminUser;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\AdminUser;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminUserController extends Controller
+class AdminUserController extends APIController
 {
-    public function index()
+    protected string $modelClass = AdminUser::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('admin_user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = AdminUser::all();
-
-        return response()->json($users);
+        return $this->indexResource($request);
     }
 
     public function store(StoreAdminUserRequest $request)
@@ -28,7 +30,7 @@ class AdminUserController extends Controller
 
         $adminUser = AdminUser::create($request->all());
 
-        return response()->json($adminUser, 201);
+        return response()->json($adminUser, Response::HTTP_CREATED);
     }
 
     public function show(AdminUser $adminUser)
@@ -60,8 +62,65 @@ class AdminUserController extends Controller
     {
         abort_if(Gate::denies('admin_user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        AdminUser::whereIn('id', request('ids'))->delete();
+        AdminUser::whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreAdminUserRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà le Gate::denies('admin_user_create')
+        $data       = $request->validated();
+        $createdIds = [];
+
+        $userModel = new AdminUser();
+        $fillable  = $userModel->getFillable();
+
+        foreach ($data['items'] as $item) {
+            // Ne garde que les colonnes du modèle (ignore les champs inconnus)
+            $attributes = collect($item)
+                ->only($fillable)
+                ->toArray();
+
+            /** @var AdminUser $adminUser */
+            $adminUser = AdminUser::query()->create($attributes);
+
+            $createdIds[] = $adminUser->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateAdminUserRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà le Gate::denies('admin_user_edit')
+        $data      = $request->validated();
+        $userModel = new AdminUser();
+        $fillable  = $userModel->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id = $rawItem['id'];
+
+            /** @var AdminUser $adminUser */
+            $adminUser = AdminUser::query()->findOrFail($id);
+
+            // Ne garde que les colonnes du modèle, sans l'id
+            $attributes = collect($rawItem)
+                ->except(['id'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $adminUser->update($attributes);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

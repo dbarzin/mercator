@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
+use App\Http\Requests\MassStorePhysicalServerRequest;
+use App\Http\Requests\MassUpdatePhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\PhysicalServer;
 use Symfony\Component\HttpFoundation\Response;
 
-class PhysicalServerController extends Controller
+class PhysicalServerController extends APIController
 {
-    public function index()
+    protected string $modelClass = PhysicalServer::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServers = PhysicalServer::all();
-
-        return response()->json($physicalServers);
+        return $this->indexResource($request);
     }
 
     public function store(StorePhysicalServerRequest $request)
@@ -84,5 +86,84 @@ class PhysicalServerController extends Controller
         PhysicalServer::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStorePhysicalServerRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà la permission `physical_server_create`
+        $data = $request->validated();
+
+        $createdIds          = [];
+        $physicalServerModel = new PhysicalServer();
+        $fillable            = $physicalServerModel->getFillable();
+
+        foreach ($data['items'] as $item) {
+            $applications    = $item['applications'] ?? null;
+            $logicalServers  = $item['logicalServers'] ?? null;
+
+            // Colonnes du modèle uniquement (sans les relations)
+            $attributes = collect($item)
+                ->except(['applications', 'logicalServers'])
+                ->only($fillable)
+                ->toArray();
+
+            /** @var PhysicalServer $physicalServer */
+            $physicalServer = PhysicalServer::query()->create($attributes);
+
+            if (array_key_exists('applications', $item)) {
+                $physicalServer->applications()->sync($applications ?? []);
+            }
+
+            if (array_key_exists('logicalServers', $item)) {
+                $physicalServer->logicalServers()->sync($logicalServers ?? []);
+            }
+
+            $createdIds[] = $physicalServer->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdatePhysicalServerRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà la permission `physical_server_edit`
+        $data                = $request->validated();
+        $physicalServerModel = new PhysicalServer();
+        $fillable            = $physicalServerModel->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id             = $rawItem['id'];
+            $applications   = $rawItem['applications'] ?? null;
+            $logicalServers = $rawItem['logicalServers'] ?? null;
+
+            /** @var PhysicalServer $physicalServer */
+            $physicalServer = PhysicalServer::query()->findOrFail($id);
+
+            // Colonnes du modèle uniquement (sans id ni relations)
+            $attributes = collect($rawItem)
+                ->except(['id', 'applications', 'logicalServers'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $physicalServer->update($attributes);
+            }
+
+            if (array_key_exists('applications', $rawItem)) {
+                $physicalServer->applications()->sync($applications ?? []);
+            }
+
+            if (array_key_exists('logicalServers', $rawItem)) {
+                $physicalServer->logicalServers()->sync($logicalServers ?? []);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

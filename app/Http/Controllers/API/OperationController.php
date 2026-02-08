@@ -2,31 +2,35 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyOperationRequest;
+use App\Http\Requests\MassStoreOperationRequest;
+use App\Http\Requests\MassUpdateOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Operation;
 use Symfony\Component\HttpFoundation\Response;
 
-class OperationController extends Controller
+class OperationController extends APIController
 {
-    public function index()
+    protected string $modelClass = Operation::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('operation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $operations = Operation::all();
-
-        return response()->json($operations);
+        return $this->indexResource($request);
     }
 
     public function store(StoreOperationRequest $request)
     {
         abort_if(Gate::denies('operation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $operation = Operation::create($request->all());
+        /** @var Operation $operation */
+        $operation = Operation::query()->create($request->all());
+
         $operation->actors()->sync($request->input('actors', []));
         $operation->tasks()->sync($request->input('tasks', []));
         $operation->activities()->sync($request->input('activities', []));
@@ -50,12 +54,15 @@ class OperationController extends Controller
         abort_if(Gate::denies('operation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operation->update($request->all());
+
         if ($request->has('actors')) {
             $operation->actors()->sync($request->input('actors', []));
         }
-        if ($request->has('actors')) {
+
+        if ($request->has('tasks')) {
             $operation->tasks()->sync($request->input('tasks', []));
         }
+
         if ($request->has('activities')) {
             $operation->activities()->sync($request->input('activities', []));
         }
@@ -76,8 +83,97 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Operation::whereIn('id', request('ids'))->delete();
+        Operation::whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreOperationRequest $request)
+    {
+        // authorize() in the FormRequest already checks `operation_create`
+        $data = $request->validated();
+
+        $createdIds   = [];
+        $operationModel = new Operation();
+        $fillable       = $operationModel->getFillable();
+
+        foreach ($data['items'] as $item) {
+            $actors     = $item['actors'] ?? null;
+            $tasks      = $item['tasks'] ?? null;
+            $activities = $item['activities'] ?? null;
+
+            // Only model columns, relations are excluded
+            $attributes = collect($item)
+                ->except(['actors', 'tasks', 'activities'])
+                ->only($fillable)
+                ->toArray();
+
+            /** @var Operation $operation */
+            $operation = Operation::query()->create($attributes);
+
+            if (array_key_exists('actors', $item)) {
+                $operation->actors()->sync($actors ?? []);
+            }
+
+            if (array_key_exists('tasks', $item)) {
+                $operation->tasks()->sync($tasks ?? []);
+            }
+
+            if (array_key_exists('activities', $item)) {
+                $operation->activities()->sync($activities ?? []);
+            }
+
+            $createdIds[] = $operation->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateOperationRequest $request)
+    {
+        // authorize() in the FormRequest already checks `operation_edit`
+        $data          = $request->validated();
+        $operationModel = new Operation();
+        $fillable       = $operationModel->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id         = $rawItem['id'];
+            $actors     = $rawItem['actors'] ?? null;
+            $tasks      = $rawItem['tasks'] ?? null;
+            $activities = $rawItem['activities'] ?? null;
+
+            /** @var Operation $operation */
+            $operation = Operation::query()->findOrFail($id);
+
+            // Only model columns (no id or relations)
+            $attributes = collect($rawItem)
+                ->except(['id', 'actors', 'tasks', 'activities'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $operation->update($attributes);
+            }
+
+            if (array_key_exists('actors', $rawItem)) {
+                $operation->actors()->sync($actors ?? []);
+            }
+
+            if (array_key_exists('tasks', $rawItem)) {
+                $operation->tasks()->sync($tasks ?? []);
+            }
+
+            if (array_key_exists('activities', $rawItem)) {
+                $operation->activities()->sync($activities ?? []);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

@@ -21,8 +21,7 @@ beforeEach(function () {
         RoleUserTableSeeder::class,
     ]);
     $this->user = User::query()->where('login','admin@admin.com')->first();
-    $this->actingAs($this->user);
-
+    Passport::actingAs($this->user);
 });
 
 // Helper pour créer un payload valide (création)
@@ -62,10 +61,10 @@ function ensureDemoActivities(): void
             'id'                             => 5,
             'name'                           => 'Helpdesk',
             'description'                    => '<p>User support</p>',
-            'recovery_time_objective'        => null,
-            'maximum_tolerable_downtime'     => null,
-            'recovery_point_objective'       => null,
-            'maximum_tolerable_data_loss'    => null,
+            'recovery_time_objective'        => 1,
+            'maximum_tolerable_downtime'     => 1,
+            'recovery_point_objective'       => 1,
+            'maximum_tolerable_data_loss'    => 1,
             'drp'                            => null,
             'drp_link'                       => null,
             'created_at'                     => '2020-08-13 05:49:05',
@@ -148,7 +147,6 @@ function ensureDemoActivities(): void
 // ============================================================
 // Tests pour l'API Activities (CRUD + massDestroy)
 // ============================================================
-
 it('forbids listing activities without permission', function () {
     $user = User::factory()->create();
     Passport::actingAs($user);
@@ -348,7 +346,7 @@ it('filters activities by exact name', function () {
 
     ensureDemoActivities();
 
-    $response = $this->getJson('/api/activities?name__exact=Complaint%20management')
+    $response = $this->getJson('/api/activities?filter[name]=Complaint%20management')
         ->assertOk();
 
     $data  = activitiesFromResponse($response);
@@ -369,7 +367,8 @@ it('filters activities by numeric gte on recovery_time_objective', function () {
     $helpdesk->update(['recovery_time_objective' => 4]);
     $development->update(['recovery_time_objective' => 24]);
 
-    $response = $this->getJson('/api/activities?recovery_time_objective__gte=8')
+
+    $response = $this->getJson('/api/activities?filter[recovery_time_objective_gte]=8')
         ->assertOk();
 
     $data  = activitiesFromResponse($response);
@@ -500,3 +499,4 @@ it('forbids mass update without permission', function () {
         'name' => 'Development',
     ]);
 });
+

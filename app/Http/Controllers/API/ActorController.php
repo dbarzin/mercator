@@ -2,52 +2,50 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActorRequest;
+use App\Http\Requests\MassStoreActorRequest;
+use App\Http\Requests\MassUpdateActorRequest;
 use App\Http\Requests\StoreActorRequest;
 use App\Http\Requests\UpdateActorRequest;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Actor;
 use Symfony\Component\HttpFoundation\Response;
 
-class ActorController extends Controller
+class ActorController extends APIController
 {
-    public function index()
+    protected string $modelClass     = Actor::class;
+    
+    public function index(Request $request)
     {
         abort_if(Gate::denies('actor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $actors = Actor::all();
-
-        return response()->json($actors);
+        return $this->indexResource($request);
     }
 
     public function store(StoreActorRequest $request)
     {
         abort_if(Gate::denies('actor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $actor = Actor::create($request->all());
-        $actor->operations()->sync($request->input('operations', []));
+        $actor = $this->storeResource($request->validated());
 
-        return response()->json($actor, 201);
+        return response()->json($actor, Response::HTTP_CREATED);
     }
 
-    public function show(Actor $actor)
+    public function show(Actor $actor): JsonResource
     {
         abort_if(Gate::denies('actor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $actor['operations'] = $actor->operations()->pluck('id');
-
-        return new JsonResource($actor);
+        // On encapsule le modèle dans une JsonResource pour rester cohérent
+        return $this->asJsonResource($actor);
     }
 
     public function update(UpdateActorRequest $request, Actor $actor)
     {
         abort_if(Gate::denies('actor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $actor->update($request->all());
-        if ($request['operations'] !== null)
-            $actor->operations()->sync($request->input('operations', []));
+        $this->updateResource($actor, $request->validated());
 
         return response()->json();
     }
@@ -56,7 +54,7 @@ class ActorController extends Controller
     {
         abort_if(Gate::denies('actor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $actor->delete();
+        $this->destroyResource($actor);
 
         return response()->json();
     }
@@ -65,8 +63,31 @@ class ActorController extends Controller
     {
         abort_if(Gate::denies('actor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Actor::whereIn('id', request('ids'))->delete();
+        $this->massDestroyByIds($request->input('ids', []));
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreActorRequest $request)
+    {
+        $data       = $request->validated();
+        $createdIds = $this->massStoreItems($data['items']);
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateActorRequest $request)
+    {
+        $data = $request->validated();
+
+        $this->massUpdateItems($data['items']);
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }
