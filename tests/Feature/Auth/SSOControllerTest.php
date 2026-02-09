@@ -192,6 +192,7 @@ it('does not sync roles when disabled', function () {
     Config::set('services.keycloak.enabled', true);
     Config::set('services.keycloak.auto_provision', true);
     Config::set('services.keycloak.sync_roles', false);
+    Config::set('services.keycloak.auto_provision_role', 'User');
 
     $keycloakUser = mockKeycloakUser([
         'nickname' => 'no.sync',
