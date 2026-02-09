@@ -79,7 +79,7 @@ class GlobalSearchController extends Controller
             $fields = $modelClass::$searchable;
 
             foreach ($fields as $field) {
-                $query->orWhere($field, 'LIKE', '%'.$term.'%');
+                $query->orWhere($field, 'LIKE', '%'.$this->escapeLike($term).'%');
             }
 
             $results = $query->take(100)->get();
@@ -109,4 +109,10 @@ class GlobalSearchController extends Controller
 
         return view('admin.search', compact('searchableData'));
     }
+
+    private function escapeLike(string $value): string
+    {
+        return addcslashes($value, '%_');
+    }
+
 }
