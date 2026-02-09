@@ -39,9 +39,9 @@ return [
         'realms' => env('KEYCLOAK_REALM'),
         // Fallback to local user if no user found in Keycloak
         'fallback_local' => env('KEYCLOAK_FALLBACK_LOCAL', false),
-        'auto_provision' => env('KEYCLOAK_AUTO_PROVISION', true),
+        'auto_provision' => env('KEYCLOAK_AUTO_PROVISION', false),
         'auto_provision_role' => env('KEYCLOAK_AUTO_PROVISION_ROLE', 'User'),
-        'sync_roles' => env('KEYCLOAK_SYNC_ROLES', true),
+        'sync_roles' => env('KEYCLOAK_SYNC_ROLES', false),
     ],
 
     'nvd' => [
