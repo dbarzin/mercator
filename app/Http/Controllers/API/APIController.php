@@ -97,12 +97,20 @@ abstract class APIController extends Controller
     {
         $filters = [];
         $relations = $this->getAllowedIncludes();
+        $model = $this->newModelInstance();
 
         foreach ($relations as $relation) {
-            // Ajouter les champs courants des relations
-            $filters[] = AllowedFilter::partial("{$relation}.name");
-            $filters[] = AllowedFilter::partial("{$relation}.email");
-            $filters[] = AllowedFilter::partial("{$relation}.description");
+            try {
+                $related = $model->{$relation}()->getRelated();
+                $relatedFillable = $related->getFillable();
+                foreach (['name', 'email', 'description'] as $field) {
+                    if (in_array($field, $relatedFillable, true)) {
+                        $filters[] = AllowedFilter::partial("{$relation}.{$field}");
+                    }
+                }
+            } catch (\Throwable $e) {
+                // Skip relations that can't be resolved
+            }
         }
 
         return $filters;
@@ -132,7 +140,6 @@ abstract class APIController extends Controller
                 }
             );
 
-            // 4. Filtres numériques
             // 4. Filtres numériques
             $allowedFilters[] = AllowedFilter::callback(
                 $field . '_lt',
