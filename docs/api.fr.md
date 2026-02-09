@@ -179,6 +179,15 @@ _* La recherche partielle automatique s'applique aux champs contenant : `name`, 
 | `_between` | `filter[recovery_time_objective_between]=4,24` | Entre deux valeurs    | `recovery_time_objective BETWEEN 4 AND 24` |
 | `_null`    | `filter[deleted_at_null]=true`                 | Valeur NULL           | `deleted_at IS NULL`                       |
 | `_null`    | `filter[description_null]=false`               | Valeur NOT NULL       | `description IS NOT NULL`                  |
+| `_not`     | `filter[type_not]=opensource`                  | Négation (différent)  | `type != 'opensource'`                     |
+
+##### Recherche globale et filtres sur relations
+
+| Opérateur  | Syntaxe                       | Description                                                          | Exemple                                               |
+|------------|-------------------------------|----------------------------------------------------------------------|-------------------------------------------------------|
+| `search`   | `filter[search]=backup`       | Recherche OR sur tous les champs textuels (name, description, email) | `name LIKE '%backup%' OR description LIKE '%backup%'` |
+| (relation) | `filter[actors.email]=john`   | Recherche LIKE sur champs de relations                               | `actors.email LIKE '%john%'`                          |
+| (relation) | `filter[contacts.name]=alice` | Recherche LIKE sur nom dans une relation                             | `contacts.name LIKE '%alice%'`                        |
 
 ##### Filtres de dates
 
@@ -241,6 +250,15 @@ GET /api/activities?filter[recovery_time_objective_lte]=4
 
 # Activités avec un ID supérieur ou égal à 100
 GET /api/activities?filter[id_gte]=100
+
+# Applications dont le type est différent de "opensource"
+GET /api/applications?filter[type_not]=opensource
+
+# Recherche globale sur tous les champs textuels
+GET /api/applications?filter[search]=backup
+
+# Recherche sur l'email d'un acteur lié
+GET /api/activities?filter[actors.email]=john@example.com
 ```
 
 ##### Filtres combinés
@@ -251,6 +269,15 @@ GET /api/activities?filter[name]=GDPR&filter[recovery_time_objective_gte]=8
 
 # Serveurs créés après le 1er janvier 2024 avec un nom contenant "prod"
 GET /api/logical-servers?filter[created_at_after]=2024-01-01&filter[name]=prod
+
+# Applications avec type différent de "opensource" triées par nom
+GET /api/applications?filter[type_not]=opensource&sort=name
+
+# Recherche globale "backup" sur toutes les applications avec RTO <= 8
+GET /api/activities?filter[search]=backup&filter[recovery_time_objective_lte]=8
+
+# Activités liées à un acteur dont l'email contient "admin"
+GET /api/activities?filter[actors.email]=admin&include=actors
 ```
 
 ##### Filtres avancés
@@ -626,17 +653,18 @@ try {
 
 ### Résumé des fonctionnalités
 
-| Fonctionnalité   | Syntaxe                           | Exemple                                 |
-|------------------|-----------------------------------|-----------------------------------------|
-| Filtre exact     | `filter[champ]=valeur`            | `filter[name]=Backup`                   |
-| Comparaison      | `filter[champ_operateur]=valeur`  | `filter[recovery_time_objective_gte]=8` |
-| Liste de valeurs | `filter[champ_in]=v1,v2,v3`       | `filter[id_in]=1,2,3`                   |
-| Intervalle       | `filter[champ_between]=min,max`   | `filter[age_between]=18,65`             |
-| NULL             | `filter[champ_null]=true/false`   | `filter[deleted_at_null]=true`          |
-| Dates            | `filter[champ_after/before]=date` | `filter[created_at_after]=2024-01-01`   |
-| Tri              | `sort=champ` ou `sort=-champ`     | `sort=-created_at`                      |
-| Relations        | `include=relation1,relation2`     | `include=processes,operations`          |
-| Soft deletes     | `filter[trashed]=with/only`       | `filter[trashed]=with`                  |
-
-
+| Fonctionnalité    | Syntaxe                           | Exemple                                 |
+|-------------------|-----------------------------------|-----------------------------------------|
+| Filtre exact      | `filter[champ]=valeur`            | `filter[name]=Backup`                   |
+| Comparaison       | `filter[champ_operateur]=valeur`  | `filter[recovery_time_objective_gte]=8` |
+| Négation          | `filter[champ_not]=valeur`        | `filter[type_not]=opensource`           |
+| Liste de valeurs  | `filter[champ_in]=v1,v2,v3`       | `filter[id_in]=1,2,3`                   |
+| Intervalle        | `filter[champ_between]=min,max`   | `filter[age_between]=18,65`             |
+| NULL              | `filter[champ_null]=true/false`   | `filter[deleted_at_null]=true`          |
+| Dates             | `filter[champ_after/before]=date` | `filter[created_at_after]=2024-01-01`   |
+| Recherche globale | `filter[search]=terme`            | `filter[search]=backup`                 |
+| Relation          | `filter[relation.champ]=valeur`   | `filter[actors.email]=john`             |
+| Tri               | `sort=champ` ou `sort=-champ`     | `sort=-created_at`                      |
+| Relations         | `include=relation1,relation2`     | `include=processes,operations`          |
+| Soft deletes      | `filter[trashed]=with/only`       | `filter[trashed]=with`                  |
 
