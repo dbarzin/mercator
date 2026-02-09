@@ -67,6 +67,15 @@ abstract class APIController extends Controller
     }
 
     /**
+     * Échappe les méta-caractères LIKE pour éviter les wildcard surprises
+     */
+    protected function escapeLikeValue(string $value): string
+    {
+        // Échapper les caractères spéciaux LIKE: \, %, _
+        return addcslashes($value, '%_\\');
+    }
+
+    /**
      * Champs textuels pour filtres partiels (LIKE)
      */
     protected function getPartialFilterFields(): array
@@ -88,20 +97,12 @@ abstract class APIController extends Controller
     {
         $filters = [];
         $relations = $this->getAllowedIncludes();
-        $textFields = ['name', 'email', 'description'];
 
         foreach ($relations as $relation) {
-            try {
-                $related = $this->newModelInstance()->{$relation}()->getRelated();
-                $fillable = $related->getFillable();
-                foreach ($textFields as $field) {
-                    if (in_array($field, $fillable, true)) {
-                        $filters[] = AllowedFilter::partial("{$relation}.{$field}");
-                    }
-                }
-            } catch (\Throwable $e) {
-                // Skip relations that cannot be resolved
-            }
+            // Ajouter les champs courants des relations
+            $filters[] = AllowedFilter::partial("{$relation}.name");
+            $filters[] = AllowedFilter::partial("{$relation}.email");
+            $filters[] = AllowedFilter::partial("{$relation}.description");
         }
 
         return $filters;
@@ -222,9 +223,14 @@ abstract class APIController extends Controller
             $allowedFilters[] = AllowedFilter::callback(
                 'search',
                 function (Builder $query, $value) use ($searchableFields) {
-                    $query->where(function ($q) use ($value, $searchableFields) {
+                    // Échapper les méta-caractères LIKE
+                    $escapedValue = $this->escapeLikeValue($value);
+                    $pattern = "%{$escapedValue}%";
+
+                    $query->where(function ($q) use ($pattern, $searchableFields) {
                         foreach ($searchableFields as $field) {
-                            $q->orWhere($field, 'LIKE', "%{$value}%");
+                            // Utiliser whereRaw avec ESCAPE clause pour la sécurité
+                            $q->orWhereRaw("{$field} LIKE ? ESCAPE '\\\\'", [$pattern]);
                         }
                     });
                 }
