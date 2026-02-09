@@ -102,6 +102,8 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#operateurs-avances">Opérateurs avancés</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#recherche-globale-et-filtres-sur-relations">Recherche globale et filtres sur relations</a>
+    </li>
     <li class="toctree-l4"><a class="reference internal" href="#filtres-de-dates">Filtres de dates</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#soft-deletes">Soft Deletes</a>
@@ -465,6 +467,43 @@ filter[&lt;champ&gt;_&lt;operateur&gt;]=&lt;valeur&gt;        # Filtre avec opé
 <td>Valeur NOT NULL</td>
 <td><code>description IS NOT NULL</code></td>
 </tr>
+<tr>
+<td><code>_not</code></td>
+<td><code>filter[type_not]=opensource</code></td>
+<td>Négation (différent)</td>
+<td><code>type != 'opensource'</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="recherche-globale-et-filtres-sur-relations">Recherche globale et filtres sur relations</h5>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Syntaxe</th>
+<th>Description</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>search</code></td>
+<td><code>filter[search]=backup</code></td>
+<td>Recherche OR sur tous les champs textuels (name, description, email)</td>
+<td><code>name LIKE '%backup%' OR description LIKE '%backup%'</code></td>
+</tr>
+<tr>
+<td>(relation)</td>
+<td><code>filter[actors.email]=john</code></td>
+<td>Recherche LIKE sur champs de relations</td>
+<td><code>actors.email LIKE '%john%'</code></td>
+</tr>
+<tr>
+<td>(relation)</td>
+<td><code>filter[contacts.name]=alice</code></td>
+<td>Recherche LIKE sur nom dans une relation</td>
+<td><code>contacts.name LIKE '%alice%'</code></td>
+</tr>
 </tbody>
 </table>
 <h5 id="filtres-de-dates">Filtres de dates</h5>
@@ -545,6 +584,15 @@ GET /api/activities?filter[recovery_time_objective_lte]=4
 
 # Activités avec un ID supérieur ou égal à 100
 GET /api/activities?filter[id_gte]=100
+
+# Applications dont le type est différent de &quot;opensource&quot;
+GET /api/applications?filter[type_not]=opensource
+
+# Recherche globale sur tous les champs textuels
+GET /api/applications?filter[search]=backup
+
+# Recherche sur l'email d'un acteur lié
+GET /api/activities?filter[actors.email]=john@example.com
 </code></pre>
 <h5 id="filtres-combines">Filtres combinés</h5>
 <pre><code class="language-http"># Activités dont le nom contient &quot;GDPR&quot; avec RTO &gt;= 8
@@ -552,6 +600,15 @@ GET /api/activities?filter[name]=GDPR&amp;filter[recovery_time_objective_gte]=8
 
 # Serveurs créés après le 1er janvier 2024 avec un nom contenant &quot;prod&quot;
 GET /api/logical-servers?filter[created_at_after]=2024-01-01&amp;filter[name]=prod
+
+# Applications avec type différent de &quot;opensource&quot; triées par nom
+GET /api/applications?filter[type_not]=opensource&amp;sort=name
+
+# Recherche globale &quot;backup&quot; sur toutes les activités avec RTO &lt;= 8
+GET /api/activities?filter[search]=backup&amp;filter[recovery_time_objective_lte]=8
+
+# Activités liées à un acteur dont l'email contient &quot;admin&quot;
+GET /api/activities?filter[actors.email]=admin&amp;include=actors
 </code></pre>
 <h5 id="filtres-avances">Filtres avancés</h5>
 <pre><code class="language-http"># Activités avec ID dans la liste 1, 2, 3, 5
@@ -898,6 +955,11 @@ try {
 <td><code>filter[recovery_time_objective_gte]=8</code></td>
 </tr>
 <tr>
+<td>Négation</td>
+<td><code>filter[champ_not]=valeur</code></td>
+<td><code>filter[type_not]=opensource</code></td>
+</tr>
+<tr>
 <td>Liste de valeurs</td>
 <td><code>filter[champ_in]=v1,v2,v3</code></td>
 <td><code>filter[id_in]=1,2,3</code></td>
@@ -916,6 +978,16 @@ try {
 <td>Dates</td>
 <td><code>filter[champ_after/before]=date</code></td>
 <td><code>filter[created_at_after]=2024-01-01</code></td>
+</tr>
+<tr>
+<td>Recherche globale</td>
+<td><code>filter[search]=terme</code></td>
+<td><code>filter[search]=backup</code></td>
+</tr>
+<tr>
+<td>Relation</td>
+<td><code>filter[relation.champ]=valeur</code></td>
+<td><code>filter[actors.email]=john</code></td>
 </tr>
 <tr>
 <td>Tri</td>
