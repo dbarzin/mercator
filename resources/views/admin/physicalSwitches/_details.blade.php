@@ -1,3 +1,7 @@
+@props([
+    'physicalSwitch',
+    'withLink' => false
+])
 <table class="table table-bordered table-striped table-report" id="{{ $physicalSwitch->getUID() }}">
     <tbody>
         <tr>

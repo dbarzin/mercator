@@ -366,7 +366,7 @@
                         @foreach($physicalSecurityDevices as $physicalSecurityDevice)
                             <div class="row">
                                 <div class="col">
-                                    @include('admin.physicalSwitches._details', [
+                                    @include('admin.physicalSecurityDevices._details', [
                                         'physicalSecurityDevice' => $physicalSecurityDevice,
                                         'withLink' => true,
                                     ])
@@ -414,7 +414,7 @@
                         @foreach($wifiTerminals as $wifiTerminal)
                             <div class="row">
                                 <div class="col">
-                                    @include('admin.physicalSwitches._details', [
+                                    @include('admin.wifiTerminals._details', [
                                         'wifiTerminal' => $wifiTerminal,
                                         'withLink' => true,
                                     ])
