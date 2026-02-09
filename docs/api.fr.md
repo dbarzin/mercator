@@ -273,7 +273,7 @@ GET /api/logical-servers?filter[created_at_after]=2024-01-01&filter[name]=prod
 # Applications avec type différent de "opensource" triées par nom
 GET /api/applications?filter[type_not]=opensource&sort=name
 
-# Recherche globale "backup" sur toutes les applications avec RTO <= 8
+# Recherche globale "backup" sur toutes les activités avec RTO <= 8
 GET /api/activities?filter[search]=backup&filter[recovery_time_objective_lte]=8
 
 # Activités liées à un acteur dont l'email contient "admin"
