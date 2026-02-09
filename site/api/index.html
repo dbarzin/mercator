@@ -82,49 +82,81 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">API</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#install-the-api-on-mercator">Install the API on Mercator</a>
+    <li class="toctree-l2"><a class="reference internal" href="#installing-the-api-on-mercator">Installing the API on Mercator</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#apis">APIs</a>
+    <li class="toctree-l2"><a class="reference internal" href="#the-apis">The APIs</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#actions-managed-by-the-resource-controller">Actions managed by the resource controller</a>
+    <li class="toctree-l2"><a class="reference internal" href="#actions-handled-by-the-resource-controller">Actions Handled by the Resource Controller</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#filtering-results">Filtering Results</a>
+    <li class="toctree-l2"><a class="reference internal" href="#filtering-sorting-and-relation-inclusion">Filtering, Sorting and Relation Inclusion</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#general-syntax">General Syntax</a>
+    <li class="toctree-l3"><a class="reference internal" href="#filterable-fields">Filterable Fields</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#available-operators">Available Operators</a>
+    <li class="toctree-l3"><a class="reference internal" href="#filter-syntax">Filter Syntax</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
+    <li class="toctree-l3"><a class="reference internal" href="#available-filter-operators">Available Filter Operators</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#exact-and-text-filters">Exact and Text Filters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#numeric-comparisons">Numeric Comparisons</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#advanced-operators">Advanced Operators</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#date-filters">Date Filters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#soft-deletes">Soft Deletes</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#access-rights">Access rights</a>
+    <li class="toctree-l3"><a class="reference internal" href="#sorting-results">Sorting Results</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#linking-objects">Linking objects</a>
+    <li class="toctree-l3"><a class="reference internal" href="#relation-inclusion-eager-loading">Relation Inclusion (Eager Loading)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#php">PHP</a>
+    <li class="toctree-l3"><a class="reference internal" href="#complete-examples">Complete Examples</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
+    <li class="toctree-l4"><a class="reference internal" href="#simple-filters">Simple Filters</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#users-list">Users list</a>
+    <li class="toctree-l4"><a class="reference internal" href="#combined-filters">Combined Filters</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#get-a-user">Get a user</a>
+    <li class="toctree-l4"><a class="reference internal" href="#advanced-filters">Advanced Filters</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#update-a-user">Update a user</a>
+    <li class="toctree-l4"><a class="reference internal" href="#sorting">Sorting</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#relation-inclusion">Relation Inclusion</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#complex-combinations">Complex Combinations</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#access-rights">Access Rights</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#linking-between-objects">Linking Between Objects</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#list-activities-with-filters">List Activities with Filters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#retrieve-an-activity-with-relations">Retrieve an Activity with Relations</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#bash">Bash</a>
+    <li class="toctree-l2"><a class="reference internal" href="#bash">bash</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#powershell">PowerShell</a>
+    <li class="toctree-l2"><a class="reference internal" href="#powershell">Powershell</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-authentication-and-obtaining-the-access-token">Step 1 — Authentication and Obtaining the Access Token</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-usage-with-filters-and-sorting">Step 2 — Usage with Filters and Sorting</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#feature-summary">Feature Summary</a>
     </li>
     </ul>
                 </li>
@@ -161,31 +193,31 @@
 <li class="i18n-link i18n-link-found i18n-link-fr"><a href="../api.fr/">Français</a></li>
 </ul>
 <h2 id="api">API</h2>
-<p>Cartography can be modified or updated via a REST API.</p>
-<p>A REST API (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
-is an application programming interface that respects the constraints of the REST
-architecture and enables interaction with RESTful web services.</p>
-<h3 id="install-the-api-on-mercator">Install the API on Mercator</h3>
+<p>The cartography can be modified or updated via a REST API.</p>
+<p>A REST API (<a href="https://en.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
+is an application programming interface that respects the constraints of the REST architectural style
+and allows interaction with RESTful web services.</p>
+<h3 id="installing-the-api-on-mercator">Installing the API on Mercator</h3>
 <p>To install the API in Mercator, you need to install Passport by running this command:</p>
 <pre><code class="language-bash">php artisan passport:install
 </code></pre>
 <ul>
-<li>The Docker environment supports this functionality natively, via the entrypoint.</li>
+<li>The Docker environment handles this functionality natively via the entrypoint.</li>
 </ul>
-<h3 id="apis">APIs</h3>
+<h3 id="the-apis">The APIs</h3>
 <p>For each object in the cartography data model, there is an API.
-The list of APIs can be found in /route/api.php</p>
-<p><strong>GDPR view</strong></p>
+The list of APIs can be found in the /route/api.php file</p>
+<p><strong>GDPR View</strong></p>
 <ul>
 <li>/api/data-processings</li>
 <li>/api/security-controls</li>
 </ul>
-<p><strong>Ecosystem view</strong></p>
+<p><strong>Ecosystem Views</strong></p>
 <ul>
 <li>/api/entities</li>
 <li>/api/relations</li>
 </ul>
-<p><strong>Information system business view</strong></p>
+<p><strong>Business View of the Information System</strong></p>
 <ul>
 <li>/api/macro-processuses</li>
 <li>/api/processes</li>
@@ -195,7 +227,7 @@ The list of APIs can be found in /route/api.php</p>
 <li>/api/actors</li>
 <li>/api/information</li>
 </ul>
-<p><strong>Application view</strong></p>
+<p><strong>Application View</strong></p>
 <ul>
 <li>/api/application-blocks</li>
 <li>/api/applications</li>
@@ -204,7 +236,7 @@ The list of APIs can be found in /route/api.php</p>
 <li>/api/databases</li>
 <li>/api/fluxes</li>
 </ul>
-<p><strong>Administration view</strong></p>
+<p><strong>Administration View</strong></p>
 <ul>
 <li>/api/zone-admins</li>
 <li>/api/annuaires</li>
@@ -212,7 +244,7 @@ The list of APIs can be found in /route/api.php</p>
 <li>/api/domaine-ads</li>
 <li>/api/admin-users</li>
 </ul>
-<p><strong>Logical infrastructure view</strong></p>
+<p><strong>Logical Infrastructure View</strong></p>
 <ul>
 <li>/api/networks</li>
 <li>/api/subnetworks</li>
@@ -230,7 +262,7 @@ The list of APIs can be found in /route/api.php</p>
 <li>/api/certificates</li>
 <li>/api/vlans</li>
 </ul>
-<p><strong>Physical infrastructure view</strong></p>
+<p><strong>Physical Infrastructure View</strong></p>
 <ul>
 <li>/api/sites</li>
 <li>/api/buildings</li>
@@ -269,8 +301,8 @@ The list of APIs can be found in /route/api.php</p>
 <li>/api/report/impacts</li>
 <li>/api/report/rto</li>
 </ul>
-<h3 id="actions-managed-by-the-resource-controller">Actions managed by the resource controller</h3>
-<p>Requests and URIs for each api are shown in the table below.</p>
+<h3 id="actions-handled-by-the-resource-controller">Actions Handled by the Resource Controller</h3>
+<p>The requests and URIs for each API are represented in the table below.</p>
 <table>
 <thead>
 <tr>
@@ -288,27 +320,27 @@ The list of APIs can be found in /route/api.php</p>
 <tr>
 <td>GET</td>
 <td>/api/objects/{id}</td>
-<td>returns the object with ID <code>{id}</code></td>
+<td id="id">returns object</td>
 </tr>
 <tr>
 <td>POST</td>
 <td>/api/objects</td>
-<td>creates a new object</td>
+<td>saves a new object</td>
 </tr>
 <tr>
 <td>PUT/PATCH</td>
 <td>/api/objects/{id}</td>
-<td>updates the object with ID <code>{id}</code></td>
+<td id="id">updates object</td>
 </tr>
 <tr>
 <td>DELETE</td>
 <td>/api/objects/{id}</td>
-<td>deletes the object with ID <code>{id}</code></td>
+<td id="id">deletes object</td>
 </tr>
 <tr>
 <td>POST</td>
 <td>/api/objects/mass-store</td>
-<td>creates multiple objects in a single request</td>
+<td>creates multiple objects in one request</td>
 </tr>
 <tr>
 <td>PUT/PATCH</td>
@@ -322,114 +354,262 @@ The list of APIs can be found in /route/api.php</p>
 </tr>
 </tbody>
 </table>
-<p>The fields to be supplied are those described in the <a href="/mercator/model/">data model</a>.</p>
-<h3 id="filtering-results">Filtering Results</h3>
-<p>List endpoints (<code>GET /api/objects</code>) support a filtering system using query parameters (<code>?param=value</code>).</p>
-<p>To prevent injection (arbitrary column names), only a limited set of fields can be used as filters.
-For each resource, the filterable fields are composed of:</p>
-<ul>
-<li>the fields declared as <em>searchable</em> in the model (for example <code>Activity::$searchable</code> for activities);</li>
-<li>additional explicitly allowed fields (for example <code>id</code>, <code>recovery_time_objective</code>, <code>maximum_tolerable_downtime</code> for activities).</li>
-</ul>
-<p>Any parameter referring to a field that is not allowed is simply ignored.</p>
-<h4 id="general-syntax">General Syntax</h4>
-<p>Each filter is written in the following form:</p>
-<pre><code class="language-text">&lt;field&gt;[__&lt;operator&gt;]=&lt;value&gt;
+<p>The fields to provide are those described in the <a href="/mercator/model/">data model</a>.</p>
+<h3 id="filtering-sorting-and-relation-inclusion">Filtering, Sorting and Relation Inclusion</h3>
+<p>List endpoints (<code>GET /api/objects</code>) support an advanced filtering, sorting and relation inclusion system via
+query parameters.</p>
+<h4 id="filterable-fields">Filterable Fields</h4>
+<p>All fields declared in the model (<code>$fillable</code>) are automatically filterable. Filters on unauthorized fields are simply
+ignored.</p>
+<h4 id="filter-syntax">Filter Syntax</h4>
+<p>Each filter is presented in the form:</p>
+<pre><code class="language-text">filter[&lt;field&gt;]=&lt;value&gt;                    # Exact filter
+filter[&lt;field&gt;_&lt;operator&gt;]=&lt;value&gt;         # Filter with operator
 </code></pre>
-<ul>
-<li>If no operator is specified, the default operator is <code>exact</code>.</li>
-<li>
-<p>Example parameters:</p>
-</li>
-<li>
-<p><code>name=Daily backup</code> → exact match</p>
-</li>
-<li><code>name__contains=backup</code> → substring search</li>
-<li><code>recovery_time_objective__lte=4</code> → RTO less than or equal to 4</li>
-</ul>
-<h4 id="available-operators">Available Operators</h4>
-<p>The following operators are supported:</p>
+<h4 id="available-filter-operators">Available Filter Operators</h4>
+<h5 id="exact-and-text-filters">Exact and Text Filters</h5>
 <table>
 <thead>
 <tr>
 <th>Operator</th>
-<th>Example parameter</th>
-<th>Approximate SQL condition</th>
+<th>Syntax</th>
+<th>Description</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>exact</code></td>
-<td><code>name=Backup</code></td>
+<td>(none)</td>
+<td><code>filter[name]=Backup</code></td>
+<td>Exact equality</td>
 <td><code>name = 'Backup'</code></td>
 </tr>
 <tr>
-<td><code>contains</code></td>
-<td><code>name__contains=save</code></td>
-<td><code>name LIKE '%save%'</code></td>
-</tr>
-<tr>
-<td><code>startswith</code></td>
-<td><code>name__startswith=save</code></td>
-<td><code>name LIKE 'save%'</code></td>
-</tr>
-<tr>
-<td><code>endswith</code></td>
-<td><code>name__endswith=prod</code></td>
-<td><code>name LIKE '%prod'</code></td>
-</tr>
-<tr>
-<td><code>lt</code></td>
-<td><code>recovery_time_objective__lt=4</code></td>
-<td><code>recovery_time_objective &lt; 4</code></td>
-</tr>
-<tr>
-<td><code>lte</code></td>
-<td><code>recovery_time_objective__lte=4</code></td>
-<td><code>recovery_time_objective &lt;= 4</code></td>
-</tr>
-<tr>
-<td><code>gt</code></td>
-<td><code>maximum_tolerable_downtime__gt=8</code></td>
-<td><code>maximum_tolerable_downtime &gt; 8</code></td>
-</tr>
-<tr>
-<td><code>gte</code></td>
-<td><code>maximum_tolerable_downtime__gte=8</code></td>
-<td><code>maximum_tolerable_downtime &gt;= 8</code></td>
+<td>(partial)</td>
+<td><code>filter[name]=backup</code></td>
+<td>Partial search (LIKE) *</td>
+<td><code>name LIKE '%backup%'</code></td>
 </tr>
 </tbody>
 </table>
-<p>If an unknown operator is provided, it is treated as an <code>exact</code> match.</p>
-<h4 id="examples">Examples</h4>
-<ul>
-<li>List activities whose name contains “backup”:</li>
-</ul>
-<pre><code class="language-http">GET /api/activities?name__contains=backup
+<p><em>* Automatic partial search applies to fields containing: <code>name</code>, <code>description</code>, <code>email</code></em></p>
+<h5 id="numeric-comparisons">Numeric Comparisons</h5>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Syntax</th>
+<th>Description</th>
+<th>SQL Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_lt</code></td>
+<td><code>filter[recovery_time_objective_lt]=4</code></td>
+<td>Less than</td>
+<td><code>recovery_time_objective &lt; 4</code></td>
+</tr>
+<tr>
+<td><code>_lte</code></td>
+<td><code>filter[recovery_time_objective_lte]=4</code></td>
+<td>Less than or equal to</td>
+<td><code>recovery_time_objective &lt;= 4</code></td>
+</tr>
+<tr>
+<td><code>_gt</code></td>
+<td><code>filter[recovery_time_objective_gt]=8</code></td>
+<td>Greater than</td>
+<td><code>recovery_time_objective &gt; 8</code></td>
+</tr>
+<tr>
+<td><code>_gte</code></td>
+<td><code>filter[recovery_time_objective_gte]=8</code></td>
+<td>Greater than or equal to</td>
+<td><code>recovery_time_objective &gt;= 8</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="advanced-operators">Advanced Operators</h5>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Syntax</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_in</code></td>
+<td><code>filter[id_in]=1,2,3</code></td>
+<td>Value in a list</td>
+<td><code>id IN (1, 2, 3)</code></td>
+</tr>
+<tr>
+<td><code>_between</code></td>
+<td><code>filter[recovery_time_objective_between]=4,24</code></td>
+<td>Between two values</td>
+<td><code>recovery_time_objective BETWEEN 4 AND 24</code></td>
+</tr>
+<tr>
+<td><code>_null</code></td>
+<td><code>filter[deleted_at_null]=true</code></td>
+<td>NULL value</td>
+<td><code>deleted_at IS NULL</code></td>
+</tr>
+<tr>
+<td><code>_null</code></td>
+<td><code>filter[description_null]=false</code></td>
+<td>NOT NULL value</td>
+<td><code>description IS NOT NULL</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="date-filters">Date Filters</h5>
+<p>For fields containing <code>date</code> or <code>at</code> in their name:</p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Syntax</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_after</code></td>
+<td><code>filter[created_at_after]=2024-01-01</code></td>
+<td>After this date</td>
+<td><code>created_at &gt;= '2024-01-01'</code></td>
+</tr>
+<tr>
+<td><code>_before</code></td>
+<td><code>filter[updated_at_before]=2024-12-31</code></td>
+<td>Before this date</td>
+<td><code>updated_at &lt;= '2024-12-31'</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="soft-deletes">Soft Deletes</h5>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filter[trashed]=with</code></td>
+<td>Include deleted items</td>
+</tr>
+<tr>
+<td><code>filter[trashed]=only</code></td>
+<td>Only deleted items</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sorting-results">Sorting Results</h4>
+<p>Sorting is done with the <code>sort</code> parameter:</p>
+<pre><code class="language-text">sort=&lt;field&gt;        # Ascending sort
+sort=-&lt;field&gt;       # Descending sort
 </code></pre>
+<p>Examples:</p>
 <ul>
-<li>List activities assigned to a specific responsible team, with an RTO less than or equal to 4 hours:</li>
+<li><code>sort=name</code>: Sort by ascending name</li>
+<li><code>sort=-created_at</code>: Sort by descending creation date</li>
+<li><code>sort=recovery_time_objective</code>: Sort by ascending RTO</li>
 </ul>
-<pre><code class="language-http">GET /api/activities?responsible=DSI&amp;recovery_time_objective__lte=4
+<h4 id="relation-inclusion-eager-loading">Relation Inclusion (Eager Loading)</h4>
+<p>Relations between objects can be loaded with the <code>include</code> parameter:</p>
+<pre><code class="language-text">include=&lt;relation1&gt;,&lt;relation2&gt;
 </code></pre>
+<p>Available relations are automatically detected from the model. For activities, for example:</p>
 <ul>
-<li>List activities whose ID is greater than or equal to 100:</li>
+<li><code>processes</code>: Related processes</li>
+<li><code>operations</code>: Related operations</li>
+<li><code>applications</code>: Related applications</li>
+<li><code>impacts</code>: Related impacts</li>
 </ul>
-<pre><code class="language-http">GET /api/activities?id__gte=100
+<p>Example: <code>include=processes,operations</code></p>
+<h4 id="complete-examples">Complete Examples</h4>
+<h5 id="simple-filters">Simple Filters</h5>
+<pre><code class="language-http"># Activities whose name contains &quot;backup&quot;
+GET /api/activities?filter[name]=backup
+
+# Activities with RTO less than or equal to 4 hours
+GET /api/activities?filter[recovery_time_objective_lte]=4
+
+# Activities with ID greater than or equal to 100
+GET /api/activities?filter[id_gte]=100
 </code></pre>
-<h3 id="access-rights">Access rights</h3>
-<p>To access the APIs, you must identify yourself as a Mercator application user.
-This user must have a role in Mercator that allows him/her to access/modify the objects
-objects accessed via the API.</p>
-<p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
-header of the API request.</p>
-<h3 id="linking-objects">Linking objects</h3>
-<p>Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a
-‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:</p>
+<h5 id="combined-filters">Combined Filters</h5>
+<pre><code class="language-http"># Activities whose name contains &quot;GDPR&quot; with RTO &gt;= 8
+GET /api/activities?filter[name]=GDPR&amp;filter[recovery_time_objective_gte]=8
+
+# Servers created after January 1, 2024 with a name containing &quot;prod&quot;
+GET /api/logical-servers?filter[created_at_after]=2024-01-01&amp;filter[name]=prod
+</code></pre>
+<h5 id="advanced-filters">Advanced Filters</h5>
+<pre><code class="language-http"># Activities with ID in list 1, 2, 3, 5
+GET /api/activities?filter[id_in]=1,2,3,5
+
+# Activities with RTO between 4 and 24 hours
+GET /api/activities?filter[recovery_time_objective_between]=4,24
+
+# Activities without description
+GET /api/activities?filter[description_null]=true
+
+# Include deleted activities
+GET /api/activities?filter[trashed]=with
+</code></pre>
+<h5 id="sorting">Sorting</h5>
+<pre><code class="language-http"># Sort by ascending name
+GET /api/activities?sort=name
+
+# Sort by descending creation date
+GET /api/activities?sort=-created_at
+
+# Sort by ascending RTO
+GET /api/activities?sort=recovery_time_objective
+</code></pre>
+<h5 id="relation-inclusion">Relation Inclusion</h5>
+<pre><code class="language-http"># Load related processes
+GET /api/activities?include=processes
+
+# Load multiple relations
+GET /api/activities?include=processes,operations,applications
+
+# Specific activity with its relations
+GET /api/activities/1?include=processes,operations
+</code></pre>
+<h5 id="complex-combinations">Complex Combinations</h5>
+<pre><code class="language-http"># GDPR activities with RTO &gt;= 8, sorted by name, with relations
+GET /api/activities?filter[name]=GDPR&amp;filter[recovery_time_objective_gte]=8&amp;include=processes,operations&amp;sort=name
+
+# Logical servers created in 2024, without description, with sorting
+GET /api/logical-servers?filter[created_at_after]=2024-01-01&amp;filter[created_at_before]=2024-12-31&amp;filter[description_null]=true&amp;sort=-created_at
+
+# Applications with multiple criteria
+GET /api/applications?filter[name]=CRM&amp;filter[id_in]=1,2,3&amp;include=databases&amp;sort=-updated_at
+</code></pre>
+<h3 id="access-rights">Access Rights</h3>
+<p>You must authenticate with a Mercator application user to access the APIs.
+This user must have a role in Mercator that allows them to access/modify objects
+accessed by the API.</p>
+<p>When authentication succeeds, the API sends an "access_token" that must be passed in
+the "Authorization" header of the API request.</p>
+<h3 id="linking-between-objects">Linking Between Objects</h3>
+<p>Cartography objects can reference other objects. For example, we can link a process to
+an application. Suppose we have a "process" that uses two applications "app1" and "app2". To do this,
+we follow these steps:</p>
 <ul>
-<li>Step 1: Ensure you have the application_id for the applications you want to link.</li>
+<li>Step 1: Make sure you have the application_id for the applications you want to link.</li>
 </ul>
-<pre><code>{
+<pre><code class="language-json">{
   &quot;id&quot;: 201,
   &quot;name&quot;: &quot;app1&quot;,
   &quot;description&quot;: &quot;desc1&quot;
@@ -441,19 +621,24 @@ header of the API request.</p>
 }
 </code></pre>
 <ul>
-<li>Step 2: Link the process to the applications. Either with an update or a store, we can add:</li>
+<li>Step 2: Link the process to the applications. Either with an update or a save, we can
+  add:</li>
 </ul>
-<pre><code>{
+<pre><code class="language-json">{
   &quot;id&quot;: 101,
   &quot;name&quot;: &quot;process&quot;,
-  &quot;applications[]&quot;: [201, 202]
+  &quot;applications&quot;: [
+    201,
+    202
+  ]
 }
 </code></pre>
-<p>The names of all extra fields
-are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']</p>
-<h3 id="php">PHP</h3>
-<p>Here are a few examples of how to use the API with PHP:</p>
-<h5 id="authentification">Authentification</h5>
+<p>The names of all available relations are automatically detected from the model. Common relations
+include: <code>actors</code>, <code>tasks</code>, <code>activities</code>, <code>entities</code>, <code>applications</code>, <code>informations</code>, <code>processes</code>, <code>databases</code>,
+<code>logical_servers</code>, <code>modules</code>, <code>operations</code>, <code>certificates</code>, <code>peripherals</code>, <code>physical_servers</code>, etc.</p>
+<h3 id="examples">Examples</h3>
+<p>Here are some examples of using the API with PHP:</p>
+<h4 id="authentication">Authentication</h4>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -484,60 +669,39 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
     } else {
         if ($info['http_code'] == 200) {
             $access_token = json_decode($response)-&gt;access_token;
-
         } else {
-            set_error_handler(&quot;Login to api faild status 403&quot;);
+            set_error_handler(&quot;Login to api failed status 403&quot;);
             error_log($responseInfo['http_code']);
             error_log(&quot;No login api status 403&quot;);
-
         }
     }
 
     var_dump($response);
 </code></pre>
-<h5 id="users-list">Users list</h5>
+<h4 id="list-activities-with-filters">List Activities with Filters</h4>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
+    // Build the URL with filter parameters
+    $filters = http_build_query([
+        'filter' =&gt; [
+            'recovery_time_objective_gte' =&gt; 8,
+            'name' =&gt; 'GDPR'
+        ],
+        'sort' =&gt; '-created_at',
+        'include' =&gt; 'processes,operations'
+    ]);
+
     curl_setopt_array($curl, array(
-        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users&quot;,
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/activities?&quot; . $filters,
         CURLOPT_RETURNTRANSFER =&gt; true,
         CURLOPT_MAXREDIRS =&gt; 10,
         CURLOPT_TIMEOUT =&gt; 30,
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
-        CURLOPT_POSTFIELDS =&gt; null, // here you can send parameters
         CURLOPT_HTTPHEADER =&gt; array(
             &quot;accept: application/json&quot;,
-            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
-            &quot;cache-control: no-cache&quot;,
-            &quot;content-type: application/json&quot;,
-        ),
-    ));
-
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
-
-    var_dump($response);
-
-</code></pre>
-<h5 id="get-a-user">Get a user</h5>
-<pre><code class="language-php">&lt;?php
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users/1&quot;,
-        CURLOPT_RETURNTRANSFER =&gt; true,
-        CURLOPT_MAXREDIRS =&gt; 10,
-        CURLOPT_TIMEOUT =&gt; 30,
-        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
-        CURLOPT_POSTFIELDS =&gt; null, // here you can send parameters
-        CURLOPT_HTTPHEADER =&gt; array(
-            &quot;accept: application/json&quot;,
-            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
+            &quot;Authorization: Bearer &quot; . $access_token,
             &quot;cache-control: no-cache&quot;,
             &quot;content-type: application/json&quot;,
         ),
@@ -549,31 +713,22 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
 
     var_dump($response);
 </code></pre>
-<h5 id="update-a-user">Update a user</h5>
+<h4 id="retrieve-an-activity-with-relations">Retrieve an Activity with Relations</h4>
 <pre><code class="language-php">&lt;?php
-   $curl = curl_init();
+    $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users/8&quot;,
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/activities/1?include=processes,operations&quot;,
         CURLOPT_RETURNTRANSFER =&gt; true,
         CURLOPT_MAXREDIRS =&gt; 10,
         CURLOPT_TIMEOUT =&gt; 30,
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
-        CURLOPT_POST =&gt; true,
-        CURLOPT_CUSTOMREQUEST =&gt; &quot;PUT&quot;,
-        CURLOPT_POSTFIELDS =&gt; http_build_query(
-            array(
-                'name' =&gt; 'Henri',
-                'login' =&gt; 'henri@test.fr',
-                'language' =&gt; 'fr',
-                'roles[0]' =&gt; 1,
-                'roles[1]' =&gt; 3,
-                'granularity' =&gt; '3')
-            ),
+        CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
         CURLOPT_HTTPHEADER =&gt; array(
             &quot;accept: application/json&quot;,
-            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
+            &quot;Authorization: Bearer &quot; . $access_token,
             &quot;cache-control: no-cache&quot;,
+            &quot;content-type: application/json&quot;,
         ),
     ));
 
@@ -584,7 +739,7 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
     var_dump($response);
 </code></pre>
 <h3 id="python">Python</h3>
-<p>Here's an example of how to use the API in Python :</p>
+<p>Here is an example of using the API in Python with advanced filters</p>
 <pre><code class="language-python">#!/usr/bin/python3
 
 import requests
@@ -597,79 +752,85 @@ vheaders['cache-control'] = 'no-cache'
 print(&quot;Login&quot;)
 response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;,
     headers=vheaders,
-    data= {'login':'admin@admin.com', 'password':'password'} )
+    data={'login':'admin@admin.com', 'password':'password'})
 print(response.status_code)
 
 vheaders['Authorization'] = &quot;Bearer &quot; + response.json()['access_token']
 
-print(&quot;Get workstations&quot;)
-response = requests.get(&quot;http://127.0.0.1:8000/api/workstations&quot;, headers=vheaders)
+# List with filters and sorting
+print(&quot;Get workstations with filters&quot;)
+params = {
+    'filter[name]': 'laptop',
+    'sort': '-created_at'
+}
+response = requests.get(&quot;http://127.0.0.1:8000/api/workstations&quot;, 
+    headers=vheaders, 
+    params=params)
 print(response.json())
 print(response.status_code)
 
+# Retrieval with relations
+print(&quot;Get activity with relations&quot;)
+params = {
+    'include': 'processes,operations'
+}
+response = requests.get(&quot;http://127.0.0.1:8000/api/activities/1&quot;,
+    headers=vheaders,
+    params=params)
+print(response.json())
 </code></pre>
-<h3 id="bash">Bash</h3>
-<p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a>
+<h3 id="bash">bash</h3>
+<p>Here is an example of using the API from the command line with <a href="https://curl.se/docs/manpage.html">CURL</a>
 and <a href="https://stedolan.github.io/jq/">JQ</a></p>
-<pre><code># valid login and password
-data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
-
-# get a token after correct login
-token=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; http://localhost:8000/api/login | jq -r .access_token)
-
-# query users and decode JSON data with JQ.
-curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Bearer ${token}&quot; &quot;http://127.0.0.1:8000/api/users&quot; | jq .
-
-</code></pre>
-<p>Other Bash example</p>
-<pre><code>#!/usr/bin/bash
+<pre><code class="language-bash">#!/usr/bin/bash
 
 API_URL=http://127.0.0.1:8000/api
+OBJECT=applications
+OBJECT_ID=45
 
-# valid login and password
-
+# Valid credentials
 data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
-# Get a token after correct login
-
+# Get a token after login
 TOKEN=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; ${API_URL}/login | jq -r .access_token)
 
-# Récupération de l'objet
+# List with filters
+echo &quot;List of applications with filters...&quot;
+curl -s -X GET &quot;${API_URL}/${OBJECT}?filter[name]=CRM&amp;sort=-created_at&quot; \
+  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+  -H &quot;Accept: application/json&quot; | jq .
 
-OBJECT_ID=10
+# Retrieval with relations
+echo &quot;Retrieving an object with relations...&quot;
+RESPONSE=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}?include=databases,processes&quot; \
+  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+  -H &quot;Accept: application/json&quot;)
 
-RESPONSE=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
- -H &quot;Authorization: Bearer ${TOKEN}&quot; \
- -H &quot;Accept: application/json&quot;)
+echo &quot;Retrieved object: ${RESPONSE}&quot;
 
-echo &quot;Objet récupéré: ${RESPONSE}&quot;
+# Update
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -c '.')
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -r '.activities=[1]')
 
-# Mise à jour d'une valeur avec une requête PUT
+echo &quot;Modified object: ${RESPONSE}&quot;
 
-RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -c '.data')
-RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -r '.operating_system=&quot;Linux&quot;')
-
-echo &quot;Objet modifié: ${RESPONSE}&quot;
-
-curl -s -X PUT &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+curl -s -X PUT &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
   -H &quot;Authorization: Bearer ${TOKEN}&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;cache-control: no-cache&quot; \
   -d &quot;$RESPONSE&quot;
 
-# Vérification de la mise à jour
-
-UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+# Verification
+UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
   -H &quot;Authorization: Bearer ${TOKEN}&quot; \
   -H &quot;Accept: application/json&quot;)
 
-echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
+echo &quot;Updated object: ${UPDATED_OBJECT}&quot;
 </code></pre>
-<h3 id="powershell">PowerShell</h3>
-<p>The following <strong>PowerShell</strong> script demonstrates how to authenticate with the API and retrieve the list of logical
-servers.</p>
-<h4 id="step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</h4>
-<pre><code class="language-powershell"># Define the login endpoint and credentials
+<h3 id="powershell">Powershell</h3>
+<p>The PowerShell script below shows how to authenticate to the API and use advanced filters.</p>
+<h4 id="step-1-authentication-and-obtaining-the-access-token">Step 1 — Authentication and Obtaining the Access Token</h4>
+<pre><code class="language-powershell"># Define the authentication URL and credentials
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
 $loginBody = @{
     login = &quot;admin@admin.com&quot;
@@ -686,23 +847,93 @@ try {
     return
 }
 </code></pre>
-<h4 id="step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</h4>
-<pre><code class="language-powershell"># Define the endpoint and authorization headers
-$endPoint = &quot;logical-servers&quot;
-$apiUri = &quot;http://127.0.0.1:8000/api/$endPoint&quot;
+<h4 id="step-2-usage-with-filters-and-sorting">Step 2 — Usage with Filters and Sorting</h4>
+<pre><code class="language-powershell"># Define headers
 $headers = @{
     'Authorization' = &quot;Bearer $token&quot;
     'Accept'        = 'application/json'
 }
 
-# Send the GET request
+# List with filters
+$endPoint = &quot;logical-servers&quot;
+$filters = &quot;filter[operating_system]=Linux&amp;sort=-created_at&quot;
+$apiUri = &quot;http://127.0.0.1:8000/api/$endPoint?$filters&quot;
+
 try {
     $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
     $servers | Format-Table id, name, operating_system, description
 } catch {
     Write-Error &quot;Request failed: $_&quot;
 }
+
+# Retrieval with relations
+$activityId = 1
+$apiUri = &quot;http://127.0.0.1:8000/api/activities/$activityId?include=processes,operations&quot;
+
+try {
+    $activity = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
+    $activity | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error &quot;Request failed: $_&quot;
+}
 </code></pre>
+<h3 id="feature-summary">Feature Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Syntax</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exact filter</td>
+<td><code>filter[field]=value</code></td>
+<td><code>filter[name]=Backup</code></td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td><code>filter[field_operator]=value</code></td>
+<td><code>filter[recovery_time_objective_gte]=8</code></td>
+</tr>
+<tr>
+<td>Value list</td>
+<td><code>filter[field_in]=v1,v2,v3</code></td>
+<td><code>filter[id_in]=1,2,3</code></td>
+</tr>
+<tr>
+<td>Range</td>
+<td><code>filter[field_between]=min,max</code></td>
+<td><code>filter[age_between]=18,65</code></td>
+</tr>
+<tr>
+<td>NULL</td>
+<td><code>filter[field_null]=true/false</code></td>
+<td><code>filter[deleted_at_null]=true</code></td>
+</tr>
+<tr>
+<td>Dates</td>
+<td><code>filter[field_after/before]=date</code></td>
+<td><code>filter[created_at_after]=2024-01-01</code></td>
+</tr>
+<tr>
+<td>Sorting</td>
+<td><code>sort=field</code> or <code>sort=-field</code></td>
+<td><code>sort=-created_at</code></td>
+</tr>
+<tr>
+<td>Relations</td>
+<td><code>include=relation1,relation2</code></td>
+<td><code>include=processes,operations</code></td>
+</tr>
+<tr>
+<td>Soft deletes</td>
+<td><code>filter[trashed]=with/only</code></td>
+<td><code>filter[trashed]=with</code></td>
+</tr>
+</tbody>
+</table>
               
             </div>
           </div><footer>
