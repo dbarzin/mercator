@@ -31,12 +31,18 @@ return [
     ],
 
     'keycloak' => [
+        'enabled' => env('KEYCLOAK_ENABLED', false),
         'client_id' => env('KEYCLOAK_CLIENT_ID'),
         'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
         'redirect' => env('KEYCLOAK_REDIRECT_URI'),
         'base_url' => env('KEYCLOAK_BASE_URL'),
         'realms' => env('KEYCLOAK_REALM'),
         'auto_provisioning' => env('KEYCLOAK_AUTO_PROVISIONING'),
+        // Fallback to local user if no user found in Keycloak
+        'fallback_local' => env('KEYCLOAK_FALLBACK_LOCAL', false),
+        'auto_provision' => env('KEYCLOAK_AUTO_PROVISION', true),
+        'auto_provision_role' => env('KEYCLOAK_AUTO_PROVISION_ROLE', 'User'),
+        'sync_roles' => env('KEYCLOAK_SYNC_ROLES', true),
     ],
 
     'nvd' => [
