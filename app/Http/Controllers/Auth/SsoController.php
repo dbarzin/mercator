@@ -67,9 +67,8 @@ class SsoController extends Controller
         $keycloakRoles = $keycloakUser['user']['realm_access']['roles'] ?? [];
 
         // Chercher l'utilisateur local par login OU par email
-        $existingUser = User::where('login', $login)
-            ->orWhere('email', $email)
-            ->first();
+        $existingUser = User::where('login', $login)->first()
+            ?? User::where('email', $email)->first();
 
         if (!$existingUser) {
             if (!$autoProvision) {
@@ -90,8 +89,8 @@ class SsoController extends Controller
             // Auto-provision de l'utilisateur
             $existingUser = User::create([
                 'name' => $name,
-                'email' => $email,
-                'login' => $login,
+                'email' => $email ?? "{$login}@localhost.local",
+                'login' => $login ?? $email,
                 'password' => Hash::make(Str::random(32)), // mot de passe inutilisable
             ]);
 
