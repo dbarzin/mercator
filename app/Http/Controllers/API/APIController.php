@@ -67,6 +67,15 @@ abstract class APIController extends Controller
     }
 
     /**
+     * Échappe les méta-caractères LIKE pour éviter les wildcard surprises
+     */
+    protected function escapeLikeValue(string $value): string
+    {
+        // Échapper les caractères spéciaux LIKE: \, %, _
+        return addcslashes($value, '%_\\');
+    }
+
+    /**
      * Champs textuels pour filtres partiels (LIKE)
      */
     protected function getPartialFilterFields(): array
@@ -79,6 +88,32 @@ abstract class APIController extends Controller
                 || str_contains($field, 'description')
                 || str_contains($field, 'email');
         });
+    }
+
+    /**
+     * Relations avec champs textuels pour recherche LIKE
+     */
+    protected function getRelationPartialFilters(): array
+    {
+        $filters = [];
+        $relations = $this->getAllowedIncludes();
+        $model = $this->newModelInstance();
+
+        foreach ($relations as $relation) {
+            try {
+                $related = $model->{$relation}()->getRelated();
+                $relatedFillable = $related->getFillable();
+                foreach (['name', 'email', 'description'] as $field) {
+                    if (in_array($field, $relatedFillable, true)) {
+                        $filters[] = AllowedFilter::partial("{$relation}.{$field}");
+                    }
+                }
+            } catch (\Throwable $e) {
+                // Skip relations that can't be resolved
+            }
+        }
+
+        return $filters;
     }
 
     protected function indexResource(Request $request)
@@ -97,7 +132,15 @@ abstract class APIController extends Controller
                 $allowedFilters[] = AllowedFilter::partial($field);
             }
 
-            // 3. Filtres numériques
+            // 3. Filtre de négation (NOT)
+            $allowedFilters[] = AllowedFilter::callback(
+                $field . '_not',
+                function (Builder $query, $value) use ($field) {
+                    $query->where($field, '!=', $value);
+                }
+            );
+
+            // 4. Filtres numériques
             $allowedFilters[] = AllowedFilter::callback(
                 $field . '_lt',
                 function (Builder $query, $value) use ($field) {
@@ -126,7 +169,7 @@ abstract class APIController extends Controller
                 }
             );
 
-            // 4. WHERE IN
+            // 5. WHERE IN
             $allowedFilters[] = AllowedFilter::callback(
                 $field . '_in',
                 function (Builder $query, $value) use ($field) {
@@ -135,7 +178,7 @@ abstract class APIController extends Controller
                 }
             );
 
-            // 5. BETWEEN
+            // 6. BETWEEN
             $allowedFilters[] = AllowedFilter::callback(
                 $field . '_between',
                 function (Builder $query, $value) use ($field) {
@@ -146,7 +189,7 @@ abstract class APIController extends Controller
                 }
             );
 
-            // 6. IS NULL / IS NOT NULL
+            // 7. IS NULL / IS NOT NULL
             $allowedFilters[] = AllowedFilter::callback(
                 $field . '_null',
                 function (Builder $query, $value) use ($field) {
@@ -158,7 +201,7 @@ abstract class APIController extends Controller
                 }
             );
 
-            // 7. Filtres de dates
+            // 8. Filtres de dates
             if (str_contains($field, 'date') || str_contains($field, 'at')) {
                 $allowedFilters[] = AllowedFilter::callback(
                     $field . '_after',
@@ -180,6 +223,30 @@ abstract class APIController extends Controller
         if (method_exists($model, 'trashed')) {
             $allowedFilters[] = AllowedFilter::trashed();
         }
+
+        // 9. Recherche globale (OR sur plusieurs champs)
+        $searchableFields = $this->getPartialFilterFields();
+        if (!empty($searchableFields)) {
+            $allowedFilters[] = AllowedFilter::callback(
+                'search',
+                function (Builder $query, $value) use ($searchableFields) {
+                    // Échapper les méta-caractères LIKE
+                    $escapedValue = $this->escapeLikeValue($value);
+                    $pattern = "%{$escapedValue}%";
+
+                    $query->where(function ($q) use ($pattern, $searchableFields) {
+                        foreach ($searchableFields as $field) {
+                            // Utiliser whereRaw avec ESCAPE clause pour la sécurité
+                            $q->orWhereRaw("{$field} LIKE ? ESCAPE '\\\\'", [$pattern]);
+                        }
+                    });
+                }
+            );
+        }
+
+        // 10. Filtres sur les relations (actors, contacts, etc.)
+        $relationFilters = $this->getRelationPartialFilters();
+        $allowedFilters = array_merge($allowedFilters, $relationFilters);
 
         // Tris autorisés
         $allowedSorts = ['id', 'created_at', 'updated_at'];
