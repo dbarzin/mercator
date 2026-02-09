@@ -76,7 +76,7 @@ class GlobalSearchController extends Controller
             $modelClass = 'Mercator\\Core\\Models\\'.$model;
             $query = $modelClass::query();
 
-            $fields = $modelClass::$searchable;
+            $fields = property_exists($modelClass, 'searchable') ? $modelClass::$searchable : [];
 
             foreach ($fields as $field) {
                 $query->orWhere($field, 'LIKE', '%'.$this->escapeLike($term).'%');
@@ -112,7 +112,7 @@ class GlobalSearchController extends Controller
 
     private function escapeLike(string $value): string
     {
-        return addcslashes($value, '%_');
+        return addcslashes($value, '%_\\');
     }
 
 }

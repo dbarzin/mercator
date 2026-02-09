@@ -83,7 +83,7 @@ abstract class APIController extends Controller
         $model = $this->newModelInstance();
 
         // Utiliser $searchable au lieu de getFillable()
-        return $model::$searchable ?? [];
+        return property_exists($model, 'searchable') ? $model::$searchable : [];
     }
 
     /**
