@@ -78,9 +78,11 @@ class GlobalSearchController extends Controller
 
             $fields = property_exists($modelClass, 'searchable') ? $modelClass::$searchable : [];
 
-            foreach ($fields as $field) {
+            if (empty($fields))
+                continue;
+
+            foreach ($fields as $field)
                 $query->orWhere($field, 'LIKE', '%'.$this->escapeLike($term).'%');
-            }
 
             $results = $query->take(100)->get();
 
@@ -91,9 +93,9 @@ class GlobalSearchController extends Controller
                 $parsedData['fields'] = $fields;
                 $formattedFields = [];
 
-                foreach ($fields as $field) {
+
+                foreach ($fields as $field)
                     $formattedFields[$field] = Str::title(str_replace('_', ' ', $field));
-                }
 
                 $parsedData['fields_formated'] = $formattedFields;
 
