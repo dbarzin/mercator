@@ -81,13 +81,9 @@ abstract class APIController extends Controller
     protected function getPartialFilterFields(): array
     {
         $model = $this->newModelInstance();
-        $fillable = $model->getFillable();
 
-        return array_filter($fillable, function ($field) {
-            return str_contains($field, 'name')
-                || str_contains($field, 'description')
-                || str_contains($field, 'email');
-        });
+        // Utiliser $searchable au lieu de getFillable()
+        return property_exists($model, 'searchable') ? $model::$searchable : [];
     }
 
     /**
@@ -102,11 +98,12 @@ abstract class APIController extends Controller
         foreach ($relations as $relation) {
             try {
                 $related = $model->{$relation}()->getRelated();
-                $relatedFillable = $related->getFillable();
-                foreach (['name', 'email', 'description'] as $field) {
-                    if (in_array($field, $relatedFillable, true)) {
-                        $filters[] = AllowedFilter::partial("{$relation}.{$field}");
-                    }
+
+                // Utiliser $searchable au lieu de getFillable()
+                $searchableFields = $related::$searchable ?? [];
+
+                foreach ($searchableFields as $field) {
+                    $filters[] = AllowedFilter::partial("{$relation}.{$field}");
                 }
             } catch (\Throwable $e) {
                 // Skip relations that can't be resolved
@@ -115,7 +112,6 @@ abstract class APIController extends Controller
 
         return $filters;
     }
-
     protected function indexResource(Request $request)
     {
         $model = $this->newModelInstance();
