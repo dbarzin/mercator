@@ -38,17 +38,16 @@ Table *data_processing* :
 | updated_at                     | timestamp    | Date of update                          |
 | deleted_at                     | timestamp    | Date of deletion                        |
 
-The "controls" field is not used and is not implemented yet in mercator.
+The field "controls" is not used and therefore is absent in the app.
 
-Data model export references processes, information, applications and documents 
-related to data processing.  
+The data model export lists processes, information, applications and documents 
+linked to a data processing.  
 
-In the application, a process can be linked to data processing from a processing object 
-of data.  
-Information can be linked to data processing from a data processing object.
+In the app, a process can be linked to a data processing from a data processing object.  
+An information can be linked with a data processing from a data processing object.
 
-An application can be linked to data processing from a data processing object.  
-A document can be attached to data processing from a data processing object.  
+An application can be linked to a data processing from a data processing object.  
+A document can be linked to a data processing from a data processing object.  
 
 #### Security measures
 
@@ -58,14 +57,14 @@ By default, this table is populated with the security measures of ISO 27001:2022
 
 Table *security_controls* :
 
-| Field | Type | Description |
+| Field       | Type         | Description          |
 |:------------|:-------------|:---------------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | measure name |
-| description | longtext | measure description |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| id          | int unsigned | auto_increment       |
+| name        | varchar(255) | measure name         |
+| description | longtext     | measure description  |
+| created_at  | timestamp    | Date of creation     |
+| updated_at  | timestamp    | Date of update       |
+| deleted_at  | timestamp    | Date of deletion     |
 
 
 ### Ecosystem view
@@ -85,32 +84,32 @@ Entities are departments, suppliers, partners with whom information is exchanged
 
 Table *entities* :
 
-| Field             | Type         | Description                              |
-|:------------------|:-------------|:-----------------------------------------|
-| id                | int unsigned | Unique identifier of the entity          |
-| name              | varchar(255) | Name of entity                           |
-| icon_id           | int unsigned | Reference to a specific image            |
-| entity_type       | varchar(255) | Type of entity                           |
-| attributes        | varchar(255) | Attributes (#tag...)                     |
-| description       | longtext     | Entity description                       |
-| reference         | varchar(255) | Reference number of the entity (billing) |
-| parent_entity_id  | int unsigned | Pointer to the parent entity             |
-| is_external       | boolean      | External entity                          |
-| security_level    | longtext     | Security level                           |
-| contact_point     | longtext     | Contact point                            |
-| created_at        | timestamp    | Date of creation                         |
-| updated_at        | timestamp    | Date of update                           |
-| deleted_at        | timestamp    | Date of deletion                         |
+| Field             | Type         | Description                                |
+|:------------------|:-------------|:-------------------------------------------|
+| id                | int unsigned | Unique identifier of the entity            |
+| name              | varchar(255) | Name of entity                             |
+| icon_id           | int unsigned | Reference to a specific image              |
+| entity_type       | varchar(255) | Type of entity                             |
+| attributes        | varchar(255) | Attributes (#tag...)                       |
+| description       | longtext     | Entity description                         |
+| reference         | varchar(255) | Reference the billing number of the entity |
+| parent_entity_id  | int unsigned | Pointer to the parent entity               |
+| is_external       | boolean      | External entity                            |
+| security_level    | longtext     | Security level                             |
+| contact_point     | longtext     | Contact point                              |
+| external_ref_id   | varchar(255) | Link to connected external entities        |
+| created_at        | timestamp    | Date of creation                           |
+| updated_at        | timestamp    | Date of update                             |
+| deleted_at        | timestamp    | Date of deletion                           |
 
-The "external_ref_id" field is not used and is therefore missing from the application.  
+The "external_ref_id" field is not used and therefore is missing in the app.  
 
-Exporting the data model references the processes and applications attached to an entity.
+The data model export lists processes and applications linked with an entity.  
 
-In the application, a process can be attached to an entity from these two objects.  
-An application can be attached to an entity (as operations manager) from these two objects.
+In the app, a process can be linked with an entity from these two objects.  
+An application can be linked with an entity (as operations manager) from these two objects.  
 
-In the application, a database can be attached to an entity (as operations manager)
-from these two objects. 
+In the app, a database can be linked with an entity (as operations manager) from these two objects.  
 
 #### Relationships
 
@@ -125,7 +124,7 @@ Table *relations* :
 | id                 | int unsigned | auto_increment                             |
 | name               | varchar(255) | Relationship name                          |
 | type               | varchar(255) | Type of relationship                       |
-| attributes         | varchar(255) | Attributes (#tag...)                       |
+| attributes         | varchar(255) | Attributes / #tags of the relationship     |
 | description        | longtext     | Description of relationship                |
 | source_id          | int unsigned | Reference to source entity                 |
 | destination_id     | int unsigned | Reference to destination entity            |
@@ -137,20 +136,19 @@ Table *relations* :
 | end_date           | date         | End date of the relation                   |
 | comments           | text         | Comment on the status of the relation      |
 | importance         | int          | Importance of relationship                 |
-| security_need_c    | int          | Confidentiality level need                 |
-| security_need_i    | int          | Integrity level need                       |
-| security_need_a    | int          | Available level need                       |
-| security_need_t    | int          | Traceability level need                    |
-| security_need_auth | int          | Need for authentication                      |
+| security_need_c    | int          | Confidentiality level needed               |
+| security_need_i    | int          | Integrity level needed                     |
+| security_need_a    | int          | Available level needed                     |
+| security_need_t    | int          | Traceability level needed                  |
+| security_need_auth | int          | Authenticity level needed                  |
 | created_at         | timestamp    | Date of creation                           |
 | updated_at         | timestamp    | Date of update                             |
 | deleted_at         | timestamp    | Date of deletion                           |
 
-In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).  
-It is activated from the Configuration > Settings menu.  
+In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for entities subject to the regulation (EU) 2022/2554 (DORA).  
+This default configuration can be changed in the menu Configuration > Parameters.  
 
-exporting the data model references the reference documents attached to a relationship.  
+The data model export lists the reference documents attached to a relationship.  
 In the application, a document can be attached to a relationship from a relationships object. 
 
 The financial values of a contract can be indicated in dedicated fields.  
@@ -171,33 +169,32 @@ Macro-processes represent sets of processes.
 
 Table *macro_processuses* :
 
-| Field | Type | Description |
-|:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of macro process |
-| description | longtext | Description of macro-process |
-| io_elements | longtext | Incoming and outgoing elements |
-| security_need_c | int | Privacy |
-| security_need_i | int | Integrity |
-| security_need_a | int | Availability |
-| security_need_t | int | Traceability |
-| security_need_auth | int          | Authentication                   |
-| owner | varchar(255) | Owner |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| Field              | Type         | Description                    |
+|:-------------------|:-------------|:-------------------------------|
+| id                 | int unsigned | auto_increment                 |
+| name               | varchar(255) | Name of macro process          |
+| description        | longtext     | Description of macro-process   |
+| io_elements        | longtext     | Incoming and outgoing elements |
+| security_need_c    | int          | Confidentiality                |
+| security_need_i    | int          | Integrity                      |
+| security_need_a    | int          | Availability                   |
+| security_need_t    | int          | Traceability                   |
+| security_need_auth | int          | Authenticity                   |
+| owner              | varchar(255) | Owner                          |
+| created_at         | timestamp    | Date of creation               |
+| updated_at         | timestamp    | Date of update                 |
+| deleted_at         | timestamp    | Date of deletion               |
 
-In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).  
-It is activated from the Configuration > Settings menu.  
+In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for entities subject to the regulation (EU) 2022/2554 (DORA).  
+This default configuration can be changed in the menu Configuration > Parameters.   
 
-In the application, a process can be attached to a macro-process from these two objects.
+In the application, a process can be linked with a macro-process from these two objects.
 
 #### Processes
 
 Processes are a set of activities designed to achieve an objective. The process produces value-added information (output) (in the form of deliverables) from information (input) produced by other processes.
 
-Processes are made up of activities, the entities involved in the process, and the information processed by the process.
+Processes are made up of activities, entities involved in this process and information processed by this process.
 
 Table *processes* :
 
@@ -213,21 +210,21 @@ Table *processes* :
 | security_need_i    | int          | Integrity                           |
 | security_need_a    | int          | Availability                        |
 | security_need_t    | int          | Traceability                        |
+| security_need_auth | int          | Authenticity                        |
 | macroprocess_id    | int unsigned | Reference to macro-process          |
 | activities         | List int [,] | IDs list of related activities      |
 | entities           | List int [,] | IDs list of related entities        |
-| informations       | List int [,] | IDs list of related informations    |
+| informations       | List int [,] | IDs list of related information     |
 | applications       | List int [,] | IDs list of related applications    |
 | operations         | List int [,] | IDs list of related operations      |
 | created_at         | timestamp    | Date of creation                    |
 | updated_at         | timestamp    | Date of update                      |
 | deleted_at         | timestamp    | Date of deletion                    |
 
-In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).  
-It is activated from the Configuration > Settings menu.  
+In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for entities subject to the regulation (EU) 2022/2554 (DORA).  
+This default configuration can be changed in the menu Configuration > Parameters.    
 
-The export of the data model references:
+The data model export lists:
 
 - entities,
 - activities,
@@ -238,15 +235,15 @@ The export of the data model references:
 
 linked to a process.
 
-In the application, an entity associated with a process can be attached to a process from these two objects.  
-An activity can be linked to a process from these two objects.  
-Information can be linked to a process from these two objects.  
+In the application, an entity associated with a process can be linked with a process from these two objects.  
+An activity can be linked with a process from these two objects.  
+An information can be linked with a process from these two objects.  
 
-An application can be attached to a process from these two objects.  
-GDPR registry processing can be attached to a process from a registry processing object.  
+An application can be linked with a process from these two objects.  
+A GDPR registry data processing can be linked with a process from a registry data processing object.  
 
-A security measure can be attached to an application from the "Assign a security measure" button.  
-This button is present in the GDPR view and visible in the list of Security Measures objects.
+A security measure can be linked with an application from the "Assign security controls" button.  
+This button is in the GDPR view and visible in the list of Security controls objects.
 
 
 #### Activities
@@ -255,31 +252,38 @@ An activity is a step required to carry out a process. It corresponds to a speci
 
 Table *activities* :
 
-| Field                       | Type         | Description |
-|:----------------------------|:-------------|:-----------------|
-| id                          | int unsigned | auto_increment |
-| name                        | varchar(255) | activity name |
-| description                 | longtext     | Activity description |
-| recovery_time_objective     | int signed   | RTO, Target time for activity recovery           |
-| maximum_tolerable_downtime  | int signed   | Maximum Tolerable Disturbance Duration           |
-| recovery_point_objective    | int signed   | RPO, Data Restore Time Point                     |
-| maximum_tolerable_data_loss | int signed   | Maximum Allowable Data Loss                |     |
-| drp                         | text         | Description of the business recovery plan (DRP)  |
-| drp_link                    | varchar(255) | Link (URL) to the DRP                            |
-| created_at                  | timestamp    | Date of creation |
-| updated_at                  | timestamp    | Date of update |
-| deleted_at                  | timestamp    | Date of deletion |
+| Field                       | Type         | Description                                     |
+|:----------------------------|:-------------|:------------------------------------------------|
+| id                          | int unsigned | auto_increment                                  |
+| name                        | varchar(255) | activity name                                   |
+| description                 | longtext     | Activity description                            |
+| recovery_time_objective     | int signed   | RTO, Recovery Time Objective                    |
+| maximum_tolerable_downtime  | int signed   | Maximum tolerable downtime                      |
+| recovery_point_objective    | int signed   | RPO, Recovery Point Objective                   |
+| maximum_tolerable_data_loss | int signed   | Maximum tolerable Data Loss                     |
+| drp                         | text         | Description of the disaster recovery plan (DRP) |
+| drp_link                    | varchar(255) | Link (URL) to the DRP                           |
+| created_at                  | timestamp    | Date of creation                                |
+| updated_at                  | timestamp    | Date of update                                  |
+| deleted_at                  | timestamp    | Date of deletion                                |
 
-In the application, the "Impact Type" and "Gravity" fields are managed in a separate table.
+The maximum tolerable downtime is the limit after which the downtime effets are critical or unacceptable.  
+The maximum tolerable data loss is the limit after which the data loss is critical or unacceptable.  
 
+The data model export lists processes, operations and applications linked with an activity.  
+
+In the app, a process can be linked with an activity from these two objects.  
+An operation can be linked with an activity from these two objects.  
+An application can be linked with an activity from these two objects.  
+
+In the app, the "Impact Type" and "Severity" fields are managed in a separate table.
 
 ##### Impacts
 
-Impacts are the consequences of the occurrence of a risk during an activity.
+Impacts are the consequences of the occurrence of a risk during an activity.  
+Impacts are only accessible through "activities" objects.  
 
-Impacts are only accessible through activity objects.  
-
-They are neither importable nor exportable through the graphics tool.  
+They are neither importable nor exportable through the graphic tool.  
 
 Table *activity_impact* :
 
@@ -308,15 +312,15 @@ Table *operations* :
 | actors      | List int [,] | IDs list of related actors                              |
 | tasks       | List int [,] | IDs list of related tasks                               |
 | activities  | List int [,] | IDs list of related activities                          |
-| created_at  | timestamp    | Date of creation |
-| updated_at  | timestamp    | Date of update |
-| deleted_at  | timestamp    | Date of deletion |
+| created_at  | timestamp    | Date of creation                                        |
+| updated_at  | timestamp    | Date of update                                          |
+| deleted_at  | timestamp    | Date of deletion                                        |
 
-The export of the data model references the activities, actors and tasks linked to an operation.  
+The data model export lists activities, actors and tasks linked to an operation.  
 
-In the application, an activity can be linked to an operation from these two objects.  
-An actor can be attached to an operation from the operations object.  
-A task can be attached to an operation from the operations object.  
+In the app, an activity can be linked with an operation from these two objects.  
+An actor can be linked to an operation from the object "operation".  
+A task can be linked to an operation from the object "operation".  
 
 #### Tasks
 
@@ -324,18 +328,18 @@ A task is an elementary activity performed by an organizational function and con
 
 Table *tasks* :
 
-| Field | Type | Description |
-|:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Task name |
-| description | longtext | Task description |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| Field       | Type         | Description      |
+|:------------|:-------------|:-----------------|
+| id          | int unsigned | auto_increment   |
+| name        | varchar(255) | Task name        |
+| description | longtext     | Task description |
+| created_at  | timestamp    | Date of creation |
+| updated_at  | timestamp    | Date of update   |
+| deleted_at  | timestamp    | Date of deletion |
 
-Exporting the data model references operations related to a task. In the application.
+The data model export lists operations linked to a task.  
 
-An operation can be attached to a task from the operations object.
+In the app, an operation can be linked to a task from the object "operation".  
 
 #### Actors
 
@@ -343,50 +347,57 @@ An actor is a representative of a business role who performs operations, uses ap
 
 Table *actors* :
 
-| Field      | Type         | Description |
-|:-----------|:-------------|:-----------------|
-| id         | int unsigned | auto_increment |
-| name       | varchar(255) | actor's name |
-| nature     | varchar(255) | Nature of actor |
-| type       | varchar(255) | Type of actor |
-| contact    | varchar(255) | Actor contact |
+| Field      | Type         | Description                    |
+|:-----------|:-------------|:-------------------------------|
+| id         | int unsigned | auto_increment                 |
+| name       | varchar(255) | actor's name                   |
+| nature     | varchar(255) | Nature of actor                |
+| type       | varchar(255) | Type of actor                  |
+| contact    | varchar(255) | Actor contact                  |
 | operations | List int [,] | IDs list of related operations |
-| created_at | timestamp    | Date of creation |
-| updated_at | timestamp    | Date of update |
-| deleted_at | timestamp    | Date of deletion |
+| created_at | timestamp    | Date of creation               |
+| updated_at | timestamp    | Date of update                 |
+| deleted_at | timestamp    | Date of deletion               |
+
+The data model export lists operations linked with an actor.  
+
+In the app, an operation can be linked with an actor from the object "operation".  
 
 #### Information
 
-Information is data that is processed by a computer.
+Information is data processed by a computer.
 
 Table *information* :
 
-| Field              | Type         | Description |
-|:-------------------|:-------------|:-----------------|
-| id                 | int unsigned | auto_increment |
-| name               | varchar(255) | Name of information |
-| description        | longtext     | Description of information |
-| owner              | varchar(255) | Owner of information |
-| administrator      | varchar(255) | Information administrator |
-| sensitivity        | varchar(255) | Sensitivity of information |
-| storage            | varchar(255) | Information storage |
-| security_need_c    | int          | Confidentiality |
-| security_need_i    | int          | Integrity |
-| security_need_a    | int          | Availability |
-| security_need_t    | int          | Traceability |
-| security_need_auth | int          | Authentication                    |
+| Field              | Type         | Description                      |
+|:-------------------|:-------------|:---------------------------------|
+| id                 | int unsigned | auto_increment                   |
+| name               | varchar(255) | Name of information              |
+| description        | longtext     | Description of information       |
+| owner              | varchar(255) | Owner of information             |
+| administrator      | varchar(255) | Information administrator        |
+| sensitivity        | varchar(255) | Sensitivity of information       |
+| storage            | varchar(255) | Information storage              |
+| security_need_c    | int          | Confidentiality                  |
+| security_need_i    | int          | Integrity                        |
+| security_need_a    | int          | Availability                     |
+| security_need_t    | int          | Traceability                     |
+| security_need_auth | int          | Authenticity                     |
 | constraints        | longtext     | Legal and regulatory constraints |
 | retention          | varchar(255) | Information retention period     |
-| created_at         | timestamp    | Date of creation |
-| updated_at         | timestamp    | Date of update |
-| deleted_at         | timestamp    | Date of deletion |
+| created_at         | timestamp    | Date of creation                 |
+| updated_at         | timestamp    | Date of update                   |
+| deleted_at         | timestamp    | Date of deletion                 |
 
-The "retention" field is not used at the moment and is therefore absent from the application. 
+The field "retention" is not used and therefore is absent in the app.  
 
-In the app, the need for authentication is hidden by default. It is mandatory in the case from an entity subject to EU Directive 2022/2554 (DORA).
-It is activated from the Configuration > Settings menu. 
+In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for entities subject to the regulation (EU) 2022/2554 (DORA).  
+This default configuration can be changed in the menu Configuration > Parameters.  
 
-The export of the data model references the databases and processes attached to information. In the application, a database can be attached to information from the database object. A process can be linked to information from these two objects.
+The data model export lists databases and processes linked with information.  
+
+In the app, a database can be linked with an information from the object "database".  
+A process can be linked to an information from these two objects.  
 
 ---
 
@@ -450,7 +461,7 @@ Table *m_applications* :
 | security_need_i      | int          | Integrity |
 | security_need_a      | int          | Availability |
 | security_need_t      | int          | Traceability |
-| ecurity_need_auth    | int          | authentication |
+| security_need_auth   | int          | authentication |
 | rto                  | int          | Recovery Time Objective |
 | rpo                  | int          | Recovery Point Objective |
 | vendor               | varchar(255) | Application's vendor |
