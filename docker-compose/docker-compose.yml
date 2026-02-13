@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     container_name: mercator-db
     networks:
-      - nextcloud_web
+      - mercator_net 
     environment:
       MYSQL_ROOT_PASSWORD: MercatorRoot123
       MYSQL_DATABASE: mercator
@@ -28,12 +28,12 @@ services:
     expose:
       - 8080
     ports:
-      - "8081:8080"
+      - "8080:8080"
     networks:
-      - nextcloud_web
+      - mercator_net 
     environment:
-      APP_ENV: production
-      APP_DEBUG: false
+      APP_ENV: local  
+      APP_DEBUG: false 
       APP_URL: https://mercator.yourdomain.com
 
       DB_CONNECTION: mariadb
@@ -45,8 +45,8 @@ services:
 
       CACHE_DRIVER: file
       SESSION_DRIVER: file
-      ENTRYPOINT ["wait-for-db.sh"]
-      CMD ["php-fpm"]
+      ENTRYPOINT: "wait-for-db.sh"
+      CMD: "php-fpm"
     depends_on:
       mercator-db:
         condition: service_healthy
@@ -54,3 +54,6 @@ services:
 volumes:
   mercator_db_data:
   mercator_app_data:
+
+networks:
+  mercator_net:
