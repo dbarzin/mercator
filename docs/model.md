@@ -417,15 +417,17 @@ An application block can be: office applications, management applications, analy
 
 Table *application_blocks* :
 
-| Field | Type | Description |
-|:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of information |
-| description | longtext | Description of application block |
+| Field       | Type         | Description                       |
+|:------------|:-------------|:----------------------------------|
+| id          | int unsigned | auto_increment                    |
+| name        | varchar(255) | Name of information               |
+| description | longtext     | Description of application block  |
 | responsible | varchar(255) | Responsible for application block |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| created_at  | timestamp    | Date of creation                  |
+| updated_at  | timestamp    | Date of update                    |
+| deleted_at  | timestamp    | Date of deletion                  |
+
+In the app, an application can be linked to an application block from these two objects.  
 
 #### Application
 
@@ -438,36 +440,36 @@ When there is no virtualized environment, there are not several logical servers 
 Table *m_applications* :
 
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the application |
-| application_block_id | int unsigned | Group of application |
-| attributes           | varchar(255) | Attributes of the application |
-| description          | longtext     | Description |
-| icon_id              | int unsigned | Reference to a specific image         |
-| responsible          | varchar(255) | Person/team responsible |
-| functional_referent  | varchar(255) | Functional referent |
-| editor               | varchar(255) | Application's editor |
-| users                | varchar(255) | Number of users and type |
-| technology           | varchar(255) | Technology |
-| type                 | varchar(255) | Type of application |
-| external             | varchar(255) | External |
-| install_date         | datetime     | Date of installation |
-| update_date          | datetime     | Date of upgrade |
-| next_update          | datetime     | Date of next planned upgrade |
-| documentation        | varchar(255) | Link to documentation |
-| security_need_c      | int          | Confidentiality |
-| security_need_i      | int          | Integrity |
-| security_need_a      | int          | Availability |
-| security_need_t      | int          | Traceability |
-| security_need_auth   | int          | authentication |
-| rto                  | int          | Recovery Time Objective |
-| rpo                  | int          | Recovery Point Objective |
-| vendor               | varchar(255) | Application's vendor |
-| product              | varchar(255) | Product name |
-| version              | varchar(255) | Version of the application |
-| patching_frequency   | int          | Patching frequency |
+| Champ                | Type         | Description                          |
+|:---------------------|:-------------|:-------------------------------------|
+| id                   | int unsigned | auto_increment                       |
+| name                 | varchar(255) | Name of the application              |
+| application_block_id | int unsigned | Group of application                 |
+| attributes           | varchar(255) | Attributes of the application        |
+| description          | longtext     | Description                          |
+| icon_id              | int unsigned | Reference to a specific icon         |
+| responsible          | varchar(255) | Person/team responsible              |
+| functional_referent  | varchar(255) | Functional referent                  |
+| editor               | varchar(255) | Application's editor                 |
+| users                | varchar(255) | Number of users and type             |
+| technology           | varchar(255) | Technology                           |
+| type                 | varchar(255) | Type of application                  |
+| external             | varchar(255) | External                             |
+| install_date         | datetime     | Date of installation                 |
+| update_date          | datetime     | Date of upgrade                      |
+| next_update          | datetime     | Date of next planned upgrade         |
+| documentation        | varchar(255) | Link to documentation                |
+| security_need_c      | int          | Confidentiality                      |
+| security_need_i      | int          | Integrity                            |
+| security_need_a      | int          | Availability                         |
+| security_need_t      | int          | Traceability                         |
+| security_need_auth   | int          | authenticicity                       |
+| rto                  | int          | Recovery Time Objective              |
+| rpo                  | int          | Recovery Point Objective             |
+| vendor               | varchar(255) | Application's vendor (CPE)           |
+| product              | varchar(255) | Product name (CPE)                   |
+| version              | varchar(255) | Version of the application (CPE)     |
+| patching_frequency   | int          | Patching frequency                   |
 | entities             | List int [,] | IDs list of related entities         |
 | processes            | List int [,] | IDs list of related processes        |
 | services             | List int [,] | IDs list of related services         |
@@ -475,20 +477,16 @@ Table *m_applications* :
 | logical_servers      | List int [,] | IDs list of related logical_servers  |
 | activities           | List int [,] | IDs list of related activities       |
 | containers           | List int [,] | IDs list of related containers       |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| created_at           | timestamp    | Date of creation                     |
+| updated_at           | timestamp    | Date of update                       |
+| deleted_at           | timestamp    | Date of deletion                     |
 
-RTO : *Recovery Time Objective*  
-RPO : *Recovery Point Objective*  
+The fields "patching_frequency" and "next_update" are not used and therefore are absent from the app.  
 
-The "patching_frequency" and "next_update" fields are not used at the moment and are therefore missing from the application.  
+In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for entities subject to the regulation (EU) 2022/2554 (DORA).  
+This default configuration can be changed in the menu Configuration > Parameters.  
 
-In the app, the need for authentication is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).  
-It is activated from the Configuration > Settings menu. 
-
-'export of reference data model:
+The data model export lists:
 
 - user entities (*entities* field),
 - supported processes,
@@ -497,52 +495,52 @@ It is activated from the Configuration > Settings menu.
 - databases,
 - workstations,
 - logical servers,
-- logical safety equipment,
-- administrators (Users object of the administration view),
+- logical security devices,
+- administrators ("Users" object of the administration view),
 - and security measures
 
-attached to an application.
+linked with an application.
 
-In the application, a user entity can be attached to an application from an application object.  
-A process can be attached to an application from these two objects.  
-An activity can be attached to an application from these two objects.  
-
-
-An application service can be attached to an application from these two objects.  
-A database can be attached to an application from these two objects.  
-A workstation can be attached to an application from a workstation object.  
+In the app, an entity using the application can be linked with an application from an application object.  
+A process can be linked with an application from these two objects.  
+An activity can be linked with an application from these two objects.  
 
 
-A logical server can be attached to an application from these two objects.  
-Logical security equipment can be attached to an application from these two objects.  
-An administrator can be attached to an application from an application object.  
+An application service can be linked with an application from these two objects.  
+A database can be linked to an application from these two objects.  
+A workstation can be linked to an application from a workstation object.  
 
 
-A security measure can be attached to an application from the "Assign a security measure" button.  
-This button is present in the GDPR view and visible in the list of Security Measures objects.  
+A logical server can be linked with an application from these two objects.  
+A logical security device can be linked with an application from these two objects.  
+An administrator can be linked with an application from an application object.  
 
 
-In the application, a container can be attached to an application from these two objects.  
-In the application, the *major events* field is managed in a separate table.
+A security measure can be linked to an application from the "Assign a security measure" button.  
+This button is present in the GDPR view and visible in the list of Security controls objects.  
 
 
-#### Major events
+In the app, a container can be linked with an application from these two objects.  
+In the app, the *major events* field is managed in a separate table.
 
-Major events are the main events experienced by an application during its operation.  
+
+##### Major events
+
+Major events are the main events undergone by an application during its operation.  
 Major events are only accessible through application objects.  
 
 They are neither importable nor exportable through the graphics tool.  
 
 Table *m_application_events* :
 
-| Champ            | Type         | Description                                         |
-|:-----------------|:-------------|:----------------------------------------------------|
-| id               | int unsigned | auto_increment                                      |
-| user_id          | int unsigned | Mercator user id who has register the event            |
-| m_application_id | varchar(255) | Reference to the id of the application that suffered the event |
-| message          | longtext     | Description of the event                            |
-| created_at       | timestamp    | Date of creation                                    |
-| updated_at       | timestamp    | Date of update                                      |
+| Champ            | Type         | Description                                                          |
+|:-----------------|:-------------|:---------------------------------------------------------------------|
+| id               | int unsigned | auto_increment                                                       |
+| user_id          | int unsigned | Mercator user id who has register the event                          |
+| m_application_id | varchar(255) | Reference to the id of the application which has undergone the event |
+| message          | longtext     | Description of the event                                             |
+| created_at       | timestamp    | Date of creation                                                     |
+| updated_at       | timestamp    | Date of update                                                       |
 
 
 #### Application services
@@ -553,26 +551,26 @@ Eg. an application service could be a Cloud service or platform.
 
 Table *application_services* :
 
-| Champ           | Type         | Description      |
-|:----------------|:-------------|:-----------------|
-| id              | int unsigned | auto_increment |
-| name            | varchar(255) | Name of the application service |
-| description     | longtext     | Description of the application service |
-| exposition      | varchar(255) | Exposure of the application service |
-| modules         | List int [,] | Liens vers les applications-modules |
-| applications    | List int [,] | Liens vers les applications        |
-| created_at      | timestamp    | Date of creation |
-| updated_at      | timestamp    | Date of update |
-| deleted_at      | timestamp    | Date of deletion |
+| Champ           | Type         | Description                             |
+|:----------------|:-------------|:----------------------------------------|
+| id              | int unsigned | auto_increment                          |
+| name            | varchar(255) | Name of the application service         |
+| description     | longtext     | Description of the application service  |
+| exposition      | varchar(255) | Exposure of the application service     |
+| modules         | List int [,] | IDs list of related application modules |
+| applications    | List int [,] | IDs list of related application         |
+| created_at      | timestamp    | Date of creation                        |
+| updated_at      | timestamp    | Date of update                          |
+| deleted_at      | timestamp    | Date of deletion                        |
 
-The export of the data model references the applications and application modules attached to an application service. 
+The data model export lists the applications and application modules linked with an application service. 
 
-In the application, an application can be attached to an application service from these two objects.  
-In the application, an application module can be attached to an application service from these two objects.  
+In the app, an application can be linked with an application service from these two objects.  
+In the app, an application module can be linked with an application service from these two objects.  
 
-There are two fields with the same information in the data model export, *servicesApplications* and 
+There are two fields containing the same information in the data model export, *servicesApplications* and 
 *applications*.  
-The connection with application objects is made via the *applications* field.
+The connection with application objects is made through the *applications* field.
 
 #### Application module
 
@@ -580,85 +578,87 @@ An application module is a component of an application characterized by function
 
 Table *application_modules* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the application module |
-| description          | longtext     | Description of the application module |
-| application_services | List int [,] | IDs list of related to applications-services |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                              |
+|:---------------------|:-------------|:-----------------------------------------|
+| id                   | int unsigned | auto_increment                           |
+| name                 | varchar(255) | Name of the application module           |
+| description          | longtext     | Description of the application module    |
+| application_services | List int [,] | IDs list of related application services |
+| created_at           | timestamp    | Date of creation                         |
+| updated_at           | timestamp    | Date of update                           |
+| deleted_at           | timestamp    | Date of deletion                         |
 
-The export of the data model references the application services attached to an application module.  
-In the application, an application service can be attached to an application module from these two objects.
+The export of the data model lists application services linked with an application module.  
+
+In the app, an application service can be linked to an application module from these two objects.
 
 #### Database
 
-A collection of databases managed within the organisation.
+A database is a set of structured and ordered information meant for computed processing.
 
 Table *databases* :
 
-| Champ               | Type         | Description      |
-|:-------------------|:-------------|:-----------------|
-| id                 | int unsigned | auto_increment |
-| name               | varchar(255) | Name of the database |
-| description        | longtext     | Description of the database |
-| type               | varchar(255) | Technology used |
-| entity_resp_id     | int unsigned | Entity responsible  |
-| responsible        | varchar(255) | Responsible entity |
-| icon_id            | int unsigned | Reference to a specific image            |
-| security_need_c    | int          | Confidentiality |
-| security_need_i    | int          | Integrity |
-| security_need_a    | int          | Availability |
-| security_need_t    | int          | Traceability |
-| security_need_auth | int          | authentication                              |
-| external           | varchar(255) | External |
-| created_at         | timestamp    | Date of creation |
-| updated_at         | timestamp    | Date of update |
-| deleted_at         | timestamp    | Date of deletion |
-
-In the app, the need for authentication is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).  
-It is activated from the Configuration > Settings menu. 
-
-Exporting the data model references the specific image of a database.  
-In the application, a specific image can be attached to a database from a database object.  
-
-The data model export references user entities (*entities* field), applications, information,
-logical servers and containers attached to a database.  
-In the application, a user entity can be attached to a database from a database object.  
-In the application, information can be attached to a database from a database object.  
-In the application, an application can be attached to a database from these two objects.  
-In the application, a logical server can be attached to a database from these two objects.  
-In the application, a container can be attached to a database from these two objects.
+| Champ              | Type         | Description                  |
+|:-------------------|:-------------|:-----------------------------|
+| id                 | int unsigned | auto_increment               |
+| name               | varchar(255) | Name of the database         |
+| description        | longtext     | Description of the database  |
+| type               | varchar(255) | Technology used              |
+| entity_resp_id     | int unsigned | Entity responsible           |
+| responsible        | varchar(255) | Responsible entity           |
+| icon_id            | int unsigned | Reference to a specific icon |
+| security_need_c    | int          | Confidentiality              |
+| security_need_i    | int          | Integrity                    |
+| security_need_a    | int          | Availability                 |
+| security_need_t    | int          | Traceability                 |
+| security_need_auth | int          | Authenticity                 |
+| external           | varchar(255) | External                     |
+| created_at         | timestamp    | Date of creation             |
+| updated_at         | timestamp    | Date of update               |
+| deleted_at         | timestamp    | Date of deletion             |
 
 
-#### Flow
+In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for entities subject to the regulation (EU) 2022/2554 (DORA).  
+This default configuration can be changed in the menu Configuration > Parameters.  
 
-A flow is an exchange of information between a sender and a receiver (application, application service, application module or database).
+The data model export references the specific icon of a database.  
+In the app, a specific icon can be linked with a database from a database object.  
 
-A flow represents an exchange of information between two elements of the information system. It is important to avoid representing all firewall filtering rules in terms of flows.
+The data model export lists entities using the database (*entities* field), applications, information,
+logical servers and containers linked with a database.  
+
+In the app, a user entity can be linked with a database from a database object.  
+In the app, an information can be linked with a database from a database object.  
+
+In the app, an application can be linked with a database from these two objects.  
+In the app, a logical server can be linked with a database from these two objects.  
+In the app, a container can be linked with a database from these two objects.
+
+#### Application Flows
+
+An application flow is an exchange of information between a sender and a receiver (application, application service, application module or database).
+
+An application flow represents an exchange of information between two elements of the information system. It is important to avoid representing all firewall filtering rules in terms of flows.
 
 For example, DNS or NTP requests should not be represented as flows.
 
 Table *fluxes* :
 
-| Champ                 | Type         | Description      |
-|:----------------------|:-------------|:-----------------|
-| id                    | int unsigned | auto_increment |
-| name                  | varchar(255) | Name of the flow |
-| attributes            | varchar(255) | Attributs (tags) du flux                  |
-| description           | longtext     | Description of the flow |
-| ***device***_source_id    | int unsigned | Link to the source_id                 |
-| ***device***_dest_id      | int unsigned | Lnk to the destination id          |
-| crypted               | tinyint(1)   | The flow is encrypted (1=yes, O=no) |
-| bidirectional         | tinyint(1)   | The flow is bydirectional (1=yes, O=no)|
-| created_at            | timestamp    | Date of creation |
-| updated_at            | timestamp    | Date of update |
-| deleted_at            | timestamp    | Date of deletion |
+| Champ                  | Type         | Description                            |
+|:-----------------------|:-------------|:---------------------------------------|
+| id                     | int unsigned | auto_increment                         |
+| name                   | varchar(255) | Name of the flow                       |
+| attributes             | varchar(255) | Attributs (tags) du flux               |
+| description            | longtext     | Description of the flow                |
+| ***device***_source_id | int unsigned | Link to the source_id                  |
+| ***device***_dest_id   | int unsigned | Link to the destination id             |
+| crypted                | tinyint(1)   | The flow is encrypted (1=yes, O=no)    |
+| bidirectional          | tinyint(1)   | The flow is bidirectional (1=yes, O=no)|
+| created_at             | timestamp    | Date of creation                       |
+| updated_at             | timestamp    | Date of update                         |
+| deleted_at             | timestamp    | Date of deletion                       |
 
-The  ***device***_ for source_id or dest_id might be: :
+The  ***device***_ for source_id or dest_id can be: :
 
 | Actif (*device*)                | Source | Destination |
 |:--------------------------------|:------:|:-----------:|
@@ -667,6 +667,7 @@ The  ***device***_ for source_id or dest_id might be: :
 | Application module              | ✅     | ✅          |
 | Database                        | ✅     | ✅          |
 
+In the app, an information can be linked with an application flow from an application flow object.  
 
 ---
 
@@ -678,6 +679,9 @@ The administration view lists the administration of resources, directories and p
 
 Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).
 
+*Nota*: OVI is coming from the French military programme law. The closest equivalents in EU regulations are OES
+(Operators of Essential Services, EU 2016/1148, NIS) and EE (Essential Entities, EU 2022/2555, NIS 2).  
+
 #### Administration area
 
 An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more) administrator(s).
@@ -688,11 +692,11 @@ Table *zone_admins* :
 
 | Champ                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
-| id                    | int unsigned | auto_increment |
+| id                    | int unsigned | auto_increment   |
 | name                  | varchar(255) | Name of the area |
 | description           | longtext     | Description area |
 | created_at            | timestamp    | Date of creation |
-| updated_at            | timestamp    | Date of update |
+| updated_at            | timestamp    | Date of update   |
 | deleted_at            | timestamp    | Date of deletion |
 
 #### Administration directory service
@@ -703,16 +707,16 @@ It can be an inventory tool used to manage changes or tickets, or a mapping tool
 
 Table *annuaires*;
 
-| Champ                 | Type         | Description      |
-|:----------------------|:-------------|:-----------------|
-| id                    | int unsigned | auto_increment |
-| name                  | varchar(255) | Name of the directory |
-| description           | longtext     | Description  of the directory |
-| solution              | varchar(255) | Techinical solution |
-| zone_admin_id         | int unsigned | Reference to administration area|
-| created_at            | timestamp    | Date of creation |
-| updated_at            | timestamp    | Date of update |
-| deleted_at            | timestamp    | Date of deletion |
+| Champ                 | Type         | Description                      |
+|:----------------------|:-------------|:---------------------------------|
+| id                    | int unsigned | auto_increment                   |
+| name                  | varchar(255) | Name of the directory            |
+| description           | longtext     | Description  of the directory    |
+| solution              | varchar(255) | Techinical solution              |
+| zone_admin_id         | int unsigned | Reference to administration area |
+| created_at            | timestamp    | Date of creation                 |
+| updated_at            | timestamp    | Date of update                   |
+| deleted_at            | timestamp    | Date of deletion                 |
 
 #### Active Directory forest / LDAP tree structure
 
@@ -720,15 +724,15 @@ These objects represent an organized grouping of Active Directory domains or LDA
 
 Table *forest_ads* :
 
-| Champ                 | Type         | Description      |
-|:----------------------|:-------------|:-----------------|
-| id                    | int unsigned | auto_increment |
-| name                  | varchar(255) | Name of Active Directory or LDAP forests |
+| Champ                 | Type         | Description                                     |
+|:----------------------|:-------------|:------------------------------------------------|
+| id                    | int unsigned | auto_increment                                  |
+| name                  | varchar(255) | Name of Active Directory or LDAP forests        |
 | description           | longtext     | Description of Active Directory or LDAP forests |
-| zone_admin_id         | int unsigned | Reference to Administration zone |
-| created_at            | timestamp    | Date of creation |
-| updated_at            | timestamp    | Date of update |
-| deleted_at            | timestamp    | Date of deletion |
+| zone_admin_id         | int unsigned | Reference to Administration zone                |
+| created_at            | timestamp    | Date of creation                                |
+| updated_at            | timestamp    | Date of update                                  |
+| deleted_at            | timestamp    | Date of deletion                                |
 
 ---
 
