@@ -385,7 +385,7 @@ return [
         'cve' => [
             'title' => 'Configuration de la recherche de vulnérabilités',
             'title_short' => 'CVE',
-            'help' => "Cet écran permet de configurer l'envoi de notification par mail lorsque de la détection de vulnérabilités.",
+            'help' => "Cet écran permet de configurer l'envoi de notification par mail lors de la détection de vulnérabilités.",
             'message_subject' => 'Sujet du message',
             'sent_from' => 'Envoyé depuis',
             'to' => 'à',

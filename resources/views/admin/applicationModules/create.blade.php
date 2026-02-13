@@ -125,24 +125,10 @@
     @vite(['resources/js/cpe.js'])
     <script>
 
-        /*****************************************/
-        /* CPE Search
-        */
-        window.cpePart = 'a';
+    /*****************************************/
+    /* CPE Search
+    */
+    window.cpePart = 'a';
 
-        document.addEventListener("DOMContentLoaded", function () {
-
-            // submit the correct button when "enter" key pressed
-            $("form input").keypress(function (e) {
-                if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
-                    $('input[type=submit].default').click();
-                    return false;
-                } else {
-                    return true;
-                }
-            });
-
-
-        });
     </script>
 @endsection
