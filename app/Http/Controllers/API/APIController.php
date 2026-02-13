@@ -120,12 +120,12 @@ abstract class APIController extends Controller
         $allowedFilters = [];
 
         foreach ($fillable as $field) {
-            // 1. Filtre exact
-            $allowedFilters[] = AllowedFilter::exact($field);
-
-            // 2. Filtres partiels (LIKE) pour champs textuels
+            // 1. Filtres partiels (LIKE) pour champs textuels
             if (in_array($field, $this->getPartialFilterFields())) {
                 $allowedFilters[] = AllowedFilter::partial($field);
+            } else {
+                // 2. Filtre exact pour les autres champs
+                $allowedFilters[] = AllowedFilter::exact($field);
             }
 
             // 3. Filtre de négation (NOT)
