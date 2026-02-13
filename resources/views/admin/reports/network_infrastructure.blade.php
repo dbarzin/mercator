@@ -158,7 +158,7 @@
                                 <div class="row">
                                     <div class="col">
                                        @include('admin.physicalServers._details', [
-                                            '$physicalServer' => $physicalServer,
+                                            'physicalServer' => $physicalServer,
                                             'withLink' => true,
                                         ])
                                     </div>
