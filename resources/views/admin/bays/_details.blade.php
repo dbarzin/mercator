@@ -1,3 +1,7 @@
+@props([
+    'bay',
+    'withLink' => false
+])
 <table class="table table-bordered table-striped table-report" id="{{ $bay->getUID() }}">
     <tbody>
     <tr>
@@ -5,7 +9,11 @@
             {{ trans('cruds.bay.fields.name') }}
         </th>
         <td>
-            {{ $bay->name }}
+        @if($withLink)
+        <a href="{{ route('admin.bays.show', $bay->id) }}">{{ $bay->name }}</a>
+        @else
+        {{ $bay->name }}
+        @endif
         </td>
     </tr>
     <tr>

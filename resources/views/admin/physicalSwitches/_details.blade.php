@@ -9,7 +9,11 @@
                 {{ trans('cruds.physicalSwitch.fields.name') }}
             </th>
             <td>
-                {{ $physicalSwitch->name }}
+            @if ($withLink)
+            <a href="{{ route('admin.physical-switches.show', $physicalSwitch->id) }}">{{ $physicalSwitch->name }}</a>
+            @else
+            {{ $physicalSwitch->name }}
+            @endif
             </td>
         </tr>
         <tr>

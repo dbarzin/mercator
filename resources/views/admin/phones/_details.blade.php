@@ -1,3 +1,7 @@
+@props([
+    'phone',
+    'withLink' => false,
+])
 <table class="table table-bordered table-striped table-report" id="{{ $phone->getUID() }}">
     <tbody>
         <tr>
@@ -5,7 +9,11 @@
                 {{ trans('cruds.phone.fields.name') }}
             </th>
             <td>
-                {{ $phone->name }}
+            @if($withLink)
+            <a href="{{ route('admin.phones.show', $phone) }}">{{ $phone->name }}</a>
+            @else
+            {{ $phone->name }}
+            @endif
             </td>
         </tr>
         <tr>

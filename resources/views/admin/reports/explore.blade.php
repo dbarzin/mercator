@@ -209,10 +209,10 @@
         // Called when the Visualization API is loaded.
         function draw() {
 
-            nodes = new DataSet();
+            nodes = new vis.DataSet();
 
             // create an array with edges
-            edges = new DataSet([]);
+            edges = new vis.DataSet([]);
 
             // create a network
             let container = document.getElementById("mynetwork");
@@ -258,7 +258,7 @@
                 }
             };
 
-            network = new Network(container, data, options);
+            network = new vis.Network(container, data, options);
 
             // Add Nodes from parameter
             @if (Request::get("node")!==null)

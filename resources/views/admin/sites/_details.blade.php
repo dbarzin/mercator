@@ -1,3 +1,7 @@
+@props([
+    'site',
+    'withLink' => false
+])
 <table class="table table-bordered table-striped table-report" id="{{ $site->getUID() }}">
     <tbody>
         <tr>
@@ -5,7 +9,11 @@
                 {{ trans('cruds.site.fields.name') }}
             </th>
             <td colspan="2">
-                {{ $site->name }}
+            @if($withLink)
+            <a href="{{ route('admin.sites.show', $site->id) }}">{{ $site->name }}</a>
+            @else
+            {{ $site->name }}
+            @endif
             </td>
         </tr>
         <tr>

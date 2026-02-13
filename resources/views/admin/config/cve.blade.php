@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group">
-            <label class="label-required" for="name">{{ trans("cruds.configuration.cve.recurence") }}</label>
+            <label class="label-required" for="name">{{ trans("cruds.configuration.cve.recurrence") }}</label>
             <select class="form-control select2" name="check_frequency" id="check_frequency">
                 <option value="0" {{ $check_frequency=="0" ? 'selected' : '' }}>{{ trans("global.never") }}</option>
                 <option value="1" {{ $check_frequency=="1" ? 'selected' : '' }}>{{ trans("global.day") }}</option>
