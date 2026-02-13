@@ -66,7 +66,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Groupes de middlewares personnalisés
         $middleware->appendToGroup('api.protected', [
-            'web',
+            'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
             'auth.multi',
             'gates',
         ]);
