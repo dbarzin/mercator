@@ -1,17 +1,15 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Laravel\Socialite\Facades\Socialite;
 use Mercator\Core\Models\Role;
 use Mercator\Core\Models\User;
-use Mockery\MockInterface;
+
+uses(Tests\TestCase::class, RefreshDatabase::class);
 
 beforeEach(function () {
-    // Nettoyer la base de données
-    User::query()->delete();
-    Role::query()->delete();
-
     // Créer des rôles de test
     Role::create(['title' => 'User', 'id' => 1]);
     Role::create(['title' => 'Admin', 'id' => 2]);
@@ -34,8 +32,7 @@ it('auto-provisions a new user when enabled', function () {
         'roles' => ['User'],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -60,8 +57,7 @@ it('does not auto-provision when disabled', function () {
         'roles' => [],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -79,8 +75,7 @@ it('redirects to local login when keycloak fails and fallback enabled', function
     Config::set('services.keycloak.enabled', true);
     Config::set('services.keycloak.fallback_local', true);
 
-    Socialite::shouldReceive('driver->user')
-        ->andThrow(new \Exception('Keycloak unreachable'));
+    mockSocialiteKeycloakException(new \Exception('Keycloak unreachable'));
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -92,8 +87,7 @@ it('shows error when keycloak fails and fallback disabled', function () {
     Config::set('services.keycloak.enabled', true);
     Config::set('services.keycloak.fallback_local', false);
 
-    Socialite::shouldReceive('driver->user')
-        ->andThrow(new \Exception('Keycloak unreachable'));
+    mockSocialiteKeycloakException(new \Exception('Keycloak unreachable'));
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -112,8 +106,7 @@ it('redirects to local login when user not found and fallback enabled', function
         'roles' => [],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -139,12 +132,14 @@ it('syncs keycloak roles with local roles', function () {
         'roles' => ['Admin', 'Editor'],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
     $user = User::where('login', 'admin.user')->first();
+
+    expect($user)->not->toBeNull();
+
     $userRoles = $user->roles->pluck('title')->toArray();
 
     expect($userRoles)->toContain('Admin');
@@ -173,8 +168,7 @@ it('preserves local roles when syncing keycloak roles', function () {
         'roles' => ['Admin'], // Nouveau rôle de Keycloak
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -201,12 +195,13 @@ it('does not sync roles when disabled', function () {
         'roles' => ['Admin', 'Editor'],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
     $user = User::where('login', 'no.sync')->first();
+
+    expect($user)->not->toBeNull();
 
     // Seul le rôle par défaut doit être attribué, pas ceux de Keycloak
     expect($user->roles->count())->toBe(1);
@@ -233,8 +228,7 @@ it('finds user by login', function () {
         'roles' => [],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -258,8 +252,7 @@ it('finds user by email when login differs', function () {
         'roles' => [],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $response = $this->get(route('keycloak.callback'));
 
@@ -281,12 +274,13 @@ it('creates audit log on successful sso login', function () {
         'roles' => ['User'],
     ]);
 
-    Socialite::shouldReceive('driver->user')
-        ->andReturn($keycloakUser);
+    mockSocialiteKeycloak($keycloakUser);
 
     $this->get(route('keycloak.callback'));
 
     $user = User::where('login', 'audit.test')->first();
+
+    expect($user)->not->toBeNull();
 
     $this->assertDatabaseHas('audit_logs', [
         'description' => 'SSO Login (Keycloak)',
@@ -300,26 +294,81 @@ it('creates audit log on successful sso login', function () {
 // Helpers
 // ============================================================================
 
-function mockKeycloakUser(array $attributes): MockInterface
+/**
+ * Crée un mock de Keycloak user qui implémente ArrayAccess
+ * pour supporter $keycloakUser['user']['realm_access']['roles']
+ */
+function mockKeycloakUser(array $attributes): object
 {
-    $user = Mockery::mock();
+    return new class($attributes) implements \ArrayAccess {
+        private $attributes;
 
-    $user->shouldReceive('getNickname')
-        ->andReturn($attributes['nickname'] ?? null);
+        public function __construct(array $attributes)
+        {
+            $this->attributes = $attributes;
+        }
 
-    $user->shouldReceive('getEmail')
-        ->andReturn($attributes['email'] ?? null);
+        public function getNickname()
+        {
+            return $this->attributes['nickname'] ?? null;
+        }
 
-    $user->shouldReceive('getName')
-        ->andReturn($attributes['name'] ?? $attributes['nickname'] ?? null);
+        public function getEmail()
+        {
+            return $this->attributes['email'] ?? null;
+        }
 
-    $user->shouldReceive('offsetGet')
-        ->with('user')
-        ->andReturn([
-            'realm_access' => [
-                'roles' => $attributes['roles'] ?? [],
-            ],
-        ]);
+        public function getName()
+        {
+            return $this->attributes['name'] ?? $this->attributes['nickname'] ?? null;
+        }
 
-    return $user;
+        public function offsetExists($offset): bool
+        {
+            return $offset === 'user';
+        }
+
+        #[\ReturnTypeWillChange]
+        public function offsetGet($offset)
+        {
+            if ($offset === 'user') {
+                return [
+                    'realm_access' => [
+                        'roles' => $this->attributes['roles'] ?? [],
+                    ],
+                ];
+            }
+            return null;
+        }
+
+        #[\ReturnTypeWillChange]
+        public function offsetSet($offset, $value)
+        {
+            // Not implemented
+        }
+
+        #[\ReturnTypeWillChange]
+        public function offsetUnset($offset)
+        {
+            // Not implemented
+        }
+    };
+}
+
+function mockSocialiteKeycloak(object $keycloakUser): void
+{
+    Socialite::shouldReceive('driver')
+        ->with('keycloak')
+        ->andReturnSelf();
+    Socialite::shouldReceive('user')
+        ->andReturn($keycloakUser);
+}
+
+function mockSocialiteKeycloakException(\Exception $exception): void
+{
+    Socialite::shouldReceive('driver')
+        ->with('keycloak')
+        ->andReturnSelf();
+    Socialite::shouldReceive('user')
+        ->andThrow($exception);
 }

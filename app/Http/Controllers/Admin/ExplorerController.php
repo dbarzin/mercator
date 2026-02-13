@@ -20,7 +20,7 @@ class ExplorerController extends Controller
 
         [$nodes, $edges] = $this->getData();
 
-        return view('admin/explore', compact('nodes', 'edges'));
+        return view('admin.reports.explore', compact('nodes', 'edges'));
     }
 
     // TODO : return a JSON in place of nodes[] and edges[]

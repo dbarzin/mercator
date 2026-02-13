@@ -37,7 +37,7 @@ Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordControlle
 
 // keycloak
 Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class, 'redirectToKeycloak'])->name('login.keycloak');
-Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class, 'handleKeycloakCallback']);
+Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.protected']], function (): void {
@@ -337,10 +337,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     Route::view('graph/test', 'admin.graphs.test')->name('graphs.test');
     
     // Explorer
-    Route::get('report/explore', [Admin\ExplorerController::class, 'explore'])->name('explore');
-    
+    Route::get('report/explore', [Admin\ExplorerController::class, 'explore'])->name('report.explore');
+
     // Explorer test
-    Route::get('report/explore2', [Admin\ExplorerController2::class, 'explore'])->name('explore');
+    Route::get('report/explore2', [Admin\ExplorerController2::class, 'explore'])->name('report.explore2');
     Route::middleware(['auth', 'can:explore_access'])->prefix('explorer/api')->group(function () {
 
         // Récupérer la liste des nodes avec filtrage optionnel
