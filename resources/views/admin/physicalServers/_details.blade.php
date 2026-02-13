@@ -1,3 +1,7 @@
+@props([
+    'physicalServer',
+    'withLink' => false
+])
 <table class="table table-bordered table-striped table-report" id="{{ $physicalServer->getUID() }}">
     <tbody>
     <tr>
@@ -5,7 +9,11 @@
             {{ trans('cruds.physicalServer.fields.name') }}
         </th>
         <td width="50%">
-            {{ $physicalServer->name }}
+        @if($withLink)
+        <a href="{{ route('admin.physical-servers.show', $physicalServer) }}">{{ $physicalServer->name }}</a>
+        @else
+        {{ $physicalServer->name }}
+        @endif
         </td>
         <th width="10%">
             {{ trans('cruds.physicalServer.fields.type') }}

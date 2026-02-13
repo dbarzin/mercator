@@ -81,7 +81,7 @@ class GlobalSearchController extends Controller
             if (empty($fields))
                 continue;
 
-            foreach ($fields as $field)
+                foreach ($fields as $field)
                 $query->orWhere($field, 'LIKE', '%'.$this->escapeLike($term).'%');
 
             $results = $query->take(100)->get();

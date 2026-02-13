@@ -1,3 +1,7 @@
+@props([
+    'wifiTerminal',
+    'withLink' => false,
+])
 <table class="table table-bordered table-striped table-report" id="{{ $wifiTerminal->getUID() }}">
     <tbody>
     <tr>
@@ -5,7 +9,11 @@
             {{ trans('cruds.wifiTerminal.fields.name') }}
         </th>
         <td>
-            {{ $wifiTerminal->name }}
+        @if($withLink)
+        <a href="{{ route('admin.wifi-terminals.show', $wifiTerminal) }}">{{ $wifiTerminal->name }}</a>
+        @else
+        {{ $wifiTerminal->name }}
+        @endif
         </td>
         <th width="10%">
             {{ trans('cruds.wifiTerminal.fields.type') }}
