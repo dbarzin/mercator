@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Mercator\Core\Models\ApplicationModule;
 use Mercator\Core\Models\MApplication;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -64,13 +65,23 @@ class CVESearch extends Command
         $minTimestamp = Carbon::now()->subDays($this->checkFrequency)->toDateString();
         Log::debug('CVESearch - min timestamp', ['published_after' => $minTimestamp]);
 
-        // Récupérer les Applications & noms à matcher (lowercase)
-        $names = MApplication::query()
+        // Récupérer les Applications & ApplicationModules & noms à matcher (lowercase)
+        $namesApplications = MApplication::query()
             ->orderBy('name')
             ->pluck('name')
-            ->filter()
+            ->filter();
+
+        $namesModules = ApplicationModule::query()
+            ->orderBy('name')
+            ->pluck('name')
+            ->filter();
+
+        $names = $namesApplications
+            ->merge($namesModules)
             ->map(fn ($n) => Str::of($n)->lower()->toString())
-            ->values();
+            ->unique()  // Éviter les doublons
+            ->sort()    // Re-trier après le merge
+            ->values(); // Réindexer
 
         if ($names->isEmpty()) {
             Log::info('CVESearch - no application names found, aborting.');

@@ -51,6 +51,61 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.applicationModule.fields.services_helper') }}</span>
                 </div>
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-header">
+                Common Platform Enumeration (CPE)
+            </div>
+            <!------------------------------------------------------------------------------------------------------------->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
+                            <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
+                                <option>{{ old('vendor', $applicationModule->vendor) }}</option>
+                            </select>
+                            <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="name">{{ trans('cruds.application.fields.product') }}</label>
+                            <select id="product-selector" class="form-control product-selector" name="product">
+                                <option>{{ old('product', $applicationModule->product) }}</option>
+                            </select>
+                            @if($errors->has('product'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('product') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="version">{{ trans('cruds.application.fields.version') }}</label>
+                            <select id="version-selector" class="form-control version-selector" name="version">
+                                <option>{{ old('version', $applicationModule->version) }}</option>
+                            </select>
+                            @if($errors->has('version'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('version') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <br>
+                            <button type="button" class="btn btn-info" id="guess"
+                                    alt="Guess vendor and product base on application name">Guess
+                            </button>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -63,4 +118,16 @@
             </button>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    @vite(['resources/js/cpe.js'])
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            /*****************************************/
+            /* CPE Search
+            */
+            window.cpePart = 'a';
+        });
+    </script>
 @endsection
