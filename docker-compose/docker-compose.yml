@@ -32,7 +32,8 @@ services:
     networks:
       - mercator_net 
     environment:
-      APP_ENV: local  
+      APP_ENV: production  
+      APP_FORCE_HTTPS: false
       APP_DEBUG: false 
       APP_URL: https://mercator.yourdomain.com
 
@@ -45,8 +46,6 @@ services:
 
       CACHE_DRIVER: file
       SESSION_DRIVER: file
-      ENTRYPOINT: "wait-for-db.sh"
-      CMD: "php-fpm"
     depends_on:
       mercator-db:
         condition: service_healthy
