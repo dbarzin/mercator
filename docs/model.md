@@ -734,6 +734,56 @@ Table *forest_ads* :
 | updated_at            | timestamp    | Date of update                                  |
 | deleted_at            | timestamp    | Date of deletion                                |
 
+#### Active Directory domains / LDAP
+
+Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts, 
+objects rights and a part of IT policies (e.g. Group Policy Object - GPO).  
+
+Table *domaines_ads* :
+
+| Champ                  | Type         | Description                             |
+|:-----------------------|:-------------|:----------------------------------------|
+| id                     | int unsigned | auto_increment                          |
+| name                   | varchar(255) | AD Domain / LDAP name                   |
+| description            | longtext     | Domain description                      |
+| domain_ctrl_cnt        | int signed   | Number of domain controllers            |
+| user_count             | int signed   | Number of domain users                  |
+| machine_count          | int signed   | Number of domain computers              |
+| relation_inter_domaine | varchar(255) | Cross domains relationships description |
+| created_at             | timestamp    | Date of creation                        |
+| updated_at             | timestamp    | Date of update                          |
+| deleted_at             | timestamp    | Date of deletion                        |
+
+The data model esport lists AD forests / LDAP trees linked with an AD domain / LDAP.  
+
+In the app, an AD forest / LDAP tree can be linked with an AD domain / LDAP from these two objects.  
+A logical server can be linked with an AD domain / LDAP from these two objects.  
+
+#### Users
+
+Users are user accounts with privileged rights on IT systems.
+
+Table *admin_users* :
+
+| Champ                 | Type         | Description                  |
+|:----------------------|:-------------|:-----------------------------|
+| id                    | int unsigned | auto_increment               |
+| user_id               | varchar(255) | ID number / other of an user | 
+| firstname             | varchar(255) | User's first name            |
+| lastname              | varchar(255) | User's last name             |
+| type                  | varchar(255) | User type                    |
+| attributes            | varchar(255) | User's tags                  |
+| icon_id               | int unsigned | Link to a specific icon      |
+| description           | longtext     | User description             |
+| domain_id             | int unsigned | Link to the users's domain   |
+| created_at            | timestamp    | Date of creation             |
+| updated_at            | timestamp    | Date of update               |
+| deleted_at            | timestamp    | Date of deletion             |
+
+The data model export lists applications which an user is administrator.  
+
+In the app, an user can be defined as administrator of an application from an application object.  
+
 ---
 
 ### Logical infrastructure
