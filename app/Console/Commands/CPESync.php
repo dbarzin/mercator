@@ -213,9 +213,12 @@ class CPESync extends Command
             }
         }
 
-        // Store last successful run timestamp for incremental sync
-        if (! $isFull) {
-            cache()->forever('cpe_sync.last_run', $end->toIso8601String());
+        // Toujours sauvegarder, mais avec un message différent
+        cache()->forever('cpe_sync.last_run', $nowUtc->toIso8601String());
+        if ($isFull) {
+            $this->info("Full sync completed. Next run will be incremental from {$nowUtc->toIso8601String()}");
+        } else {
+            $this->info("Incremental sync completed. Next run will start from {$end->toIso8601String()}");
         }
 
         $this->info("Done. Processed: {$processed}. New => vendors: {$createdVendors}, products: {$createdProducts}, versions: {$createdVersions}");
