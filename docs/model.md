@@ -800,26 +800,25 @@ Networks are a set of logically interconnected devices that exchange information
 
 Table *networks* :
 
-| Champ           | Type         | Description      |
-|:----------------|:-------------|:-----------------|
-| id              | int unsigned | auto_increment |
-| name            | varchar(255) | Name of network |
-| description     | longtext     | Description of network |
-| protocol_type   | varchar(255) | Used protocols |
-| responsible     | varchar(255) | Operation manager |
-| responsible_sec | varchar(255) | Security manager |
-| security_need_c | int          | Confidentiality |
-| security_need_i | int          | Integrity |
-| security_need_a | int          | Availability |
-| security_need_t | int          | Traceability |
-| security_need_auth | int       | Authentication                  |
-| created_at      | timestamp    | Date of creation |
-| updated_at      | timestamp    | Date of update |
-| deleted_at      | timestamp    | Date of deletion |
+| Champ              | Type         | Description                |
+|:-------------------|:-------------|:---------------------------|
+| id                 | int unsigned | auto_increment             |
+| name               | varchar(255) | Name of network            |
+| description        | longtext     | Description of the network |
+| protocol_type      | varchar(255) | Used protocols             |
+| responsible        | varchar(255) | Operation manager          |
+| responsible_sec    | varchar(255) | Security manager           |
+| security_need_c    | int          | Confidentiality            |
+| security_need_i    | int          | Integrity                  |
+| security_need_a    | int          | Availability               |
+| security_need_t    | int          | Traceability               |
+| security_need_auth | int          | Authenticity               |
+| created_at         | timestamp    | Date of creation           |
+| updated_at         | timestamp    | Date of update             |
+| deleted_at         | timestamp    | Date of deletion           |
 
-In the app, the need for authentication is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).  
-It is activated from the Configuration > Settings menu. 
+In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for entities subject to the regulation (EU) 2022/2554 (DORA).  
+This default configuration can be changed in the menu Configuration > Parameters. 
 
 #### Subnetworks
 
@@ -827,28 +826,28 @@ Subnetworks are a logical subdivision of a larger network.
 
 table *subnetworks* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the subnet |
-| description          | longtext     | Description of the subnet |
-| network_id           | int unsigned | ID related to parent network |
-| subnetwork_id        | int unsigned | ID related to child network  |
+| Champ                | Type         | Description                          |
+|:---------------------|:-------------|:-------------------------------------|
+| id                   | int unsigned | auto_increment                       |
+| name                 | varchar(255) | Name of the subnet                   |
+| description          | longtext     | Description of the subnet            |
+| network_id           | int unsigned | ID related to parent network         |
+| subnetwork_id        | int unsigned | ID related to child network          |
 | connected_subnets_id | int unsigned | Network to which this subnet belongs |
-| address              | varchar(255) | Addresses range |
-| default_gateway      | varchar(255) | Default gateway |
-| gateway_id           | int unsigned | Gateway |
-| vlan_id              | int unsigned | Associated VLAN |
-| ip_allocation_type   | varchar(255) | Type of IP address allocation |
-| zone                 | varchar(255) | Name of the firewall zone |
-| dmz                  | varchar(255) | DMZ (Yes/No) |
-| wifi                 | varchar(255) | Wireless |
-| responsible_exp      | varchar(255) | Operations manager |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| address              | varchar(255) | Addresses range                      |
+| default_gateway      | varchar(255) | Default gateway                      |
+| gateway_id           | int unsigned | Link to the gateway                  |
+| vlan_id              | int unsigned | Associated VLAN                      |
+| ip_allocation_type   | varchar(255) | Type of IP address allocation        |
+| zone                 | varchar(255) | Name of the firewall zone            |
+| dmz                  | varchar(255) | DMZ (Yes/No)                         |
+| wifi                 | varchar(255) | Wireless (Yes / No)                  |
+| responsible_exp      | varchar(255) | Operations manager                   |
+| created_at           | timestamp    | Date of creation                     |
+| updated_at           | timestamp    | Date of update                       |
+| deleted_at           | timestamp    | Date of deletion                     |
 
-The "connected_subnets_id" field is used to define a foreign key. However, this one does not seem to be used.
+The field "connected_subnets_id" is a foreign key. However, this one doesn't seem to be used.  
 
 #### External input gateways
 
@@ -856,19 +855,19 @@ Gateways are components used to connect a local network to the outside world.
 
 Table *gateways* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the gateway |
-| description          | longtext     | Description of the gateway |
-| ip                   | varchar(255) | IP address of the gateway |
-| authentification     | varchar(255) | Authentication modes |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                                 |
+|:---------------------|:-------------|:--------------------------------------------|
+| id                   | int unsigned | auto_increment                              |
+| name                 | varchar(255) | Name of the gateway                         |
+| description          | longtext     | Description of the gateway                  |
+| ip                   | varchar(255) | Gateway's IP addresses (public and private) |
+| authentification     | varchar(255) | Authentication modes                        |
+| created_at           | timestamp    | Date of creation                            |
+| updated_at           | timestamp    | Date of update                              |
+| deleted_at           | timestamp    | Date of deletion                            |
 
 
-In the application, a subnet can be attached to a gateway from these objects.
+In the application, a subnet can be linked with a gateway from these two objects.
 
 #### Connected external entities
 
@@ -876,26 +875,27 @@ Connected external entities represent external entities connected to the network
 
 Table *external_connected_entities* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of entity/company |
-| type                 | varchar(255) | Connexion type                    |
-| description          | longtext     | Description of the entity/company |
-| entity_id            | int unsigned | Reference to the connected external                       |
-| network_id           | int unsigned | Reference to the internal neetwork connected to the entity |
-| contacts             | varchar(255) | Contacts within the entity/company|
-| src                  | varchar(255) | IP Adress(es) of entity connection                          |
-| src_desc             | varchar(255) | Description de Entity source connection                   |
-| dst                  | varchar(255) | IP Adress(es) or IP Range of the destination of the connection |
-| dst_desc             | varchar(255) | Description of the Entity connection |
-| security             | text         | Security requirements of the system                         |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                                                       |
+|:---------------------|:-------------|:------------------------------------------------------------------|
+| id                   | int unsigned | auto_increment                                                    |
+| name                 | varchar(255) | Name of entity/company                                            |
+| type                 | varchar(255) | Connexion type                                                    |
+| description          | longtext     | Description of the entity/company and connection reason           |
+| entity_id            | int unsigned | Reference to the entity (ecosystem view)                          |
+| network_id           | int unsigned | Reference to the internal network(s) connected to the entity      |
+| contacts             | varchar(255) | Contacts within the external entity/company                       |
+| src                  | varchar(255) | Source IP address(es) or source range of the connection           |
+| src_desc             | varchar(255) | Description of the source's connection                            |
+| dst                  | varchar(255) | Destination IP address(es) or destination range of the connection |
+| dst_desc             | varchar(255) | Description of the destination's connection                       |
+| security             | text         | Security requirements of the system                               |
+| created_at           | timestamp    | Date of creation                                                  |
+| updated_at           | timestamp    | Date of update                                                    |
+| deleted_at           | timestamp    | Date of deletion                                                  |
 
-Exporting the data model references subnets and documents attached to a connected external entity.  
-In the application, a subnet can be attached to a connected external entity from a connected external entity object.  
+The data model export lists subnets and documents attached to a connected external entity.  
+
+In the app, a subnet can be linked to a connected external entity from a connected external entity object.  
 A document can be attached to a connected external entity from a connected external entity object.
 
 #### Network switches
@@ -904,15 +904,20 @@ Network switches are the components that manage connections between the various 
 
 Table *network_switches* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the switch |
+| Champ                | Type         | Description               |
+|:---------------------|:-------------|:--------------------------|
+| id                   | int unsigned | auto_increment            |
+| name                 | varchar(255) | Name of the switch        |
 | description          | longtext     | Description of the switch |
-| ip                   | varchar(255) | IP address of the switch |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| ip                   | varchar(255) | IP address of the switch  |
+| created_at           | timestamp    | Date of creation          |
+| updated_at           | timestamp    | Date of update            |
+| deleted_at           | timestamp    | Date of deletion          |
+
+The data model export lists physical switches and VLANs linked with a network switch.  
+
+In the app, a VLAN can be linked with a network switch from these two objects.  
+A physical switch can be linked with a network switch from these two objects.  
 
 #### Logical routers
 
@@ -920,23 +925,23 @@ Logical routers are logical components that manage connections between different
 
 Table *routers* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the router |
-| type                 | varchar(255) | router type         |
-| ip_addresses         | text         | IP Adress(es) of the router |
-| description          | longtext     | Description of the router |
-| rules                | longtext     | Filtering rules |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                  |
+|:---------------------|:-------------|:-----------------------------|
+| id                   | int unsigned | auto_increment               |
+| name                 | varchar(255) | Name of the router           |
+| type                 | varchar(255) | router type                  |
+| ip_addresses         | text         | IP address(es) of the router |
+| description          | longtext     | Description of the router    |
+| rules                | longtext     | Filtering rules              |
+| created_at           | timestamp    | Date of creation             |
+| updated_at           | timestamp    | Date of update               |
+| deleted_at           | timestamp    | Date of deletion             |
 
+The data model export lists physical routers linked to a logical router.  
 
-Exporting the data model references physical routers attached to a logical router.  
-In the application, a physical router can be attached to a logical router from these two objects.
+In the app, a physical router can be linked to a logical router from these two objects.  
 
-#### Security equipment
+#### Security devices
 
 Security devices are components used for network supervision, incident detection, equipment protection and information system security.
 
@@ -944,61 +949,69 @@ Security equipment includes intrusion detection systems (IDS: Intrusion Detectio
 
 Table *security_devices* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the device |
-| type                 | varchar(255) | Eqquipement type                    |
-| attributes           | varchar(255) | Equipment attributes                |
-| icon_id              | int unsigned | Reference to a specific image            |
-| description          | longtext     | Description of the device |
-| address_ip           | varchar(255) | IP Adress(es) of the equipment          |
-| vendor               | varchar(255) | Vendor / editor for CPE search    |
-| product              | varchar(255) | Editor Product for CPE search  |
+| Champ                | Type         | Description                         |
+|:---------------------|:-------------|:------------------------------------|
+| id                   | int unsigned | auto_increment                      |
+| name                 | varchar(255) | Name of the device                  |
+| type                 | varchar(255) | Device type                         |
+| attributes           | varchar(255) | Device attributes                   |
+| icon_id              | int unsigned | Reference to a specific icon        |
+| description          | longtext     | Description of the device           |
+| address_ip           | varchar(255) | IP address(es) of the device        |
+| vendor               | varchar(255) | Vendor / editor for CPE search      |
+| product              | varchar(255) | Editor Product for CPE search       |
 | version              | varchar(255) | Version of a product for CPE search |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| created_at           | timestamp    | Date of creation                    |
+| updated_at           | timestamp    | Date of update                      |
+| deleted_at           | timestamp    | Date of deletion                    |
 
-The "vendor", "product" and "version" fields are not used at the moment and are therefore 
-missing from the app.  
-Data model export references physical security equipment and applications 
-attached to logical safety equipment.  
-In the application, physical safety equipment can be attached to safety equipment 
-logic from these two objects.  
-An application can be attached to logical security equipment from these two objects.
+The "vendor", "product" and "version" fields are not used and therefore are absent in the app.  
+
+The data model export lists physical security device and applications linked to a logical security device.  
+
+In the app, physical security device can be linked to a logical security device from these two objects.  
+An application can be linked a to logical security device from these two objects.
 
 #### DHCP servers
 
-DHCP servers are physical or virtual devices that manage a network's IP addresses.
+DHCP servers are physical or virtual devices that manage a network's IP addresses. This object is considered barely usefull and obsolete. It's hidden by default. 
+
+The DHCP server object is kept to be compliant with ANSSI's guidelines.
+
+*Nota*: ANSSI is the french cybersecurity regulation authority.
 
 Table *dhcp_servers* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the DHCP server |
-| description          | longtext     | Description of the DHCP server |
-| address_ip           | varchar(255) | Adresse(s) IP of the server |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                     |
+|:---------------------|:-------------|:--------------------------------|
+| id                   | int unsigned | auto_increment                  |
+| name                 | varchar(255) | Name of the DHCP server         |
+| description          | longtext     | Description of the DHCP server  |
+| address_ip           | varchar(255) | IP addresse(s) IP of the server |
+| created_at           | timestamp    | Date of creation                |
+| updated_at           | timestamp    | Date of update                  |
+| deleted_at           | timestamp    | Date of deletion                |
 
 #### DNS servers
 
-Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
+Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address. 
+This object is considered barely usefull and obsolete. It's hidden by default. 
+
+The DNS server object is kept to be compliant with ANSSI's guidelines.
+
+*Nota*: ANSSI is the french cybersecurity regulation authority.
 
 Table *dnsservers* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the DNS server |
-| description          | longtext     | Description of the DNS server |
-| address_ip           | varchar(255) | Adresse(s) IP of the server |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                     |
+|:---------------------|:-------------|:--------------------------------|
+| id                   | int unsigned | auto_increment                  |
+| name                 | varchar(255) | DNS server's name               |
+| description          | longtext     | Description of the DNS server   |
+| address_ip           | varchar(255) | IP address(es) of the server    |
+| created_at           | timestamp    | Date of creation                |
+| updated_at           | timestamp    | Date of update                  |
+| deleted_at           | timestamp    | Date of deletion                |
 
 #### Clusters
 
@@ -1011,21 +1024,21 @@ Table *clusters* :
 | id                   | int unsigned | auto_increment                  |
 | name                 | varchar(255) | Name of the cluster             |
 | type                 | varchar(255) | Type of cluster                 |
-| icon_id              | int unsigned | Reference to a specific image   |
+| icon_id              | int unsigned | Reference to a specific icon    |
 | description          | longtext     | Description of the cluster      |
 | attributes           | varchar(255) | Cluster attributes              |
-| address_ip           | varchar(255) | IP address of the cluster       |
+| address_ip           | varchar(255) | Cluster's IP address            |
 | created_at           | timestamp    | Date of creation                |
 | updated_at           | timestamp    | Date of update                  |
 | deleted_at           | timestamp    | Date of deletionn               |
 
 
-The data model export references logical routers, logical and physical servers attached to a cluster.  
-In the application, a logical router can be attached to a cluster from a cluster object.  
-A logical server can be attached to a cluster from these two objects.  
-A physical server can be attached to a cluster from these two objects.
+The data model export lists logical routers, logical and physical servers linked with a cluster.  
 
----
+In the app, a logical router can be linked to a cluster from a cluster object.  
+A logical server can be linked to a cluster from these two objects.  
+A physical server can be linked to a cluster from these two objects.  
+
 #### Logical servers
 
 Logical servers are a logical breakdown of a physical server. If the physical server is not virtualized, it is split into a single logical server.
@@ -1033,86 +1046,86 @@ Logical servers are a logical breakdown of a physical server. If the physical se
 
 Table *logical_servers* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the logical server |
-| description          | longtext     | Description of the logical server |
-| icon_id              | int unsigned | Reference to a specific image   |
-| type                 | varchar(255) | Server type (appli, DB, ...)                 |
-| active               | tinyint(1)   | Server status active (1) or obsolete (0)          |
-| attributes           | varchar(255) | Server atributes (tags)            |
-| net_services         | varchar(255) | Active network services |
-| configuration        | longtext     | Server configuration |
-| operating_system     | varchar(255) | Operative system |
-| address_ip           | varchar(255) | IP address |
-| cpu                  | varchar(255) | Number of CPU |
-| memory               | varchar(255) | Quantity of RAM |
-| environment          | varchar(255) | Environnement (prod, dev, test, ...) |
-| disk                 | int          | Storage allocated |
-| disk_used            | int          | Stroage used                           |
-| domain_id            | int unsigned | Administartion domain for this server   |
-| install_date         | datetime     | Date of server installation |
-| update_date          | datetime     | Date of server upgrade |
+| Champ                | Type         | Description                            |
+|:---------------------|:-------------|:---------------------------------------|
+| id                   | int unsigned | auto_increment                         |
+| name                 | varchar(255) | Name of the logical server             |
+| icon_id              | int unsigned | Reference to a specific icon           |
+| type                 | varchar(255) | Server type (applicative, DB, ...)     |
+| active               | tinyint(1)   | Active (1) or obsolete (0) status      |
+| attributes           | varchar(255) | Server attributes (tags)               |
+| description          | longtext     | Description of the logical server      |
+| operating_system     | varchar(255) | Operating system                       |
+| install_date         | datetime     | Date of server installation            |
+| update_date          | datetime     | Date of server upgrade                 |
 | patching_frequency   | int signed   | Recurrence of update                   |
-| next_update          | date         | NNewt planned update date              |
-| databases            | List int [,] | IDs List of related database(s)        |
-| cluster_id           | List int [,] | IDs List of related cluster(s)         |
-| physical_servers     | List int [,] | IDs List of related physical_servers   |
-| applications         | List int [,] | IDs List of related applications       |
-| containers           | List int [,] | IDs List of related containers         |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| next_update          | date         | Next planned update date               |
+| net_services         | varchar(255) | Active network services                |
+| environment          | varchar(255) | Environnement (prod, dev, test, ...)   |
+| address_ip           | varchar(255) | IP address(es)                         |
+| domain_id            | int unsigned | Administration domain for this server  |
+| cpu                  | varchar(255) | Number of CPU                          |
+| memory               | varchar(255) | Quantity of RAM                        |
+| disk                 | int          | Storage allocated                      |
+| disk_used            | int          | Storage used                           |
+| configuration        | longtext     | Server configuration                   |
+| databases            | List int [,] | IDs list of related database(s)        |
+| cluster_id           | List int [,] | IDs list of related cluster(s)         |
+| physical_servers     | List int [,] | IDs list of related physical servers   |
+| applications         | List int [,] | IDs list of related applications       |
+| containers           | List int [,] | IDs list of related containers         |
+| created_at           | timestamp    | Date of creation                       |
+| updated_at           | timestamp    | Date of update                         |
+| deleted_at           | timestamp    | Date of deletion                       |
 
-The "patching_frequency" and "next_update" fields are not used at the moment and are therefore absent from the application.  
-Exporting the reference data model: 
+The "patching_frequency" and "next_update" fields are not used and therefore are absent in the app.  
+
+The data model lists: 
 
 - applications,
 - physical servers,
-- the documents,
+- documents,
 - databases,
 - clusters,
 - certificates,
-- and the containers
+- and containers
 
-attached to a logical server.  
+linked with a logical server.  
 
-in the application, an application can be attached to a logical server from these two objects.  
-A database can be attached to a logical server from these two objects.  
-A cluster can be attached to a logical server from these two objects.  
-A physical server can be attached to a logical server from these two objects.  
-A certificate can be attached to a logical server from a certificate object.  
-A container can be attached to a logical server from a container object.
+In the app, an application can be linked with a logical server from these two objects.  
+A database can be linked with a logical server from these two objects.  
 
-The "documents" field does not appear to be used in a logical server's data model.
+A cluster can be linked with a logical server from these two objects.  
+A physical server can be linked with a logical server from these two objects.  
 
+A certificate can be linked with a logical server from a certificate object.  
+A container can be linked with a logical server from a container object.
 
-
+The "documents" field doesn't appear to be used in a logical server's data model.
 
 #### Containers
 
 Containers are part of virtualization systems. They can operate in clusters or in isolation.
-on internal or external logical servers (cloud).
+on internal or external (cloud) logical servers.
 
 Table *containers* :
 
-| Champ                | Type         | Description                                  |
-|:---------------------|:-------------|:---------------------------------------------|
-| id                   | int unsigned | auto_increment                               |
-| name                 | varchar(255) | Container name                               |
-| description          | longtext     | Container description                        |
+| Champ                | Type         | Description                                     |
+|:---------------------|:-------------|:------------------------------------------------|
+| id                   | int unsigned | auto_increment                                  |
+| name                 | varchar(255) | Container name                                  |
+| description          | longtext     | Container description                           |
 | type                 | varchar(255) | Type of the container (docker, kubernetes, ...) |
-| icon_id              | int unsigned | Reference to a specific image                |
-| created_at           | timestamp    | Date of creation                             |
-| updated_at           | timestamp    | Date of update                               |
-| deleted_at           | timestamp    | Date of deletion                             |
+| icon_id              | int unsigned | Reference to a specific icon                    |
+| created_at           | timestamp    | Date of creation                                |
+| updated_at           | timestamp    | Date of update                                  |
+| deleted_at           | timestamp    | Date of deletion                                |
 
-Data model export references applications, databases and servers
-logics attached to a container.  
-In the application, an application can be attached to a container from these two objects.  
-A database can be attached to a container from these two objects.  
-A logical server can be attached to a container from a containing object.
+The aata model export lists applications, databases and logical servers linked with a container.  
+
+In the app, an application can be linked to a container from these two objects.  
+A database can be linked to a container from these two objects.  
+A logical server can be linked to a container from a container object.  
 
 #### Logical flows
 
@@ -1122,42 +1135,41 @@ Table *logical_flows* :
 
 General principle :
 
-| Champ                | Type         | Description                                   |
-|:---------------------|:-------------|:----------------------------------------------|
-| id                   | int unsigned | auto_increment                                |
-| name                 | varchar(255) | Name of logical flow                          |
-| description          | text         | Description of logical flow                   |
-| chain                | varchar(255) | INPUT / OUTPUT / FORWARD                      |
-| interface            | varchar(255) | Network interface linked                      |
-| router_id            | int unsigned | Router used for this logical flow             |
-| priority             | int signed   | Priority of the rule / flow                   |
-| action               | varchar(255) | Rule action (Grant, refuse, restrict, ...)    |
-| protocol             | varchar(255) | Protocol(s) used by this flow                 |
-| source_ip_range      | varchar(255) | Source IP range                               |
-| dest_ip_range        | varchar(255) | Destination IP range                          |
-| source_port          | varchar(255) | Logical port of the source                    |
-| dest_port            | varchar(255) | Logical port of the destination               |
-| *device*_source_id   | int unsigned | Actif source                                  |
-| *device*_dest_id     | int unsigned | Actif de destination                          |
-| users                | varchar(255) | Users concerned by this flow rule             |
-| schedule             | varchar(255) | Period of activity of the rule/flow           |
-| created_at           | timestamp    | Date of creation                              |
-| updated_at           | timestamp    | Date of update                                |
-| deleted_at           | timestamp    | Date of deletion                              |
+| Champ                | Type         | Description                              |
+|:---------------------|:-------------|:-----------------------------------------|
+| id                   | int unsigned | auto_increment                           |
+| name                 | varchar(255) | Name of logical flow                     |
+| description          | text         | Description of logical flow              |
+| chain                | varchar(255) | INPUT / OUTPUT / FORWARD                 |
+| interface            | varchar(255) | Network interface used                   |
+| router_id            | int unsigned | Router used for this logical flow        |
+| priority             | int signed   | Priority of the rule / flow              |
+| action               | varchar(255) | Rule action (Allow, deny, restrict, ...) |
+| protocol             | varchar(255) | Protocol(s) used by this flow            |
+| source_ip_range      | varchar(255) | Source IP range                          |
+| dest_ip_range        | varchar(255) | Destination IP range                     |
+| source_port          | varchar(255) | Logical port of the source               |
+| dest_port            | varchar(255) | Logical port of the destination          |
+| *device*_source_id   | int unsigned | Source device                            |
+| *device*_dest_id     | int unsigned | Destination device                       |
+| users                | varchar(255) | Users concerned by this flow rule        |
+| schedule             | varchar(255) | Period of activity of the rule/flow      |
+| created_at           | timestamp    | Date of creation                         |
+| updated_at           | timestamp    | Date of update                           |
+| deleted_at           | timestamp    | Date of deletion                         |
 
-Les actifs sources et destination peuvent être :
+Source and destination devices can be:
 
-| Actif (*device*)                | Source  | Destination |
-|:--------------------------------|:-------:|:-----------:|
-| Peripherals                     | ✅      | ✅          |
-| Physical Security Equipement    | ✅      | ✅          |
-| Physical server                 | ✅      | ✅          |
-| Storage infrastructure          | ✅      | ✅          |
-| Workstations                    | ✅      | ✅          |
-| Logical security equipment      | ✅      | ✅          |
-| Logical server                  | ✅      | ✅          |
-| Subnetworks                     | ✅      | ✅          |
-
+| *device*                 | Source  | Destination |
+|:-------------------------|:-------:|:-----------:|
+| Peripherals              | ✅      | ✅          |
+| Physical security device | ✅      | ✅          |
+| Physical server          | ✅      | ✅          |
+| Storage infrastructure   | ✅      | ✅          |
+| Workstations             | ✅      | ✅          |
+| Logical security device  | ✅      | ✅          |
+| Logical server           | ✅      | ✅          |
+| Subnetworks              | ✅      | ✅          |
 
 #### Certificates
 
@@ -1167,51 +1179,53 @@ Certificates are SSL keys, HTTPS certificates, etc. They are associated with log
 
 Table *certificates* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the certificate |
-| description          | longtext     | Description of the certificate |
+| Champ                | Type         | Description                          |
+|:---------------------|:-------------|:-------------------------------------|
+| id                   | int unsigned | auto_increment                       |
+| name                 | varchar(255) | Name of the certificate              |
+| description          | longtext     | Description of the certificate       |
 | type                 | varchar(255) | Type of certificate (SSL, HTTPS ...) |
-| start_validity       | date         | Date start of validity |
-| end_validity         | date         | Date end of validity |
-| status               | int          | State of certificate (RFC 6960) |
-| last_notification    | datetime     | Last notification submited |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| start_validity       | date         | Start date of validity               |
+| end_validity         | date         | End date of validity                 |
+| status               | int          | Certificate statis (RFC 6960)        |
+| last_notification    | datetime     | Last notification sent               |
+| created_at           | timestamp    | Date of creation                     |
+| updated_at           | timestamp    | Date of update                       |
+| deleted_at           | timestamp    | Date of deletion                     |
 
 * Note:
     * status = 0 : "Good"
-    * status = 1 : "Revoked
-    * status = 2 : "Unknown
+    * status = 1 : "Revoked"
+    * status = 2 : "Unknown"
 
-The "last_notification" field is not used at the moment and is therefore missing from the application.  
-Exporting the data model references logical applications and servers attached to a certificate.  
-In the application, a certificate can be attached to a logical application or server from a certificate object.
+The "last_notification" field is not used and therefore is absent in the app.  
 
+The data model export lists applications and logical servers linked with a certificate.  
+
+In the app, a certificate can be linked to a application or a logical server from a certificate object.  
 
 #### VLAN
 
-A VLAN (Virtual Local Area Network) or virtual local area network (LAN) enables equipment to be logically grouped together, free from physical constraints.
+A VLAN (Virtual Local Area Network) or virtual LAN enables equipment to be logically grouped together, free from physical constraints.
 
 Table *vlans* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of VLAN |
+| Champ                | Type         | Description         |
+|:---------------------|:-------------|:--------------------|
+| id                   | int unsigned | auto_increment      |
+| name                 | varchar(255) | Name of VLAN        |
 | description          | longtext     | Description of VLAN |
-| vlan_id              | int signed   | VLAN  number     |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| vlan_id              | int signed   | VLAN number         |
+| created_at           | timestamp    | Date of creation    |
+| updated_at           | timestamp    | Date of update      |
+| deleted_at           | timestamp    | Date of deletion    |
 
 
-The data model export references physical routers and logical switches ("network switches")
-attached to a VLAN.
-In the application, a VLAN can be attached to a physical router from a physical router object.  
-In the application, a VLAN can be attached to a subnet or a logic switch from these two objects.
+The data model export lists physical routers and logical network switches linked to a VLAN.  
+
+In the app, a VLAN can be linked to a physical router from a physical router object.  
+In the app, a VLAN can be linked to a subnet from these two objects.  
+In the app, a VLAN can be linked to a logic switch from these two objects.  
 
 ---
 
