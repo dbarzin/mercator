@@ -132,7 +132,7 @@ Requests and URIs for each api are shown in the table below.
 
 The fields to be supplied are those described in the [data model](/mercator/model/).
 
-To get access to advanced filters, feel free to check the related page: [API Avanced (filters)](./apifilters.md)
+To get access to advanced filters, feel free to check the related page: [API Advanced (filters)](./apifilters.md)
 
 ### Access rights
 
