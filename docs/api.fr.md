@@ -137,7 +137,7 @@ Pour voir les fonctions avancées de filtres : voir la page [API avancée (filtr
 
 ### Droits d'accès
 
-Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
+Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accéder aux API.
 Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
 accédés par l'API.
 
