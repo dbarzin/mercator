@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/api/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/apifilters/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>API - Mercator</title>
+    <title>API advanced (filters) - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "API";
-        var mkdocs_page_input_path = "api.md";
-        var mkdocs_page_url = "/mercator/api/";
+        var mkdocs_page_name = "API advanced (filters)";
+        var mkdocs_page_input_path = "apifilters.md";
+        var mkdocs_page_url = "/mercator/apifilters/";
       </script>
     
     <!--[if lt IE 9]>
@@ -79,15 +79,13 @@
                 <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
                 </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
+                </li>
+              </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">API</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">API advanced (filters)</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#installing-the-api-on-mercator">Installing the API on Mercator</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#the-apis">The APIs</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#actions-handled-by-the-resource-controller">Actions Handled by the Resource Controller</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#filtering-sorting-and-including-relations">Filtering, Sorting and Including Relations</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#filterable-fields">Filterable Fields</a>
@@ -166,10 +164,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
                 </li>
               </ul>
@@ -187,9 +181,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">API</li>
+      <li class="breadcrumb-item active">API advanced (filters)</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/dbarzin/mercator/edit/master/docs/api.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/apifilters.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -198,171 +192,9 @@
             <div class="section" itemprop="articleBody">
               
                 <ul>
-<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../api.fr/">Français</a></li>
+<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../apifilters.fr/">Français</a></li>
 </ul>
-<h2 id="api">API</h2>
-<p>The cartography can be modified or updated via a REST API.</p>
-<p>A REST API (<a href="https://en.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
-is an application programming interface that respects the constraints of REST architectural style
-and allows interaction with RESTful web services.</p>
-<h3 id="installing-the-api-on-mercator">Installing the API on Mercator</h3>
-<p>To install the API in Mercator, you need to install Passport by running this command:</p>
-<pre><code class="language-bash">php artisan passport:install
-</code></pre>
-<ul>
-<li>The Docker environment supports this functionality natively, via the entrypoint.</li>
-</ul>
-<h3 id="the-apis">The APIs</h3>
-<p>For each object in the cartography data model, there is an API.
-The list of APIs can be found in the /route/api.php file</p>
-<p><strong>GDPR View</strong></p>
-<ul>
-<li>/api/data-processings</li>
-<li>/api/security-controls</li>
-</ul>
-<p><strong>Ecosystem Views</strong></p>
-<ul>
-<li>/api/entities</li>
-<li>/api/relations</li>
-</ul>
-<p><strong>Business View of the Information System</strong></p>
-<ul>
-<li>/api/macro-processuses</li>
-<li>/api/processes</li>
-<li>/api/activities</li>
-<li>/api/operations</li>
-<li>/api/tasks</li>
-<li>/api/actors</li>
-<li>/api/information</li>
-</ul>
-<p><strong>Applications View</strong></p>
-<ul>
-<li>/api/application-blocks</li>
-<li>/api/applications</li>
-<li>/api/application-services</li>
-<li>/api/application-modules</li>
-<li>/api/databases</li>
-<li>/api/fluxes</li>
-</ul>
-<p><strong>Administration View</strong></p>
-<ul>
-<li>/api/zone-admins</li>
-<li>/api/annuaires</li>
-<li>/api/forest-ads</li>
-<li>/api/domaine-ads</li>
-<li>/api/admin-users</li>
-</ul>
-<p><strong>Logical Infrastructure View</strong></p>
-<ul>
-<li>/api/networks</li>
-<li>/api/subnetworks</li>
-<li>/api/gateways</li>
-<li>/api/external-connected-entities</li>
-<li>/api/network-switches</li>
-<li>/api/routers</li>
-<li>/api/security-devices</li>
-<li>/api/dhcp-servers</li>
-<li>/api/dnsservers</li>
-<li>/api/clusters</li>
-<li>/api/logical-servers</li>
-<li>/api/logical-flows</li>
-<li>/api/containers</li>
-<li>/api/certificates</li>
-<li>/api/vlans</li>
-</ul>
-<p><strong>Physical Infrastructure View</strong></p>
-<ul>
-<li>/api/sites</li>
-<li>/api/buildings</li>
-<li>/api/bays</li>
-<li>/api/physical-servers</li>
-<li>/api/workstations</li>
-<li>/api/storage-devices</li>
-<li>/api/peripherals</li>
-<li>/api/phones</li>
-<li>/api/physical-switches</li>
-<li>/api/physical-routers</li>
-<li>/api/wifi-terminals</li>
-<li>/api/physical-security-devices</li>
-<li>/api/wans</li>
-<li>/api/mans</li>
-<li>/api/lans</li>
-<li>/api/physical-links</li>
-<li>/api/fluxes</li>
-</ul>
-<p><strong>Reports</strong></p>
-<ul>
-<li>/api/report/cartography</li>
-<li>/api/report/entities</li>
-<li>/api/report/applicationsByBlocks</li>
-<li>/api/report/directory</li>
-<li>/api/report/logicalServers</li>
-<li>/api/report/securityNeeds</li>
-<li>/api/report/logicalServerConfigs</li>
-<li>/api/report/externalAccess</li>
-<li>/api/report/physicalInventory</li>
-<li>/api/report/vlans</li>
-<li>/api/report/workstations</li>
-<li>/api/report/cve</li>
-<li>/api/report/activityList</li>
-<li>/api/report/activityReport</li>
-<li>/api/report/impacts</li>
-<li>/api/report/rto</li>
-</ul>
-<h3 id="actions-handled-by-the-resource-controller">Actions Handled by the Resource Controller</h3>
-<p>The requests and URIs for each API are represented in the table below.</p>
-<table>
-<thead>
-<tr>
-<th>Request</th>
-<th>URI</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GET</td>
-<td>/api/objects</td>
-<td>returns the list of objects</td>
-</tr>
-<tr>
-<td>GET</td>
-<td>/api/objects/{id}</td>
-<td id="id">returns the object</td>
-</tr>
-<tr>
-<td>POST</td>
-<td>/api/objects</td>
-<td>saves a new object</td>
-</tr>
-<tr>
-<td>PUT/PATCH</td>
-<td>/api/objects/{id}</td>
-<td id="id">updates the object</td>
-</tr>
-<tr>
-<td>DELETE</td>
-<td>/api/objects/{id}</td>
-<td id="id">deletes the object</td>
-</tr>
-<tr>
-<td>POST</td>
-<td>/api/objects/mass-store</td>
-<td>creates multiple objects in one request</td>
-</tr>
-<tr>
-<td>PUT/PATCH</td>
-<td>/api/objects/mass-update</td>
-<td>updates multiple objects at once</td>
-</tr>
-<tr>
-<td>DELETE</td>
-<td>/api/objects/mass-destroy</td>
-<td>deletes multiple objects at once</td>
-</tr>
-</tbody>
-</table>
-<p>The fields to provide are those described in the <a href="/mercator/model/">data model</a>.</p>
+<h2 id="api-advanced-filters">API Advanced (filters)</h2>
 <h3 id="filtering-sorting-and-including-relations">Filtering, Sorting and Including Relations</h3>
 <p>List endpoints (<code>GET /api/objects</code>) support an advanced system of filters, sorting and relation inclusion via
 query parameters.</p>
@@ -996,8 +828,8 @@ try {
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../import/" class="btn btn-neutral float-left" title="Import"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../apifilters/" class="btn btn-neutral float-right" title="API advanced (filters)">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../api/" class="btn btn-neutral float-left" title="API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../references/" class="btn btn-neutral float-right" title="References">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -1025,10 +857,10 @@ try {
         </span>
     
     
-      <span><a href="../import/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../apifilters/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../references/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

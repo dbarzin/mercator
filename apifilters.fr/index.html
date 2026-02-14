@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/api.fr/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/apifilters.fr/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>API - Mercator</title>
+    <title>API avancé (filtres) - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "API";
-        var mkdocs_page_input_path = "api.fr.md";
-        var mkdocs_page_url = "/mercator/api.fr/";
+        var mkdocs_page_name = "API avanc\u00e9 (filtres)";
+        var mkdocs_page_input_path = "apifilters.fr.md";
+        var mkdocs_page_url = "/mercator/apifilters.fr/";
       </script>
     
     <!--[if lt IE 9]>
@@ -79,14 +79,56 @@
                 <li class="toctree-l1"><a class="reference internal" href="../import.fr/">Import</a>
                 </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../api.fr/">API</a>
+                </li>
+              </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">API</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">API avancé (filtres)</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#installer-lapi-sur-mercator">Installer l'API sur Mercator</a>
+    <li class="toctree-l2"><a class="reference internal" href="#filtrage-tri-et-inclusion-de-relations">Filtrage, tri et inclusion de relations</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#champs-filtrables">Champs filtrables</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#les-apis">Les APIs</a>
+    <li class="toctree-l3"><a class="reference internal" href="#syntaxe-des-filtres">Syntaxe des filtres</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</a>
+    <li class="toctree-l3"><a class="reference internal" href="#operateurs-de-filtrage-disponibles">Opérateurs de filtrage disponibles</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#filtres-exacts-et-textuels">Filtres exacts et textuels</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#comparaisons-numeriques">Comparaisons numériques</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#operateurs-avances">Opérateurs avancés</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#recherche-globale-et-filtres-sur-relations">Recherche globale et filtres sur relations</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#filtres-de-dates">Filtres de dates</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#soft-deletes">Soft Deletes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tri-des-resultats">Tri des résultats</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#inclusion-de-relations-eager-loading">Inclusion de relations (Eager Loading)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemples-complets">Exemples complets</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#filtres-simples">Filtres simples</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#filtres-combines">Filtres combinés</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#filtres-avances">Filtres avancés</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#tri">Tri</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#inclusion-de-relations">Inclusion de relations</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#combinaisons-complexes">Combinaisons complexes</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
     </li>
@@ -100,27 +142,23 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#recuperer-une-activite-avec-relations">Récupérer une activité avec relations</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</a>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#python">Python</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#bash">bash</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#powershell">Powershell</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</a>
+    <li class="toctree-l4"><a class="reference internal" href="#etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d'accès</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#etape-2-utilisation-du-jeton-pour-interroger-les-serveurs-logiques">Étape 2 — Utilisation du jeton pour interroger les serveurs logiques</a>
+    <li class="toctree-l4"><a class="reference internal" href="#etape-2-utilisation-avec-filtres-et-tri">Étape 2 — Utilisation avec filtres et tri</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#resume-des-fonctionnalites">Résumé des fonctionnalités</a>
     </li>
     </ul>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters.fr/">API avancé (filtres)</a>
                 </li>
               </ul>
               <ul>
@@ -141,9 +179,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">API</li>
+      <li class="breadcrumb-item active">API avancé (filtres)</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/dbarzin/mercator/edit/master/docs/api.fr.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/apifilters.fr.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -152,172 +190,306 @@
             <div class="section" itemprop="articleBody">
               
                 <ul>
-<li class="i18n-link i18n-link-found i18n-link-en"><a href="../api/">English</a></li>
+<li class="i18n-link i18n-link-found i18n-link-en"><a href="../apifilters/">English</a></li>
 </ul>
-<h2 id="api">API</h2>
-<p>La cartographie peut être modifiée ou mise à jour via une REST API.</p>
-<p>Une API REST (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
-est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST
-et permet d'interagir avec les services web RESTful.</p>
-<h3 id="installer-lapi-sur-mercator">Installer l'API sur Mercator</h3>
-<p>pour installer l'API dans Mercator, il est nécessaire d'installer Passport en lançant cette commande :</p>
-<pre><code class="language-bash">php artisan passport:install
+<h2 id="api-avance-filtres">API avancé (filtres)</h2>
+<p>Ce chapitre vient en complément du chapitre <a href="../api.fr/">API</a>.</p>
+<h3 id="filtrage-tri-et-inclusion-de-relations">Filtrage, tri et inclusion de relations</h3>
+<p>Les endpoints de liste (<code>GET /api/objets</code>) supportent un système avancé de filtres, tri et inclusion de relations via
+les paramètres de requête.</p>
+<h4 id="champs-filtrables">Champs filtrables</h4>
+<p>Tous les champs déclarés dans le modèle (<code>$fillable</code>) sont automatiquement filtrables. Les filtres sur des champs non
+autorisés sont simplement ignorés.</p>
+<h4 id="syntaxe-des-filtres">Syntaxe des filtres</h4>
+<p>Chaque filtre se présente sous la forme :</p>
+<pre><code class="language-text">filter[&lt;champ&gt;]=&lt;valeur&gt;                    # Filtre exact
+filter[&lt;champ&gt;_&lt;operateur&gt;]=&lt;valeur&gt;        # Filtre avec opérateur
 </code></pre>
-<ul>
-<li>l'environnement Docker prend en charge cette fonctionnalité nativement, via l'entrypoint.</li>
-</ul>
-<h3 id="les-apis">Les APIs</h3>
-<p>Pour chaque objet du modèle de données de la cartographie, il existe une API.
-La liste des API se trouve dans le fichier /route/api.php</p>
-<p><em>Note:</em> Pour visualiser le datamodel d'une API, cliquer sur son nom.</p>
-<p><strong>Vue du RGPD</strong></p>
-<ul>
-<li><a href="../model.fr/#registre">/api/data-processings</a></li>
-<li><a href="../model.fr/#mesures-de-securite">/api/security-controls</a></li>
-</ul>
-<p><strong>Vues de l'écosystème</strong></p>
-<ul>
-<li><a href="../model.fr/#entites">/api/entities</a></li>
-<li><a href="../model.fr/#relations">/api/relations</a></li>
-</ul>
-<p><strong>Vue métier du système d'information</strong></p>
-<ul>
-<li><a href="../model.fr/#macro-processus">/api/macro-processuses</a></li>
-<li><a href="../model.fr/#processus">/api/processes</a></li>
-<li><a href="../model.fr/#activites">/api/activities</a></li>
-<li><a href="../model.fr/#operations">/api/operations</a></li>
-<li><a href="../model.fr/#taches">/api/tasks</a></li>
-<li><a href="../model.fr/#acteurs">/api/actors</a></li>
-<li><a href="../model.fr/#information">/api/information</a></li>
-</ul>
-<p><strong>Vue des applications</strong></p>
-<ul>
-<li><a href="../model.fr/#blocs-applicatif">/api/application-blocks</a></li>
-<li><a href="../model.fr/#applications">/api/applications</a></li>
-<li><a href="../model.fr/#services-applicatif">/api/application-services</a></li>
-<li><a href="../model.fr/#modules-applicatif">/api/application-modules</a></li>
-<li><a href="../model.fr/#bases-de-donnees">/api/databases</a></li>
-<li><a href="../model.fr/#flux">/api/fluxes</a></li>
-</ul>
-<p><strong>Vue de l'administration</strong></p>
-<ul>
-<li><a href="../model.fr/#zones-dadministration">/api/zone-admins</a></li>
-<li><a href="../model.fr/#services-dannuaire-dadministration">/api/annuaires</a></li>
-<li><a href="../model.fr/#forets-active-directory-arborescence-ldap">/api/forest-ads</a></li>
-<li><a href="../model.fr/#domaines-active-directory-ldap">/api/domaine-ads</a></li>
-<li><a href="../model.fr/#utilisateurs">/api/admin-users</a></li>
-</ul>
-<p><strong>Vue de l'infrastructure logique</strong></p>
-<ul>
-<li><a href="../model.fr/#reseaux">/api/networks</a></li>
-<li><a href="../model.fr/#sous-reseaux">/api/subnetworks</a></li>
-<li><a href="../model.fr/#passerelles-dentrees-depuis-lexterieur">/api/gateways</a></li>
-<li><a href="../model.fr/#entites-exterieures-connectees">/api/external-connected-entities</a></li>
-<li><a href="../model.fr/#commutateurs-reseau">/api/network-switches</a></li>
-<li><a href="../model.fr/#routeurs-logiques">/api/routers</a></li>
-<li><a href="../model.fr/#equipements-de-securite">/api/security-devices</a></li>
-<li><a href="../model.fr/#serveurs-dhcp">/api/dhcp-servers</a></li>
-<li><a href="../model.fr/#serveurs-dns">/api/dnsservers</a></li>
-<li><a href="../model.fr/#clusters">/api/clusters</a></li>
-<li><a href="../model.fr/#serveurs-logiques">/api/logical-servers</a></li>
-<li><a href="../model.fr/#flux-logiques">/api/logical-flows</a></li>
-<li><a href="../model.fr/#conteneurs">/api/containers</a></li>
-<li><a href="../model.fr/#certificats">/api/certificates</a></li>
-<li><a href="../model.fr/#vlans">/api/vlans</a></li>
-</ul>
-<p><strong>Vue de l'infrastructure physique</strong></p>
-<ul>
-<li><a href="../model.fr/#sites">/api/sites</a></li>
-<li><a href="../model.fr/#batiments-salles">/api/buildings</a></li>
-<li><a href="../model.fr/#baies">/api/bays</a></li>
-<li><a href="../model.fr/#serveurs-physiques">/api/physical-servers</a></li>
-<li><a href="../model.fr/#postes-de-travail">/api/workstations</a></li>
-<li><a href="../model.fr/#infrastructures-de-stockage">/api/storage-devices</a></li>
-<li><a href="../model.fr/#peripheriques">/api/peripherals</a></li>
-<li><a href="../model.fr/#telephones">/api/phones</a></li>
-<li><a href="../model.fr/#commutateurs-physiques">/api/physical-switches</a></li>
-<li><a href="../model.fr/#routeurs-physiques">/api/physical-routers</a></li>
-<li><a href="../model.fr/#bornes-wifi">/api/wifi-terminals</a></li>
-<li><a href="../model.fr/#equipements-de-securite-physique">/api/physical-security-devices</a></li>
-<li><a href="../model.fr/#liens-physiques">/api/physical-links</a></li>
-<li><a href="../model.fr/#wans">/api/wans</a></li>
-<li><a href="../model.fr/#mans">/api/mans</a></li>
-<li><a href="../model.fr/#lans">/api/lans</a></li>
-</ul>
-<p><strong>Rapport</strong></p>
-<ul>
-<li>/api/report/cartography</li>
-<li>/api/report/entities</li>
-<li>/api/report/applicationsByBlocks</li>
-<li>/api/report/directory</li>
-<li>/api/report/logicalServers</li>
-<li>/api/report/securityNeeds</li>
-<li>/api/report/logicalServerConfigs</li>
-<li>/api/report/externalAccess</li>
-<li>/api/report/physicalInventory</li>
-<li>/api/report/vlans</li>
-<li>/api/report/workstations</li>
-<li>/api/report/cve</li>
-<li>/api/report/activityList</li>
-<li>/api/report/activityReport</li>
-<li>/api/report/impacts</li>
-<li>/api/report/rto</li>
-</ul>
-<h3 id="actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</h3>
-<p>Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.</p>
+<h4 id="operateurs-de-filtrage-disponibles">Opérateurs de filtrage disponibles</h4>
+<h5 id="filtres-exacts-et-textuels">Filtres exacts et textuels</h5>
 <table>
 <thead>
 <tr>
-<th>Requête</th>
-<th>URI</th>
-<th>Action</th>
+<th>Opérateur</th>
+<th>Syntaxe</th>
+<th>Description</th>
+<th>Exemple</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>GET</td>
-<td>/api/objets</td>
-<td>renvoie la liste des objets</td>
+<td>(aucun)</td>
+<td><code>filter[name]=Backup</code></td>
+<td>Égalité exacte</td>
+<td><code>name = 'Backup'</code></td>
 </tr>
 <tr>
-<td>GET</td>
-<td>/api/objets/{id}</td>
-<td id="id">renvoie l'objet</td>
-</tr>
-<tr>
-<td>POST</td>
-<td>/api/objets</td>
-<td>sauve un nouvel objet</td>
-</tr>
-<tr>
-<td>PUT/PATCH</td>
-<td>/api/objets/{id}</td>
-<td id="id">met à jour l'objet</td>
-</tr>
-<tr>
-<td>DELETE</td>
-<td>/api/objets/{id}</td>
-<td id="id">supprime l'objet</td>
-</tr>
-<tr>
-<td>POST</td>
-<td>/api/objets/mass-store</td>
-<td>crée plusieurs objets en une requête</td>
-</tr>
-<tr>
-<td>PUT/PATCH</td>
-<td>/api/objets/mass-update</td>
-<td>met à jour plusieurs objets à la fois</td>
-</tr>
-<tr>
-<td>DELETE</td>
-<td>/api/objets/mass-destroy</td>
-<td>supprime plusieurs objets à la fois</td>
+<td>(partiel)</td>
+<td><code>filter[name]=backup</code></td>
+<td>Recherche partielle (LIKE) *</td>
+<td><code>name LIKE '%backup%'</code></td>
 </tr>
 </tbody>
 </table>
-<p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
-<p>Pour voir les fonctions avancées de filtres : voir la page <a href="../apifilters.fr/">API Avancé (filtres)</a></p>
+<p><em>* La recherche partielle automatique s'applique aux champs contenant : <code>name</code>, <code>description</code>, <code>email</code></em></p>
+<h5 id="comparaisons-numeriques">Comparaisons numériques</h5>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Syntaxe</th>
+<th>Description</th>
+<th>Exemple SQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_lt</code></td>
+<td><code>filter[recovery_time_objective_lt]=4</code></td>
+<td>Inférieur à</td>
+<td><code>recovery_time_objective &lt; 4</code></td>
+</tr>
+<tr>
+<td><code>_lte</code></td>
+<td><code>filter[recovery_time_objective_lte]=4</code></td>
+<td>Inférieur ou égal à</td>
+<td><code>recovery_time_objective &lt;= 4</code></td>
+</tr>
+<tr>
+<td><code>_gt</code></td>
+<td><code>filter[recovery_time_objective_gt]=8</code></td>
+<td>Supérieur à</td>
+<td><code>recovery_time_objective &gt; 8</code></td>
+</tr>
+<tr>
+<td><code>_gte</code></td>
+<td><code>filter[recovery_time_objective_gte]=8</code></td>
+<td>Supérieur ou égal à</td>
+<td><code>recovery_time_objective &gt;= 8</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="operateurs-avances">Opérateurs avancés</h5>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Syntaxe</th>
+<th>Description</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_in</code></td>
+<td><code>filter[id_in]=1,2,3</code></td>
+<td>Valeur dans une liste</td>
+<td><code>id IN (1, 2, 3)</code></td>
+</tr>
+<tr>
+<td><code>_between</code></td>
+<td><code>filter[recovery_time_objective_between]=4,24</code></td>
+<td>Entre deux valeurs</td>
+<td><code>recovery_time_objective BETWEEN 4 AND 24</code></td>
+</tr>
+<tr>
+<td><code>_null</code></td>
+<td><code>filter[deleted_at_null]=true</code></td>
+<td>Valeur NULL</td>
+<td><code>deleted_at IS NULL</code></td>
+</tr>
+<tr>
+<td><code>_null</code></td>
+<td><code>filter[description_null]=false</code></td>
+<td>Valeur NOT NULL</td>
+<td><code>description IS NOT NULL</code></td>
+</tr>
+<tr>
+<td><code>_not</code></td>
+<td><code>filter[type_not]=opensource</code></td>
+<td>Négation (différent)</td>
+<td><code>type != 'opensource'</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="recherche-globale-et-filtres-sur-relations">Recherche globale et filtres sur relations</h5>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Syntaxe</th>
+<th>Description</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>search</code></td>
+<td><code>filter[search]=backup</code></td>
+<td>Recherche OR sur tous les champs textuels (name, description, email)</td>
+<td><code>name LIKE '%backup%' OR description LIKE '%backup%'</code></td>
+</tr>
+<tr>
+<td>(relation)</td>
+<td><code>filter[actors.email]=john</code></td>
+<td>Recherche LIKE sur champs de relations</td>
+<td><code>actors.email LIKE '%john%'</code></td>
+</tr>
+<tr>
+<td>(relation)</td>
+<td><code>filter[contacts.name]=alice</code></td>
+<td>Recherche LIKE sur nom dans une relation</td>
+<td><code>contacts.name LIKE '%alice%'</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="filtres-de-dates">Filtres de dates</h5>
+<p>Pour les champs contenant <code>date</code> ou <code>at</code> dans leur nom :</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Syntaxe</th>
+<th>Description</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_after</code></td>
+<td><code>filter[created_at_after]=2024-01-01</code></td>
+<td>Après cette date</td>
+<td><code>created_at &gt;= '2024-01-01'</code></td>
+</tr>
+<tr>
+<td><code>_before</code></td>
+<td><code>filter[updated_at_before]=2024-12-31</code></td>
+<td>Avant cette date</td>
+<td><code>updated_at &lt;= '2024-12-31'</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="soft-deletes">Soft Deletes</h5>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filter[trashed]=with</code></td>
+<td>Inclure les éléments supprimés</td>
+</tr>
+<tr>
+<td><code>filter[trashed]=only</code></td>
+<td>Uniquement les éléments supprimés</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tri-des-resultats">Tri des résultats</h4>
+<p>Le tri se fait avec le paramètre <code>sort</code> :</p>
+<pre><code class="language-text">sort=&lt;champ&gt;        # Tri ascendant
+sort=-&lt;champ&gt;       # Tri descendant
+</code></pre>
+<p>Exemples :</p>
+<ul>
+<li><code>sort=name</code> : Tri par nom croissant</li>
+<li><code>sort=-created_at</code> : Tri par date de création décroissant</li>
+<li><code>sort=recovery_time_objective</code> : Tri par RTO croissant</li>
+</ul>
+<h4 id="inclusion-de-relations-eager-loading">Inclusion de relations (Eager Loading)</h4>
+<p>Les relations entre objets peuvent être chargées avec le paramètre <code>include</code> :</p>
+<pre><code class="language-text">include=&lt;relation1&gt;,&lt;relation2&gt;
+</code></pre>
+<p>Les relations disponibles sont automatiquement détectées depuis le modèle. Pour les activités, par exemple :</p>
+<ul>
+<li><code>processes</code> : Processus liés</li>
+<li><code>operations</code> : Opérations liées</li>
+<li><code>applications</code> : Applications liées</li>
+<li><code>impacts</code> : Impacts liés</li>
+</ul>
+<p>Exemple : <code>include=processes,operations</code></p>
+<h4 id="exemples-complets">Exemples complets</h4>
+<h5 id="filtres-simples">Filtres simples</h5>
+<pre><code class="language-http"># Activités dont le nom contient &quot;sauvegarde&quot;
+GET /api/activities?filter[name]=sauvegarde
+
+# Activités avec un RTO inférieur ou égal à 4 heures
+GET /api/activities?filter[recovery_time_objective_lte]=4
+
+# Activités avec un ID supérieur ou égal à 100
+GET /api/activities?filter[id_gte]=100
+
+# Applications dont le type est différent de &quot;opensource&quot;
+GET /api/applications?filter[type_not]=opensource
+
+# Recherche globale sur tous les champs textuels
+GET /api/applications?filter[search]=backup
+
+# Recherche sur l'email d'un acteur lié
+GET /api/activities?filter[actors.email]=john@example.com
+</code></pre>
+<h5 id="filtres-combines">Filtres combinés</h5>
+<pre><code class="language-http"># Activités dont le nom contient &quot;GDPR&quot; avec RTO &gt;= 8
+GET /api/activities?filter[name]=GDPR&amp;filter[recovery_time_objective_gte]=8
+
+# Serveurs créés après le 1er janvier 2024 avec un nom contenant &quot;prod&quot;
+GET /api/logical-servers?filter[created_at_after]=2024-01-01&amp;filter[name]=prod
+
+# Applications avec type différent de &quot;opensource&quot; triées par nom
+GET /api/applications?filter[type_not]=opensource&amp;sort=name
+
+# Recherche globale &quot;backup&quot; sur toutes les activités avec RTO &lt;= 8
+GET /api/activities?filter[search]=backup&amp;filter[recovery_time_objective_lte]=8
+
+# Activités liées à un acteur dont l'email contient &quot;admin&quot;
+GET /api/activities?filter[actors.email]=admin&amp;include=actors
+</code></pre>
+<h5 id="filtres-avances">Filtres avancés</h5>
+<pre><code class="language-http"># Activités avec ID dans la liste 1, 2, 3, 5
+GET /api/activities?filter[id_in]=1,2,3,5
+
+# Activités avec RTO entre 4 et 24 heures
+GET /api/activities?filter[recovery_time_objective_between]=4,24
+
+# Activités sans description
+GET /api/activities?filter[description_null]=true
+
+# Inclure les activités supprimées
+GET /api/activities?filter[trashed]=with
+</code></pre>
+<h5 id="tri">Tri</h5>
+<pre><code class="language-http"># Tri par nom croissant
+GET /api/activities?sort=name
+
+# Tri par date de création décroissant
+GET /api/activities?sort=-created_at
+
+# Tri par RTO croissant
+GET /api/activities?sort=recovery_time_objective
+</code></pre>
+<h5 id="inclusion-de-relations">Inclusion de relations</h5>
+<pre><code class="language-http"># Charger les processus liés
+GET /api/activities?include=processes
+
+# Charger plusieurs relations
+GET /api/activities?include=processes,operations,applications
+
+# Activité spécifique avec ses relations
+GET /api/activities/1?include=processes,operations
+</code></pre>
+<h5 id="combinaisons-complexes">Combinaisons complexes</h5>
+<pre><code class="language-http"># Activités GDPR avec RTO &gt;= 8, triées par nom, avec relations
+GET /api/activities?filter[name]=GDPR&amp;filter[recovery_time_objective_gte]=8&amp;include=processes,operations&amp;sort=name
+
+# Serveurs logiques créés en 2024, sans description, avec tri
+GET /api/logical-servers?filter[created_at_after]=2024-01-01&amp;filter[created_at_before]=2024-12-31&amp;filter[description_null]=true&amp;sort=-created_at
+
+# Applications avec plusieurs critères
+GET /api/applications?filter[name]=CRM&amp;filter[id_in]=1,2,3&amp;include=databases&amp;sort=-updated_at
+</code></pre>
 <h3 id="droits-dacces">Droits d'accès</h3>
 <p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accéder aux API.
 Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
@@ -460,40 +632,6 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
 
     var_dump($response);
 </code></pre>
-<h4 id="mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</h4>
-<pre><code class="language-php">&lt;?php
-   $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users/8&quot;,
-        CURLOPT_RETURNTRANSFER =&gt; true,
-        CURLOPT_MAXREDIRS =&gt; 10,
-        CURLOPT_TIMEOUT =&gt; 30,
-        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
-        CURLOPT_POST =&gt; true,
-        CURLOPT_CUSTOMREQUEST =&gt; &quot;PUT&quot;,
-        CURLOPT_POSTFIELDS =&gt; http_build_query(
-            array(
-                'name' =&gt; 'Henri',
-                'login' =&gt; 'henri@test.fr',
-                'language' =&gt; 'fr',
-                'roles[0]' =&gt; 1,
-                'roles[1]' =&gt; 3,
-                'granularity' =&gt; '3')
-            ),
-        CURLOPT_HTTPHEADER =&gt; array(
-            &quot;accept: application/json&quot;,
-            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
-            &quot;cache-control: no-cache&quot;,
-        ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
-
-    var_dump($response);
-</code></pre>
 <h4 id="python">Python</h4>
 <p>Voici un exemple d'utilisation de l'API en Python avec filtres avancés</p>
 <pre><code class="language-python">#!/usr/bin/python3
@@ -585,7 +723,7 @@ echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
 </code></pre>
 <h4 id="powershell">Powershell</h4>
 <p>Le script PowerShell ci-dessous montre comment s'authentifier auprès de l'API et utiliser les filtres avancés.</p>
-<h5 id="etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</h5>
+<h5 id="etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d'accès</h5>
 <pre><code class="language-powershell"># Définir l'URL d'authentification et les identifiants
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
 $loginBody = @{
@@ -603,7 +741,7 @@ try {
     return
 }
 </code></pre>
-<h5 id="etape-2-utilisation-du-jeton-pour-interroger-les-serveurs-logiques">Étape 2 — Utilisation du jeton pour interroger les serveurs logiques</h5>
+<h5 id="etape-2-utilisation-avec-filtres-et-tri">Étape 2 — Utilisation avec filtres et tri</h5>
 <pre><code class="language-powershell"># Définir les en-têtes
 $headers = @{
     'Authorization' = &quot;Bearer $token&quot;
@@ -621,13 +759,96 @@ try {
 } catch {
     Write-Error &quot;Échec de la requête : $_&quot;
 }
+
+# Récupération avec relations
+$activityId = 1
+$apiUri = &quot;http://127.0.0.1:8000/api/activities/$activityId?include=processes,operations&quot;
+
+try {
+    $activity = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
+    $activity | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error &quot;Échec de la requête : $_&quot;
+}
 </code></pre>
+<h3 id="resume-des-fonctionnalites">Résumé des fonctionnalités</h3>
+<table>
+<thead>
+<tr>
+<th>Fonctionnalité</th>
+<th>Syntaxe</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filtre exact</td>
+<td><code>filter[champ]=valeur</code></td>
+<td><code>filter[name]=Backup</code></td>
+</tr>
+<tr>
+<td>Comparaison</td>
+<td><code>filter[champ_operateur]=valeur</code></td>
+<td><code>filter[recovery_time_objective_gte]=8</code></td>
+</tr>
+<tr>
+<td>Négation</td>
+<td><code>filter[champ_not]=valeur</code></td>
+<td><code>filter[type_not]=opensource</code></td>
+</tr>
+<tr>
+<td>Liste de valeurs</td>
+<td><code>filter[champ_in]=v1,v2,v3</code></td>
+<td><code>filter[id_in]=1,2,3</code></td>
+</tr>
+<tr>
+<td>Intervalle</td>
+<td><code>filter[champ_between]=min,max</code></td>
+<td><code>filter[age_between]=18,65</code></td>
+</tr>
+<tr>
+<td>NULL</td>
+<td><code>filter[champ_null]=true/false</code></td>
+<td><code>filter[deleted_at_null]=true</code></td>
+</tr>
+<tr>
+<td>Dates</td>
+<td><code>filter[champ_after/before]=date</code></td>
+<td><code>filter[created_at_after]=2024-01-01</code></td>
+</tr>
+<tr>
+<td>Recherche globale</td>
+<td><code>filter[search]=terme</code></td>
+<td><code>filter[search]=backup</code></td>
+</tr>
+<tr>
+<td>Relation</td>
+<td><code>filter[relation.champ]=valeur</code></td>
+<td><code>filter[actors.email]=john</code></td>
+</tr>
+<tr>
+<td>Tri</td>
+<td><code>sort=champ</code> ou <code>sort=-champ</code></td>
+<td><code>sort=-created_at</code></td>
+</tr>
+<tr>
+<td>Relations</td>
+<td><code>include=relation1,relation2</code></td>
+<td><code>include=processes,operations</code></td>
+</tr>
+<tr>
+<td>Soft deletes</td>
+<td><code>filter[trashed]=with/only</code></td>
+<td><code>filter[trashed]=with</code></td>
+</tr>
+</tbody>
+</table>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../import.fr/" class="btn btn-neutral float-left" title="Import"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../apifilters.fr/" class="btn btn-neutral float-right" title="API avancé (filtres)">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../api.fr/" class="btn btn-neutral float-left" title="API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../references.fr/" class="btn btn-neutral float-right" title="Références">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -655,10 +876,10 @@ try {
         </span>
     
     
-      <span><a href="../import.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../api.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../apifilters.fr/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../references.fr/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

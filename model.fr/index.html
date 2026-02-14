@@ -100,25 +100,25 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#acteurs">Acteurs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#informations">Informations</a>
+    <li class="toctree-l3"><a class="reference internal" href="#information">Information</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#la-vue-des-applications">La vue des applications</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#bloc-applicatif">Bloc applicatif</a>
+    <li class="toctree-l3"><a class="reference internal" href="#blocs-applicatif">Blocs applicatif</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#application">Application</a>
+    <li class="toctree-l3"><a class="reference internal" href="#applications">Applications</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#evenements-majeurs">Evènements majeurs</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#service-applicatif">Service applicatif</a>
+    <li class="toctree-l3"><a class="reference internal" href="#services-applicatif">Services applicatif</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#module-applicatif">Module applicatif</a>
+    <li class="toctree-l3"><a class="reference internal" href="#modules-applicatif">Modules applicatif</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#base-de-donnees">Base de données</a>
+    <li class="toctree-l3"><a class="reference internal" href="#bases-de-donnees">Bases de données</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#flux">Flux</a>
     </li>
@@ -126,11 +126,11 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#ladministration">L’administration</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#zone-dadministration">Zone d’administration</a>
+    <li class="toctree-l3"><a class="reference internal" href="#zones-dadministration">Zones d’administration</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#service-dannuaire-dadministration">Service d’annuaire d’administration</a>
+    <li class="toctree-l3"><a class="reference internal" href="#services-dannuaire-dadministration">Services d’annuaire d’administration</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#foret-active-directory-arborescence-ldap">Forêt Active Directory / Arborescence LDAP</a>
+    <li class="toctree-l3"><a class="reference internal" href="#forets-active-directory-arborescence-ldap">Forêts Active Directory / Arborescence LDAP</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#domaines-active-directory-ldap">Domaines Active Directory / LDAP</a>
     </li>
@@ -168,7 +168,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#certificats">Certificats</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#vlan">VLAN</a>
+    <li class="toctree-l3"><a class="reference internal" href="#vlans">VLANs</a>
     </li>
         </ul>
     </li>
@@ -200,11 +200,11 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#liens-physiques">Liens physiques</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#wan">WAN</a>
+    <li class="toctree-l3"><a class="reference internal" href="#wans">WANs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#man">MAN</a>
+    <li class="toctree-l3"><a class="reference internal" href="#mans">MANs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#lan">LAN</a>
+    <li class="toctree-l3"><a class="reference internal" href="#lans">LANs</a>
     </li>
         </ul>
     </li>
@@ -225,6 +225,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../api.fr/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters.fr/">API avancé (filtres)</a>
                 </li>
               </ul>
               <ul>
@@ -266,7 +270,20 @@ les processus, applications et informations utilisées par le système d'informa
 <p>Cette vue permet de remplir les obligations prévues à l’article 30 du RGPD.</p>
 <h4 id="registre">Registre</h4>
 <p>Le registre des activités de traitement contient les informations prévues à l'article 30.1 du RGPD.</p>
-<p>Table <em>data_processing</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>data_processing</em></span></td>
+<td style="text-align: left;"><code>/api/data-processings</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -383,18 +400,31 @@ les processus, applications et informations utilisées par le système d'informa
 </tr>
 </tbody>
 </table>
-<p>Le champ "controls" n'est pas utilisé et est donc absent de l'application.  </p>
-<p>L'export du modèle de données référence les processus, les informations, les applications et les documents 
-rattachés à un traitement de données.  </p>
-<p>Dans l'application, un processus peut être rattaché à un traitement de données depuis un objet traitement 
+<p>Le champ "controls" n'est pas utilisé et est donc absent de l'application.</p>
+<p>L'export du modèle de données référence les processus, les informations, les applications et les documents
+rattachés à un traitement de données.</p>
+<p>Dans l'application, un processus peut être rattaché à un traitement de données depuis un objet traitement
 de données.<br />
-Une information peut être rattachée à un traitement de données depuis un objet traitement de données.  </p>
+Une information peut être rattachée à un traitement de données depuis un objet traitement de données.</p>
 <p>Une application peut être rattachée à un traitement de données depuis un objet traitement de données.<br />
-Un document peut être rattaché à un traitement de données depuis un objet traitement de données.  </p>
+Un document peut être rattaché à un traitement de données depuis un objet traitement de données.</p>
 <h4 id="mesures-de-securite">Mesures de sécurité</h4>
 <p>Cette table permet d'identifier les mesures de sécurité appliquées aux processus et applications.</p>
 <p>Par défaut cette table est complétée avec les mesures de sécurité de la norme ISO 27001:2022.</p>
-<p>Table <em>security_controls</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"> <span style="color: blue;"><em>security_controls</em></span></td>
+<td style="text-align: left;"><code>/api/security-controls</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -447,7 +477,20 @@ de l’écosystème sans se limiter à l’étude individuelle de chaque entité
 d’information qui vise à être cartographié.</p>
 <p>Les entités sont des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au
 travers de relations.</p>
-<p>Table <em>entities</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>entities</em></span></td>
+<td style="text-align: left;"><code>/api/entities</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -534,17 +577,30 @@ travers de relations.</p>
 </tr>
 </tbody>
 </table>
-<p>Le champ "external_ref_id" n'est pas utilisé et est donc absent de l'application.  </p>
-<p>L'export du modèle de données référence les processus et applications rattachées à une entité.  </p>
+<p>Le champ "external_ref_id" n'est pas utilisé et est donc absent de l'application.</p>
+<p>L'export du modèle de données référence les processus et applications rattachées à une entité.</p>
 <p>Dans l'application, un processus peut être rattaché à une entité depuis ces deux objets.<br />
-Une application peut être rattachée à une entité (en tant que responsable de l'exploitation) depuis ces deux objets.  </p>
+Une application peut être rattachée à une entité (en tant que responsable de l'exploitation) depuis ces deux objets.</p>
 <p>Dans l'application, une base de données peut être rattachée à une entité (en tant que responsable de l'exploitation)
-depuis ces deux objets.  </p>
+depuis ces deux objets.</p>
 <h4 id="relations">Relations</h4>
 <p>Les relations représentent un lien entre deux entités ou systèmes.</p>
 <p>Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système
 d’information.</p>
-<p>Table <em>relations</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>relations</em></span></td>
+<td style="text-align: left;"><code>/api/relations</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -671,12 +727,12 @@ d’information.</p>
 </tr>
 </tbody>
 </table>
-<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas
 d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
-Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
+Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>L'export du modèle de données référence les documents de référence rattachés à une relation.<br />
-Dans l'application, un document peut être rattaché à une relation depuis un objet relations. </p>
-<p>Les valeurs financières d'un contrat peuvent être indiquées dans des champs dédiés.  </p>
+Dans l'application, un document peut être rattaché à une relation depuis un objet relations.</p>
+<p>Les valeurs financières d'un contrat peuvent être indiquées dans des champs dédiés.</p>
 <hr />
 <h3 id="vue-metier-du-systeme-dinformation">Vue métier du système d’information</h3>
 <p>La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y
@@ -686,7 +742,20 @@ participent, indépendamment des choix technologiques faits par l’organisme et
 et ainsi de comprendre leur contexte d’emploi.</p>
 <h4 id="macro-processus">Macro-processus</h4>
 <p>Les macro-processus représentent des ensembles de processus.</p>
-<p>Table <em>macro_processuses</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>macro-processuses</em></span></td>
+<td style="text-align: left;"><code>/api/macro-processuses</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -763,16 +832,29 @@ et ainsi de comprendre leur contexte d’emploi.</p>
 </tr>
 </tbody>
 </table>
-<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas
 d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
-Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
+Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>Dans l'application, un processus peut être rattaché à un macro-processus depuis ces deux objets.</p>
 <h4 id="processus">Processus</h4>
 <p>Les processus sont un ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à
 valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.</p>
 <p>Les processus sont composés d’activités, des entités qui participent à ce processus et des informations traitées par
 celui-ci.</p>
-<p>Table <em>processes</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>processes</em></span></td>
+<td style="text-align: left;"><code>/api/processes</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -884,9 +966,9 @@ celui-ci.</p>
 </tr>
 </tbody>
 </table>
-<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas
 d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
-Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
+Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>L'export du modèle de données référence les :</p>
 <ul>
 <li>entités,</li>
@@ -899,15 +981,28 @@ Il s'active depuis le menu Configuration &gt; Paramètres.  </p>
 <p>rattachées à un processus.</p>
 <p>Dans l'application, une entité associée à un processus peut être rattachée à un processus depuis ces deux objets.<br />
 Une activité peut être rattachée à un processus depuis ces deux objets.<br />
-Une information peut être rattachée à un processus depuis ces deux objets.  </p>
+Une information peut être rattachée à un processus depuis ces deux objets.</p>
 <p>Une application peut être rattachée à un processus depuis ces deux objets.<br />
-Un traitement du registre RGPD peut être rattachée à un processus depuis un objet traitement du registre.  </p>
+Un traitement du registre RGPD peut être rattachée à un processus depuis un objet traitement du registre.</p>
 <p>Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".<br />
 Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.</p>
 <h4 id="activites">Activités</h4>
 <p>Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et
 pas forcément à une structure organisationnelle de l’entreprise.</p>
-<p>Table <em>activities</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>activities</em></span></td>
+<td style="text-align: left;"><code>/api/activities</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -980,17 +1075,30 @@ pas forcément à une structure organisationnelle de l’entreprise.</p>
 </tbody>
 </table>
 <p>DMTP : Temps d'interruption maximale avant que les conséquences ne se soient critiques ou ne deviennent innaceptables.<br />
-PDMA : perte de données maximales avant des conséquences critiques ou innaceptables.  </p>
-<p>L'export du modèle de données référence les processus, opérations et applications rattachées à une activité.  </p>
+PDMA : perte de données maximales avant des conséquences critiques ou innaceptables.</p>
+<p>L'export du modèle de données référence les processus, opérations et applications rattachées à une activité.</p>
 <p>Dans l'application, un processus peut être rattaché à une activité depuis ces deux objets.<br />
 Une opération peut être rattachée à une activité depuis ces deux objets.<br />
 Une application peut être rattachée à une activité depuis ces deux objets.</p>
 <p>Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans une table à part.</p>
 <h5 id="impacts">Impacts</h5>
 <p>Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.<br />
-Les impacts ne sont accessibles qu'à travers les objets activités.  </p>
-<p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.  </p>
-<p>Table <em>activity_impact</em> :</p>
+Les impacts ne sont accessibles qu'à travers les objets activités.</p>
+<p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>activity_impacts</em></span></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1034,7 +1142,20 @@ Les impacts ne sont accessibles qu'à travers les objets activités.  </p>
 </table>
 <h4 id="operations">Opérations</h4>
 <p>Une opération est composée d’acteurs et de tâches.</p>
-<p>Table <em>operations</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>operations</em></span></td>
+<td style="text-align: left;"><code>/api/operations</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1096,14 +1217,27 @@ Les impacts ne sont accessibles qu'à travers les objets activités.  </p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les activités, les acteurs et les tâches rattachées à une opération.  </p>
+<p>L'export du modèle de données référence les activités, les acteurs et les tâches rattachées à une opération.</p>
 <p>Dans l'application, une activité peut être rattachée à une opération depuis ces deux objets.<br />
 Un acteur peut être rattaché à une opération depuis l'objet opérations.<br />
-Une tâche peut être rattachée à une opération depuis l'objet opérations.  </p>
+Une tâche peut être rattachée à une opération depuis l'objet opérations.</p>
 <h4 id="taches">Tâches</h4>
 <p>Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible
 de travail dans la chaîne de valeur ajoutée d’un processus.</p>
-<p>Table <em>tasks</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>tasks</em></span></td>
+<td style="text-align: left;"><code>/api/tasks</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1145,12 +1279,25 @@ de travail dans la chaîne de valeur ajoutée d’un processus.</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les opérations rattachées à une tâche.  </p>
-<p>Dans l'application, une opération peut être rattachée à une tâche depuis l'objet opérations.  </p>
+<p>L'export du modèle de données référence les opérations rattachées à une tâche.</p>
+<p>Dans l'application, une opération peut être rattachée à une tâche depuis l'objet opérations.</p>
 <h4 id="acteurs">Acteurs</h4>
 <p>Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des
 décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.</p>
-<p>Table <em>actors</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>actors</em></span></td>
+<td style="text-align: left;"><code>/api/actors</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1207,11 +1354,24 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les opérations rattachées à un acteur.  </p>
-<p>Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.  </p>
-<h4 id="informations">Informations</h4>
+<p>L'export du modèle de données référence les opérations rattachées à un acteur.</p>
+<p>Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.</p>
+<h4 id="information">Information</h4>
 <p>Une information est une donnée faisant l’objet d’un traitement informatique.</p>
-<p>Table <em>information</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>information</em></span></td>
+<td style="text-align: left;"><code>/api/information</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1308,22 +1468,35 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 </tr>
 </tbody>
 </table>
-<p>Le champ "retention" n'est pas utilisé pour le moment et est donc absent de l'application.  </p>
-<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+<p>Le champ "retention" n'est pas utilisé pour le moment et est donc absent de l'application.</p>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas
 d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
-Il s'active depuis le menu Configuration &gt; Paramètres. </p>
+Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>L'export du modèle de données référence les bases de données et processus rattachés à une information.<br />
 Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.<br />
-Un processus peut être rattachée à une information depuis ces deux objets. </p>
+Un processus peut être rattachée à une information depuis ces deux objets.</p>
 <hr />
 <h3 id="la-vue-des-applications">La vue des applications</h3>
 <p>La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ».</p>
 <p><a href="/mercator/images/applications.png"><img src="/mercator/images/applications.png" width="600"></a></p>
 <p>Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.</p>
-<h4 id="bloc-applicatif">Bloc applicatif</h4>
+<h4 id="blocs-applicatif">Blocs applicatif</h4>
 <p>Un bloc applicatif représente un ensemble d’application.</p>
 <p>Un bloc applicatif peut être : les applications bureautique, de gestion, d’analyse, de développement, ...</p>
-<p>Table <em>application_blocks</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>application-blocks</em></span></td>
+<td style="text-align: left;"><code>/api/application-blocks</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1371,13 +1544,26 @@ Un processus peut être rattachée à une information depuis ces deux objets. </
 </tbody>
 </table>
 <p>Dans l'application, une application peut être rattachée à un bloc applicatif depuis ces deux objets.</p>
-<h4 id="application">Application</h4>
+<h4 id="applications">Applications</h4>
 <p>Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un
 regroupement de services applicatifs.</p>
 <p>Une application peut être déployée sur un ou plusieurs serveurs logiques.</p>
 <p>Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y
 a un serveur logique par serveur physique.</p>
-<p>Table <em>m_applications</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>m_applications</em></span></td>
+<td style="text-align: left;"><code>/api/applications</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1580,11 +1766,12 @@ a un serveur logique par serveur physique.</p>
 </tbody>
 </table>
 <p>RTO : <em>Recovery Time Objective</em><br />
-RPO : <em>Recovery Point Objective</em>  </p>
-<p>Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absent de l'application.  </p>
-<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+RPO : <em>Recovery Point Objective</em></p>
+<p>Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absent de
+l'application.</p>
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas
 d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
-Il s'active depuis le menu Configuration &gt; Paramètres. </p>
+Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>L'export du modèle de données référence :</p>
 <ul>
 <li>les entités utilisatrices (champ <em>entities</em>),</li>
@@ -1601,22 +1788,35 @@ Il s'active depuis le menu Configuration &gt; Paramètres. </p>
 <p>rattachées à une application.</p>
 <p>Dans l'application, une entité utilisatrice peut être rattachée à une application depuis un objet application.<br />
 Un processus peut être rattaché à une application depuis ces deux objets.<br />
-Une activité peut être rattachée à une application depuis ces deux objets.  </p>
+Une activité peut être rattachée à une application depuis ces deux objets.</p>
 <p>Un service applicatif peut être rattaché à une application depuis ces deux objets.<br />
 Une base de données peut être rattachée à une application depuis ces deux objets.<br />
-Un poste de travail peut être rattaché à une application depuis un objet poste de travail.  </p>
+Un poste de travail peut être rattaché à une application depuis un objet poste de travail.</p>
 <p>Un serveur logique peut être rattaché à une application depuis ces deux objets.<br />
 Un équipement de sécurité logique peut être rattaché à une application depuis ces deux objets.<br />
-Un administrateur peut être rattaché à une application depuis un objet application.  </p>
+Un administrateur peut être rattaché à une application depuis un objet application.</p>
 <p>Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".<br />
-Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.  </p>
+Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.</p>
 <p>Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.<br />
 Dans l'application, le champ <em>évènements majeurs</em> est géré dans une table à part.</p>
 <h5 id="evenements-majeurs">Evènements majeurs</h5>
 <p>Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.<br />
-Les évènements majeurs ne sont accessibles qu'à travers les objets applications.  </p>
-<p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.  </p>
-<p>Table <em>m_application_events</em> :</p>
+Les évènements majeurs ne sont accessibles qu'à travers les objets applications.</p>
+<p>Ils ne sont ni importables, ni exportables à travers l'outil graphique.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>m_application_events</em></span></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1658,11 +1858,24 @@ Les évènements majeurs ne sont accessibles qu'à travers les objets applicatio
 </tr>
 </tbody>
 </table>
-<h4 id="service-applicatif">Service applicatif</h4>
+<h4 id="services-applicatif">Services applicatif</h4>
 <p>Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le
 cadre de son travail.</p>
 <p>Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).</p>
-<p>Table <em>application_services</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>application_services</em></span></td>
+<td style="text-align: left;"><code>/api/application-services</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1693,12 +1906,12 @@ cadre de son travail.</p>
 <td style="text-align: left;">Exposition du service applicatif</td>
 </tr>
 <tr>
-<td style="text-align: left;"> modules</td>
+<td style="text-align: left;">modules</td>
 <td style="text-align: left;">List int [,]</td>
 <td style="text-align: left;">Liens vers les applications-modules</td>
 </tr>
 <tr>
-<td style="text-align: left;"> applications</td>
+<td style="text-align: left;">applications</td>
 <td style="text-align: left;">List int [,]</td>
 <td style="text-align: left;">Liens vers les applications</td>
 </tr>
@@ -1719,16 +1932,29 @@ cadre de son travail.</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif. </p>
+<p>L'export du modèle de données référence les applications et les modules applicatifs rattachés à un service applicatif.</p>
 <p>Dans l'application, une application peut être rattachée à un service applicatif depuis ces deux objets.<br />
-Dans l'application, un module applicatif peut être rattaché à un service applicatif depuis ces deux objets.  </p>
-<p>Il y a deux champs comportant les mêmes informations dans l'export du modèle de données, <em>servicesApplications</em> et 
+Dans l'application, un module applicatif peut être rattaché à un service applicatif depuis ces deux objets.</p>
+<p>Il y a deux champs comportant les mêmes informations dans l'export du modèle de données, <em>servicesApplications</em> et
 <em>applications</em>.<br />
 La liaison avec les objets applications se fait par le champ <em>applications</em>.</p>
-<h4 id="module-applicatif">Module applicatif</h4>
+<h4 id="modules-applicatif">Modules applicatif</h4>
 <p>Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière
 d’informatique et une homogénéité technologique.</p>
-<p>Table <em>application_modules</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>application_modules</em></span></td>
+<td style="text-align: left;"><code>/api/application-modules</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1754,9 +1980,24 @@ d’informatique et une homogénéité technologique.</p>
 <td style="text-align: left;">Description du module applicatif</td>
 </tr>
 <tr>
-<td style="text-align: left;"> application_services</td>
+<td style="text-align: left;">application_services</td>
 <td style="text-align: left;">List int [,]</td>
 <td style="text-align: left;">Liens vers les applications-services</td>
+</tr>
+<tr>
+<td style="text-align: left;">vendor</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Vendeur / éditeur pour recherche CPE</td>
+</tr>
+<tr>
+<td style="text-align: left;">product</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Produit d'un éditeur pour recherche CPE</td>
+</tr>
+<tr>
+<td style="text-align: left;">version</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Version d'un produit pour recherche CPE</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1777,9 +2018,22 @@ d’informatique et une homogénéité technologique.</p>
 </table>
 <p>L'export du modèle de données référence les services applicatifs rattachés à un module applicatif.<br />
 Dans l'application, un service applicatif peut être rattaché à un module applicatif depuis ces deux objets.</p>
-<h4 id="base-de-donnees">Base de données</h4>
+<h4 id="bases-de-donnees">Bases de données</h4>
 <p>Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.</p>
-<p>Table <em>databases</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>databases</em></span></td>
+<td style="text-align: left;"><code>/api/databases</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1871,12 +2125,13 @@ Dans l'application, un service applicatif peut être rattaché à un module appl
 </tr>
 </tbody>
 </table>
-<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas
 d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
-Il s'active depuis le menu Configuration &gt; Paramètres.   </p>
+Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>L'export du modèle de données référence l'image spécifique d'une base de données.<br />
-Dans l'application, une image spécifique peut être rattachée à une base de données depuis un objet base de données.  </p>
-<p>L'export du modèle de données référence les entités utilisatrices (champ <em>entities</em>), les applications, les informations,
+Dans l'application, une image spécifique peut être rattachée à une base de données depuis un objet base de données.</p>
+<p>L'export du modèle de données référence les entités utilisatrices (champ <em>entities</em>), les applications, les
+informations,
 les serveurs logiques et les conteneurs rattachés à une base de données.<br />
 Dans l'application, une entité utilisatrice peut être rattachée à une base de données depuis un objet base de données.<br />
 Dans l'application, une information peut être rattachée à une base de données depuis un objet base de données.<br />
@@ -1889,7 +2144,20 @@ applicatif ou base de données).</p>
 <p>Un flux représente un échange d’information entre deux éléments du système d’information. Il faut éviter de représenter
 en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 <p>Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux.</p>
-<p>Table <em>fluxes</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>fluxes</em></span></td>
+<td style="text-align: left;"><code>/api/fluxes</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1920,12 +2188,12 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 <td style="text-align: left;">Description du flux</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong><em>device</em></strong>_source_id</td>
+<td style="text-align: left;"><span style="color: purple;"><em>device</em>**_source_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Lien vers l'actif source</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong><em>device</em></strong>_dest_id</td>
+<td style="text-align: left;"><span style="color: purple;"><em>device</em>**_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Lien vers l'actif destinataire</td>
 </tr>
@@ -1961,7 +2229,7 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 </tr>
 </tbody>
 </table>
-<p>Les <strong><em>device</em></strong> sources et destination peuvent être :</p>
+<p>Les <span style="color: purple;"><em>actifs (device)</em></span>  sources et destination peuvent être :</p>
 <table>
 <thead>
 <tr>
@@ -2001,12 +2269,25 @@ utilisateurs du système d’information.</p>
 <p><a href="/mercator/images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <p>Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les
 opérateurs d’importance vitale (OIV).</p>
-<h4 id="zone-dadministration">Zone d’administration</h4>
+<h4 id="zones-dadministration">Zones d’administration</h4>
 <p>Une zone d’administration est un ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (
 ou plusieurs) administrateur(s).</p>
 <p>Une zone d’administration est composée de services d’annuaires et de forêts Active Directory (AD) ou d’arborescences
 LDAP.</p>
-<p>Table <em>zone_admins</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>zone_admins</em></span></td>
+<td style="text-align: left;"><code>/api/zone-admins</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2048,12 +2329,25 @@ LDAP.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="service-dannuaire-dadministration">Service d’annuaire d’administration</h4>
+<h4 id="services-dannuaire-dadministration">Services d’annuaire d’administration</h4>
 <p>Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les
 équipements informatiques de l’entreprise et permettant leur administration.</p>
 <p>Il peut s’agir d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie
 comme Mercator.</p>
-<p>Table <em>annuaires</em>;</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>annuaires</em></span></td>
+<td style="text-align: left;"><code>/api/annuaires</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2105,9 +2399,22 @@ comme Mercator.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="foret-active-directory-arborescence-ldap">Forêt Active Directory / Arborescence LDAP</h4>
+<h4 id="forets-active-directory-arborescence-ldap">Forêts Active Directory / Arborescence LDAP</h4>
 <p>Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.</p>
-<p>Table <em>forest_ads</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>forest_ads</em></span></td>
+<td style="text-align: left;"><code>/api/forest-ads</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2157,10 +2464,23 @@ comme Mercator.</p>
 <p>L'export du modèle de données référence les domaines rattachés à une forêt AD / Arborescence LDAP.<br />
 Dans l'application, un domaine peut être rattaché à une forêt AD / arborescence LDAP depuis ces deux objets.</p>
 <h4 id="domaines-active-directory-ldap">Domaines Active Directory / LDAP</h4>
-<p>Les domaines Active Directory / LDAP sont des annuaires informatique d'entreprise. Ils contiennent les comptes 
+<p>Les domaines Active Directory / LDAP sont des annuaires informatique d'entreprise. Ils contiennent les comptes
 utilisateurs et machines, les contacts, une partie des configurations de la gestion des SI (politiques de groupes,
 GPO, par exemple) ainsi que les droits des objets.</p>
-<p>Table <em>domaines_ads</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>domaines_ads</em></span></td>
+<td style="text-align: left;"><code>/api/domaines-ads</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2223,11 +2543,25 @@ GPO, par exemple) ainsi que les droits des objets.</p>
 </tbody>
 </table>
 <p>L'export du modèle de données référence les forêts AD / arborescence LDAP rattachées à un domaine AD / LDAP.<br />
-Dans l'application, une forêt AD / arborescence LDAP peut être rattachée à un domaine AD / LDAP depuis ces deux objets.<br />
+Dans l'application, une forêt AD / arborescence LDAP peut être rattachée à un domaine AD / LDAP depuis ces deux
+objets.<br />
 Un serveur logique peut être rattaché à un domaine AD / LDAP depuis ces deux objets.</p>
 <h4 id="utilisateurs">Utilisateurs</h4>
 <p>Les utilisateurs représentent les comptes ayant des droits privilégiés sur les SI.</p>
-<p>Table <em>admin_users</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>admin_users</em></span></td>
+<td style="text-align: left;"><code>/api/admin-users</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2309,7 +2643,20 @@ Dans l'application, un utilisateur peut être défini comme administrateur d'une
 réseau en charge du trafic.</p>
 <h4 id="reseaux">Réseaux</h4>
 <p>Les réseaux sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.</p>
-<p>Table <em>networks</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>networks</em></span></td>
+<td style="text-align: left;"><code>/api/networks</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2391,12 +2738,25 @@ réseau en charge du trafic.</p>
 </tr>
 </tbody>
 </table>
-<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas 
+<p>Dans l'application, le besoin en authenticité est masqué par défaut. Il est obligatoire dans le cas
 d'une entité soumise à la directive UE 2022/2554 (DORA).<br />
 Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <h4 id="sous-reseaux">Sous-réseaux</h4>
 <p>Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.</p>
-<p>table <em>subnetworks</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>subnetworks</em></span></td>
+<td style="text-align: left;"><code>/api/subnetworks</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2501,7 +2861,20 @@ Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>Le champ "connected_subnets_id" sert à définir une clé étrangère. Cependant, celle-ci ne semble pas utilisée.</p>
 <h4 id="passerelles-dentrees-depuis-lexterieur">Passerelles d’entrées depuis l’extérieur</h4>
 <p>Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.</p>
-<p>Table <em>gateways</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>gateways</em></span></td>
+<td style="text-align: left;"><code>/api/gateways</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2556,7 +2929,20 @@ Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>Dans l'application, un sous-réseau peut être rattaché à une passerelle depuis ces objets.</p>
 <h4 id="entites-exterieures-connectees">Entités extérieures connectées</h4>
 <p>Les entités extérieures connectées représentent les entités externes connectées au réseau.</p>
-<p>Table <em>external_connected_entities</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>external_connected_entities</em></span></td>
+<td style="text-align: left;"><code>/api/external-connected-entities</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2644,11 +3030,25 @@ Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 </tbody>
 </table>
 <p>L'export du modèle de données référence les sous-réseaux et documents rattachés à une entité extérieure connectées.<br />
-Dans l'application, un sous-réseau peut être rattaché à une entité extérieure connectée depuis un objet entité extérieure connectée.<br />
+Dans l'application, un sous-réseau peut être rattaché à une entité extérieure connectée depuis un objet entité
+extérieure connectée.<br />
 Un document peut être rattaché à une entité extérieure connectée depuis un objet entité extérieure connectée.</p>
 <h4 id="commutateurs-reseau">Commutateurs réseau</h4>
 <p>Les commutateurs réseau sont les composants gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
-<p>Table <em>network_switches</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>network_switches</em></span></td>
+<td style="text-align: left;"><code>/api/network-switches</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2700,7 +3100,20 @@ Dans l'application, un VLAN peut être rattaché à un commutateur réseau depui
 Un commutateur physique peut être rattaché à un commutateur réseau depuis ces deux objets.</p>
 <h4 id="routeurs-logiques">Routeurs logiques</h4>
 <p>Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.</p>
-<p>Table <em>routers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>routers</em></span></td>
+<td style="text-align: left;"><code>/api/routers</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2765,7 +3178,20 @@ protection des équipements ou ayant une fonction de sécurisation du système d
 <p>Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des
 systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des
 équipements.</p>
-<p>Table <em>security_devices</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>security_devices</em></span></td>
+<td style="text-align: left;"><code>/api/security-devices</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2842,18 +3268,31 @@ systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), de
 </tr>
 </tbody>
 </table>
-<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc 
+<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc
 absent de l'application.<br />
-L'export du modèle de données référence les équipements de sécurité physiques et les applications 
+L'export du modèle de données référence les équipements de sécurité physiques et les applications
 rattachées à un équipement de sécurité logique.<br />
-Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité 
+Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité
 logique depuis ces deux objets.<br />
 Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.</p>
 <h4 id="serveurs-dhcp">Serveurs DHCP</h4>
 <p>Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.
 Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide de
 l'ANSSI (cf. Références).</p>
-<p>Table <em>dhcp_servers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>dhcp_servers</em></span></td>
+<td style="text-align: left;"><code>/api/dhcp-servers</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2901,11 +3340,24 @@ l'ANSSI (cf. Références).</p>
 </tbody>
 </table>
 <h4 id="serveurs-dns">Serveurs DNS</h4>
-<p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant 
+<p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant
 la conversion d’un nom de domaine en adresse IP.<br />
-Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide 
+Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide
 de l'ANSSI (cf. Références).</p>
-<p>Table <em>dnsservers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>dnsservers</em></span></td>
+<td style="text-align: left;"><code>/api/dnsservers</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2954,7 +3406,20 @@ de l'ANSSI (cf. Références).</p>
 </table>
 <h4 id="clusters">Clusters</h4>
 <p>Les clusters représentent un ensemble de serveurs logiques hébergés sur un ou plusieurs serveurs physiques</p>
-<p>Table <em>clusters</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>clusters</em></span></td>
+<td style="text-align: left;"><code>/api/clusters</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3016,14 +3481,28 @@ de l'ANSSI (cf. Références).</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les routeurs logiques, les serveurs logiques et physiques rattachés à un cluster.<br />
+<p>L'export du modèle de données référence les routeurs logiques, les serveurs logiques et physiques rattachés à un
+cluster.<br />
 Dans l'application, un routeur logique peut être rattaché à un cluster depuis un objet cluster.<br />
 Un serveur logique peut être rattaché à un cluster depuis ces deux objets.<br />
 Un serveur physique peut être rattaché à un cluster depuis ces deux objets.</p>
 <h4 id="serveurs-logiques">Serveurs logiques</h4>
 <p>Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il
 est découpé en un seul serveur logique.</p>
-<p>Table <em>logical_servers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>logical_servers</em></span></td>
+<td style="text-align: left;"><code>/api/logical-servers</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3180,8 +3659,9 @@ est découpé en un seul serveur logique.</p>
 </tr>
 </tbody>
 </table>
-<p>Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absents de l'application.<br />
-L'export du modèle de données référence : </p>
+<p>Les champs "patching_frequency" et "next_update" ne sont pas utilisés pour le moment et sont donc absents de
+l'application.<br />
+L'export du modèle de données référence :</p>
 <ul>
 <li>les applications,</li>
 <li>les serveurs physiques,</li>
@@ -3191,7 +3671,7 @@ L'export du modèle de données référence : </p>
 <li>les certificats,</li>
 <li>et les conteneurs</li>
 </ul>
-<p>rattachés à un serveur logique.  </p>
+<p>rattachés à un serveur logique.</p>
 <p>Dans l'application, une application peut être rattachée à un serveur logique depuis ces deux objets.<br />
 Une base de données peut être rattachée à un serveur logique depuis ces deux objets.<br />
 Un cluster peut être rattaché à un serveur logique depuis ces deux objets.<br />
@@ -3202,7 +3682,20 @@ Un conteneur peut être rattaché à un serveur logique depuis un objet conteneu
 <h4 id="conteneurs">Conteneurs</h4>
 <p>Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément,
 sur des serveurs logiques internes ou externes (cloud).</p>
-<p>Table <em>containers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>containers</em></span></td>
+<td style="text-align: left;"><code>/api/containers</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3260,8 +3753,21 @@ Dans l'application, une application peut être rattachée à un conteneur depuis
 Une base de données peut être rattachée à un conteneur depuis ces deux objets.<br />
 Un serveur logique peut être rattaché à un conteneur depuis un objet conteneur.</p>
 <h4 id="flux-logiques">Flux logiques</h4>
-<p>Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.  </p>
-<p>Table <em>logical_flows</em> :</p>
+<p>Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>logical_flows</em></span></td>
+<td style="text-align: left;"><code>/api/logical-flows</code></td>
+</tr>
+</tbody>
+</table>
 <p>Principe général :</p>
 <table>
 <thead>
@@ -3338,12 +3844,12 @@ Un serveur logique peut être rattaché à un conteneur depuis un objet conteneu
 <td style="text-align: left;">Port logique de destination</td>
 </tr>
 <tr>
-<td style="text-align: left;"><em>device</em>_source_id</td>
+<td style="text-align: left;"><span style="color: purple;"><em>device</em>_source_id</span></td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Actif source</td>
 </tr>
 <tr>
-<td style="text-align: left;"><em>device</em>_dest_id</td>
+<td style="text-align: left;"><span style="color: purple;"><em>device</em>_dest_id</span></td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Actif de destination</td>
 </tr>
@@ -3374,7 +3880,7 @@ Un serveur logique peut être rattaché à un conteneur depuis un objet conteneu
 </tr>
 </tbody>
 </table>
-<p>Les actifs sources et destination peuvent être :</p>
+<p>Les <span style="color: purple;"><em>actifs (devices)</em></span> sources et destination peuvent être :</p>
 <table>
 <thead>
 <tr>
@@ -3431,7 +3937,20 @@ Un serveur logique peut être rattaché à un conteneur depuis un objet conteneu
 morales, mais aussi pour chiffrer des échanges.</p>
 <p>Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associés à des serveurs logiques ou des
 applications.</p>
-<p>Table <em>certificates</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>certificates</em></span></td>
+<td style="text-align: left;"><code>/api/certificates</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3509,10 +4028,23 @@ applications.</p>
 <p>Le champ "last_notification" n'est pas utilisé pour le moment et est donc absent de l'application.<br />
 L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.<br />
 Dans l'application, un certificat peut être rattaché à une application ou un serveur logique depuis un objet certificat.</p>
-<h4 id="vlan">VLAN</h4>
+<h4 id="vlans">VLANs</h4>
 <p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements
 en s’affranchissant des contraintes physiques.</p>
-<p>Table <em>vlans</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>vlans</em></span></td>
+<td style="text-align: left;"><code>/api/vlans</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3571,7 +4103,20 @@ utilisés par celui-ci.</p>
 <p>Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.</p>
 <h4 id="sites">Sites</h4>
 <p>Les sites sont des emplacements géographiques rassemblant un ensemble de personnes et/ou de ressources.</p>
-<p>Table <em>sites</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>sites</em></span></td>
+<td style="text-align: left;"><code>/api/sites</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3621,7 +4166,20 @@ utilisés par celui-ci.</p>
 <p>Dans l'application, un bâtiment / salle peut être rattaché à un site depuis un objet bâtiment / salle.</p>
 <h4 id="batiments-salles">Bâtiments / Salles</h4>
 <p>Les bâtiments ou salles représentent la localisation des personnes ou ressources à l’intérieur d’un site.</p>
-<p>Table <em>buildings</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>buildings</em></span></td>
+<td style="text-align: left;"><code>/api/buildings</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3692,7 +4250,20 @@ utilisés par celui-ci.</p>
 salle.</p>
 <h4 id="baies">Baies</h4>
 <p>Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.</p>
-<p>Table <em>bays</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>bays</em></span></td>
+<td style="text-align: left;"><code>/api/bays</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3739,10 +4310,23 @@ salle.</p>
 </tr>
 </tbody>
 </table>
-<p>Dans l'application, une baie peut être rattachée à un bâtiment / baie depuis un objet baie. </p>
+<p>Dans l'application, une baie peut être rattachée à un bâtiment / baie depuis un objet baie.</p>
 <h4 id="serveurs-physiques">Serveurs physiques</h4>
 <p>Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.</p>
-<p>Table <em>physical_servers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>physical_servers</em></span></td>
+<td style="text-align: left;"><code>/api/physical-servers</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3869,12 +4453,12 @@ salle.</p>
 </tr>
 </tbody>
 </table>
-<p>L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs 
+<p>L'export du modèle de données référence les applications, les clusters (logiques) et les serveurs
 logiques rattachés à un serveur physique.<br />
 Dans l'application, une application peut être rattachée à un serveur physique depuis un objet serveur physique.<br />
 Un cluster peut être rattaché à un serveur physique depuis ces deux types d'objets.<br />
 Un serveur logique peut être rattaché à un serveur physique depuis ces deux types d'objets.</p>
-<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le 
+<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le
 moment dans l'application pour la table <em>physical_servers</em> ont été regroupés dans le tableau suivant :</p>
 <table>
 <thead>
@@ -3924,7 +4508,20 @@ moment dans l'application pour la table <em>physical_servers</em> ont été regr
 </table>
 <h4 id="postes-de-travail">Postes de travail</h4>
 <p>Les postes de travail sont des machines physiques permettant à un utilisateur d’accéder au système d’information.</p>
-<p>Table <em>workstations</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>workstations</em></span></td>
+<td style="text-align: left;"><code>/api/workstations</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4068,7 +4665,7 @@ moment dans l'application pour la table <em>physical_servers</em> ont été regr
 </table>
 <p>L'export du modèle de données référence les applications rattachées à un poste de travail.<br />
 Dans l'application, une application peut être rattachée à un poste de travail depuis un objet poste de travail.</p>
-<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment 
+<p>Pour une question de lisibilité, les champs définis dans le modèle de données mais inutilisés pour le moment
 dans l'application pour la table <em>workstations</em> ont été regroupés dans le tableau suivant :</p>
 <table>
 <thead>
@@ -4149,7 +4746,20 @@ dans l'application pour la table <em>workstations</em> ont été regroupés dans
 <h4 id="infrastructures-de-stockage">Infrastructures de stockage</h4>
 <p>Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en
 réseau (NAS), réseau de stockage (SAN), disque dur…</p>
-<p>Table <em>storage_devices</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>storage_devices</em></span></td>
+<td style="text-align: left;"><code>/api/storage-devices</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4235,7 +4845,20 @@ réseau (NAS), réseau de stockage (SAN), disque dur…</p>
 <h4 id="peripheriques">Périphériques</h4>
 <p>Les périphériques sont des composants physiques connectés à un poste de travail afin d’ajouter de nouvelles
 fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
-<p>Table <em>peripherals</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>peripherals</em></span></td>
+<td style="text-align: left;"><code>/api/peripherals</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4344,6 +4967,20 @@ Dans l'application, un périphérique peut être rattaché à une application de
 <table>
 <thead>
 <tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>phones</em></span></td>
+<td style="text-align: left;"><code>/api/phones</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
 <th style="text-align: left;">Champ</th>
 <th style="text-align: left;">Type</th>
 <th style="text-align: left;">Description</th>
@@ -4428,7 +5065,20 @@ téléphone peut être rattaché à un commutateur réseau en utilisant l'objet 
 <h4 id="commutateurs-physiques">Commutateurs physiques</h4>
 <p>Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein
 d’un réseau.</p>
-<p>Table <em>physical_switches</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>physical_switches</em></span></td>
+<td style="text-align: left;"><code>/api/physical-switches</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4505,13 +5155,28 @@ d’un réseau.</p>
 </tr>
 </tbody>
 </table>
-<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.<br />
+<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans
+l'application.<br />
 L'export du modèle de données référence les commutateurs logiques rattachés à un commutateur physique.<br />
-Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs réseau")
+Dans l'application, un commutateur physique peut être rattaché à un commutateur logique (noté comme "Commutateurs
+réseau")
 depuis ces deux types d'objets.</p>
 <h4 id="routeurs-physiques">Routeurs physiques</h4>
 <p>Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.</p>
-<p>Table <em>physical_routers</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>physical_routers</em></span></td>
+<td style="text-align: left;"><code>/api/physical_routers</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4588,13 +5253,28 @@ depuis ces deux types d'objets.</p>
 </tr>
 </tbody>
 </table>
-<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans l'application.<br />
+<p>Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absent dans
+l'application.<br />
 L'export du modèle de données référence les routeurs logiques et les VLAN rattachés à un routeur physique.<br />
-Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux types d'objets.<br />
+Dans l'application, un routeur physique peut être rattaché à un routeur logique (noté comme "Routeurs" depuis ces deux
+types d'objets.<br />
 Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.</p>
 <h4 id="bornes-wifi">Bornes WiFi</h4>
 <p>Les bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.</p>
-<p>Table <em>wifi_terminals</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>wifi_terminals</em></span></td>
+<td style="text-align: left;"><code>/api/wifi-terminals</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4675,7 +5355,20 @@ Un VLAN peut être rattaché à un routeur physique depuis un objet routeur phys
 <p>Les équipements de sécurité physique sont des composants permettant la supervision du réseau, la détection d’incidents,
 la protection des équipements ou ayant une fonction de sécurisation du système d’information</p>
 <p>Les équipements de sécurité physique sont des sondes de températures, des caméras, des portes sécurisées, ...</p>
-<p>Table <em>physical_security_devices</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>physical_security_devices</em></span></td>
+<td style="text-align: left;"><code>/api/physical-security-devices</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4759,9 +5452,23 @@ deux types d'objets.</p>
 <h4 id="liens-physiques">Liens physiques</h4>
 <p>Les liens physiques représentent les câbles entre les objets physiques ou logiques.<br />
 Les objets logiques peuvent disposer de liens physiques, par exemple au sein d'un réseau virtualisé.<br />
-Un lien physique est différent d'un flux logique. Un lien physique décrit une relation au niveau des couches 1 ou 2 du modèle OSI.<br />
+Un lien physique est différent d'un flux logique. Un lien physique décrit une relation au niveau des couches 1 ou 2 du
+modèle OSI.<br />
 Un flux logique décrit une relation au niveau des couches 3 et 4 du modèle OSI.</p>
-<p>Table <em>physical_links</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>physical_links</em></span></td>
+<td style="text-align: left;"><code>/api/physical-links</code></td>
+</tr>
+</tbody>
+</table>
 <p>Principe général :</p>
 <table>
 <thead>
@@ -4886,10 +5593,23 @@ Un flux logique décrit une relation au niveau des couches 3 et 4 du modèle OSI
 </tr>
 </tbody>
 </table>
-<h4 id="wan">WAN</h4>
+<h4 id="wans">WANs</h4>
 <p>Les WAN (Wide Area Network) sont des réseaux informatiques reliant des équipements sur des distances importantes. Ils
 interconnectent généralement des MAN ou LAN entre eux.</p>
-<p>Table <em>wans</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>wans</em></span></td>
+<td style="text-align: left;"><code>/api/wans</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4928,10 +5648,23 @@ interconnectent généralement des MAN ou LAN entre eux.</p>
 </table>
 <p>L'export du modèle de données référence les MAN et LAN rattachés à un WAN.<br />
 Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.</p>
-<h4 id="man">MAN</h4>
+<h4 id="mans">MANs</h4>
 <p>Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement
 importantes. Ils interconnectent généralement des LAN entre eux.</p>
-<p>Table <em>mans</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>mans</em></span></td>
+<td style="text-align: left;"><code>/api/mans</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -4971,9 +5704,22 @@ importantes. Ils interconnectent généralement des LAN entre eux.</p>
 <p>L'export du modèle de données référence les WAN et LAN rattachés à un MAN.<br />
 Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.<br />
 Un LAN peut être rattaché à un MAN depuis les objets MAN.</p>
-<h4 id="lan">LAN</h4>
+<h4 id="lans">LANs</h4>
 <p>Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.</p>
-<p>Table <em>lans</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>lans</em></span></td>
+<td style="text-align: left;"><code>/api/lans</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
