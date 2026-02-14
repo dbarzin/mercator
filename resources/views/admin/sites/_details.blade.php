@@ -23,11 +23,11 @@
             <td>
                 {!! $site->description !!}
             </td>
-            <td width="10%">
+            <td width="10%" align="center">
                 @if ($site->icon_id === null)
-                <img src='/images/site.png' width='120' height='120'>
+                <img src='/images/site.png' width='60' height='60'>
                 @else
-                <img src='{{ route('admin.documents.show', $site->icon_id) }}' width='120' height='120'>
+                <img src='{{ route('admin.documents.show', $site->icon_id) }}' width='60' height='60'>
                 @endif
             </td>
         </tr>

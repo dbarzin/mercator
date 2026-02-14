@@ -36,11 +36,11 @@
             <td colspan='4'>
                 {!! $peripheral->description !!}
             </td>
-            <td width="10%">
+            <td width="10%" align="center">
                 @if ($peripheral->icon_id === null)
-                <img src='/images/peripheral.png' width='120' height='120'>
+                <img src='/images/peripheral.png' width='60' height='60'>
                 @else
-                <img src='{{ route('admin.documents.show', $peripheral->icon_id) }}' width='100' height='100'>
+                <img src='{{ route('admin.documents.show', $peripheral->icon_id) }}' width='60' height='60'>
                 @endif
             </td>
 

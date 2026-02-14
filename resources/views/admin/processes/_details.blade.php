@@ -34,11 +34,11 @@
             <td colspan="3">
                 {!! $process->description !!}
             </td>
-            <td colspan=2>
+            <td colspan=2 align="center" width="10%">
                 @if ($process->icon_id === null)
-                <img src='/images/process.png' width='120' height='120'>
+                <img src='/images/process.png' width='60' height='60'>
                 @else
-                <img src='{{ route('admin.documents.show', $process->icon_id) }}' width='120' height='120'>
+                <img src='{{ route('admin.documents.show', $process->icon_id) }}' width='60' height='60'>
                 @endif
             </td>
         </tr>

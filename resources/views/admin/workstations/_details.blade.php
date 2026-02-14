@@ -26,8 +26,8 @@
         <tr>
             <td width="10%">{{ trans('cruds.workstation.fields.description') }}</td>
             <td width="80%" colspan="5">{!! $workstation->description !!}</td>
-            <td width="10%">
-                <img src="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" width='120' height='120'/>
+            <td width="10%" align="center">
+                <img src="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" width='60' height='60'/>
             </td>
        </tr>
        <tr>
