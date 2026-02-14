@@ -69,7 +69,7 @@ Pour les champs contenant `date` ou `at` dans leur nom :
 | `_after`  | `filter[created_at_after]=2024-01-01`  | Après cette date | `created_at >= '2024-01-01'` |
 | `_before` | `filter[updated_at_before]=2024-12-31` | Avant cette date | `updated_at <= '2024-12-31'` |
 
-##### Soft Deletes
+##### Elements supprimés
 
 | Syntaxe                | Description                       |
 |------------------------|-----------------------------------|
@@ -108,7 +108,7 @@ Les relations disponibles sont automatiquement détectées depuis le modèle. Po
 
 Exemple : `include=processes,operations`
 
-#### Exemples complets
+#### Cas d'usage
 
 ##### Filtres simples
 
@@ -254,11 +254,13 @@ Les noms de toutes les relations disponibles sont automatiquement détectés dep
 incluent : `actors`, `tasks`, `activities`, `entities`, `applications`, `informations`, `processes`, `databases`,
 `logical_servers`, `modules`, `operations`, `certificates`, `peripherals`, `physical_servers`, etc.
 
-### Exemples
+### Exemples de filtres
 
 Voici quelques exemples d'utilisation de l'API avec PHP :
 
-#### Authentification
+#### PHP
+
+##### Authentification
 
 ```php
 <?php
@@ -301,7 +303,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
     var_dump($response);
 ```
 
-#### Liste des activités avec filtres
+##### Liste des activités avec filtres
 
 ```php
 <?php
@@ -339,7 +341,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
     var_dump($response);
 ```
 
-#### Récupérer une activité avec relations
+##### Récupérer une activité avec relations
 
 ```php
 <?php

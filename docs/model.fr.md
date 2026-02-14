@@ -315,7 +315,7 @@ Ils ne sont ni importables, ni exportables à travers l'outil graphique.
 
 | Table            | api              |
 |:-----------------|:-----------------|
-|   <span style="color: blue;">*activity_impacts*</span>      |     |
+|   <span style="color: blue;">*activity_impacts*</span>      |  S/O |
 
 | Champ            | Type          | Description                                           |
 |:-----------------|:--------------|:------------------------------------------------------|
@@ -582,7 +582,7 @@ Ils ne sont ni importables, ni exportables à travers l'outil graphique.
 
 | Table            | api              |
 |:-----------------|:-----------------|
-|   <span style="color: blue;">*m_application_events*</span>      |     |
+|   <span style="color: blue;">*m_application_events*</span>      |  S/O  |
 
 | Champ            | Type         | Description                                         |
 |:-----------------|:-------------|:----------------------------------------------------|

@@ -12,7 +12,9 @@ This view is used to fulfill the obligations set out in article 30 of the GDPR.
 
 The register of processing activities contains the information required by article 30.1 of the GDPR.
 
-Table *data_processing* :
+| Table            | api             |
+|:-----------------|:----------------|
+| <span style="color: blue;">*data_processing*</span>  | `/api/data-processings` |
 
 | Field                          | Type         | Description                             |
 |:-------------------------------|:-------------|:----------------------------------------|
@@ -56,7 +58,9 @@ This table identifies the security measures applied to processes and application
 
 By default, this table is populated with the security measures of ISO 27001:2022.
 
-Table *security_controls* :
+| Table            | api             |
+|:-----------------|:----------------|
+| <span style="color: blue;">*security_controls*</span>  | `/api/security-controls` |
 
 | Field | Type | Description |
 |:------------|:-------------|:---------------------|
@@ -83,7 +87,9 @@ Entities are a part of the organization (e.g.: subsidiary, department, etc.) or 
 
 Entities are departments, suppliers, partners with whom information is exchanged through relationships.
 
-Table *entities* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*entities*</span>      | `/api/entities`    |
 
 | Field             | Type         | Description                              |
 |:------------------|:-------------|:-----------------------------------------|
@@ -118,7 +124,9 @@ Relationships represent a link between two entities or systems.
 
 Relationships are contracts, service agreements, legal obligations... that have an influence on the information system.
 
-Table *relations* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*relations*</span>      | `/api/relations`    |
 
 | Field              | Type         | Description                                |
 |:-------------------|:-------------|:-------------------------------------------|
@@ -169,7 +177,9 @@ The business view is essential, as it allows you to reposition technical element
 
 Macro-processes represent sets of processes.
 
-Table *macro_processuses* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*macro-processuses*</span>      | `/api/macro-processuses`    |
 
 | Field | Type | Description |
 |:----------------|:-------------|:-----------------|
@@ -199,7 +209,9 @@ Processes are a set of activities designed to achieve an objective. The process 
 
 Processes are made up of activities, the entities involved in the process, and the information processed by the process.
 
-Table *processes* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*processes*</span>      | `/api/processes`    |
 
 | Field              | Type         | Description                         |
 |:-------------------|:-------------|:------------------------------------|
@@ -253,7 +265,9 @@ This button is present in the GDPR view and visible in the list of Security Meas
 
 An activity is a step required to carry out a process. It corresponds to a speciﬁc know-how and not necessarily to an organizational structure of the company.
 
-Table *activities* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*activities*</span>      | `/api/activities`    |
 
 | Field                       | Type         | Description |
 |:----------------------------|:-------------|:-----------------|
@@ -281,9 +295,11 @@ Impacts are only accessible through activity objects.
 
 They are neither importable nor exportable through the graphics tool.  
 
-Table *activity_impact* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*activity_impacts*</span>      |  N/A   |
 
-| Champ            | Type          | Description                                              |
+| Field            | Type          | Description                                              |
 |:-----------------|:--------------|:---------------------------------------------------------|
 | id               | bigint signed | auto_increment                                           |
 | activity_id      | int unsigned  | Link to the activity related to this impact              |
@@ -297,7 +313,9 @@ Table *activity_impact* :
 
 An operation is made up of actors and tasks.
 
-Table *operations* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*operations*</span>      | `/api/operations`    |
 
 | Field       | Type         | Description                                             |
 |:------------|:-------------|:--------------------------------------------------------|
@@ -322,7 +340,9 @@ A task can be attached to an operation from the operations object.
 
 A task is an elementary activity performed by an organizational function and constituting an indivisible unit of work in the value-added chain of a process.
 
-Table *tasks* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*tasks*</span>      | `/api/tasks`    |
 
 | Field | Type | Description |
 |:----------------|:-------------|:-----------------|
@@ -341,7 +361,9 @@ An operation can be attached to a task from the operations object.
 
 An actor is a representative of a business role who performs operations, uses applications and makes decisions within processes. This role can be carried by a person, a group of people or an entity.
 
-Table *actors* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*actors*</span>      | `/api/actors`    |
 
 | Field      | Type         | Description |
 |:-----------|:-------------|:-----------------|
@@ -359,7 +381,9 @@ Table *actors* :
 
 Information is data that is processed by a computer.
 
-Table *information* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*information*</span>      | `/api/information`    |
 
 | Field              | Type         | Description |
 |:-------------------|:-------------|:-----------------|
@@ -390,7 +414,7 @@ The export of the data model references the databases and processes attached to 
 
 ---
 
-### Application view
+### Applications view
 
 The application view is used to describe part of what is classically referred to as the "computer system".
 
@@ -398,13 +422,15 @@ The application view is used to describe part of what is classically referred to
 
 This view describes the technological solutions that support business processes, mainly applications.
 
-#### Application block
+#### Applications blocks
 
 An application block represents a set of applications.
 
 An application block can be: office applications, management applications, analysis applications, development applications, etc.
 
-Table *application_blocks* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*application-blocks*</span>      | `/api/application-blocks`    |
 
 | Field | Type | Description |
 |:----------------|:-------------|:-----------------|
@@ -416,7 +442,7 @@ Table *application_blocks* :
 | updated_at | timestamp | Date of update |
 | deleted_at | timestamp | Date of deletion |
 
-#### Application
+#### Applications
 
 An application is a coherent set of IT objects (executables, programs, data, etc.). It is a grouping of application services.
 
@@ -424,10 +450,11 @@ An application can be deployed on one or more logical servers.
 
 When there is no virtualized environment, there are not several logical servers per physical server, but one logical server per physical server.
 
-Table *m_applications* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*m_applications*</span>      | `/api/applications`    |
 
-
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the application |
@@ -522,9 +549,11 @@ Major events are only accessible through application objects.
 
 They are neither importable nor exportable through the graphics tool.  
 
-Table *m_application_events* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*m_application_events*</span>      | N/A    |
 
-| Champ            | Type         | Description                                         |
+| Field            | Type         | Description                                         |
 |:-----------------|:-------------|:----------------------------------------------------|
 | id               | int unsigned | auto_increment                                      |
 | user_id          | int unsigned | Mercator user id who has register the event            |
@@ -534,15 +563,17 @@ Table *m_application_events* :
 | updated_at       | timestamp    | Date of update                                      |
 
 
-#### Application services
+#### Applications services
 
 An application service is a specific service provided to a user to perform specific tasks related to their role in the organisation.
 
 Eg. an application service could be a Cloud service or platform.
 
-Table *application_services* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*application_services*</span>      | `/api/application-services`    |
 
-| Champ           | Type         | Description      |
+| Field           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
 | id              | int unsigned | auto_increment |
 | name            | varchar(255) | Name of the application service |
@@ -563,13 +594,15 @@ There are two fields with the same information in the data model export, *servic
 *applications*.  
 The connection with application objects is made via the *applications* field.
 
-#### Application module
+#### Application modules
 
 An application module is a component of an application characterized by functional coherence and technological homogeneity.
 
-Table *application_modules* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*application_modules*</span>      | `/api/application-modules`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the application module |
@@ -582,13 +615,15 @@ Table *application_modules* :
 The export of the data model references the application services attached to an application module.  
 In the application, an application service can be attached to an application module from these two objects.
 
-#### Database
+#### Databases
 
 A collection of databases managed within the organisation.
 
-Table *databases* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*databases*</span>      | `/api/databases`    |
 
-| Champ               | Type         | Description      |
+| Field               | Type         | Description      |
 |:-------------------|:-------------|:-----------------|
 | id                 | int unsigned | auto_increment |
 | name               | varchar(255) | Name of the database |
@@ -623,7 +658,7 @@ In the application, a logical server can be attached to a database from these tw
 In the application, a container can be attached to a database from these two objects.
 
 
-#### Flow
+#### Flows
 
 A flow is an exchange of information between a sender and a receiver (application, application service, application module or database).
 
@@ -631,9 +666,11 @@ A flow represents an exchange of information between two elements of the informa
 
 For example, DNS or NTP requests should not be represented as flows.
 
-Table *fluxes* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*fluxes*</span>      | `/api/fluxes`    |
 
-| Champ                 | Type         | Description      |
+| Field                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
 | name                  | varchar(255) | Name of the flow |
@@ -667,15 +704,17 @@ The administration view lists the administration of resources, directories and p
 
 Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).
 
-#### Administration area
+#### Administration areas
 
 An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more) administrator(s).
 
 An administration zone is made up of Active Directory (AD) directory services and forests, or LDAP trees.
 
-Table *zone_admins* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*zone_admins*</span>      | `/api/zone-admins`    |
 
-| Champ                 | Type         | Description      |
+| Field                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
 | name                  | varchar(255) | Name of the area |
@@ -684,15 +723,17 @@ Table *zone_admins* :
 | updated_at            | timestamp    | Date of update |
 | deleted_at            | timestamp    | Date of deletion |
 
-#### Administration directory service
+#### Administration directory services
 
 An administration directory service is an application that collects data on a company's users or IT equipment, enabling them to be administered.
 
 It can be an inventory tool used to manage changes or tickets, or a mapping tool such as Mercator.
 
-Table *annuaires*;
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*annuaires*</span>      | `/api/annuaires`    |
 
-| Champ                 | Type         | Description      |
+| Field                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
 | name                  | varchar(255) | Name of the directory |
@@ -703,13 +744,15 @@ Table *annuaires*;
 | updated_at            | timestamp    | Date of update |
 | deleted_at            | timestamp    | Date of deletion |
 
-#### Active Directory forest / LDAP tree structure
+#### Active Directory forests / LDAP tree structure
 
 These objects represent an organized grouping of Active Directory domains or LDAP trees.
 
-Table *forest_ads* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*forest_ads*</span>      | `/api/forest-ads`    |
 
-| Champ                 | Type         | Description      |
+| Field                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
 | name                  | varchar(255) | Name of Active Directory or LDAP forests |
@@ -718,6 +761,59 @@ Table *forest_ads* :
 | created_at            | timestamp    | Date of creation |
 | updated_at            | timestamp    | Date of update |
 | deleted_at            | timestamp    | Date of deletion |
+
+#### Active Directory domains / LDAP
+
+Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts, objects rights and a part of IT policies (e.g. Group Policy Object - GPO).
+
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*domaines_ads*</span>      | `/api/domaines-ads`    |
+
+| Field                  | Type         | Description                              |
+|:-----------------------|:-------------|:-----------------------------------------|
+| id                     | int unsigned | auto_increment                           |
+| name                   | varchar(255) | AD Domain / LDAP name                    |
+| description            | longtext     | Domain description                       |
+| domain_ctrl_cnt        | int signed   | Number of domain controllers             |
+| user_count             | int signed   | Number of domain users                   |
+| machine_count          | int signed   | Number of domain computers               |
+| relation_inter_domaine | varchar(255) | Cross domains relationships description  |
+| created_at             | timestamp    | Date of creation                         |
+| updated_at             | timestamp    | Date of update                           |
+| deleted_at             | timestamp    | Date of deletion                         |
+
+The data model export lists AD forests / LDAP trees linked with an AD domain / LDAP.
+
+In the app, an AD forest / LDAP tree can be linked with an AD domain / LDAP from these two objects.
+A logical server can be linked with an AD domain / LDAP from these two objects.
+
+#### Users
+
+Users are user accounts with privileged rights on IT systems.
+
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*admin_users*</span>      | `/api/admin-users`    |
+
+| Field                 | Type         | Description                                    |
+|:----------------------|:-------------|:-----------------------------------------------|
+| id                    | int unsigned | auto_increment                                 |
+| user_id               | varchar(255) | Unique ID number / other of an user            | 
+| firstname             | varchar(255) | User's first name                              |
+| lastname              | varchar(255) | User's last name                               |
+| type                  | varchar(255) | User type                                      |
+| attributes            | varchar(255) | User's tags                                    |
+| icon_id               | int unsigned | Link to a specific icon                        |
+| description           | longtext     | DUser description                              |
+| domain_id             | int unsigned | Link to the users's domain                     |
+| created_at            | timestamp    | Date of creation                               |
+| updated_at            | timestamp    | Date of update                                 |
+| deleted_at            | timestamp    | Date of deletion                               |
+
+The data model export lists applications which an user is administrator.
+
+In the app, an user can be defined as administrator of an application from an application object.
 
 ---
 
@@ -733,9 +829,11 @@ It illustrates the partitioning of networks and the logical links between them. 
 
 Networks are a set of logically interconnected devices that exchange information.
 
-Table *networks* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*networks*</span>      | `/api/networks`    |
 
-| Champ           | Type         | Description      |
+| Field           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
 | id              | int unsigned | auto_increment |
 | name            | varchar(255) | Name of network |
@@ -760,9 +858,11 @@ It is activated from the Configuration > Settings menu.
 
 Subnetworks are a logical subdivision of a larger network.
 
-table *subnetworks* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*subnetworks*</span>      | `/api/subnetworks`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the subnet |
@@ -789,9 +889,11 @@ The "connected_subnets_id" field is used to define a foreign key. However, this 
 
 Gateways are components used to connect a local network to the outside world.
 
-Table *gateways* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*gateways*</span>      | `/api/gateways`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the gateway |
@@ -809,9 +911,11 @@ In the application, a subnet can be attached to a gateway from these objects.
 
 Connected external entities represent external entities connected to the network.
 
-Table *external_connected_entities* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*external_connected_entities*</span>      | `/api/external-connected-entities`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of entity/company |
@@ -837,9 +941,11 @@ A document can be attached to a connected external entity from a connected exter
 
 Network switches are the components that manage connections between the various servers on a network.
 
-Table *network_switches* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*network_switches*</span>      | `/api/network-switches`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the switch |
@@ -853,9 +959,11 @@ Table *network_switches* :
 
 Logical routers are logical components that manage connections between different networks.
 
-Table *routers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*routers*</span>      | `/api/routers`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the router |
@@ -871,15 +979,17 @@ Table *routers* :
 Exporting the data model references physical routers attached to a logical router.  
 In the application, a physical router can be attached to a logical router from these two objects.
 
-#### Security equipment
+#### Security equipments
 
 Security devices are components used for network supervision, incident detection, equipment protection and information system security.
 
 Security equipment includes intrusion detection systems (IDS: Intrusion Detection System), intrusion prevention systems (IPS: Intrusion Prevention System) and equipment monitoring systems.
 
-Table *security_devices* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*security_devices*</span>      | `/api/security-devices`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the device |
@@ -907,9 +1017,11 @@ An application can be attached to logical security equipment from these two obje
 
 DHCP servers are physical or virtual devices that manage a network's IP addresses.
 
-Table *dhcp_servers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*dhcp_servers*</span>      | `/api/dhcp-servers`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the DHCP server |
@@ -923,9 +1035,11 @@ Table *dhcp_servers* :
 
 Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
 
-Table *dnsservers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*dnsservers*</span>      | `/api/dnsservers`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the DNS server |
@@ -939,9 +1053,11 @@ Table *dnsservers* :
 
 Clusters are a set of logical servers hosted on one or more physical servers.
 
-Table *clusters* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*clusters*</span>      | `/api/clusters`    |
 
-| Champ                | Type         | Description                     |
+| Field                | Type         | Description                     |
 |:---------------------|:-------------|:--------------------------------|
 | id                   | int unsigned | auto_increment                  |
 | name                 | varchar(255) | Name of the cluster             |
@@ -966,9 +1082,11 @@ A physical server can be attached to a cluster from these two objects.
 Logical servers are a logical breakdown of a physical server. If the physical server is not virtualized, it is split into a single logical server.
 
 
-Table *logical_servers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*logical_servers*</span>      | `/api/logical-servers`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the logical server |
@@ -1022,17 +1140,16 @@ A container can be attached to a logical server from a container object.
 
 The "documents" field does not appear to be used in a logical server's data model.
 
-
-
-
 #### Containers
 
 Containers are part of virtualization systems. They can operate in clusters or in isolation.
 on internal or external logical servers (cloud).
 
-Table *containers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*containers*</span>      | `/api/containers`    |
 
-| Champ                | Type         | Description                                  |
+| Field                | Type         | Description                                  |
 |:---------------------|:-------------|:---------------------------------------------|
 | id                   | int unsigned | auto_increment                               |
 | name                 | varchar(255) | Container name                               |
@@ -1053,11 +1170,13 @@ A logical server can be attached to a container from a containing object.
 
 Logical flows describe relationships at layers 3 and 4 of the OSI model.
 
-Table *logical_flows* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*logical_flows*</span>      | `/api/logical-flows`    |
 
 General principle :
 
-| Champ                | Type         | Description                                   |
+| Field                | Type         | Description                                   |
 |:---------------------|:-------------|:----------------------------------------------|
 | id                   | int unsigned | auto_increment                                |
 | name                 | varchar(255) | Name of logical flow                          |
@@ -1082,7 +1201,7 @@ General principle :
 
 Les actifs sources et destination peuvent être :
 
-| Actif (*device*)                | Source  | Destination |
+| Asset (*device*)                | Source  | Destination |
 |:--------------------------------|:-------:|:-----------:|
 | Peripherals                     | ✅      | ✅          |
 | Physical Security Equipement    | ✅      | ✅          |
@@ -1100,9 +1219,11 @@ Electronic certificates are used to identify and authenticate services and indiv
 
 Certificates are SSL keys, HTTPS certificates, etc. They are associated with logical servers or applications.
 
-Table *certificates* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*certificates*</span>      | `/api/certificates`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the certificate |
@@ -1126,13 +1247,15 @@ Exporting the data model references logical applications and servers attached to
 In the application, a certificate can be attached to a logical application or server from a certificate object.
 
 
-#### VLAN
+#### VLANs
 
 A VLAN (Virtual Local Area Network) or virtual local area network (LAN) enables equipment to be logically grouped together, free from physical constraints.
 
-Table *vlans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*vlans*</span>      | `/api/vlans`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of VLAN |
@@ -1162,9 +1285,11 @@ This view corresponds to the geographical distribution of network equipment with
 
 Sites are geographical locations that bring together a group of people and/or resources.
 
-Table *sites* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*sites*</span>     | `/api/sites`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the site |
@@ -1178,9 +1303,11 @@ Table *sites* :
 
 Buildings or rooms represent the location of people or resources within a site.
 
-Table *buildings* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*buildings*</span>      | `/api/buildings`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of building |
@@ -1201,9 +1328,11 @@ room.
 
 Racks are technical cabinets housing computer network or telephony equipment.
 
-Table *bays* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*bays*</span>      | `/api/bays`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of the rack |
@@ -1217,9 +1346,11 @@ Table *bays* :
 
 Physical servers are physical machines running a set of IT services.
 
-Table *physical_servers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_servers*</span>      | `/api/physical-servers`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of physical server |
@@ -1256,7 +1387,7 @@ For readability, fields defined in the data model but unused for the
 moment in application for table *physical_servers* have been grouped into the following table:
 
 
-| Champ                | Type         | Description                             |
+| Field                | Type         | Description                             |
 |:---------------------|:-------------|:----------------------------------------|
 | vendor               | varchar(255) | Vendor / editor for CPE search        |
 | product              | varchar(255) | Product of an editor for CPE search   |
@@ -1271,9 +1402,11 @@ moment in application for table *physical_servers* have been grouped into the fo
 
 Workstations are physical machines that enable a user to access the information system.
 
-Table *workstations* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*workstations*</span>      | `/api/workstations`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of workstation |
@@ -1308,7 +1441,7 @@ In the application, an application can be attached to a workstation from a works
 For readability reasons, fields defined in the data model but unused at the moment 
 in the application for the table *workstations* have been grouped in the following table:
 
-| Champ                | Type         | Description                             |
+| Field                | Type         | Description                             |
 |:---------------------|:-------------|:----------------------------------------|
 | vendor               | varchar(255) | Vendor / editor for CPE search          |
 | product              | varchar(255) | Product of an editor for CPE search     |
@@ -1330,9 +1463,11 @@ in the application for the table *workstations* have been grouped in the followi
 
 Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area network (SAN), hard disk...
 
-Table *storage_devices* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*storage_devices*</span>      | `/api/storage-devices`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of storage infrastructure |
@@ -1355,9 +1490,11 @@ The "vendor", "product" and "version" fields are not used at the moment and are 
 
 Peripherals are physical components connected to a workstation to add new functions (e.g. keyboard, mouse, printer, scanner, etc.).
 
-Table *peripherals* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*peripherals*</span>      | `/api/peripherals`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of peripheral |
@@ -1386,7 +1523,11 @@ In the application, a device can be attached to an application from a peripheral
 
 Fixed and mobile phones belonging to the organization.
 
-| Champ                | Type         | Description      |
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*phones*</span>      | `/api/phones`    |
+
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of telephone |
@@ -1412,9 +1553,11 @@ The "vendor", "product" and "version" fields are not used at the moment and are 
 
 Physical switches are physical components that manage connections between different servers within a network.
 
-Table *physical_switches* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_switches*</span>      | `/api/physical-switches`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of physical switch |
@@ -1442,9 +1585,11 @@ from these two types of objects.
 
 Physical routers are physical components that manage connections between different networks.
 
-Table *physical_routers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_routers*</span>      | `/api/physical_routers`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of physical router |
@@ -1470,9 +1615,11 @@ A VLAN can be attached to a physical router from a physical router object.
 
 WiFi hotspots are hardware devices that enable access to the WiFi wireless network.
 
-Table *wifi_terminals* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*wifi_terminals*</span>      | `/api/wifi-terminals`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of WiFi hotspot |
@@ -1489,29 +1636,30 @@ Table *wifi_terminals* :
 | updated_at           | timestamp    | Date of update |
 | deleted_at           | timestamp    | Date of deletion |
 
-#### Physical security equipment
+#### Physical security equipments
 
 Physical security equipment includes components for network supervision, incident detection, equipment protection and information system security.
 
 Physical security equipment includes temperature sensors, cameras, security doors, etc.
 
-Table *physical_security_devices* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_security_devices*</span>      | `/api/physical-security-devices`    |
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of security equipment |
-| icon_id              | int unsigned | Reference to a specific image            |
+| Field                | Type         | Description                        |
+|:---------------------|:-------------|:-----------------------------------|
+| id                   | int unsigned | auto_increment                     |
+| name                 | varchar(255) | Name of security equipment         |
+| icon_id              | int unsigned | Reference to a specific image      |
 | description          | longtext     | Description of security equipment  |
-| type                 | varchar(255) | Type / model of security equipment  |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| bay_id               | int unsigned | Reference to rack |
-| address_ip           | varchar(255) | IP Adress        |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
-
+| type                 | varchar(255) | Type / model of security equipment |
+| site_id              | int unsigned | Reference to site                  |
+| building_id          | int unsigned | Reference to building / room       |
+| bay_id               | int unsigned | Reference to rack                  |
+| address_ip           | varchar(255) | IP Adress                          |
+| created_at           | timestamp    | Date of creation                   |
+| updated_at           | timestamp    | Date of update                     |
+| deleted_at           | timestamp    | Date of deletion                   |
 
 
 #### Physical links
@@ -1521,9 +1669,11 @@ Logical objects can have physical links, for example within a virtualized networ
 A physical link is different from a logical flow. A physical link describes a relationship at layers 1 or 2 of the OSI model.  
 A logic flow describes a relationship at layers 3 and 4 of the OSI model.
 
-Table *physical_links* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_links*</span>      | `/api/physical-links`    |
 
-| Champ           | Type         | Description                             |
+| Field           | Type         | Description                             |
 |:----------------|:-------------|:----------------------------------------|
 | id              | int unsigned | auto_increment                          |
 | *device*_src_id | int unsigned | Source                                  |
@@ -1532,11 +1682,11 @@ Table *physical_links* :
 | dst_port        | varchar(255) | Physical port of the destination        |
 | created_at      | timestamp    | Date of creation                        |
 | updated_at      | timestamp    | Date of update                          |
-| deleted_at      | timestamp    | Date of deletion                      |
+| deleted_at      | timestamp    | Date of deletion                        |
 
 Les ***devices***** sources or destination might be :
 
-| Actif                            | Source  | Destination |
+| Assets ***(devices***)           | Source  | Destination |
 |:---------------------------------|:-------:|:-----------:|
 | Peripheral                       | ✅      | ✅          |
 | Phonehone                        | ✅      | ✅          |
@@ -1552,15 +1702,15 @@ Les ***devices***** sources or destination might be :
 | Logical router                   | ✅      | ✅          |
 
 
-
-
-#### WAN
+#### WANs
 
 WANs (Wide Area Networks) are computer networks linking equipment over long distances. They generally interconnect MANs or LANs.
 
-Table *wans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*wans*</span>      | `/api/wans`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of WAN |
@@ -1569,13 +1719,15 @@ Table *wans* :
 | deleted_at           | timestamp    | Date of deletion |
 
 
-#### MAN
+#### MANs
 
 MANs (Middle Area Networks) are computer networks linking equipment over medium-sized distances. They generally interconnect LANs.
 
-Table *mans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*mans*</span>      | `/api/mans`    |
 
-| Champ                | Type         | Description      |
+| Field                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Name of MAN |
@@ -1583,17 +1735,19 @@ Table *mans* :
 | updated_at           | timestamp    | Date of update |
 | deleted_at           | timestamp    | Date of deletion |
 
-#### LAN
+#### LANs
 
 LANs (Local Area Networks) are computer networks linking equipment over a small geographical area.
 
-Table *lans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*lans*</span>      | `/api/lans`    |
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of LAN |
+| Field                | Type         | Description        |
+|:---------------------|:-------------|:-------------------|
+| id                   | int unsigned | auto_increment     |
+| name                 | varchar(255) | Name of LAN        |
 | description          | longtext     | Description of LAN |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| created_at           | timestamp    | Date of creation   |
+| updated_at           | timestamp    | Date of update     |
+| deleted_at           | timestamp    | Date of deletion   |
