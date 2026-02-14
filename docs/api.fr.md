@@ -146,7 +146,7 @@ l'entête "Authorization" de la requête de l'API.
 
 ### Liaison entre les objets
 
-Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier une processus à
+Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier un processus à
 une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire,
 nous suivons ces étapes :
 
