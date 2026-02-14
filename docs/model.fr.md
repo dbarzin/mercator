@@ -13,7 +13,9 @@ Cette vue permet de remplir les obligations prévues à l’article 30 du RGPD.
 
 Le registre des activités de traitement contient les informations prévues à l'article 30.1 du RGPD.
 
-Table *data_processing* :
+| Table            | api             |
+|:-----------------|:----------------|
+| <span style="color: blue;">*data_processing*</span>  | `/api/data-processings` |
 
 | Champ                          | Type         | Description                             |
 |:-------------------------------|:-------------|:----------------------------------------|
@@ -57,7 +59,9 @@ Cette table permet d'identifier les mesures de sécurité appliquées aux proces
 
 Par défaut cette table est complétée avec les mesures de sécurité de la norme ISO 27001:2022.
 
-Table *security_controls* :
+| Table            | api             |
+|:-----------------|:----------------|
+| <span style="color: blue;">*security_controls*</span>  | `/api/security-controls` |
 
 | Champ       | Type         | Description              |
 |:------------|:-------------|:-------------------------|
@@ -86,7 +90,10 @@ d’information qui vise à être cartographié.
 Les entités sont des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au
 travers de relations.
 
-Table *entities* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*entities*</span>      | `/api/entities`    |
+
 
 | Champ            | Type         | Description                                   |
 |:-----------------|:-------------|:----------------------------------------------|
@@ -123,7 +130,9 @@ Les relations représentent un lien entre deux entités ou systèmes.
 Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système
 d’information.
 
-Table *relations* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*relations*</span>      | `/api/relations`    |
 
 | Champ              | Type         | Description                                      |
 |:-------------------|:-------------|:-------------------------------------------------|
@@ -176,7 +185,9 @@ et ainsi de comprendre leur contexte d’emploi.
 
 Les macro-processus représentent des ensembles de processus.
 
-Table *macro_processuses* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*macro-processuses*</span>      | `/api/macro-processuses`    |
 
 | Champ              | Type         | Description                    |
 |:-------------------|:-------------|:-------------------------------|
@@ -208,7 +219,9 @@ valeur ajoutée (sous forme de livrables) à partir d’informations (d’entré
 Les processus sont composés d’activités, des entités qui participent à ce processus et des informations traitées par
 celui-ci.
 
-Table *processes* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*processes*</span>      | `/api/processes`    |
 
 | Champ              | Type         | Description                         |
 |:-------------------|:-------------|:------------------------------------|
@@ -263,7 +276,9 @@ Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets M
 Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et
 pas forcément à une structure organisationnelle de l’entreprise.
 
-Table *activities* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*activities*</span>      | `/api/activities`    |
 
 | Champ                       | Type         | Description                                      |
 |:----------------------------|:-------------|:-------------------------------------------------|
@@ -298,7 +313,9 @@ Les impacts ne sont accessibles qu'à travers les objets activités.
 
 Ils ne sont ni importables, ni exportables à travers l'outil graphique.  
 
-Table *activity_impact* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*activity_impacts*</span>      |     |
 
 | Champ            | Type          | Description                                           |
 |:-----------------|:--------------|:------------------------------------------------------|
@@ -314,7 +331,9 @@ Table *activity_impact* :
 
 Une opération est composée d’acteurs et de tâches.
 
-Table *operations* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*operations*</span>      | `/api/operations`    |
 
 | Champ       | Type         | Description                                              |
 |:------------|:-------------|:---------------------------------------------------------|
@@ -340,7 +359,9 @@ Une tâche peut être rattachée à une opération depuis l'objet opérations.
 Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible
 de travail dans la chaîne de valeur ajoutée d’un processus.
 
-Table *tasks* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*tasks*</span>      | `/api/tasks`    |
 
 | Champ       | Type         | Description          |
 |:------------|:-------------|:---------------------|
@@ -360,7 +381,9 @@ Dans l'application, une opération peut être rattachée à une tâche depuis l'
 Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des
 décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.
 
-Table *actors* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*actors*</span>      | `/api/actors`    |
 
 | Champ      | Type         | Description                       |
 |:-----------|:-------------|:----------------------------------|
@@ -378,11 +401,13 @@ L'export du modèle de données référence les opérations rattachées à un ac
 
 Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.  
 
-#### Informations
+#### Information
 
 Une information est une donnée faisant l’objet d’un traitement informatique.
 
-Table *information* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*information*</span>      | `/api/information`    |
 
 | Champ              | Type         | Description                           |
 |:-------------------|:-------------|:--------------------------------------|
@@ -424,13 +449,16 @@ La vue des applications permet de décrire une partie de ce qui est classiquemen
 
 Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.
 
-#### Bloc applicatif
+#### Blocs applicatif
 
 Un bloc applicatif représente un ensemble d’application.
 
 Un bloc applicatif peut être : les applications bureautique, de gestion, d’analyse, de développement, ...
 
-Table *application_blocks* :
+
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*application-blocks*</span>      | `/api/application-blocks`    |
 
 | Champ       | Type         | Description                    |
 |:------------|:-------------|:-------------------------------|
@@ -444,7 +472,7 @@ Table *application_blocks* :
 
 Dans l'application, une application peut être rattachée à un bloc applicatif depuis ces deux objets.
 
-#### Application
+#### Applications
 
 Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un
 regroupement de services applicatifs.
@@ -454,7 +482,9 @@ Une application peut être déployée sur un ou plusieurs serveurs logiques.
 Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y
 a un serveur logique par serveur physique.
 
-Table *m_applications* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*m_applications*</span>      | `/api/applications`    |
 
 | Champ                | Type         | Description                                     |
 |:---------------------|:-------------|:------------------------------------------------|
@@ -550,7 +580,9 @@ Les évènements majeurs ne sont accessibles qu'à travers les objets applicatio
 
 Ils ne sont ni importables, ni exportables à travers l'outil graphique.  
 
-Table *m_application_events* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*m_application_events*</span>      |     |
 
 | Champ            | Type         | Description                                         |
 |:-----------------|:-------------|:----------------------------------------------------|
@@ -561,14 +593,16 @@ Table *m_application_events* :
 | created_at       | timestamp    | Date de création                                    |
 | updated_at       | timestamp    | Date de mise à jour                                 |
 
-#### Service applicatif
+#### Services applicatif
 
 Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le
 cadre de son travail.
 
 Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).
 
-Table *application_services* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*application_services*</span>      | `/api/application-services`    |
 
 | Champ       | Type         | Description                         |
 |:------------|:-------------|:------------------------------------|
@@ -591,12 +625,14 @@ Il y a deux champs comportant les mêmes informations dans l'export du modèle d
 *applications*.  
 La liaison avec les objets applications se fait par le champ *applications*.
 
-#### Module applicatif
+#### Modules applicatif
 
 Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière
 d’informatique et une homogénéité technologique.
 
-Table *application_modules* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*application_modules*</span>      | `/api/application-modules`    |
 
 | Champ                | Type         | Description                          |
 |:---------------------|:-------------|:-------------------------------------|
@@ -611,11 +647,13 @@ Table *application_modules* :
 L'export du modèle de données référence les services applicatifs rattachés à un module applicatif.  
 Dans l'application, un service applicatif peut être rattaché à un module applicatif depuis ces deux objets.
 
-#### Base de données
+#### Bases de données
 
 Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.
 
-Table *databases* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*databases*</span>      | `/api/databases`    |
 
 | Champ              | Type         | Description                               |
 |:-------------------|:-------------|:------------------------------------------|
@@ -661,7 +699,9 @@ en termes de flux l’ensemble des règles de filtrage du firewall.
 
 Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux.
 
-Table *fluxes* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*fluxes*</span>      | `/api/fluxes`    |
 
 | Champ                 | Type         | Description                               |
 |:----------------------|:-------------|:------------------------------------------|
@@ -669,8 +709,8 @@ Table *fluxes* :
 | name                  | varchar(255) | Nom du flux                               |
 | attributes            | varchar(255) | Attributs (tags) du flux                  |
 | description           | longtext     | Description du flux                       |
-| ***device***_source_id    | int unsigned | Lien vers l'actif source                  |
-| ***device***_dest_id      | int unsigned | Lien vers l'actif destinataire            |
+| <span style="color: purple;">*device***_source_id    | int unsigned | Lien vers l'actif source                  |
+| <span style="color: purple;">*device***_dest_id      | int unsigned | Lien vers l'actif destinataire            |
 | crypted               | tinyint(1)   | Le flux est chiffré (1=oui, O=non)        |
 | bidirectional         | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non) |
 | nature                | varcahr(255) | Nature du flux applicatif                 |
@@ -679,7 +719,7 @@ Table *fluxes* :
 | deleted_at            | timestamp    | Date de suppression                       |
 
 
-Les ***device*** sources et destination peuvent être :
+Les <span style="color: purple;">*actifs (device)*</span>  sources et destination peuvent être :
 
 | Actif (*device*)                | Source | Destination |
 |:--------------------------------|:------:|:-----------:|
@@ -702,7 +742,7 @@ utilisateurs du système d’information.
 Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les
 opérateurs d’importance vitale (OIV).
 
-#### Zone d’administration
+#### Zones d’administration
 
 Une zone d’administration est un ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (
 ou plusieurs) administrateur(s).
@@ -710,7 +750,9 @@ ou plusieurs) administrateur(s).
 Une zone d’administration est composée de services d’annuaires et de forêts Active Directory (AD) ou d’arborescences
 LDAP.
 
-Table *zone_admins* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*zone_admins*</span>      | `/api/zone-admins`    |
 
 | Champ       | Type         | Description            |
 |:------------|:-------------|:-----------------------|
@@ -721,7 +763,7 @@ Table *zone_admins* :
 | updated_at  | timestamp    | Date de mise à jour    |
 | deleted_at  | timestamp    | Date de suppression    |
 
-#### Service d’annuaire d’administration
+#### Services d’annuaire d’administration
 
 Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les
 équipements informatiques de l’entreprise et permettant leur administration.
@@ -729,7 +771,9 @@ Un service d’annuaire d’administration est une application regroupant les do
 Il peut s’agir d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie
 comme Mercator.
 
-Table *annuaires*;
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*annuaires*</span>      | `/api/annuaires`    |
 
 | Champ         | Type         | Description                             |
 |:--------------|:-------------|:----------------------------------------|
@@ -742,11 +786,13 @@ Table *annuaires*;
 | updated_at    | timestamp    | Date de mise à jour                     |
 | deleted_at    | timestamp    | Date de suppression                     |
 
-#### Forêt Active Directory / Arborescence LDAP
+#### Forêts Active Directory / Arborescence LDAP
 
 Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.
 
-Table *forest_ads* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*forest_ads*</span>      | `/api/forest-ads`    |
 
 | Champ         | Type         | Description                                                        |
 |:--------------|:-------------|:-------------------------------------------------------------------|
@@ -768,7 +814,9 @@ Les domaines Active Directory / LDAP sont des annuaires informatique d'entrepris
 utilisateurs et machines, les contacts, une partie des configurations de la gestion des SI (politiques de groupes,
 GPO, par exemple) ainsi que les droits des objets.
 
-Table *domaines_ads* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*domaines_ads*</span>      | `/api/domaines-ads`    |
 
 | Champ                  | Type         | Description                              |
 |:-----------------------|:-------------|:-----------------------------------------|
@@ -791,7 +839,9 @@ Un serveur logique peut être rattaché à un domaine AD / LDAP depuis ces deux 
 
 Les utilisateurs représentent les comptes ayant des droits privilégiés sur les SI.
 
-Table *admin_users* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*admin_users*</span>      | `/api/admin-users`    |
 
 | Champ                 | Type         | Description                                    |
 |:----------------------|:-------------|:-----------------------------------------------|
@@ -826,7 +876,9 @@ réseau en charge du trafic.
 
 Les réseaux sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.
 
-Table *networks* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*networks*</span>      | `/api/networks`    |
 
 | Champ           | Type         | Description                   |
 |:----------------|:-------------|:------------------------------|
@@ -853,7 +905,9 @@ Il s'active depuis le menu Configuration > Paramètres.
 
 Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.
 
-table *subnetworks* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*subnetworks*</span>      | `/api/subnetworks`    |
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -882,7 +936,9 @@ Le champ "connected_subnets_id" sert à définir une clé étrangère. Cependant
 
 Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.
 
-Table *gateways* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*gateways*</span>      | `/api/gateways`    |
 
 | Champ                | Type         | Description                                       |
 |:---------------------|:-------------|:--------------------------------------------------|
@@ -901,7 +957,9 @@ Dans l'application, un sous-réseau peut être rattaché à une passerelle depui
 
 Les entités extérieures connectées représentent les entités externes connectées au réseau.
 
-Table *external_connected_entities* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*external_connected_entities*</span>      | `/api/external-connected-entities`    |
 
 | Champ                | Type         | Description                                               |
 |:---------------------|:-------------|:----------------------------------------------------------|
@@ -929,7 +987,10 @@ Un document peut être rattaché à une entité extérieure connectée depuis un
 
 Les commutateurs réseau sont les composants gérant les connexions entre les différents serveurs au sein d’un réseau.
 
-Table *network_switches* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*network_switches*</span>      | `/api/network-switches`    |
+
 
 | Champ       | Type         | Description                |
 |:------------|:-------------|:---------------------------|
@@ -949,7 +1010,10 @@ Un commutateur physique peut être rattaché à un commutateur réseau depuis ce
 
 Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.
 
-Table *routers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*routers*</span>      | `/api/routers`    |
+
 
 | Champ                | Type         | Description              |
 |:---------------------|:-------------|:-------------------------|
@@ -975,7 +1039,11 @@ Les équipements de sécurité sont des systèmes de détection d'intrusion (ou 
 systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des
 équipements.
 
-Table *security_devices* :
+
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*security_devices*</span>      | `/api/security-devices`    |
+
 
 | Champ                | Type         | Description                             |
 |:---------------------|:-------------|:----------------------------------------|
@@ -1007,7 +1075,10 @@ Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gest
 Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide de
 l'ANSSI (cf. Références).
 
-Table *dhcp_servers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*dhcp_servers*</span>      | `/api/dhcp-servers`    |
+
 
 | Champ                | Type         | Description              |
 |:---------------------|:-------------|:-------------------------|
@@ -1026,7 +1097,10 @@ la conversion d’un nom de domaine en adresse IP.
 Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide 
 de l'ANSSI (cf. Références).
 
-Table *dnsservers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*dnsservers*</span>      | `/api/dnsservers`    |
+
 
 | Champ                | Type         | Description              |
 |:---------------------|:-------------|:-------------------------|
@@ -1042,7 +1116,10 @@ Table *dnsservers* :
 
 Les clusters représentent un ensemble de serveurs logiques hébergés sur un ou plusieurs serveurs physiques
 
-Table *clusters* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*clusters*</span>      | `/api/clusters`    |
+
 
 | Champ                | Type         | Description                         |
 |:---------------------|:-------------|:------------------------------------|
@@ -1067,7 +1144,10 @@ Un serveur physique peut être rattaché à un cluster depuis ces deux objets.
 Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il
 est découpé en un seul serveur logique.
 
-Table *logical_servers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*logical_servers*</span>      | `/api/logical-servers`    |
+
 
 | Champ                | Type         | Description                                       |
 |:---------------------|:-------------|:--------------------------------------------------|
@@ -1128,7 +1208,10 @@ Le champ "documents" ne semble pas utilisé dans le modèle de données d'un ser
 Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément,
 sur des serveurs logiques internes ou externes (cloud).
 
-Table *containers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*containers*</span>      | `/api/containers`    |
+
 
 | Champ                | Type         | Description                                  |
 |:---------------------|:-------------|:---------------------------------------------|
@@ -1151,7 +1234,11 @@ Un serveur logique peut être rattaché à un conteneur depuis un objet conteneu
 
 Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.  
 
-Table *logical_flows* :
+
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*logical_flows*</span>      | `/api/logical-flows`    |
+
 
 Principe général :
 
@@ -1170,15 +1257,15 @@ Principe général :
 | dest_ip_range        | varchar(255) | Plage IP de destination                       |
 | source_port          | varchar(255) | Port logique source                           |
 | dest_port            | varchar(255) | Port logique de destination                   |
-| *device*_source_id   | int unsigned | Actif source                                  |
-| *device*_dest_id     | int unsigned | Actif de destination                          |
+| <span style="color: purple;">*device*_source_id</span>   | int unsigned | Actif source                                  |
+| <span style="color: purple;">*device*_dest_id</span>     | int unsigned | Actif de destination                          |
 | users                | varchar(255) | Utilisateurs concernés par la règle / le flux |
 | schedule             | varchar(255) | Période d'activité de la règle / du flux      |
 | created_at           | timestamp    | Date de création                              |
 | updated_at           | timestamp    | Date de mise à jour                           |
 | deleted_at           | timestamp    | Date de suppression                           |
 
-Les actifs sources et destination peuvent être :
+Les <span style="color: purple;">*actifs (devices)*</span> sources et destination peuvent être :
 
 | Actif (*device*)                | Source  | Destination |
 |:--------------------------------|:-------:|:-----------:|
@@ -1199,7 +1286,10 @@ morales, mais aussi pour chiffrer des échanges.
 Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associés à des serveurs logiques ou des
 applications.
 
-Table *certificates* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*certificates*</span>      | `/api/certificates`    |
+
 
 | Champ                | Type         | Description                              |
 |:---------------------|:-------------|:-----------------------------------------|
@@ -1224,12 +1314,15 @@ Le champ "last_notification" n'est pas utilisé pour le moment et est donc absen
 L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.  
 Dans l'application, un certificat peut être rattaché à une application ou un serveur logique depuis un objet certificat.
 
-#### VLAN
+#### VLANs
 
 Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements
 en s’affranchissant des contraintes physiques.
 
-Table *vlans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*vlans*</span>      | `/api/vlans`    |
+
 
 | Champ                | Type         | Description         |
 |:---------------------|:-------------|:--------------------|
@@ -1261,7 +1354,9 @@ Cette vue correspond à la répartition géographique des équipements réseaux 
 
 Les sites sont des emplacements géographiques rassemblant un ensemble de personnes et/ou de ressources.
 
-Table *sites* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*sites*</span>     | `/api/sites`    |
 
 | Champ       | Type         | Description                         |
 |:------------|:-------------|:------------------------------------|
@@ -1279,7 +1374,10 @@ Dans l'application, un bâtiment / salle peut être rattaché à un site depuis 
 
 Les bâtiments ou salles représentent la localisation des personnes ou ressources à l’intérieur d’un site.
 
-Table *buildings* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*buildings*</span>      | `/api/buildings`    |
+
 
 | Champ       | Type         | Description                                          |
 |:------------|:-------------|:-----------------------------------------------------|
@@ -1302,7 +1400,10 @@ salle.
 
 Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.
 
-Table *bays* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*bays*</span>      | `/api/bays`    |
+
 
 | Champ       | Type         | Description                        |
 |:------------|:-------------|:-----------------------------------|
@@ -1320,7 +1421,10 @@ Dans l'application, une baie peut être rattachée à un bâtiment / baie depuis
 
 Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.
 
-Table *physical_servers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_servers*</span>      | `/api/physical-servers`    |
+
 
 | Champ                | Type         | Description                                          |
 |:---------------------|:-------------|:-----------------------------------------------------|
@@ -1371,7 +1475,10 @@ moment dans l'application pour la table *physical_servers* ont été regroupés 
 
 Les postes de travail sont des machines physiques permettant à un utilisateur d’accéder au système d’information.
 
-Table *workstations* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*workstations*</span>      | `/api/workstations`    |
+
 
 | Champ                | Type         | Description                                                     |
 |:---------------------|:-------------|:----------------------------------------------------------------|
@@ -1429,7 +1536,10 @@ dans l'application pour la table *workstations* ont été regroupés dans le tab
 Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en
 réseau (NAS), réseau de stockage (SAN), disque dur…
 
-Table *storage_devices* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*storage_devices*</span>      | `/api/storage-devices`    |
+
 
 | Champ       | Type         | Description                                 |
 |:------------|:-------------|:--------------------------------------------|
@@ -1455,7 +1565,10 @@ Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment
 Les périphériques sont des composants physiques connectés à un poste de travail afin d’ajouter de nouvelles
 fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
 
-Table *peripherals* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*peripherals*</span>      | `/api/peripherals`    |
+
 
 | Champ                | Type         | Description                                        |
 |:---------------------|:-------------|:---------------------------------------------------|
@@ -1485,6 +1598,11 @@ Dans l'application, un périphérique peut être rattaché à une application de
 
 Les téléphones fixes ou portables appartenant à l’organisation.
 
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*phones*</span>      | `/api/phones`    |
+
+
 | Champ              | Type         | Description                             |
 |:-------------------|:-------------|:----------------------------------------|
 | id                 | int unsigned | auto_increment                          |
@@ -1511,7 +1629,10 @@ téléphone peut être rattaché à un commutateur réseau en utilisant l'objet 
 Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein
 d’un réseau.
 
-Table *physical_switches* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_switches*</span>      | `/api/physical-switches`    |
+
 
 | Champ                | Type         | Description                             |
 |:---------------------|:-------------|:----------------------------------------|
@@ -1538,7 +1659,10 @@ depuis ces deux types d'objets.
 
 Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.
 
-Table *physical_routers* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_routers*</span>      | `/api/physical_routers`    |
+
 
 | Champ                | Type         | Description                             |
 |:---------------------|:-------------|:----------------------------------------|
@@ -1565,7 +1689,10 @@ Un VLAN peut être rattaché à un routeur physique depuis un objet routeur phys
 
 Les bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.
 
-Table *wifi_terminals* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*wifi_terminals*</span>      | `/api/wifi-terminals`    |
+
 
 | Champ       | Type         | Description                             |
 |:------------|:-------------|:----------------------------------------|
@@ -1590,7 +1717,10 @@ la protection des équipements ou ayant une fonction de sécurisation du systèm
 
 Les équipements de sécurité physique sont des sondes de températures, des caméras, des portes sécurisées, ...
 
-Table *physical_security_devices* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_security_devices*</span>      | `/api/physical-security-devices`    |
+
 
 | Champ       | Type         | Description                               |
 |:------------|:-------------|:------------------------------------------|
@@ -1620,7 +1750,9 @@ Les objets logiques peuvent disposer de liens physiques, par exemple au sein d'u
 Un lien physique est différent d'un flux logique. Un lien physique décrit une relation au niveau des couches 1 ou 2 du modèle OSI.  
 Un flux logique décrit une relation au niveau des couches 3 et 4 du modèle OSI.
 
-Table *physical_links* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*physical_links*</span>      | `/api/physical-links`    |
 
 Principe général :
 
@@ -1652,12 +1784,15 @@ Les actifs sources et destination peuvent être :
 | Commutateur logique             | ✅      | ✅          |
 | Routeur logique                 | ✅      | ✅          |
 
-#### WAN
+#### WANs
 
 Les WAN (Wide Area Network) sont des réseaux informatiques reliant des équipements sur des distances importantes. Ils
 interconnectent généralement des MAN ou LAN entre eux.
 
-Table *wans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*wans*</span>      | `/api/wans`    |
+
 
 | Champ      | Type         | Description         |
 |:-----------|:-------------|:--------------------|
@@ -1670,12 +1805,15 @@ Table *wans* :
 L'export du modèle de données référence les MAN et LAN rattachés à un WAN.  
 Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.
 
-#### MAN
+#### MANs
 
 Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement
 importantes. Ils interconnectent généralement des LAN entre eux.
 
-Table *mans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*mans*</span>      | `/api/mans`    |
+
 
 | Champ      | Type         | Description         |
 |:-----------|:-------------|:--------------------|
@@ -1689,11 +1827,15 @@ L'export du modèle de données référence les WAN et LAN rattachés à un MAN.
 Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.  
 Un LAN peut être rattaché à un MAN depuis les objets MAN.
 
-#### LAN
+#### LANs
 
 Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.
 
-Table *lans* :
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*lans*</span>      | `/api/lans`    |
+
+
 
 | Champ       | Type         | Description         |
 |:------------|:-------------|:--------------------|

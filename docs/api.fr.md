@@ -14,87 +14,88 @@ pour installer l'API dans Mercator, il est nécessaire d'installer Passport en l
 php artisan passport:install
 ```
 
-- l'environnement Docker prend en charge cette fonctionnalité nativement, via le l'entrypoint.
+- l'environnement Docker prend en charge cette fonctionnalité nativement, via l'entrypoint.
 
 ### Les APIs
 
 Pour chaque objet du modèle de données de la cartographie, il existe une API.
 La liste des API se trouve dans le fichier /route/api.php
 
+*Note:* Pour visualiser le datamodel d'une API, cliquer sur son nom.
+
 __Vue du RGPD__
 
-- /api/data-processings
-- /api/security-controls
+- [/api/data-processings](./model.fr.md#registre)
+- [/api/security-controls](./model.fr.md#mesures-de-securite)
 
 __Vues de l'écosystème__
 
-- /api/entities
-- /api/relations
+- [/api/entities](./model.fr.md#entites)
+- [/api/relations](./model.fr.md#relations)
 
 __Vue métier du système d'information__
 
-- /api/macro-processuses
-- /api/processes
-- /api/activities
-- /api/operations
-- /api/tasks
-- /api/actors
-- /api/information
+- [/api/macro-processuses](./model.fr.md#macro-processus)
+- [/api/processes](./model.fr.md#processus)
+- [/api/activities](./model.fr.md#activites)
+- [/api/operations](./model.fr.md#operations)
+- [/api/tasks](./model.fr.md#taches)
+- [/api/actors](./model.fr.md#acteurs)
+- [/api/information](./model.fr.md#information)
 
 __Vue des applications__
 
-- /api/application-blocks
-- /api/applications
-- /api/application-services
-- /api/application-modules
-- /api/databases
-- /api/fluxes
+- [/api/application-blocks](./model.fr.md#blocs-applicatif)
+- [/api/applications](./model.fr.md#applications)
+- [/api/application-services](./model.fr.md#services-applicatif)
+- [/api/application-modules](./model.fr.md#modules-applicatif)
+- [/api/databases](./model.fr.md#bases-de-donnees)
+- [/api/fluxes](./model.fr.md#flux)
 
 __Vue de l'administration__
 
-- /api/zone-admins
-- /api/annuaires
-- /api/forest-ads
-- /api/domaine-ads
-- /api/admin-users
+- [/api/zone-admins](./model.fr.md#zones-dadministration)
+- [/api/annuaires](./model.fr.md#services-dannuaire-dadministration)
+- [/api/forest-ads](./model.fr.md#forets-active-directory-arborescence-ldap)
+- [/api/domaine-ads](./model.fr.md#domaines-active-directory-ldap)
+- [/api/admin-users](./model.fr.md#utilisateurs)
 
 __Vue de l'infrastructure logique__
 
-- /api/networks
-- /api/subnetworks
-- /api/gateways
-- /api/external-connected-entities
-- /api/network-switches
-- /api/routers
-- /api/security-devices
-- /api/dhcp-servers
-- /api/dnsservers
-- /api/clusters
-- /api/logical-servers
-- /api/logical-flows
-- /api/containers
-- /api/certificates
-- /api/vlans
+- [/api/networks](./model.fr.md#reseaux)
+- [/api/subnetworks](./model.fr.md#sous-reseaux)
+- [/api/gateways](./model.fr.md#passerelles-dentrees-depuis-lexterieur)
+- [/api/external-connected-entities](./model.fr.md#entites-exterieures-connectees)
+- [/api/network-switches](./model.fr.md#commutateurs-reseau)
+- [/api/routers](./model.fr.md#routeurs-logiques)
+- [/api/security-devices](./model.fr.md#equipements-de-securite)
+- [/api/dhcp-servers](./model.fr.md#serveurs-dhcp)
+- [/api/dnsservers](./model.fr.md#serveurs-dns)
+- [/api/clusters](./model.fr.md#clusters)
+- [/api/logical-servers](./model.fr.md#serveurs-logiques)
+- [/api/logical-flows](./model.fr.md#flux-logiques)
+- [/api/containers](./model.fr.md#conteneurs)
+- [/api/certificates](./model.fr.md#certificats)
+- [/api/vlans](./model.fr.md#vlans)
 
 __Vue de l'infrastructure physique__
 
-- /api/sites
-- /api/buildings
-- /api/bays
-- /api/physical-servers
-- /api/workstations
-- /api/storage-devices
-- /api/peripherals
-- /api/phones
-- /api/physical-switches
-- /api/physical-routers
-- /api/wifi-terminals
-- /api/physical-security-devices
-- /api/wans
-- /api/mans
-- /api/lans
-- /api/physical-links
-- /api/fluxes
+- [/api/sites](./model.fr.md#sites)
+- [/api/buildings](./model.fr.md#batiments-salles)
+- [/api/bays](./model.fr.md#baies)
+- [/api/physical-servers](./model.fr.md#serveurs-physiques)
+- [/api/workstations](./model.fr.md#postes-de-travail)
+- [/api/storage-devices](./model.fr.md#infrastructures-de-stockage)
+- [/api/peripherals](./model.fr.md#peripheriques)
+- [/api/phones](./model.fr.md#telephones)
+- [/api/physical-switches](./model.fr.md#commutateurs-physiques)
+- [/api/physical-routers](./model.fr.md#routeurs-physiques)
+- [/api/wifi-terminals](./model.fr.md#bornes-wifi)
+- [/api/physical-security-devices](./model.fr.md#equipements-de-securite-physique)
+- [/api/physical-links](./model.fr.md#liens-physiques)
+- [/api/wans](./model.fr.md#wans)
+- [/api/mans](./model.fr.md#mans)
+- [/api/lans](./model.fr.md#lans)
 
 __Rapport__
 
@@ -132,208 +133,7 @@ Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
-### Filtrage, tri et inclusion de relations
-
-Les endpoints de liste (`GET /api/objets`) supportent un système avancé de filtres, tri et inclusion de relations via
-les paramètres de requête.
-
-#### Champs filtrables
-
-Tous les champs déclarés dans le modèle (`$fillable`) sont automatiquement filtrables. Les filtres sur des champs non
-autorisés sont simplement ignorés.
-
-#### Syntaxe des filtres
-
-Chaque filtre se présente sous la forme :
-
-```text
-filter[<champ>]=<valeur>                    # Filtre exact
-filter[<champ>_<operateur>]=<valeur>        # Filtre avec opérateur
-```
-
-#### Opérateurs de filtrage disponibles
-
-##### Filtres exacts et textuels
-
-| Opérateur | Syntaxe               | Description                  | Exemple                |
-|-----------|-----------------------|------------------------------|------------------------|
-| (aucun)   | `filter[name]=Backup` | Égalité exacte               | `name = 'Backup'`      |
-| (partiel) | `filter[name]=backup` | Recherche partielle (LIKE) * | `name LIKE '%backup%'` |
-
-_* La recherche partielle automatique s'applique aux champs contenant : `name`, `description`, `email`_
-
-##### Comparaisons numériques
-
-| Opérateur | Syntaxe                                 | Description         | Exemple SQL                    |
-|-----------|-----------------------------------------|---------------------|--------------------------------|
-| `_lt`     | `filter[recovery_time_objective_lt]=4`  | Inférieur à         | `recovery_time_objective < 4`  |
-| `_lte`    | `filter[recovery_time_objective_lte]=4` | Inférieur ou égal à | `recovery_time_objective <= 4` |
-| `_gt`     | `filter[recovery_time_objective_gt]=8`  | Supérieur à         | `recovery_time_objective > 8`  |
-| `_gte`    | `filter[recovery_time_objective_gte]=8` | Supérieur ou égal à | `recovery_time_objective >= 8` |
-
-##### Opérateurs avancés
-
-| Opérateur  | Syntaxe                                        | Description           | Exemple                                    |
-|------------|------------------------------------------------|-----------------------|--------------------------------------------|
-| `_in`      | `filter[id_in]=1,2,3`                          | Valeur dans une liste | `id IN (1, 2, 3)`                          |
-| `_between` | `filter[recovery_time_objective_between]=4,24` | Entre deux valeurs    | `recovery_time_objective BETWEEN 4 AND 24` |
-| `_null`    | `filter[deleted_at_null]=true`                 | Valeur NULL           | `deleted_at IS NULL`                       |
-| `_null`    | `filter[description_null]=false`               | Valeur NOT NULL       | `description IS NOT NULL`                  |
-| `_not`     | `filter[type_not]=opensource`                  | Négation (différent)  | `type != 'opensource'`                     |
-
-##### Recherche globale et filtres sur relations
-
-| Opérateur  | Syntaxe                       | Description                                                          | Exemple                                               |
-|------------|-------------------------------|----------------------------------------------------------------------|-------------------------------------------------------|
-| `search`   | `filter[search]=backup`       | Recherche OR sur tous les champs textuels (name, description, email) | `name LIKE '%backup%' OR description LIKE '%backup%'` |
-| (relation) | `filter[actors.email]=john`   | Recherche LIKE sur champs de relations                               | `actors.email LIKE '%john%'`                          |
-| (relation) | `filter[contacts.name]=alice` | Recherche LIKE sur nom dans une relation                             | `contacts.name LIKE '%alice%'`                        |
-
-##### Filtres de dates
-
-Pour les champs contenant `date` ou `at` dans leur nom :
-
-| Opérateur | Syntaxe                                | Description      | Exemple                      |
-|-----------|----------------------------------------|------------------|------------------------------|
-| `_after`  | `filter[created_at_after]=2024-01-01`  | Après cette date | `created_at >= '2024-01-01'` |
-| `_before` | `filter[updated_at_before]=2024-12-31` | Avant cette date | `updated_at <= '2024-12-31'` |
-
-##### Soft Deletes
-
-| Syntaxe                | Description                       |
-|------------------------|-----------------------------------|
-| `filter[trashed]=with` | Inclure les éléments supprimés    |
-| `filter[trashed]=only` | Uniquement les éléments supprimés |
-
-#### Tri des résultats
-
-Le tri se fait avec le paramètre `sort` :
-
-```text
-sort=<champ>        # Tri ascendant
-sort=-<champ>       # Tri descendant
-```
-
-Exemples :
-
-- `sort=name` : Tri par nom croissant
-- `sort=-created_at` : Tri par date de création décroissant
-- `sort=recovery_time_objective` : Tri par RTO croissant
-
-#### Inclusion de relations (Eager Loading)
-
-Les relations entre objets peuvent être chargées avec le paramètre `include` :
-
-```text
-include=<relation1>,<relation2>
-```
-
-Les relations disponibles sont automatiquement détectées depuis le modèle. Pour les activités, par exemple :
-
-- `processes` : Processus liés
-- `operations` : Opérations liées
-- `applications` : Applications liées
-- `impacts` : Impacts liés
-
-Exemple : `include=processes,operations`
-
-#### Exemples complets
-
-##### Filtres simples
-
-```http
-# Activités dont le nom contient "sauvegarde"
-GET /api/activities?filter[name]=sauvegarde
-
-# Activités avec un RTO inférieur ou égal à 4 heures
-GET /api/activities?filter[recovery_time_objective_lte]=4
-
-# Activités avec un ID supérieur ou égal à 100
-GET /api/activities?filter[id_gte]=100
-
-# Applications dont le type est différent de "opensource"
-GET /api/applications?filter[type_not]=opensource
-
-# Recherche globale sur tous les champs textuels
-GET /api/applications?filter[search]=backup
-
-# Recherche sur l'email d'un acteur lié
-GET /api/activities?filter[actors.email]=john@example.com
-```
-
-##### Filtres combinés
-
-```http
-# Activités dont le nom contient "GDPR" avec RTO >= 8
-GET /api/activities?filter[name]=GDPR&filter[recovery_time_objective_gte]=8
-
-# Serveurs créés après le 1er janvier 2024 avec un nom contenant "prod"
-GET /api/logical-servers?filter[created_at_after]=2024-01-01&filter[name]=prod
-
-# Applications avec type différent de "opensource" triées par nom
-GET /api/applications?filter[type_not]=opensource&sort=name
-
-# Recherche globale "backup" sur toutes les activités avec RTO <= 8
-GET /api/activities?filter[search]=backup&filter[recovery_time_objective_lte]=8
-
-# Activités liées à un acteur dont l'email contient "admin"
-GET /api/activities?filter[actors.email]=admin&include=actors
-```
-
-##### Filtres avancés
-
-```http
-# Activités avec ID dans la liste 1, 2, 3, 5
-GET /api/activities?filter[id_in]=1,2,3,5
-
-# Activités avec RTO entre 4 et 24 heures
-GET /api/activities?filter[recovery_time_objective_between]=4,24
-
-# Activités sans description
-GET /api/activities?filter[description_null]=true
-
-# Inclure les activités supprimées
-GET /api/activities?filter[trashed]=with
-```
-
-##### Tri
-
-```http
-# Tri par nom croissant
-GET /api/activities?sort=name
-
-# Tri par date de création décroissant
-GET /api/activities?sort=-created_at
-
-# Tri par RTO croissant
-GET /api/activities?sort=recovery_time_objective
-```
-
-##### Inclusion de relations
-
-```http
-# Charger les processus liés
-GET /api/activities?include=processes
-
-# Charger plusieurs relations
-GET /api/activities?include=processes,operations,applications
-
-# Activité spécifique avec ses relations
-GET /api/activities/1?include=processes,operations
-```
-
-##### Combinaisons complexes
-
-```http
-# Activités GDPR avec RTO >= 8, triées par nom, avec relations
-GET /api/activities?filter[name]=GDPR&filter[recovery_time_objective_gte]=8&include=processes,operations&sort=name
-
-# Serveurs logiques créés en 2024, sans description, avec tri
-GET /api/logical-servers?filter[created_at_after]=2024-01-01&filter[created_at_before]=2024-12-31&filter[description_null]=true&sort=-created_at
-
-# Applications avec plusieurs critères
-GET /api/applications?filter[name]=CRM&filter[id_in]=1,2,3&include=databases&sort=-updated_at
-```
+Pour voir les fonctions avancées de filtres : voir la page [API Avancé (filtres)](./apifilters.fr.md)
 
 ### Droits d'accès
 
@@ -496,7 +296,44 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
     var_dump($response);
 ```
 
-### Python
+#### Mettre à jour un utilisateur
+
+```php
+<?php
+   $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "http://127.0.0.1:8000/api/users/8",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_POST => true,
+        CURLOPT_CUSTOMREQUEST => "PUT",
+        CURLOPT_POSTFIELDS => http_build_query(
+            array(
+                'name' => 'Henri',
+                'login' => 'henri@test.fr',
+                'language' => 'fr',
+                'roles[0]' => 1,
+                'roles[1]' => 3,
+                'granularity' => '3')
+            ),
+        CURLOPT_HTTPHEADER => array(
+            "accept: application/json",
+            "Authorization: " . "Bearer" . " " . $access_token . "",
+            "cache-control: no-cache",
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    var_dump($response);
+```
+
+#### Python
 
 Voici un exemple d'utilisation de l'API en Python avec filtres avancés
 
@@ -541,7 +378,7 @@ response = requests.get("http://127.0.0.1:8000/api/activities/1",
 print(response.json())
 ```
 
-### bash
+#### bash
 
 Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html)
 et [JQ](https://stedolan.github.io/jq/)
@@ -593,11 +430,11 @@ UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
 echo "Objet mis à jour: ${UPDATED_OBJECT}"
 ```
 
-### Powershell
+#### Powershell
 
 Le script PowerShell ci-dessous montre comment s'authentifier auprès de l'API et utiliser les filtres avancés.
 
-#### Étape 1 — Authentification et obtention du jeton d'accès
+##### Étape 1 — Authentification et obtention du jeton d’accès
 
 ```powershell
 # Définir l'URL d'authentification et les identifiants
@@ -618,7 +455,7 @@ try {
 }
 ```
 
-#### Étape 2 — Utilisation avec filtres et tri
+##### Étape 2 — Utilisation du jeton pour interroger les serveurs logiques
 
 ```powershell
 # Définir les en-têtes
@@ -638,33 +475,4 @@ try {
 } catch {
     Write-Error "Échec de la requête : $_"
 }
-
-# Récupération avec relations
-$activityId = 1
-$apiUri = "http://127.0.0.1:8000/api/activities/$activityId?include=processes,operations"
-
-try {
-    $activity = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
-    $activity | ConvertTo-Json -Depth 10
-} catch {
-    Write-Error "Échec de la requête : $_"
-}
 ```
-
-### Résumé des fonctionnalités
-
-| Fonctionnalité    | Syntaxe                           | Exemple                                 |
-|-------------------|-----------------------------------|-----------------------------------------|
-| Filtre exact      | `filter[champ]=valeur`            | `filter[name]=Backup`                   |
-| Comparaison       | `filter[champ_operateur]=valeur`  | `filter[recovery_time_objective_gte]=8` |
-| Négation          | `filter[champ_not]=valeur`        | `filter[type_not]=opensource`           |
-| Liste de valeurs  | `filter[champ_in]=v1,v2,v3`       | `filter[id_in]=1,2,3`                   |
-| Intervalle        | `filter[champ_between]=min,max`   | `filter[age_between]=18,65`             |
-| NULL              | `filter[champ_null]=true/false`   | `filter[deleted_at_null]=true`          |
-| Dates             | `filter[champ_after/before]=date` | `filter[created_at_after]=2024-01-01`   |
-| Recherche globale | `filter[search]=terme`            | `filter[search]=backup`                 |
-| Relation          | `filter[relation.champ]=valeur`   | `filter[actors.email]=john`             |
-| Tri               | `sort=champ` ou `sort=-champ`     | `sort=-created_at`                      |
-| Relations         | `include=relation1,relation2`     | `include=processes,operations`          |
-| Soft deletes      | `filter[trashed]=with/only`       | `filter[trashed]=with`                  |
-
