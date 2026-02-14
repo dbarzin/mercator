@@ -31,11 +31,11 @@
             <td colspan=5>
                 {!! $database->description !!}
             </td>
-            <td style="text-align: right; width: 10%">
+            <td style="text-align: center; width: 10%">
                 @if ($database->icon_id === null)
-                    <img src='/images/database.png' width='120' height='120'>
+                    <img src='/images/database.png' width='60' height='60'>
                 @else
-                    <img src='{{ route('admin.documents.show', $database->icon_id) }}' width='120' height='120'>
+                    <img src='{{ route('admin.documents.show', $database->icon_id) }}' width='60' height='60'>
                 @endif
             </td>
         </tr>

@@ -1,9 +1,17 @@
+@props([
+    'application',
+    'withLink' => false,
+])
 <table class="table table-bordered table-striped table-report" id="{{ $application->getUID() }}">
     <tbody>
     <tr>
         <th width="10%">{{ trans('cruds.application.fields.name') }}</th>
         <td>
-            {{ $application->name }}
+        @if ($withLink)
+        <a href='{{ route("admin.applications.show", $application->id) }}'>{{ $application->name }}</a>
+        @else
+        {{ $application->name }}
+        @endif
         </td>
         <th width="10%">
             {{ trans('cruds.application.fields.application_block') }}
@@ -27,13 +35,13 @@
         <td colspan="4">
             {!! $application->description !!}
         </td>
-        <td width="10%">
+        <td width="10%" align="center">
             @if ($application->icon_id === null)
-                <img src='/images/application.png' width='120' height='120'
+                <img src='/images/application.png' width='60' height='60'
                      alt="{{ $application->name }} icon"/>
             @else
-                <img src='{{ route('admin.documents.show', $application->icon_id) }}' width='100'
-                     height='100' alt="{{ $application->name }} icon"/>
+                <img src='{{ route('admin.documents.show', $application->icon_id) }}' width='60'
+                     height='60' alt="{{ $application->name }} icon"/>
             @endif
         </td>
     </tr>
