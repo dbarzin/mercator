@@ -59,9 +59,9 @@ Cette table permet d'identifier les mesures de sécurité appliquées aux proces
 
 Par défaut cette table est complétée avec les mesures de sécurité de la norme ISO 27001:2022.
 
-| Table                                                  | api                      |
-|:-------------------------------------------------------|:-------------------------|
-|  <span style="color: blue;">*security_controls*</span> | `/api/security-controls` |
+| Table                                                 | api                      |
+|:------------------------------------------------------|:-------------------------|
+| <span style="color: blue;">*security_controls*</span> | `/api/security-controls` |
 
 | Champ       | Type         | Description              |
 |:------------|:-------------|:-------------------------|
@@ -513,7 +513,7 @@ a un serveur logique par serveur physique.
 | product              | varchar(255) | Produit d'un éditeur pour recherche CPE                             |
 | version              | varchar(255) | Version d'un produit pour recherche CPE                             |
 | patching_frequency   | int          | Fréquence des mises à jour en part. de sécurité                     |
-|  entities            | List int [,] | Liste d'id de(s) entitée(s) liée(s)                                 |
+| entities             | List int [,] | Liste d'id de(s) entitée(s) liée(s)                                 |
 | processes            | List int [,] | Liste d'id de(s) proces(ses) lié(s)                                 |
 | services             | List int [,] | Liste d'id de(s) service(s) lié(s)                                  |
 | databases            | List int [,] | Liste d'id de(s) database(s) liée(s)                                |
@@ -576,7 +576,7 @@ Ils ne sont ni importables, ni exportables à travers l'outil graphique.
 
 | Table                                                    | api |
 |:---------------------------------------------------------|:----|
-| <span style="color: blue;">*m_application_events*</span> |     |
+| <span style="color: blue;">*m_application_events*</span> | S/O |
 
 | Champ            | Type         | Description                                         |
 |:-----------------|:-------------|:----------------------------------------------------|
@@ -1825,3 +1825,5 @@ Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipe
 
 L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.  
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
+
+
