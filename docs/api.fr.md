@@ -133,7 +133,7 @@ Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
-Pour voir les fonctions avancées de filtres : voir la page [API Avancé (filtres)](./apifilters.fr.md)
+Pour voir les fonctions avancées de filtres : voir la page [API avancée (filtres)](./apifilters.fr.md)
 
 ### Droits d'accès
 
