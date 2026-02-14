@@ -1,5 +1,6 @@
 ## API Advanced (filters)
 
+This part is an addition of the API chapter [API](./api.md).
 
 ### Filtering, Sorting and Including Relations
 
@@ -106,7 +107,7 @@ Available relations are automatically detected from the model. For activities, f
 
 Example: `include=processes,operations`
 
-#### Complete Examples
+#### Complete cases
 
 ##### Simple Filters
 
@@ -234,13 +235,13 @@ For this:
 
 The token must be used in the `Authorization` header as a Bearer token.
 
-### Usage Examples
+### Filters Examples
 
 Here are practical examples of API usage in different programming languages.
 
-### PHP
+#### PHP
 
-#### Authentication
+##### Authentication
 
 ```php
 <?php
@@ -282,7 +283,7 @@ Here are practical examples of API usage in different programming languages.
     var_dump($response);
 ```
 
-#### List of Activities with Filters
+##### List of Activities with Filters
 
 ```php
 <?php
@@ -320,7 +321,7 @@ Here are practical examples of API usage in different programming languages.
     var_dump($response);
 ```
 
-#### Retrieve an Activity with Relations
+##### Retrieve an Activity with Relations
 
 ```php
 <?php
@@ -348,7 +349,7 @@ Here are practical examples of API usage in different programming languages.
     var_dump($response);
 ```
 
-### Python
+#### Python
 
 Here is an example of API usage in Python with advanced filters
 
@@ -393,7 +394,7 @@ response = requests.get("http://127.0.0.1:8000/api/activities/1",
 print(response.json())
 ```
 
-### bash
+#### bash
 
 Here is an example of API usage from the command line with [CURL](https://curl.se/docs/manpage.html)
 and [JQ](https://stedolan.github.io/jq/)
@@ -445,11 +446,11 @@ UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
 echo "Updated object: ${UPDATED_OBJECT}"
 ```
 
-### Powershell
+#### Powershell
 
 The PowerShell script below shows how to authenticate with the API and use advanced filters.
 
-#### Step 1 — Authentication and Obtaining Access Token
+##### Step 1 — Authentication and Obtaining Access Token
 
 ```powershell
 # Define authentication URL and credentials
@@ -470,7 +471,7 @@ try {
 }
 ```
 
-#### Step 2 — Usage with Filters and Sort
+##### Step 2 — Usage with Filters and Sort
 
 ```powershell
 # Define headers

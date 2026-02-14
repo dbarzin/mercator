@@ -310,7 +310,13 @@ Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans u
 Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.  
 Les impacts ne sont accessibles qu'à travers les objets activités.
 
+<<<<<<< dev
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*activity_impacts*</span>      |  S/O |
+=======
 Ils ne sont ni importables, ni exportables à travers l'outil graphique.
+>>>>>>> dev
 
 | Table                                                | api |
 |:-----------------------------------------------------|:----|
@@ -574,9 +580,15 @@ Les évènements majeurs ne sont accessibles qu'à travers les objets applicatio
 
 Ils ne sont ni importables, ni exportables à travers l'outil graphique.
 
+<<<<<<< dev
+| Table            | api              |
+|:-----------------|:-----------------|
+|   <span style="color: blue;">*m_application_events*</span>      |  S/O  |
+=======
 | Table                                                    | api |
 |:---------------------------------------------------------|:----|
 | <span style="color: blue;">*m_application_events*</span> |     |
+>>>>>>> dev
 
 | Champ            | Type         | Description                                         |
 |:-----------------|:-------------|:----------------------------------------------------|
