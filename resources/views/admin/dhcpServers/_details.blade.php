@@ -1,11 +1,20 @@
-<table class="table table-bordered table-striped">
+@props([
+    'dhcpServer',
+    'withLink' => false,
+])
+
+<table class="table table-bordered table-striped table-report" id="{{ $dhcpServer->getUID() }}">
     <tbody>
         <tr>
             <th width="10%">
                 {{ trans('cruds.dhcpServer.fields.name') }}
             </th>
             <td>
-                {{ $dhcpServer->name }}
+            @if($withLink)
+            <a href="{{ route('admin.dhcp-servers.show', $dhcpServer) }}">{{ $dhcpServer->name }}</a>
+            @else
+            {{ $dhcpServer->name }}
+            @endif
             </td>
         </tr>
         <tr>

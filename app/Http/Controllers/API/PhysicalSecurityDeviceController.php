@@ -2,31 +2,34 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
+use App\Http\Requests\MassStorePhysicalSecurityDeviceRequest;
+use App\Http\Requests\MassUpdatePhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-use Mercator\Core\Models\PhysicalSecurityDevice;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response;
+use Mercator\Core\Models\PhysicalSecurityDevice;
+use Symfony\Component\HttpFoundation\Response;
 
-class PhysicalSecurityDeviceController extends Controller
+class PhysicalSecurityDeviceController extends APIController
 {
-    public function index()
+    protected string $modelClass = PhysicalSecurityDevice::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('physical_security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $devices = PhysicalSecurityDevice::all();
-
-        return response()->json($devices);
+        return $this->indexResource($request);
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
     {
         abort_if(Gate::denies('physical_security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $device = PhysicalSecurityDevice::create($request->all());
+        /** @var PhysicalSecurityDevice $device */
+        $device = PhysicalSecurityDevice::query()->create($request->all());
 
         return response()->json($device, 201);
     }
@@ -60,8 +63,65 @@ class PhysicalSecurityDeviceController extends Controller
     {
         abort_if(Gate::denies('physical_security_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        PhysicalSecurityDevice::whereIn('id', request('ids'))->delete();
+        PhysicalSecurityDevice::whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStorePhysicalSecurityDeviceRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà la permission `physical_security_device_create`
+        $data = $request->validated();
+
+        $createdIds             = [];
+        $deviceModel            = new PhysicalSecurityDevice();
+        $fillable               = $deviceModel->getFillable();
+
+        foreach ($data['items'] as $item) {
+            // Colonnes du modèle uniquement
+            $attributes = collect($item)
+                ->only($fillable)
+                ->toArray();
+
+            /** @var PhysicalSecurityDevice $device */
+            $device = PhysicalSecurityDevice::query()->create($attributes);
+
+            $createdIds[] = $device->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdatePhysicalSecurityDeviceRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà la permission `physical_security_device_edit`
+        $data        = $request->validated();
+        $deviceModel = new PhysicalSecurityDevice();
+        $fillable    = $deviceModel->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id = $rawItem['id'];
+
+            /** @var PhysicalSecurityDevice $device */
+            $device = PhysicalSecurityDevice::query()->findOrFail($id);
+
+            // Colonnes du modèle uniquement (sans id)
+            $attributes = collect($rawItem)
+                ->except(['id'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $device->update($attributes);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

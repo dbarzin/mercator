@@ -1,11 +1,21 @@
-<table class="table table-bordered table-striped">
+@props([
+    'database',
+    'withLink' => false,
+])
+<table class="table table-bordered table-striped table-report" id="{{ $database->getUID() }}">
     <tbody>
         <tr>
             <th style="width: 10%;">
                 {{ trans('cruds.database.fields.name') }}
             </th>
             <td style="width: 50%;" colspan=3>
+            @if ($withLink)
+                <a href="{{ route('admin.databases.show', $database) }}">
                 {{ $database->name }}
+                </a>
+            @else
+                {{ $database->name }}
+            @endif
             </td>
             <th style="width: 10%;">
                 {{ trans('cruds.database.fields.type') }}

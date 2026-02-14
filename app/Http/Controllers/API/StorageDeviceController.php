@@ -2,42 +2,43 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyStorageDeviceRequest;
+use App\Http\Requests\MassStoreStorageDeviceRequest;
+use App\Http\Requests\MassUpdateStorageDeviceRequest;
 use App\Http\Requests\StoreStorageDeviceRequest;
 use App\Http\Requests\UpdateStorageDeviceRequest;
-use Mercator\Core\Models\StorageDevice;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response;
+use Mercator\Core\Models\StorageDevice;
+use Symfony\Component\HttpFoundation\Response;
 
-class StorageDeviceController extends Controller
+class StorageDeviceController extends APIController
 {
-    public function index()
+    protected string $modelClass = StorageDevice::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('storage_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $storagedevices = StorageDevice::all();
-
-        return response()->json($storagedevices);
+        return $this->indexResource($request);
     }
 
     public function store(StoreStorageDeviceRequest $request)
     {
         abort_if(Gate::denies('storage_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $storagedevice = StorageDevice::create($request->all());
+        /** @var StorageDevice $storageDevice */
+        $storageDevice = StorageDevice::query()->create($request->all());
 
-        return response()->json($storagedevice, 201);
+        return response()->json($storageDevice, Response::HTTP_CREATED);
     }
 
-    public function show(int $id)
+    public function show(StorageDevice $storageDevice)
     {
         abort_if(Gate::denies('storage_device_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $storagedevice = Storagedevice::where('id', $id)->get();
-
-        return new JsonResource($storagedevice);
+        return new JsonResource($storageDevice);
     }
 
     public function update(UpdateStorageDeviceRequest $request, StorageDevice $storageDevice)
@@ -62,8 +63,65 @@ class StorageDeviceController extends Controller
     {
         abort_if(Gate::denies('storage_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        StorageDevice::whereIn('id', request('ids'))->delete();
+        StorageDevice::whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreStorageDeviceRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà la permission `storage_device_create`
+        $data = $request->validated();
+
+        $createdIds          = [];
+        $storageDeviceModel  = new StorageDevice();
+        $fillable            = $storageDeviceModel->getFillable();
+
+        foreach ($data['items'] as $item) {
+            // Colonnes du modèle uniquement
+            $attributes = collect($item)
+                ->only($fillable)
+                ->toArray();
+
+            /** @var StorageDevice $storageDevice */
+            $storageDevice = StorageDevice::query()->create($attributes);
+
+            $createdIds[] = $storageDevice->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateStorageDeviceRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà la permission `storage_device_edit`
+        $data              = $request->validated();
+        $storageDeviceModel = new StorageDevice();
+        $fillable           = $storageDeviceModel->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id = $rawItem['id'];
+
+            /** @var StorageDevice $storageDevice */
+            $storageDevice = StorageDevice::query()->findOrFail($id);
+
+            // Colonnes du modèle uniquement (sans id)
+            $attributes = collect($rawItem)
+                ->except(['id'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $storageDevice->update($attributes);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

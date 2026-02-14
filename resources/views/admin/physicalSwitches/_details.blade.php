@@ -1,11 +1,19 @@
-<table class="table table-bordered table-striped">
+@props([
+    'physicalSwitch',
+    'withLink' => false
+])
+<table class="table table-bordered table-striped table-report" id="{{ $physicalSwitch->getUID() }}">
     <tbody>
         <tr>
             <th width="10%">
                 {{ trans('cruds.physicalSwitch.fields.name') }}
             </th>
             <td>
-                {{ $physicalSwitch->name }}
+            @if ($withLink)
+            <a href="{{ route('admin.physical-switches.show', $physicalSwitch->id) }}">{{ $physicalSwitch->name }}</a>
+            @else
+            {{ $physicalSwitch->name }}
+            @endif
             </td>
         </tr>
         <tr>

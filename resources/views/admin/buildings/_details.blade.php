@@ -1,11 +1,19 @@
-<table class="table table-bordered table-striped">
+@props([
+    'bay',
+    'withLink' => false
+])
+<table class="table table-bordered table-striped table-report" id="{{ $building->getUID() }}">
     <tbody>
     <tr>
         <th width="10%">
             {{ trans('cruds.building.fields.name') }}
         </th>
         <td colspan="2">
-            {{ $building->name }}
+        @if($withLink)
+        <a href="{{ route('admin.buildings.show', $building->id) }}">{{ $building->name }}</a>
+        @else
+        {{ $building->name }}
+        @endif
         </td>
     </tr>
     <tr>

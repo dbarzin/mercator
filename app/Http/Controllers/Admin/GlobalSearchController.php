@@ -76,11 +76,13 @@ class GlobalSearchController extends Controller
             $modelClass = 'Mercator\\Core\\Models\\'.$model;
             $query = $modelClass::query();
 
-            $fields = $modelClass::$searchable;
+            $fields = property_exists($modelClass, 'searchable') ? $modelClass::$searchable : [];
 
-            foreach ($fields as $field) {
-                $query->orWhere($field, 'LIKE', '%'.$term.'%');
-            }
+            if (empty($fields))
+                continue;
+
+                foreach ($fields as $field)
+                $query->orWhere($field, 'LIKE', '%'.$this->escapeLike($term).'%');
 
             $results = $query->take(100)->get();
 
@@ -91,9 +93,9 @@ class GlobalSearchController extends Controller
                 $parsedData['fields'] = $fields;
                 $formattedFields = [];
 
-                foreach ($fields as $field) {
+
+                foreach ($fields as $field)
                     $formattedFields[$field] = Str::title(str_replace('_', ' ', $field));
-                }
 
                 $parsedData['fields_formated'] = $formattedFields;
 
@@ -109,4 +111,10 @@ class GlobalSearchController extends Controller
 
         return view('admin.search', compact('searchableData'));
     }
+
+    private function escapeLike(string $value): string
+    {
+        return addcslashes($value, '%_\\');
+    }
+
 }

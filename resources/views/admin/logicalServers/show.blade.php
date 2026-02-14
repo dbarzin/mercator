@@ -39,123 +39,11 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-header">
-            {{ trans("cruds.menu.logical_infrastructure.title_short") }}
-        </div>
-        <!---------------------------------------------------------------------------------------------------->
-        <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th width="16%">
-                        {{ trans('cruds.logicalServer.fields.operating_system') }}
-                    </th>
-                    <td width="16%">
-                        {{ $logicalServer->operating_system }}
-                    </td>
-                    <th width="16%">
-                        {{ trans('cruds.logicalServer.fields.install_date') }}
-                    </th>
-                    <td width="16%">
-                        {{ $logicalServer->install_date }}
-                    </td>
-                    <th width="16%">
-                        {{ trans('cruds.logicalServer.fields.update_date') }}
-                    </th>
-                    <td width="20%">
-                        {{ $logicalServer->update_date }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.logicalServer.fields.cluster') }}
-                    </th>
-                    <td>
-                        @foreach($logicalServer->clusters as $cluster)
-                            <a href="{{ route('admin.clusters.show', $cluster->id) }}">
-                                {{ $cluster->name ?? "" }}
-                            </a>
-                            @if (!$loop->last)
-                                ,
-                            @endif
-                        @endforeach
-                    </td>
-                    <th>
-                        {{ trans('cruds.logicalServer.fields.environment') }}
-                    </th>
-                    <td>
-                        {{ $logicalServer->environment }}
-                    </td>
-                    <th>
-                        {{ trans('cruds.logicalServer.fields.address_ip') }}
-                    </th>
-                    <td>
-                        {{ $logicalServer->address_ip }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.logicalServer.fields.net_services') }}
-                    </th>
-                    <td colspan="5">
-                        {{ $logicalServer->net_services }}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-        <!---------------------------------------------------------------------------------------------------->
-        <div class="card-header">
-            {{ trans("cruds.logicalServer.fields.configuration") }}
-        </div>
-        <!---------------------------------------------------------------------------------------------------->
-        <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th width="12%">
-                        {{ trans('cruds.logicalServer.fields.cpu') }}
-                    </th>
-                    <td width="12%">
-                        {{ $logicalServer->cpu }}
-                    </td>
-                    <th width="12%">
-                        <b>{{ trans('cruds.logicalServer.fields.memory') }}</b>
-                    </th>
-                    <td width="12%">
-                        {{ $logicalServer->memory }}
-                    </td>
-                    <th width="12%">
-                        <b>{{ trans('cruds.logicalServer.fields.disk') }}</b>
-                    </th>
-                    <td width="12%">
-                        {{ $logicalServer->disk }}
-                    </td>
-                    <th width="12%">
-                        <b>{{ trans('cruds.logicalServer.fields.disk_used') }}</b>
-                    </th>
-                    <td width="12%">
-                        {{ $logicalServer->disk_used }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.logicalServer.fields.configuration') }}
-                    </th>
-                    <td colspan="7">
-                        {!! $logicalServer->configuration !!}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <!---------------------------------------------------------------------------------------------------->
-        <div class="card-header">
             {{ trans("cruds.menu.application.title_short") }}
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -194,7 +82,7 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -217,7 +105,7 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">

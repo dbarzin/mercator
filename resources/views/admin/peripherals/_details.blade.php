@@ -1,11 +1,20 @@
-<table class="table table-bordered table-striped">
+@props([
+    'peripheral',
+    'withLink' => false,
+])
+
+<table class="table table-bordered table-striped table-report" id="{{ $peripheral->getUID() }}">
     <tbody>
         <tr>
             <th width="10%">
                 {{ trans('cruds.peripheral.fields.name') }}
             </th>
             <td width="40%">
-                {{ $peripheral->name }}
+            @if($withLink)
+            <a href="{{ route('admin.peripherals.show', $peripheral) }}">{{ $peripheral->name }}</a>
+            @else
+            {{ $peripheral->name }}
+            @endif
             </td>
             <th width="10%">
                 {{ trans('cruds.peripheral.fields.domain') }}

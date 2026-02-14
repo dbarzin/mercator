@@ -1,11 +1,20 @@
-<table class="table table-bordered table-striped">
+@props([
+    'actor',
+    'withLink' => false,
+])
+
+<table class="table table-bordered table-striped table-report" id="{{ $cluster->getUID() }}">
     <tbody>
     <tr>
         <th width="10%">
             {{ trans('cruds.cluster.fields.name') }}
         </th>
         <td colspan="2">
+        @if($withLink)
+            <a href="{{ route('admin.clusters.show', $cluster->id) }}">{{ $cluster->name }}</a>
+        @else
             {{ $cluster->name }}
+        @endif
         </td>
     </tr>
     <tr>

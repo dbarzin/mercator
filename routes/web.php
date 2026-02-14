@@ -37,10 +37,10 @@ Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordControlle
 
 // keycloak
 Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class, 'redirectToKeycloak'])->name('login.keycloak');
-Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class, 'handleKeycloakCallback']);
+Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
 
 // Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function (): void {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.protected']], function (): void {
     // Dashboard
     Route::get('/', [Admin\HomeController::class, 'index'])->name('home');
 
@@ -338,6 +338,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     
     // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class, 'explore'])->name('report.explore');
+
+    // Explorer test
+    Route::get('report/explore2', [Admin\ExplorerController2::class, 'explore'])->name('report.explore2');
+    Route::middleware(['auth', 'can:explore_access'])->prefix('explorer/api')->group(function () {
+
+        // Récupérer la liste des nodes avec filtrage optionnel
+        // GET /admin/explorer/api/nodes?filter[]=1&filter[]=2&search=test
+        Route::get('/nodes', [Admin\ExplorerController2::class, 'getNodes'])
+            ->name('admin.explorer.api.nodes');
+
+        // Récupérer les edges pour plusieurs nodes
+        // POST /admin/explorer/api/edges
+        // Body: { "node_ids": ["SITE_1", "BUILDING_2"], "depth": 2 }
+        Route::post('/edges', [Admin\ExplorerController2::class, 'getEdges'])
+            ->name('admin.explorer.api.edges');
+
+        // Récupérer le graphe complet autour d'un node
+        // GET /admin/explorer/api/node/{nodeId}/graph?depth=2&filter[]=1
+        Route::get('/node/{nodeId}/graph', [Admin\ExplorerController2::class, 'getNodeGraph'])
+            ->name('admin.explorer.api.node.graph');
+    });
 
     // Maturity levels
     Route::get('report/maturity1', [Admin\HomeController::class, 'maturity1'])->name('report.maturity1');

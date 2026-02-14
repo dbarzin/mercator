@@ -1,11 +1,20 @@
-<table class="table table-bordered table-striped">
+@props([
+    'vlan',
+    'withLink' => false,
+])
+
+<table class="table table-bordered table-striped table-report" id="{{ $vlan->getUID() }}">
     <tbody>
         <tr>
             <th width="10%">
                 {{ trans('cruds.vlan.fields.name') }}
             </th>
             <td>
+            @if ($withLink)
+            <a href=" {{ route('admin.vlans.show', $vlan) }}">{{ $vlan->name }}</a>
+            @else
                 {{ $vlan->name }}
+            @endif
             </td>
         </tr>
         <tr>

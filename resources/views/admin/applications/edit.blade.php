@@ -584,7 +584,7 @@
                         <div class="form-group">
                             <label for="name">{{ trans('cruds.application.fields.product') }}</label>
                             <select id="product-selector" class="form-control product-selector" name="product">
-                                <option>{{ old('name', $application->product) }}</option>
+                                <option>{{ old('product', $application->product) }}</option>
                             </select>
                             @if($errors->has('product'))
                                 <div class="invalid-feedback">

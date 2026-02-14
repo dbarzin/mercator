@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyContainerRequest;
 use App\Http\Requests\StoreContainerRequest;
 use App\Http\Requests\UpdateContainerRequest;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
 use Mercator\Core\Models\Container;
 use Symfony\Component\HttpFoundation\Response;
 
-class ContainerController extends Controller
+class ContainerController extends APIController
 {
-    public function index()
+    protected string $modelClass = Container::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('container_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $containers = Container::all();
-
-        return response()->json($containers);
+        return $this->indexResource($request);
     }
 
     public function store(StoreContainerRequest $request)

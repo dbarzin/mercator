@@ -11,6 +11,12 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(\Illuminate\Http\Request $request): ?string
     {
+        // Si c'est une route API, ne jamais rediriger (forcer un 401)
+        if ($request->is('api/*')) {
+            return null;
+        }
+
+        // Pour les routes web, rediriger vers login si ce n'est pas du JSON
         if (! $request->expectsJson()) {
             return route('login', ['locale' => app()->getLocale()]);
         }

@@ -1,12 +1,12 @@
 ## API
 
-Cartography can be modified or updated via a REST API.
+The cartography can be modified or updated via a REST API.
 
-A REST API ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer))
-is an application programming interface that respects the constraints of the REST
-architecture and enables interaction with RESTful web services.
+A REST API ([Representational State Transfer](https://en.wikipedia.org/wiki/Representational_state_transfer))
+is an application programming interface that respects the constraints of REST architectural style
+and allows interaction with RESTful web services.
 
-### Install the API on Mercator
+### Installing the API on Mercator
 
 To install the API in Mercator, you need to install Passport by running this command:
 
@@ -16,22 +16,22 @@ php artisan passport:install
 
 - The Docker environment supports this functionality natively, via the entrypoint.
 
-### APIs
+### The APIs
 
 For each object in the cartography data model, there is an API.
-The list of APIs can be found in /route/api.php
+The list of APIs can be found in the /route/api.php file
 
-__GDPR view__
+__GDPR View__
 
 - /api/data-processings
 - /api/security-controls
 
-__Ecosystem view__
+__Ecosystem Views__
 
 - /api/entities
 - /api/relations
 
-__Information system business view__
+__Business View of the Information System__
 
 - /api/macro-processuses
 - /api/processes
@@ -41,7 +41,7 @@ __Information system business view__
 - /api/actors
 - /api/information
 
-__Application view__
+__Applications View__
 
 - /api/application-blocks
 - /api/applications
@@ -50,7 +50,7 @@ __Application view__
 - /api/databases
 - /api/fluxes
 
-__Administration view__
+__Administration View__
 
 - /api/zone-admins
 - /api/annuaires
@@ -58,7 +58,7 @@ __Administration view__
 - /api/domaine-ads
 - /api/admin-users
 
-__Logical infrastructure view__
+__Logical Infrastructure View__
 
 - /api/networks
 - /api/subnetworks
@@ -76,7 +76,7 @@ __Logical infrastructure view__
 - /api/certificates
 - /api/vlans
 
-__Physical infrastructure view__
+__Physical Infrastructure View__
 
 - /api/sites
 - /api/buildings
@@ -115,137 +115,263 @@ __Reports__
 - /api/report/impacts
 - /api/report/rto
 
-### Actions managed by the resource controller
+### Actions Handled by the Resource Controller
 
-Requests and URIs for each api are shown in the table below.
+The requests and URIs for each API are represented in the table below.
 
-| Request   | URI                       | Action                                       |
-| --------- | ------------------------- | -------------------------------------------- |
-| GET       | /api/objects              | returns the list of objects                  |
-| GET       | /api/objects/{id}         | returns the object with ID `{id}`            |
-| POST      | /api/objects              | creates a new object                         |
-| PUT/PATCH | /api/objects/{id}         | updates the object with ID `{id}`            |
-| DELETE    | /api/objects/{id}         | deletes the object with ID `{id}`            |
-| POST      | /api/objects/mass-store   | creates multiple objects in a single request |
-| PUT/PATCH | /api/objects/mass-update  | updates multiple objects at once             |
-| DELETE    | /api/objects/mass-destroy | deletes multiple objects at once             |
+| Request   | URI                       | Action 	                                |
+|-----------|---------------------------|-----------------------------------------|
+| GET       | /api/objects              | returns the list of objects             |
+| GET       | /api/objects/{id}         | returns the object {id}                 |
+| POST 	    | /api/objects              | saves a new object                      |
+| PUT/PATCH | /api/objects/{id}         | updates the object {id}                 |
+| DELETE 	  | /api/objects/{id}         | deletes the object {id}                 |
+| POST      | /api/objects/mass-store   | creates multiple objects in one request |
+| PUT/PATCH | /api/objects/mass-update  | updates multiple objects at once        |
+| DELETE    | /api/objects/mass-destroy | deletes multiple objects at once        |
 
+The fields to provide are those described in the [data model](/mercator/model/).
 
-The fields to be supplied are those described in the [data model](/mercator/model/).
+### Filtering, Sorting and Including Relations
 
+List endpoints (`GET /api/objects`) support an advanced system of filters, sorting and relation inclusion via
+query parameters.
 
-### Filtering Results
+#### Filterable Fields
 
-List endpoints (`GET /api/objects`) support a filtering system using query parameters (`?param=value`).
+All fields declared in the model (`$fillable`) are automatically filterable. Filters on unauthorized
+fields are simply ignored.
 
-To prevent injection (arbitrary column names), only a limited set of fields can be used as filters.
-For each resource, the filterable fields are composed of:
+#### Filter Syntax
 
-* the fields declared as *searchable* in the model (for example `Activity::$searchable` for activities);
-* additional explicitly allowed fields (for example `id`, `recovery_time_objective`, `maximum_tolerable_downtime` for activities).
-
-Any parameter referring to a field that is not allowed is simply ignored.
-
-#### General Syntax
-
-Each filter is written in the following form:
+Each filter is presented in the form:
 
 ```text
-<field>[__<operator>]=<value>
+filter[<field>]=<value>                     # Exact filter
+filter[<field>_<operator>]=<value>          # Filter with operator
 ```
 
-* If no operator is specified, the default operator is `exact`.
-* Example parameters:
+#### Available Filtering Operators
 
-  * `name=Daily backup` → exact match
-  * `name__contains=backup` → substring search
-  * `recovery_time_objective__lte=4` → RTO less than or equal to 4
+##### Exact and Text Filters
 
-#### Available Operators
+| Operator  | Syntax                | Description             | Example                |
+|-----------|-----------------------|-------------------------|------------------------|
+| (none)    | `filter[name]=Backup` | Exact equality          | `name = 'Backup'`      |
+| (partial) | `filter[name]=backup` | Partial search (LIKE) * | `name LIKE '%backup%'` |
 
-The following operators are supported:
+_* Automatic partial search applies to fields containing: `name`, `description`, `email`_
 
-| Operator     | Example parameter                   | Approximate SQL condition         |
-| ------------ | ----------------------------------- | --------------------------------- |
-| `exact`      | `name=Backup`                       | `name = 'Backup'`                 |
-| `contains`   | `name__contains=save`               | `name LIKE '%save%'`              |
-| `startswith` | `name__startswith=save`             | `name LIKE 'save%'`               |
-| `endswith`   | `name__endswith=prod`               | `name LIKE '%prod'`               |
-| `lt`         | `recovery_time_objective__lt=4`     | `recovery_time_objective < 4`     |
-| `lte`        | `recovery_time_objective__lte=4`    | `recovery_time_objective <= 4`    |
-| `gt`         | `maximum_tolerable_downtime__gt=8`  | `maximum_tolerable_downtime > 8`  |
-| `gte`        | `maximum_tolerable_downtime__gte=8` | `maximum_tolerable_downtime >= 8` |
+##### Numeric Comparisons
 
-If an unknown operator is provided, it is treated as an `exact` match.
+| Operator | Syntax                                  | Description              | SQL Example                    |
+|----------|-----------------------------------------|--------------------------|--------------------------------|
+| `_lt`    | `filter[recovery_time_objective_lt]=4`  | Less than                | `recovery_time_objective < 4`  |
+| `_lte`   | `filter[recovery_time_objective_lte]=4` | Less than or equal to    | `recovery_time_objective <= 4` |
+| `_gt`    | `filter[recovery_time_objective_gt]=8`  | Greater than             | `recovery_time_objective > 8`  |
+| `_gte`   | `filter[recovery_time_objective_gte]=8` | Greater than or equal to | `recovery_time_objective >= 8` |
 
-#### Examples
+##### Advanced Operators
 
-* List activities whose name contains “backup”:
+| Operator   | Syntax                                         | Description          | Example                                    |
+|------------|------------------------------------------------|----------------------|--------------------------------------------|
+| `_in`      | `filter[id_in]=1,2,3`                          | Value in a list      | `id IN (1, 2, 3)`                          |
+| `_between` | `filter[recovery_time_objective_between]=4,24` | Between two values   | `recovery_time_objective BETWEEN 4 AND 24` |
+| `_null`    | `filter[deleted_at_null]=true`                 | NULL value           | `deleted_at IS NULL`                       |
+| `_null`    | `filter[description_null]=false`               | NOT NULL value       | `description IS NOT NULL`                  |
+| `_not`     | `filter[type_not]=opensource`                  | Negation (different) | `type != 'opensource'`                     |
+
+##### Global Search and Relation Filters
+
+| Operator   | Syntax                        | Description                                             | Example                                               |
+|------------|-------------------------------|---------------------------------------------------------|-------------------------------------------------------|
+| `search`   | `filter[search]=backup`       | OR search on all text fields (name, description, email) | `name LIKE '%backup%' OR description LIKE '%backup%'` |
+| (relation) | `filter[actors.email]=john`   | LIKE search on relation fields                          | `actors.email LIKE '%john%'`                          |
+| (relation) | `filter[contacts.name]=alice` | LIKE search on name in a relation                       | `contacts.name LIKE '%alice%'`                        |
+
+##### Date Filters
+
+For fields containing `date` or `at` in their name:
+
+| Operator  | Syntax                                 | Description      | Example                      |
+|-----------|----------------------------------------|------------------|------------------------------|
+| `_after`  | `filter[created_at_after]=2024-01-01`  | After this date  | `created_at >= '2024-01-01'` |
+| `_before` | `filter[updated_at_before]=2024-12-31` | Before this date | `updated_at <= '2024-12-31'` |
+
+##### Soft Deletes
+
+| Syntax                 | Description           |
+|------------------------|-----------------------|
+| `filter[trashed]=with` | Include deleted items |
+| `filter[trashed]=only` | Only deleted items    |
+
+#### Sorting Results
+
+Sorting is done with the `sort` parameter:
+
+```text
+sort=<field>        # Ascending sort
+sort=-<field>       # Descending sort
+```
+
+Examples:
+
+- `sort=name` : Sort by name ascending
+- `sort=-created_at` : Sort by creation date descending
+- `sort=recovery_time_objective` : Sort by RTO ascending
+
+#### Including Relations (Eager Loading)
+
+Relations between objects can be loaded with the `include` parameter:
+
+```text
+include=<relation1>,<relation2>
+```
+
+Available relations are automatically detected from the model. For activities, for example:
+
+- `processes` : Related processes
+- `operations` : Related operations
+- `applications` : Related applications
+- `impacts` : Related impacts
+
+Example: `include=processes,operations`
+
+#### Complete Examples
+
+##### Simple Filters
 
 ```http
-GET /api/activities?name__contains=backup
+# Activities with name containing "backup"
+GET /api/activities?filter[name]=backup
+
+# Activities with RTO less than or equal to 4 hours
+GET /api/activities?filter[recovery_time_objective_lte]=4
+
+# Activities with ID greater than or equal to 100
+GET /api/activities?filter[id_gte]=100
+
+# Applications with type different from "opensource"
+GET /api/applications?filter[type_not]=opensource
+
+# Global search on all text fields
+GET /api/applications?filter[search]=backup
+
+# Search on linked actor's email
+GET /api/activities?filter[actors.email]=john@example.com
 ```
 
-* List activities assigned to a specific responsible team, with an RTO less than or equal to 4 hours:
+##### Combined Filters
 
 ```http
-GET /api/activities?responsible=DSI&recovery_time_objective__lte=4
+# Activities with name containing "GDPR" and RTO >= 8
+GET /api/activities?filter[name]=GDPR&filter[recovery_time_objective_gte]=8
+
+# Servers created after January 1, 2024 with name containing "prod"
+GET /api/logical-servers?filter[created_at_after]=2024-01-01&filter[name]=prod
+
+# Applications with type different from "opensource" sorted by name
+GET /api/applications?filter[type_not]=opensource&sort=name
+
+# Global search "backup" on all activities with RTO <= 8
+GET /api/activities?filter[search]=backup&filter[recovery_time_objective_lte]=8
+
+# Activities linked to an actor whose email contains "admin"
+GET /api/activities?filter[actors.email]=admin&include=actors
 ```
 
-* List activities whose ID is greater than or equal to 100:
+##### Advanced Filters
 
 ```http
-GET /api/activities?id__gte=100
+# Activities with ID in the list 1, 2, 3, 5
+GET /api/activities?filter[id_in]=1,2,3,5
+
+# Activities with RTO between 4 and 24 hours
+GET /api/activities?filter[recovery_time_objective_between]=4,24
+
+# Activities without description
+GET /api/activities?filter[description_null]=true
+
+# Activities with a description
+GET /api/activities?filter[description_null]=false
+
+# Include soft-deleted items
+GET /api/activities?filter[trashed]=with
+
+# Only soft-deleted items
+GET /api/activities?filter[trashed]=only
 ```
 
+##### With Sorting and Relations
 
-### Access rights
+```http
+# Activities with RTO >= 8, sorted by creation date descending
+GET /api/activities?filter[recovery_time_objective_gte]=8&sort=-created_at
 
-To access the APIs, you must identify yourself as a Mercator application user.
-This user must have a role in Mercator that allows him/her to access/modify the objects
-objects accessed via the API.
+# Activities with name "GDPR", including related processes and operations
+GET /api/activities?filter[name]=GDPR&include=processes,operations
 
-When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
-header of the API request.
-
-### Linking objects
-
-Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a
-‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:
-
-- Step 1: Ensure you have the application_id for the applications you want to link.
-
+# Complete example: filters + sort + include
+GET /api/activities?filter[recovery_time_objective_gte]=8&filter[name]=GDPR&sort=-created_at&include=processes,operations
 ```
+
+### Authentication
+
+#### Authentication with email / password
+
+To use the API, it is necessary to obtain an authentication token.
+
+Endpoint : `POST /api/login`
+
+Parameters :
+
+- **login** : User's email address
+- **password** : User's password
+
+Example with CURL:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/login \
+  -d "login=admin@admin.com" \
+  -d "password=password"
+```
+
+The API returns a token in JSON format:
+
+```json
 {
-  "id": 201,
-  "name": "app1",
-  "description": "desc1"
-}
-{
-  "id": 202,
-  "name": "app2",
-  "description": "desc2"
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9..."
 }
 ```
 
-- Step 2: Link the process to the applications. Either with an update or a store, we can add:
+This token must be included in the `Authorization` header for all subsequent requests:
 
-```
-{
-  "id": 101,
-  "name": "process",
-  "applications[]": [201, 202]
-}
+```bash
+curl -X GET http://127.0.0.1:8000/api/activities \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
-The names of all extra fields
-are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']
+#### Authentication with API Token
+
+It's possible to create an API token directly from the interface.
+
+For this:
+
+- Click on "Profile" in the top menu
+- Go to the "API Token" section
+- Click on "Create a new token"
+- Give a name to your token
+- Copy the generated token
+
+The token must be used in the `Authorization` header as a Bearer token.
+
+### Usage Examples
+
+Here are practical examples of API usage in different programming languages.
 
 ### PHP
 
-Here are a few examples of how to use the API with PHP:
-
-##### Authentification
+#### Authentication
 
 ```php
 <?php
@@ -258,11 +384,10 @@ Here are a few examples of how to use the API with PHP:
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => http_build_query(
-            array("login" => "admin@admin.com",
-                  "password" => "password")),
+        CURLOPT_POSTFIELDS => "login=admin@admin.com&password=password",
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
+            "cache-control: no-cache",
             "content-type: application/x-www-form-urlencoded",
         ),
     ));
@@ -278,66 +403,42 @@ Here are a few examples of how to use the API with PHP:
     } else {
         if ($info['http_code'] == 200) {
             $access_token = json_decode($response)->access_token;
-
         } else {
-            set_error_handler("Login to api faild status 403");
+            set_error_handler("Login to api failed status 403");
             error_log($responseInfo['http_code']);
             error_log("No login api status 403");
-
         }
     }
 
     var_dump($response);
 ```
 
-##### Users list
+#### List of Activities with Filters
 
 ```php
 <?php
     $curl = curl_init();
 
+    // Build URL with filtering parameters
+    $filters = http_build_query([
+        'filter' => [
+            'recovery_time_objective_gte' => 8,
+            'name' => 'GDPR'
+        ],
+        'sort' => '-created_at',
+        'include' => 'processes,operations'
+    ]);
+
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://127.0.0.1:8000/api/users",
+        CURLOPT_URL => "http://127.0.0.1:8000/api/activities?" . $filters,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_POSTFIELDS => null, // here you can send parameters
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
-            "Authorization: " . "Bearer" . " " . $access_token . "",
-            "cache-control: no-cache",
-            "content-type: application/json",
-        ),
-    ));
-
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
-
-    var_dump($response);
-
-```
-
-##### Get a user
-
-```php
-<?php
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://127.0.0.1:8000/api/users/1",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_POSTFIELDS => null, // here you can send parameters
-        CURLOPT_HTTPHEADER => array(
-            "accept: application/json",
-            "Authorization: " . "Bearer" . " " . $access_token . "",
+            "Authorization: Bearer " . $access_token,
             "cache-control: no-cache",
             "content-type: application/json",
         ),
@@ -350,33 +451,24 @@ Here are a few examples of how to use the API with PHP:
     var_dump($response);
 ```
 
-##### Update a user
+#### Retrieve an Activity with Relations
 
 ```php
 <?php
-   $curl = curl_init();
+    $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://127.0.0.1:8000/api/users/8",
+        CURLOPT_URL => "http://127.0.0.1:8000/api/activities/1?include=processes,operations",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_POST => true,
-        CURLOPT_CUSTOMREQUEST => "PUT",
-        CURLOPT_POSTFIELDS => http_build_query(
-            array(
-                'name' => 'Henri',
-                'login' => 'henri@test.fr',
-                'language' => 'fr',
-                'roles[0]' => 1,
-                'roles[1]' => 3,
-                'granularity' => '3')
-            ),
+        CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
-            "Authorization: " . "Bearer" . " " . $access_token . "",
+            "Authorization: Bearer " . $access_token,
             "cache-control: no-cache",
+            "content-type: application/json",
         ),
     ));
 
@@ -389,7 +481,7 @@ Here are a few examples of how to use the API with PHP:
 
 ### Python
 
-Here's an example of how to use the API in Python :
+Here is an example of API usage in Python with advanced filters
 
 ```python
 #!/usr/bin/python3
@@ -404,124 +496,157 @@ vheaders['cache-control'] = 'no-cache'
 print("Login")
 response = requests.post("http://127.0.0.1:8000/api/login",
     headers=vheaders,
-    data= {'login':'admin@admin.com', 'password':'password'} )
+    data={'login':'admin@admin.com', 'password':'password'})
 print(response.status_code)
 
 vheaders['Authorization'] = "Bearer " + response.json()['access_token']
 
-print("Get workstations")
-response = requests.get("http://127.0.0.1:8000/api/workstations", headers=vheaders)
+# List with filters and sort
+print("Get workstations with filters")
+params = {
+    'filter[name]': 'laptop',
+    'sort': '-created_at'
+}
+response = requests.get("http://127.0.0.1:8000/api/workstations", 
+    headers=vheaders, 
+    params=params)
 print(response.json())
 print(response.status_code)
 
+# Retrieval with relations
+print("Get activity with relations")
+params = {
+    'include': 'processes,operations'
+}
+response = requests.get("http://127.0.0.1:8000/api/activities/1",
+    headers=vheaders,
+    params=params)
+print(response.json())
 ```
 
-### Bash
+### bash
 
-Here's an example of using the API on the command line with [CURL](https://curl.se/docs/manpage.html)
+Here is an example of API usage from the command line with [CURL](https://curl.se/docs/manpage.html)
 and [JQ](https://stedolan.github.io/jq/)
 
-```
-# valid login and password
-data='{"login":"admin@admin.com","password":"password"}'
-
-# get a token after correct login
-token=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:8000/api/login | jq -r .access_token)
-
-# query users and decode JSON data with JQ.
-curl -s -H "Content-Type: application/json" -H "Authorization: Bearer ${token}" "http://127.0.0.1:8000/api/users" | jq .
-
-```
-
-Other Bash example
-
-```
+```bash
 #!/usr/bin/bash
 
 API_URL=http://127.0.0.1:8000/api
+OBJECT=applications
+OBJECT_ID=45
 
-# valid login and password
-
+# Valid credentials
 data='{"login":"admin@admin.com","password":"password"}'
 
-# Get a token after correct login
-
+# Get a token after login
 TOKEN=$(curl -s -d ${data} -H "Content-Type: application/json" ${API_URL}/login | jq -r .access_token)
 
-# Récupération de l'objet
+# List with filters
+echo "List of applications with filters..."
+curl -s -X GET "${API_URL}/${OBJECT}?filter[name]=CRM&sort=-created_at" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Accept: application/json" | jq .
 
-OBJECT_ID=10
+# Retrieval with relations
+echo "Retrieving an object with relations..."
+RESPONSE=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}?include=databases,processes" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Accept: application/json")
 
-RESPONSE=$(curl -s -X GET "${API_URL}/logical-servers/${OBJECT_ID}" \
- -H "Authorization: Bearer ${TOKEN}" \
- -H "Accept: application/json")
+echo "Retrieved object: ${RESPONSE}"
 
-echo "Objet récupéré: ${RESPONSE}"
+# Update
+RESPONSE=$(echo "$RESPONSE" | jq -c '.')
+RESPONSE=$(echo "$RESPONSE" | jq -r '.activities=[1]')
 
-# Mise à jour d'une valeur avec une requête PUT
+echo "Modified object: ${RESPONSE}"
 
-RESPONSE=$(echo "$RESPONSE" | jq -c '.data')
-RESPONSE=$(echo "$RESPONSE" | jq -r '.operating_system="Linux"')
-
-echo "Objet modifié: ${RESPONSE}"
-
-curl -s -X PUT "${API_URL}/logical-servers/${OBJECT_ID}" \
+curl -s -X PUT "${API_URL}/${OBJECT}/${OBJECT_ID}" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -H "cache-control: no-cache" \
   -d "$RESPONSE"
 
-# Vérification de la mise à jour
-
-UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/logical-servers/${OBJECT_ID}" \
+# Verification
+UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Accept: application/json")
 
-echo "Objet mis à jour: ${UPDATED_OBJECT}"
+echo "Updated object: ${UPDATED_OBJECT}"
 ```
 
-### PowerShell
+### Powershell
 
-The following **PowerShell** script demonstrates how to authenticate with the API and retrieve the list of logical
-servers.
+The PowerShell script below shows how to authenticate with the API and use advanced filters.
 
-#### Step 1 — Authenticate and obtain an access token
+#### Step 1 — Authentication and Obtaining Access Token
 
 ```powershell
-# Define the login endpoint and credentials
+# Define authentication URL and credentials
 $loginUri = "http://127.0.0.1:8000/api/login"
 $loginBody = @{
     login = "admin@admin.com"
     password = "password"
 }
 
-# Send the authentication request
+# Send authentication request
 try {
     $loginResponse = Invoke-RestMethod -Uri $loginUri -Method Post -Body $loginBody -ContentType "application/x-www-form-urlencoded"
     $token = $loginResponse.access_token
-    Write-Host "Access token successfully retrieved."
+    Write-Host "Access token retrieved successfully."
 } catch {
     Write-Error "Authentication failed: $_"
     return
 }
 ```
 
-#### Step 2 — Use the token to query logical servers
+#### Step 2 — Usage with Filters and Sort
 
 ```powershell
-# Define the endpoint and authorization headers
-$endPoint = "logical-servers"
-$apiUri = "http://127.0.0.1:8000/api/$endPoint"
+# Define headers
 $headers = @{
     'Authorization' = "Bearer $token"
     'Accept'        = 'application/json'
 }
 
-# Send the GET request
+# List with filters
+$endPoint = "logical-servers"
+$filters = "filter[operating_system]=Linux&sort=-created_at"
+$apiUri = "http://127.0.0.1:8000/api/$endPoint?$filters"
+
 try {
     $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
     $servers | Format-Table id, name, operating_system, description
 } catch {
     Write-Error "Request failed: $_"
 }
+
+# Retrieval with relations
+$activityId = 1
+$apiUri = "http://127.0.0.1:8000/api/activities/$activityId?include=processes,operations"
+
+try {
+    $activity = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
+    $activity | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error "Request failed: $_"
+}
 ```
+
+### Feature Summary
+
+| Feature        | Syntax                            | Example                                 |
+|----------------|-----------------------------------|-----------------------------------------|
+| Exact filter   | `filter[field]=value`             | `filter[name]=Backup`                   |
+| Comparison     | `filter[field_operator]=value`    | `filter[recovery_time_objective_gte]=8` |
+| Negation       | `filter[field_not]=value`         | `filter[type_not]=opensource`           |
+| List of values | `filter[field_in]=v1,v2,v3`       | `filter[id_in]=1,2,3`                   |
+| Range          | `filter[field_between]=min,max`   | `filter[age_between]=18,65`             |
+| NULL           | `filter[field_null]=true/false`   | `filter[deleted_at_null]=true`          |
+| Dates          | `filter[field_after/before]=date` | `filter[created_at_after]=2024-01-01`   |
+| Global search  | `filter[search]=term`             | `filter[search]=backup`                 |
+| Relation       | `filter[relation.field]=value`    | `filter[actors.email]=john`             |
+| Sort           | `sort=field` or `sort=-field`     | `sort=-created_at`                      |
+| Relations      | `include=relation1,relation2`     | `include=processes,operations`          |
+| Soft deletes   | `filter[trashed]=with/only`       | `filter[trashed]=with`                  |
