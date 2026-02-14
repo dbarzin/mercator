@@ -133,7 +133,7 @@ Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
-Pour voir les fonctions avancées de filtres : voir la page [API Avancé (filtres)](./apifilters.fr.md)
+Pour voir les fonctions avancées de filtres : voir la page [API avancée (filtres)](./apifilters.fr.md)
 
 ### Droits d'accès
 
@@ -302,7 +302,6 @@ Voici quelques exemples d'utilisation de l'API avec différents langages :
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_POST => true,
         CURLOPT_CUSTOMREQUEST => "PUT",
         CURLOPT_POSTFIELDS => http_build_query(
             array(
@@ -317,6 +316,7 @@ Voici quelques exemples d'utilisation de l'API avec différents langages :
             "accept: application/json",
             "Authorization: " . "Bearer" . " " . $access_token . "",
             "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
         ),
     ));
 

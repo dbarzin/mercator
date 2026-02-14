@@ -109,8 +109,10 @@
     <li class="toctree-l3"><a class="reference internal" href="#application-block">Application block</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application">Application</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#major-events">Major events</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#major-events">Major events</a>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application-services">Application services</a>
     </li>
@@ -118,7 +120,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#database">Database</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#flow">Flow</a>
+    <li class="toctree-l3"><a class="reference internal" href="#application-flows">Application Flows</a>
     </li>
         </ul>
     </li>
@@ -129,6 +131,10 @@
     <li class="toctree-l3"><a class="reference internal" href="#administration-directory-service">Administration directory service</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#active-directory-forest-ldap-tree-structure">Active Directory forest / LDAP tree structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#active-directory-domains-ldap">Active Directory domains / LDAP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#users">Users</a>
     </li>
         </ul>
     </li>
@@ -146,7 +152,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#logical-routers">Logical routers</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#security-equipment">Security equipment</a>
+    <li class="toctree-l3"><a class="reference internal" href="#security-devices">Security devices</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#dhcp-servers">DHCP servers</a>
     </li>
@@ -190,7 +196,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#wifi-terminals">WiFi terminals</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#physical-security-equipment">Physical security equipment</a>
+    <li class="toctree-l3"><a class="reference internal" href="#physical-security-device">Physical security device</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#physical-links">Physical links</a>
     </li>
@@ -219,6 +225,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
                 </li>
               </ul>
               <ul>
@@ -255,7 +265,8 @@
 <h2 id="data-model">Data model</h2>
 <p><a href="/mercator/images/model.png"><img src="/mercator/images/model.png" width="700"></a></p>
 <h3 id="gdpr-view">GDPR view</h3>
-<p>The GDPR view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.</p>
+<p>The GDPR view contains all the data required to maintain the data processing register, and provides a link with the
+processes, applications and information used by the information system.</p>
 <p>This view is used to fulfill the obligations set out in article 30 of the GDPR.</p>
 <h4 id="register">Register</h4>
 <p>The register of processing activities contains the information required by article 30.1 of the GDPR.</p>
@@ -376,14 +387,13 @@
 </tr>
 </tbody>
 </table>
-<p>The "controls" field is not used and is not implemented yet in mercator.</p>
-<p>Data model export references processes, information, applications and documents 
-related to data processing.  </p>
-<p>In the application, a process can be linked to data processing from a processing object 
-of data.<br />
-Information can be linked to data processing from a data processing object.</p>
-<p>An application can be linked to data processing from a data processing object.<br />
-A document can be attached to data processing from a data processing object.  </p>
+<p>The field "controls" is not used and therefore is absent in the app.</p>
+<p>The data model export lists processes, information, applications and documents
+linked to a data processing.</p>
+<p>In the app, a process can be linked to a data processing from a data processing object.<br />
+An information can be linked with a data processing from a data processing object.</p>
+<p>An application can be linked to a data processing from a data processing object.<br />
+A document can be linked to a data processing from a data processing object.</p>
 <h4 id="security-measures">Security measures</h4>
 <p>This table identifies the security measures applied to processes and applications.</p>
 <p>By default, this table is populated with the security measures of ISO 27001:2022.</p>
@@ -430,11 +440,14 @@ A document can be attached to data processing from a data processing object.  </
 </tbody>
 </table>
 <h3 id="ecosystem-view">Ecosystem view</h3>
-<p>The ecosystem view describes all the entities or systems that revolve around the information system considered in the mapping.</p>
+<p>The ecosystem view describes all the entities or systems that revolve around the information system considered in the
+mapping.</p>
 <p><a href="/mercator/images/ecosystem.png"><img src="/mercator/images/ecosystem.png" width="600"></a></p>
-<p>This view not only delimits the scope of the mapping, but also provides an overall view of the ecosystem without being limited to the individual study of each entity.</p>
+<p>This view not only delimits the scope of the mapping, but also provides an overall view of the ecosystem without being
+limited to the individual study of each entity.</p>
 <h4 id="entities">Entities</h4>
-<p>Entities are a part of the organization (e.g.: subsidiary, department, etc.) or related to the information system to be mapped.</p>
+<p>Entities are a part of the organization (e.g.: subsidiary, department, etc.) or related to the information system to be
+mapped.</p>
 <p>Entities are departments, suppliers, partners with whom information is exchanged through relationships.</p>
 <p>Table <em>entities</em> :</p>
 <table>
@@ -479,7 +492,7 @@ A document can be attached to data processing from a data processing object.  </
 <tr>
 <td style="text-align: left;">reference</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Reference number of the entity (billing)</td>
+<td style="text-align: left;">Reference the billing number of the entity</td>
 </tr>
 <tr>
 <td style="text-align: left;">parent_entity_id</td>
@@ -502,6 +515,11 @@ A document can be attached to data processing from a data processing object.  </
 <td style="text-align: left;">Contact point</td>
 </tr>
 <tr>
+<td style="text-align: left;">external_ref_id</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Link to connected external entities</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -518,12 +536,11 @@ A document can be attached to data processing from a data processing object.  </
 </tr>
 </tbody>
 </table>
-<p>The "external_ref_id" field is not used and is therefore missing from the application.  </p>
-<p>Exporting the data model references the processes and applications attached to an entity.</p>
-<p>In the application, a process can be attached to an entity from these two objects.<br />
-An application can be attached to an entity (as operations manager) from these two objects.</p>
-<p>In the application, a database can be attached to an entity (as operations manager)
-from these two objects. </p>
+<p>The "external_ref_id" field is not used and therefore is missing in the app.</p>
+<p>The data model export lists processes and applications linked with an entity.</p>
+<p>In the app, a process can be linked with an entity from these two objects.<br />
+An application can be linked with an entity (as operations manager) from these two objects.</p>
+<p>In the app, a database can be linked with an entity (as operations manager) from these two objects.</p>
 <h4 id="relationships">Relationships</h4>
 <p>Relationships represent a link between two entities or systems.</p>
 <p>Relationships are contracts, service agreements, legal obligations... that have an influence on the information system.</p>
@@ -555,7 +572,7 @@ from these two objects. </p>
 <tr>
 <td style="text-align: left;">attributes</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Attributes (#tag...)</td>
+<td style="text-align: left;">Attributes / #tags of the relationship</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -615,27 +632,27 @@ from these two objects. </p>
 <tr>
 <td style="text-align: left;">security_need_c</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Confidentiality level need</td>
+<td style="text-align: left;">Confidentiality level needed</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_i</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Integrity level need</td>
+<td style="text-align: left;">Integrity level needed</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_a</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Available level need</td>
+<td style="text-align: left;">Available level needed</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_t</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Traceability level need</td>
+<td style="text-align: left;">Traceability level needed</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Need for authentication</td>
+<td style="text-align: left;">Authenticity level needed</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -654,17 +671,19 @@ from these two objects. </p>
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).<br />
-It is activated from the Configuration &gt; Settings menu.  </p>
-<p>exporting the data model references the reference documents attached to a relationship.<br />
-In the application, a document can be attached to a relationship from a relationships object. </p>
-<p>The financial values of a contract can be indicated in dedicated fields.  </p>
+<p>In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for
+entities subject to the regulation (EU) 2022/2554 (DORA).<br />
+This default configuration can be changed in the menu Configuration &gt; Parameters.</p>
+<p>The data model export lists the reference documents attached to a relationship.<br />
+In the application, a document can be attached to a relationship from a relationships object.</p>
+<p>The financial values of a contract can be indicated in dedicated fields.</p>
 <hr />
 <h3 id="business-view-of-the-information-system">Business view of the information system</h3>
-<p>The business view of the information system describes all the organization's business processes and the players involved, independently of the technological choices made by the organization and the resources made available to it.</p>
+<p>The business view of the information system describes all the organization's business processes and the players
+involved, independently of the technological choices made by the organization and the resources made available to it.</p>
 <p><a href="/mercator/images/information_system.png"><img src="/mercator/images/information_system.png" width="600"></a></p>
-<p>The business view is essential, as it allows you to reposition technical elements in their business environment, and thus understand their context of use.</p>
+<p>The business view is essential, as it allows you to reposition technical elements in their business environment, and
+thus understand their context of use.</p>
 <h4 id="macro-processes">Macro-processes</h4>
 <p>Macro-processes represent sets of processes.</p>
 <p>Table <em>macro_processuses</em> :</p>
@@ -700,7 +719,7 @@ In the application, a document can be attached to a relationship from a relation
 <tr>
 <td style="text-align: left;">security_need_c</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Privacy</td>
+<td style="text-align: left;">Confidentiality</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_i</td>
@@ -720,7 +739,7 @@ In the application, a document can be attached to a relationship from a relation
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authentication</td>
+<td style="text-align: left;">Authenticity</td>
 </tr>
 <tr>
 <td style="text-align: left;">owner</td>
@@ -744,13 +763,14 @@ In the application, a document can be attached to a relationship from a relation
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).<br />
-It is activated from the Configuration &gt; Settings menu.  </p>
-<p>In the application, a process can be attached to a macro-process from these two objects.</p>
+<p>In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for
+entities subject to the regulation (EU) 2022/2554 (DORA).<br />
+This default configuration can be changed in the menu Configuration &gt; Parameters.</p>
+<p>In the application, a process can be linked with a macro-process from these two objects.</p>
 <h4 id="processes">Processes</h4>
-<p>Processes are a set of activities designed to achieve an objective. The process produces value-added information (output) (in the form of deliverables) from information (input) produced by other processes.</p>
-<p>Processes are made up of activities, the entities involved in the process, and the information processed by the process.</p>
+<p>Processes are a set of activities designed to achieve an objective. The process produces value-added information (
+output) (in the form of deliverables) from information (input) produced by other processes.</p>
+<p>Processes are made up of activities, entities involved in this process and information processed by this process.</p>
 <p>Table <em>processes</em> :</p>
 <table>
 <thead>
@@ -812,6 +832,11 @@ It is activated from the Configuration &gt; Settings menu.  </p>
 <td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
+<td style="text-align: left;">security_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticity</td>
+</tr>
+<tr>
 <td style="text-align: left;">macroprocess_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Reference to macro-process</td>
@@ -829,7 +854,7 @@ It is activated from the Configuration &gt; Settings menu.  </p>
 <tr>
 <td style="text-align: left;">informations</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs list of related informations</td>
+<td style="text-align: left;">IDs list of related information</td>
 </tr>
 <tr>
 <td style="text-align: left;">applications</td>
@@ -858,10 +883,10 @@ It is activated from the Configuration &gt; Settings menu.  </p>
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authentication, "security_need_auth", is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).<br />
-It is activated from the Configuration &gt; Settings menu.  </p>
-<p>The export of the data model references:</p>
+<p>In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for
+entities subject to the regulation (EU) 2022/2554 (DORA).<br />
+This default configuration can be changed in the menu Configuration &gt; Parameters.</p>
+<p>The data model export lists:</p>
 <ul>
 <li>entities,</li>
 <li>activities,</li>
@@ -871,15 +896,16 @@ It is activated from the Configuration &gt; Settings menu.  </p>
 <li>and security measures</li>
 </ul>
 <p>linked to a process.</p>
-<p>In the application, an entity associated with a process can be attached to a process from these two objects.<br />
-An activity can be linked to a process from these two objects.<br />
-Information can be linked to a process from these two objects.  </p>
-<p>An application can be attached to a process from these two objects.<br />
-GDPR registry processing can be attached to a process from a registry processing object.  </p>
-<p>A security measure can be attached to an application from the "Assign a security measure" button.<br />
-This button is present in the GDPR view and visible in the list of Security Measures objects.</p>
+<p>In the application, an entity associated with a process can be linked with a process from these two objects.<br />
+An activity can be linked with a process from these two objects.<br />
+An information can be linked with a process from these two objects.</p>
+<p>An application can be linked with a process from these two objects.<br />
+A GDPR registry data processing can be linked with a process from a registry data processing object.</p>
+<p>A security measure can be linked with an application from the "Assign security controls" button.<br />
+This button is in the GDPR view and visible in the list of Security controls objects.</p>
 <h4 id="activities">Activities</h4>
-<p>An activity is a step required to carry out a process. It corresponds to a speciﬁc know-how and not necessarily to an organizational structure of the company.</p>
+<p>An activity is a step required to carry out a process. It corresponds to a speciﬁc know-how and not necessarily to an
+organizational structure of the company.</p>
 <p>Table <em>activities</em> :</p>
 <table>
 <thead>
@@ -908,27 +934,27 @@ This button is present in the GDPR view and visible in the list of Security Meas
 <tr>
 <td style="text-align: left;">recovery_time_objective</td>
 <td style="text-align: left;">int signed</td>
-<td style="text-align: left;">RTO, Target time for activity recovery</td>
+<td style="text-align: left;">RTO, Recovery Time Objective</td>
 </tr>
 <tr>
 <td style="text-align: left;">maximum_tolerable_downtime</td>
 <td style="text-align: left;">int signed</td>
-<td style="text-align: left;">Maximum Tolerable Disturbance Duration</td>
+<td style="text-align: left;">Maximum tolerable downtime</td>
 </tr>
 <tr>
 <td style="text-align: left;">recovery_point_objective</td>
 <td style="text-align: left;">int signed</td>
-<td style="text-align: left;">RPO, Data Restore Time Point</td>
+<td style="text-align: left;">RPO, Recovery Point Objective</td>
 </tr>
 <tr>
 <td style="text-align: left;">maximum_tolerable_data_loss</td>
 <td style="text-align: left;">int signed</td>
-<td style="text-align: left;">Maximum Allowable Data Loss</td>
+<td style="text-align: left;">Maximum tolerable Data Loss</td>
 </tr>
 <tr>
 <td style="text-align: left;">drp</td>
 <td style="text-align: left;">text</td>
-<td style="text-align: left;">Description of the business recovery plan (DRP)</td>
+<td style="text-align: left;">Description of the disaster recovery plan (DRP)</td>
 </tr>
 <tr>
 <td style="text-align: left;">drp_link</td>
@@ -952,11 +978,17 @@ This button is present in the GDPR view and visible in the list of Security Meas
 </tr>
 </tbody>
 </table>
-<p>In the application, the "Impact Type" and "Gravity" fields are managed in a separate table.</p>
+<p>The maximum tolerable downtime is the limit after which the downtime effets are critical or unacceptable.<br />
+The maximum tolerable data loss is the limit after which the data loss is critical or unacceptable.</p>
+<p>The data model export lists processes, operations and applications linked with an activity.</p>
+<p>In the app, a process can be linked with an activity from these two objects.<br />
+An operation can be linked with an activity from these two objects.<br />
+An application can be linked with an activity from these two objects.</p>
+<p>In the app, the "Impact Type" and "Severity" fields are managed in a separate table.</p>
 <h5 id="impacts">Impacts</h5>
-<p>Impacts are the consequences of the occurrence of a risk during an activity.</p>
-<p>Impacts are only accessible through activity objects.  </p>
-<p>They are neither importable nor exportable through the graphics tool.  </p>
+<p>Impacts are the consequences of the occurrence of a risk during an activity.<br />
+Impacts are only accessible through "activities" objects.</p>
+<p>They are neither importable nor exportable through the graphic tool.</p>
 <p>Table <em>activity_impact</em> :</p>
 <table>
 <thead>
@@ -1063,12 +1095,13 @@ This button is present in the GDPR view and visible in the list of Security Meas
 </tr>
 </tbody>
 </table>
-<p>The export of the data model references the activities, actors and tasks linked to an operation.  </p>
-<p>In the application, an activity can be linked to an operation from these two objects.<br />
-An actor can be attached to an operation from the operations object.<br />
-A task can be attached to an operation from the operations object.  </p>
+<p>The data model export lists activities, actors and tasks linked to an operation.</p>
+<p>In the app, an activity can be linked with an operation from these two objects.<br />
+An actor can be linked to an operation from the object "operation".<br />
+A task can be linked to an operation from the object "operation".</p>
 <h4 id="tasks">Tasks</h4>
-<p>A task is an elementary activity performed by an organizational function and constituting an indivisible unit of work in the value-added chain of a process.</p>
+<p>A task is an elementary activity performed by an organizational function and constituting an indivisible unit of work in
+the value-added chain of a process.</p>
 <p>Table <em>tasks</em> :</p>
 <table>
 <thead>
@@ -1111,10 +1144,11 @@ A task can be attached to an operation from the operations object.  </p>
 </tr>
 </tbody>
 </table>
-<p>Exporting the data model references operations related to a task. In the application.</p>
-<p>An operation can be attached to a task from the operations object.</p>
+<p>The data model export lists operations linked to a task.</p>
+<p>In the app, an operation can be linked to a task from the object "operation".</p>
 <h4 id="actors">Actors</h4>
-<p>An actor is a representative of a business role who performs operations, uses applications and makes decisions within processes. This role can be carried by a person, a group of people or an entity.</p>
+<p>An actor is a representative of a business role who performs operations, uses applications and makes decisions within
+processes. This role can be carried by a person, a group of people or an entity.</p>
 <p>Table <em>actors</em> :</p>
 <table>
 <thead>
@@ -1172,8 +1206,10 @@ A task can be attached to an operation from the operations object.  </p>
 </tr>
 </tbody>
 </table>
+<p>The data model export lists operations linked with an actor.</p>
+<p>In the app, an operation can be linked with an actor from the object "operation".</p>
 <h4 id="information">Information</h4>
-<p>Information is data that is processed by a computer.</p>
+<p>Information is data processed by a computer.</p>
 <p>Table <em>information</em> :</p>
 <table>
 <thead>
@@ -1242,7 +1278,7 @@ A task can be attached to an operation from the operations object.  </p>
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authentication</td>
+<td style="text-align: left;">Authenticity</td>
 </tr>
 <tr>
 <td style="text-align: left;">constraints</td>
@@ -1271,10 +1307,13 @@ A task can be attached to an operation from the operations object.  </p>
 </tr>
 </tbody>
 </table>
-<p>The "retention" field is not used at the moment and is therefore absent from the application. </p>
-<p>In the app, the need for authentication is hidden by default. It is mandatory in the case from an entity subject to EU Directive 2022/2554 (DORA).
-It is activated from the Configuration &gt; Settings menu. </p>
-<p>The export of the data model references the databases and processes attached to information. In the application, a database can be attached to information from the database object. A process can be linked to information from these two objects.</p>
+<p>The field "retention" is not used and therefore is absent in the app.</p>
+<p>In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for
+entities subject to the regulation (EU) 2022/2554 (DORA).<br />
+This default configuration can be changed in the menu Configuration &gt; Parameters.</p>
+<p>The data model export lists databases and processes linked with information.</p>
+<p>In the app, a database can be linked with an information from the object "database".<br />
+A process can be linked to an information from these two objects.</p>
 <hr />
 <h3 id="application-view">Application view</h3>
 <p>The application view is used to describe part of what is classically referred to as the "computer system".</p>
@@ -1282,7 +1321,8 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <p>This view describes the technological solutions that support business processes, mainly applications.</p>
 <h4 id="application-block">Application block</h4>
 <p>An application block represents a set of applications.</p>
-<p>An application block can be: office applications, management applications, analysis applications, development applications, etc.</p>
+<p>An application block can be: office applications, management applications, analysis applications, development
+applications, etc.</p>
 <p>Table <em>application_blocks</em> :</p>
 <table>
 <thead>
@@ -1330,10 +1370,13 @@ It is activated from the Configuration &gt; Settings menu. </p>
 </tr>
 </tbody>
 </table>
+<p>In the app, an application can be linked to an application block from these two objects.</p>
 <h4 id="application">Application</h4>
-<p>An application is a coherent set of IT objects (executables, programs, data, etc.). It is a grouping of application services.</p>
+<p>An application is a coherent set of IT objects (executables, programs, data, etc.). It is a grouping of application
+services.</p>
 <p>An application can be deployed on one or more logical servers.</p>
-<p>When there is no virtualized environment, there are not several logical servers per physical server, but one logical server per physical server.</p>
+<p>When there is no virtualized environment, there are not several logical servers per physical server, but one logical
+server per physical server.</p>
 <p>Table <em>m_applications</em> :</p>
 <table>
 <thead>
@@ -1372,7 +1415,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
@@ -1450,9 +1493,9 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
-<td style="text-align: left;">ecurity_need_auth</td>
+<td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">authentication</td>
+<td style="text-align: left;">authenticicity</td>
 </tr>
 <tr>
 <td style="text-align: left;">rto</td>
@@ -1467,17 +1510,17 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">vendor</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Application's vendor</td>
+<td style="text-align: left;">Application's vendor (CPE)</td>
 </tr>
 <tr>
 <td style="text-align: left;">product</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Product name</td>
+<td style="text-align: left;">Product name (CPE)</td>
 </tr>
 <tr>
 <td style="text-align: left;">version</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Version of the application</td>
+<td style="text-align: left;">Version of the application (CPE)</td>
 </tr>
 <tr>
 <td style="text-align: left;">patching_frequency</td>
@@ -1536,13 +1579,11 @@ It is activated from the Configuration &gt; Settings menu. </p>
 </tr>
 </tbody>
 </table>
-<p>RTO : <em>Recovery Time Objective</em><br />
-RPO : <em>Recovery Point Objective</em>  </p>
-<p>The "patching_frequency" and "next_update" fields are not used at the moment and are therefore missing from the application.  </p>
-<p>In the app, the need for authentication is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).<br />
-It is activated from the Configuration &gt; Settings menu. </p>
-<p>'export of reference data model:</p>
+<p>The fields "patching_frequency" and "next_update" are not used and therefore are absent from the app.</p>
+<p>In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for
+entities subject to the regulation (EU) 2022/2554 (DORA).<br />
+This default configuration can be changed in the menu Configuration &gt; Parameters.</p>
+<p>The data model export lists:</p>
 <ul>
 <li>user entities (<em>entities</em> field),</li>
 <li>supported processes,</li>
@@ -1551,28 +1592,28 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <li>databases,</li>
 <li>workstations,</li>
 <li>logical servers,</li>
-<li>logical safety equipment,</li>
-<li>administrators (Users object of the administration view),</li>
+<li>logical security devices,</li>
+<li>administrators ("Users" object of the administration view),</li>
 <li>and security measures</li>
 </ul>
-<p>attached to an application.</p>
-<p>In the application, a user entity can be attached to an application from an application object.<br />
-A process can be attached to an application from these two objects.<br />
-An activity can be attached to an application from these two objects.  </p>
-<p>An application service can be attached to an application from these two objects.<br />
-A database can be attached to an application from these two objects.<br />
-A workstation can be attached to an application from a workstation object.  </p>
-<p>A logical server can be attached to an application from these two objects.<br />
-Logical security equipment can be attached to an application from these two objects.<br />
-An administrator can be attached to an application from an application object.  </p>
-<p>A security measure can be attached to an application from the "Assign a security measure" button.<br />
-This button is present in the GDPR view and visible in the list of Security Measures objects.  </p>
-<p>In the application, a container can be attached to an application from these two objects.<br />
-In the application, the <em>major events</em> field is managed in a separate table.</p>
-<h4 id="major-events">Major events</h4>
-<p>Major events are the main events experienced by an application during its operation.<br />
-Major events are only accessible through application objects.  </p>
-<p>They are neither importable nor exportable through the graphics tool.  </p>
+<p>linked with an application.</p>
+<p>In the app, an entity using the application can be linked with an application from an application object.<br />
+A process can be linked with an application from these two objects.<br />
+An activity can be linked with an application from these two objects.</p>
+<p>An application service can be linked with an application from these two objects.<br />
+A database can be linked to an application from these two objects.<br />
+A workstation can be linked to an application from a workstation object.</p>
+<p>A logical server can be linked with an application from these two objects.<br />
+A logical security device can be linked with an application from these two objects.<br />
+An administrator can be linked with an application from an application object.</p>
+<p>A security measure can be linked to an application from the "Assign a security measure" button.<br />
+This button is present in the GDPR view and visible in the list of Security controls objects.</p>
+<p>In the app, a container can be linked with an application from these two objects.<br />
+In the app, the <em>major events</em> field is managed in a separate table.</p>
+<h5 id="major-events">Major events</h5>
+<p>Major events are the main events undergone by an application during its operation.<br />
+Major events are only accessible through application objects.</p>
+<p>They are neither importable nor exportable through the graphics tool.</p>
 <p>Table <em>m_application_events</em> :</p>
 <table>
 <thead>
@@ -1596,7 +1637,7 @@ Major events are only accessible through application objects.  </p>
 <tr>
 <td style="text-align: left;">m_application_id</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Reference to the id of the application that suffered the event</td>
+<td style="text-align: left;">Reference to the id of the application which has undergone the event</td>
 </tr>
 <tr>
 <td style="text-align: left;">message</td>
@@ -1616,7 +1657,8 @@ Major events are only accessible through application objects.  </p>
 </tbody>
 </table>
 <h4 id="application-services">Application services</h4>
-<p>An application service is a specific service provided to a user to perform specific tasks related to their role in the organisation.</p>
+<p>An application service is a specific service provided to a user to perform specific tasks related to their role in the
+organisation.</p>
 <p>Eg. an application service could be a Cloud service or platform.</p>
 <p>Table <em>application_services</em> :</p>
 <table>
@@ -1649,14 +1691,14 @@ Major events are only accessible through application objects.  </p>
 <td style="text-align: left;">Exposure of the application service</td>
 </tr>
 <tr>
-<td style="text-align: left;"> modules</td>
+<td style="text-align: left;">modules</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">Liens vers les applications-modules</td>
+<td style="text-align: left;">IDs list of related application modules</td>
 </tr>
 <tr>
-<td style="text-align: left;"> applications</td>
+<td style="text-align: left;">applications</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">Liens vers les applications</td>
+<td style="text-align: left;">IDs list of related application</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1675,14 +1717,15 @@ Major events are only accessible through application objects.  </p>
 </tr>
 </tbody>
 </table>
-<p>The export of the data model references the applications and application modules attached to an application service. </p>
-<p>In the application, an application can be attached to an application service from these two objects.<br />
-In the application, an application module can be attached to an application service from these two objects.  </p>
-<p>There are two fields with the same information in the data model export, <em>servicesApplications</em> and 
+<p>The data model export lists the applications and application modules linked with an application service.</p>
+<p>In the app, an application can be linked with an application service from these two objects.<br />
+In the app, an application module can be linked with an application service from these two objects.</p>
+<p>There are two fields containing the same information in the data model export, <em>servicesApplications</em> and
 <em>applications</em>.<br />
-The connection with application objects is made via the <em>applications</em> field.</p>
+The connection with application objects is made through the <em>applications</em> field.</p>
 <h4 id="application-module">Application module</h4>
-<p>An application module is a component of an application characterized by functional coherence and technological homogeneity.</p>
+<p>An application module is a component of an application characterized by functional coherence and technological
+homogeneity.</p>
 <p>Table <em>application_modules</em> :</p>
 <table>
 <thead>
@@ -1709,9 +1752,24 @@ The connection with application objects is made via the <em>applications</em> fi
 <td style="text-align: left;">Description of the application module</td>
 </tr>
 <tr>
-<td style="text-align: left;"> application_services</td>
+<td style="text-align: left;">application_services</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs list of related to applications-services</td>
+<td style="text-align: left;">IDs list of related application services</td>
+</tr>
+<tr>
+<td style="text-align: left;">vendor</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Vendor / editor for CPE search</td>
+</tr>
+<tr>
+<td style="text-align: left;">product</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Editor Product for CPE search</td>
+</tr>
+<tr>
+<td style="text-align: left;">version</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Version of a product for CPE search</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1730,10 +1788,10 @@ The connection with application objects is made via the <em>applications</em> fi
 </tr>
 </tbody>
 </table>
-<p>The export of the data model references the application services attached to an application module.<br />
-In the application, an application service can be attached to an application module from these two objects.</p>
+<p>The export of the data model lists application services linked with an application module.</p>
+<p>In the app, an application service can be linked to an application module from these two objects.</p>
 <h4 id="database">Database</h4>
-<p>A collection of databases managed within the organisation.</p>
+<p>A database is a set of structured and ordered information meant for computed processing.</p>
 <p>Table <em>databases</em> :</p>
 <table>
 <thead>
@@ -1777,7 +1835,7 @@ In the application, an application service can be attached to an application mod
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_c</td>
@@ -1802,7 +1860,7 @@ In the application, an application service can be attached to an application mod
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">authentication</td>
+<td style="text-align: left;">Authenticity</td>
 </tr>
 <tr>
 <td style="text-align: left;">external</td>
@@ -1826,21 +1884,23 @@ In the application, an application service can be attached to an application mod
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authentication is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).<br />
-It is activated from the Configuration &gt; Settings menu. </p>
-<p>Exporting the data model references the specific image of a database.<br />
-In the application, a specific image can be attached to a database from a database object.  </p>
-<p>The data model export references user entities (<em>entities</em> field), applications, information,
-logical servers and containers attached to a database.<br />
-In the application, a user entity can be attached to a database from a database object.<br />
-In the application, information can be attached to a database from a database object.<br />
-In the application, an application can be attached to a database from these two objects.<br />
-In the application, a logical server can be attached to a database from these two objects.<br />
-In the application, a container can be attached to a database from these two objects.</p>
-<h4 id="flow">Flow</h4>
-<p>A flow is an exchange of information between a sender and a receiver (application, application service, application module or database).</p>
-<p>A flow represents an exchange of information between two elements of the information system. It is important to avoid representing all firewall filtering rules in terms of flows.</p>
+<p>In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for
+entities subject to the regulation (EU) 2022/2554 (DORA).<br />
+This default configuration can be changed in the menu Configuration &gt; Parameters.</p>
+<p>The data model export references the specific icon of a database.<br />
+In the app, a specific icon can be linked with a database from a database object.</p>
+<p>The data model export lists entities using the database (<em>entities</em> field), applications, information,
+logical servers and containers linked with a database.</p>
+<p>In the app, a user entity can be linked with a database from a database object.<br />
+In the app, an information can be linked with a database from a database object.</p>
+<p>In the app, an application can be linked with a database from these two objects.<br />
+In the app, a logical server can be linked with a database from these two objects.<br />
+In the app, a container can be linked with a database from these two objects.</p>
+<h4 id="application-flows">Application Flows</h4>
+<p>An application flow is an exchange of information between a sender and a receiver (application, application service,
+application module or database).</p>
+<p>An application flow represents an exchange of information between two elements of the information system. It is
+important to avoid representing all firewall filtering rules in terms of flows.</p>
 <p>For example, DNS or NTP requests should not be represented as flows.</p>
 <p>Table <em>fluxes</em> :</p>
 <table>
@@ -1880,7 +1940,7 @@ In the application, a container can be attached to a database from these two obj
 <tr>
 <td style="text-align: left;"><strong><em>device</em></strong>_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lnk to the destination id</td>
+<td style="text-align: left;">Link to the destination id</td>
 </tr>
 <tr>
 <td style="text-align: left;">crypted</td>
@@ -1890,7 +1950,7 @@ In the application, a container can be attached to a database from these two obj
 <tr>
 <td style="text-align: left;">bidirectional</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">The flow is bydirectional (1=yes, O=no)</td>
+<td style="text-align: left;">The flow is bidirectional (1=yes, O=no)</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1909,7 +1969,7 @@ In the application, a container can be attached to a database from these two obj
 </tr>
 </tbody>
 </table>
-<p>The  <strong><em>device</em></strong>_ for source_id or dest_id might be: :</p>
+<p>The  <strong><em>device</em></strong>_ for source_id or dest_id can be: :</p>
 <table>
 <thead>
 <tr>
@@ -1941,13 +2001,18 @@ In the application, a container can be attached to a database from these two obj
 </tr>
 </tbody>
 </table>
+<p>In the app, an information can be linked with an application flow from an application flow object.</p>
 <hr />
 <h3 id="administration">Administration</h3>
-<p>The administration view lists the administration of resources, directories and privilege levels of information system users.</p>
+<p>The administration view lists the administration of resources, directories and privilege levels of information system
+users.</p>
 <p><a href="/mercator/images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <p>Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).</p>
+<p><em>Nota</em>: OVI is coming from the French military programme law. The closest equivalents in EU regulations are OES
+(Operators of Essential Services, EU 2016/1148, NIS) and EE (Essential Entities, EU 2022/2555, NIS 2).</p>
 <h4 id="administration-area">Administration area</h4>
-<p>An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more) administrator(s).</p>
+<p>An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more)
+administrator(s).</p>
 <p>An administration zone is made up of Active Directory (AD) directory services and forests, or LDAP trees.</p>
 <p>Table <em>zone_admins</em> :</p>
 <table>
@@ -1992,7 +2057,8 @@ In the application, a container can be attached to a database from these two obj
 </tbody>
 </table>
 <h4 id="administration-directory-service">Administration directory service</h4>
-<p>An administration directory service is an application that collects data on a company's users or IT equipment, enabling them to be administered.</p>
+<p>An administration directory service is an application that collects data on a company's users or IT equipment, enabling
+them to be administered.</p>
 <p>It can be an inventory tool used to manage changes or tickets, or a mapping tool such as Mercator.</p>
 <p>Table <em>annuaires</em>;</p>
 <table>
@@ -2095,11 +2161,156 @@ In the application, a container can be attached to a database from these two obj
 </tr>
 </tbody>
 </table>
+<h4 id="active-directory-domains-ldap">Active Directory domains / LDAP</h4>
+<p>Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts,
+objects rights and a part of IT policies (e.g. Group Policy Object - GPO).</p>
+<p>Table <em>domaines_ads</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">AD Domain / LDAP name</td>
+</tr>
+<tr>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Domain description</td>
+</tr>
+<tr>
+<td style="text-align: left;">domain_ctrl_cnt</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Number of domain controllers</td>
+</tr>
+<tr>
+<td style="text-align: left;">user_count</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Number of domain users</td>
+</tr>
+<tr>
+<td style="text-align: left;">machine_count</td>
+<td style="text-align: left;">int signed</td>
+<td style="text-align: left;">Number of domain computers</td>
+</tr>
+<tr>
+<td style="text-align: left;">relation_inter_domaine</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Cross domains relationships description</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
+</tr>
+</tbody>
+</table>
+<p>The data model esport lists AD forests / LDAP trees linked with an AD domain / LDAP.</p>
+<p>In the app, an AD forest / LDAP tree can be linked with an AD domain / LDAP from these two objects.<br />
+A logical server can be linked with an AD domain / LDAP from these two objects.</p>
+<h4 id="users">Users</h4>
+<p>Users are user accounts with privileged rights on IT systems.</p>
+<p>Table <em>admin_users</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">user_id</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">ID number / other of an user</td>
+</tr>
+<tr>
+<td style="text-align: left;">firstname</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">User's first name</td>
+</tr>
+<tr>
+<td style="text-align: left;">lastname</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">User's last name</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">User type</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">User's tags</td>
+</tr>
+<tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Link to a specific icon</td>
+</tr>
+<tr>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">User description</td>
+</tr>
+<tr>
+<td style="text-align: left;">domain_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Link to the users's domain</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
+</tr>
+</tbody>
+</table>
+<p>The data model export lists applications which an user is administrator.</p>
+<p>In the app, an user can be defined as administrator of an application from an application object.</p>
 <hr />
 <h3 id="logical-infrastructure">Logical infrastructure</h3>
 <p>The logical infrastructure view corresponds to the logical distribution of the network.</p>
 <p><a href="/mercator/images/logical.png"><img src="/mercator/images/logical.png" width="400"></a></p>
-<p>It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that handles the traffic.</p>
+<p>It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that
+handles the traffic.</p>
 <h4 id="networks">Networks</h4>
 <p>Networks are a set of logically interconnected devices that exchange information.</p>
 <p>Table <em>networks</em> :</p>
@@ -2125,7 +2336,7 @@ In the application, a container can be attached to a database from these two obj
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description of network</td>
+<td style="text-align: left;">Description of the network</td>
 </tr>
 <tr>
 <td style="text-align: left;">protocol_type</td>
@@ -2165,7 +2376,7 @@ In the application, a container can be attached to a database from these two obj
 <tr>
 <td style="text-align: left;">security_need_auth</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Authentication</td>
+<td style="text-align: left;">Authenticity</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2184,9 +2395,9 @@ In the application, a container can be attached to a database from these two obj
 </tr>
 </tbody>
 </table>
-<p>In the app, the need for authentication is hidden by default. It is mandatory in the case 
-from an entity subject to EU Directive 2022/2554 (DORA).<br />
-It is activated from the Configuration &gt; Settings menu. </p>
+<p>In the app, the field for the authenticity need ("security_need_auth") is hidden by default. It is mandatory for
+entities subject to the regulation (EU) 2022/2554 (DORA).<br />
+This default configuration can be changed in the menu Configuration &gt; Parameters.</p>
 <h4 id="subnetworks">Subnetworks</h4>
 <p>Subnetworks are a logical subdivision of a larger network.</p>
 <p>table <em>subnetworks</em> :</p>
@@ -2242,7 +2453,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">gateway_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Gateway</td>
+<td style="text-align: left;">Link to the gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">vlan_id</td>
@@ -2267,7 +2478,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">wifi</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Wireless</td>
+<td style="text-align: left;">Wireless (Yes / No)</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible_exp</td>
@@ -2291,7 +2502,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 </tr>
 </tbody>
 </table>
-<p>The "connected_subnets_id" field is used to define a foreign key. However, this one does not seem to be used.</p>
+<p>The field "connected_subnets_id" is a foreign key. However, this one doesn't seem to be used.</p>
 <h4 id="external-input-gateways">External input gateways</h4>
 <p>Gateways are components used to connect a local network to the outside world.</p>
 <p>Table <em>gateways</em> :</p>
@@ -2322,7 +2533,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP address of the gateway</td>
+<td style="text-align: left;">Gateway's IP addresses (public and private)</td>
 </tr>
 <tr>
 <td style="text-align: left;">authentification</td>
@@ -2346,7 +2557,7 @@ It is activated from the Configuration &gt; Settings menu. </p>
 </tr>
 </tbody>
 </table>
-<p>In the application, a subnet can be attached to a gateway from these objects.</p>
+<p>In the application, a subnet can be linked with a gateway from these two objects.</p>
 <h4 id="connected-external-entities">Connected external entities</h4>
 <p>Connected external entities represent external entities connected to the network.</p>
 <p>Table <em>external_connected_entities</em> :</p>
@@ -2377,42 +2588,42 @@ It is activated from the Configuration &gt; Settings menu. </p>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description of the entity/company</td>
+<td style="text-align: left;">Description of the entity/company and connection reason</td>
 </tr>
 <tr>
 <td style="text-align: left;">entity_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to the connected external</td>
+<td style="text-align: left;">Reference to the entity (ecosystem view)</td>
 </tr>
 <tr>
 <td style="text-align: left;">network_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to the internal neetwork connected to the entity</td>
+<td style="text-align: left;">Reference to the internal network(s) connected to the entity</td>
 </tr>
 <tr>
 <td style="text-align: left;">contacts</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Contacts within the entity/company</td>
+<td style="text-align: left;">Contacts within the external entity/company</td>
 </tr>
 <tr>
 <td style="text-align: left;">src</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adress(es) of entity connection</td>
+<td style="text-align: left;">Source IP address(es) or source range of the connection</td>
 </tr>
 <tr>
 <td style="text-align: left;">src_desc</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Description de Entity source connection</td>
+<td style="text-align: left;">Description of the source's connection</td>
 </tr>
 <tr>
 <td style="text-align: left;">dst</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adress(es) or IP Range of the destination of the connection</td>
+<td style="text-align: left;">Destination IP address(es) or destination range of the connection</td>
 </tr>
 <tr>
 <td style="text-align: left;">dst_desc</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Description of the Entity connection</td>
+<td style="text-align: left;">Description of the destination's connection</td>
 </tr>
 <tr>
 <td style="text-align: left;">security</td>
@@ -2436,8 +2647,8 @@ It is activated from the Configuration &gt; Settings menu. </p>
 </tr>
 </tbody>
 </table>
-<p>Exporting the data model references subnets and documents attached to a connected external entity.<br />
-In the application, a subnet can be attached to a connected external entity from a connected external entity object.<br />
+<p>The data model export lists subnets and documents attached to a connected external entity.</p>
+<p>In the app, a subnet can be linked to a connected external entity from a connected external entity object.<br />
 A document can be attached to a connected external entity from a connected external entity object.</p>
 <h4 id="network-switches">Network switches</h4>
 <p>Network switches are the components that manage connections between the various servers on a network.</p>
@@ -2488,6 +2699,9 @@ A document can be attached to a connected external entity from a connected exter
 </tr>
 </tbody>
 </table>
+<p>The data model export lists physical switches and VLANs linked with a network switch.</p>
+<p>In the app, a VLAN can be linked with a network switch from these two objects.<br />
+A physical switch can be linked with a network switch from these two objects.</p>
 <h4 id="logical-routers">Logical routers</h4>
 <p>Logical routers are logical components that manage connections between different networks.</p>
 <p>Table <em>routers</em> :</p>
@@ -2518,7 +2732,7 @@ A document can be attached to a connected external entity from a connected exter
 <tr>
 <td style="text-align: left;">ip_addresses</td>
 <td style="text-align: left;">text</td>
-<td style="text-align: left;">IP Adress(es) of the router</td>
+<td style="text-align: left;">IP address(es) of the router</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -2547,11 +2761,13 @@ A document can be attached to a connected external entity from a connected exter
 </tr>
 </tbody>
 </table>
-<p>Exporting the data model references physical routers attached to a logical router.<br />
-In the application, a physical router can be attached to a logical router from these two objects.</p>
-<h4 id="security-equipment">Security equipment</h4>
-<p>Security devices are components used for network supervision, incident detection, equipment protection and information system security.</p>
-<p>Security equipment includes intrusion detection systems (IDS: Intrusion Detection System), intrusion prevention systems (IPS: Intrusion Prevention System) and equipment monitoring systems.</p>
+<p>The data model export lists physical routers linked to a logical router.</p>
+<p>In the app, a physical router can be linked to a logical router from these two objects.</p>
+<h4 id="security-devices">Security devices</h4>
+<p>Security devices are components used for network supervision, incident detection, equipment protection and information
+system security.</p>
+<p>Security equipment includes intrusion detection systems (IDS: Intrusion Detection System), intrusion prevention
+systems (IPS: Intrusion Prevention System) and equipment monitoring systems.</p>
 <p>Table <em>security_devices</em> :</p>
 <table>
 <thead>
@@ -2575,17 +2791,17 @@ In the application, a physical router can be attached to a logical router from t
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Eqquipement type</td>
+<td style="text-align: left;">Device type</td>
 </tr>
 <tr>
 <td style="text-align: left;">attributes</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Equipment attributes</td>
+<td style="text-align: left;">Device attributes</td>
 </tr>
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -2595,7 +2811,7 @@ In the application, a physical router can be attached to a logical router from t
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adress(es) of the equipment</td>
+<td style="text-align: left;">IP address(es) of the device</td>
 </tr>
 <tr>
 <td style="text-align: left;">vendor</td>
@@ -2629,15 +2845,15 @@ In the application, a physical router can be attached to a logical router from t
 </tr>
 </tbody>
 </table>
-<p>The "vendor", "product" and "version" fields are not used at the moment and are therefore 
-missing from the app.<br />
-Data model export references physical security equipment and applications 
-attached to logical safety equipment.<br />
-In the application, physical safety equipment can be attached to safety equipment 
-logic from these two objects.<br />
-An application can be attached to logical security equipment from these two objects.</p>
+<p>The "vendor", "product" and "version" fields are not used and therefore are absent in the app.</p>
+<p>The data model export lists physical security device and applications linked to a logical security device.</p>
+<p>In the app, physical security device can be linked to a logical security device from these two objects.<br />
+An application can be linked a to logical security device from these two objects.</p>
 <h4 id="dhcp-servers">DHCP servers</h4>
-<p>DHCP servers are physical or virtual devices that manage a network's IP addresses.</p>
+<p>DHCP servers are physical or virtual devices that manage a network's IP addresses. This object is considered barely
+usefull and obsolete. It's hidden by default.</p>
+<p>The DHCP server object is kept to be compliant with ANSSI's guidelines.</p>
+<p><em>Nota</em>: ANSSI is the french cybersecurity regulation authority.</p>
 <p>Table <em>dhcp_servers</em> :</p>
 <table>
 <thead>
@@ -2666,7 +2882,7 @@ An application can be attached to logical security equipment from these two obje
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresse(s) IP of the server</td>
+<td style="text-align: left;">IP addresse(s) IP of the server</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2686,7 +2902,10 @@ An application can be attached to logical security equipment from these two obje
 </tbody>
 </table>
 <h4 id="dns-servers">DNS servers</h4>
-<p>Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.</p>
+<p>Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
+This object is considered barely usefull and obsolete. It's hidden by default.</p>
+<p>The DNS server object is kept to be compliant with ANSSI's guidelines.</p>
+<p><em>Nota</em>: ANSSI is the french cybersecurity regulation authority.</p>
 <p>Table <em>dnsservers</em> :</p>
 <table>
 <thead>
@@ -2705,7 +2924,7 @@ An application can be attached to logical security equipment from these two obje
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Name of the DNS server</td>
+<td style="text-align: left;">DNS server's name</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -2715,7 +2934,7 @@ An application can be attached to logical security equipment from these two obje
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresse(s) IP of the server</td>
+<td style="text-align: left;">IP address(es) of the server</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2764,7 +2983,7 @@ An application can be attached to logical security equipment from these two obje
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -2779,7 +2998,7 @@ An application can be attached to logical security equipment from these two obje
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP address of the cluster</td>
+<td style="text-align: left;">Cluster's IP address</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2798,13 +3017,13 @@ An application can be attached to logical security equipment from these two obje
 </tr>
 </tbody>
 </table>
-<p>The data model export references logical routers, logical and physical servers attached to a cluster.<br />
-In the application, a logical router can be attached to a cluster from a cluster object.<br />
-A logical server can be attached to a cluster from these two objects.<br />
-A physical server can be attached to a cluster from these two objects.</p>
-<hr />
+<p>The data model export lists logical routers, logical and physical servers linked with a cluster.</p>
+<p>In the app, a logical router can be linked to a cluster from a cluster object.<br />
+A logical server can be linked to a cluster from these two objects.<br />
+A physical server can be linked to a cluster from these two objects.</p>
 <h4 id="logical-servers">Logical servers</h4>
-<p>Logical servers are a logical breakdown of a physical server. If the physical server is not virtualized, it is split into a single logical server.</p>
+<p>Logical servers are a logical breakdown of a physical server. If the physical server is not virtualized, it is split
+into a single logical server.</p>
 <p>Table <em>logical_servers</em> :</p>
 <table>
 <thead>
@@ -2826,79 +3045,34 @@ A physical server can be attached to a cluster from these two objects.</p>
 <td style="text-align: left;">Name of the logical server</td>
 </tr>
 <tr>
+<td style="text-align: left;">icon_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Reference to a specific icon</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Server type (applicative, DB, ...)</td>
+</tr>
+<tr>
+<td style="text-align: left;">active</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Active (1) or obsolete (0) status</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Server attributes (tags)</td>
+</tr>
+<tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description of the logical server</td>
 </tr>
 <tr>
-<td style="text-align: left;">icon_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
-</tr>
-<tr>
-<td style="text-align: left;">type</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Server type (appli, DB, ...)</td>
-</tr>
-<tr>
-<td style="text-align: left;">active</td>
-<td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Server status active (1) or obsolete (0)</td>
-</tr>
-<tr>
-<td style="text-align: left;">attributes</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Server atributes (tags)</td>
-</tr>
-<tr>
-<td style="text-align: left;">net_services</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Active network services</td>
-</tr>
-<tr>
-<td style="text-align: left;">configuration</td>
-<td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Server configuration</td>
-</tr>
-<tr>
 <td style="text-align: left;">operating_system</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Operative system</td>
-</tr>
-<tr>
-<td style="text-align: left;">address_ip</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP address</td>
-</tr>
-<tr>
-<td style="text-align: left;">cpu</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Number of CPU</td>
-</tr>
-<tr>
-<td style="text-align: left;">memory</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Quantity of RAM</td>
-</tr>
-<tr>
-<td style="text-align: left;">environment</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Environnement (prod, dev, test, ...)</td>
-</tr>
-<tr>
-<td style="text-align: left;">disk</td>
-<td style="text-align: left;">int</td>
-<td style="text-align: left;">Storage allocated</td>
-</tr>
-<tr>
-<td style="text-align: left;">disk_used</td>
-<td style="text-align: left;">int</td>
-<td style="text-align: left;">Stroage used</td>
-</tr>
-<tr>
-<td style="text-align: left;">domain_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Administartion domain for this server</td>
+<td style="text-align: left;">Operating system</td>
 </tr>
 <tr>
 <td style="text-align: left;">install_date</td>
@@ -2918,32 +3092,77 @@ A physical server can be attached to a cluster from these two objects.</p>
 <tr>
 <td style="text-align: left;">next_update</td>
 <td style="text-align: left;">date</td>
-<td style="text-align: left;">NNewt planned update date</td>
+<td style="text-align: left;">Next planned update date</td>
+</tr>
+<tr>
+<td style="text-align: left;">net_services</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Active network services</td>
+</tr>
+<tr>
+<td style="text-align: left;">environment</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Environnement (prod, dev, test, ...)</td>
+</tr>
+<tr>
+<td style="text-align: left;">address_ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">IP address(es)</td>
+</tr>
+<tr>
+<td style="text-align: left;">domain_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Administration domain for this server</td>
+</tr>
+<tr>
+<td style="text-align: left;">cpu</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Number of CPU</td>
+</tr>
+<tr>
+<td style="text-align: left;">memory</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Quantity of RAM</td>
+</tr>
+<tr>
+<td style="text-align: left;">disk</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Storage allocated</td>
+</tr>
+<tr>
+<td style="text-align: left;">disk_used</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Storage used</td>
+</tr>
+<tr>
+<td style="text-align: left;">configuration</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Server configuration</td>
 </tr>
 <tr>
 <td style="text-align: left;">databases</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs List of related database(s)</td>
+<td style="text-align: left;">IDs list of related database(s)</td>
 </tr>
 <tr>
 <td style="text-align: left;">cluster_id</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs List of related cluster(s)</td>
+<td style="text-align: left;">IDs list of related cluster(s)</td>
 </tr>
 <tr>
 <td style="text-align: left;">physical_servers</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs List of related physical_servers</td>
+<td style="text-align: left;">IDs list of related physical servers</td>
 </tr>
 <tr>
 <td style="text-align: left;">applications</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs List of related applications</td>
+<td style="text-align: left;">IDs list of related applications</td>
 </tr>
 <tr>
 <td style="text-align: left;">containers</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs List of related containers</td>
+<td style="text-align: left;">IDs list of related containers</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2962,28 +3181,28 @@ A physical server can be attached to a cluster from these two objects.</p>
 </tr>
 </tbody>
 </table>
-<p>The "patching_frequency" and "next_update" fields are not used at the moment and are therefore absent from the application.<br />
-Exporting the reference data model: </p>
+<p>The "patching_frequency" and "next_update" fields are not used and therefore are absent in the app.</p>
+<p>The data model lists:</p>
 <ul>
 <li>applications,</li>
 <li>physical servers,</li>
-<li>the documents,</li>
+<li>documents,</li>
 <li>databases,</li>
 <li>clusters,</li>
 <li>certificates,</li>
-<li>and the containers</li>
+<li>and containers</li>
 </ul>
-<p>attached to a logical server.  </p>
-<p>in the application, an application can be attached to a logical server from these two objects.<br />
-A database can be attached to a logical server from these two objects.<br />
-A cluster can be attached to a logical server from these two objects.<br />
-A physical server can be attached to a logical server from these two objects.<br />
-A certificate can be attached to a logical server from a certificate object.<br />
-A container can be attached to a logical server from a container object.</p>
-<p>The "documents" field does not appear to be used in a logical server's data model.</p>
+<p>linked with a logical server.</p>
+<p>In the app, an application can be linked with a logical server from these two objects.<br />
+A database can be linked with a logical server from these two objects.</p>
+<p>A cluster can be linked with a logical server from these two objects.<br />
+A physical server can be linked with a logical server from these two objects.</p>
+<p>A certificate can be linked with a logical server from a certificate object.<br />
+A container can be linked with a logical server from a container object.</p>
+<p>The "documents" field doesn't appear to be used in a logical server's data model.</p>
 <h4 id="containers">Containers</h4>
 <p>Containers are part of virtualization systems. They can operate in clusters or in isolation.
-on internal or external logical servers (cloud).</p>
+on internal or external (cloud) logical servers.</p>
 <p>Table <em>containers</em> :</p>
 <table>
 <thead>
@@ -3017,7 +3236,7 @@ on internal or external logical servers (cloud).</p>
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -3036,11 +3255,10 @@ on internal or external logical servers (cloud).</p>
 </tr>
 </tbody>
 </table>
-<p>Data model export references applications, databases and servers
-logics attached to a container.<br />
-In the application, an application can be attached to a container from these two objects.<br />
-A database can be attached to a container from these two objects.<br />
-A logical server can be attached to a container from a containing object.</p>
+<p>The aata model export lists applications, databases and logical servers linked with a container.</p>
+<p>In the app, an application can be linked to a container from these two objects.<br />
+A database can be linked to a container from these two objects.<br />
+A logical server can be linked to a container from a container object.</p>
 <h4 id="logical-flows">Logical flows</h4>
 <p>Logical flows describe relationships at layers 3 and 4 of the OSI model.</p>
 <p>Table <em>logical_flows</em> :</p>
@@ -3077,7 +3295,7 @@ A logical server can be attached to a container from a containing object.</p>
 <tr>
 <td style="text-align: left;">interface</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Network interface linked</td>
+<td style="text-align: left;">Network interface used</td>
 </tr>
 <tr>
 <td style="text-align: left;">router_id</td>
@@ -3092,7 +3310,7 @@ A logical server can be attached to a container from a containing object.</p>
 <tr>
 <td style="text-align: left;">action</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Rule action (Grant, refuse, restrict, ...)</td>
+<td style="text-align: left;">Rule action (Allow, deny, restrict, ...)</td>
 </tr>
 <tr>
 <td style="text-align: left;">protocol</td>
@@ -3122,12 +3340,12 @@ A logical server can be attached to a container from a containing object.</p>
 <tr>
 <td style="text-align: left;"><em>device</em>_source_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Actif source</td>
+<td style="text-align: left;">Source device</td>
 </tr>
 <tr>
 <td style="text-align: left;"><em>device</em>_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Actif de destination</td>
+<td style="text-align: left;">Destination device</td>
 </tr>
 <tr>
 <td style="text-align: left;">users</td>
@@ -3156,11 +3374,11 @@ A logical server can be attached to a container from a containing object.</p>
 </tr>
 </tbody>
 </table>
-<p>Les actifs sources et destination peuvent être :</p>
+<p>Source and destination devices can be:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Actif (<em>device</em>)</th>
+<th style="text-align: left;"><em>device</em></th>
 <th style="text-align: center;">Source</th>
 <th style="text-align: center;">Destination</th>
 </tr>
@@ -3172,7 +3390,7 @@ A logical server can be attached to a container from a containing object.</p>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Physical Security Equipement</td>
+<td style="text-align: left;">Physical security device</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
@@ -3192,7 +3410,7 @@ A logical server can be attached to a container from a containing object.</p>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Logical security equipment</td>
+<td style="text-align: left;">Logical security device</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
@@ -3209,7 +3427,7 @@ A logical server can be attached to a container from a containing object.</p>
 </tbody>
 </table>
 <h4 id="certificates">Certificates</h4>
-<p>Electronic certificates are used to identify and authenticate services and individuals, as well as to encrypt exchanges.  </p>
+<p>Electronic certificates are used to identify and authenticate services and individuals, as well as to encrypt exchanges.</p>
 <p>Certificates are SSL keys, HTTPS certificates, etc. They are associated with logical servers or applications.</p>
 <p>Table <em>certificates</em> :</p>
 <table>
@@ -3244,22 +3462,22 @@ A logical server can be attached to a container from a containing object.</p>
 <tr>
 <td style="text-align: left;">start_validity</td>
 <td style="text-align: left;">date</td>
-<td style="text-align: left;">Date start of validity</td>
+<td style="text-align: left;">Start date of validity</td>
 </tr>
 <tr>
 <td style="text-align: left;">end_validity</td>
 <td style="text-align: left;">date</td>
-<td style="text-align: left;">Date end of validity</td>
+<td style="text-align: left;">End date of validity</td>
 </tr>
 <tr>
 <td style="text-align: left;">status</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">State of certificate (RFC 6960)</td>
+<td style="text-align: left;">Certificate statis (RFC 6960)</td>
 </tr>
 <tr>
 <td style="text-align: left;">last_notification</td>
 <td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Last notification submited</td>
+<td style="text-align: left;">Last notification sent</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -3281,16 +3499,17 @@ A logical server can be attached to a container from a containing object.</p>
 <ul>
 <li>Note:<ul>
 <li>status = 0 : "Good"</li>
-<li>status = 1 : "Revoked</li>
-<li>status = 2 : "Unknown</li>
+<li>status = 1 : "Revoked"</li>
+<li>status = 2 : "Unknown"</li>
 </ul>
 </li>
 </ul>
-<p>The "last_notification" field is not used at the moment and is therefore missing from the application.<br />
-Exporting the data model references logical applications and servers attached to a certificate.<br />
-In the application, a certificate can be attached to a logical application or server from a certificate object.</p>
+<p>The "last_notification" field is not used and therefore is absent in the app.</p>
+<p>The data model export lists applications and logical servers linked with a certificate.</p>
+<p>In the app, a certificate can be linked to a application or a logical server from a certificate object.</p>
 <h4 id="vlan">VLAN</h4>
-<p>A VLAN (Virtual Local Area Network) or virtual local area network (LAN) enables equipment to be logically grouped together, free from physical constraints.</p>
+<p>A VLAN (Virtual Local Area Network) or virtual LAN enables equipment to be logically grouped together, free from
+physical constraints.</p>
 <p>Table <em>vlans</em> :</p>
 <table>
 <thead>
@@ -3319,7 +3538,7 @@ In the application, a certificate can be attached to a logical application or se
 <tr>
 <td style="text-align: left;">vlan_id</td>
 <td style="text-align: left;">int signed</td>
-<td style="text-align: left;">VLAN  number</td>
+<td style="text-align: left;">VLAN number</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -3338,10 +3557,10 @@ In the application, a certificate can be attached to a logical application or se
 </tr>
 </tbody>
 </table>
-<p>The data model export references physical routers and logical switches ("network switches")
-attached to a VLAN.
-In the application, a VLAN can be attached to a physical router from a physical router object.<br />
-In the application, a VLAN can be attached to a subnet or a logic switch from these two objects.</p>
+<p>The data model export lists physical routers and logical network switches linked to a VLAN.</p>
+<p>In the app, a VLAN can be linked to a physical router from a physical router object.<br />
+In the app, a VLAN can be linked to a subnet from these two objects.<br />
+In the app, a VLAN can be linked to a logic switch from these two objects.</p>
 <hr />
 <h3 id="physical-infrastructure">Physical infrastructure</h3>
 <p>The physical infrastructure view describes the physical equipment that makes up or is used by the information system.</p>
@@ -3372,7 +3591,7 @@ In the application, a VLAN can be attached to a subnet or a logic switch from th
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -3396,6 +3615,7 @@ In the application, a VLAN can be attached to a subnet or a logic switch from th
 </tr>
 </tbody>
 </table>
+<p>In the app, a building / room can be linked with a site from a building / room objet.</p>
 <h4 id="buildings-rooms">Buildings / Rooms</h4>
 <p>Buildings or rooms represent the location of people or resources within a site.</p>
 <p>Table <em>buildings</em> :</p>
@@ -3421,7 +3641,7 @@ In the application, a VLAN can be attached to a subnet or a logic switch from th
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
@@ -3465,7 +3685,7 @@ In the application, a VLAN can be attached to a subnet or a logic switch from th
 </tr>
 </tbody>
 </table>
-<p>In the application, a building /room or a site can be attached to a building /room from a building object /
+<p>In the app, a building / room or a site can be linked with a building / room from a building object /
 room.</p>
 <h4 id="racks">Racks</h4>
 <p>Racks are technical cabinets housing computer network or telephony equipment.</p>
@@ -3516,6 +3736,7 @@ room.</p>
 </tr>
 </tbody>
 </table>
+<p>In the app, a rack can be linked to a building / room from a rack objet.</p>
 <h4 id="physical-servers">Physical servers</h4>
 <p>Physical servers are physical machines running a set of IT services.</p>
 <p>Table <em>physical_servers</em> :</p>
@@ -3541,7 +3762,7 @@ room.</p>
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -3571,7 +3792,7 @@ room.</p>
 <tr>
 <td style="text-align: left;">disk_used</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Stroage used</td>
+<td style="text-align: left;">Storage used</td>
 </tr>
 <tr>
 <td style="text-align: left;">configuration</td>
@@ -3581,7 +3802,7 @@ room.</p>
 <tr>
 <td style="text-align: left;">operating_system</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Operative system</td>
+<td style="text-align: left;">Operating system</td>
 </tr>
 <tr>
 <td style="text-align: left;">address_ip</td>
@@ -3626,7 +3847,7 @@ room.</p>
 <tr>
 <td style="text-align: left;">logical_servers</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs List of related logical(s) servers(s)</td>
+<td style="text-align: left;">IDs list of related logical(s) servers(s)</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -3645,13 +3866,12 @@ room.</p>
 </tr>
 </tbody>
 </table>
-<p>Data model export references applications, (logical) clusters, and servers 
-logics attached to a physical server.<br />
-In the application, an application can be attached to a physical server from a physical server object.<br />
-A cluster can be attached to a physical server from these two types of objects.<br />
-A logical server can be attached to a physical server from these two types of objects.</p>
-<p>For readability, fields defined in the data model but unused for the 
-moment in application for table <em>physical_servers</em> have been grouped into the following table:</p>
+<p>The data model export lists applications, (logical) clusters, and logical servers linked with a physical server.</p>
+<p>In the app, an application can be linked with a physical server from a physical server object.<br />
+A cluster can be linked with a physical server from these two types of objects.<br />
+A logical server can be linked with a physical server from these two types of objects.</p>
+<p>For readability purpose, fields defined in the data model but unused in the app for the table <em>physical_servers</em>
+have been gathered into the following table:</p>
 <table>
 <thead>
 <tr>
@@ -3723,7 +3943,7 @@ moment in application for table <em>physical_servers</em> have been grouped into
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -3733,7 +3953,7 @@ moment in application for table <em>physical_servers</em> have been grouped into
 <tr>
 <td style="text-align: left;">status</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Status of the workstation (lifecycle incident)</td>
+<td style="text-align: left;">Status of the workstation (lifecycle, incidents)</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
@@ -3753,12 +3973,12 @@ moment in application for table <em>physical_servers</em> have been grouped into
 <tr>
 <td style="text-align: left;">user_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">ID of the reference domain user of the workstation</td>
+<td style="text-align: left;">User ID if inside the domain (admin view)</td>
 </tr>
 <tr>
 <td style="text-align: left;">other_user</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Workstation users , if outside of domain</td>
+<td style="text-align: left;">Workstation users, if outside of domain</td>
 </tr>
 <tr>
 <td style="text-align: left;">manufacturer</td>
@@ -3793,27 +4013,27 @@ moment in application for table <em>physical_servers</em> have been grouped into
 <tr>
 <td style="text-align: left;">operating_system</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Workstation Operating system</td>
+<td style="text-align: left;">Operating system</td>
 </tr>
 <tr>
 <td style="text-align: left;">network_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">ID of the workstation related network</td>
+<td style="text-align: left;">ID of the related network</td>
 </tr>
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adresse(s) of the workstation</td>
+<td style="text-align: left;">IP address(es) of the workstation</td>
 </tr>
 <tr>
 <td style="text-align: left;">mac_address</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">MAC Adresse(s) MAC of the workstation</td>
+<td style="text-align: left;">MAC address(es) of the workstation</td>
 </tr>
 <tr>
 <td style="text-align: left;">network_port_type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Network Connector type (RJ45, USB, SFP,...)</td>
+<td style="text-align: left;">Network connector type (RJ45, USB, SFP,...)</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
@@ -3842,10 +4062,10 @@ moment in application for table <em>physical_servers</em> have been grouped into
 </tr>
 </tbody>
 </table>
-<p>Exporting the data model references applications attached to a workstation.<br />
-In the application, an application can be attached to a workstation from a workstation object.</p>
-<p>For readability reasons, fields defined in the data model but unused at the moment 
-in the application for the table <em>workstations</em> have been grouped in the following table:</p>
+<p>The data model export lists applications linked to a workstation.</p>
+<p>In the app, an application can be linked to a workstation from a workstation object.</p>
+<p>For readability purpose, fields defined in the data model but unused in the app for the table <em>workstations</em> have
+been gathered in the following table:</p>
 <table>
 <thead>
 <tr>
@@ -3883,7 +4103,7 @@ in the application for the table <em>workstations</em> have been grouped in the 
 <tr>
 <td style="text-align: left;">warranty_end_date</td>
 <td style="text-align: left;">date</td>
-<td style="text-align: left;">Guaranty end date</td>
+<td style="text-align: left;">Guarantee end date</td>
 </tr>
 <tr>
 <td style="text-align: left;">warranty_period</td>
@@ -3913,7 +4133,7 @@ in the application for the table <em>workstations</em> have been grouped in the 
 <tr>
 <td style="text-align: left;">agent_version</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Inventory agent verrsion</td>
+<td style="text-align: left;">Inventory agent version</td>
 </tr>
 <tr>
 <td style="text-align: left;">physical_swicth_id</td>
@@ -3922,8 +4142,10 @@ in the application for the table <em>workstations</em> have been grouped in the 
 </tr>
 </tbody>
 </table>
+<p>The "vendor", "product" and "version" fields are not used and therefore are absent of the app.</p>
 <h4 id="storage-infrastructures">Storage infrastructures</h4>
-<p>Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area network (SAN), hard disk...</p>
+<p>Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area
+network (SAN), hard disk...</p>
 <p>Table <em>storage_devices</em> :</p>
 <table>
 <thead>
@@ -3943,6 +4165,11 @@ in the application for the table <em>workstations</em> have been grouped in the 
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Name of storage infrastructure</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Storage infrastructure type (NAS, SAN, HDD, etc.)</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
@@ -4001,9 +4228,10 @@ in the application for the table <em>workstations</em> have been grouped in the 
 </tr>
 </tbody>
 </table>
-<p>The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.</p>
+<p>The "vendor", "product" and "version" fields are not used and therefore are absent of the app.</p>
 <h4 id="peripherals">Peripherals</h4>
-<p>Peripherals are physical components connected to a workstation to add new functions (e.g. keyboard, mouse, printer, scanner, etc.).</p>
+<p>Peripherals are physical components connected to a workstation to add new functions (e.g. keyboard, mouse, printer,
+scanner, etc.).</p>
 <p>Table <em>peripherals</em> :</p>
 <table>
 <thead>
@@ -4037,7 +4265,7 @@ in the application for the table <em>workstations</em> have been grouped in the 
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
@@ -4057,12 +4285,12 @@ in the application for the table <em>workstations</em> have been grouped in the 
 <tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Internal responsible of this equipment</td>
+<td style="text-align: left;">Internal responsible of this peripheral</td>
 </tr>
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adress of the equipment</td>
+<td style="text-align: left;">IP address of the peripheral</td>
 </tr>
 <tr>
 <td style="text-align: left;">domain</td>
@@ -4106,10 +4334,10 @@ in the application for the table <em>workstations</em> have been grouped in the 
 </tr>
 </tbody>
 </table>
-<p>Data model export references applications using a device.<br />
-In the application, a device can be attached to an application from a peripheral object.</p>
+<p>The data model export lists applications using a peripheral.</p>
+<p>In the app, an application can be linked to a peripheral from a peripheral object.</p>
 <h4 id="phones">Phones</h4>
-<p>Fixed and mobile phones belonging to the organization.</p>
+<p>Landlines and mobile phones belonging to the organization.</p>
 <table>
 <thead>
 <tr>
@@ -4172,7 +4400,7 @@ In the application, a device can be attached to an application from a peripheral
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adress of the phone</td>
+<td style="text-align: left;">IP address of the phone</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -4191,7 +4419,9 @@ In the application, a device can be attached to an application from a peripheral
 </tr>
 </tbody>
 </table>
-<p>The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.</p>
+<p>The "vendor", "product" and "version" fields are not used and therefore are absent in the app.</p>
+<p>The filed "physical_switch_id" is not used and therefore is absent in the app. However, a phone object can be linked
+with a network switch (either physical or logical) through a physical link object.</p>
 <h4 id="physical-switches">Physical switches</h4>
 <p>Physical switches are physical components that manage connections between different servers within a network.</p>
 <p>Table <em>physical_switches</em> :</p>
@@ -4271,10 +4501,9 @@ In the application, a device can be attached to an application from a peripheral
 </tr>
 </tbody>
 </table>
-<p>The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.</p>
-<p>'data model export references logical switches attached to a physical switch.<br />
-In the application, a physical switch can be attached to a logical switch (denoted as "Network Switches")
-from these two types of objects.</p>
+<p>The "vendor", "product" and "version" fields are not used and therefore are absent in the app.</p>
+<p>The data model export lists logical network switches linked with a physical switch.</p>
+<p>In the app, a physical switch can be linked with a logical network switch from these two objects.</p>
 <h4 id="physical-routers">Physical routers</h4>
 <p>Physical routers are physical components that manage connections between different networks.</p>
 <p>Table <em>physical_routers</em> :</p>
@@ -4354,10 +4583,11 @@ from these two types of objects.</p>
 </tr>
 </tbody>
 </table>
-<p>The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.</p>
-<p>Exporting the data model references logical routers and VLANs attached to a physical router.<br />
-In the application, a physical router can be attached to a logical router (denoted as "Routers" from these two types of objects.<br />
-A VLAN can be attached to a physical router from a physical router object.</p>
+<p>The "vendor", "product" and "version" fields are not used and therefore are absent in the app.</p>
+<p>The data model export lists logical routers and VLANs linked to a physical router.</p>
+<p>In the app, a physical router can be linked to a logical router (denoted as "Routers") from these two types of
+objects.<br />
+A VLAN can be linked to a physical router from a physical router object.</p>
 <h4 id="wifi-terminals">WiFi terminals</h4>
 <p>WiFi hotspots are hardware devices that enable access to the WiFi wireless network.</p>
 <p>Table <em>wifi_terminals</em> :</p>
@@ -4403,7 +4633,7 @@ A VLAN can be attached to a physical router from a physical router object.</p>
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adress of the wifi terminal</td>
+<td style="text-align: left;">IP address of the wifi terminal</td>
 </tr>
 <tr>
 <td style="text-align: left;">vendor</td>
@@ -4442,9 +4672,10 @@ A VLAN can be attached to a physical router from a physical router object.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="physical-security-equipment">Physical security equipment</h4>
-<p>Physical security equipment includes components for network supervision, incident detection, equipment protection and information system security.</p>
-<p>Physical security equipment includes temperature sensors, cameras, security doors, etc.</p>
+<h4 id="physical-security-device">Physical security device</h4>
+<p>Physical security device includes components for network supervision, incident detection, equipment protection and
+information system security.</p>
+<p>Physical security device includes temperature sensors, cameras, security doors, etc.</p>
 <p>Table <em>physical_security_devices</em> :</p>
 <table>
 <thead>
@@ -4463,22 +4694,22 @@ A VLAN can be attached to a physical router from a physical router object.</p>
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Name of security equipment</td>
+<td style="text-align: left;">Name of security device</td>
 </tr>
 <tr>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Reference to a specific image</td>
+<td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description of security equipment</td>
+<td style="text-align: left;">Description of security device</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / model of security equipment</td>
+<td style="text-align: left;">Type / model of security device</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
@@ -4498,7 +4729,7 @@ A VLAN can be attached to a physical router from a physical router object.</p>
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">IP Adress</td>
+<td style="text-align: left;">IP sddress</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -4517,10 +4748,13 @@ A VLAN can be attached to a physical router from a physical router object.</p>
 </tr>
 </tbody>
 </table>
+<p>The data model export lists logical security devices linked to a physical security device.</p>
+<p>In the app, a logical security device can be linked to a physical security device from these two objects.</p>
 <h4 id="physical-links">Physical links</h4>
 <p>Physical links represent the cables between physical or logical objects.<br />
 Logical objects can have physical links, for example within a virtualized network.<br />
-A physical link is different from a logical flow. A physical link describes a relationship at layers 1 or 2 of the OSI model.<br />
+A physical link is different from a logical flow. A physical link describes a relationship at layers 1 or 2 of the OSI
+model.<br />
 A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 <p>Table <em>physical_links</em> :</p>
 <table>
@@ -4545,7 +4779,7 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 <tr>
 <td style="text-align: left;">src_id</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Physical port of the source</td>
+<td style="text-align: left;">Physical port of the source device</td>
 </tr>
 <tr>
 <td style="text-align: left;"><em>device</em>_dst_id</td>
@@ -4555,7 +4789,7 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 <tr>
 <td style="text-align: left;">dst_port</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Physical port of the destination</td>
+<td style="text-align: left;">Physical port of the destination device</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -4574,33 +4808,33 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 </tr>
 </tbody>
 </table>
-<p>Les <strong><em>devices</em></strong>** sources or destination might be :</p>
+<p>Source and destination devices can be:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Actif</th>
+<th style="text-align: left;"><em>device</em></th>
 <th style="text-align: center;">Source</th>
 <th style="text-align: center;">Destination</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Peripheral</td>
+<td style="text-align: left;">Peripheral device</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Phonehone</td>
+<td style="text-align: left;">Phone</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Physical Router</td>
+<td style="text-align: left;">Physical router</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td style="text-align: left;">Physical Security equipment</td>
+<td style="text-align: left;">Physical security device</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
@@ -4647,7 +4881,8 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 </tbody>
 </table>
 <h4 id="wan">WAN</h4>
-<p>WANs (Wide Area Networks) are computer networks linking equipment over long distances. They generally interconnect MANs or LANs.</p>
+<p>WANs (Wide Area Networks) are computer networks linking equipment over long distances. They generally interconnect MANs
+or LANs.</p>
 <p>Table <em>wans</em> :</p>
 <table>
 <thead>
@@ -4685,8 +4920,12 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 </tr>
 </tbody>
 </table>
+<p>The data model export lists LANs and MANs linked to a WAN.</p>
+<p>In the app, a LAN can be linked to a WAN from a WAN object.<br />
+A MAN can be linked to a WAN from a WAN object.</p>
 <h4 id="man">MAN</h4>
-<p>MANs (Middle Area Networks) are computer networks linking equipment over medium-sized distances. They generally interconnect LANs.</p>
+<p>MANs (Middle Area Networks) are computer networks linking equipment over medium-sized distances. They generally
+interconnect LANs.</p>
 <p>Table <em>mans</em> :</p>
 <table>
 <thead>
@@ -4724,6 +4963,9 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 </tr>
 </tbody>
 </table>
+<p>The data model export lists WANs and LANs linked to a MAN.</p>
+<p>In the app, a WAN can be linked to a MAN from a WAN object.<br />
+A LAN can be linked to a MAN from a MAN object.</p>
 <h4 id="lan">LAN</h4>
 <p>LANs (Local Area Networks) are computer networks linking equipment over a small geographical area.</p>
 <p>Table <em>lans</em> :</p>
@@ -4768,6 +5010,9 @@ A logic flow describes a relationship at layers 3 and 4 of the OSI model.</p>
 </tr>
 </tbody>
 </table>
+<p>The data model export lists MANs and WANs linked to a LAN.</p>
+<p>In the app, a MAN can be linked to a LAN from a MAN object.<br />
+A WAN can be linked to a LAN from a WAN object.  </p>
               
             </div>
           </div><footer>

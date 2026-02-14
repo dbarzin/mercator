@@ -8,27 +8,23 @@
         <th width="10%">
             {{ trans('cruds.building.fields.name') }}
         </th>
-        <td colspan="2">
+        <td width="20%">
         @if($withLink)
         <a href="{{ route('admin.buildings.show', $building->id) }}">{{ $building->name }}</a>
         @else
         {{ $building->name }}
         @endif
         </td>
-    </tr>
-    <tr>
-        <th>
+        <th width="10%">
             {{ trans('cruds.building.fields.type') }}
         </th>
-        <td colspan="">
+        <td width="20%">
             {{ $building->type }}
         </td>
-    </tr>
-    <tr>
-        <th>
+        <th width="10%">
             {{ trans('cruds.building.fields.attributes') }}
         </th>
-        <td colspan="2">
+        <td>
             @foreach(explode(" ",$building->attributes) as $attribute)
                 <span class="badge badge-info">{{ $attribute }}</span>
             @endforeach
@@ -38,14 +34,14 @@
         <th>
             {{ trans('cruds.building.fields.description') }}
         </th>
-        <td>
+        <td colspan="4">
             {!! $building->description !!}
         </td>
-        <td width="10%">
+        <td width="10%" align="center">
             @if ($building->icon_id === null)
-                <img src='/images/building.png' width='120' height='120'>
+                <img src='/images/building.png' width='60' height='60'>
             @else
-                <img src='{{ route('admin.documents.show', $building->icon_id) }}' width='120' height='120'>
+                <img src='{{ route('admin.documents.show', $building->icon_id) }}' width='60' height='60'>
             @endif
         </td>
     </tr>
@@ -53,19 +49,17 @@
         <th>
             {{ trans('cruds.building.fields.site') }}
         </th>
-        <td colspan="2">
+        <td>
             @if ($building->site!=null)
                 <a href="{{ route('admin.sites.show', $building->site->id) }}">
                     {{ $building->site->name ?? '' }}
                 </a>
             @endif
         </td>
-    </tr>
-    <tr>
         <th>
             {{ trans('cruds.building.fields.parent') }}
         </th>
-        <td colspan="2">
+        <td colspan="4">
             @if ($building->building!=null)
                 <a href="{{ route('admin.buildings.show', $building->building->id) }}">
                     {{ $building->building->name ?? '' }}
@@ -77,7 +71,7 @@
         <th>
             {{ trans('cruds.building.fields.children') }}
         </th>
-        <td colspan="2">
+        <td colspan="6">
             @foreach($building->buildings as $b)
                 <a href="{{ route('admin.buildings.show', $b->id) }}">
                     {{ $b->name ?? '' }}
@@ -92,7 +86,7 @@
         <th>
             {{ trans('cruds.building.fields.bays') }}
         </th>
-        <td colspan="2">
+        <td colspan="6">
             @foreach($building->roomBays as $bay)
                 <a href="{{ route('admin.bays.show', $bay->id) }}">
                     {{ $bay->name ?? '' }}

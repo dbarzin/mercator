@@ -1,22 +1,30 @@
-<table class="table table-bordered table-striped">
+@props([
+    'flux',
+    'withLink' => false,
+])
+<table class="table table-bordered table-striped table-report">
     <tbody>
     <tr>
         <th width="10%">
             {{ trans('cruds.flux.fields.name') }}
         </th>
-        <td>
+        <th width="30%">
+        @if ($withLink)
+        <a href="{{ route('admin.fluxes.show', $flux->id) }}">{{ $flux->name }}</a>
+        @else
             {{ $flux->name }}
+        @endif
         </td>
         <th width="10%">
             {{ trans('cruds.flux.fields.nature') }}
         </th>
-        <td>
+        <td width="20%">
             {{ $flux->nature }}
         </td>
         <th width="10%">
             {{ trans('cruds.flux.fields.attributes') }}
         </th>
-        <td>
+        <th width="20%">
             @foreach(explode(" ",$flux->attributes) as $attribute)
                 <span class="badge badge-info">{{ $attribute }}</span>
             @endforeach
