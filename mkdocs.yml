@@ -60,6 +60,8 @@ nav:
   - Import: import.fr.md
   - API: api.md
   - API: api.fr.md
+  - API advanced (filters): apifilters.md
+  - API avancé (filtres): apifilters.fr.md
   - References: references.md
   - Références: references.fr.md
 

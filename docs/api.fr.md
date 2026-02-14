@@ -14,87 +14,88 @@ pour installer l'API dans Mercator, il est nécessaire d'installer Passport en l
 php artisan passport:install
 ```
 
-- l'environnement Docker prend en charge cette fonctionnalité nativement, via le l'entrypoint.
+- l'environnement Docker prend en charge cette fonctionnalité nativement, via l'entrypoint.
 
 ### Les APIs
 
 Pour chaque objet du modèle de données de la cartographie, il existe une API.
 La liste des API se trouve dans le fichier /route/api.php
 
+*Note:* Pour visualiser le datamodel d'une API, cliquer sur son nom.
+
 __Vue du RGPD__
 
-- /api/data-processings
-- /api/security-controls
+- [/api/data-processings](./model.fr.md#registre)
+- [/api/security-controls](./model.fr.md#mesures-de-securite)
 
 __Vues de l'écosystème__
 
-- /api/entities
-- /api/relations
+- [/api/entities](./model.fr.md#entites)
+- [/api/relations](./model.fr.md#relations)
 
 __Vue métier du système d'information__
 
-- /api/macro-processuses
-- /api/processes
-- /api/activities
-- /api/operations
-- /api/tasks
-- /api/actors
-- /api/information
+- [/api/macro-processuses](./model.fr.md#macro-processus)
+- [/api/processes](./model.fr.md#processus)
+- [/api/activities](./model.fr.md#activites)
+- [/api/operations](./model.fr.md#operations)
+- [/api/tasks](./model.fr.md#taches)
+- [/api/actors](./model.fr.md#acteurs)
+- [/api/information](./model.fr.md#information)
 
 __Vue des applications__
 
-- /api/application-blocks
-- /api/applications
-- /api/application-services
-- /api/application-modules
-- /api/databases
-- /api/fluxes
+- [/api/application-blocks](./model.fr.md#blocs-applicatif)
+- [/api/applications](./model.fr.md#applications)
+- [/api/application-services](./model.fr.md#services-applicatif)
+- [/api/application-modules](./model.fr.md#modules-applicatif)
+- [/api/databases](./model.fr.md#bases-de-donnees)
+- [/api/fluxes](./model.fr.md#flux)
 
 __Vue de l'administration__
 
-- /api/zone-admins
-- /api/annuaires
-- /api/forest-ads
-- /api/domaine-ads
-- /api/admin-users
+- [/api/zone-admins](./model.fr.md#zones-dadministration)
+- [/api/annuaires](./model.fr.md#services-dannuaire-dadministration)
+- [/api/forest-ads](./model.fr.md#forets-active-directory-arborescence-ldap)
+- [/api/domaine-ads](./model.fr.md#domaines-active-directory-ldap)
+- [/api/admin-users](./model.fr.md#utilisateurs)
 
 __Vue de l'infrastructure logique__
 
-- /api/networks
-- /api/subnetworks
-- /api/gateways
-- /api/external-connected-entities
-- /api/network-switches
-- /api/routers
-- /api/security-devices
-- /api/dhcp-servers
-- /api/dnsservers
-- /api/clusters
-- /api/logical-servers
-- /api/logical-flows
-- /api/containers
-- /api/certificates
-- /api/vlans
+- [/api/networks](./model.fr.md#reseaux)
+- [/api/subnetworks](./model.fr.md#sous-reseaux)
+- [/api/gateways](./model.fr.md#passerelles-dentrees-depuis-lexterieur)
+- [/api/external-connected-entities](./model.fr.md#entites-exterieures-connectees)
+- [/api/network-switches](./model.fr.md#commutateurs-reseau)
+- [/api/routers](./model.fr.md#routeurs-logiques)
+- [/api/security-devices](./model.fr.md#equipements-de-securite)
+- [/api/dhcp-servers](./model.fr.md#serveurs-dhcp)
+- [/api/dnsservers](./model.fr.md#serveurs-dns)
+- [/api/clusters](./model.fr.md#clusters)
+- [/api/logical-servers](./model.fr.md#serveurs-logiques)
+- [/api/logical-flows](./model.fr.md#flux-logiques)
+- [/api/containers](./model.fr.md#conteneurs)
+- [/api/certificates](./model.fr.md#certificats)
+- [/api/vlans](./model.fr.md#vlans)
 
 __Vue de l'infrastructure physique__
 
-- /api/sites
-- /api/buildings
-- /api/bays
-- /api/physical-servers
-- /api/workstations
-- /api/storage-devices
-- /api/peripherals
-- /api/phones
-- /api/physical-switches
-- /api/physical-routers
-- /api/wifi-terminals
-- /api/physical-security-devices
-- /api/wans
-- /api/mans
-- /api/lans
-- /api/physical-links
-- /api/fluxes
+- [/api/sites](./model.fr.md#sites)
+- [/api/buildings](./model.fr.md#batiments-salles)
+- [/api/bays](./model.fr.md#baies)
+- [/api/physical-servers](./model.fr.md#serveurs-physiques)
+- [/api/workstations](./model.fr.md#postes-de-travail)
+- [/api/storage-devices](./model.fr.md#infrastructures-de-stockage)
+- [/api/peripherals](./model.fr.md#peripheriques)
+- [/api/phones](./model.fr.md#telephones)
+- [/api/physical-switches](./model.fr.md#commutateurs-physiques)
+- [/api/physical-routers](./model.fr.md#routeurs-physiques)
+- [/api/wifi-terminals](./model.fr.md#bornes-wifi)
+- [/api/physical-security-devices](./model.fr.md#equipements-de-securite-physique)
+- [/api/physical-links](./model.fr.md#liens-physiques)
+- [/api/wans](./model.fr.md#wans)
+- [/api/mans](./model.fr.md#mans)
+- [/api/lans](./model.fr.md#lans)
 
 __Rapport__
 
@@ -119,83 +120,20 @@ __Rapport__
 
 Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
-| Requête   | URI                       | Action 	                             |
-|-----------|---------------------------|---------------------------------------|
-| GET       | /api/objets               | renvoie la liste des objets           |
-| GET       | /api/objets/{id}          | renvoie l'objet {id}                  |
-| POST 	    | /api/objets               | sauve un nouvel objet                 |
-| PUT/PATCH | /api/objets/{id}          | met à jour l'objet {id}               |
-| DELETE 	| /api/objets/{id}          | supprime l'objet {id}                 |
-| POST      | /api/objets/mass-store    | crée plusieurs objets en une requête  |
-| PUT/PATCH | /api/objets/mass-update   | met à jour plusieurs objets à la fois |
-| DELETE    | /api/objets/mass-destroy  | supprime plusieurs objets à la fois   |
+| Requête   | URI                      | Action 	                              |
+|-----------|--------------------------|---------------------------------------|
+| GET       | /api/objets              | renvoie la liste des objets           |
+| GET       | /api/objets/{id}         | renvoie l'objet {id}                  |
+| POST 	    | /api/objets              | sauve un nouvel objet                 |
+| PUT/PATCH | /api/objets/{id}         | met à jour l'objet {id}               |
+| DELETE 	  | /api/objets/{id}         | supprime l'objet {id}                 |
+| POST      | /api/objets/mass-store   | crée plusieurs objets en une requête  |
+| PUT/PATCH | /api/objets/mass-update  | met à jour plusieurs objets à la fois |
+| DELETE    | /api/objets/mass-destroy | supprime plusieurs objets à la fois   |
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
-### Filtrage des résultats
-
-Les endpoints de liste (`GET /api/objets`) supportent un système de filtres via les paramètres de requête (`?param=valeur`).
-
-Pour éviter toute injection (nom de colonne arbitraire), seuls certains champs sont filtrables.
-Pour chaque ressource, les champs filtrables sont constitués :
-
-* des champs déclarés comme *recherchables* dans le modèle (par exemple `Activity::$searchable` pour les activités) ;
-* de quelques champs supplémentaires explicitement autorisés (par exemple `id`, `recovery_time_objective`, `maximum_tolerable_downtime` pour les activités).
-
-Les noms des champs non autorisés sont simplement ignorés.
-
-#### Syntaxe générale
-
-Chaque filtre se présente sous la forme :
-
-```text
-<champ>[__<operateur>]=<valeur>
-```
-
-* Si aucun opérateur n’est précisé, l’opérateur par défaut est `exact`.
-* Exemples de clés de paramètres :
-
-  * `name=Backup quotidien` → filtre exact
-  * `name__contains=backup` → recherche de sous-chaîne
-  * `recovery_time_objective__lte=4` → RTO inférieur ou égal à 4
-
-#### Opérateurs disponibles
-
-Les opérateurs suivants sont supportés :
-
-| Opérateur    | Exemple de paramètre                | Condition SQL approximative       |
-| ------------ | ----------------------------------- | --------------------------------- |
-| `exact`      | `name=Sauvegarde`                   | `name = 'Sauvegarde'`             |
-| `contains`   | `name__contains=save`               | `name LIKE '%save%'`              |
-| `startswith` | `name__startswith=save`             | `name LIKE 'save%'`               |
-| `endswith`   | `name__endswith=prod`               | `name LIKE '%prod'`               |
-| `lt`         | `recovery_time_objective__lt=4`     | `recovery_time_objective < 4`     |
-| `lte`        | `recovery_time_objective__lte=4`    | `recovery_time_objective <= 4`    |
-| `gt`         | `maximum_tolerable_downtime__gt=8`  | `maximum_tolerable_downtime > 8`  |
-| `gte`        | `maximum_tolerable_downtime__gte=8` | `maximum_tolerable_downtime >= 8` |
-
-Si un opérateur inconnu est fourni, il est traité comme `exact`.
-
-#### Exemples
-
-* Lister les activités dont le nom contient “sauvegarde” :
-
-```http
-GET /api/activities?name__contains=sauvegarde
-```
-
-* Lister les activités gérées par un responsable donné, avec un RTO inférieur ou égal à 4 heures :
-
-```http
-GET /api/activities?responsible=DSI&recovery_time_objective__lte=4
-```
-
-* Lister les activités dont l’ID est supérieur ou égal à 100 :
-
-```http
-GET /api/activities?id__gte=100
-```
-
+Pour voir les fonctions avancées de filtres : voir la page [API Avancé (filtres)](./apifilters.fr.md)
 
 ### Droits d'accès
 
@@ -387,7 +325,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
     var_dump($response);
 ```
 
-### Python
+#### Python
 
 Voici un exemple d'utilisation de l'API en Python
 
@@ -417,7 +355,7 @@ print(response.status_code)
 
 ```
 
-### bash
+#### bash
 
 Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html)
 et [JQ](https://stedolan.github.io/jq/)
@@ -467,12 +405,12 @@ echo "Objet mis à jour: ${UPDATED_OBJECT}"
 
 ```
 
-### Powershell
+#### Powershell
 
 Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs
 logiques.
 
-#### Étape 1 — Authentification et obtention du jeton d’accès
+##### Étape 1 — Authentification et obtention du jeton d’accès
 
 ```powershell
 # Définir l’URL d’authentification et les identifiants
@@ -493,7 +431,7 @@ try {
 }
 ```
 
-#### Étape 2 — Utilisation du jeton pour interroger les serveurs logiques
+##### Étape 2 — Utilisation du jeton pour interroger les serveurs logiques
 
 ```powershell
 # Définir l’endpoint et les en-têtes d’autorisation
