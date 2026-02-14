@@ -1,4 +1,4 @@
-## API avancé (filtres)
+## API avancée (filtres)
 
 Ce chapitre vient en complément du chapitre [API](./api.fr.md).
 
