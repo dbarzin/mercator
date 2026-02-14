@@ -41,11 +41,11 @@
         <td>
             {!! $building->description !!}
         </td>
-        <td width="10%">
+        <td width="10%" align="center">
             @if ($building->icon_id === null)
-                <img src='/images/building.png' width='120' height='120'>
+                <img src='/images/building.png' width='60' height='60'>
             @else
-                <img src='{{ route('admin.documents.show', $building->icon_id) }}' width='120' height='120'>
+                <img src='{{ route('admin.documents.show', $building->icon_id) }}' width='60' height='60'>
             @endif
         </td>
     </tr>

@@ -28,12 +28,12 @@
     <td colspan="3">
         {!! $physicalServer->description !!}
     </td>
-    <td width="10%">
+    <td width="10%" align="center">
         @if ($physicalServer->icon_id === null)
-            <img src='/images/server.png' width='120' height='120'>
+            <img src='/images/server.png' width='60' height='60'>
         @else
-            <img src='{{ route('admin.documents.show', $physicalServer->icon_id) }}' width='100'
-                 height='100'>
+            <img src='{{ route('admin.documents.show', $physicalServer->icon_id) }}' width='60'
+                 height='60'>
         @endif
     </td>
     </tbody>
