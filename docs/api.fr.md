@@ -308,7 +308,6 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_POST => true,
         CURLOPT_CUSTOMREQUEST => "PUT",
         CURLOPT_POSTFIELDS => http_build_query(
             array(
@@ -323,6 +322,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
             "accept: application/json",
             "Authorization: " . "Bearer" . " " . $access_token . "",
             "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
         ),
     ));
 
