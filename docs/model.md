@@ -1243,15 +1243,17 @@ Sites are geographical locations that bring together a group of people and/or re
 
 Table *sites* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the site |
-| icon_id           | int unsigned | Reference to a specific image            |
-| description          | longtext     | Description of the site |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                  |
+|:---------------------|:-------------|:-----------------------------|
+| id                   | int unsigned | auto_increment               |
+| name                 | varchar(255) | Name of the site             |
+| icon_id              | int unsigned | Reference to a specific icon |
+| description          | longtext     | Description of the site      |
+| created_at           | timestamp    | Date of creation             |
+| updated_at           | timestamp    | Date of update               |
+| deleted_at           | timestamp    | Date of deletion             |
+
+In the app, a building / room can be linked with a site from a building / room objet.  
 
 #### Buildings / Rooms
 
@@ -1259,21 +1261,21 @@ Buildings or rooms represent the location of people or resources within a site.
 
 Table *buildings* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of building |
-| icon_id              | int unsigned | Reference to a specific image            |
-| type                 | varchar(255) | Type of Room/Building               |
-| attributes           | varchar(255) | Attributes of the building / room                        |
-| description          | longtext     | Description of the building |
-| site_id              | int unsigned | Reference to the site |
-| building_id          | int unsigned | Reference to a building / room |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                       |
+|:---------------------|:-------------|:----------------------------------|
+| id                   | int unsigned | auto_increment                    |
+| name                 | varchar(255) | Name of building                  |
+| icon_id              | int unsigned | Reference to a specific icon      |
+| type                 | varchar(255) | Type of Room/Building             |
+| attributes           | varchar(255) | Attributes of the building / room |
+| description          | longtext     | Description of the building       |
+| site_id              | int unsigned | Reference to the site             |
+| building_id          | int unsigned | Reference to a building / room    |
+| created_at           | timestamp    | Date of creation                  |
+| updated_at           | timestamp    | Date of update                    |
+| deleted_at           | timestamp    | Date of deletion                  |
 
-In the application, a building /room or a site can be attached to a building /room from a building object /
+In the app, a building / room or a site can be linked with a building / room from a building object /
 room.
 
 #### Racks
@@ -1282,15 +1284,17 @@ Racks are technical cabinets housing computer network or telephony equipment.
 
 Table *bays* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of the rack |
-| description          | longtext     | Description of the rack |
+| Champ                | Type         | Description                  |
+|:---------------------|:-------------|:-----------------------------|
+| id                   | int unsigned | auto_increment               |
+| name                 | varchar(255) | Name of the rack             |
+| description          | longtext     | Description of the rack      |
 | room_id              | int unsigned | Reference to building / room |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| created_at           | timestamp    | Date of creation             |
+| updated_at           | timestamp    | Date of update               |
+| deleted_at           | timestamp    | Date of deletion             |
+
+In the app, a rack can be linked to a building / room from a rack objet.  
 
 #### Physical servers
 
@@ -1298,53 +1302,51 @@ Physical servers are physical machines running a set of IT services.
 
 Table *physical_servers* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of physical server |
-| icon_id              | int unsigned | Reference to a specific image            |
-| description          | longtext     | Description of physical server |
-| type                 | varchar(255) | Type / model of server |
-| cpu                  | varchar(255) | Number of CPU |
-| memory               | varchar(255) | Quantity of RAM |
-| disk                 | int          | Storage allocated |
-| disk_used            | int          | Stroage used                           |
-| configuration        | longtext     | Server configuration |
-| operating_system     | varchar(255) | Operative system |
-| address_ip           | varchar(255) | IP address |
-| install_date         | datetime     | Date of server installation |
-| update_date          | datetime     | Date of server upgrade |
-| responsible          | varchar(255) | Person/Team responsible for the server |
-| site_id              | int unsigned | Reference to the site |
-| building_id          | int unsigned | Reference to the building / room |
-| bay_id               | int unsigned | Reference to the rack |
-| clusters             | List int [,] | IDs list of related cluster(s)         |
-| logical_servers      | List int [,] | IDs List of related logical(s) servers(s) |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                               |
+|:---------------------|:-------------|:------------------------------------------|
+| id                   | int unsigned | auto_increment                            |
+| name                 | varchar(255) | Name of physical server                   |
+| icon_id              | int unsigned | Reference to a specific icon              |
+| description          | longtext     | Description of physical server            |
+| type                 | varchar(255) | Type / model of server                    |
+| cpu                  | varchar(255) | Number of CPU                             |
+| memory               | varchar(255) | Quantity of RAM                           |
+| disk                 | int          | Storage allocated                         |
+| disk_used            | int          | Storage used                              |
+| configuration        | longtext     | Server configuration                      |
+| operating_system     | varchar(255) | Operating system                          |
+| address_ip           | varchar(255) | IP address                                |
+| install_date         | datetime     | Date of server installation               |
+| update_date          | datetime     | Date of server upgrade                    |
+| responsible          | varchar(255) | Person/Team responsible for the server    |
+| site_id              | int unsigned | Reference to the site                     |
+| building_id          | int unsigned | Reference to the building / room          |
+| bay_id               | int unsigned | Reference to the rack                     |
+| clusters             | List int [,] | IDs list of related cluster(s)            |
+| logical_servers      | List int [,] | IDs list of related logical(s) servers(s) |
+| created_at           | timestamp    | Date of creation                          |
+| updated_at           | timestamp    | Date of update                            |
+| deleted_at           | timestamp    | Date of deletion                          |
+
+The data model export lists applications, (logical) clusters, and logical servers linked with a physical server.  
+
+In the app, an application can be linked with a physical server from a physical server object.  
+A cluster can be linked with a physical server from these two types of objects.  
+A logical server can be linked with a physical server from these two types of objects.
+
+For readability purpose, fields defined in the data model but unused in the app for the table *physical_servers*
+have been gathered into the following table:
 
 
-Data model export references applications, (logical) clusters, and servers 
-logics attached to a physical server.  
-In the application, an application can be attached to a physical server from a physical server object.  
-A cluster can be attached to a physical server from these two types of objects.  
-A logical server can be attached to a physical server from these two types of objects.
-
-For readability, fields defined in the data model but unused for the 
-moment in application for table *physical_servers* have been grouped into the following table:
-
-
-| Champ                | Type         | Description                             |
-|:---------------------|:-------------|:----------------------------------------|
-| vendor               | varchar(255) | Vendor / editor for CPE search        |
-| product              | varchar(255) | Product of an editor for CPE search   |
-| version              | varchar(255) | Version of a product for CPE search   |
-| patching_group       | varchar(255) | Group for upgrade                       |
-| patching_frequency   | varchar(255) | Frequency of upgrade                    |
-| next_update          | date         | Date of next upgrade                    |
-| physical_swicth_id   | int unsigned | ID of related Physical switch           |
-
+| Champ                | Type         | Description                         |
+|:---------------------|:-------------|:------------------------------------|
+| vendor               | varchar(255) | Vendor / editor for CPE search      |
+| product              | varchar(255) | Product of an editor for CPE search |
+| version              | varchar(255) | Version of a product for CPE search |
+| patching_group       | varchar(255) | Group for upgrade                   |
+| patching_frequency   | varchar(255) | Frequency of upgrade                |
+| next_update          | date         | Date of next upgrade                |
+| physical_swicth_id   | int unsigned | ID of related Physical switch       |
 
 #### Workstations
 
@@ -1352,40 +1354,41 @@ Workstations are physical machines that enable a user to access the information 
 
 Table *workstations* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of workstation |
-| icon_id              | int unsigned | Reference to a specific image            |
-| description          | longtext     | Description of workstation |
-| status               | varchar(255) | Status of the workstation (lifecycle incident)   |
-| type                 | varchar(255) | Type / model of workstation |
-| entity_id            | int unsigned | ID of the related entity                   |
-| domain_id            | int unsigned | ID of the related users identification domain      |
-| user_id              | int unsigned | ID of the reference domain user of the workstation |
-| other_user           | int unsigned | Workstation users , if outside of domain               |
-| manufacturer         | varchar(255) | Workstation manufacturer                                        |
-| model                | varchar(255) | Workstation model                                               |
-| serial_number        | varchar(255) | Workstation serial number                                       |
-| cpu                  | varchar(255) | Workstation CPU                                          |
-| memory               | varchar(255) | Workstation RAM                                     |
-| disk                 | int signed   | Disk size of the workstation                           |
-| operating_system     | varchar(255) | Workstation Operating system                                  |
-| network_id           | int unsigned | ID of the workstation related network               |
-| address_ip           | varchar(255) | IP Adresse(s) of the workstation                       |
-| mac_address          | varchar(255) | MAC Adresse(s) MAC of the workstation                           |
-| network_port_type    | varchar(255) | Network Connector type (RJ45, USB, SFP,...)              |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                                      |
+|:---------------------|:-------------|:-------------------------------------------------|
+| id                   | int unsigned | auto_increment                                   |
+| name                 | varchar(255) | Name of workstation                              |
+| icon_id              | int unsigned | Reference to a specific icon                     |
+| description          | longtext     | Description of workstation                       |
+| status               | varchar(255) | Status of the workstation (lifecycle, incidents) |
+| type                 | varchar(255) | Type / model of workstation                      |
+| entity_id            | int unsigned | ID of the related entity                         |
+| domain_id            | int unsigned | ID of the related users identification domain    |
+| user_id              | int unsigned | User ID if inside the domain (admin view)        |
+| other_user           | int unsigned | Workstation users, if outside of domain          |
+| manufacturer         | varchar(255) | Workstation manufacturer                         |
+| model                | varchar(255) | Workstation model                                |
+| serial_number        | varchar(255) | Workstation serial number                        |
+| cpu                  | varchar(255) | Workstation CPU                                  |
+| memory               | varchar(255) | Workstation RAM                                  |
+| disk                 | int signed   | Disk size of the workstation                     |
+| operating_system     | varchar(255) | Operating system                                 |
+| network_id           | int unsigned | ID of the related network                        |
+| address_ip           | varchar(255) | IP address(es) of the workstation                |
+| mac_address          | varchar(255) | MAC address(es) of the workstation               |
+| network_port_type    | varchar(255) | Network connector type (RJ45, USB, SFP,...)      |
+| site_id              | int unsigned | Reference to site                                |
+| building_id          | int unsigned | Reference to building / room                     |
+| created_at           | timestamp    | Date of creation                                 |
+| updated_at           | timestamp    | Date of update                                   |
+| deleted_at           | timestamp    | Date of deletion                                 |
 
-Exporting the data model references applications attached to a workstation.  
-In the application, an application can be attached to a workstation from a workstation object.
+The data model export lists applications linked to a workstation.  
 
-For readability reasons, fields defined in the data model but unused at the moment 
-in the application for the table *workstations* have been grouped in the following table:
+In the app, an application can be linked to a workstation from a workstation object.
+
+For readability purpose, fields defined in the data model but unused in the app for the table *workstations* have
+been gathered in the following table:
 
 | Champ                | Type         | Description                             |
 |:---------------------|:-------------|:----------------------------------------|
@@ -1394,16 +1397,16 @@ in the application for the table *workstations* have been grouped in the followi
 | version              | varchar(255) | Version of a product for CPE search     |
 | warranty             | varchar(255) | Guarantee contract                      |
 | warranty_start_date  | date         | Guarantee start date                    |
-| warranty_end_date    | date         | Guaranty end date                       |
+| warranty_end_date    | date         | Guarantee end date                      |
 | warranty_period      | date         | Guarantee period                        |
 | purchase_date        | date         | Purchase date                           |
 | fin_value            | decimal      | Financial value.                        | 
 | last_inventory_date  | date         | Date of last inventory                  |
 | update_source        | varchar(255) | Source of inventory update              |
-| agent_version        | varchar(255) | Inventory agent verrsion                |
+| agent_version        | varchar(255) | Inventory agent version                 |
 | physical_swicth_id   | int unsigned | ID related to the physical switch       |
 
-
+The "vendor", "product" and "version" fields are not used and therefore are absent of the app.  
 
 #### Storage infrastructures
 
@@ -1411,24 +1414,24 @@ Storage infrastructures are physical media or data storage networks: network att
 
 Table *storage_devices* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of storage infrastructure |
-| description          | longtext     | Description of the storage infrastructure |
-| site_id              | int unsigned | Reference to the site |
-| building_id          | int unsigned | Reference to building / room |
-| bay_id               | int unsigned | Reference to the rack |
-| address_ip           | varchar(255) | IP address of storage infrastructure |
-| vendor               | varchar(255) | Vendor / editor for CPE search          |
-| product              | varchar(255) | Product of an editor for CPE search     |
-| version              | varchar(255) | Version of a product for CPE search     |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                                       |
+|:---------------------|:-------------|:--------------------------------------------------|
+| id                   | int unsigned | auto_increment                                    |
+| name                 | varchar(255) | Name of storage infrastructure                    |
+| type                 | varchar(255) | Storage infrastructure type (NAS, SAN, HDD, etc.) |
+| description          | longtext     | Description of the storage infrastructure         |
+| site_id              | int unsigned | Reference to the site                             |
+| building_id          | int unsigned | Reference to building / room                      |
+| bay_id               | int unsigned | Reference to the rack                             |
+| address_ip           | varchar(255) | IP address of storage infrastructure              |
+| vendor               | varchar(255) | Vendor / editor for CPE search                    |
+| product              | varchar(255) | Product of an editor for CPE search               |
+| version              | varchar(255) | Version of a product for CPE search               |
+| created_at           | timestamp    | Date of creation                                  |
+| updated_at           | timestamp    | Date of update                                    |
+| deleted_at           | timestamp    | Date of deletion                                  |
 
-
-The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.
+The "vendor", "product" and "version" fields are not used and therefore are absent of the app.  
 
 #### Peripherals
 
@@ -1436,56 +1439,56 @@ Peripherals are physical components connected to a workstation to add new functi
 
 Table *peripherals* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of peripheral |
-| description          | longtext     | Description of peripheral |
-| type                 | varchar(255) | Type / model of peripheral |
-| icon_id              | int unsigned | Reference to a specific image            |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| bay_id               | int unsigned | Reference to rack |
-| responsible          | varchar(255) | Internal responsible of this equipment  |
-| address_ip           | varchar(255) | IP Adress of the equipment                         |
+| Champ                | Type         | Description                                         |
+|:---------------------|:-------------|:----------------------------------------------------|
+| id                   | int unsigned | auto_increment                                      |
+| name                 | varchar(255) | Name of peripheral                                  |
+| description          | longtext     | Description of peripheral                           |
+| type                 | varchar(255) | Type / model of peripheral                          |
+| icon_id              | int unsigned | Reference to a specific icon                        |
+| site_id              | int unsigned | Reference to site                                   |
+| building_id          | int unsigned | Reference to building / room                        |
+| bay_id               | int unsigned | Reference to rack                                   |
+| responsible          | varchar(255) | Internal responsible of this peripheral             |
+| address_ip           | varchar(255) | IP address of the peripheral                        |
 | domain               | varchar(255) | General domain where it fits to (IT, OT, IOT, etc.) |
-| vendor               | varchar(255) | Vendor / editor for CPE search          |
-| product              | varchar(255) | Product of an editor for CPE search     |
-| version              | varchar(255) | Version of a product for CPE search     |
-| provider_id          | int unsigned | ID related to the provider of this peripheral      |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| vendor               | varchar(255) | Vendor / editor for CPE search                      |
+| product              | varchar(255) | Product of an editor for CPE search                 |
+| version              | varchar(255) | Version of a product for CPE search                 |
+| provider_id          | int unsigned | ID related to the provider of this peripheral       |
+| created_at           | timestamp    | Date of creation                                    |
+| updated_at           | timestamp    | Date of update                                      |
+| deleted_at           | timestamp    | Date of deletion                                    |
 
-Data model export references applications using a device.  
-In the application, a device can be attached to an application from a peripheral object.
+The data model export lists applications using a peripheral.  
 
+In the app, an application can be linked to a peripheral from a peripheral object.  
 
 #### Phones
 
-Fixed and mobile phones belonging to the organization.
+Landlines and mobile phones belonging to the organization.
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of telephone |
-| description          | longtext     | Description of telephone |
-| type                 | varchar(255) | Type / model of telephone |
-| vendor               | varchar(255) | Vendor / editor for CPE search          |
-| product              | varchar(255) | Product of an editor for CPE search     |
-| version              | varchar(255) | Version of a product for CPE search     |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| physical_switch_id   | int unsigned | ID related to the physical switch  |
-| address_ip           | varchar(255) | IP Adress of the phone               |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                         |
+|:---------------------|:-------------|:------------------------------------|
+| id                   | int unsigned | auto_increment                      |
+| name                 | varchar(255) | Name of telephone                   |
+| description          | longtext     | Description of telephone            |
+| type                 | varchar(255) | Type / model of telephone           |
+| vendor               | varchar(255) | Vendor / editor for CPE search      |
+| product              | varchar(255) | Product of an editor for CPE search |
+| version              | varchar(255) | Version of a product for CPE search |
+| site_id              | int unsigned | Reference to site                   |
+| building_id          | int unsigned | Reference to building / room        |
+| physical_switch_id   | int unsigned | ID related to the physical switch   |
+| address_ip           | varchar(255) | IP address of the phone             |
+| created_at           | timestamp    | Date of creation                    |
+| updated_at           | timestamp    | Date of update                      |
+| deleted_at           | timestamp    | Date of deletion                    |
 
+The "vendor", "product" and "version" fields are not used and therefore are absent in the app.  
 
-The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.
-
-
+The filed "physical_switch_id" is not used and therefore is absent in the app. However, a phone object can be linked
+with a network switch (either physical or logical) through a physical link object.  
 
 #### Physical switches
 
@@ -1493,29 +1496,28 @@ Physical switches are physical components that manage connections between differ
 
 Table *physical_switches* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of physical switch |
-| description          | longtext     | Description of physical switch |
-| type                 | varchar(255) | Type / model of physical switch |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| bay_id               | int unsigned | Reference to rack |
-| vendor               | varchar(255) | Vendor / editor for CPE search          |
-| product              | varchar(255) | Product of an editor for CPE search     |
-| version              | varchar(255) | Version of a product for CPE search     |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                         |
+|:---------------------|:-------------|:------------------------------------|
+| id                   | int unsigned | auto_increment                      |
+| name                 | varchar(255) | Name of physical switch             |
+| description          | longtext     | Description of physical switch      |
+| type                 | varchar(255) | Type / model of physical switch     |
+| site_id              | int unsigned | Reference to site                   |
+| building_id          | int unsigned | Reference to building / room        |
+| bay_id               | int unsigned | Reference to rack                   |
+| vendor               | varchar(255) | Vendor / editor for CPE search      |
+| product              | varchar(255) | Product of an editor for CPE search |
+| version              | varchar(255) | Version of a product for CPE search |
+| created_at           | timestamp    | Date of creation                    |
+| updated_at           | timestamp    | Date of update                      |
+| deleted_at           | timestamp    | Date of deletion                    |
 
 
-The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.
+The "vendor", "product" and "version" fields are not used and therefore are absent in the app.  
 
-'data model export references logical switches attached to a physical switch.  
-In the application, a physical switch can be attached to a logical switch (denoted as "Network Switches")
-from these two types of objects.
+The data model export lists logical network switches linked with a physical switch.  
 
+In the app, a physical switch can be linked with a logical network switch from these two objects.  
 
 #### Physical routers
 
@@ -1523,27 +1525,28 @@ Physical routers are physical components that manage connections between differe
 
 Table *physical_routers* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of physical router |
-| description          | longtext     | Description of physical router |
-| type                 | varchar(255) | Type / model of physical router |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| bay_id               | int unsigned | Reference to rack |
-| vendor               | varchar(255) | Vendor / editor for CPE search          |
-| product              | varchar(255) | Product of an editor for CPE search     |
-| version              | varchar(255) | Version of a product for CPE search     |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                         |
+|:---------------------|:-------------|:------------------------------------|
+| id                   | int unsigned | auto_increment                      |
+| name                 | varchar(255) | Name of physical router             |
+| description          | longtext     | Description of physical router      |
+| type                 | varchar(255) | Type / model of physical router     |
+| site_id              | int unsigned | Reference to site                   |
+| building_id          | int unsigned | Reference to building / room        |
+| bay_id               | int unsigned | Reference to rack                   |
+| vendor               | varchar(255) | Vendor / editor for CPE search      |
+| product              | varchar(255) | Product of an editor for CPE search |
+| version              | varchar(255) | Version of a product for CPE search |
+| created_at           | timestamp    | Date of creation                    |
+| updated_at           | timestamp    | Date of update                      |
+| deleted_at           | timestamp    | Date of deletion                    |
 
-The "vendor", "product" and "version" fields are not used at the moment and are therefore missing from the application.
+The "vendor", "product" and "version" fields are not used and therefore are absent in the app.
 
-Exporting the data model references logical routers and VLANs attached to a physical router.  
-In the application, a physical router can be attached to a logical router (denoted as "Routers" from these two types of objects.  
-A VLAN can be attached to a physical router from a physical router object.
+The data model export lists logical routers and VLANs linked to a physical router.  
+
+In the app, a physical router can be linked to a logical router (denoted as "Routers") from these two types of objects.  
+A VLAN can be linked to a physical router from a physical router object.  
 
 #### WiFi terminals
 
@@ -1551,47 +1554,49 @@ WiFi hotspots are hardware devices that enable access to the WiFi wireless netwo
 
 Table *wifi_terminals* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of WiFi hotspot |
-| description          | longtext     | Description of WiFi hotspot |
-| type                 | varchar(255) | Type / model of WiFi hotspot |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| address_ip           | varchar(255) | IP Adress of the wifi terminal          |
-| vendor               | varchar(255) | Vendor / editor for CPE search          |
-| product              | varchar(255) | Product of an editor for CPE search     |
-| version              | varchar(255) | Version of a product for CPE search     |
-| created_at           | timestamp    | Date of creation |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                         |
+|:---------------------|:-------------|:------------------------------------|
+| id                   | int unsigned | auto_increment                      |
+| name                 | varchar(255) | Name of WiFi hotspot                |
+| description          | longtext     | Description of WiFi hotspot         |
+| type                 | varchar(255) | Type / model of WiFi hotspot        |
+| site_id              | int unsigned | Reference to site                   |
+| building_id          | int unsigned | Reference to building / room        |
+| address_ip           | varchar(255) | IP address of the wifi terminal     |
+| vendor               | varchar(255) | Vendor / editor for CPE search      |
+| product              | varchar(255) | Product of an editor for CPE search |
+| version              | varchar(255) | Version of a product for CPE search |
+| created_at           | timestamp    | Date of creation                    |
+| created_at           | timestamp    | Date of creation                    |
+| updated_at           | timestamp    | Date of update                      |
+| deleted_at           | timestamp    | Date of deletion                    |
 
-#### Physical security equipment
+#### Physical security device
 
-Physical security equipment includes components for network supervision, incident detection, equipment protection and information system security.
+Physical security device includes components for network supervision, incident detection, equipment protection and information system security.
 
-Physical security equipment includes temperature sensors, cameras, security doors, etc.
+Physical security device includes temperature sensors, cameras, security doors, etc.
 
 Table *physical_security_devices* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of security equipment |
-| icon_id              | int unsigned | Reference to a specific image            |
-| description          | longtext     | Description of security equipment  |
-| type                 | varchar(255) | Type / model of security equipment  |
-| site_id              | int unsigned | Reference to site |
-| building_id          | int unsigned | Reference to building / room |
-| bay_id               | int unsigned | Reference to rack |
-| address_ip           | varchar(255) | IP Adress        |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| Champ                | Type         | Description                     |
+|:---------------------|:-------------|:--------------------------------|
+| id                   | int unsigned | auto_increment                  |
+| name                 | varchar(255) | Name of security device         |
+| icon_id              | int unsigned | Reference to a specific icon    |
+| description          | longtext     | Description of security device  |
+| type                 | varchar(255) | Type / model of security device |
+| site_id              | int unsigned | Reference to site               |
+| building_id          | int unsigned | Reference to building / room    |
+| bay_id               | int unsigned | Reference to rack               |
+| address_ip           | varchar(255) | IP sddress                      |
+| created_at           | timestamp    | Date of creation                |
+| updated_at           | timestamp    | Date of update                  |
+| deleted_at           | timestamp    | Date of deletion                |
 
+The data model export lists logical security devices linked to a physical security device.  
 
+In the app, a logical security device can be linked to a physical security device from these two objects.  
 
 #### Physical links
 
@@ -1606,32 +1611,29 @@ Table *physical_links* :
 |:----------------|:-------------|:----------------------------------------|
 | id              | int unsigned | auto_increment                          |
 | *device*_src_id | int unsigned | Source                                  |
-| src_id          | varchar(255) | Physical port of the source             |
+| src_id          | varchar(255) | Physical port of the source device      |
 | *device*_dst_id | int unsigned | Destination                             |
-| dst_port        | varchar(255) | Physical port of the destination        |
+| dst_port        | varchar(255) | Physical port of the destination device |
 | created_at      | timestamp    | Date of creation                        |
 | updated_at      | timestamp    | Date of update                          |
-| deleted_at      | timestamp    | Date of deletion                      |
+| deleted_at      | timestamp    | Date of deletion                        |
 
-Les ***devices***** sources or destination might be :
+Source and destination devices can be:
 
-| Actif                            | Source  | Destination |
-|:---------------------------------|:-------:|:-----------:|
-| Peripheral                       | ✅      | ✅          |
-| Phonehone                        | ✅      | ✅          |
-| Physical Router                  | ✅      | ✅          |
-| Physical Security equipment      | ✅      | ✅          |
-| Physical server                  | ✅      | ✅          |
-| Physical switch                  | ✅      | ✅          |
-| Storage infrastructure           | ✅      | ✅          |
-| Wifi terminal                    | ✅      | ✅          |
-| Workstation                      | ✅      | ✅          |
-| Logical server                   | ✅      | ✅          |
-| Logical switch                   | ✅      | ✅          |
-| Logical router                   | ✅      | ✅          |
-
-
-
+| *device*                 | Source  | Destination |
+|:-------------------------|:-------:|:-----------:|
+| Peripheral device        | ✅      | ✅          |
+| Phone                    | ✅      | ✅          |
+| Physical router          | ✅      | ✅          |
+| Physical security device | ✅      | ✅          |
+| Physical server          | ✅      | ✅          |
+| Physical switch          | ✅      | ✅          |
+| Storage infrastructure   | ✅      | ✅          |
+| Wifi terminal            | ✅      | ✅          |
+| Workstation              | ✅      | ✅          |
+| Logical server           | ✅      | ✅          |
+| Logical switch           | ✅      | ✅          |
+| Logical router           | ✅      | ✅          |
 
 #### WAN
 
@@ -1641,12 +1643,16 @@ Table *wans* :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of WAN |
+| id                   | int unsigned | auto_increment   |
+| name                 | varchar(255) | Name of WAN      |
 | created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
+| updated_at           | timestamp    | Date of update   |
 | deleted_at           | timestamp    | Date of deletion |
 
+The data model export lists LANs and MANs linked to a WAN.  
+
+In the app, a LAN can be linked to a WAN from a WAN object.  
+A MAN can be linked to a WAN from a WAN object.  
 
 #### MAN
 
@@ -1656,11 +1662,16 @@ Table *mans* :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of MAN |
-| created_at           | timestamp    | Date of creation|
-| updated_at           | timestamp    | Date of update |
+| id                   | int unsigned | auto_increment   |
+| name                 | varchar(255) | Name of MAN      |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update   |
 | deleted_at           | timestamp    | Date of deletion |
+
+The data model export lists WANs and LANs linked to a MAN.  
+
+In the app, a WAN can be linked to a MAN from a WAN object.  
+A LAN can be linked to a MAN from a MAN object.  
 
 #### LAN
 
@@ -1668,11 +1679,16 @@ LANs (Local Area Networks) are computer networks linking equipment over a small 
 
 Table *lans* :
 
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Name of LAN |
+| Champ                | Type         | Description        |
+|:---------------------|:-------------|:-------------------|
+| id                   | int unsigned | auto_increment     |
+| name                 | varchar(255) | Name of LAN        |
 | description          | longtext     | Description of LAN |
-| created_at           | timestamp    | Date of creation |
-| updated_at           | timestamp    | Date of update |
-| deleted_at           | timestamp    | Date of deletion |
+| created_at           | timestamp    | Date of creation   |
+| updated_at           | timestamp    | Date of update     |
+| deleted_at           | timestamp    | Date of deletion   |
+
+The data model export lists MANs and WANs linked to a LAN.  
+
+In the app, a MAN can be linked to a LAN from a MAN object.  
+A WAN can be linked to a LAN from a WAN object.  
