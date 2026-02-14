@@ -104,7 +104,7 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#filtres-de-dates">Filtres de dates</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#soft-deletes">Soft Deletes</a>
+    <li class="toctree-l4"><a class="reference internal" href="#elements-supprimes">Elements supprimés</a>
     </li>
         </ul>
     </li>
@@ -112,7 +112,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#inclusion-de-relations-eager-loading">Inclusion de relations (Eager Loading)</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#exemples-complets">Exemples complets</a>
+    <li class="toctree-l3"><a class="reference internal" href="#cas-dusage">Cas d'usage</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#filtres-simples">Filtres simples</a>
     </li>
@@ -134,13 +134,17 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#liaison-entre-les-objets">Liaison entre les objets</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
+    <li class="toctree-l2"><a class="reference internal" href="#exemples-de-filtres">Exemples de filtres</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
+    <li class="toctree-l3"><a class="reference internal" href="#php">PHP</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#authentification">Authentification</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#liste-des-activites-avec-filtres">Liste des activités avec filtres</a>
+    <li class="toctree-l4"><a class="reference internal" href="#liste-des-activites-avec-filtres">Liste des activités avec filtres</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#recuperer-une-activite-avec-relations">Récupérer une activité avec relations</a>
+    <li class="toctree-l4"><a class="reference internal" href="#recuperer-une-activite-avec-relations">Récupérer une activité avec relations</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#python">Python</a>
     </li>
@@ -192,7 +196,7 @@
                 <ul>
 <li class="i18n-link i18n-link-found i18n-link-en"><a href="../apifilters/">English</a></li>
 </ul>
-<h2 id="api-avance-filtres">API avancé (filtres)</h2>
+<h2 id="api-avancee-filtres">API avancée (filtres)</h2>
 <p>Ce chapitre vient en complément du chapitre <a href="../api.fr/">API</a>.</p>
 <h3 id="filtrage-tri-et-inclusion-de-relations">Filtrage, tri et inclusion de relations</h3>
 <p>Les endpoints de liste (<code>GET /api/objets</code>) supportent un système avancé de filtres, tri et inclusion de relations via
@@ -369,7 +373,7 @@ filter[&lt;champ&gt;_&lt;operateur&gt;]=&lt;valeur&gt;        # Filtre avec opé
 </tr>
 </tbody>
 </table>
-<h5 id="soft-deletes">Soft Deletes</h5>
+<h5 id="elements-supprimes">Elements supprimés</h5>
 <table>
 <thead>
 <tr>
@@ -411,7 +415,7 @@ sort=-&lt;champ&gt;       # Tri descendant
 <li><code>impacts</code> : Impacts liés</li>
 </ul>
 <p>Exemple : <code>include=processes,operations</code></p>
-<h4 id="exemples-complets">Exemples complets</h4>
+<h4 id="cas-dusage">Cas d'usage</h4>
 <h5 id="filtres-simples">Filtres simples</h5>
 <pre><code class="language-http"># Activités dont le nom contient &quot;sauvegarde&quot;
 GET /api/activities?filter[name]=sauvegarde
@@ -530,9 +534,10 @@ nous suivons ces étapes :</p>
 <p>Les noms de toutes les relations disponibles sont automatiquement détectés depuis le modèle. Les relations courantes
 incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <code>entities</code>, <code>applications</code>, <code>informations</code>, <code>processes</code>, <code>databases</code>,
 <code>logical_servers</code>, <code>modules</code>, <code>operations</code>, <code>certificates</code>, <code>peripherals</code>, <code>physical_servers</code>, etc.</p>
-<h3 id="exemples">Exemples</h3>
+<h3 id="exemples-de-filtres">Exemples de filtres</h3>
 <p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
-<h4 id="authentification">Authentification</h4>
+<h4 id="php">PHP</h4>
+<h5 id="authentification">Authentification</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -572,7 +577,7 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
 
     var_dump($response);
 </code></pre>
-<h4 id="liste-des-activites-avec-filtres">Liste des activités avec filtres</h4>
+<h5 id="liste-des-activites-avec-filtres">Liste des activités avec filtres</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -607,7 +612,7 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
 
     var_dump($response);
 </code></pre>
-<h4 id="recuperer-une-activite-avec-relations">Récupérer une activité avec relations</h4>
+<h5 id="recuperer-une-activite-avec-relations">Récupérer une activité avec relations</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 

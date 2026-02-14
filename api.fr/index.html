@@ -94,13 +94,17 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
+    <li class="toctree-l3"><a class="reference internal" href="#php">PHP</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#authentification">Authentification</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#liste-des-activites-avec-filtres">Liste des activités avec filtres</a>
+    <li class="toctree-l4"><a class="reference internal" href="#liste-des-utilisateurs">Liste des utilisateurs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#recuperer-une-activite-avec-relations">Récupérer une activité avec relations</a>
+    <li class="toctree-l4"><a class="reference internal" href="#recuperer-un-utilisateur">Récupérer un utilisateur</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</a>
+    <li class="toctree-l4"><a class="reference internal" href="#mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#python">Python</a>
     </li>
@@ -317,7 +321,7 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 </tbody>
 </table>
 <p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
-<p>Pour voir les fonctions avancées de filtres : voir la page <a href="../apifilters.fr/">API Avancé (filtres)</a></p>
+<p>Pour voir les fonctions avancées de filtres : voir la page <a href="../apifilters.fr/">API avancée (filtres)</a></p>
 <h3 id="droits-dacces">Droits d'accès</h3>
 <p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accéder aux API.
 Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
@@ -331,7 +335,7 @@ nous suivons ces étapes :</p>
 <ul>
 <li>Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</li>
 </ul>
-<pre><code class="language-json">{
+<pre><code>{
   &quot;id&quot;: 201,
   &quot;name&quot;: &quot;app1&quot;,
   &quot;description&quot;: &quot;desc1&quot;
@@ -346,21 +350,18 @@ nous suivons ces étapes :</p>
 <li>Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons
   ajouter :</li>
 </ul>
-<pre><code class="language-json">{
+<pre><code>{
   &quot;id&quot;: 101,
   &quot;name&quot;: &quot;processus&quot;,
-  &quot;applications&quot;: [
-    201,
-    202
-  ]
+  &quot;application_id[]&quot;: [201, 202]
 }
 </code></pre>
-<p>Les noms de toutes les relations disponibles sont automatiquement détectés depuis le modèle. Les relations courantes
-incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <code>entities</code>, <code>applications</code>, <code>informations</code>, <code>processes</code>, <code>databases</code>,
-<code>logical_servers</code>, <code>modules</code>, <code>operations</code>, <code>certificates</code>, <code>peripherals</code>, <code>physical_servers</code>, etc.</p>
+<p>Les noms de tous les champs supplémentaires
+sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].</p>
 <h3 id="exemples">Exemples</h3>
-<p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
-<h4 id="authentification">Authentification</h4>
+<p>Voici quelques exemples d'utilisation de l'API avec différents langages :</p>
+<h4 id="php">PHP</h4>
+<h5 id="authentification">Authentification</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -391,39 +392,60 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
     } else {
         if ($info['http_code'] == 200) {
             $access_token = json_decode($response)-&gt;access_token;
+
         } else {
-            set_error_handler(&quot;Login to api failed status 403&quot;);
+            set_error_handler(&quot;Login to api faild status 403&quot;);
             error_log($responseInfo['http_code']);
             error_log(&quot;No login api status 403&quot;);
+
         }
     }
 
     var_dump($response);
 </code></pre>
-<h4 id="liste-des-activites-avec-filtres">Liste des activités avec filtres</h4>
+<h5 id="liste-des-utilisateurs">Liste des utilisateurs</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
-    // Construire l'URL avec les paramètres de filtrage
-    $filters = http_build_query([
-        'filter' =&gt; [
-            'recovery_time_objective_gte' =&gt; 8,
-            'name' =&gt; 'GDPR'
-        ],
-        'sort' =&gt; '-created_at',
-        'include' =&gt; 'processes,operations'
-    ]);
-
     curl_setopt_array($curl, array(
-        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/activities?&quot; . $filters,
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users&quot;,
         CURLOPT_RETURNTRANSFER =&gt; true,
         CURLOPT_MAXREDIRS =&gt; 10,
         CURLOPT_TIMEOUT =&gt; 30,
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
+        CURLOPT_POSTFIELDS =&gt; null, // here you can send parameters
         CURLOPT_HTTPHEADER =&gt; array(
             &quot;accept: application/json&quot;,
-            &quot;Authorization: Bearer &quot; . $access_token,
+            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
+            &quot;cache-control: no-cache&quot;,
+            &quot;content-type: application/json&quot;,
+        ),
+    ));
+
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    var_dump($response);
+
+</code></pre>
+<h5 id="recuperer-un-utilisateur">Récupérer un utilisateur</h5>
+<pre><code class="language-php">&lt;?php
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users/1&quot;,
+        CURLOPT_RETURNTRANSFER =&gt; true,
+        CURLOPT_MAXREDIRS =&gt; 10,
+        CURLOPT_TIMEOUT =&gt; 30,
+        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
+        CURLOPT_POSTFIELDS =&gt; null, // here you can send parameters
+        CURLOPT_HTTPHEADER =&gt; array(
+            &quot;accept: application/json&quot;,
+            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
             &quot;cache-control: no-cache&quot;,
             &quot;content-type: application/json&quot;,
         ),
@@ -435,32 +457,7 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
 
     var_dump($response);
 </code></pre>
-<h4 id="recuperer-une-activite-avec-relations">Récupérer une activité avec relations</h4>
-<pre><code class="language-php">&lt;?php
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/activities/1?include=processes,operations&quot;,
-        CURLOPT_RETURNTRANSFER =&gt; true,
-        CURLOPT_MAXREDIRS =&gt; 10,
-        CURLOPT_TIMEOUT =&gt; 30,
-        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
-        CURLOPT_HTTPHEADER =&gt; array(
-            &quot;accept: application/json&quot;,
-            &quot;Authorization: Bearer &quot; . $access_token,
-            &quot;cache-control: no-cache&quot;,
-            &quot;content-type: application/json&quot;,
-        ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
-
-    var_dump($response);
-</code></pre>
-<h4 id="mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</h4>
+<h5 id="mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</h5>
 <pre><code class="language-php">&lt;?php
    $curl = curl_init();
 
@@ -470,7 +467,6 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
         CURLOPT_MAXREDIRS =&gt; 10,
         CURLOPT_TIMEOUT =&gt; 30,
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
-        CURLOPT_POST =&gt; true,
         CURLOPT_CUSTOMREQUEST =&gt; &quot;PUT&quot;,
         CURLOPT_POSTFIELDS =&gt; http_build_query(
             array(
@@ -485,6 +481,7 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
             &quot;accept: application/json&quot;,
             &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
             &quot;cache-control: no-cache&quot;,
+            &quot;content-type: application/x-www-form-urlencoded&quot;,
         ),
     ));
 
@@ -495,7 +492,7 @@ incluent : <code>actors</code>, <code>tasks</code>, <code>activities</code>, <co
     var_dump($response);
 </code></pre>
 <h4 id="python">Python</h4>
-<p>Voici un exemple d'utilisation de l'API en Python avec filtres avancés</p>
+<p>Voici un exemple d'utilisation de l'API en Python</p>
 <pre><code class="language-python">#!/usr/bin/python3
 
 import requests
@@ -508,64 +505,45 @@ vheaders['cache-control'] = 'no-cache'
 print(&quot;Login&quot;)
 response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;,
     headers=vheaders,
-    data={'login':'admin@admin.com', 'password':'password'})
+    data= {'login':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
 vheaders['Authorization'] = &quot;Bearer &quot; + response.json()['access_token']
 
-# Liste avec filtres et tri
-print(&quot;Get workstations with filters&quot;)
-params = {
-    'filter[name]': 'laptop',
-    'sort': '-created_at'
-}
-response = requests.get(&quot;http://127.0.0.1:8000/api/workstations&quot;, 
-    headers=vheaders, 
-    params=params)
-print(response.json())
+print(&quot;Get workstations&quot;)
+response = requests.get(&quot;http://127.0.0.1:8000/api/workstations&quot;, headers=vheaders)
+data=response.json()
+print(data)
 print(response.status_code)
 
-# Récupération avec relations
-print(&quot;Get activity with relations&quot;)
-params = {
-    'include': 'processes,operations'
-}
-response = requests.get(&quot;http://127.0.0.1:8000/api/activities/1&quot;,
-    headers=vheaders,
-    params=params)
-print(response.json())
 </code></pre>
 <h4 id="bash">bash</h4>
 <p>Voici un exemple d'utilisation de l'API en ligne de commande avec <a href="https://curl.se/docs/manpage.html">CURL</a>
 et <a href="https://stedolan.github.io/jq/">JQ</a></p>
-<pre><code class="language-bash">#!/usr/bin/bash
+<pre><code>#!/usr/bin/bash
 
 API_URL=http://127.0.0.1:8000/api
 OBJECT=applications
 OBJECT_ID=45
 
-# Identifiants valides
+# valid login and password
+
 data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
-# Obtenir un token après connexion
+# Get a token after correct login
+
 TOKEN=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; ${API_URL}/login | jq -r .access_token)
 
-# Liste avec filtres
-echo &quot;Liste des applications avec filtres...&quot;
-curl -s -X GET &quot;${API_URL}/${OBJECT}?filter[name]=CRM&amp;sort=-created_at&quot; \
-  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
-  -H &quot;Accept: application/json&quot; | jq .
-
-# Récupération avec relations
-echo &quot;Récupération d'un objet avec relations...&quot;
-RESPONSE=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}?include=databases,processes&quot; \
-  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
-  -H &quot;Accept: application/json&quot;)
+# Récupération de l'objet
+RESPONSE=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
+ -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+ -H &quot;Accept: application/json&quot;)
 
 echo &quot;Objet récupéré: ${RESPONSE}&quot;
 
-# Mise à jour
-RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -c '.')
+# Mise à jour d'une valeur avec une requête PUT
+
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -c '.data')
 RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -r '.activities=[1]')
 
 echo &quot;Objet modifié: ${RESPONSE}&quot;
@@ -576,45 +554,46 @@ curl -s -X PUT &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
   -H &quot;cache-control: no-cache&quot; \
   -d &quot;$RESPONSE&quot;
 
-# Vérification
+# Vérification de la mise à jour
+
 UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
   -H &quot;Authorization: Bearer ${TOKEN}&quot; \
   -H &quot;Accept: application/json&quot;)
 
 echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
+
 </code></pre>
 <h4 id="powershell">Powershell</h4>
-<p>Le script PowerShell ci-dessous montre comment s'authentifier auprès de l'API et utiliser les filtres avancés.</p>
+<p>Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs
+logiques.</p>
 <h5 id="etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</h5>
-<pre><code class="language-powershell"># Définir l'URL d'authentification et les identifiants
+<pre><code class="language-powershell"># Définir l’URL d’authentification et les identifiants
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
 $loginBody = @{
     login = &quot;admin@admin.com&quot;
     password = &quot;password&quot;
 }
 
-# Envoyer la requête d'authentification
+# Envoyer la requête d’authentification
 try {
     $loginResponse = Invoke-RestMethod -Uri $loginUri -Method Post -Body $loginBody -ContentType &quot;application/x-www-form-urlencoded&quot;
     $token = $loginResponse.access_token
-    Write-Host &quot;Jeton d'accès récupéré avec succès.&quot;
+    Write-Host &quot;Jeton d’accès récupéré avec succès.&quot;
 } catch {
-    Write-Error &quot;Échec de l'authentification : $_&quot;
+    Write-Error &quot;Échec de l’authentification : $_&quot;
     return
 }
 </code></pre>
 <h5 id="etape-2-utilisation-du-jeton-pour-interroger-les-serveurs-logiques">Étape 2 — Utilisation du jeton pour interroger les serveurs logiques</h5>
-<pre><code class="language-powershell"># Définir les en-têtes
+<pre><code class="language-powershell"># Définir l’endpoint et les en-têtes d’autorisation
+$endPoint = &quot;logical-servers&quot;
+$apiUri = &quot;https://127.0.0.1:8000/api/$endPoint&quot;
 $headers = @{
     'Authorization' = &quot;Bearer $token&quot;
     'Accept'        = 'application/json'
 }
 
-# Liste avec filtres
-$endPoint = &quot;logical-servers&quot;
-$filters = &quot;filter[operating_system]=Linux&amp;sort=-created_at&quot;
-$apiUri = &quot;http://127.0.0.1:8000/api/$endPoint?$filters&quot;
-
+# Envoyer la requête GET
 try {
     $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
     $servers | Format-Table id, name, operating_system, description
