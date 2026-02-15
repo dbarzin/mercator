@@ -5,10 +5,6 @@
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=NETWORK_{{$network->id}}">
-        {{ trans('global.explore') }}
-    </a>
-
     @can('network_edit')
         <a class="btn btn-info" href="{{ route('admin.networks.edit', $network->id) }}">
             {{ trans('global.edit') }}

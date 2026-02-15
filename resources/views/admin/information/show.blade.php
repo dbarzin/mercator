@@ -6,7 +6,7 @@
             {{ trans('global.back_to_list') }}
         </a>
 
-        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=INFO_{{$information->id}}">
+        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$information->getUID()}}">
             {{ trans('global.explore') }}
         </a>
 

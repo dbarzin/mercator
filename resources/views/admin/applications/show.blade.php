@@ -5,7 +5,7 @@
             <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=APP_{{$application->id}}">
+            <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$application->getUID()}}">
                 {{ trans('global.explore') }}
             </a>
             @if(auth()->user()->can('m_application_edit'))

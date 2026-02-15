@@ -4,6 +4,11 @@
     <a class="btn btn-default" href="{{ route('admin.mans.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
+
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$man->getUID()}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('man_edit')
         <a class="btn btn-info" href="{{ route('admin.mans.edit', $man->id) }}">
             {{ trans('global.edit') }}

@@ -1,3 +1,8 @@
+@props([
+    'wan',
+    'withLink' => false,
+])
+
 <table class="table table-bordered table-striped table-report" id="{{ $wan->getUID() }}">
     <tbody>
         <tr>
@@ -5,7 +10,11 @@
                 {{ trans('cruds.wan.fields.name') }}
             </th>
             <td>
-                {{ $wan->name }}
+            @if($withLink)
+            <a href="{{ route('admin.wans.show', $wan) }}">{{ $wan->name }}</a>
+            @else
+            {{ $wan->name }}
+            @endif
             </td>
         </tr>
         <tr>
@@ -13,8 +22,9 @@
                 {{ trans('cruds.wan.fields.mans') }}
             </th>
             <td>
-                @foreach($wan->mans as $key => $mans)
-                    <span class="label label-info">{{ $mans->name }}</span>
+                @foreach($wan->mans as $mans)
+                <a href="{{ route('admin.mans.show', $mans) }}">{{ $mans->name }}</a>
+                @if(!$loop->last), @endif
                 @endforeach
             </td>
         </tr>
@@ -23,8 +33,9 @@
                 {{ trans('cruds.wan.fields.lans') }}
             </th>
             <td>
-                @foreach($wan->lans as $key => $lans)
-                    <span class="label label-info">{{ $lans->name }}</span>
+                @foreach($wan->lans as $lan)
+                <a href="{{ route('admin.lans.show', $lan) }}">{{ $lan->name }}</a>
+                @if(!$loop->last), @endif
                 @endforeach
             </td>
         </tr>

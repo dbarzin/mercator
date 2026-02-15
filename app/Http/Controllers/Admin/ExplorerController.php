@@ -2,213 +2,323 @@
 
 namespace App\Http\Controllers\Admin;
 
-// Models
 use App\Http\Controllers\Controller;
 use Gate;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\Activity;
+use Mercator\Core\Models\Actor;
+use Mercator\Core\Models\Annuaire;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\ApplicationModule;
+use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\Bay;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Certificate;
+use Mercator\Core\Models\Cluster;
+use Mercator\Core\Models\Container;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\DomaineAd;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\ExternalConnectedEntity;
+use Mercator\Core\Models\ForestAd;
+use Mercator\Core\Models\Gateway;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\Lan;
 use Mercator\Core\Models\LogicalFlow;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MacroProcessus;
+use Mercator\Core\Models\Man;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Network;
+use Mercator\Core\Models\NetworkSwitch;
+use Mercator\Core\Models\Operation;
+use Mercator\Core\Models\Peripheral;
+use Mercator\Core\Models\Phone;
 use Mercator\Core\Models\PhysicalLink;
+use Mercator\Core\Models\PhysicalRouter;
+use Mercator\Core\Models\PhysicalSecurityDevice;
+use Mercator\Core\Models\PhysicalServer;
+use Mercator\Core\Models\PhysicalSwitch;
+use Mercator\Core\Models\Process;
+use Mercator\Core\Models\Relation;
+use Mercator\Core\Models\Router;
+use Mercator\Core\Models\Site;
+use Mercator\Core\Models\StorageDevice;
 use Mercator\Core\Models\Subnetwork;
+use Mercator\Core\Models\Task;
+use Mercator\Core\Models\Vlan;
+use Mercator\Core\Models\Wan;
+use Mercator\Core\Models\WifiTerminal;
+use Mercator\Core\Models\Workstation;
+use Mercator\Core\Models\ZoneAdmin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExplorerController extends Controller
 {
+    private array $nodes = [];
+    private array $edges = [];
+
+    // Shared objects
+    private Collection $subnetworks;
+    private Collection $logicalServers;
+    private Collection $workstations;
+    private Collection $peripherals;
+
     public function explore(Request $request)
+    {
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Vue optimisée - pas de données, chargement AJAX
+        return view('admin.reports.explore');
+    }
+
+    /**
+     * API endpoint pour récupérer les données du graphe en JSON
+     */
+    public function getGraphData(Request $request)
     {
         abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         [$nodes, $edges] = $this->getData();
 
-        return view('admin.reports.explore', compact('nodes', 'edges'));
+        return response()->json([
+            'nodes' => $nodes,
+            'edges' => $edges,
+        ], 200, [], JSON_UNESCAPED_UNICODE);
     }
 
-    // TODO : return a JSON in place of nodes[] and edges[]
-    // TODO : split me in several private functions by views
     /**
      * Build node and edge collections representing the system graph across all views.
      *
-     * The returned nodes represent entities (sites, devices, applications, processes, etc.) annotated with view level and visual metadata.
-     * Each node is an associative array with keys: `vue`, `id`, `label`, `image`, `type` and optionally `title`.
-     * Each edge is an associative array with keys: `name`, `bidirectional`, `from`, `to`, `type`.
-     *
-     * @return array An array with two elements: `[0 => array $nodes, 1 => array $edges]` where `$nodes` is the list of node arrays and `$edges` is the list of edge arrays.
+     * @return array [nodes, edges]
      */
     public function getData(): array
     {
-        $nodes = [];
-        $edges = [];
+        $this->nodes = [];
+        $this->edges = [];
+        $this->subnetworks = Subnetwork::all();
 
-        // Get all subnetworks
-        $subnetworks = Subnetwork::all();
+        $this->buildPhysicalView();
+        $this->buildLogicalView();
+        $this->buildApplicationView();
+        $this->buildAdministrativeView();
+        $this->buildProcessView();
+        $this->buildEcosystemView();
 
-        // ---------------------------------------------------
-        // Physical view - 6
-        // ---------------------------------------------------
-        // SITES
-        $sites = DB::table('sites')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
+        return [$this->nodes, $this->edges];
+    }
+
+    /**
+     * Build Physical view (view 6) - Infrastructure physique
+     */
+    private function buildPhysicalView(): void
+    {
+        $this->buildSites();
+        $this->buildBuildings();
+        $this->buildBays();
+        $this->buildPhysicalServers();
+        $this->buildPhones();
+        $this->buildStorageDevices();
+        $this->buildWorkstations();
+        $this->buildPeripherals();
+        $this->buildPhysicalSwitches();
+        $this->buildPhysicalRouters();
+        $this->buildPhysicalSecurityDevices();
+        $this->buildWifiTerminals();
+        $this->buildWANs();
+        $this->buildMAN();
+        $this->buildLAN();
+        $this->buildVLAN();
+        $this->buildPhysicalLinks();
+    }
+
+    private function buildSites(): void
+    {
+        $sites = DB::table('sites')
+            ->select('id', 'name', 'icon_id')
+            ->whereNull('deleted_at')
+            ->get();
+
         foreach ($sites as $site) {
             $this->addNode(
-                $nodes,
                 6,
-                $this->formatId('SITE_', $site->id),
+                $this->formatId(Site::$prefix, $site->id),
                 $site->name,
-                $site->icon_id === null ? '/images/site.png' : "/admin/documents/{$site->icon_id}",
+                $this->getIcon($site->icon_id, '/images/site.png'),
                 'sites'
             );
-            // link to build
         }
-        // BUILDINGS
-        $buildings = DB::table('buildings')->select('id', 'name', 'building_id', 'site_id', 'icon_id')->whereNull('deleted_at')->get();
+    }
+
+    private function buildBuildings(): void
+    {
+        $buildings = DB::table('buildings')
+            ->select('id', 'name', 'building_id', 'site_id', 'icon_id')
+            ->whereNull('deleted_at')
+            ->get();
+
         foreach ($buildings as $building) {
             $this->addNode(
-                $nodes,
                 6,
-                $this->formatId('BUILDING_', $building->id),
+                $this->formatId(Building::$prefix, $building->id),
                 $building->name,
-                $building->icon_id === null ? '/images/building.png' : "/admin/documents/{$building->icon_id}",
+                $this->getIcon($building->icon_id, '/images/building.png'),
                 'buildings'
             );
+
             if ($building->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('BUILDING_', $building->id), $this->formatId('BUILDING_', $building->building_id));
+                $this->addLinkEdge(
+                    $this->formatId(Building::$prefix, $building->id),
+                    $this->formatId(Building::$prefix, $building->building_id)
+                );
             } elseif ($building->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('BUILDING_', $building->id), $this->formatId('SITE_', $building->site_id));
+                $this->addLinkEdge(
+                    $this->formatId(Building::$prefix, $building->id),
+                    $this->formatId(Site::$prefix, $building->site_id)
+                );
             }
         }
-        // Bay
-        $bays = DB::table('bays')->select('id', 'name', 'room_id')->whereNull('deleted_at')->get();
+    }
+
+    private function buildBays(): void
+    {
+        $bays = DB::table('bays')
+            ->select('id', 'name', 'room_id')
+            ->whereNull('deleted_at')
+            ->get();
+
         foreach ($bays as $bay) {
-            $this->addNode($nodes, 6, $this->formatId('BAY_', $bay->id), $bay->name, '/images/bay.png', 'bays');
+            $this->addNode(6, $this->formatId(Bay::$prefix, $bay->id), $bay->name, '/images/bay.png', 'bays');
+
             if ($bay->room_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('BAY_', $bay->id), $this->formatId('BUILDING_', $bay->room_id));
+                $this->addLinkEdge(
+                    $this->formatId(Bay::$prefix, $bay->id),
+                    $this->formatId(Building::$prefix, $bay->room_id)
+                );
             }
         }
-        // Physical Server
-        $physicalServers = DB::table('physical_servers')->select('id', 'name', 'icon_id', 'bay_id')->whereNull('deleted_at')->get();
-        foreach ($physicalServers as $physicalServer) {
+    }
+
+    private function buildPhysicalServers(): void
+    {
+        $servers = DB::table('physical_servers')
+            ->select('id', 'name', 'icon_id', 'bay_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($servers as $server) {
             $this->addNode(
-                $nodes,
                 6,
-                $this->formatId('PSERVER_', $physicalServer->id),
-                $physicalServer->name,
-                $physicalServer->icon_id === null ? '/images/server.png' : "/admin/documents/{$physicalServer->icon_id}",
+                $this->formatId(PhysicalServer::$prefix, $server->id),
+                $server->name,
+                $this->getIcon($server->icon_id, '/images/server.png'),
                 'physical-servers'
             );
-            if ($physicalServer->bay_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('BAY_', $physicalServer->bay_id));
+
+            if ($server->bay_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(PhysicalServer::$prefix, $server->id),
+                    $this->formatId(Bay::$prefix, $server->bay_id)
+                );
             }
         }
-        // Workstation
-        $workstations = DB::table('workstations')->select('id', 'name', 'icon_id', 'address_ip', 'building_id', 'site_id')->whereNull('deleted_at')->get();
-        foreach ($workstations as $workstation) {
+    }
+
+    private function buildWorkstations(): void
+    {
+        $this->workstations = DB::table('workstations')
+            ->select('id', 'name', 'icon_id', 'address_ip', 'building_id', 'site_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($this->workstations as $workstation) {
             $this->addNode(
-                $nodes,
                 6,
-                $this->formatId('WORK_', $workstation->id),
+                $this->formatId(Workstation::$prefix, $workstation->id),
                 $workstation->name,
-                $workstation->icon_id === null ? '/images/workstation.png' : "/admin/documents/{$workstation->icon_id}",
+                $this->getIcon($workstation->icon_id, '/images/workstation.png'),
                 'workstations',
                 $workstation->address_ip
             );
-            if ($workstation->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('BUILDING_', $workstation->building_id));
-            } elseif ($workstation->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('SITE_', $workstation->site_id));
-            }
-            foreach ($subnetworks as $subnetwork) {
-                foreach (explode(',', $workstation->address_ip) as $address) {
-                    if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('WORK_', $workstation->id));
-                        break;
-                    }
-                }
-            }
-        }
-        // physical_switches
-        $switches = DB::table('physical_switches')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
-        foreach ($switches as $switch) {
-            $this->addNode($nodes, 6, $this->formatId('SWITCH_', $switch->id), $switch->name, '/images/switch.png', 'physical-switches');
-            if ($switch->bay_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SWITCH_', $switch->id), $this->formatId('BAY_', $switch->bay_id));
-            } elseif ($switch->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SWITCH_', $switch->id), $this->formatId('BUILDING_', $switch->building_id));
-            } elseif ($switch->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SWITCH_', $switch->id), $this->formatId('SITE_', $switch->site_id));
-            }
-        }
 
-        // network_switch_physical_switch
-        $joins = DB::table('network_switch_physical_switch')->select('network_switch_id', 'physical_switch_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('LSWITCH_', $join->network_switch_id), $this->formatId('SWITCH_', $join->physical_switch_id));
-        }
+            $this->linkToLocationOrSite(
+                $this->formatId(Workstation::$prefix, $workstation->id),
+                $workstation->building_id,
+                $workstation->site_id
+            );
 
-        // Physical routers
-        $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
-        foreach ($routers as $router) {
-            $this->addNode($nodes, 6, $this->formatId('PROUTER_', $router->id), $router->name, '/images/router.png', 'physical-routers');
-            if ($router->bay_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BAY_', $router->bay_id));
-            } elseif ($router->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BUILDING_', $router->building_id));
-            } elseif ($router->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('SITE_', $router->site_id));
-            }
+            $this->linkWorkstationToSubnetworks($workstation);
         }
+    }
 
-        // Physical security devices
-        $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
-        foreach ($securityDevices as $securityDevice) {
-            $this->addNode($nodes,
-                6,
-                $this->formatId('PSECURITY_', $securityDevice->id),
-                $securityDevice->name,
-                $securityDevice->icon_id === null ? '/images/security.png' : "/admin/documents/{$securityDevice->icon_id}",
-                'physical-security-devices',
-                $securityDevice->address_ip);
-            if ($securityDevice->bay_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
-            } elseif ($securityDevice->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('BUILDING_', $securityDevice->building_id));
-            } elseif ($securityDevice->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('SITE_', $securityDevice->site_id));
-            }
-            foreach ($subnetworks as $subnetwork) {
-                foreach (explode(',', $securityDevice->address_ip) as $address) {
-                    if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('PSECURITY_', $securityDevice->id));
-                        break;
-                    }
-                }
-            }
-        }
+    private function buildPhones(): void
+    {
+        $phones = DB::table('phones')
+            ->select('id', 'name', 'address_ip', 'building_id', 'site_id')
+            ->whereNull('deleted_at')
+            ->get();
 
-        // peripherals
-        $peripherals = DB::table('peripherals')->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id', 'provider_id')->whereNull('deleted_at')->get();
-        foreach ($peripherals as $peripheral) {
+        foreach ($phones as $phone) {
             $this->addNode(
-                $nodes,
                 6,
-                $this->formatId('PERIF_', $peripheral->id),
+                $this->formatId(Phone::$prefix, $phone->id),
+                $phone->name,
+                $this->getIcon(null, '/images/phone.png'),
+                'workstations',
+                $phone->address_ip
+            );
+
+            $this->linkToLocationOrSite(
+                $this->formatId(Phone::$prefix, $phone->id),
+                $phone->building_id,
+                $phone->site_id
+            );
+
+            $this->linkPhoneToSubnetworks($phone);
+        }
+    }
+
+    private function buildPeripherals(): void {
+        $this->peripherals = DB::table('peripherals')
+            ->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id', 'provider_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($this->peripherals as $peripheral) {
+            $this->addNode(
+                6,
+                $this->formatId(Peripheral::$prefix, $peripheral->id),
                 $peripheral->name,
                 $peripheral->icon_id === null ? '/images/peripheral.png' : "/admin/documents/{$peripheral->icon_id}",
                 'peripherals',
                 $peripheral->address_ip
             );
             if ($peripheral->bay_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BAY_', $peripheral->bay_id));
+                $this->addLinkEdge(
+                    $this->formatId(Peripheral::$prefix, $peripheral->id),
+                    $this->formatId(Bay::$prefix, $peripheral->bay_id));
             } elseif ($peripheral->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BUILDING_', $peripheral->building_id));
+                $this->addLinkEdge(
+                    $this->formatId(Peripheral::$prefix, $peripheral->id),
+                    $this->formatId(Building::$prefix, $peripheral->building_id));
             } elseif ($peripheral->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('SITE_', $peripheral->site_id));
+                $this->addLinkEdge(
+                    $this->formatId(Peripheral::$prefix, $peripheral->id),
+                    $this->formatId(Site::$prefix, $peripheral->site_id));
             }
             if ($peripheral->provider_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('ENTITY_', $peripheral->provider_id));
+                $this->addLinkEdge(
+                    $this->formatId(Peripheral::$prefix, $peripheral->id),
+                    $this->formatId(Entity::$prefix, $peripheral->provider_id));
             }
-            foreach ($subnetworks as $subnetwork) {
+            foreach ($this->subnetworks as $subnetwork) {
                 foreach (explode(',', $peripheral->address_ip) as $address) {
                     if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('PERIF_', $peripheral->id));
+                        $this->addLinkEdge(
+                            $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                            $this->formatId(Peripheral::$prefix, $peripheral->id));
                         break;
                     }
                 }
@@ -216,265 +326,435 @@ class ExplorerController extends Controller
         }
 
         // m_application_peripheral
-        $joins = DB::table('m_application_peripheral')->select('m_application_id', 'peripheral_id')->get();
+        $joins = DB::table('m_application_peripheral')
+            ->select('m_application_id', 'peripheral_id')
+            ->get();
+
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('PERIF_', $join->peripheral_id));
+            $this->addLinkEdge(
+                $this->formatId(MApplication::$prefix, $join->m_application_id),
+                $this->formatId(Peripheral::$prefix, $join->peripheral_id));
         }
 
-        // Phones
-        $phones = DB::table('phones')->select('id', 'name', 'address_ip', 'building_id')->whereNull('deleted_at')->get();
-        foreach ($phones as $phone) {
-            $this->addNode($nodes, 6, $this->formatId('PHONE_', $phone->id), $phone->name, '/images/phone.png', 'phones', $phone->address_ip);
-            if ($phone->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('PHONE_', $phone->id), $this->formatId('BUILDING_', $phone->building_id));
-            }
-            foreach ($subnetworks as $subnetwork) {
-                foreach (explode(',', $phone->address_ip) as $address) {
-                    if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('PHONE_', $phone->id));
-                        break;
-                    }
-                }
-            }
-        }
-
+    }
+    private function buildStorageDevices(): void {
         // Storage devices
-        $storageDevices = DB::table('storage_devices')->select('id', 'name', 'bay_id', 'address_ip')->whereNull('deleted_at')->get();
+        $storageDevices = DB::table('storage_devices')
+            ->select('id', 'name', 'bay_id', 'address_ip')
+            ->whereNull('deleted_at')
+            ->get();
+
         foreach ($storageDevices as $storageDevice) {
-            $this->addNode($nodes, 6, $this->formatId('STORAGE_', $storageDevice->id), $storageDevice->name, '/images/storagedev.png', 'storage-devices', $storageDevice->address_ip);
+            $this->addNode(
+                6,
+                $this->formatId(StorageDevice::$prefix, $storageDevice->id),
+                $storageDevice->name,
+                '/images/storagedev.png',
+                'storage-devices',
+                $storageDevice->address_ip);
+
             if ($storageDevice->bay_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('STORAGE_', $storageDevice->id), $this->formatId('BAY_', $storageDevice->bay_id));
+                $this->addLinkEdge(
+                    $this->formatId(StorageDevice::$prefix, $storageDevice->id),
+                    $this->formatId(Bay::$prefix, $storageDevice->bay_id));
             }
-            foreach ($subnetworks as $subnetwork) {
+
+            foreach ($this->subnetworks as $subnetwork) {
                 foreach (explode(',', $storageDevice->address_ip) as $address) {
                     if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('STORAGE_', $storageDevice->id));
+                        $this->addLinkEdge(
+                            $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                            $this->formatId(StorageDevice::$prefix, $storageDevice->id));
                         break;
                     }
                 }
             }
         }
+    }
 
-        // Wifi terminals
-        $wifiTerminals = DB::table('wifi_terminals')->select('id', 'name', 'address_ip', 'site_id', 'building_id')->whereNull('deleted_at')->get();
+    private function buildPhysicalSwitches(): void
+    {
+        $switches = DB::table('physical_switches')
+            ->select('id', 'name', 'bay_id', 'building_id', 'site_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($switches as $switch) {
+            $this->addNode(
+                6,
+                $this->formatId(PhysicalSwitch::$prefix, $switch->id),
+                $switch->name,
+                '/images/switch.png',
+                'physical-switches'
+            );
+
+            $this->linkToLocationOrSite(
+                $this->formatId(PhysicalSwitch::$prefix, $switch->id),
+                $switch->building_id,
+                $switch->site_id,
+                $switch->bay_id
+            );
+        }
+
+        $this->linkJoinTable('network_switch_physical_switch', NetworkSwitch::$prefix, PhysicalSwitch::$prefix, 'network_switch_id', 'physical_switch_id');
+    }
+
+    private function buildPhysicalRouters(): void
+    {
+        $routers = DB::table('physical_routers')
+            ->select('id', 'name', 'bay_id', 'building_id', 'site_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($routers as $router) {
+            $this->addNode(
+                6,
+                $this->formatId(PhysicalRouter::$prefix, $router->id),
+                $router->name,
+                '/images/router.png',
+                'physical-routers'
+            );
+
+            $this->linkToLocationOrSite(
+                $this->formatId(PhysicalRouter::$prefix, $router->id),
+                $router->building_id,
+                $router->site_id,
+                $router->bay_id
+            );
+        }
+    }
+
+    private function buildWifiTerminals(): void {
+        $wifiTerminals = DB::table('wifi_terminals')
+            ->select('id', 'name', 'address_ip', 'site_id', 'building_id')
+            ->whereNull('deleted_at')
+            ->get();
+
         foreach ($wifiTerminals as $wifiTerminal) {
-            $this->addNode($nodes, 6, $this->formatId('WIFI_', $wifiTerminal->id), $wifiTerminal->name, '/images/wifi.png', 'wifi-terminals', $wifiTerminal->address_ip);
+            $this->addNode(
+                6,
+                $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
+                $wifiTerminal->name, '/images/wifi.png',
+                'wifi-terminals',
+                $wifiTerminal->address_ip);
+
             if ($wifiTerminal->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('BUILDING_', $wifiTerminal->building_id));
+                $this->addLinkEdge(
+                    $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
+                    $this->formatId(Building::$prefix, $wifiTerminal->building_id));
             } elseif ($wifiTerminal->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('SITE_', $wifiTerminal->site_id));
+                $this->addLinkEdge(
+                    $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
+                    $this->formatId(Site::$prefix, $wifiTerminal->site_id));
             }
-            foreach ($subnetworks as $subnetwork) {
+            foreach ($this->subnetworks as $subnetwork) {
                 foreach (explode(',', $wifiTerminal->address_ip) as $address) {
                     if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('WIFI_', $wifiTerminal->id));
+                        $this->addLinkEdge(
+                            $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                            $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id));
                         break;
                     }
                 }
             }
         }
 
-        // PhysicalLink
-        $links = PhysicalLink::All();
-        foreach ($links as $link) {
-            // Get Source
-            $src_id = $link->sourceId();
-            if ($src_id === null) {
-                continue;
-            }
-            // Get Destination
-            $dest_id = $link->destinationId();
-            if ($dest_id === null) {
-                continue;
-            }
-            // Add link
-            $this->addPhysicalLinkEdge($edges, $src_id, $dest_id);
-        }
+    }
 
-        // ---------------------------------------------------
-        // Logical view - 5
-        // ---------------------------------------------------
-        // networks
-        $networks = DB::table('networks')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($networks as $network) {
-            $this->addNode($nodes, 5, $this->formatId('NETWORK_', $network->id), $network->name, '/images/cloud.png', 'networks');
-        }
 
-        // lans
-        $lans = DB::table('lans')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($lans as $lan) {
-            $this->addNode($nodes, 5, $this->formatId('LAN_', $lan->id), $lan->name, '/images/vlan.png', 'lans');
-        }
+    private function buildPhysicalSecurityDevices(): void
+    {
+        $devices = DB::table('physical_security_devices')
+            ->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id')
+            ->whereNull('deleted_at')
+            ->get();
 
-        // mans
-        $mans = DB::table('mans')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($mans as $man) {
-            $this->addNode($nodes, 5, $this->formatId('MAN_', $man->id), $man->name, '/images/vlan.png', 'mans');
-        }
-
-        // wans
-        $wans = DB::table('wans')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($wans as $wan) {
-            $this->addNode($nodes, 5, $this->formatId('WAN_', $wan->id), $wan->name, '/images/vlan.png', 'wans');
-        }
-
-        // vlans
-        $vlans = DB::table('vlans')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($vlans as $vlan) {
-            $this->addNode($nodes, 5, $this->formatId('VLAN_', $vlan->id), $vlan->name, '/images/vlan.png', 'vlans');
-        }
-
-        // man_wan
-        $joins = DB::table('man_wan')->select('man_id', 'wan_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('MAN_', $join->man_id), $this->formatId('WAN_', $join->wan_id));
-        }
-
-        // lan_man
-        $joins = DB::table('lan_man')->select('lan_id', 'man_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('LAN_', $join->lan_id), $this->formatId('MAN_', $join->man_id));
-        }
-
-        // lan_wan
-        $joins = DB::table('lan_wan')->select('lan_id', 'wan_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('LAN_', $join->lan_id), $this->formatId('WAN_', $join->wan_id));
-        }
-
-        // External connected entities
-        $externals = DB::table('external_connected_entities')->select('id', 'name', 'network_id', 'entity_id')->whereNull('deleted_at')->get();
-        foreach ($externals as $external) {
-            $this->addNode($nodes, 5, $this->formatId('EXT_', $external->id), $external->name, '/images/entity.png', 'external-connected-entities');
-            $this->addLinkEdge($edges, $this->formatId('EXT_', $external->id), $this->formatId('NETWORK_', $external->network_id));
-            $this->addLinkEdge($edges, $this->formatId('EXT_', $external->id), $this->formatId('ENTITY_', $external->entity_id));
-        }
-
-        // Gateways
-        $gateways = DB::table('gateways')->select('id', 'name', 'ip')->whereNull('deleted_at')->get();
-        foreach ($gateways as $gateway) {
-            $this->addNode($nodes, 5, $this->formatId('GATEWAY_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
-        }
-
-        // Subnetworks
-        foreach ($subnetworks as $subnetwork) {
-            $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
-            if ($subnetwork->subnetwork_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('SUBNETWORK_', $subnetwork->subnetwork_id));
-            } elseif ($subnetwork->network_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('NETWORK_', $subnetwork->network_id));
-            }
-            if ($subnetwork->vlan_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('VLAN_', $subnetwork->vlan_id));
-            }
-            if ($subnetwork->gateway_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('GATEWAY_', $subnetwork->gateway_id));
-            }
-            /*
-             * TODO : fixme
-            if ($subnetwork->address_ip !== null) {
-                foreach ($logicalServers as $logicalServer) {
-                    foreach (explode(',', $logicalServer->address_ip) as $address) {
-                        if ($subnetwork->contains($address)) {
-                            $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('LSERVER_', $logicalServer->id));
-                            break;
-                        }
-                    }
-                }
-            }
-            */
-        }
-
-        // Logical Routers
-        $logicalRouters = DB::table('routers')->select('id', 'name', 'ip_addresses')->get();
-        foreach ($logicalRouters as $logicalRouter) {
-            $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers');
-            if ($logicalRouter->ip_addresses !== null) {
-                foreach ($subnetworks as $subnetwork) {
-                    foreach (explode(',', $logicalRouter->ip_addresses) as $address) {
-                        if ($subnetwork->contains($address)) {
-                            $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('ROUTER_', $logicalRouter->id));
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        // physical_router_router
-        $joins = DB::table('physical_router_router')->select('router_id', 'physical_router_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ROUTER_', $join->router_id), $this->formatId('PROUTER_', $join->physical_router_id));
-        }
-
-        // Logical Switches
-        $networkSwitches = DB::table('network_switches')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($networkSwitches as $networkSwitch) {
-            $this->addNode($nodes, 5, $this->formatId('LSWITCH_', $networkSwitch->id), $networkSwitch->name, '/images/switch.png', 'switches');
-        }
-
-        // Network Switches - VLAN
-        $joins = DB::table('network_switch_vlan')->select('network_switch_id', 'vlan_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('LSWITCH_', $join->network_switch_id), $this->formatId('VLAN_', $join->vlan_id));
-        }
-
-        // Logical Security Devices
-        $logical_security_devices = DB::table('security_devices')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
-        foreach ($logical_security_devices as $securityDevice) {
+        foreach ($devices as $device) {
             $this->addNode(
-                $nodes,
-                5, $this->formatId('LSECURITY_', $securityDevice->id),
-                $securityDevice->name,
-                $securityDevice->icon_id === null ? '/images/securitydevice.png' : "/admin/documents/{$securityDevice->icon_id}",
-                'security-devices');
+                6,
+                $this->formatId(PhysicalSecurityDevice::$prefix, $device->id),
+                $device->name,
+                $this->getIcon($device->icon_id, '/images/security.png'),
+                'physical-security-devices',
+                $device->address_ip
+            );
+
+            $this->linkToLocationOrSite(
+                $this->formatId(PhysicalSecurityDevice::$prefix, $device->id),
+                $device->building_id,
+                $device->site_id,
+                $device->bay_id
+            );
+
+            $this->linkDeviceToSubnetworks($device->address_ip, $this->formatId(PhysicalSecurityDevice::$prefix, $device->id));
+        }
+    }
+
+    private function buildWANs(): void
+    {
+        $wans = DB::table('wans')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($wans as $wan) {
+            $this->addNode(
+                6,
+                $this->formatId(Wan::$prefix, $wan->id),
+                $wan->name,
+                '/images/vlan.png',
+                'wans'
+            );
         }
 
-        // Logical Security Devices - Physical Security Device
-        $joins = DB::table('physical_security_device_security_device')->select('security_device_id', 'physical_security_device_id')->get();
+        $this->linkJoinTable('man_wan', Man::$prefix, Wan::$prefix, 'man_id', 'wan_id');
+    }
+
+    private function buildMAN(): void
+    {
+        $mans = DB::table('mans')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($mans as $man) {
+            $this->addNode(
+                6,
+                $this->formatId(Man::$prefix, $man->id),
+                $man->name,
+                '/images/vlan.png',
+                'mans'
+            );
+        }
+
+        $this->linkJoinTable('lan_man', Lan::$prefix, Man::$prefix, 'lan_id', 'man_id');
+    }
+
+    private function buildLAN(): void
+    {
+        $lans = DB::table('lans')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($lans as $lan) {
+            $this->addNode(
+                6,
+                $this->formatId(Lan::$prefix, $lan->id),
+                $lan->name,
+                '/images/vlan.png',
+                'lans'
+            );
+        }
+
+        $this->linkJoinTable('lan_wan', Lan::$prefix, Wan::$prefix, 'lan_id', 'wan_id');
+    }
+
+    private function buildVLAN(): void
+    {
+        $vlans = DB::table('vlans')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($vlans as $vlan) {
+            $this->addNode(
+                5,
+                $this->formatId(Vlan::$prefix, $vlan->id),
+                $vlan->name,
+                '/images/vlan.png',
+                'vlans'
+            );
+        }
+    }
+
+    private function buildPhysicalLinks(): void
+    {
+        $links = PhysicalLink::all();
+
+        foreach ($links as $link) {
+            $src = $link->sourceId();
+            $dest = $link->destinationId();
+            if ($src !== null && $dest !== null) {
+                $this->addPhysicalLinkEdge(
+                    $src,
+                    $dest
+                );
+            }
+        }
+    }
+
+    /**
+     * Build Logical view (view 5) - Infrastructure logique
+     */
+    private function buildLogicalView(): void
+    {
+        $this->buildNetworks();
+        $this->buildNetworkSwitches();
+        $this->buildSubnetworks();
+        $this->buildGateways();
+        $this->buildExternalConnectedEntities();
+        $this->buildLogicalServers();
+        $this->buildCertificates();
+        $this->buildLogicalFlows();
+        $this->buildContainers();
+        $this->buildClusters();
+    }
+
+    private function buildNetworks(): void {
+        $networks = DB::table('networks')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($networks as $network) {
+            $this->addNode(
+                5,
+                $this->formatId(Network::$prefix, $network->id),
+                $network->name,
+                '/images/cloud.png',
+                'networks');
+        }
+    }
+
+    private function buildNetworkSwitches(): void
+    {
+        $switches = DB::table('network_switches')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($switches as $switch) {
+            $this->addNode(
+                5,
+                $this->formatId(NetworkSwitch::$prefix, $switch->id),
+                $switch->name,
+                '/images/switch.png',
+                'network-switches'
+            );
+        }
+    }
+
+    private function buildSubnetworks(): void
+    {
+        foreach ($this->subnetworks as $subnetwork) {
+            $this->addNode(
+                5,
+                $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                $subnetwork->name,
+                '/images/network.png',
+                'subnetworks',
+                $subnetwork->address
+            );
+
+            if ($subnetwork->vlan_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                    $this->formatId(Vlan::$prefix, $subnetwork->vlan_id)
+                );
+            }
+
+            if ($subnetwork->gateway_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                    $this->formatId(Gateway::$prefix, $subnetwork->gateway_id)
+                );
+            }
+        }
+    }
+
+    private function buildGateways(): void
+    {
+        $gateways = DB::table('gateways')
+            ->select('id', 'name', 'ip')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($gateways as $gateway) {
+            $this->addNode(
+                5,
+                $this->formatId(Gateway::$prefix, $gateway->id),
+                $gateway->name,
+                '/images/gateway.png',
+                'gateways',
+                $gateway->ip
+            );
+        }
+    }
+
+    private function buildExternalConnectedEntities(): void
+    {
+        $entities = DB::table('external_connected_entities')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($entities as $entity) {
+            $this->addNode(
+                5,
+                $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
+                $entity->name,
+                '/images/entity.png',
+                'external-connected-entities'
+            );
+        }
+    }
+
+    private function buildContainers(): void
+    {
+        $containers = DB::table('containers')
+            ->select('id', 'name', 'icon_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($containers as $container) {
+            $this->addNode(
+                5,
+                $this->formatId(Container::$prefix, $container->id),
+                $container->name,
+                $container->icon_id === null ? '/images/container.png' : "/admin/documents/{$container->icon_id}",
+                'containers'
+            );
+        }
+
+        // Container - Logical Servers
+        $joins = DB::table('container_logical_server')
+            ->select('container_id', 'logical_server_id')
+            ->get();
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('LSECURITY_', $join->security_device_id), $this->formatId('PSECURITY_', $join->physical_security_device_id));
+            $this->addLinkEdge(
+                $this->formatId(Container::$prefix, $join->container_id),
+                $this->formatId(LogicalServer::$prefix, $join->logical_server_id));
         }
 
-        // DHCP Servers
-        $dhcp_servers = DB::table('dhcp_servers')->select('id', 'name', 'address_ip')->whereNull('deleted_at')->get();
-        foreach ($dhcp_servers as $dhcp_server) {
-            $this->addNode($nodes, 5, $this->formatId('DHCPS_', $dhcp_server->id), $dhcp_server->name, '/images/lserver.png', 'dhcp-servers', $dhcp_server->address_ip);
-            if ($dhcp_server->address_ip !== null) {
-                foreach ($subnetworks as $subnetwork) {
-                    foreach (explode(',', $dhcp_server->address_ip) as $address) {
-                        if ($subnetwork->contains($address)) {
-                            $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('DHCPS_', $dhcp_server->id));
-                            break;
-                        }
-                    }
-                }
-            }
+        // Container - Applications
+        $joins = DB::table('container_m_application')
+            ->select('container_id', 'm_application_id')
+            ->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge(
+                $this->formatId(Container::$prefix, $join->container_id),
+                $this->formatId(MApplication::$prefix, $join->m_application_id));
         }
 
-        // DNS Servers
-        $dns_servers = DB::table('dnsservers')->select('id', 'name', 'address_ip')->whereNull('deleted_at')->get();
-        foreach ($dns_servers as $dns_server) {
-            $this->addNode($nodes, 5, $this->formatId('DNSS_', $dns_server->id), $dns_server->name, '/images/lserver.png', 'dnsservers', $dns_server->address_ip);
-            if ($dns_server->address_ip !== null) {
-                foreach ($subnetworks as $subnetwork) {
-                    foreach (explode(',', $dns_server->address_ip) as $address) {
-                        if ($subnetwork->contains($address)) {
-                            $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('DNSS_', $dns_server->id));
-                            break;
-                        }
-                    }
-                }
-            }
+        // Container - Databases
+        $joins = DB::table('container_database')
+            ->select('container_id', 'database_id')
+            ->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge(
+                $this->formatId(Container::$prefix, $join->container_id),
+                $this->formatId(Database::$prefix, $join->database_id));
         }
+    }
 
+    private function buildClusters(): void {
         // Clusters
         $clusters = DB::table('clusters')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($clusters as $cluster) {
             $this->addNode(
-                $nodes,
                 5,
-                $this->formatId('CLUSTER_', $cluster->id),
+                $this->formatId(Cluster::$prefix, $cluster->id),
                 $cluster->name,
                 $cluster->icon_id === null ? '/images/cluster.png' : "/admin/documents/{$cluster->icon_id}",
                 'clusters'
@@ -484,104 +764,96 @@ class ExplorerController extends Controller
         // Cluster - Logical Servers
         $joins = DB::table('cluster_logical_server')->select('cluster_id', 'logical_server_id')->get();
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('CLUSTER_', $join->cluster_id), $this->formatId('LSERVER_', $join->logical_server_id));
+            $this->addLinkEdge(
+                $this->formatId(Cluster::$prefix, $join->cluster_id),
+                $this->formatId(LogicalServer::$prefix, $join->logical_server_id));
         }
 
         // Cluster - Logical Servers
         $joins = DB::table('cluster_physical_server')->select('cluster_id', 'physical_server_id')->get();
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('CLUSTER_', $join->cluster_id), $this->formatId('PSERVER_', $join->physical_server_id));
+            $this->addLinkEdge(
+                $this->formatId(Cluster::$prefix, $join->cluster_id),
+                $this->formatId(PhysicalServer::$prefix, $join->physical_server_id));
         }
 
         // Cluster - Routers
         $joins = DB::table('cluster_router')->select('cluster_id', 'router_id')->get();
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('CLUSTER_', $join->cluster_id), $this->formatId('ROUTER_', $join->router_id));
+            $this->addLinkEdge(
+                $this->formatId(Cluster::$prefix, $join->cluster_id),
+                $this->formatId(Router::$prefix, $join->router_id));
         }
 
-        // Containers
-        $containers = DB::table('containers')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
-        foreach ($containers as $container) {
+    }
+
+    private function buildLogicalServers(): void
+    {
+        $this->logicalServers = DB::table('logical_servers')
+            ->select('id', 'name', 'icon_id', 'address_ip')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($this->logicalServers as $server) {
             $this->addNode(
-                $nodes,
                 5,
-                $this->formatId('CONT_', $container->id),
-                $container->name,
-                $container->icon_id === null ? '/images/container.png' : "/admin/documents/{$container->icon_id}",
-                'containers'
+                $this->formatId(LogicalServer::$prefix, $server->id),
+                $server->name,
+                $this->getIcon($server->icon_id, '/images/server.png'),
+                'logical-servers',
+                $server->address_ip
+            );
+
+            $this->linkDeviceToSubnetworks(
+                $server->address_ip,
+                $this->formatId(LogicalServer::$prefix, $server->id));
+        }
+
+        $this->linkJoinTable('logical_server_physical_server', LogicalServer::$prefix, PhysicalServer::$prefix, 'logical_server_id', 'physical_server_id');
+    }
+
+    private function buildCertificates(): void
+    {
+        $certificates = DB::table('certificates')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($certificates as $certificate) {
+            $this->addNode(
+                5,
+                $this->formatId(Certificate::$prefix, $certificate->id),
+                $certificate->name,
+                '/images/certificate.png',
+                'certificates'
             );
         }
 
-        // Container - Logical Servers
-        $joins = DB::table('container_logical_server')->select('container_id', 'logical_server_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('CONT_', $join->container_id), $this->formatId('LSERVER_', $join->logical_server_id));
-        }
+        $this->linkJoinTable('certificate_logical_server', Certificate::$prefix, LogicalServer::$prefix, 'certificate_id', 'logical_server_id');
+    }
 
-        // Container - Applications
-        $joins = DB::table('container_m_application')->select('container_id', 'm_application_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('CONT_', $join->container_id), $this->formatId('APP_', $join->m_application_id));
-        }
-
-        // Container - Databases
-        $joins = DB::table('container_database')->select('container_id', 'database_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('CONT_', $join->container_id), $this->formatId('DATABASE_', $join->database_id));
-        }
-
-        // Logical Servers
-        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'icon_id', 'address_ip', 'domain_id')->get();
-        foreach ($logicalServers as $logicalServer) {
-            $this->addNode(
-                $nodes,
-                5,
-                $this->formatId('LSERVER_', $logicalServer->id),
-                $logicalServer->name,
-                $logicalServer->icon_id === null ? '/images/lserver.png' : "/admin/documents/{$logicalServer->icon_id}",
-                'logical-servers'
-            );
-            if ($logicalServer->address_ip !== null) {
-                foreach ($subnetworks as $subnetwork) {
-                    foreach (explode(',', $logicalServer->address_ip) as $address) {
-                        if ($subnetwork->contains($address)) {
-                            $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('LSERVER_', $logicalServer->id));
-                            break;
-                        }
-                    }
-                }
-            }
-            if ($logicalServer->domain_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('LSERVER_', $logicalServer->id), $this->formatId('DOMAIN_', $logicalServer->domain_id));
-            }
-        }
-
-        // Logical Servers - Physical Servers
-        $joins = DB::table('logical_server_physical_server')->select('physical_server_id', 'logical_server_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('PSERVER_', $join->physical_server_id), $this->formatId('LSERVER_', $join->logical_server_id));
-        }
-
-        // Logical Flows
+    private function buildLogicalFlows(): void
+    {
         $flows = LogicalFlow::All();
+
         foreach ($flows as $flow) {
             // \Log::Debug('flow: '.$flow->name);
             // Get sources
             $sources = [];
             if ($flow->source_ip_range !== null) {
-                foreach ($logicalServers as $server) {
+                foreach ($this->logicalServers as $server) {
                     foreach (explode(',', $server->address_ip) as $ip) {
                         if ($flow->isSource($ip)) {
                             array_push($sources, $this->formatId('LSERVER_', $server->id));
                         }
                     }
                 }
-                foreach ($workstations as $workstation) {
+                foreach ($this->workstations as $workstation) {
                     if ($flow->isSource($workstation->address_ip)) {
                         array_push($sources, $this->formatId('WORK_', $workstation->id));
                     }
                 }
-                foreach ($peripherals as $peripheral) {
+                foreach ($this->peripherals as $peripheral) {
                     if ($flow->isSource($peripheral->address_ip)) {
                         array_push($sources, $this->formatId('PERIF_', $peripheral->id));
                     }
@@ -594,19 +866,19 @@ class ExplorerController extends Controller
             // Get destinations
             $destinations = [];
             if ($flow->dest_ip_range !== null) {
-                foreach ($logicalServers as $server) {
+                foreach ($this->logicalServers as $server) {
                     foreach (explode(',', $server->address_ip) as $ip) {
                         if ($flow->isDestination($ip)) {
                             array_push($destinations, $this->formatId('LSERVER_', $server->id));
                         }
                     }
                 }
-                foreach ($workstations as $workstation) {
+                foreach ($this->workstations as $workstation) {
                     if ($flow->isDestination($workstation->address_ip)) {
                         array_push($destinations, $this->formatId('WORK_', $workstation->id));
                     }
                 }
-                foreach ($peripherals as $peripheral) {
+                foreach ($this->peripherals as $peripheral) {
                     if ($flow->isDestination($peripheral->address_ip)) {
                         array_push($sources, $this->formatId('PERIF_', $peripheral->id));
                     }
@@ -619,361 +891,620 @@ class ExplorerController extends Controller
             // Add source <-> destination flows
             foreach ($sources as $source) {
                 foreach ($destinations as $destination) {
-                    // \Log::Debug($source . ' -> ' . $destination);
-                    $this->addFluxEdge($edges, $flow->name, false, $source, $destination);
+                    $this->addFluxEdge($flow->name, false, $source, $destination);
                 }
             }
         }
 
-        // Certificates
-        $certificates = DB::table('certificates')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($certificates as $certificate) {
-            $this->addNode($nodes, 5, $this->formatId('CERT_', $certificate->id), $certificate->name, '/images/certificate.png', 'certificates');
-        }
-        // certificate_logical_server
-        $joins = DB::table('certificate_logical_server')->select('certificate_id', 'logical_server_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('CERT_', $join->certificate_id), $this->formatId('LSERVER_', $join->logical_server_id));
-        }
+    }
 
-        // ---------------------------------------------------
-        // Administration view - 4
-        // ---------------------------------------------------
-        // Zones
-        $zoneAdmins = DB::table('zone_admins')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($zoneAdmins as $zone) {
-            $this->addNode($nodes, 4, $this->formatId('ZONE_', $zone->id), $zone->name, '/images/zoneadmin.png', 'zone-admins');
-        }
-        // Annuaires
-        $annuaires = DB::table('annuaires')->select('id', 'name', 'zone_admin_id')->whereNull('deleted_at')->get();
-        foreach ($annuaires as $annuaire) {
-            $this->addNode($nodes, 4, $this->formatId('ANNUAIRE_', $annuaire->id), $annuaire->name, '/images/annuaire.png', 'annuaires');
-            $this->addLinkEdge($edges, $this->formatId('ANNUAIRE_', $annuaire->id), $this->formatId('ZONE_', $annuaire->zone_admin_id));
-        }
-        // Forest
-        $forests = DB::table('forest_ads')->select('id', 'name', 'zone_admin_id')->whereNull('deleted_at')->get();
-        foreach ($forests as $forest) {
-            $this->addNode($nodes, 4, $this->formatId('FOREST_', $forest->id), $forest->name, '/images/ldap.png', 'forest-ads');
-            $this->addLinkEdge($edges, $this->formatId('FOREST_', $forest->id), $this->formatId('ZONE_', $forest->zone_admin_id));
-        }
-        // Domain
-        $domains = DB::table('domaine_ads')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($domains as $domain) {
-            $this->addNode($nodes, 4, $this->formatId('DOMAIN_', $domain->id), $domain->name, '/images/domain.png', 'domaine-ads');
-        }
-        // domaine_ad_forest_ad
-        $joins = DB::table('domaine_ad_forest_ad')->select('forest_ad_id', 'domaine_ad_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('FOREST_', $join->forest_ad_id), $this->formatId('DOMAIN_', $join->domaine_ad_id));
-        }
-        // AdminUsers
-        $adminUsers = DB::table('admin_users')->select('id', 'user_id', 'domain_id')->whereNull('deleted_at')->get();
-        foreach ($adminUsers as $adminUser) {
-            $this->addNode($nodes, 4, $this->formatId('USER_', $adminUser->id), $adminUser->user_id, '/images/user.png', 'admin-users');
-            if ($adminUser->domain_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('USER_', $adminUser->id), $this->formatId('DOMAIN_', $adminUser->domain_id));
-            }
-        }
+    /**
+     * Build Application view (view 4) - Applications et services
+     */
+    private function buildApplicationView(): void
+    {
+        $this->buildApplications();
+        $this->buildApplicationBlocks();
+        $this->buildApplicationServices();
+        $this->buildApplicationModules();
+        $this->buildDatabases();
+        $this->buildApplicationFlows();
+    }
 
-        // ---------------------------------------------------
-        // Application view - 3
-        // ---------------------------------------------------
-        // Application Blocks
-        $applicationBlocks = DB::table('application_blocks')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($applicationBlocks as $applicationBlock) {
-            $this->addNode($nodes, 3, $this->formatId('BLOCK_', $applicationBlock->id), $applicationBlock->name, '/images/applicationblock.png', 'application-blocks');
-        }
-        // Applications
-        $applications = DB::table('m_applications')->select('id', 'name', 'icon_id', 'application_block_id')->whereNull('deleted_at')->get();
-        foreach ($applications as $application) {
-            $this->addNode(
-                $nodes,
-                3,
-                $this->formatId('APP_', $application->id),
-                $application->name,
-                $application->icon_id === null ? '/images/application.png' : "/admin/documents/{$application->icon_id}",
-                'applications'
-            );
-            $this->addLinkEdge($edges, $this->formatId('BLOCK_', $application->application_block_id), $this->formatId('APP_', $application->id));
-        }
-        // m_application_physical_server
-        $joins = DB::table('m_application_physical_server')->select('m_application_id', 'physical_server_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('PSERVER_', $join->physical_server_id));
-        }
-        // m_application_workstation
-        $joins = DB::table('m_application_workstation')->select('m_application_id', 'workstation_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('WORK_', $join->workstation_id));
-        }
-        // m_application_process
-        $joins = DB::table('m_application_process')->select('m_application_id', 'process_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('PROCESS_', $join->process_id));
-        }
-        // activity_m_application
-        $joins = DB::table('activity_m_application')->select('m_application_id', 'activity_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('ACTIVITY_', $join->activity_id));
-        }
-        // logical_server_m_application
-        $joins = DB::table('logical_server_m_application')->select('m_application_id', 'logical_server_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('LSERVER_', $join->logical_server_id));
-        }
-        // m_application_security_device
-        $joins = DB::table('m_application_security_device')->select('m_application_id', 'security_device_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('LSECURITY_', $join->security_device_id));
-        }
-
-        // Application Services
-        $services = DB::table('application_services')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($services as $service) {
-            $this->addNode($nodes, 3, $this->formatId('SERV_', $service->id), $service->name, '/images/applicationservice.png', 'application-services');
-        }
-        // application_service_m_application
-        $joins = DB::table('application_service_m_application')->select('m_application_id', 'application_service_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('SERV_', $join->application_service_id));
-        }
-        // Application Modules
-        $modules = DB::table('application_modules')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($modules as $module) {
-            $this->addNode($nodes, 3, $this->formatId('MOD_', $module->id), $module->name, '/images/applicationmodule.png', 'application-modules');
-        }
-        // application_module_application_service
-        $joins = DB::table('application_module_application_service')->select('application_module_id', 'application_service_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('MOD_', $join->application_module_id), $this->formatId('SERV_', $join->application_service_id));
-        }
-
-        // certificate_m_application
-        $joins = DB::table('certificate_m_application')->select('m_application_id', 'certificate_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('CERT_', $join->certificate_id));
-        }
-        // Databases
-        $databases = DB::table('databases')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
-        foreach ($databases as $database) {
-            $this->addNode(
-                $nodes,
-                3,
-                $this->formatId('DATABASE_', $database->id),
-                $database->name,
-                $database->icon_id === null ? '/images/database.png' : "/admin/documents/{$database->icon_id}",
-                'databases'
-            );
-        }
-        // database_m_application
-        $joins = DB::table('database_m_application')->select('m_application_id', 'database_id')->get();
-        foreach ($joins as $join) {
-            $this->addFluxEdge($edges, null, false, $this->formatId('APP_', $join->m_application_id), $this->formatId('DATABASE_', $join->database_id));
-        }
-
-        // database_logical_server
-        $joins = DB::table('database_logical_server')->select('database_id', 'logical_server_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('LSERVER_', $join->logical_server_id), $this->formatId('DATABASE_', $join->database_id));
-        }
-
+    private function buildApplicationFlows() : void {
         // Fluxes
         $fluxes = DB::table('fluxes')->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
             if ($flux->application_source_id !== null) {
-                $src_id = 'APP_'.$flux->application_source_id;
+                $src_id = MApplication::$prefix . $flux->application_source_id;
             } elseif ($flux->service_source_id !== null) {
-                $src_id = 'SERV_'.$flux->service_source_id;
+                $src_id = ApplicationService::$prefix . $flux->service_source_id;
             } elseif ($flux->module_source_id !== null) {
-                $src_id = 'MOD_'.$flux->module_source_id;
+                $src_id = ApplicationModule::$prefix . $flux->module_source_id;
             } elseif ($flux->database_source_id !== null) {
-                $src_id = 'DATABASE_'.$flux->database_source_id;
+                $src_id = Database::$prefix . $flux->database_source_id;
             } else {
                 continue;
             }
 
             if ($flux->application_dest_id !== null) {
-                $dest_id = 'APP_'.$flux->application_dest_id;
+                $dest_id = MApplication::$prefix . $flux->application_dest_id;
             } elseif ($flux->service_dest_id !== null) {
-                $dest_id = 'SERV_'.$flux->service_dest_id;
+                $dest_id = ApplicationService::$prefix . $flux->service_dest_id;
             } elseif ($flux->module_dest_id !== null) {
-                $dest_id = 'MOD_'.$flux->module_dest_id;
+                $dest_id = ApplicationModule::$prefix . $flux->module_dest_id;
             } elseif ($flux->database_dest_id !== null) {
-                $dest_id = 'DATABASE_'.$flux->database_dest_id;
+                $dest_id =  Database::$prefix  . $flux->database_dest_id;
             } else {
                 continue;
             }
 
-            $this->addFluxEdge($edges, $flux->nature, $flux->bidirectional, $src_id, $dest_id);
+            $this->addFluxEdge($flux->nature, $flux->bidirectional, $src_id, $dest_id);
         }
+    }
 
-        // ---------------------------------------------------
-        // Information System - 2
-        // ---------------------------------------------------
-        // Information
-        $informations = DB::table('information')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($informations as $information) {
-            $this->addNode($nodes, 2, $this->formatId('INFO_', $information->id), $information->name, '/images/information.png', 'information');
-        }
-        // database_information
-        $joins = DB::table('database_information')->select('information_id', 'database_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('INFO_', $join->information_id), $this->formatId('DATABASE_', $join->database_id));
-        }
-        // process
-        $processes = DB::table('processes')->select('id', 'name', 'icon_id', 'macroprocess_id')->whereNull('deleted_at')->get();
-        foreach ($processes as $process) {
+
+    private function buildApplications(): void
+    {
+        $applications = DB::table('m_applications')
+            ->select('id', 'name', 'icon_id', 'application_block_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($applications as $app) {
             $this->addNode(
-                $nodes,
-                2,
-                $this->formatId('PROCESS_', $process->id),
-                $process->name,
-                $process->icon_id === null ? '/images/process.png' : "/admin/documents/{$process->icon_id}",
-                'processes'
+                3,
+                $this->formatId(MApplication::$prefix, $app->id),
+                $app->name,
+                $this->getIcon($app->icon_id, '/images/application.png'),
+                'm-applications'
             );
-            $this->addLinkEdge($edges, $this->formatId('PROCESS_', $process->id), $this->formatId('MACROPROCESS_', $process->macroprocess_id));
-        }
-        // information_process
-        $joins = DB::table('information_process')->select('information_id', 'process_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('INFO_', $join->information_id), $this->formatId('PROCESS_', $join->process_id));
-        }
-        // macro_processuses
-        $macro_processuses = DB::table('macro_processuses')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($macro_processuses as $macro_process) {
-            $this->addNode($nodes, 2, $this->formatId('MACROPROCESS_', $macro_process->id), $macro_process->name, '/images/macroprocess.png', 'macro-processuses');
-        }
 
-        // Activities
-        $activities = DB::table('activities')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($activities as $activity) {
-            $this->addNode($nodes, 2, $this->formatId('ACTIVITY_', $activity->id), $activity->name, '/images/activity.png', 'activities');
-        }
-        // activity_process
-        $joins = DB::table('activity_process')->select('activity_id', 'process_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ACTIVITY_', $join->activity_id), $this->formatId('PROCESS_', $join->process_id));
-        }
-
-        // Operations
-        $operations = DB::table('operations')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($operations as $operation) {
-            $this->addNode($nodes, 2, $this->formatId('OPERATION_', $operation->id), $operation->name, '/images/operation.png', 'operations');
-        }
-
-        // activity_operation
-        $joins = DB::table('activity_operation')->select('activity_id', 'operation_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ACTIVITY_', $join->activity_id), $this->formatId('OPERATION_', $join->operation_id));
-        }
-
-        // Tasks
-        $tasks = DB::table('tasks')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($tasks as $task) {
-            $this->addNode($nodes, 2, $this->formatId('TASK_', $task->id), $task->name, '/images/task.png', 'tasks');
-        }
-
-        // operation_task
-        $joins = DB::table('operation_task')->select('operation_id', 'task_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('OPERATION_', $join->operation_id), $this->formatId('TASK_', $join->task_id));
-        }
-
-        // Actors
-        $actors = DB::table('actors')->select('id', 'name')->whereNull('deleted_at')->get();
-        foreach ($actors as $actor) {
-            $this->addNode($nodes, 2, $this->formatId('ACTOR_', $actor->id), $actor->name, '/images/actor.png', 'actors');
-        }
-
-        // actor_operation
-        $joins = DB::table('actor_operation')->select('actor_id', 'operation_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ACTOR_', $join->actor_id), $this->formatId('OPERATION_', $join->operation_id));
-        }
-        // ---------------------------------------------------
-        // Ecosystem - 1
-        // ---------------------------------------------------
-        // Entities
-        $entities = DB::table('entities')->select('id', 'name', 'icon_id', 'parent_entity_id')->whereNull('deleted_at')->get();
-        foreach ($entities as $entity) {
-            $this->addNode(
-                $nodes,
-                1,
-                $this->formatId('ENTITY_', $entity->id),
-                $entity->name,
-                $entity->icon_id === null ? '/images/entity.png' : "/admin/documents/{$entity->icon_id}",
-                'entities'
-            );
-            if ($entity->parent_entity_id !== null) {
-                $this->addFluxEdge($edges, null, false, $this->formatId('ENTITY_', $entity->id), $this->formatId('ENTITY_', $entity->parent_entity_id));
+            if ($app->application_block_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(MApplication::$prefix, $app->id),
+                    $this->formatId(ApplicationBlock::$prefix, $app->application_block_id)
+                );
             }
         }
 
-        // Relations
-        $relations = DB::table('relations')->select('id', 'name', 'source_id', 'destination_id')->whereNull('deleted_at')->get();
+        $this->linkJoinTable('application_service_m_application', ApplicationService::$prefix, MApplication::$prefix, 'application_service_id', 'm_application_id');
+        $this->linkJoinTable('logical_server_m_application', LogicalServer::$prefix, MApplication::$prefix, 'logical_server_id', 'm_application_id');
+    }
+
+    private function buildApplicationBlocks(): void
+    {
+        $blocks = DB::table('application_blocks')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($blocks as $block) {
+            $this->addNode(
+                3,
+                $this->formatId(ApplicationBlock::$prefix, $block->id),
+                $block->name,
+                '/images/applicationblock.png',
+                'application-blocks'
+            );
+        }
+    }
+
+    private function buildApplicationServices(): void
+    {
+        $services = DB::table('application_services')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($services as $service) {
+            $this->addNode(
+                3,
+                $this->formatId(ApplicationService::$prefix, $service->id),
+                $service->name,
+                '/images/applicationservice.png',
+                'application-services'
+            );
+        }
+    }
+
+    private function buildApplicationModules(): void
+    {
+        $modules = DB::table('application_modules')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($modules as $module) {
+            $this->addNode(
+                3,
+                $this->formatId(ApplicationModule::$prefix, $module->id),
+                $module->name,
+                '/images/module.png',
+                'application-modules'
+            );
+        }
+    }
+
+    private function buildDatabases(): void
+    {
+        $databases = DB::table('databases')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($databases as $database) {
+            $this->addNode(
+                3,
+                $this->formatId(Database::$prefix, $database->id),
+                $database->name,
+                '/images/database.png',
+                'databases'
+            );
+        }
+
+        $this->linkJoinTable('database_logical_server', Database::$prefix, LogicalServer::$prefix, 'database_id', 'logical_server_id');
+        $this->linkJoinTable('database_m_application', Database::$prefix, MApplication::$prefix, 'database_id', 'm_application_id');
+    }
+
+    /**
+     * Build Administrative view (view 3) - Annuaires et zones
+     */
+    private function buildAdministrativeView(): void
+    {
+        $this->buildAnnuaires();
+        $this->buildZoneAdmins();
+        $this->buildForests();
+        $this->buildDomains();
+    }
+
+    private function buildAnnuaires(): void
+    {
+        $annuaires = DB::table('annuaires')
+            ->select('id', 'name', 'zone_admin_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($annuaires as $annuaire) {
+            $this->addNode(
+                4,
+                $this->formatId(Annuaire::$prefix, $annuaire->id),
+                $annuaire->name,
+                '/images/annuaire.png',
+                'annuaires'
+            );
+
+            if ($annuaire->zone_admin_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(Annuaire::$prefix, $annuaire->id),
+                    $this->formatId(ZoneAdmin::$prefix, $annuaire->zone_admin_id)
+                );
+            }
+        }
+    }
+
+    private function buildZoneAdmins(): void
+    {
+        $zones = DB::table('zone_admins')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($zones as $zone) {
+            $this->addNode(
+                4,
+                $this->formatId(ZoneAdmin::$prefix, $zone->id),
+                $zone->name,
+                '/images/zone.png',
+                'zone-admins'
+            );
+        }
+    }
+
+    private function buildForests(): void
+    {
+        $forests = DB::table('forest_ads')
+            ->select('id', 'name', 'zone_admin_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($forests as $forest) {
+            $this->addNode(
+                4,
+                $this->formatId(ForestAd::$prefix, $forest->id),
+                $forest->name,
+                '/images/forest.png',
+                'forest-ads'
+            );
+
+            if ($forest->zone_admin_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(ForestAd::$prefix, $forest->id),
+                    $this->formatId(ZoneAdmin::$prefix, $forest->zone_admin_id)
+                );
+            }
+        }
+    }
+
+    private function buildDomains(): void
+    {
+        $domains = DB::table('domaine_ads')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($domains as $domain) {
+            $this->addNode(
+                4,
+                $this->formatId(DomaineAd::$prefix, $domain->id),
+                $domain->name,
+                '/images/domain.png',
+                'domaine-ads'
+            );
+        }
+
+        $this->linkJoinTable('domaine_ad_forest_ad', DomaineAd::$prefix, ForestAd::$prefix, 'domaine_ad_id', 'forest_ad_id');
+    }
+
+    /**
+     * Build Process view (view 2) - Processus et informations
+     */
+    private function buildProcessView(): void
+    {
+        $this->buildInformation();
+        $this->buildProcesses();
+        $this->buildMacroProcesses();
+        $this->buildActivities();
+        $this->buildOperations();
+        $this->buildTasks();
+        $this->buildActors();
+    }
+
+    private function buildInformation(): void
+    {
+        $information = DB::table('information')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($information as $info) {
+            $this->addNode(
+                2,
+                $this->formatId(Information::$prefix, $info->id),
+                $info->name,
+                '/images/information.png',
+                'information'
+            );
+        }
+
+        $this->linkJoinTable('database_information', Information::$prefix, Database::$prefix, 'information_id', 'database_id');
+    }
+
+    private function buildProcesses(): void
+    {
+        $processes = DB::table('processes')
+            ->select('id', 'name', 'icon_id', 'macroprocess_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($processes as $process) {
+            $this->addNode(
+                2,
+                $this->formatId(Process::$prefix, $process->id),
+                $process->name,
+                $this->getIcon($process->icon_id, '/images/process.png'),
+                'processes'
+            );
+
+            if ($process->macroprocess_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(Process::$prefix, $process->id),
+                    $this->formatId(MacroProcessus::$prefix, $process->macroprocess_id)
+                );
+            }
+        }
+
+        $this->linkJoinTable('information_process', Information::$prefix, Process::$prefix, 'information_id', 'process_id');
+    }
+
+    private function buildMacroProcesses(): void
+    {
+        $macroProcesses = DB::table('macro_processuses')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($macroProcesses as $macroProcess) {
+            $this->addNode(
+                2,
+                $this->formatId(MacroProcessus::$prefix, $macroProcess->id),
+                $macroProcess->name,
+                '/images/macroprocess.png',
+                'macro-processuses'
+            );
+        }
+    }
+
+    private function buildActivities(): void
+    {
+        $activities = DB::table('activities')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($activities as $activity) {
+            $this->addNode(
+                2,
+                $this->formatId(Activity::$prefix, $activity->id),
+                $activity->name,
+                '/images/activity.png',
+                'activities'
+            );
+        }
+
+        $this->linkJoinTable('activity_process', Activity::$prefix, Process::$prefix, 'activity_id', 'process_id');
+    }
+
+    private function buildOperations(): void
+    {
+        $operations = DB::table('operations')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($operations as $operation) {
+            $this->addNode(
+                2,
+                $this->formatId(Operation::$prefix, $operation->id),
+                $operation->name,
+                '/images/operation.png',
+                'operations'
+            );
+        }
+
+        $this->linkJoinTable('activity_operation', Activity::$prefix, Operation::$prefix, 'activity_id', 'operation_id');
+    }
+
+    private function buildTasks(): void
+    {
+        $tasks = DB::table('tasks')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($tasks as $task) {
+            $this->addNode(
+                2,
+                $this->formatId(Task::$prefix, $task->id),
+                $task->name,
+                '/images/task.png',
+                'tasks'
+            );
+        }
+
+        $this->linkJoinTable('operation_task', Operation::$prefix, Task::$prefix, 'operation_id', 'task_id');
+    }
+
+    private function buildActors(): void
+    {
+        $actors = DB::table('actors')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($actors as $actor) {
+            $this->addNode(
+                2,
+                $this->formatId(Actor::$prefix, $actor->id),
+                $actor->name,
+                '/images/actor.png',
+                'actors'
+            );
+        }
+
+        $this->linkJoinTable('actor_operation', Actor::$prefix, Operation::$prefix, 'actor_id', 'operation_id');
+    }
+
+    /**
+     * Build Ecosystem view (view 1) - Entités et relations
+     */
+    private function buildEcosystemView(): void
+    {
+        $this->buildEntities();
+        $this->buildRelations();
+    }
+
+    private function buildEntities(): void
+    {
+        $entities = DB::table('entities')
+            ->select('id', 'name', 'icon_id', 'parent_entity_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($entities as $entity) {
+            $this->addNode(
+                1,
+                $this->formatId(Entity::$prefix, $entity->id),
+                $entity->name,
+                $this->getIcon($entity->icon_id, '/images/entity.png'),
+                'entities'
+            );
+
+            if ($entity->parent_entity_id !== null) {
+                $this->addFluxEdge(
+                    null,
+                    false,
+                    $this->formatId(Entity::$prefix, $entity->id),
+                    $this->formatId(Entity::$prefix, $entity->parent_entity_id)
+                );
+            }
+        }
+
+        $this->linkJoinTable('entity_process', Entity::$prefix, Process::$prefix, 'entity_id', 'process_id');
+        $this->linkJoinTable('entity_m_application', Entity::$prefix, MApplication::$prefix, 'entity_id', 'm_application_id');
+    }
+
+    private function buildRelations(): void
+    {
+        $relations = DB::table('relations')
+            ->select('id', 'name', 'source_id', 'destination_id')
+            ->whereNull('deleted_at')
+            ->get();
+
         foreach ($relations as $relation) {
-            $this->addNode($nodes, 1, $this->formatId('REL_', $relation->id), $relation->name, '/images/relation.png', 'relations');
-            $this->addLinkEdge($edges, $this->formatId('REL_', $relation->id), $this->formatId('ENTITY_', $relation->source_id));
-            $this->addLinkEdge($edges, $this->formatId('REL_', $relation->id), $this->formatId('ENTITY_', $relation->destination_id));
-        }
-        // entity_process
-        $joins = DB::table('entity_process')->select('entity_id', 'process_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ENTITY_', $join->entity_id), $this->formatId('PROCESS_', $join->process_id));
-        }
-        // entity_m_application
-        $joins = DB::table('entity_m_application')->select('entity_id', 'm_application_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ENTITY_', $join->entity_id), $this->formatId('APP_', $join->m_application_id));
-        }
+            $this->addNode(
+                1,
+                $this->formatId(Relation::$prefix, $relation->id),
+                $relation->name,
+                '/images/relation.png',
+                'relations'
+            );
 
-        return [$nodes, $edges];
-    }
+            $this->addLinkEdge(
+                $this->formatId(Relation::$prefix, $relation->id),
+                $this->formatId(Entity::$prefix, $relation->source_id)
+            );
 
-    private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null): void
-    {
-        $data = ['vue' => $vue, 'id' => $id,  'label' => $label, 'image' => $image, 'type' => $type];
-        if ($title !== null) {
-            $data['title'] = $title;
-        }
-        array_push($nodes, $data);
-    }
-
-    private function addLinkEdge(&$edges, $from, $to): void
-    {
-        $this->addEdge($edges, null, false, $from, $to, 'LINK');
-    }
-
-    private function addPhysicalLinkEdge(&$edges, $from, $to): void
-    {
-        $this->addEdge($edges, null, false, $from, $to, 'CABLE');
-    }
-
-    private function addFluxEdge(&$edges, $name, $bidir, $from, $to): void
-    {
-        $this->addEdge($edges, $name, $bidir, $from, $to, 'FLUX');
-    }
-
-    private function addEdge(&$edges, $name, $bidir, $from, $to, $type): void
-    {
-        if ($from !== null && $to !== null) {
-            array_push($edges, ['name' => $name, 'bidirectional' => $bidir, 'from' => $from, 'to' => $to, 'type' => $type]);
+            $this->addLinkEdge(
+                $this->formatId(Relation::$prefix, $relation->id),
+                $this->formatId(Entity::$prefix, $relation->destination_id)
+            );
         }
     }
 
     /**
-     * Concatenates a prefix and an identifier into a single identifier string, or returns null if the identifier is null.
-     *
-     * @param  string  $prefix  The string prefix to prepend.
-     * @param  mixed|null  $id  The identifier to append; when null, no identifier is produced.
-     * @return string|null The concatenated identifier (`$prefix . $id`) when `$id` is not null, or `null` otherwise.
+     * Helper methods
      */
-    private function formatId($prefix, $id)
+    private function addNode(int $vue, string $id, string $label, string $image, string $type, ?string $title = null): void
     {
-        if ($id !== null) {
-            return $prefix.$id;
+        $data = [
+            'vue' => $vue,
+            'id' => $id,
+            'label' => $label,
+            'image' => $image,
+            'type' => $type,
+        ];
+
+        if ($title !== null) {
+            $data['title'] = $title;
         }
 
-        return null;
+        $this->nodes[] = $data;
+    }
+
+    private function addEdge(?string $name, bool $bidirectional, string $from, string $to, string $type): void
+    {
+        if ($from !== null && $to !== null) {
+            $this->edges[] = [
+                'name' => $name,
+                'bidirectional' => $bidirectional,
+                'from' => $from,
+                'to' => $to,
+                'type' => $type,
+            ];
+        }
+    }
+
+    private function addLinkEdge(string $from, string $to): void
+    {
+        $this->addEdge(null, false, $from, $to, 'LINK');
+    }
+
+    private function addPhysicalLinkEdge(string $from, string $to): void
+    {
+        $this->addEdge(null, false, $from, $to, 'CABLE');
+    }
+
+    private function addFluxEdge(?string $name, bool $bidirectional, string $from, string $to): void
+    {
+        $this->addEdge($name, $bidirectional, $from, $to, 'FLUX');
+    }
+
+    private function formatId(string $prefix, $id): ?string
+    {
+        return $id !== null ? $prefix . $id : null;
+    }
+
+    private function getIcon(?int $iconId, string $defaultIcon): string
+    {
+        return $iconId === null ? $defaultIcon : "/admin/documents/{$iconId}";
+    }
+
+    private function linkToLocationOrSite(string $nodeId, $buildingId = null, $siteId = null, $bayId = null): void
+    {
+        if ($bayId !== null) {
+            $this->addLinkEdge($nodeId, $this->formatId(Bay::$prefix, $bayId));
+        } elseif ($buildingId !== null) {
+            $this->addLinkEdge($nodeId, $this->formatId(Building::$prefix, $buildingId));
+        } elseif ($siteId !== null) {
+            $this->addLinkEdge($nodeId, $this->formatId(Site::$prefix, $siteId));
+        }
+    }
+
+
+    // TODO: refactor me
+    private function linkWorkstationToSubnetworks($workstation): void
+    {
+        foreach ($this->subnetworks as $subnetwork) {
+            $addresses = explode(',', $workstation->address_ip ?? '');
+            foreach ($addresses as $address) {
+                if ($subnetwork->contains($address)) {
+                    $this->addLinkEdge(
+                        $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                        $this->formatId(Workstation::$prefix, $workstation->id)
+                    );
+                    break;
+                }
+            }
+        }
+    }
+
+    // TODO: refactor me
+    private function linkPhoneToSubnetworks($phone): void
+    {
+        foreach ($this->subnetworks as $subnetwork) {
+            $addresses = explode(',', $phone->address_ip ?? '');
+            foreach ($addresses as $address) {
+                if ($subnetwork->contains($address)) {
+                    $this->addLinkEdge(
+                        $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                        $this->formatId(Phone::$prefix, $phone->id)
+                    );
+                    break;
+                }
+            }
+        }
+    }
+
+    private function linkDeviceToSubnetworks(?string $addressIp, string $deviceId): void
+    {
+        if ($addressIp === null) {
+            return;
+        }
+
+        foreach ($this->subnetworks as $subnetwork) {
+            $addresses = explode(',', $addressIp);
+            foreach ($addresses as $address) {
+                if ($subnetwork->contains($address)) {
+                    $this->addLinkEdge(
+                        $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                        $deviceId
+                    );
+                    break;
+                }
+            }
+        }
+    }
+
+    private function linkJoinTable(string $table, string $fromPrefix, string $toPrefix, string $fromColumn, string $toColumn): void
+    {
+        $joins = DB::table($table)->select($fromColumn, $toColumn)->get();
+
+        foreach ($joins as $join) {
+            $this->addLinkEdge(
+                $this->formatId($fromPrefix, $join->{$fromColumn}),
+                $this->formatId($toPrefix, $join->{$toColumn})
+            );
+        }
     }
 }

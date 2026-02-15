@@ -1,3 +1,7 @@
+@props([
+    'applicationBlock',
+    'withLink' => false,
+])
 <table class="table table-bordered table-striped table-report" id="{{ $applicationBlock->getUID() }}">
     <tbody>
         <tr>
@@ -5,7 +9,11 @@
                 {{ trans('cruds.applicationBlock.fields.name') }}
             </th>
             <td>
-                {{ $applicationBlock->name }}
+            @if($withLink)
+            <a href="{{ route('admin.application-blocks.show',$applicationBlock->id) }}">{{ $applicationBlock->name }}</a>
+            @else
+            {{ $applicationBlock->name }}
+            @endif
             </td>
         </tr>
         <tr>

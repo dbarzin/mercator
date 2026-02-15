@@ -5,7 +5,7 @@
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=ANNUAIRE_{{$annuaire->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$annuaire->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 

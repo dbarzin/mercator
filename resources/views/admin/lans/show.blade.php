@@ -4,6 +4,11 @@
     <a class="btn btn-default" href="{{ route('admin.lans.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
+
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$lan->getUID()}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('lan_edit')
         <a class="btn btn-info" href="{{ route('admin.lans.edit', $lan->id) }}">
             {{ trans('global.edit') }}
@@ -23,13 +28,12 @@
         {{ trans('global.show') }} {{ trans('cruds.lan.title') }}
     </div>
     <div class="card-body">
-   <div class="card-body">
         @include('admin.lans._details', [
             'lan' => $lan,
             'withLink' => false,
         ])
      </div>
-    <div class="card-footer">
+     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $lan->created_at ? $lan->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $lan->updated_at ? $lan->updated_at->format(trans('global.timestamp')) : '' }}
     </div>

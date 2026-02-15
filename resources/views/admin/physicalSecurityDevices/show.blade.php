@@ -6,7 +6,7 @@
         </a>
 
         <a class="btn btn-success"
-           href="{{ route('admin.report.explore') }}?node=PSECURITY_{{$physicalSecurityDevice->id}}">
+           href="{{ route('admin.report.explore') }}?node={{$physicalSecurityDevice->getUID()}}">
             {{ trans('global.explore') }}
         </a>
 

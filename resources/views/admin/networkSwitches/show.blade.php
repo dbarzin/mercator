@@ -6,7 +6,7 @@
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SWITCH_{{$networkSwitch->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$networkSwitch->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
