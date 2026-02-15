@@ -253,9 +253,9 @@
             edges = new vis.DataSet([]);
 
             // Create a network
-            var container = document.getElementById('mynetwork');
+            const container = document.getElementById('mynetwork');
 
-            var data = {
+            const data = {
                 nodes: nodes,
                 edges: edges
             };
@@ -333,7 +333,7 @@
 
         // Add a node base on the node.id
         function addNode(id) {
-            var new_node = _nodes.get(id);
+            const new_node = _nodes.get(id);
             if (new_node == null)
                 return;
             // Check node already present
@@ -341,7 +341,7 @@
                 network.body.data.nodes.add(new_node);
             }
             // add edges
-            var edgeList = new_node.edges;
+            const edgeList = new_node.edges;
             if (edgeList === undefined)
                 return;
 
@@ -427,16 +427,17 @@
 
             var activeNode;
             network.on("oncontext", function (params) {
+                console.log('Context menu on node:', params);
                 params.event.preventDefault();
                 activeNode = this.getNodeAt(params.pointer.DOM);
+                console.log(activeNode);
                 if (activeNode !== undefined) {
-                    showContextMenu(params.pointer.DOM.x, params.pointer.DOM.y, activeNode);
+                    showContextMenu(params.event.pageX, params.event.pageY, activeNode);
                 }
             });
 
             // Gestion du double-clic pour déployer
             network.on('doubleClick', async function(params) {
-                console.log('Double-click on node:', params.nodes);
                 if (params.nodes.length > 0) {
                     const nodeId = params.nodes[0];
                     await deployFromNode(nodeId, 1, new Set(), getFilter());
@@ -456,19 +457,35 @@
             });
         }
 
-        function showContextMenu(left, top, nodeId) {
-            const menu = document.getElementById('explore_context');
-            menu.innerHTML = '';
-            menu.style.display = 'block';
-            menu.style.left = left + 'px';
-            menu.style.top = top + 'px';
+        const contextMenu = document.getElementById("explore_context");
 
-            if (nodeId !== undefined) {
-                var node = _nodes.get(nodeId);
-                const li1 = document.createElement('li');
-                li1.innerHTML = '<a href="/admin/' + node.type + '/' + nodeId.replace(/[A-Z]+_/, '') + '"><i class="far fa-edit fa-fw"></i> {{ trans("global.view") }}</a>';
-                menu.appendChild(li1);
-            }
+        function displayContextMenu(left, top) {
+            contextMenu.style.display = "block";
+            contextMenu.style.opacity = "1";
+            contextMenu.style.top = top + "px";
+            contextMenu.style.left = left + "px";
+        }
+
+        function hideContextMenu() {
+            contextMenu.style.opacity = "0";
+            contextMenu.style.display = "none";
+        }
+
+        function showContextMenu(left, top, nodeId) {
+            const node = _nodes.get(nodeId);
+            const type = node.type;
+            const id = nodeId.split("_").pop();
+            contextMenu.innerHTML = "<li><a href='/admin/" + type + "/" + id + "'>{{ trans("global.view") }}</a></li>" +
+                "<li><a href='/admin/" + type + "/" + id + "/edit'>{{ trans("global.edit") }}</a></li>" +
+                "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span></li>"
+            displayContextMenu(left, top);
+
+            let hideNode = document.getElementById("hideNode");
+            hideNode.addEventListener("click", function () {
+                network.body.data.nodes.remove(node);
+                hideContextMenu();
+            });
+
         }
 
         function deployAll() {
@@ -523,7 +540,7 @@
         }
 
         function addEdge(sourceNodeId, targetNodeId) {
-            var edgeList = _nodes.get(sourceNodeId).edges;
+            const edgeList = _nodes.get(sourceNodeId).edges;
             for (const edge of edgeList) {
                 if (edge.attachedNodeId === targetNodeId) {
                     if (edge.edgeType === 'FLUX') {
@@ -572,7 +589,7 @@
         }
 
         function getFilter() {
-            let filter = [];
+            const filter = [];
             for (let option of document.getElementById('filters').options)
                 if (option.selected)
                     filter.push(option.value);
