@@ -28,13 +28,12 @@
         {{ trans('global.show') }} {{ trans('cruds.lan.title') }}
     </div>
     <div class="card-body">
-   <div class="card-body">
         @include('admin.lans._details', [
             'lan' => $lan,
             'withLink' => false,
         ])
      </div>
-    <div class="card-footer">
+     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $lan->created_at ? $lan->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $lan->updated_at ? $lan->updated_at->format(trans('global.timestamp')) : '' }}
     </div>

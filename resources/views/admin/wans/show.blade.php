@@ -5,7 +5,7 @@
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$wlan->getUID()}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$wan->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
