@@ -5,6 +5,10 @@
         {{ trans('global.back_to_list') }}
     </a>
 
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$gateway->getUID()}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('entity_edit')
         <a class="btn btn-info" href="{{ route('admin.gateways.edit', $gateway->id) }}">
             {{ trans('global.edit') }}

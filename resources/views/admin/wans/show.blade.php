@@ -4,6 +4,11 @@
     <a class="btn btn-default" href="{{ route('admin.wans.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
+
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$wlan->getUID()}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('wan_edit')
         <a class="btn btn-info" href="{{ route('admin.wans.edit', $wan->id) }}">
             {{ trans('global.edit') }}
