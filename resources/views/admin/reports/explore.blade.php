@@ -88,12 +88,24 @@ Physique :
 </button>
                                     &nbsp;
                                     &nbsp;
-                                    <!--
-                                    Direction :
-                                    <input type="radio" name="direction" value="up" checked> {{ trans("cruds.report.explorer.up") }}
-                                    <input type="radio" name="direction" value="down"> {{ trans("cruds.report.explorer.down") }}
-                                    <input type="radio" name="direction" value="both"> {{ trans("cruds.report.explorer.both") }}
-                                    -->
+
+<div class="btn-group" role="group" aria-label="Direction">
+    <input type="radio" class="btn-check" name="direction" id="direction-up" value="up" autocomplete="off">
+    <label class="btn btn-outline-primary" for="direction-up">
+        ↑ {{ trans("cruds.report.explorer.up") }}
+    </label>
+
+    <input type="radio" class="btn-check" name="direction" id="direction-down" value="down" autocomplete="off">
+    <label class="btn btn-outline-primary" for="direction-down">
+        ↓ {{ trans("cruds.report.explorer.down") }}
+    </label>
+
+    <input type="radio" class="btn-check" name="direction" id="direction-both" value="both" checked autocomplete="off">
+    <label class="btn btn-outline-primary" for="direction-both">
+        ↕ {{ trans("cruds.report.explorer.both") }}
+    </label>
+</div>
+
                                 </td>
                             </tr>
                         </table>
@@ -182,7 +194,7 @@ Physique :
             } catch (error) {
                 console.error('Erreur lors du chargement:', error);
                 loadingIndicator.className = 'alert alert-danger';
-                loadingText.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erreur: ${error.message}`;
+                loadingText.textContent = `Erreur: ${error.message}`;
             }
 
         }
@@ -415,7 +427,7 @@ Physique :
                 return edges.get({
                     filter: function (item) {
                         return (
-                            (item.from === from) && (item.to === to) ||
+                            ((item.from === from) && (item.to === to)) ||
                             ((item.to === from) && (item.from === to))
                             );
                     }
