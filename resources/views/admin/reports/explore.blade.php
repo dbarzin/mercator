@@ -663,10 +663,8 @@ toggleBtn.addEventListener('click', function() {
         toggleBtn.classList.remove('physics-inactive', 'btn-danger');
         toggleBtn.classList.add('physics-active', 'btn-success');
         icon.className = 'bi bi-play-fill';
-        network.setOptions({physics: true});
-
         // Activer votre animation physique
-        enablePhysics();
+        network.setOptions({physics: true});
     } else {
         // Mode inactif (rouge, stop)
         toggleBtn.classList.remove('physics-active', 'btn-success');
@@ -674,20 +672,9 @@ toggleBtn.addEventListener('click', function() {
         icon.className = 'bi bi-pause-fill';
 
         // Désactiver votre animation physique
-        disablePhysics();
+        network.setOptions({physics: false});
     }
 });
-
-// Fonctions à adapter selon votre implémentation
-function enablePhysics() {
-    console.log('Animation physique activée');
-    network.setOptions({physics: true});
-}
-
-function disablePhysics() {
-    console.log('Animation physique désactivée');
-    network.setOptions({physics: false});
-}
 
         });
 
