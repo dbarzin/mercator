@@ -1379,6 +1379,9 @@ return [
             'physics' => 'Physique',
             'deploy' => 'Déployer',
             'please_select' => 'Veuillez sélectionner un noeud pour déployer.',
+            'up' => 'Haut',
+            'down' => 'Bas',
+            'both' => 'Les deux'
         ],
     ],
     'role' => [

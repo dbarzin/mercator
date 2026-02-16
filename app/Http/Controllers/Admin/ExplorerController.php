@@ -1006,6 +1006,11 @@ class ExplorerController extends Controller
                 'application-services'
             );
         }
+        
+        $this->linkJoinTable('application_module_application_service',
+            ApplicationModule::$prefix, ApplicationService::$prefix,
+            'application_module_id', 'application_service_id');
+
     }
 
     private function buildApplicationModules(): void
@@ -1043,8 +1048,12 @@ class ExplorerController extends Controller
             );
         }
 
-        $this->linkJoinTable('database_logical_server', Database::$prefix, LogicalServer::$prefix, 'database_id', 'logical_server_id');
-        $this->linkJoinTable('database_m_application', Database::$prefix, MApplication::$prefix, 'database_id', 'm_application_id');
+        $this->linkJoinTable('database_logical_server',
+            Database::$prefix, LogicalServer::$prefix,
+            'database_id', 'logical_server_id');
+        $this->linkJoinTable('database_m_application',
+            Database::$prefix, MApplication::$prefix,
+            'database_id', 'm_application_id');
     }
 
     /**
@@ -1242,7 +1251,13 @@ class ExplorerController extends Controller
             );
         }
 
-        $this->linkJoinTable('activity_process', Activity::$prefix, Process::$prefix, 'activity_id', 'process_id');
+        $this->linkJoinTable('activity_process',
+            Activity::$prefix, Process::$prefix,
+            'activity_id', 'process_id');
+
+        $this->linkJoinTable('activity_m_application',
+            Activity::$prefix, MApplication::$prefix,
+            'activity_id', 'm_application_id');
     }
 
     private function buildOperations(): void
@@ -1360,12 +1375,12 @@ class ExplorerController extends Controller
                 'relations'
             );
 
-            $this->addLinkEdge(
-                $this->formatId(Relation::$prefix, $relation->id),
-                $this->formatId(Entity::$prefix, $relation->source_id)
+            $this->addFluxEdge(null, false,
+                $this->formatId(Entity::$prefix, $relation->source_id),
+                $this->formatId(Relation::$prefix, $relation->id)
             );
 
-            $this->addLinkEdge(
+            $this->addFluxEdge(null, false,
                 $this->formatId(Relation::$prefix, $relation->id),
                 $this->formatId(Entity::$prefix, $relation->destination_id)
             );

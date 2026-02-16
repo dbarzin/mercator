@@ -38,7 +38,7 @@ npm install
 npm run build
 
 # Vérifie s'il y a quelque chose à valider
-if ! git diff --quiet -- public/build/assets/; then
+if ! git diff --quiet -- public/build/assets/*; then
     git add public/build/assets/*
     git commit -m "npm build"
     git push
