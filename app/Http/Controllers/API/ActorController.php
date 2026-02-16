@@ -28,7 +28,7 @@ class ActorController extends APIController
     {
         abort_if(Gate::denies('actor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $actor = $this->storeResource($request->validated());
+        $actor = Actor::query()->create($request->all());
 
         return response()->json($actor, Response::HTTP_CREATED);
     }
@@ -45,7 +45,7 @@ class ActorController extends APIController
     {
         abort_if(Gate::denies('actor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $this->updateResource($actor, $request->validated());
+        $actor->update($request->all());
 
         return response()->json();
     }
