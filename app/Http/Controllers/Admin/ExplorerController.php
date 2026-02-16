@@ -1242,7 +1242,13 @@ class ExplorerController extends Controller
             );
         }
 
-        $this->linkJoinTable('activity_process', Activity::$prefix, Process::$prefix, 'activity_id', 'process_id');
+        $this->linkJoinTable('activity_process',
+            Activity::$prefix, Process::$prefix,
+            'activity_id', 'process_id');
+
+        $this->linkJoinTable('activity_m_application',
+            Activity::$prefix, MApplication::$prefix,
+            'activity_id', 'm_application_id');
     }
 
     private function buildOperations(): void
@@ -1360,12 +1366,12 @@ class ExplorerController extends Controller
                 'relations'
             );
 
-            $this->addLinkEdge(
-                $this->formatId(Relation::$prefix, $relation->id),
-                $this->formatId(Entity::$prefix, $relation->source_id)
+            $this->addFluxEdge(null, false,
+                $this->formatId(Entity::$prefix, $relation->source_id),
+                $this->formatId(Relation::$prefix, $relation->id)
             );
 
-            $this->addLinkEdge(
+            $this->addFluxEdge(null, false,
                 $this->formatId(Relation::$prefix, $relation->id),
                 $this->formatId(Entity::$prefix, $relation->destination_id)
             );

@@ -47,12 +47,11 @@
                                     </div>
                                 </td>
                                 <td style="text-align: left; vertical-align: middle;">
-                                    <a href="#" id="add_node_button"
-                                       onclick="addNode(document.getElementById('node').value)">
-                                        <i class="bi bi-plus-square-fill"></i>
-                                    </a>
+<button type="button" class="btn btn-primary" onclick="addNode(document.getElementById('node').value)">
+<i class="bi bi-plus-square-fill"></i>&nbsp;Ajouter
+</button>
                                 </td>
-                                <td style="text-align: right; vertical-align: right;">
+                                <td style="text-align: right; vertical-align: top;">
                                     &nbsp;
                                     <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();"
                                        href="#"><i class="fas fa-camera-retro"></i>
@@ -63,17 +62,18 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <a href="#" onclick="network.deleteSelected()" class="command">
-                                        <i class="bi bi-dash-circle"></i>
-                                        {{ trans("cruds.report.explorer.delete") }}
-                                    </a>
-                                    &nbsp;
-                                    <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
-                                        <i class="bi bi-arrow-repeat"></i>
-                                        {{ trans("cruds.report.explorer.reload") }}
-                                    </a>
-                                    <input type="checkbox" id="physicsCheckbox" class="command" checked>
-                                    <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
+<button type="button" class="btn btn-danger" onclick="network.deleteSelected()">
+<i class="bi bi-dash-circle"></i>&nbsp;{{ trans("cruds.report.explorer.delete") }}
+</button>
+&nbsp;
+<button type="button" class="btn btn-warning" onclick="network.unselectAll(); nodes.clear(); edges.clear(); network.redraw();">
+<i class="bi bi-arrow-repeat"></i>&nbsp;{{ trans("cruds.report.explorer.reload") }}
+</button>
+&nbsp;&nbsp;
+Physique :
+<button id="physicsToggle" class="btn btn-success physics-active" type="button">
+    <i class="bi bi-play-fill"></i>
+</button>
                                     &nbsp;
                                     &nbsp;
                                     <select id="depth">
@@ -83,10 +83,17 @@
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
-                                    <a href="#" onclick="deployAll()">
-                                        <i class="fas fa-star"></i>
-                                        {{ trans("cruds.report.explorer.deploy") }}
-                                    </a>
+<button type="button" class="btn btn-info" onclick="deployAll()">
+<i class="fas fa-star"></i>&nbsp;{{ trans("cruds.report.explorer.deploy") }}
+</button>
+                                    &nbsp;
+                                    &nbsp;
+                                    <!--
+                                    Direction :
+                                    <input type="radio" name="direction" value="up" checked> {{ trans("cruds.report.explorer.up") }}
+                                    <input type="radio" name="direction" value="down"> {{ trans("cruds.report.explorer.down") }}
+                                    <input type="radio" name="direction" value="both"> {{ trans("cruds.report.explorer.both") }}
+                                    -->
                                 </td>
                             </tr>
                         </table>
@@ -349,7 +356,8 @@
             for (const edge of edgeList) {
                 var target_node = _nodes.get(edge.attachedNodeId);
                 if (target_node !== undefined) {
-                    if ((nodes.get(target_node.id) != null) && (exists(new_node.id, target_node.id, edge.name).length == 0)) {
+                    if ((nodes.get(target_node.id) != null) &&
+                    (exists(new_node.id, target_node.id, edge.name).length === 0)) {
                         if (edge.edgeType === 'FLUX') {
                             if (edge.edgeDirection === 'TO') {
                                 if (edge.bidirectional)
@@ -406,13 +414,19 @@
             if (label === undefined)
                 return edges.get({
                     filter: function (item) {
-                        return ((item.from == from) && (item.to == to) || ((item.to == from) && (item.from == to)));
+                        return (
+                            (item.from === from) && (item.to === to) ||
+                            ((item.to === from) && (item.from === to))
+                            );
                     }
                 });
             else
                 return edges.get({
                     filter: function (item) {
-                        return (((item.from == from) && (item.to == to) && (item.label === label)) || ((item.to == from) && (item.from == to) && (item.label === label)));
+                        return (
+                            ((item.from === from) && (item.to === to) && (item.label === label)) ||
+                            ((item.to === from) && (item.from === to) && (item.label === label))
+                            );
                     }
                 });
         }
@@ -449,11 +463,6 @@
                     document.getElementById('explore_context').style.display = 'none';
                     document.getElementById('explore_context').innerHTML = '';
                 }
-            });
-
-            document.getElementById("physicsCheckbox").addEventListener('change', (e) => {
-                var value = e.target.checked;
-                network.setOptions({physics: value});
             });
         }
 
@@ -517,9 +526,8 @@
                     let targetNode = _nodes.get(targetNodeId);
                     if (targetNode == null)
                         continue;
-
                     if (
-                        ((filter.length == 0) || filter.includes(targetNode.vue))
+                        ((filter.length === 0) || filter.includes(targetNode.vue))
                         ||
                         (filter.includes("8") && (edge.edgeType === 'CABLE'))
                         ||
@@ -637,7 +645,52 @@
                 .on('select2:unselect', function (e) {
                     apply_filter();
                 });
+
+
+/********************/
+// Gestion du toggle
+let physicsEnabled = true;
+
+const toggleBtn = document.getElementById('physicsToggle');
+const icon = toggleBtn.querySelector('i');
+const text = toggleBtn.querySelector('span');
+
+toggleBtn.addEventListener('click', function() {
+    physicsEnabled = !physicsEnabled;
+
+    if (physicsEnabled) {
+        // Mode actif (vert, play)
+        toggleBtn.classList.remove('physics-inactive', 'btn-danger');
+        toggleBtn.classList.add('physics-active', 'btn-success');
+        icon.className = 'bi bi-play-fill';
+        network.setOptions({physics: true});
+
+        // Activer votre animation physique
+        enablePhysics();
+    } else {
+        // Mode inactif (rouge, stop)
+        toggleBtn.classList.remove('physics-active', 'btn-success');
+        toggleBtn.classList.add('physics-inactive', 'btn-danger');
+        icon.className = 'bi bi-pause-fill';
+
+        // Désactiver votre animation physique
+        disablePhysics();
+    }
+});
+
+// Fonctions à adapter selon votre implémentation
+function enablePhysics() {
+    console.log('Animation physique activée');
+    network.setOptions({physics: true});
+}
+
+function disablePhysics() {
+    console.log('Animation physique désactivée');
+    network.setOptions({physics: false});
+}
+
         });
+
 
     </script>
 
