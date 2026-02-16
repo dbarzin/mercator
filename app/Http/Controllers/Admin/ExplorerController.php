@@ -1006,6 +1006,11 @@ class ExplorerController extends Controller
                 'application-services'
             );
         }
+        
+        $this->linkJoinTable('application_module_application_service',
+            ApplicationModule::$prefix, ApplicationService::$prefix,
+            'application_module_id', 'application_service_id');
+
     }
 
     private function buildApplicationModules(): void
@@ -1043,8 +1048,12 @@ class ExplorerController extends Controller
             );
         }
 
-        $this->linkJoinTable('database_logical_server', Database::$prefix, LogicalServer::$prefix, 'database_id', 'logical_server_id');
-        $this->linkJoinTable('database_m_application', Database::$prefix, MApplication::$prefix, 'database_id', 'm_application_id');
+        $this->linkJoinTable('database_logical_server',
+            Database::$prefix, LogicalServer::$prefix,
+            'database_id', 'logical_server_id');
+        $this->linkJoinTable('database_m_application',
+            Database::$prefix, MApplication::$prefix,
+            'database_id', 'm_application_id');
     }
 
     /**
