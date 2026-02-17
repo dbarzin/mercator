@@ -107,6 +107,9 @@ class ExplorerController extends Controller
         $this->buildProcessView();
         $this->buildEcosystemView();
 
+        // Sort elements by name
+        usort($this->nodes, fn($a, $b) => strcmp($a['label'], $b['label']));
+
         return [$this->nodes, $this->edges];
     }
 
@@ -147,7 +150,8 @@ class ExplorerController extends Controller
                 $this->formatId(Site::$prefix, $site->id),
                 $site->name,
                 $this->getIcon($site->icon_id, '/images/site.png'),
-                'sites'
+                'sites',
+                600
             );
         }
     }
@@ -165,7 +169,8 @@ class ExplorerController extends Controller
                 $this->formatId(Building::$prefix, $building->id),
                 $building->name,
                 $this->getIcon($building->icon_id, '/images/building.png'),
-                'buildings'
+                'buildings',
+                605
             );
 
             if ($building->building_id !== null) {
@@ -190,7 +195,12 @@ class ExplorerController extends Controller
             ->get();
 
         foreach ($bays as $bay) {
-            $this->addNode(6, $this->formatId(Bay::$prefix, $bay->id), $bay->name, '/images/bay.png', 'bays');
+            $this->addNode(6,
+                $this->formatId(Bay::$prefix, $bay->id),
+                $bay->name,
+                '/images/bay.png',
+                'bays',
+                610);
 
             if ($bay->room_id !== null) {
                 $this->addLinkEdge(
@@ -214,7 +224,8 @@ class ExplorerController extends Controller
                 $this->formatId(PhysicalServer::$prefix, $server->id),
                 $server->name,
                 $this->getIcon($server->icon_id, '/images/server.png'),
-                'physical-servers'
+                'physical-servers',
+                615
             );
 
             if ($server->bay_id !== null) {
@@ -240,6 +251,7 @@ class ExplorerController extends Controller
                 $workstation->name,
                 $this->getIcon($workstation->icon_id, '/images/workstation.png'),
                 'workstations',
+                620,
                 $workstation->address_ip
             );
 
@@ -266,7 +278,8 @@ class ExplorerController extends Controller
                 $this->formatId(Phone::$prefix, $phone->id),
                 $phone->name,
                 $this->getIcon(null, '/images/phone.png'),
-                'workstations',
+                'phones',
+                625,
                 $phone->address_ip
             );
 
@@ -293,6 +306,7 @@ class ExplorerController extends Controller
                 $peripheral->name,
                 $peripheral->icon_id === null ? '/images/peripheral.png' : "/admin/documents/{$peripheral->icon_id}",
                 'peripherals',
+                630,
                 $peripheral->address_ip
             );
             if ($peripheral->bay_id !== null) {
@@ -351,6 +365,7 @@ class ExplorerController extends Controller
                 $storageDevice->name,
                 '/images/storagedev.png',
                 'storage-devices',
+                635,
                 $storageDevice->address_ip);
 
             if ($storageDevice->bay_id !== null) {
@@ -385,7 +400,8 @@ class ExplorerController extends Controller
                 $this->formatId(PhysicalSwitch::$prefix, $switch->id),
                 $switch->name,
                 '/images/switch.png',
-                'physical-switches'
+                'physical-switches',
+                640
             );
 
             $this->linkToLocationOrSite(
@@ -412,7 +428,8 @@ class ExplorerController extends Controller
                 $this->formatId(PhysicalRouter::$prefix, $router->id),
                 $router->name,
                 '/images/router.png',
-                'physical-routers'
+                'physical-routers',
+                650
             );
 
             $this->linkToLocationOrSite(
@@ -436,6 +453,7 @@ class ExplorerController extends Controller
                 $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
                 $wifiTerminal->name, '/images/wifi.png',
                 'wifi-terminals',
+                655,
                 $wifiTerminal->address_ip);
 
             if ($wifiTerminal->building_id !== null) {
@@ -476,6 +494,7 @@ class ExplorerController extends Controller
                 $device->name,
                 $this->getIcon($device->icon_id, '/images/security.png'),
                 'physical-security-devices',
+                660,
                 $device->address_ip
             );
 
@@ -503,7 +522,8 @@ class ExplorerController extends Controller
                 $this->formatId(Wan::$prefix, $wan->id),
                 $wan->name,
                 '/images/vlan.png',
-                'wans'
+                'wans',
+                670
             );
         }
 
@@ -523,7 +543,8 @@ class ExplorerController extends Controller
                 $this->formatId(Man::$prefix, $man->id),
                 $man->name,
                 '/images/vlan.png',
-                'mans'
+                'mans',
+                680
             );
         }
 
@@ -543,11 +564,14 @@ class ExplorerController extends Controller
                 $this->formatId(Lan::$prefix, $lan->id),
                 $lan->name,
                 '/images/vlan.png',
-                'lans'
+                'lans',
+                690
             );
         }
 
-        $this->linkJoinTable('lan_wan', Lan::$prefix, Wan::$prefix, 'lan_id', 'wan_id');
+        $this->linkJoinTable('lan_wan',
+            Lan::$prefix, Wan::$prefix,
+            'lan_id', 'wan_id');
     }
 
     private function buildVLAN(): void
@@ -563,7 +587,8 @@ class ExplorerController extends Controller
                 $this->formatId(Vlan::$prefix, $vlan->id),
                 $vlan->name,
                 '/images/vlan.png',
-                'vlans'
+                'vlans',
+                520
             );
         }
     }
@@ -613,7 +638,7 @@ class ExplorerController extends Controller
                 $this->formatId(Network::$prefix, $network->id),
                 $network->name,
                 '/images/cloud.png',
-                'networks');
+                'networks', 500);
         }
     }
 
@@ -630,7 +655,7 @@ class ExplorerController extends Controller
                 $this->formatId(NetworkSwitch::$prefix, $switch->id),
                 $switch->name,
                 '/images/switch.png',
-                'network-switches'
+                'network-switches', 510
             );
         }
     }
@@ -643,7 +668,7 @@ class ExplorerController extends Controller
                 $this->formatId(Subnetwork::$prefix, $subnetwork->id),
                 $subnetwork->name,
                 '/images/network.png',
-                'subnetworks',
+                'subnetworks', 515,
                 $subnetwork->address
             );
 
@@ -676,7 +701,7 @@ class ExplorerController extends Controller
                 $this->formatId(Gateway::$prefix, $gateway->id),
                 $gateway->name,
                 '/images/gateway.png',
-                'gateways',
+                'gateways',530,
                 $gateway->ip
             );
         }
@@ -695,7 +720,7 @@ class ExplorerController extends Controller
                 $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
                 $entity->name,
                 '/images/entity.png',
-                'external-connected-entities'
+                'external-connected-entities', 540,
             );
         }
     }
@@ -713,7 +738,7 @@ class ExplorerController extends Controller
                 $this->formatId(Container::$prefix, $container->id),
                 $container->name,
                 $container->icon_id === null ? '/images/container.png' : "/admin/documents/{$container->icon_id}",
-                'containers'
+                'containers', 550
             );
         }
 
@@ -750,14 +775,17 @@ class ExplorerController extends Controller
 
     private function buildClusters(): void {
         // Clusters
-        $clusters = DB::table('clusters')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
+        $clusters = DB::table('clusters')
+            ->select('id', 'name', 'icon_id', 'address_ip')
+            ->whereNull('deleted_at')->get();
         foreach ($clusters as $cluster) {
             $this->addNode(
                 5,
                 $this->formatId(Cluster::$prefix, $cluster->id),
                 $cluster->name,
                 $cluster->icon_id === null ? '/images/cluster.png' : "/admin/documents/{$cluster->icon_id}",
-                'clusters'
+                'clusters', 560,
+                $cluster->address_ip
             );
         }
 
@@ -800,7 +828,7 @@ class ExplorerController extends Controller
                 $this->formatId(LogicalServer::$prefix, $server->id),
                 $server->name,
                 $this->getIcon($server->icon_id, '/images/server.png'),
-                'logical-servers',
+                'logical-servers', 580,
                 $server->address_ip
             );
 
@@ -825,7 +853,7 @@ class ExplorerController extends Controller
                 $this->formatId(Certificate::$prefix, $certificate->id),
                 $certificate->name,
                 '/images/certificate.png',
-                'certificates'
+                'certificates', 570
             );
         }
 
@@ -939,37 +967,8 @@ class ExplorerController extends Controller
                 continue;
             }
 
-            $this->addFluxEdge($flux->nature, $flux->bidirectional, $src_id, $dest_id);
+            $this->addFluxEdge($flux->nature, $flux->bidirectional ?? false, $src_id, $dest_id);
         }
-    }
-
-
-    private function buildApplications(): void
-    {
-        $applications = DB::table('m_applications')
-            ->select('id', 'name', 'icon_id', 'application_block_id')
-            ->whereNull('deleted_at')
-            ->get();
-
-        foreach ($applications as $app) {
-            $this->addNode(
-                3,
-                $this->formatId(MApplication::$prefix, $app->id),
-                $app->name,
-                $this->getIcon($app->icon_id, '/images/application.png'),
-                'm-applications'
-            );
-
-            if ($app->application_block_id !== null) {
-                $this->addLinkEdge(
-                    $this->formatId(MApplication::$prefix, $app->id),
-                    $this->formatId(ApplicationBlock::$prefix, $app->application_block_id)
-                );
-            }
-        }
-
-        $this->linkJoinTable('application_service_m_application', ApplicationService::$prefix, MApplication::$prefix, 'application_service_id', 'm_application_id');
-        $this->linkJoinTable('logical_server_m_application', LogicalServer::$prefix, MApplication::$prefix, 'logical_server_id', 'm_application_id');
     }
 
     private function buildApplicationBlocks(): void
@@ -985,10 +984,39 @@ class ExplorerController extends Controller
                 $this->formatId(ApplicationBlock::$prefix, $block->id),
                 $block->name,
                 '/images/applicationblock.png',
-                'application-blocks'
+                'application-blocks', 300
             );
         }
     }
+
+    private function buildApplications(): void
+    {
+        $applications = DB::table('m_applications')
+            ->select('id', 'name', 'icon_id', 'application_block_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($applications as $app) {
+            $this->addNode(
+                3,
+                $this->formatId(MApplication::$prefix, $app->id),
+                $app->name,
+                $this->getIcon($app->icon_id, '/images/application.png'),
+                'applications', 310
+            );
+
+            if ($app->application_block_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(MApplication::$prefix, $app->id),
+                    $this->formatId(ApplicationBlock::$prefix, $app->application_block_id)
+                );
+            }
+        }
+
+        $this->linkJoinTable('application_service_m_application', ApplicationService::$prefix, MApplication::$prefix, 'application_service_id', 'm_application_id');
+        $this->linkJoinTable('logical_server_m_application', LogicalServer::$prefix, MApplication::$prefix, 'logical_server_id', 'm_application_id');
+    }
+
 
     private function buildApplicationServices(): void
     {
@@ -1003,10 +1031,10 @@ class ExplorerController extends Controller
                 $this->formatId(ApplicationService::$prefix, $service->id),
                 $service->name,
                 '/images/applicationservice.png',
-                'application-services'
+                'application-services', 320
             );
         }
-        
+
         $this->linkJoinTable('application_module_application_service',
             ApplicationModule::$prefix, ApplicationService::$prefix,
             'application_module_id', 'application_service_id');
@@ -1026,7 +1054,7 @@ class ExplorerController extends Controller
                 $this->formatId(ApplicationModule::$prefix, $module->id),
                 $module->name,
                 '/images/module.png',
-                'application-modules'
+                'application-modules', 330
             );
         }
     }
@@ -1034,7 +1062,7 @@ class ExplorerController extends Controller
     private function buildDatabases(): void
     {
         $databases = DB::table('databases')
-            ->select('id', 'name')
+            ->select('id', 'name', 'icon_id')
             ->whereNull('deleted_at')
             ->get();
 
@@ -1043,8 +1071,8 @@ class ExplorerController extends Controller
                 3,
                 $this->formatId(Database::$prefix, $database->id),
                 $database->name,
-                '/images/database.png',
-                'databases'
+                $this->getIcon($database->icon_id, '/images/database.png'),
+                'databases', 340
             );
         }
 
@@ -1061,10 +1089,28 @@ class ExplorerController extends Controller
      */
     private function buildAdministrativeView(): void
     {
-        $this->buildAnnuaires();
         $this->buildZoneAdmins();
+        $this->buildAnnuaires();
         $this->buildForests();
         $this->buildDomains();
+    }
+
+    private function buildZoneAdmins(): void
+    {
+        $zones = DB::table('zone_admins')
+            ->select('id', 'name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($zones as $zone) {
+            $this->addNode(
+                4,
+                $this->formatId(ZoneAdmin::$prefix, $zone->id),
+                $zone->name,
+                '/images/zoneadmin.png',
+                'zone-admins', 400
+            );
+        }
     }
 
     private function buildAnnuaires(): void
@@ -1080,7 +1126,7 @@ class ExplorerController extends Controller
                 $this->formatId(Annuaire::$prefix, $annuaire->id),
                 $annuaire->name,
                 '/images/annuaire.png',
-                'annuaires'
+                'annuaires', 420
             );
 
             if ($annuaire->zone_admin_id !== null) {
@@ -1092,23 +1138,6 @@ class ExplorerController extends Controller
         }
     }
 
-    private function buildZoneAdmins(): void
-    {
-        $zones = DB::table('zone_admins')
-            ->select('id', 'name')
-            ->whereNull('deleted_at')
-            ->get();
-
-        foreach ($zones as $zone) {
-            $this->addNode(
-                4,
-                $this->formatId(ZoneAdmin::$prefix, $zone->id),
-                $zone->name,
-                '/images/zone.png',
-                'zone-admins'
-            );
-        }
-    }
 
     private function buildForests(): void
     {
@@ -1122,8 +1151,8 @@ class ExplorerController extends Controller
                 4,
                 $this->formatId(ForestAd::$prefix, $forest->id),
                 $forest->name,
-                '/images/forest.png',
-                'forest-ads'
+                '/images/ldap.png',
+                'forest-ads', 440
             );
 
             if ($forest->zone_admin_id !== null) {
@@ -1148,11 +1177,13 @@ class ExplorerController extends Controller
                 $this->formatId(DomaineAd::$prefix, $domain->id),
                 $domain->name,
                 '/images/domain.png',
-                'domaine-ads'
+                'domaine-ads', 460
             );
         }
 
-        $this->linkJoinTable('domaine_ad_forest_ad', DomaineAd::$prefix, ForestAd::$prefix, 'domaine_ad_id', 'forest_ad_id');
+        $this->linkJoinTable('domaine_ad_forest_ad',
+            DomaineAd::$prefix, ForestAd::$prefix,
+            'domaine_ad_id', 'forest_ad_id');
     }
 
     /**
@@ -1182,11 +1213,13 @@ class ExplorerController extends Controller
                 $this->formatId(Information::$prefix, $info->id),
                 $info->name,
                 '/images/information.png',
-                'information'
+                'information', 260
             );
         }
 
-        $this->linkJoinTable('database_information', Information::$prefix, Database::$prefix, 'information_id', 'database_id');
+        $this->linkJoinTable('database_information',
+            Information::$prefix, Database::$prefix,
+            'information_id', 'database_id');
     }
 
     private function buildProcesses(): void
@@ -1202,7 +1235,7 @@ class ExplorerController extends Controller
                 $this->formatId(Process::$prefix, $process->id),
                 $process->name,
                 $this->getIcon($process->icon_id, '/images/process.png'),
-                'processes'
+                'processes', 210
             );
 
             if ($process->macroprocess_id !== null) {
@@ -1229,7 +1262,7 @@ class ExplorerController extends Controller
                 $this->formatId(MacroProcessus::$prefix, $macroProcess->id),
                 $macroProcess->name,
                 '/images/macroprocess.png',
-                'macro-processuses'
+                'macro-processuses', 200
             );
         }
     }
@@ -1247,7 +1280,7 @@ class ExplorerController extends Controller
                 $this->formatId(Activity::$prefix, $activity->id),
                 $activity->name,
                 '/images/activity.png',
-                'activities'
+                'activities', 220
             );
         }
 
@@ -1273,11 +1306,13 @@ class ExplorerController extends Controller
                 $this->formatId(Operation::$prefix, $operation->id),
                 $operation->name,
                 '/images/operation.png',
-                'operations'
+                    'operations', 230
             );
         }
 
-        $this->linkJoinTable('activity_operation', Activity::$prefix, Operation::$prefix, 'activity_id', 'operation_id');
+        $this->linkJoinTable('activity_operation',
+            Activity::$prefix, Operation::$prefix,
+            'activity_id', 'operation_id');
     }
 
     private function buildTasks(): void
@@ -1293,11 +1328,13 @@ class ExplorerController extends Controller
                 $this->formatId(Task::$prefix, $task->id),
                 $task->name,
                 '/images/task.png',
-                'tasks'
+                'tasks', 240
             );
         }
 
-        $this->linkJoinTable('operation_task', Operation::$prefix, Task::$prefix, 'operation_id', 'task_id');
+        $this->linkJoinTable('operation_task',
+            Operation::$prefix, Task::$prefix,
+            'operation_id', 'task_id');
     }
 
     private function buildActors(): void
@@ -1313,7 +1350,7 @@ class ExplorerController extends Controller
                 $this->formatId(Actor::$prefix, $actor->id),
                 $actor->name,
                 '/images/actor.png',
-                'actors'
+                'actors', 250
             );
         }
 
@@ -1342,7 +1379,7 @@ class ExplorerController extends Controller
                 $this->formatId(Entity::$prefix, $entity->id),
                 $entity->name,
                 $this->getIcon($entity->icon_id, '/images/entity.png'),
-                'entities'
+                'entities', 150
             );
 
             if ($entity->parent_entity_id !== null) {
@@ -1372,7 +1409,7 @@ class ExplorerController extends Controller
                 $this->formatId(Relation::$prefix, $relation->id),
                 $relation->name,
                 '/images/relation.png',
-                'relations'
+                'relations', 100
             );
 
             $this->addFluxEdge(null, false,
@@ -1390,21 +1427,17 @@ class ExplorerController extends Controller
     /**
      * Helper methods
      */
-    private function addNode(int $vue, string $id, string $label, string $image, string $type, ?string $title = null): void
+    private function addNode(int $vue, string $id, string $label, string $image, string $type, int $order, ?string $title = null): void
     {
-        $data = [
+        $this->nodes[] = [
             'vue' => $vue,
             'id' => $id,
             'label' => $label,
             'image' => $image,
             'type' => $type,
+            'order' => $order,
+            'title' => $title
         ];
-
-        if ($title !== null) {
-            $data['title'] = $title;
-        }
-
-        $this->nodes[] = $data;
     }
 
     private function addEdge(?string $name, bool $bidirectional, string $from, string $to, string $type): void

@@ -16,7 +16,7 @@
 
                     <!-- Controls (hidden until data loaded) -->
                     <div id="explorer-controls" style="display: none;">
-                        <table width="100%" border=0>
+                        <table width="100%">
                             <tr>
                                 <td width="400">
                                     <div class="form-group">
@@ -61,7 +61,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="3">
+                                <td colspan="4">
 <button type="button" class="btn btn-danger" onclick="network.deleteSelected()">
 <i class="bi bi-dash-circle"></i>&nbsp;{{ trans("cruds.report.explorer.delete") }}
 </button>
@@ -105,6 +105,11 @@ Physique :
         ↕ {{ trans("cruds.report.explorer.both") }}
     </label>
 </div>
+&nbsp;
+<button id="toggleIP" class="btn btn-outline-secondary" type="button"
+        data-bs-toggle="button" autocomplete="off">
+    <i class="fa fa-eye"></i> Show IP
+</button>
 
                                 </td>
                             </tr>
@@ -241,6 +246,7 @@ Physique :
                     title: node.title || undefined,
                     image: node.image,
                     type: node.type,
+                    order: node.order,
                     edges: edgesByNode.get(node.id) || []
                 });
             });
@@ -357,7 +363,14 @@ Physique :
                 return;
             // Check node already present
             if (!nodes.get(new_node.id)) {
-                network.body.data.nodes.add(new_node);
+                // Add new Node
+                if (getShowIP() && (new_node.title!=null)) {
+                    const modified_node = { ...new_node};
+                    modified_node.label = new_node.label + "\n" + new_node.title;
+                    network.body.data.nodes.add(modified_node);
+                    }
+                else
+                    network.body.data.nodes.add(new_node);
             }
             // add edges
             const edgeList = new_node.edges;
@@ -466,7 +479,7 @@ Physique :
             network.on('doubleClick', async function(params) {
                 if (params.nodes.length > 0) {
                     const nodeId = params.nodes[0];
-                    await deployFromNode(nodeId, 1, new Set(), getFilter());
+                    await deployFromNode(nodeId, 1, new Set(), getFilter(), getDirection());
                 }
             });
 
@@ -518,10 +531,10 @@ Physique :
             let depth = parseInt(document.getElementById('depth').value);
             let visitedNodes = new Set();
             let filter = getFilter();
-            deployFromNode(activeNode, depth, visitedNodes, filter);
+            deployFromNode(activeNode, depth, visitedNodes, filter, getDirection());
         }
 
-        function deployFromNode(nodeId, depth, visitedNodes, filter) {
+        function deployFromNode(nodeId, depth, visitedNodes, filter, direction = 3) {
             if (depth <= 0 || visitedNodes.has(nodeId)) {
                 return;
             }
@@ -545,15 +558,28 @@ Physique :
                         ||
                         (filter.includes("9") && (edge.edgeType === 'FLUX'))
                     ) {
-                        if (!nodes.get(targetNodeId)) {
-                            nodes.add(targetNode);
-                            if (exists(nodeId, targetNodeId, edge.name).length === 0) {
-                                addEdge(nodeId, targetNodeId);
+                        // Check order Up
+                        if ((direction === 1) && (node.order <= targetNode.order))
+                            continue;
+                        // Check order Down
+                        if ((direction === 2) && (node.order >= targetNode.order))
+                            continue;
+
+                        // Add new Node
+                        if (getShowIP() && (targetNode.title!=null)) {
+                            const modified_node = { ...targetNode};
+                            modified_node.label = targetNode.label + "\n" + targetNode.title;
+                            network.body.data.nodes.add(modified_node);
                             }
-                            setTimeout(function () {
-                                deployFromNode(targetNodeId, depth - 1, visitedNodes, filter);
-                            }, 500);
+                        else
+                            network.body.data.nodes.add(targetNode);
+
+                        if (exists(nodeId, targetNodeId, edge.name).length === 0) {
+                            addEdge(nodeId, targetNodeId);
                         }
+                        setTimeout(function () {
+                            deployFromNode(targetNodeId, depth - 1, visitedNodes, filter, direction);
+                        }, 500);
                     }
                 }
             }
@@ -616,6 +642,16 @@ Physique :
             return filter
         }
 
+        // 1 up, 2 down, 3 both
+        function getDirection() {
+            if (document.getElementById('direction-up').checked)
+                return 1;
+            else if (document.getElementById('direction-down').checked)
+                return 2;
+            else
+                return 3;
+        }
+
         function apply_filter() {
             cur_filter = $('#filters').val();
             if (cur_filter.length == 0) {
@@ -658,9 +694,7 @@ Physique :
                     apply_filter();
                 });
 
-
-/********************/
-// Gestion du toggle
+// Gestion du toggle Physique
 let physicsEnabled = true;
 
 const toggleBtn = document.getElementById('physicsToggle');
@@ -688,9 +722,44 @@ toggleBtn.addEventListener('click', function() {
     }
 });
 
+    // Gestion du toggle IP
+
+    const toggleIP = document.getElementById('toggleIP');
+
+    // Restaurer l'état au chargement
+    if (localStorage.getItem('showIP') === 'true') {
+        toggleIP.classList.add('active');
+        refreshNodeLabels(true);
+    }
+
+    toggleIP.addEventListener('click', function () {
+        const isActive = this.classList.contains('active');
+        localStorage.setItem('showIP', isActive);
+        refreshNodeLabels(isActive);
+    });
+
+
+});
+
+    function getShowIP() {
+        return  document.getElementById('toggleIP').classList.contains('active');
+    }
+
+    function refreshNodeLabels(showIP)
+     {
+         if (!nodes) return;
+        nodes.forEach(function(visNode) {
+            const srcNode = _nodes.get(visNode.id);
+            if (srcNode) {
+                const newLabel = (showIP && srcNode.title)
+                    ? srcNode.label + "\n" + srcNode.title
+                    : srcNode.label;
+                if (visNode.label !== newLabel) {
+                    nodes.update({ id: visNode.id, label: newLabel });
+                }
+            }
         });
-
-
+    }
     </script>
 
     @parent
