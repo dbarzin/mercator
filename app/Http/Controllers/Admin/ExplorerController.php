@@ -784,7 +784,7 @@ class ExplorerController extends Controller
                 $this->formatId(Cluster::$prefix, $cluster->id),
                 $cluster->name,
                 $cluster->icon_id === null ? '/images/cluster.png' : "/admin/documents/{$cluster->icon_id}",
-                'clusters', 560,
+                'clusters', 580,
                 $cluster->address_ip
             );
         }
@@ -828,7 +828,7 @@ class ExplorerController extends Controller
                 $this->formatId(LogicalServer::$prefix, $server->id),
                 $server->name,
                 $this->getIcon($server->icon_id, '/images/server.png'),
-                'logical-servers', 580,
+                'logical-servers', 560,
                 $server->address_ip
             );
 

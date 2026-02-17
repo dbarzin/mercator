@@ -60,6 +60,7 @@ class GlobalSearchController extends Controller
         'LogicalFlow' => 'cruds.LogicalFlow.title',
         'Graph' => 'cruds.graph.title',
         'Container' => 'cruds.container.title',
+        'Cluster' => 'cruds.cluster.title',
     ];
 
     public function search(Request $request)
