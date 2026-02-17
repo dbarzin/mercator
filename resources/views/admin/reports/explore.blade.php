@@ -729,27 +729,37 @@ toggleBtn.addEventListener('click', function() {
     // Restaurer l'état au chargement
     if (localStorage.getItem('showIP') === 'true') {
         toggleIP.classList.add('active');
-        showIPAddresses(true);
+        refreshNodeLabels(true);
     }
 
     toggleIP.addEventListener('click', function () {
         const isActive = this.classList.contains('active');
         localStorage.setItem('showIP', isActive);
-        showIPAddresses(isActive);
+        refreshNodeLabels(isActive);
     });
 
-    function showIPAddresses(show) {
-        document.querySelectorAll('.ip-address').forEach(el => {
-            el.style.display = show ? '' : 'none';
-        });
-    }
 
 });
 
-function getShowIP() {
-    return  document.getElementById('toggleIP').classList.contains('active');
-}
+    function getShowIP() {
+        return  document.getElementById('toggleIP').classList.contains('active');
+    }
 
+    function refreshNodeLabels(showIP)
+     {
+         if (!nodes) return;
+        nodes.forEach(function(visNode) {
+            const srcNode = _nodes.get(visNode.id);
+            if (srcNode) {
+                const newLabel = (showIP && srcNode.title)
+                    ? srcNode.label + "\n" + srcNode.title
+                    : srcNode.label;
+                if (visNode.label !== newLabel) {
+                    nodes.update({ id: visNode.id, label: newLabel });
+                }
+            }
+        });
+    }
     </script>
 
     @parent
