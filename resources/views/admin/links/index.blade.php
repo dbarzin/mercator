@@ -22,6 +22,12 @@
                         <th width="10">
 
                         </th>
+                        <th width='100'>
+                            {{ trans('cruds.physicalLink.fields.type') }}
+                        </th>
+                        <th width='20'>
+                            {{ trans('cruds.physicalLink.fields.color') }}
+                        </th>
                         <th>
                             {{ trans('cruds.physicalLink.fields.src') }}
                         </th>
@@ -44,6 +50,14 @@
                         <tr data-entry-id="{{ $physicalLink->id }}">
                             <td>
 
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.links.show', $physicalLink->id) }}">{{ $physicalLink->type }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.links.show', $physicalLink->id) }}">
+                                <div style="width: 40px; height: 40px; background-color: {{ $physicalLink->color }}; border: 1px solid #ccc; border-radius: 4px;"></div>
+                                </a>
                             </td>
                             <td>
                                 @if ($physicalLink->peripheralSrc!=null)

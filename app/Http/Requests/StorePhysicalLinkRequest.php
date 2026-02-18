@@ -8,16 +8,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StorePhysicalLinkRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         abort_if(Gate::denies('physical_link_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
+            'type' => 'nullable|string|max:255',
+            'color' => 'nullable|regex:/^#[0-9a-fA-F]{6}$/',
             // Sources
             'peripheral_src_id' => [
                 'nullable',
