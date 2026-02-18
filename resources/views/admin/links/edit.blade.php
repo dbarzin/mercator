@@ -27,7 +27,7 @@
                     </div>
                     <div style="width: 120px; flex: 0 0 120px;">
                         <div class="form-group">
-                            <label for="type">{{ trans('cruds.physicalLink.fields.color') }}</label>
+                            <label for="color">{{ trans('cruds.physicalLink.fields.color') }}</label>
                             <input type="color" name="color" value="{{ $link->color ?? '#FFFFFF' }}" class="form-control form-control-color">
                             <span class="help-block">{{ trans('cruds.physicalLink.fields.color_helper') }}</span>
                         </div>
@@ -36,7 +36,6 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
-                        {{ $link->sourceId() }}
                             <label class="label-required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
                             <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}"
                                     name="src_id" id="src_id" autofocus>
