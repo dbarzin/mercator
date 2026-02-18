@@ -673,6 +673,16 @@ class ExplorerController extends Controller
                 $subnetwork->address
             );
 
+            if ($subnetwork->subnetwork_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                    $this->formatId(Subnetwork::$prefix, $subnetwork->subnetwork_id));
+            } elseif ($subnetwork->network_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(Subnetwork::$prefix, $subnetwork->id),
+                    $this->formatId(Network::$prefix, $subnetwork->network_id));
+            }
+
             if ($subnetwork->vlan_id !== null) {
                 $this->addLinkEdge(
                     $this->formatId(Subnetwork::$prefix, $subnetwork->id),
@@ -686,6 +696,9 @@ class ExplorerController extends Controller
                     $this->formatId(Gateway::$prefix, $subnetwork->gateway_id)
                 );
             }
+
+
+
         }
     }
 
@@ -828,7 +841,7 @@ class ExplorerController extends Controller
                 5,
                 $this->formatId(LogicalServer::$prefix, $server->id),
                 $server->name,
-                $this->getIcon($server->icon_id, '/images/server.png'),
+                $this->getIcon($server->icon_id, '/images/lserver.png'),
                 'logical-servers', 560,
                 $server->address_ip
             );
@@ -1014,8 +1027,12 @@ class ExplorerController extends Controller
             }
         }
 
-        $this->linkJoinTable('application_service_m_application', ApplicationService::$prefix, MApplication::$prefix, 'application_service_id', 'm_application_id');
-        $this->linkJoinTable('logical_server_m_application', LogicalServer::$prefix, MApplication::$prefix, 'logical_server_id', 'm_application_id');
+        $this->linkJoinTable('application_service_m_application',
+            ApplicationService::$prefix, MApplication::$prefix,
+            'application_service_id', 'm_application_id');
+        $this->linkJoinTable('logical_server_m_application',
+            LogicalServer::$prefix, MApplication::$prefix,
+            'logical_server_id', 'm_application_id');
     }
 
 
