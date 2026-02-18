@@ -60,7 +60,7 @@
             </td>
         </tr>
         <tr>
-            <th with="10%">
+            <th width="10%">
                 {{ trans('cruds.physicalLink.fields.src_port') }}
             </th>
             <td colspan="2">

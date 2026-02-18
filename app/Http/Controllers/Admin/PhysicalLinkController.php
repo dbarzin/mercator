@@ -121,21 +121,21 @@ class PhysicalLinkController extends Controller
         } elseif (str_starts_with($request->src_id, PhysicalSecurityDevice::$prefix)) {
             $link->physical_security_device_src_id = intval(substr($request->src_id, strlen(PhysicalSecurityDevice::$prefix)));
         } elseif (str_starts_with($request->src_id, PhysicalServer::$prefix)) {
-            $link->physical_server_src_id = intval(substr($request->src_id, strlen(PhysicalServer::$prefix)));;
+            $link->physical_server_src_id = intval(substr($request->src_id, strlen(PhysicalServer::$prefix)));
         } elseif (str_starts_with($request->src_id, PhysicalSwitch::$prefix)) {
-            $link->physical_switch_src_id = intval(substr($request->src_id, strlen(PhysicalSwitch::$prefix)));;
+            $link->physical_switch_src_id = intval(substr($request->src_id, strlen(PhysicalSwitch::$prefix)));
         } elseif (str_starts_with($request->src_id, StorageDevice::$prefix)) {
             $link->storage_device_src_id = intval(substr($request->src_id, strlen(StorageDevice::$prefix)));
         } elseif (str_starts_with($request->src_id, WifiTerminal::$prefix)) {
-            $link->wifi_terminal_src_id = intval(substr($request->src_id, strlen(WifiTerminal::$prefix)));;
+            $link->wifi_terminal_src_id = intval(substr($request->src_id, strlen(WifiTerminal::$prefix)));
         } elseif (str_starts_with($request->src_id, Workstation::$prefix)) {
-            $link->workstation_src_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));;;
+            $link->workstation_src_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));
         } elseif (str_starts_with($request->src_id, Router::$prefix)) {
-            $link->router_src_id = intval(substr($request->src_id, strlen(Router::$prefix)));;;;
+            $link->router_src_id = intval(substr($request->src_id, strlen(Router::$prefix)));
         } elseif (str_starts_with($request->src_id, NetworkSwitch::$prefix)) {
-            $link->network_switch_src_id = intval(substr($request->src_id, strlen(NetworkSwitch::$prefix)));;;;;
+            $link->network_switch_src_id = intval(substr($request->src_id, strlen(NetworkSwitch::$prefix)));
         } elseif (str_starts_with($request->src_id, LogicalServer::$prefix)) {
-            $link->logical_server_src_id = intval(substr($request->src_id, strlen(LogicalServer::$prefix)));;;;;;;
+            $link->logical_server_src_id = intval(substr($request->src_id, strlen(LogicalServer::$prefix)));
         }
 
         // Dest device
@@ -148,21 +148,21 @@ class PhysicalLinkController extends Controller
         } elseif (str_starts_with($request->src_id, PhysicalSecurityDevice::$prefix)) {
             $link->physical_security_device_dest_id = intval(substr($request->src_id, strlen(PhysicalSecurityDevice::$prefix)));
         } elseif (str_starts_with($request->src_id, PhysicalServer::$prefix)) {
-            $link->physical_server_dest_id = intval(substr($request->src_id, strlen(PhysicalServer::$prefix)));;
+            $link->physical_server_dest_id = intval(substr($request->src_id, strlen(PhysicalServer::$prefix)));
         } elseif (str_starts_with($request->src_id, PhysicalSwitch::$prefix)) {
-            $link->physical_switch_dest_id = intval(substr($request->src_id, strlen(PhysicalSwitch::$prefix)));;
+            $link->physical_switch_dest_id = intval(substr($request->src_id, strlen(PhysicalSwitch::$prefix)));
         } elseif (str_starts_with($request->src_id, StorageDevice::$prefix)) {
             $link->storage_device_dest_id = intval(substr($request->src_id, strlen(StorageDevice::$prefix)));
         } elseif (str_starts_with($request->src_id, WifiTerminal::$prefix)) {
-            $link->wifi_terminal_dest_id = intval(substr($request->src_id, strlen(WifiTerminal::$prefix)));;
+            $link->wifi_terminal_dest_id = intval(substr($request->src_id, strlen(WifiTerminal::$prefix)));
         } elseif (str_starts_with($request->src_id, Workstation::$prefix)) {
-            $link->workstation_dest_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));;;
+            $link->workstation_dest_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));
         } elseif (str_starts_with($request->src_id, Router::$prefix)) {
-            $link->router_dest_id = intval(substr($request->src_id, strlen(Router::$prefix)));;;;
+            $link->router_dest_id = intval(substr($request->src_id, strlen(Router::$prefix)));
         } elseif (str_starts_with($request->src_id, NetworkSwitch::$prefix)) {
-            $link->network_switch_dest_id = intval(substr($request->src_id, strlen(NetworkSwitch::$prefix)));;;;;
+            $link->network_switch_dest_id = intval(substr($request->src_id, strlen(NetworkSwitch::$prefix)));
         } elseif (str_starts_with($request->src_id, LogicalServer::$prefix)) {
-            $link->logical_server_dest_id = intval(substr($request->src_id, strlen(LogicalServer::$prefix)));;;;;;;
+            $link->logical_server_dest_id = intval(substr($request->src_id, strlen(LogicalServer::$prefix)));
         }
 
         // Ports
@@ -353,13 +353,13 @@ class PhysicalLinkController extends Controller
 
         // Source device
         if (str_starts_with($request->src_id, Peripheral::$prefix)) {
-            $link->peripheral_src_id = intval(substr($request->src_id, strlen(Peripheral::$prefix)));;
+            $link->peripheral_src_id = intval(substr($request->src_id, strlen(Peripheral::$prefix)));
         } else {
             $link->peripheral_src_id = null;
         }
 
         if (str_starts_with($request->src_id, Phone::$prefix)) {
-            $link->phone_src_id = intval(substr($request->src_id, strlen(Phone::$prefix)));;
+            $link->phone_src_id = intval(substr($request->src_id, strlen(Phone::$prefix)));
         } else {
             $link->phone_src_id = null;
         }
@@ -371,7 +371,7 @@ class PhysicalLinkController extends Controller
         }
 
         if (str_starts_with($request->src_id, PhysicalSecurityDevice::$prefix)) {
-            $link->physical_security_device_src_id = intval(substr($request->src_id, strlen(PhysicalSecurityDevice::$prefix)));;;;
+            $link->physical_security_device_src_id = intval(substr($request->src_id, strlen(PhysicalSecurityDevice::$prefix)));
         } else {
             $link->physical_security_device_src_id = null;
         }
@@ -383,7 +383,7 @@ class PhysicalLinkController extends Controller
         }
 
         if (str_starts_with($request->src_id, PhysicalSwitch::$prefix)) {
-            $link->physical_switch_src_id = intval(substr($request->src_id, strlen(PhysicalSwitch::$prefix)));;;;;
+            $link->physical_switch_src_id = intval(substr($request->src_id, strlen(PhysicalSwitch::$prefix)));
         } else {
             $link->physical_switch_src_id = null;
         }
@@ -395,19 +395,19 @@ class PhysicalLinkController extends Controller
         }
 
         if (str_starts_with($request->src_id, WifiTerminal::$prefix)) {
-            $link->wifi_terminal_src_id = intval(substr($request->src_id, strlen(WifiTerminal::$prefix)));;
+            $link->wifi_terminal_src_id = intval(substr($request->src_id, strlen(WifiTerminal::$prefix)));
         } else {
             $link->wifi_terminal_src_id = null;
         }
 
         if (str_starts_with($request->src_id, Workstation::$prefix)) {
-            $link->workstation_src_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));;;;;
+            $link->workstation_src_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));
         } else {
             $link->workstation_src_id = null;
         }
 
         if (str_starts_with($request->src_id, Router::$prefix)) {
-            $link->router_src_id = intval(substr($request->src_id, 8));
+            $link->router_src_id = intval(substr($request->src_id, strlen(Router::$prefix)));
         } else {
             $link->router_src_id = null;
         }
@@ -426,72 +426,72 @@ class PhysicalLinkController extends Controller
 
         // Dest device
         if (str_starts_with($request->dest_id, Peripheral::$prefix)) {
-            $link->peripheral_dest_id = intval(substr($request->dest_id, strlen(Peripheral::$prefix)));;
+            $link->peripheral_dest_id = intval(substr($request->dest_id, strlen(Peripheral::$prefix)));
         } else {
             $link->peripheral_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, Phone::$prefix)) {
-            $link->phone_dest_id = intval(substr($request->dest_id, strlen(Phone::$prefix)));;;
+            $link->phone_dest_id = intval(substr($request->dest_id, strlen(Phone::$prefix)));
         } else {
             $link->phone_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, PhysicalRouter::$prefix)) {
-            $link->physical_router_dest_id = intval(substr($request->dest_id, strlen(PhysicalRouter::$prefix)));;
+            $link->physical_router_dest_id = intval(substr($request->dest_id, strlen(PhysicalRouter::$prefix)));
         } else {
             $link->physical_router_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, PhysicalSecurityDevice::$prefix)) {
-            $link->physical_security_device_dest_id = intval(substr($request->dest_id, strlen(PhysicalSecurityDevice::$prefix)));;;;;
+            $link->physical_security_device_dest_id = intval(substr($request->dest_id, strlen(PhysicalSecurityDevice::$prefix)));
         } else {
             $link->physical_security_device_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, PhysicalServer::$prefix)) {
-            $link->physical_server_dest_id = intval(substr($request->dest_id, strlen(PhysicalServer::$prefix)));;;;;;
+            $link->physical_server_dest_id = intval(substr($request->dest_id, strlen(PhysicalServer::$prefix)));
         } else {
             $link->physical_server_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, PhysicalSwitch::$prefix)) {
-            $link->physical_switch_dest_id = intval(substr($request->dest_id, strlen(PhysicalSwitch::$prefix)));;;;;;;;
+            $link->physical_switch_dest_id = intval(substr($request->dest_id, strlen(PhysicalSwitch::$prefix)));
         } else {
             $link->physical_switch_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, StorageDevice::$prefix)) {
-            $link->storage_device_dest_id = intval(substr($request->dest_id, strlen(StorageDevice::$prefix)));;;;;;;;
+            $link->storage_device_dest_id = intval(substr($request->dest_id, strlen(StorageDevice::$prefix)));
         } else {
             $link->storage_device_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, WifiTerminal::$prefix)) {
-            $link->wifi_terminal_dest_id = intval(substr($request->dest_id, strlen(WifiTerminal::$prefix)));;;;;;;;;
+            $link->wifi_terminal_dest_id = intval(substr($request->dest_id, strlen(WifiTerminal::$prefix)));
         } else {
             $link->wifi_terminal_dest_id = null;
         }
         if (str_starts_with($request->dest_id, Workstation::$prefix)) {
-            $link->workstation_dest_id = intval(substr($request->dest_id, strlen(Workstation::$prefix)));;;;;;;;;;;;;;;;;;
+            $link->workstation_dest_id = intval(substr($request->dest_id, strlen(Workstation::$prefix)));
         } else {
             $link->workstation_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, Router::$prefix)) {
-            $link->router_dest_id = intval(substr($request->dest_id, str()));
+            $link->router_dest_id = intval(substr($request->dest_id, str(Router::$prefix)));
         } else {
             $link->router_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, NetworkSwitch::$prefix)) {
-            $link->network_switch_dest_id = intval(substr($request->dest_id, strlen(NetworkSwitch::$prefix)));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            $link->network_switch_dest_id = intval(substr($request->dest_id, strlen(NetworkSwitch::$prefix)));
         } else {
             $link->network_switch_dest_id = null;
         }
 
         if (str_starts_with($request->dest_id, LogicalServer::$prefix)) {
-            $link->logical_server_dest_id = intval(substr($request->dest_id, strlen(LogicalServer::$prefix)));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            $link->logical_server_dest_id = intval(substr($request->dest_id, strlen(LogicalServer::$prefix)));
         } else {
             $link->logical_server_dest_id = null;
         }
