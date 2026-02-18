@@ -333,7 +333,7 @@ Physique :
                     enabled: true,
                     stabilization: {
                         enabled: true,
-                        iterations: 100
+                        iterations: 1500
                     }
                 },
                 nodes: {
@@ -391,7 +391,7 @@ Physique :
                                         label: edge.name,
                                         from: target_node.id,
                                         to: new_node.id,
-                                        // length: 200,
+                                        length: 200,
                                         arrows: {
                                             from: {enabled: true, type: 'arrow'},
                                             to: {enabled: true, type: 'arrow'}
@@ -402,7 +402,7 @@ Physique :
                                         label: edge.name,
                                         from: new_node.id,
                                         to: target_node.id,
-                                        // length: 200,
+                                        length: 200,
                                         arrows: {to: {enabled: true, type: 'arrow'}}
                                     });
                             } else if (edge.edgeDirection === 'FROM') {
@@ -411,7 +411,7 @@ Physique :
                                         label: edge.name,
                                         from: target_node.id,
                                         to: new_node.id,
-                                        // length: 200,
+                                        length: 200,
                                         arrows: {
                                             from: {enabled: true, type: 'arrow'},
                                             to: {enabled: true, type: 'arrow'}
@@ -422,14 +422,21 @@ Physique :
                                         label: edge.name,
                                         from: target_node.id,
                                         to: new_node.id,
-                                        // length: 200,
+                                        length: 200,
                                         arrows: {from: {enabled: true, type: 'arrow'}}
                                     });
                             }
                         } else if (edge.edgeType === 'CABLE') {
-                            edges.add({from: new_node.id, to: target_node.id, color: edge.color ?? 'blue', width: 5});
+                            edges.add({
+                            from: new_node.id, to: target_node.id,
+                            color: edge.color ?? 'blue', width: 5,
+                            length:200
+                            });
                         } else if (edge.edgeType === 'LINK') {
-                            edges.add({from: new_node.id, to: target_node.id});
+                            edges.add({
+                            from: new_node.id, to: target_node.id,
+                            length:200
+                            });
                         }
                     }
                 }
@@ -627,9 +634,18 @@ Physique :
                                 });
                         }
                     } else if (edge.edgeType === 'CABLE') {
-                        edges.add({from: sourceNodeId, to: targetNodeId, color: edge.color ?? 'blue', width: 5});
+                        edges.add(
+                            {from: sourceNodeId, to: targetNodeId,
+                            color: edge.color ?? 'blue',
+                            width: 5,
+                            length: 200
+                            });
                     } else if (edge.edgeType === 'LINK') {
-                        edges.add({from: sourceNodeId, to: targetNodeId});
+                        edges.add(
+                            {
+                            from: sourceNodeId, to: targetNodeId,
+                            length: 200,
+                            });
                     }
                 }
             }
