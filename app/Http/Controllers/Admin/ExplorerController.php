@@ -603,7 +603,8 @@ class ExplorerController extends Controller
             if ($src !== null && $dest !== null) {
                 $this->addPhysicalLinkEdge(
                     $src,
-                    $dest
+                    $dest,
+                    $link->color
                 );
             }
         }
@@ -1436,36 +1437,40 @@ class ExplorerController extends Controller
             'image' => $image,
             'type' => $type,
             'order' => $order,
-            'title' => $title
+            'title' => $title,
         ];
     }
 
-    private function addEdge(?string $name, bool $bidirectional, string $from, string $to, string $type): void
+    private function addEdge(?string $name, bool $bidirectional,
+                             string $from, string $to,
+                             string $type, ?string $color): void
     {
-        if ($from !== null && $to !== null) {
-            $this->edges[] = [
-                'name' => $name,
-                'bidirectional' => $bidirectional,
-                'from' => $from,
-                'to' => $to,
-                'type' => $type,
-            ];
-        }
+        $edge = [
+            'name' => $name,
+            'bidirectional' => $bidirectional,
+            'from' => $from,
+            'to' => $to,
+            'type' => $type,
+            'color' => $color
+        ];
+        if ($color !== null)
+            $edge['color'] = $color;
+        $this->edges[] = $edge;
     }
 
     private function addLinkEdge(string $from, string $to): void
     {
-        $this->addEdge(null, false, $from, $to, 'LINK');
+        $this->addEdge(null, false, $from, $to, 'LINK', null);
     }
 
-    private function addPhysicalLinkEdge(string $from, string $to): void
+    private function addPhysicalLinkEdge(string $from, string $to, ?string $color): void
     {
-        $this->addEdge(null, false, $from, $to, 'CABLE');
+        $this->addEdge(null, false, $from, $to, 'CABLE', $color);
     }
 
     private function addFluxEdge(?string $name, bool $bidirectional, string $from, string $to): void
     {
-        $this->addEdge($name, $bidirectional, $from, $to, 'FLUX');
+        $this->addEdge($name, $bidirectional, $from, $to, 'FLUX', null);
     }
 
     private function formatId(string $prefix, $id): ?string

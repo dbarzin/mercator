@@ -582,7 +582,7 @@ digraph  {
         ?>
 
     @if($isPhysicalLink && $srcNode && $destNode)
-    {{ $srcNode }} -> {{ $destNode }} [arrowhead=none,taillabel="{{ $link->src_port }}", headlabel="{{ $link->dest_port }}", href="{{ route('admin.links.show', $link->id) }}"];
+    {{ $srcNode }} -> {{ $destNode }} [color="{{ $link->color ?? "grey" }}", penwidth=2, arrowhead=none, taillabel="{{ $link->src_port }}", headlabel="{{ $link->dest_port }}", href="{{ route('admin.links.show', $link->id) }}"];
     @endif
 @endforeach
 }`;

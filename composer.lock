@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96e83f775832c47f9331a2f941f8d18d",
+    "content-hash": "7293fce0b6e419f1e548abd27377e8d3",
     "packages": [
         {
             "name": "brick/math",
@@ -5452,16 +5452,16 @@
         },
         {
             "name": "sourcentis/mercator-core",
-            "version": "1.52.0",
+            "version": "1.54.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dbarzin/mercator-core.git",
-                "reference": "f6dd6be851da91fc6800ae0d7c6d901feb4129ca"
+                "reference": "c64e4053d00216da37f5ccfc3816112b9a0d47cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/f6dd6be851da91fc6800ae0d7c6d901feb4129ca",
-                "reference": "f6dd6be851da91fc6800ae0d7c6d901feb4129ca",
+                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/c64e4053d00216da37f5ccfc3816112b9a0d47cc",
+                "reference": "c64e4053d00216da37f5ccfc3816112b9a0d47cc",
                 "shasum": ""
             },
             "require": {
@@ -5493,9 +5493,9 @@
             "description": "Mercator core services (modules, licensing, menus, domain models).",
             "support": {
                 "issues": "https://github.com/dbarzin/mercator-core/issues",
-                "source": "https://github.com/dbarzin/mercator-core/tree/v1.52.0"
+                "source": "https://github.com/dbarzin/mercator-core/tree/v1.54.0"
             },
-            "time": "2026-02-15T10:25:46+00:00"
+            "time": "2026-02-18T09:37:56+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

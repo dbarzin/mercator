@@ -10,8 +10,33 @@
 
             <div class="card-body">
                 <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="type">{{ trans('cruds.physicalLink.fields.type') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
+                                    name="type" id="type">
+                                @if (!$types->contains(old('type')))
+                                    <option> {{ old('type') }}</option>
+                                @endif
+                                @foreach($types as $type)
+                                    <option {{ (old('type') ? old('type') : $link->type) == $type ? 'selected' : '' }}>{{$type}}</option>
+                                @endforeach
+                            </select>
+                            <span class="help-block">{{ trans('cruds.physicalLink.fields.type_helper') }}</span>
+                        </div>
+                    </div>
+                    <div style="width: 120px; flex: 0 0 120px;">
+                        <div class="form-group">
+                            <label for="type">{{ trans('cruds.physicalLink.fields.color') }}</label>
+                            <input type="color" name="color" value="{{ $link->color ?? '#FFFFFF' }}" class="form-control form-control-color">
+                            <span class="help-block">{{ trans('cruds.physicalLink.fields.color_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
+                        {{ $link->sourceId() }}
                             <label class="label-required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
                             <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}"
                                     name="src_id" id="src_id" autofocus>

@@ -221,9 +221,9 @@ Physique :
                     name: edge.name,
                     edgeType: edge.type,
                     edgeDirection: 'TO',
-                    bidirectional: edge.bidirectional
+                    bidirectional: edge.bidirectional,
+                    color: edge.color
                 });
-
                 // Edge entrant
                 if (!edgesByNode.has(edge.to)) {
                     edgesByNode.set(edge.to, []);
@@ -233,7 +233,8 @@ Physique :
                     name: edge.name,
                     edgeType: edge.type,
                     edgeDirection: 'FROM',
-                    bidirectional: edge.bidirectional
+                    bidirectional: edge.bidirectional,
+                    color: edge.color
                 });
             });
 
@@ -426,7 +427,7 @@ Physique :
                                     });
                             }
                         } else if (edge.edgeType === 'CABLE') {
-                            edges.add({from: new_node.id, to: target_node.id, color: 'blue', width: 5});
+                            edges.add({from: new_node.id, to: target_node.id, color: edge.color ?? 'blue', width: 5});
                         } else if (edge.edgeType === 'LINK') {
                             edges.add({from: new_node.id, to: target_node.id});
                         }
@@ -626,7 +627,7 @@ Physique :
                                 });
                         }
                     } else if (edge.edgeType === 'CABLE') {
-                        edges.add({from: sourceNodeId, to: targetNodeId, color: 'blue', width: 5});
+                        edges.add({from: sourceNodeId, to: targetNodeId, color: edge.color ?? 'blue', width: 5});
                     } else if (edge.edgeType === 'LINK') {
                         edges.add({from: sourceNodeId, to: targetNodeId});
                     }
