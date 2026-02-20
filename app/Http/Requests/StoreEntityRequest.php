@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StoreEntityRequest extends BaseFormRequest
 {
+
     protected array $htmlFields = ['description', 'security_level', 'contact_point'];
 
     public function authorize(): bool

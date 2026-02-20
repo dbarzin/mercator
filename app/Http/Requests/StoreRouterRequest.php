@@ -4,12 +4,13 @@ namespace App\Http\Requests;
 
 use App\Rules\IPList;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreRouterRequest extends FormRequest
+class StoreRouterRequest extends BaseFormRequest
 {
+    protected array $htmlFields = ['description', 'rules'];
+
     public function authorize()
     {
         abort_if(Gate::denies('router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');

@@ -3,20 +3,20 @@
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreDatabaseRequest extends FormRequest
+class StoreDatabaseRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description', 'responsible', 'purpose', 'lawfulness', 'categories', 'recipients', 'transfert', 'retention'];
+    public function authorize() : bool
     {
         abort_if(Gate::denies('database_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [
