@@ -4,20 +4,21 @@ namespace App\Http\Requests;
 
 use App\Rules\IPList;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreLogicalServerRequest extends FormRequest
+class StoreLogicalServerRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description', 'configuration'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [

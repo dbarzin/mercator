@@ -32,11 +32,11 @@
        </tr>
        <tr>
             <th width="10%">{{ trans('cruds.workstation.fields.manufacturer') }}</th>
-            <td width="20%">{!! $workstation->manufacturer !!}</td>
+            <td width="20%">{{ $workstation->manufacturer }}</td>
             <th width="10%">{{ trans('cruds.workstation.fields.model') }}</th>
-            <td width="20%">{!! $workstation->model !!}</td>
+            <td width="20%">{{ $workstation->model }}</td>
             <th width="10%">{{ trans('cruds.workstation.fields.serial_number') }}</th>
-            <td width="20%" colspan="2">{!! $workstation->serial_number !!}</td>
+            <td width="20%" colspan="2">{{ $workstation->serial_number }}</td>
        </tr>
        <tr>
             <th>{{ trans('cruds.workstation.fields.cpu') }}</th>

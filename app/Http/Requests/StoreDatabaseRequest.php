@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StoreDatabaseRequest extends BaseFormRequest
 {
-    protected array $htmlFields = ['description', 'responsible', 'purpose', 'lawfulness', 'categories', 'recipients', 'transfert', 'retention'];
+
+    protected array $htmlFields = ['description'];
+
     public function authorize() : bool
     {
         abort_if(Gate::denies('database_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
