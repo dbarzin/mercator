@@ -38,7 +38,7 @@
             {{ trans('cruds.certificate.fields.start_validity') }}
         </th>
         <td>
-            {!! $certificate->start_validity !!}
+            {{ $certificate->start_validity }}
         </td>
     </tr>
     <tr>
@@ -46,7 +46,7 @@
             {{ trans('cruds.certificate.fields.end_validity') }}
         </th>
         <td>
-            {!! $certificate->end_validity !!}
+            {{ $certificate->end_validity }}
         </td>
     </tr>
     <tr>
@@ -54,7 +54,7 @@
             {{ trans('cruds.certificate.fields.last_notification') }}
         </th>
         <td>
-            {!! $certificate->last_notification !!}
+            {{ $certificate->last_notification }}
             <br>
             {{ trans('cruds.certificate.fields.last_notification_helper') }}
         </td>

@@ -9,14 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StoreBuildingRequest extends FormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [

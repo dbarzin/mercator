@@ -4,20 +4,21 @@ namespace App\Http\Requests;
 
 use App\Rules\IPList;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdatePhysicalSecurityDeviceRequest extends FormRequest
+class UpdatePhysicalSecurityDeviceRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('physical_security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [

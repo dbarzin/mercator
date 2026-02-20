@@ -11,7 +11,7 @@
                 {{ trans('cruds.entity.fields.entity_type') }}
             </th>
             <td>
-                {!! $entity->entity_type !!}
+                {{ $entity->entity_type }}
             </td>
             <th width="10%">
                 {{ trans('cruds.entity.fields.parent_entity') }}

@@ -3,20 +3,21 @@
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreCertificateRequest extends FormRequest
+class StoreCertificateRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('certificate_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [

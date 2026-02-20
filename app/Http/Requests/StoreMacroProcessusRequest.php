@@ -3,20 +3,21 @@
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreMacroProcessusRequest extends FormRequest
+class StoreMacroProcessusRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description', 'io_elements'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('macro_processus_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [

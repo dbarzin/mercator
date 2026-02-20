@@ -3,20 +3,19 @@
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
 use Mercator\Core\Models\Database;
+use Symfony\Component\HttpFoundation\Response;
 
 class MassUpdateDatabaseRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize() : bool
     {
         abort_if(Gate::denies('database_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         // Règles du UpdateDatabaseRequest classique
         $updateRules = (new UpdateDatabaseRequest())->rules();

@@ -35,9 +35,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UseCachedAuthUser::class,
-            // \App\Http\Middleware\AuthGates::class,  // ✅ Actif pour la sécurité
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\LicenseWarning::class,
+            \App\Http\Middleware\SecurityHeaders::class,
         ]);
 
         $middleware->api(prepend: [

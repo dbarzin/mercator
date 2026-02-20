@@ -3,20 +3,21 @@
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdateMacroProcessusRequest extends FormRequest
+class UpdateMacroProcessusRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description', 'io_elements'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('macro_processus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [
@@ -30,8 +31,8 @@ class UpdateMacroProcessusRequest extends FormRequest
             'security_need' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:5',
             ],
             'processes.*' => [
                 'integer',

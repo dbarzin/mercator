@@ -4,12 +4,14 @@ namespace App\Http\Requests;
 
 use App\Rules\IPList;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreSecurityDeviceRequest extends FormRequest
+class StoreSecurityDeviceRequest extends BaseFormRequest
 {
+
+    protected array $htmlFields = ['description'];
+
     public function authorize(): bool
     {
         abort_if(Gate::denies('security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');

@@ -3,11 +3,11 @@
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreLogicalFlowRequest extends FormRequest
+class StoreLogicalFlowRequest extends BaseFormRequest
 {
+    protected array $htmlFields = ['description'];
     public function authorize(): bool
     {
         abort_if(Gate::denies('logical_flow_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');

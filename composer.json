@@ -22,6 +22,7 @@
     "laravel/tinker": "^2.10",
     "laravel/ui": "^4.5",
     "maatwebsite/excel": "^3.1",
+    "mews/purifier": "^3.4",
     "phpmailer/phpmailer": "^6.9",
     "phpoffice/phpword": "^1.4",
     "socialiteproviders/keycloak": "^5.3",
