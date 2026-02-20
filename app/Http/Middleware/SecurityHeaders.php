@@ -50,7 +50,13 @@ class SecurityHeaders
 
             // Bloque les workers non autorisés
             "worker-src 'self' blob:",
-        ];
+
+            // Prevents this page from being embedded in foreign frames (modern replacement for X-Frame-Options)
+            "frame-ancestors 'self'",
+
+            // Restricts form submissions to same origin
+            "form-action 'self'",
+            ];
 
         return implode('; ', $directives);
     }
