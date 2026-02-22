@@ -17,7 +17,7 @@
     "php": "^8.4",
     "directorytree/ldaprecord-laravel": "^3.3",
     "laravel/framework": "^11.9",
-    "laravel/passport": "^12.4",
+    "laravel/passport": "^13",
     "laravel/sanctum": "^4.2",
     "laravel/tinker": "^2.10",
     "laravel/ui": "^4.5",
@@ -26,7 +26,7 @@
     "phpmailer/phpmailer": "^6.9",
     "phpoffice/phpword": "^1.4",
     "socialiteproviders/keycloak": "^5.3",
-    "sourcentis/mercator-core": "1.54",
+    "sourcentis/mercator-core": "^1.55",
     "spatie/laravel-query-builder": "^6.3",
     "yajra/laravel-datatables-oracle": "^11.1"
   },
