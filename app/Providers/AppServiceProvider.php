@@ -6,6 +6,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -81,6 +82,11 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinutes($decay, $limit)
                 ->by($request->user()?->id ?: $request->ip());
+        });
+
+        // CSP : helper Blade pour accéder au nonce
+        Blade::directive('cspNonce', function () {
+            return "<?php echo app('csp-nonce'); ?>";
         });
     }
 }
