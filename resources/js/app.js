@@ -172,13 +172,21 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
     // ====================================================================
-    // Sidebar
+    // Navbar
 
-    $('button.sidebar-toggler').click(function () {
-        setTimeout(function () {
-            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-        }, 275);
-    })
+    document.getElementById('logout-link')
+        ?.addEventListener('click', (event) => {
+            event.preventDefault();
+            document.getElementById('logoutform').submit();
+        });
+
+    // ====================================================================
+    // Sidebar
+    
+    document.getElementById('toggle-sidebar-btn')
+        ?.addEventListener('click', () => {
+            toggleSidebar();
+        });
 
     let sidebar = document.querySelector(".sidebar");
     let dropdowns = document.querySelectorAll(".sidebar .dropdown-toggle");
@@ -214,6 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300);
     }
 
+    // ====================================================================
     // Accordion JS toggle
     $('.accordion').click(function () {
         $(this).toggleClass('active');

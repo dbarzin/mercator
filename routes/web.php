@@ -39,6 +39,15 @@ Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordControlle
 Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class, 'redirectToKeycloak'])->name('login.keycloak');
 Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
 
+// CSP
+Route::post('/csp-report', function (Request $request) {
+    Log::channel('security')->warning('CSP Violation', [
+        'report' => $request->getContent(),
+        'ip'     => $request->ip(),
+    ]);
+    return response()->noContent();
+})->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.protected']], function (): void {
     // Dashboard

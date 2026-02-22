@@ -1,63 +1,95 @@
 <?php
 
-// app/Http/Middleware/SecurityHeaders.php
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Random\RandomException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SecurityHeaders
 {
+    /**
+     * @throws RandomException
+     */
     public function handle(Request $request, Closure $next): mixed
     {
+        // TODO : enable CSP
+
+        // Le nonce doit être blindé AVANT $next() car la vue est rendue dans $next()
+        // $nonce = base64_encode(random_bytes(16));
+        // app()->instance('csp-nonce', $nonce);
+
+        // Transmettre le même nonce au plugin Vite
+        // → il l'ajoutera automatiquement sur les <script> et <link> qu'il génère
+        // Vite::useCspNonce($nonce);
+
         $response = $next($request);
+
+        // Les réponses binaires et streams ne supportent pas l'ajout de headers CSP
+        if ($response instanceof BinaryFileResponse || $response instanceof StreamedResponse) {
+            return $response;
+        }
 
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
-        $response->headers->set('Content-Security-Policy', $this->buildCsp());
+
+        // Phase de test : Report-Only observe sans bloquer
+        // $response->headers->set('Content-Security-Policy-Report-Only', $this->buildCsp($nonce));
+
+        // Basculer vers 'Content-Security-Policy' une fois zéro violation dans les logs
+        // $response->headers->set('Content-Security-Policy', $this->buildCsp($nonce));
 
         return $response;
     }
 
-    private function buildCsp(): string
+    private function buildCsp(string $nonce): string
     {
+        $isDev = app()->environment('local');
+
+        // Origines Vite — IPv4 ET IPv6, sans ws:// ici
+        $viteOrigins = $isDev
+            ? 'http://localhost:5173'
+            : '';
+
+        // WebSocket HMR — uniquement pour connect-src
+        $viteWs = $isDev
+            ? 'ws://localhost:5173'
+            : '';
+
         $directives = [
             "default-src 'self'",
 
-            // Scripts : soi-même uniquement
-            // 'unsafe-inline' est nécessaire si tu as des <script> inline dans les Blades
-            // À terme, viser à les supprimer pour retirer unsafe-inline
-            "script-src 'self' 'unsafe-inline'",
+            // Le hash couvre le script inline HMR de Vite que Vite::useCspNonce() ne peut pas nonce-ifier
+            "script-src 'self' 'nonce-{$nonce}'"
+            . ($viteOrigins ? " {$viteOrigins}" : '')
+            ,
 
-            // Styles : soi-même + inline (CKEditor en a besoin)
-            "style-src 'self' 'unsafe-inline'",
+            // Vite sert les CSS depuis son serveur dev
+            "style-src 'self' 'unsafe-inline'"
+            . ($viteOrigins ? " {$viteOrigins}" : ''),
 
-            // Images : soi-même + data: (pour les images base64 éventuelles)
+            // Bootstrap Icons woff2 servi par Vite en dev
+            "font-src 'self'"
+            . ($viteOrigins ? " {$viteOrigins}" : ''),
+
+            // WebSocket HMR uniquement ici
+            "connect-src 'self'"
+            . ($viteOrigins ? " {$viteOrigins}" : '')
+            . ($viteWs      ? " {$viteWs}"      : ''),
+
             "img-src 'self' data:",
-
-            // Fontes
-            "font-src 'self'",
-
-            // Connexions AJAX/fetch : soi-même uniquement
-            "connect-src 'self'",
-
-            // Interdit les iframes externes
             "frame-src 'none'",
-
-            // Interdit les objets Flash/plugins
             "object-src 'none'",
-
-            // Bloque les workers non autorisés
             "worker-src 'self' blob:",
-
-            // Prevents this page from being embedded in foreign frames (modern replacement for X-Frame-Options)
-            "frame-ancestors 'self'",
-
-            // Restricts form submissions to same origin
+            "base-uri 'self'",
             "form-action 'self'",
-            ];
+            "frame-ancestors 'self'",
+        ];
 
         return implode('; ', $directives);
     }
+
 }

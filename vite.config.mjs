@@ -9,6 +9,10 @@ export default defineConfig({
     define: {
         'process.env.APP_VERSION': JSON.stringify(version),
     },
+    server: {
+        host: 'localhost',
+        port: 5173,
+    },
     plugins: [
         laravel({
             input: [
