@@ -261,7 +261,8 @@ class ExplorerController extends Controller
                 $workstation->site_id
             );
 
-            $this->linkWorkstationToSubnetworks($workstation);
+            foreach (explode(',', $workstation->address_ip ?? '') as $ip)
+                $this->linkDeviceToSubnetworks($ip, $this->formatId(Workstation::$prefix, $workstation->id));
         }
     }
 
@@ -289,7 +290,8 @@ class ExplorerController extends Controller
                 $phone->site_id
             );
 
-            $this->linkPhoneToSubnetworks($phone);
+            $this->linkDeviceToSubnetworks($phone->address_ip, $this->formatId(Phone::$prefix, $phone->id));
+
         }
     }
 
@@ -1512,60 +1514,36 @@ class ExplorerController extends Controller
     }
 
 
-    // TODO: refactor me
-    private function linkWorkstationToSubnetworks($workstation): void
-    {
-        foreach ($this->subnetworks as $subnetwork) {
-            $addresses = explode(',', $workstation->address_ip ?? '');
-            foreach ($addresses as $address) {
-                if ($subnetwork->contains($address)) {
-                    $this->addLinkEdge(
-                        $this->formatId(Subnetwork::$prefix, $subnetwork->id),
-                        $this->formatId(Workstation::$prefix, $workstation->id)
-                    );
-                    break;
-                }
-            }
-        }
-    }
-
-    // TODO: refactor me
-    private function linkPhoneToSubnetworks($phone): void
-    {
-        foreach ($this->subnetworks as $subnetwork) {
-            $addresses = explode(',', $phone->address_ip ?? '');
-            foreach ($addresses as $address) {
-                if ($subnetwork->contains($address)) {
-                    $this->addLinkEdge(
-                        $this->formatId(Subnetwork::$prefix, $subnetwork->id),
-                        $this->formatId(Phone::$prefix, $phone->id)
-                    );
-                    break;
-                }
-            }
-        }
-    }
-
     private function linkDeviceToSubnetworks(?string $addressIp, string $deviceId): void
     {
         if ($addressIp === null) {
             return;
         }
 
+        $addresses = explode(',', $addressIp);
+        $smallestSubnetwork = null;
+        $smallestSize = PHP_INT_MAX;
+
         foreach ($this->subnetworks as $subnetwork) {
-            $addresses = explode(',', $addressIp);
             foreach ($addresses as $address) {
-                if ($subnetwork->contains($address)) {
-                    $this->addLinkEdge(
-                        $this->formatId(Subnetwork::$prefix, $subnetwork->id),
-                        $deviceId
-                    );
+                if ($subnetwork->contains(trim($address))) {
+                    $size = $subnetwork->getMaskLength();
+                    if ($size < $smallestSize) {
+                        $smallestSize = $size;
+                        $smallestSubnetwork = $subnetwork;
+                    }
                     break;
                 }
             }
         }
-    }
 
+        if ($smallestSubnetwork !== null) {
+            $this->addLinkEdge(
+                $this->formatId(Subnetwork::$prefix, $smallestSubnetwork->id),
+                $deviceId
+            );
+        }
+    }
     private function linkJoinTable(string $table, string $fromPrefix, string $toPrefix, string $fromColumn, string $toColumn): void
     {
         $joins = DB::table($table)->select($fromColumn, $toColumn)->get();

@@ -334,8 +334,17 @@ Physique :
                     stabilization: {
                         enabled: true,
                         iterations: 1500
-                    }
-                },
+                    },
+                    barnesHut: {
+                        gravitationalConstant: -30000,
+                        centralGravity: 0.1,
+                        springLength: 200,
+                        springConstant: 0.04,
+                        avoidOverlap: 1.0
+                    },
+
+                    solver: 'barnesHut',
+                    },
                 nodes: {
                     shape: 'image',
                     size: 25
