@@ -9,12 +9,34 @@
 
             <div class="card-body">
                 <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="type">{{ trans('cruds.physicalLink.fields.type') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
+                                    name="type" id="type" autofocus>
+                                @foreach($types as $type)
+                                    <option {{ (old('type') == $type) ? 'selected' : '' }}>{{$type}}</option>
+                                @endforeach
+                            </select>
+                            <span class="help-block">{{ trans('cruds.physicalLink.fields.type_helper') }}</span>
+                        </div>
+                    </div>
+                    <div style="width: 120px; flex: 0 0 120px;">
+                        <div class="form-group">
+                            <label for="color">{{ trans('cruds.physicalLink.fields.color') }}</label>
+                            <input type="color" name="color" value="{{ old('color', '#FFFFFF') }}" class="form-control form-control-color" id="color"/>
+                            <span class="help-block">{{ trans('cruds.physicalLink.fields.color_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="label-required"
                                    for="src_id">{{ trans('cruds.physicalLink.fields.src') }}</label>
                             <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}"
-                                    name="src_id" id="src_id" autofocus>
+                                    name="src_id" id="src_id">
                                 <option></option>
                                 @foreach($devices as $id => $name)
                                     <option value="{{ $id }}" {{ old('src_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
