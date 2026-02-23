@@ -49,17 +49,15 @@
                     {{ $flux->application_source->name }}
                 </a>
             @endif
-            @if (auth()->user()->granularity>=2)
-                @if($flux->service_source!=null)
-                    <a href="{{ route('admin.application-services.show', $flux->service_source->id) }}">
-                        {{ $flux->service_source->name }}
-                    </a>
-                @endif
-                @if ($flux->module_source!=null)
-                    <a href="{{ route('admin.application-modules.show', $flux->module_source->id) }}">
-                        {{ $flux->module_source->name }}
-                    </a>
-                @endif
+            @if($flux->service_source!=null)
+                <a href="{{ route('admin.application-services.show', $flux->service_source->id) }}">
+                    {{ $flux->service_source->name }}
+                </a>
+            @endif
+            @if ($flux->module_source!=null)
+                <a href="{{ route('admin.application-modules.show', $flux->module_source->id) }}">
+                    {{ $flux->module_source->name }}
+                </a>
             @endif
             @if ($flux->database_source!=null)
                 <a href="{{ route('admin.databases.show',$flux->database_source->id) }}">
@@ -77,17 +75,15 @@
                     {{ $flux->application_dest->name }}
                 </a>
             @endif
-            @if (auth()->user()->granularity>=2)
-                @if ($flux->service_dest!=null)
-                    <a href="{{ route('admin.application-services.show', $flux->service_dest->id) }}">
-                        {{ $flux->service_dest->name }}
-                    </a>
-                @endif
-                @if ($flux->module_dest!=null)
-                    <a href="{{ route('admin.application-modules.show', $flux->module_dest->id) }}">
-                        {{ $flux->module_dest->name }}
-                    </a>
-                @endif
+            @if ($flux->service_dest!=null)
+                <a href="{{ route('admin.application-services.show', $flux->service_dest->id) }}">
+                    {{ $flux->service_dest->name }}
+                </a>
+            @endif
+            @if ($flux->module_dest!=null)
+                <a href="{{ route('admin.application-modules.show', $flux->module_dest->id) }}">
+                    {{ $flux->module_dest->name }}
+                </a>
             @endif
             @if ($flux->database_dest!=null)
                 <a href="{{ route('admin.databases.show',$flux->database_dest->id) }}">
