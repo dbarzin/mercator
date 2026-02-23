@@ -24,7 +24,7 @@
                     <div style="width: 120px; flex: 0 0 120px;">
                         <div class="form-group">
                             <label for="color">{{ trans('cruds.physicalLink.fields.color') }}</label>
-                            <input type="color" name="color" value="{{ old('color', '#FFFFFF') }}" class="form-control form-control-color">
+                            <input type="color" name="color" value="{{ old('color', '#FFFFFF') }}" class="form-control form-control-color" id="color"/>
                             <span class="help-block">{{ trans('cruds.physicalLink.fields.color_helper') }}</span>
                         </div>
                     </div>
