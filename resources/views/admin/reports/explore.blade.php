@@ -443,6 +443,7 @@ Physique :
             }
         }
 
+        // Check that a edge already exists between 2 nodes
         function exists(from, to, label) {
             if (label === undefined)
                 return edges.get({
@@ -582,9 +583,14 @@ Physique :
                         else
                             network.body.data.nodes.add(targetNode);
 
-                        if (exists(nodeId, targetNodeId, edge.name).length === 0) {
-                            addEdge(nodeId, targetNodeId);
-                        }
+                        // Add edged between New node and other nodes
+                        _nodes.get(targetNodeId).edges.forEach(edge => {
+                            // Target node present
+                            if (nodes.get(edge.attachedNodeId) !== null) {
+                                addEdge(targetNodeId, edge.attachedNodeId);
+                            }
+                        })
+
                         setTimeout(function () {
                             deployFromNode(targetNodeId, depth - 1, visitedNodes, filter, direction);
                         }, 500);
