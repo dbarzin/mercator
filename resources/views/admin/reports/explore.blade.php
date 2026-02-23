@@ -574,7 +574,7 @@ Physique :
                         if ((direction === 2) && (node.order >= targetNode.order))
                             continue;
 
-                        // Add new Node
+                        // Add new node
                         if (getShowIP() && (targetNode.title!=null)) {
                             const modified_node = { ...targetNode};
                             modified_node.label = targetNode.label + "\n" + targetNode.title;
@@ -583,11 +583,11 @@ Physique :
                         else
                             network.body.data.nodes.add(targetNode);
 
-                        // Add edges between New node and other nodes
-                        _nodes.get(targetNodeId).edges.forEach(edge => {
+                        // Add edges between new node and other nodes
+                        _nodes.get(targetNodeId).edges.forEach(neighborEdge => {
                             // Target node present
-                            if (nodes.get(edge.attachedNodeId) !== null) {
-                                addEdge(targetNodeId, edge.attachedNodeId);
+                            if (nodes.get(neighborEdge.attachedNodeId) !== null) {
+                                addEdge(targetNodeId, neighborEdge.attachedNodeId);
                             }
                         })
 
