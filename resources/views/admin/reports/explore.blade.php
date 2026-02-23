@@ -620,7 +620,7 @@ Physique :
             return {
                 enabled: true,
                 type: count % 2 === 1 ? 'curvedCW' : 'curvedCCW',
-                roundness: 0.2 + Math.floor(count / 2) * 0.3
+                roundness: Math.ceil(count / 2) * 0.3
             };
         }
 
@@ -634,8 +634,8 @@ Physique :
                 if (edge.edgeType === 'FLUX') {
                     const isFrom = edge.edgeDirection === 'FROM';
                     const [from, to] = isFrom
-                        ? [sourceNodeId, targetNodeId]
-                        : [targetNodeId, sourceNodeId];
+                        ? [targetNodeId, sourceNodeId]
+                        : [sourceNodeId, targetNodeId];
 
                     edges.add({
                         label: edge.name,
