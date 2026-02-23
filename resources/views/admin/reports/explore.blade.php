@@ -443,7 +443,7 @@ Physique :
             }
         }
 
-        // Check that a edge already exists between 2 nodes
+        // Check that an edge already exists between 2 nodes
         function exists(from, to, label) {
             if (label === undefined)
                 return edges.get({
@@ -583,7 +583,7 @@ Physique :
                         else
                             network.body.data.nodes.add(targetNode);
 
-                        // Add edged between New node and other nodes
+                        // Add edges between New node and other nodes
                         _nodes.get(targetNodeId).edges.forEach(edge => {
                             // Target node present
                             if (nodes.get(edge.attachedNodeId) !== null) {
@@ -603,6 +603,7 @@ Physique :
             const edgeList = _nodes.get(sourceNodeId).edges;
             for (const edge of edgeList) {
                 if (edge.attachedNodeId === targetNodeId) {
+                    if (exists(sourceNodeId, targetNodeId, edge.name).length > 0) continue;
                     if (edge.edgeType === 'FLUX') {
                         if (edge.edgeDirection === 'TO') {
                             if (edge.bidirectional)
