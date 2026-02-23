@@ -373,72 +373,13 @@ Physique :
                 else
                     network.body.data.nodes.add(new_node);
             }
-            // add edges
-            const edgeList = new_node.edges;
-            if (edgeList === undefined)
-                return;
 
-            // Loop on all edges
+            // Loop on all edges using unified addEdge
+            const edgeList = new_node.edges;
             for (const edge of edgeList) {
-                var target_node = _nodes.get(edge.attachedNodeId);
-                if (target_node !== undefined) {
-                    if ((nodes.get(target_node.id) != null) &&
-                    (exists(new_node.id, target_node.id, edge.name).length === 0)) {
-                        if (edge.edgeType === 'FLUX') {
-                            if (edge.edgeDirection === 'TO') {
-                                if (edge.bidirectional)
-                                    edges.add({
-                                        label: edge.name,
-                                        from: target_node.id,
-                                        to: new_node.id,
-                                        length: 200,
-                                        arrows: {
-                                            from: {enabled: true, type: 'arrow'},
-                                            to: {enabled: true, type: 'arrow'}
-                                        }
-                                    });
-                                else
-                                    edges.add({
-                                        label: edge.name,
-                                        from: new_node.id,
-                                        to: target_node.id,
-                                        length: 200,
-                                        arrows: {to: {enabled: true, type: 'arrow'}}
-                                    });
-                            } else if (edge.edgeDirection === 'FROM') {
-                                if (edge.bidirectional)
-                                    edges.add({
-                                        label: edge.name,
-                                        from: target_node.id,
-                                        to: new_node.id,
-                                        length: 200,
-                                        arrows: {
-                                            from: {enabled: true, type: 'arrow'},
-                                            to: {enabled: true, type: 'arrow'}
-                                        }
-                                    });
-                                else
-                                    edges.add({
-                                        label: edge.name,
-                                        from: target_node.id,
-                                        to: new_node.id,
-                                        length: 200,
-                                        arrows: {from: {enabled: true, type: 'arrow'}}
-                                    });
-                            }
-                        } else if (edge.edgeType === 'CABLE') {
-                            edges.add({
-                            from: new_node.id, to: target_node.id,
-                            color: edge.color ?? 'blue', width: 5,
-                            length:200
-                            });
-                        } else if (edge.edgeType === 'LINK') {
-                            edges.add({
-                            from: new_node.id, to: target_node.id,
-                            length:200
-                            });
-                        }
-                    }
+                const target_node = _nodes.get(edge.attachedNodeId);
+                if (target_node !== undefined && nodes.get(target_node.id) != null) {
+                    addEdge(new_node.id, target_node.id);
                 }
             }
         }
@@ -620,7 +561,7 @@ Physique :
             return {
                 enabled: true,
                 type: count % 2 === 1 ? 'curvedCW' : 'curvedCCW',
-                roundness: Math.ceil(count / 2) * 0.3
+                roundness: Math.min(Math.ceil(count / 2) * 0.3, 1.0)
             };
         }
 
