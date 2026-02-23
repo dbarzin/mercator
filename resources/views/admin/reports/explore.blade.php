@@ -336,9 +336,9 @@ Physique :
                         iterations: 1500
                     },
                     barnesHut: {
-                        gravitationalConstant: -30000,
+                        gravitationalConstant: -3000,
                         centralGravity: 0.1,
-                        springLength: 200,
+                        springLength: 150,
                         springConstant: 0.04,
                         avoidOverlap: 1.0
                     },
@@ -368,27 +368,44 @@ Physique :
 
         // Add a node base on the node.id
         function addNode(id) {
-            const new_node = _nodes.get(id);
-            if (new_node == null)
+            const newNode = _nodes.get(id);
+            if (newNode == null)
                 return;
             // Check node already present
-            if (!nodes.get(new_node.id)) {
+            if (!nodes.get(newNode.id)) {
                 // Add new Node
-                if (getShowIP() && (new_node.title!=null)) {
-                    const modified_node = { ...new_node};
-                    modified_node.label = new_node.label + "\n" + new_node.title;
-                    network.body.data.nodes.add(modified_node);
+                if (getShowIP() && (newNode.title!=null)) {
+                    const modifiedNode = { ...newNode};
+                    modifiedNode.label = newNode.label + "\n" + newNode.title;
+                    network.body.data.nodes.add(modifiedNode);
                     }
                 else
-                    network.body.data.nodes.add(new_node);
+                    network.body.data.nodes.add(newNode);
             }
 
             // Loop on all edges using unified addEdge
-            const edgeList = new_node.edges;
+            const edgeList = newNode.edges;
+            const filter = getFilter();
+            console.log("filter=",filter);
             for (const edge of edgeList) {
-                const target_node = _nodes.get(edge.attachedNodeId);
-                if (target_node !== undefined && nodes.get(target_node.id) != null) {
-                    addEdge(new_node.id, target_node.id);
+                const targetNode = _nodes.get(edge.attachedNodeId);
+                if (targetNode === undefined) continue;
+                if (
+                    (filter.length === 0)
+                    ||
+                    (filter.includes(targetNode.vue) && (
+                        (edge.edgeType !== 'CABLE') && (edge.edgeDirection === 'FLUX')
+                        )
+                    )
+                    ||
+                    (filter.includes("8") && (edge.edgeType === 'CABLE'))
+                    ||
+                    (filter.includes("9") && (edge.edgeType === 'FLUX'))
+                ) {
+                if (nodes.get(targetNode.id) != null) {
+                    console.log("targetNode=", targetNode);
+                    addEdge(newNode.id, targetNode.id);
+                    }
                 }
             }
         }
@@ -503,6 +520,8 @@ Physique :
                 return;
             }
 
+            console.log("filter=", filter);
+
             let edgeList = node.edges;
             for (const edge of edgeList) {
                 let targetNodeId = edge.attachedNodeId;
@@ -511,7 +530,13 @@ Physique :
                     if (targetNode == null)
                         continue;
                     if (
-                        ((filter.length === 0) || filter.includes(targetNode.vue))
+                        (filter.length === 0)
+                        ||
+                        (
+                            filter.includes(targetNode.vue) &&
+                            (edge.edgeType !== 'CABLE')  &&
+                            (edge.edgeType !== 'FLUX')
+                        )
                         ||
                         (filter.includes("8") && (edge.edgeType === 'CABLE'))
                         ||
@@ -537,9 +562,21 @@ Physique :
                         _nodes.get(targetNodeId).edges.forEach(neighborEdge => {
                             // Target node present
                             if (nodes.get(neighborEdge.attachedNodeId) !== null) {
-                                addEdge(targetNodeId, neighborEdge.attachedNodeId);
+                                console.log("neighborEdge=", neighborEdge);
+                                if (
+                                    (filter.length === 0)
+                                    ||
+                                    (neighborEdge.edgeType === 'LINK')
+                                    ||
+                                    (filter.includes("8") && (neighborEdge.edgeType === 'CABLE'))
+                                    ||
+                                    (filter.includes("9") && (neighborEdge.edgeType === 'FLUX'))
+                                ) {
+                                    addEdge(targetNodeId, neighborEdge.attachedNodeId);
+                                    }
+                                }
                             }
-                        })
+                        );
 
                         setTimeout(function () {
                             deployFromNode(targetNodeId, depth - 1, visitedNodes, filter, direction);
@@ -591,7 +628,6 @@ Physique :
                         label: edge.name,
                         from,
                         to,
-                        length: 200,
                         smooth: getSmooth(from, to),
                         font: FONT_OPTIONS,
                         arrows: edge.bidirectional
@@ -604,8 +640,7 @@ Physique :
                         from: sourceNodeId,
                         to: targetNodeId,
                         color: edge.color ?? 'blue',
-                        width: 5,
-                        length: 200,
+                        width: 3,
                         smooth: getSmooth(sourceNodeId, targetNodeId)
                     });
 
@@ -613,7 +648,6 @@ Physique :
                     edges.add({
                         from: sourceNodeId,
                         to: targetNodeId,
-                        length: 200,
                         smooth: getSmooth(sourceNodeId, targetNodeId)
                     });
                 }

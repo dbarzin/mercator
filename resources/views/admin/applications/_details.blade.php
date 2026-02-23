@@ -16,7 +16,7 @@
         <th width="10%">
             {{ trans('cruds.application.fields.application_block') }}
         </th>
-        <td width="10%">
+        <td width="20%">
             @if ($application->applicationBlock!=null)
                 <a href='{{ route("admin.application-blocks.show", $application->applicationBlock->id) }}'>{{ $application->applicationBlock->name }}</a>
             @endif
