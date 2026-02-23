@@ -599,65 +599,76 @@ Physique :
             }
         }
 
+        const FONT_OPTIONS = {
+            align: 'middle',
+            background: 'white',
+            strokeWidth: 2,
+            strokeColor: 'white'
+        };
+
+        /**
+         * Calcule la courbure en fonction du nombre de liens déjà présents entre deux nœuds.
+         */
+        function getSmooth(sourceNodeId, targetNodeId) {
+            const count = edges.get().filter(e =>
+                (e.from === sourceNodeId && e.to === targetNodeId) ||
+                (e.from === targetNodeId && e.to === sourceNodeId)
+            ).length;
+
+            if (count === 0) return { enabled: false };
+
+            return {
+                enabled: true,
+                type: count % 2 === 1 ? 'curvedCW' : 'curvedCCW',
+                roundness: 0.2 + Math.floor(count / 2) * 0.3
+            };
+        }
+
         function addEdge(sourceNodeId, targetNodeId) {
             const edgeList = _nodes.get(sourceNodeId).edges;
+
             for (const edge of edgeList) {
-                if (edge.attachedNodeId === targetNodeId) {
-                    if (exists(sourceNodeId, targetNodeId, edge.name).length > 0) continue;
-                    if (edge.edgeType === 'FLUX') {
-                        if (edge.edgeDirection === 'TO') {
-                            if (edge.bidirectional)
-                                edges.add({
-                                    label: edge.name,
-                                    from: targetNodeId,
-                                    to: sourceNodeId,
-                                    length: 200,
-                                    arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}
-                                });
-                            else
-                                edges.add({
-                                    label: edge.name,
-                                    from: sourceNodeId,
-                                    to: targetNodeId,
-                                    length: 200,
-                                    arrows: {to: {enabled: true, type: 'arrow'}}
-                                });
-                        } else if (edge.edgeDirection === 'FROM') {
-                            if (edge.bidirectional)
-                                edges.add({
-                                    label: edge.name,
-                                    from: targetNodeId,
-                                    to: sourceNodeId,
-                                    length: 200,
-                                    arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}
-                                });
-                            else
-                                edges.add({
-                                    label: edge.name,
-                                    from: sourceNodeId,
-                                    to: targetNodeId,
-                                    length: 200,
-                                    arrows: {from: {enabled: true, type: 'arrow'}}
-                                });
-                        }
-                    } else if (edge.edgeType === 'CABLE') {
-                        edges.add(
-                            {from: sourceNodeId, to: targetNodeId,
-                            color: edge.color ?? 'blue',
-                            width: 5,
-                            length: 200
-                            });
-                    } else if (edge.edgeType === 'LINK') {
-                        edges.add(
-                            {
-                            from: sourceNodeId, to: targetNodeId,
-                            length: 200,
-                            });
-                    }
+                if (edge.attachedNodeId !== targetNodeId) continue;
+                if (exists(sourceNodeId, targetNodeId, edge.name).length > 0) continue;
+
+                if (edge.edgeType === 'FLUX') {
+                    const isFrom = edge.edgeDirection === 'FROM';
+                    const [from, to] = isFrom
+                        ? [sourceNodeId, targetNodeId]
+                        : [targetNodeId, sourceNodeId];
+
+                    edges.add({
+                        label: edge.name,
+                        from,
+                        to,
+                        length: 200,
+                        smooth: getSmooth(from, to),
+                        font: FONT_OPTIONS,
+                        arrows: edge.bidirectional
+                            ? { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } }
+                            : { to: { enabled: true, type: 'arrow' } }
+                    });
+
+                } else if (edge.edgeType === 'CABLE') {
+                    edges.add({
+                        from: sourceNodeId,
+                        to: targetNodeId,
+                        color: edge.color ?? 'blue',
+                        width: 5,
+                        length: 200,
+                        smooth: getSmooth(sourceNodeId, targetNodeId)
+                    });
+
+                } else if (edge.edgeType === 'LINK') {
+                    edges.add({
+                        from: sourceNodeId,
+                        to: targetNodeId,
+                        length: 200,
+                        smooth: getSmooth(sourceNodeId, targetNodeId)
+                    });
                 }
             }
         }
-
         function getFilter() {
             const filter = [];
             for (let option of document.getElementById('filters').options)
