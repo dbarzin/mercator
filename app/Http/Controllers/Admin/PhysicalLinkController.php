@@ -479,7 +479,7 @@ class PhysicalLinkController extends Controller
         }
 
         if (str_starts_with($request->dest_id, Router::$prefix)) {
-            $link->router_dest_id = intval(substr($request->dest_id, str(Router::$prefix)));
+            $link->router_dest_id = intval(substr($request->dest_id, strlen(Router::$prefix)));
         } else {
             $link->router_dest_id = null;
         }
