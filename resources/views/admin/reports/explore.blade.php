@@ -445,7 +445,7 @@ Physique :
 
         // Check that an edge already exists between 2 nodes
         function exists(from, to, label) {
-            if (label === undefined)
+            if (label === null)
                 return edges.get({
                     filter: function (item) {
                         return (
