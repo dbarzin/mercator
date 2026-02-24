@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::dropIfExists('oauth_access_tokens');
         Schema::dropIfExists('oauth_refresh_tokens');
         Schema::dropIfExists('oauth_auth_codes');
-        Schema::dropIfExists('oauth_clients');
         Schema::dropIfExists('oauth_device_codes');
+        Schema::dropIfExists('oauth_clients');
     }
 
     /**
