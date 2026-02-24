@@ -111,9 +111,9 @@ Lors du déploiement de Mercator, nous recommandons les mesures suivantes :
 
 Nous remercions les personnes suivantes qui ont divulgué de manière responsable des vulnérabilités de sécurité :
 
-| Rapporteur | Vulnérabilité        | Année |
-|------------|----------------------|-------|
-| @hadhub    | Stored XSS displayed | 2026  |
+| Rapporteur                           | Vulnérabilité        | Année |
+|--------------------------------------|----------------------|-------|
+| [@hadbuh](https://github.com/hadhub) | Stored XSS displayed | 2026  |
 
 ---
 
@@ -121,4 +121,4 @@ Nous remercions les personnes suivantes qui ont divulgué de manière responsabl
 
 Pour toute question de sécurité ne concernant pas une vulnérabilité (conseils de durcissement, conformité, revue
 d'architecture), vous pouvez ouvrir une [Discussion GitHub](../../discussions) ou nous contacter à *
-*security@sourcentis.fr**.
+*info@sourcentis.com**.

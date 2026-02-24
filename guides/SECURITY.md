@@ -108,14 +108,14 @@ When deploying Mercator, we recommend the following:
 
 We are grateful to the following individuals who have responsibly disclosed security vulnerabilities:
 
-| Reporter | Vulnerability        | Year |
-|----------|----------------------|------|
-| @hadhub  | Stored XSS displayed | 2026 |
+| Reporter                             | Vulnerability        | Year |
+|--------------------------------------|----------------------|------|
+| [@hadbuh](https://github.com/hadhub) | Stored XSS displayed | 2026 |
 
 ---
 
 ## Contact
 
 For non-vulnerability security questions (hardening advice, compliance, architecture review), you may open
-a [GitHub Discussion](../../discussions) or contact us at **security@sourcentis.fr**.
+a [GitHub Discussion](../../discussions) or contact us at **info@sourcentis.com**.
 
