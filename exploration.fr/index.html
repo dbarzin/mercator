@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/exploration.fr/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Exploration - Mercator</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Exploration";
+        var mkdocs_page_input_path = "exploration.fr.md";
+        var mkdocs_page_url = "/mercator/exploration.fr/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Mercator
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.fr/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography.fr/">Cartographie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../application.fr/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn.fr/">BPMN 2.0</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reports.fr/">Rapports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases.fr/">Cas d'utilisation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model.fr/">Modèle de données</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Exploration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-interface">1 Interface</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-semantique-des-boutons-directionnels">2 Sémantique des boutons directionnels</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-procedure-dutilisation-pas-a-pas">3 Procédure d'utilisation pas à pas</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin.fr/">Administration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../config.fr/">Configuration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../import.fr/">Import</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../api.fr/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters.fr/">API avancé (filtres)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../references.fr/">Références</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Mercator</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Exploration</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/exploration.fr.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <ul>
+<li class="i18n-link i18n-link-found i18n-link-en"><a href="../exploration/">English</a></li>
+</ul>
+<h2 id="fonctionnalite-exploration">Fonctionnalité Exploration</h2>
+<p>L'outil <strong>Exploration</strong> (<code>Outils → Exploration</code>) permet de naviguer dynamiquement dans le graphe de relations entre les
+assets. Il révèle les dépendances entre couches : vers le <strong>haut</strong> (abstrait / métier) ou vers le <strong>bas</strong> (concret /
+physique).</p>
+<h3 id="1-interface">1 Interface</h3>
+<p><a href="/mercator/images/explorer.fr.png"><img src="/mercator/images/explorer.fr.png" width="700"></a></p>
+<table>
+<thead>
+<tr>
+<th>Élément UI</th>
+<th>Type</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Filtre</strong></td>
+<td>Champ texte</td>
+<td>Filtre sur les vues de la cartographie (ex : <code>Applications</code>)</td>
+</tr>
+<tr>
+<td><strong>Objet</strong></td>
+<td>Liste déroulante</td>
+<td>Sélection de l'asset à explorer (ex : <code>RH-Solution</code>)</td>
+</tr>
+<tr>
+<td><strong>Ajouter</strong></td>
+<td>Bouton bleu</td>
+<td>Ajoute l'asset sélectionné dans la fenêtre graphique</td>
+</tr>
+<tr>
+<td><strong>Physique</strong></td>
+<td>Toggle vert</td>
+<td>Active/désactive l'affichage des liaisons physiques</td>
+</tr>
+<tr>
+<td><strong>Niveau (1–5)</strong></td>
+<td>Sélecteur</td>
+<td>Nombre de niveaux de relations à déployer</td>
+</tr>
+<tr>
+<td><strong>Déployer</strong></td>
+<td>Bouton vert</td>
+<td>Lance l'exploration selon les paramètres définis</td>
+</tr>
+<tr>
+<td><strong>↑ Haut</strong></td>
+<td>Bouton cyan</td>
+<td>Déploie vers les couches supérieures (abstrait / métier)</td>
+</tr>
+<tr>
+<td><strong>↓ Bas</strong></td>
+<td>Bouton cyan</td>
+<td>Déploie vers les couches inférieures (concret / physique)</td>
+</tr>
+<tr>
+<td><strong>↕ Les deux</strong></td>
+<td>Bouton cyan</td>
+<td>Déploie dans les deux sens simultanément</td>
+</tr>
+<tr>
+<td><strong>Supprimer</strong></td>
+<td>Bouton rouge</td>
+<td>Retire l'asset sélectionné du graphe</td>
+</tr>
+<tr>
+<td><strong>Recommencer</strong></td>
+<td>Bouton jaune</td>
+<td>Réinitialise entièrement le graphe</td>
+</tr>
+<tr>
+<td><strong>Show IP</strong></td>
+<td>Bouton gris</td>
+<td>Affiche les adresses IP sur les assets réseau</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="2-semantique-des-boutons-directionnels">2 Sémantique des boutons directionnels</h3>
+<p>La direction est relative à la <strong>hiérarchie des couches Mercator</strong>, alignée sur ArchiMate :</p>
+<pre><code>↑ HAUT  ═══════════════════════════════════════════════  vers 100 (Métier)
+         Couche 1 : Entités, Processus, Acteurs (100–260)
+         Couche 2 : Applications, Modules, BDD  (300–340)
+         Couche 3 : IAM, Active Directory        (400–460)
+         Couche 4 : Réseaux, VMs, Conteneurs     (500–580)
+         Couche 5 : Physique, Sites, Baies        (600–675)
+↓ BAS   ═══════════════════════════════════════════════  vers 675 (Physique)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Bouton</th>
+<th>Direction</th>
+<th>Signification</th>
+<th>Exemple depuis <code>RH-Solution</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>↑ Haut</strong></td>
+<td>Vers les couches supérieures</td>
+<td>Remonte vers le métier, les processus et les acteurs qui utilisent cet asset</td>
+<td><code>Application → Processus RH → Acteurs DRH</code></td>
+</tr>
+<tr>
+<td><strong>↓ Bas</strong></td>
+<td>Vers les couches inférieures</td>
+<td>Descend vers l'infrastructure, les serveurs et les réseaux qui supportent cet asset</td>
+<td><code>Application → VM → Serveur physique → Baie → Site</code></td>
+</tr>
+<tr>
+<td><strong>↕ Les deux</strong></td>
+<td>Bidirectionnel</td>
+<td>Vue complète : qui utilise cet asset ET sur quoi il repose</td>
+<td><code>Processus ← Application → Serveur → Physique</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="3-procedure-dutilisation-pas-a-pas">3 Procédure d'utilisation pas à pas</h3>
+<pre><code>Étape 1 ─ Saisir un filtre (optionnel)
+          └─ Champ &quot;Filtre&quot; : ex. &quot;Applications&quot;
+             Restreint la liste des objets à une vue spécifique
+
+Étape 2 ─ Sélectionner l'asset de départ
+          └─ Liste déroulante &quot;Objet&quot; : ex. &quot;RH-Solution&quot;
+
+Étape 3 ─ Ajouter l'asset au graphe
+          └─ Cliquer sur le bouton bleu &quot;Ajouter&quot;
+             L'asset apparaît dans la fenêtre graphique
+
+Étape 4 ─ Sélectionner l'asset dans le graphe
+          └─ Cliquer sur l'icône de l'asset dans la zone graphique
+             (il doit être actif / sélectionné)
+
+Étape 5 ─ Choisir la direction
+          └─ Cliquer sur : ↑ Haut  |  ↓ Bas  |  ↕ Les deux
+
+Étape 6 ─ Définir le nombre de niveaux
+          └─ Sélecteur numérique : 1 à 5
+             Commencer par 1 ou 2 pour les assets très connectés
+
+Étape 7 ─ Déployer
+          └─ Cliquer sur le bouton vert &quot;Déployer&quot;
+             Le graphe se construit avec les relations trouvées
+
+Étape 8 ─ Itérer (optionnel)
+          └─ Cliquer sur un autre nœud du graphe
+             Répéter à partir de l'étape 4
+</code></pre>
+<hr />
+<h2 id="4-exemples-dexploration">4. Exemples d'Exploration</h2>
+<h3 id="41-impact-metier-dune-application">4.1 Impact métier d'une application</h3>
+<blockquote>
+<p><strong>Contexte :</strong> Quels processus métier et acteurs dépendent de <code>RH-Solution</code> ?</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filtre</td>
+<td><code>Applications</code></td>
+</tr>
+<tr>
+<td>Objet</td>
+<td><code>RH-Solution</code></td>
+</tr>
+<tr>
+<td>Direction</td>
+<td><strong>↑ Haut</strong></td>
+</tr>
+<tr>
+<td>Niveaux</td>
+<td><code>3</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat attendu :</strong></p>
+<pre><code>RH-Solution
+ └── APPLI-RH-MOD-1 (module)
+      └── Processus Gestion RH
+           └── Acteur : Direction RH
+</code></pre>
+<p>Vous obtenez la liste de tous les processus et acteurs qui dépendent fonctionnellement de cette application.</p>
+<hr />
+<h3 id="42-infrastructure-supportant-une-application">4.2 Infrastructure supportant une application</h3>
+<blockquote>
+<p><strong>Contexte :</strong> Sur quel matériel physique repose <code>RH-Solution</code> ? (pour PRA, analyse d'impact ITIL, CMDB)</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filtre</td>
+<td><code>Applications</code></td>
+</tr>
+<tr>
+<td>Objet</td>
+<td><code>RH-Solution</code></td>
+</tr>
+<tr>
+<td>Direction</td>
+<td><strong>↓ Bas</strong></td>
+</tr>
+<tr>
+<td>Niveaux</td>
+<td><code>3</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat attendu :</strong></p>
+<pre><code>RH-Solution
+ ├── APPLI-RH-SRV-1 (service applicatif)
+ └── DB-RH-PROD (base de données)
+      └── VM-APP-RH-01 (serveur logique)
+           └── SRV-PROD-01 (serveur physique)
+                └── RACK-A3 (baie)
+                     └── Site DC-Paris
+</code></pre>
+<p>Vous obtenez la chaîne complète depuis l'application jusqu'au site physique.</p>
+<hr />
+<h3 id="43-analyse-dimpact-complete-avant-maintenance-incident">4.3 Analyse d'impact complète (avant maintenance / incident)</h3>
+<blockquote>
+<p><strong>Contexte :</strong> Vue complète de TOUTES les dépendances de <code>RH-Solution</code> avant une maintenance.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filtre</td>
+<td><code>Applications</code></td>
+</tr>
+<tr>
+<td>Objet</td>
+<td><code>RH-Solution</code></td>
+</tr>
+<tr>
+<td>Direction</td>
+<td><strong>↕ Les deux</strong></td>
+</tr>
+<tr>
+<td>Niveaux</td>
+<td><code>3</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat attendu :</strong></p>
+<pre><code>         Macro-processus : Gestion du Personnel
+              └── Processus RH → Acteur DRH
+                       ↑
+              [RH-Solution]  ← asset central
+                       ↓
+         APPLI-RH-SRV-1 · APPLI-RH-MOD-1 · DB-RH-PROD
+              └── Serveurs logiques → Physiques → Baies → Site
+</code></pre>
+<p>Idéal pour les <strong>dossiers d'architecture</strong> et les <strong>analyses d'impact</strong>.</p>
+<hr />
+<h3 id="44-selection-de-la-direction-selon-le-cas-dusage">4.4 Sélection de la direction selon le cas d'usage</h3>
+<table>
+<thead>
+<tr>
+<th>Cas d'usage</th>
+<th>Direction</th>
+<th>Couches traversées</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qui utilise cette application ?</td>
+<td>↑ Haut</td>
+<td>Application → Processus → Acteurs</td>
+</tr>
+<tr>
+<td>Sur quoi repose ce serveur ?</td>
+<td>↓ Bas</td>
+<td>Serveur logique → Physique → Baie → Site</td>
+</tr>
+<tr>
+<td>Analyse d'impact complète</td>
+<td>↕ Les deux</td>
+<td>Métier ↔ Application ↔ Infrastructure</td>
+</tr>
+<tr>
+<td>Quels processus dépendent d'une BDD ?</td>
+<td>↑ Haut</td>
+<td>Base de données → Application → Processus</td>
+</tr>
+<tr>
+<td>Quels équipements réseau sous un VLAN ?</td>
+<td>↓ Bas</td>
+<td>VLAN → Switch → Routeur physique</td>
+</tr>
+<tr>
+<td>Cartographie d'un domaine AD</td>
+<td>↕ Les deux</td>
+<td>Forest AD → Domaine → Zone Admin → Serveurs</td>
+</tr>
+<tr>
+<td>Quels assets un acteur utilise-t-il ?</td>
+<td>↓ Bas</td>
+<td>Acteur → Processus → Application → Infrastructure</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-correspondance-bpmn-archimate-mercator">5. Correspondance BPMN — ArchiMate — Mercator</h2>
+<table>
+<thead>
+<tr>
+<th>Asset Mercator</th>
+<th>BPMN 2.0</th>
+<th>ArchiMate 3.1</th>
+<th>TOGAF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>entities</code> (100)</td>
+<td>Pool / Lane</td>
+<td>Business Actor</td>
+<td>Organizational Unit</td>
+</tr>
+<tr>
+<td><code>macro-processuses</code> (200)</td>
+<td>Process (niveau 1)</td>
+<td>Business Process</td>
+<td>Business Function</td>
+</tr>
+<tr>
+<td><code>processes</code> (210)</td>
+<td>Sub-Process</td>
+<td>Business Process</td>
+<td>Business Service</td>
+</tr>
+<tr>
+<td><code>activities</code> (220)</td>
+<td>Task / Activity</td>
+<td>Business Function</td>
+<td>Business Function</td>
+</tr>
+<tr>
+<td><code>tasks</code> (240)</td>
+<td>Task (atomique)</td>
+<td>Business Interaction</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>actors</code> (250)</td>
+<td>Lane / Performer</td>
+<td>Business Role</td>
+<td>Business Actor</td>
+</tr>
+<tr>
+<td><code>information</code> (260)</td>
+<td>Data Object</td>
+<td>Business Object</td>
+<td>Data Entity</td>
+</tr>
+<tr>
+<td><code>applications</code> (310)</td>
+<td>—</td>
+<td>Application Component</td>
+<td>Application Component</td>
+</tr>
+<tr>
+<td><code>application-services</code> (320)</td>
+<td>—</td>
+<td>Application Service</td>
+<td>Application Service</td>
+</tr>
+<tr>
+<td><code>databases</code> (340)</td>
+<td>Data Store</td>
+<td>Data Object</td>
+<td>Data Store</td>
+</tr>
+<tr>
+<td><code>logical-servers</code> (580)</td>
+<td>—</td>
+<td>System Software</td>
+<td>Platform Service</td>
+</tr>
+<tr>
+<td><code>physical-servers</code> (615)</td>
+<td>—</td>
+<td>Device</td>
+<td>Technology Component</td>
+</tr>
+<tr>
+<td><code>sites</code> (600)</td>
+<td>—</td>
+<td>Location</td>
+<td>Geography</td>
+</tr>
+</tbody>
+</table>
+<h3 id="relations-archimate-dans-mercator">Relations ArchiMate dans Mercator</h3>
+<table>
+<thead>
+<tr>
+<th>Relation ArchiMate</th>
+<th>Direction Exploration</th>
+<th>Exemple Mercator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Serving</strong> (sert)</td>
+<td>↑ Haut</td>
+<td>Application Service sert un Business Process</td>
+</tr>
+<tr>
+<td><strong>Realization</strong> (réalise)</td>
+<td>↕ Les deux</td>
+<td>Application réalise un Business Service</td>
+</tr>
+<tr>
+<td><strong>Assignment</strong> (affecté à)</td>
+<td>↓ Bas</td>
+<td>Logical Server assigné à Physical Server</td>
+</tr>
+<tr>
+<td><strong>Composition</strong> (composé de)</td>
+<td>↓ Bas</td>
+<td>Site contient Buildings contient Bays</td>
+</tr>
+<tr>
+<td><strong>Association</strong></td>
+<td>↕ Les deux</td>
+<td>Application associée à Database</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-bonnes-pratiques">6. Bonnes Pratiques</h2>
+<h3 id="61-recommandations-pour-lexploration">6.1 Recommandations pour l'exploration</h3>
+<p><strong>Commencer par le niveau 1 ou 2</strong>
+Pour les assets très connectés (ex : application centrale), démarrer avec 1 ou 2 niveaux évite un graphe illisible.
+Augmenter ensuite progressivement.</p>
+<p><strong>Utiliser le filtre pour cibler les vues</strong>
+Le champ Filtre restreint les objets disponibles à une vue spécifique. Cela évite de chercher un asset dans toute la
+CMDB.</p>
+<p><strong>Mode Physique</strong>
+Activer le toggle Physique uniquement quand vous souhaitez visualiser les liaisons réseau physiques (WAN/LAN/MAN).
+Désactivé, l'exploration reste au niveau logique.</p>
+<h3 id="62-recommandations-pour-la-saisie-des-assets">6.2 Recommandations pour la saisie des assets</h3>
+<ul>
+<li>Respecter la numérotation Mercator : créer les assets de la couche physique (600+) avant de les associer aux couches
+  logiques.</li>
+<li>La relation de containment physique doit être saisie dans l'ordre : <strong>Site → Building → Bay → Physical Server</strong>.</li>
+<li>Un <code>logical-server</code> (VM) doit toujours être rattaché à un <code>physical-server</code> pour que la navigation ↓ Bas fonctionne
+  correctement.</li>
+<li>Les <code>certificates</code> (570) sont transverses : les associer aux applications ET aux serveurs logiques pour une
+  exploration complète.</li>
+<li>Les <code>external-connected-entities</code> (540) peuvent être rattachées à la couche métier (partenaires) ou réseau (
+  connexions) selon le contexte.</li>
+</ul>
+<h3 id="63-cas-dusage-par-profil-utilisateur">6.3 Cas d'usage par profil utilisateur</h3>
+<table>
+<thead>
+<tr>
+<th>Profil</th>
+<th>Direction privilégiée</th>
+<th>Cas d'usage typique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecte d'entreprise</td>
+<td>↑ Haut</td>
+<td>Tracer l'alignement entre infrastructure et processus métier</td>
+</tr>
+<tr>
+<td>Architecte infrastructure</td>
+<td>↓ Bas</td>
+<td>Identifier la chaîne physique supportant une application</td>
+</tr>
+<tr>
+<td>RSSI / Risk Manager</td>
+<td>↕ Les deux</td>
+<td>Cartographier les dépendances pour l'analyse de risque</td>
+</tr>
+<tr>
+<td>Responsable CMDB</td>
+<td>↓ Bas</td>
+<td>Vérifier la complétude du chaînage physique</td>
+</tr>
+<tr>
+<td>Gestionnaire de crise / PRA</td>
+<td>↕ Les deux</td>
+<td>Analyse d'impact avant/après incident</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="references">Références</h2>
+<ul>
+<li><a href="https://github.com/dbarzin/mercator">GitHub Mercator</a></li>
+<li><a href="https://www.opengroup.org/archimate-forum/archimate-overview">ArchiMate 3.1</a></li>
+<li><a href="https://www.opengroup.org/togaf">TOGAF ADM</a></li>
+<li><a href="https://www.omg.org/spec/BPMN/2.0/">BPMN 2.0</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../model.fr/" class="btn btn-neutral float-left" title="Modèle de données"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../admin.fr/" class="btn btn-neutral float-right" title="Administration">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dbarzin/mercator" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../model.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../admin.fr/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
