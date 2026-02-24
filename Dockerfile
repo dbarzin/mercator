@@ -6,7 +6,7 @@ ENV APP_VERSION=${VERSION}
 
 # Install system dependencies and PHP extensions in a single layer
 RUN apk add --no-cache \
-    git curl bash ssmtp graphviz fontconfig ttf-freefont \
+    git curl bash ssmtp graphviz fontconfig ttf-freefont dcron \
     ca-certificates sqlite sqlite-dev \
     postgresql-dev postgresql-client \
     mariadb-client mariadb-connector-c-dev \
@@ -34,7 +34,12 @@ RUN apk add --no-cache \
     && chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d \
     && chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d \
     && chmod g=u /etc/passwd \
-    && chgrp www /etc/passwd
+    && chgrp www /etc/passwd \
+    # Configure crontab for mercator user
+    && mkdir -p /etc/crontabs \
+    && echo "* * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1" > /etc/crontabs/mercator \
+    && chmod 600 /etc/crontabs/mercator \
+    && chown mercator /etc/crontabs/mercator
 
 # Set working directory
 WORKDIR /var/www/mercator
@@ -46,7 +51,9 @@ COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chown=mercator:www docker/wait-for-db.sh /usr/local/bin/wait-for-db.sh
 
 # Set permissions for scripts
-RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/wait-for-db.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/wait-for-db.sh \
+    # Add crond to supervisord
+    && printf '\n[program:cron]\ncommand=/usr/sbin/crond -f -l 8 -L /dev/stdout -c /etc/crontabs\nautostart=true\nautorestart=true\nstdout_logfile=/dev/stdout\nstdout_logfile_maxbytes=0\nstderr_logfile=/dev/stderr\nstderr_logfile_maxbytes=0\nuser=root\n' >> /etc/supervisord.conf
 
 # Switch to application user
 USER mercator:www

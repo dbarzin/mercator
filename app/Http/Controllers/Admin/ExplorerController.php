@@ -262,7 +262,9 @@ class ExplorerController extends Controller
             );
 
             foreach (explode(',', $workstation->address_ip ?? '') as $ip)
-                $this->linkDeviceToSubnetworks($ip, $this->formatId(Workstation::$prefix, $workstation->id));
+                $this->linkDeviceToSubnetworks(
+                    $ip,
+                    $this->formatId(Workstation::$prefix, $workstation->id));
         }
     }
 
@@ -290,7 +292,8 @@ class ExplorerController extends Controller
                 $phone->site_id
             );
 
-            $this->linkDeviceToSubnetworks($phone->address_ip, $this->formatId(Phone::$prefix, $phone->id));
+            $this->linkDeviceToSubnetworks($phone->address_ip,
+                $this->formatId(Phone::$prefix, $phone->id));
 
         }
     }
@@ -329,14 +332,13 @@ class ExplorerController extends Controller
                     $this->formatId(Peripheral::$prefix, $peripheral->id),
                     $this->formatId(Entity::$prefix, $peripheral->provider_id));
             }
+
             foreach ($this->subnetworks as $subnetwork) {
                 foreach (explode(',', $peripheral->address_ip) as $address) {
-                    if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge(
-                            $this->formatId(Subnetwork::$prefix, $subnetwork->id),
-                            $this->formatId(Peripheral::$prefix, $peripheral->id));
-                        break;
-                    }
+                    $this->linkDeviceToSubnetworks(
+                        $address,
+                        $this->formatId(Peripheral::$prefix, $peripheral->id));
+
                 }
             }
         }
@@ -378,12 +380,9 @@ class ExplorerController extends Controller
 
             foreach ($this->subnetworks as $subnetwork) {
                 foreach (explode(',', $storageDevice->address_ip) as $address) {
-                    if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge(
-                            $this->formatId(Subnetwork::$prefix, $subnetwork->id),
-                            $this->formatId(StorageDevice::$prefix, $storageDevice->id));
-                        break;
-                    }
+                    $this->linkDeviceToSubnetworks(
+                        $address,
+                        $this->formatId(StorageDevice::$prefix, $storageDevice->id));
                 }
             }
         }
@@ -467,18 +466,15 @@ class ExplorerController extends Controller
                     $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
                     $this->formatId(Site::$prefix, $wifiTerminal->site_id));
             }
+
             foreach ($this->subnetworks as $subnetwork) {
                 foreach (explode(',', $wifiTerminal->address_ip) as $address) {
-                    if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge(
-                            $this->formatId(Subnetwork::$prefix, $subnetwork->id),
-                            $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id));
-                        break;
-                    }
+                    $this->linkDeviceToSubnetworks(
+                        $address,
+                        $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id));
                 }
             }
         }
-
     }
 
 
@@ -507,7 +503,9 @@ class ExplorerController extends Controller
                 $device->bay_id
             );
 
-            $this->linkDeviceToSubnetworks($device->address_ip, $this->formatId(PhysicalSecurityDevice::$prefix, $device->id));
+            $this->linkDeviceToSubnetworks(
+                $device->address_ip,
+                $this->formatId(PhysicalSecurityDevice::$prefix, $device->id));
         }
     }
 
@@ -648,7 +646,7 @@ class ExplorerController extends Controller
     private function buildNetworkSwitches(): void
     {
         $switches = DB::table('network_switches')
-            ->select('id', 'name')
+            ->select('id', 'name', 'ip')
             ->whereNull('deleted_at')
             ->get();
 
@@ -658,8 +656,15 @@ class ExplorerController extends Controller
                 $this->formatId(NetworkSwitch::$prefix, $switch->id),
                 $switch->name,
                 '/images/switch.png',
-                'network-switches', 510
+                'network-switches', 510,
+                $switch->ip
             );
+
+            if ($switch->ip!=null)
+                $this->linkDeviceToSubnetworks(
+                    $switch->ip,
+                    $this->formatId(NetworkSwitch::$prefix, $switch->id));
+
         }
     }
 
