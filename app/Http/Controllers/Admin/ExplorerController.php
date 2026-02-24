@@ -333,13 +333,11 @@ class ExplorerController extends Controller
                     $this->formatId(Entity::$prefix, $peripheral->provider_id));
             }
 
-            foreach ($this->subnetworks as $subnetwork) {
-                foreach (explode(',', $peripheral->address_ip) as $address) {
-                    $this->linkDeviceToSubnetworks(
-                        $address,
-                        $this->formatId(Peripheral::$prefix, $peripheral->id));
+            foreach (explode(',', $peripheral->address_ip ?? '') as $address) {
+                $this->linkDeviceToSubnetworks(
+                    $address,
+                    $this->formatId(Peripheral::$prefix, $peripheral->id));
 
-                }
             }
         }
 
@@ -378,12 +376,10 @@ class ExplorerController extends Controller
                     $this->formatId(Bay::$prefix, $storageDevice->bay_id));
             }
 
-            foreach ($this->subnetworks as $subnetwork) {
-                foreach (explode(',', $storageDevice->address_ip) as $address) {
-                    $this->linkDeviceToSubnetworks(
-                        $address,
-                        $this->formatId(StorageDevice::$prefix, $storageDevice->id));
-                }
+            foreach (explode(',', $storageDevice->address_ip ?? '') as $address) {
+                $this->linkDeviceToSubnetworks(
+                    $address,
+                    $this->formatId(StorageDevice::$prefix, $storageDevice->id));
             }
         }
     }
@@ -467,12 +463,10 @@ class ExplorerController extends Controller
                     $this->formatId(Site::$prefix, $wifiTerminal->site_id));
             }
 
-            foreach ($this->subnetworks as $subnetwork) {
-                foreach (explode(',', $wifiTerminal->address_ip) as $address) {
-                    $this->linkDeviceToSubnetworks(
-                        $address,
-                        $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id));
-                }
+            foreach (explode(',', $wifiTerminal->address_ip ?? '') as $address) {
+                $this->linkDeviceToSubnetworks(
+                    $address,
+                    $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id));
             }
         }
     }
@@ -891,7 +885,7 @@ class ExplorerController extends Controller
             $sources = [];
             if ($flow->source_ip_range !== null) {
                 foreach ($this->logicalServers as $server) {
-                    foreach (explode(',', $server->address_ip) as $ip) {
+                    foreach (explode(',', $server->address_ip ?? '') as $ip) {
                         if ($flow->isSource($ip)) {
                             array_push($sources, $this->formatId('LSERVER_', $server->id));
                         }
@@ -916,7 +910,7 @@ class ExplorerController extends Controller
             $destinations = [];
             if ($flow->dest_ip_range !== null) {
                 foreach ($this->logicalServers as $server) {
-                    foreach (explode(',', $server->address_ip) as $ip) {
+                    foreach (explode(',', $server->address_ip ?? '') as $ip) {
                         if ($flow->isDestination($ip)) {
                             array_push($destinations, $this->formatId('LSERVER_', $server->id));
                         }
