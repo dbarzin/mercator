@@ -6,7 +6,7 @@ ENV APP_VERSION=${VERSION}
 
 # Install system dependencies and PHP extensions in a single layer
 RUN apk add --no-cache \
-    git curl bash ssmtp graphviz fontconfig ttf-freefont dcron \
+    git curl bash ssmtp graphviz fontconfig ttf-freefont \
     ca-certificates sqlite sqlite-dev \
     postgresql-dev postgresql-client \
     mariadb-client mariadb-connector-c-dev \
@@ -34,11 +34,9 @@ RUN apk add --no-cache \
     && chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d \
     && chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d \
     && chmod g=u /etc/passwd \
-    # Configure crontab for mercator user (Laravel scheduler)
-    && mkdir -p /etc/crontabs \
-    && echo "* * * * * cd /var/www/mercator && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1" > /etc/crontabs/mercator \
-    && chmod 600 /etc/crontabs/mercator \
-    && chown mercator /etc/crontabs/mercator
+    && chgrp www /etc/passwd \
+    # Fin de la configuration système
+    && true
 
 # Set working directory
 WORKDIR /var/www/mercator
