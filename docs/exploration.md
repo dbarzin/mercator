@@ -3,7 +3,7 @@
 The **Exploration** tool (`Tools → Exploration`) allows you to dynamically navigate through the asset relationship
 graph. It reveals dependencies between layers: upward (abstract / business) or downward (concrete / physical).
 
-### 1. Interface
+## 1. Interface
 
 [<img src="/mercator/images/explorer.en.png" width="700">](/mercator/images/explorer.en.png)
 
@@ -24,7 +24,7 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 
 ---
 
-### 2. Semantics of Directional Buttons
+## 2. Semantics of Directional Buttons
 
 The direction is relative to the **Mercator layer hierarchy**, aligned with ArchiMate:
 
@@ -46,7 +46,7 @@ The direction is relative to the **Mercator layer hierarchy**, aligned with Arch
 
 ---
 
-### 3. Step-by-Step Usage Procedure
+## 3. Step-by-Step Usage Procedure
 
 ```
 Step 1 ─ Enter a filter (optional)

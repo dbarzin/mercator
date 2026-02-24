@@ -4,7 +4,7 @@ L'outil **Exploration** (`Outils → Exploration`) permet de naviguer dynamiquem
 assets. Il révèle les dépendances entre couches : vers le **haut** (abstrait / métier) ou vers le **bas** (concret /
 physique).
 
-### 1 Interface
+## 1. Interface
 
 [<img src="/mercator/images/explorer.fr.png" width="700">](/mercator/images/explorer.fr.png)
 
@@ -25,7 +25,7 @@ physique).
 
 ---
 
-### 2 Sémantique des boutons directionnels
+## 2. Sémantique des boutons directionnels
 
 La direction est relative à la **hiérarchie des couches Mercator**, alignée sur ArchiMate :
 
@@ -47,7 +47,7 @@ La direction est relative à la **hiérarchie des couches Mercator**, alignée s
 
 ---
 
-### 3 Procédure d'utilisation pas à pas
+## 3. Procédure d'utilisation pas à pas
 
 ```
 Étape 1 ─ Saisir un filtre (optionnel)
