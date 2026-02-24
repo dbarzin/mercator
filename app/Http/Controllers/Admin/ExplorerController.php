@@ -335,7 +335,7 @@ class ExplorerController extends Controller
 
             foreach (explode(',', $peripheral->address_ip) as $address) {
                 $this->linkDeviceToSubnetworks(
-                    $address,
+                    $peripheral->address_ip,
                     $this->formatId(Peripheral::$prefix, $peripheral->id));
 
             }

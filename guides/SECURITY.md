@@ -4,9 +4,9 @@
 
 The following versions of Mercator currently receive security updates:
 
-| Version               | Supported              |
-|-----------------------|------------------------|
-| 2026.xx.xx (dernière) | ✅ Activement maintenue |
+| Version           | Supported            |
+|-------------------|----------------------|
+| 2026.xx.xx (last) | ✅ Maintained version |
 
 We strongly recommend always running the latest stable release to benefit from all security fixes.
 

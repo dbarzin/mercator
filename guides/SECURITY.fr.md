@@ -120,5 +120,5 @@ Nous remercions les personnes suivantes qui ont divulgué de manière responsabl
 ## Contact
 
 Pour toute question de sécurité ne concernant pas une vulnérabilité (conseils de durcissement, conformité, revue
-d'architecture), vous pouvez ouvrir une [Discussion GitHub](../../discussions) ou nous contacter à *
-*info@sourcentis.com**.
+d'architecture), vous pouvez ouvrir une [Discussion GitHub](../../discussions) ou nous contacter à
+**info@sourcentis.com**.
