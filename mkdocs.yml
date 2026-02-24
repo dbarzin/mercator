@@ -52,6 +52,8 @@ nav:
   - Cas d'utilisation: usecases.fr.md
   - Data model: model.md
   - Modèle de données: model.fr.md
+  - Exploration: exploration.md
+  - Exploration: exploration.fr.md
   - Administration: admin.md
   - Administration: admin.fr.md
   - Configuration: config.md
