@@ -37,7 +37,7 @@ RUN apk add --no-cache \
     && chgrp www /etc/passwd \
     # Configure crontab for mercator user (Laravel scheduler)
     && mkdir -p /etc/crontabs \
-    && echo "* * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1" > /etc/crontabs/mercator \
+    && echo "* * * * * cd /var/www/mercator && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1" > /etc/crontabs/mercator \
     && chmod 600 /etc/crontabs/mercator \
     && chown mercator /etc/crontabs/mercator
 
