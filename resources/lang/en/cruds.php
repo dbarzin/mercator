@@ -1306,6 +1306,7 @@ return [
     'tools' => [
         'patching' => 'Patching',
         'explore' => 'Exploration',
+
     ],
     'report' => [
         'cartography' => [
@@ -1374,7 +1375,10 @@ return [
             'reload' => 'Reload',
             'physics' => 'Physics',
             'deploy' => 'Deploy',
-            'please_select' => 'Pease select a node in order to deploy.',
+            'please_select' => 'Please select a node in order to deploy.',
+            'up' => 'Up',
+            'down' => 'Down',
+            'both' => 'Both',
         ],
     ],
     'role' => [
