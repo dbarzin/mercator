@@ -47,9 +47,9 @@ du [guide de cartographie du système d'information de l'ANSSI](https://www.ssi.
 
 Cette maturité est divisée en trois niveaux :
 
-- La **granularité minimale de niveau 1** qui contient les informations indispensables à la cartographie ;
-- La **granularité intermédiaire de niveau 2** qui contient les informations importantes à la cartographie ;
-- La **granularité fine de niveau 3** qui contient les informations utiles à la gestion de la sécurité du système
+- la **granularité minimale de niveau 1** qui contient les informations indispensables à la cartographie ;
+- la **granularité intermédiaire de niveau 2** qui contient les informations importantes à la cartographie ;
+- la **granularité fine de niveau 3** qui contient les informations utiles à la gestion de la sécurité du système
   d'information.
 
 [<img src="/mercator/images/maturity.png" width="600">](images/maturity.png)
