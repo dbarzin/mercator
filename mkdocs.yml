@@ -26,16 +26,38 @@ plugins:
           name: English
           build: true
           nav_translations:
-            section title: "Section"
-            subsection: "Subsection"
-            page title: "Page with title translated"
+            Introduction: "Introduction"
+            Mapping: "Mapping"
+            Application: "Application"
+            BPMN 2.0: "BPMN 2.0"
+            Reports: "Reports"
+            Use cases: "Use cases"
+            Data model: "Data model"
+            Exploration: "Exploration"
+            Administration: "Administration"
+            Configuration: "Configuration"
+            Import: "Import"
+            API: "API"
+            API advanced (filters): "API advanced (filters)"
+            References: "References"
         - locale: fr
           name: Français
           build: true
           nav_translations:
-            section title: "Section"
-            subsection: "Sous-section"
-            page title: "Titre"
+            Introduction: "Introduction"
+            Mapping: "Cartographie"
+            Application: "Application"
+            BPMN 2.0: "BPMN 2.0"
+            Reports: "Rapports"
+            Use cases: "Cas d'usage"
+            Data model: "Modèle de données"
+            Exploration: "Exploration"
+            Administration: "Administration"
+            Configuration: "Configuration"
+            Import: "Import"
+            API: "API"
+            API advanced (filters): "API avancée (filtres)"
+            References: "Références"
 
 nav:
   - Introduction: index.md
