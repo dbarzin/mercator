@@ -70,12 +70,6 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Exploration</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#1-interface">1. Interface</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#2-semantics-of-directional-buttons">2. Semantics of Directional Buttons</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#3-step-by-step-usage-procedure">3. Step-by-Step Usage Procedure</a>
-    </li>
     </ul>
                 </li>
               </ul>
@@ -133,7 +127,7 @@
 <h2 id="exploration-feature">Exploration Feature</h2>
 <p>The <strong>Exploration</strong> tool (<code>Tools → Exploration</code>) allows you to dynamically navigate through the asset relationship
 graph. It reveals dependencies between layers: upward (abstract / business) or downward (concrete / physical).</p>
-<h3 id="1-interface">1. Interface</h3>
+<h2 id="1-interface">1. Interface</h2>
 <p><a href="/mercator/images/explorer.en.png"><img src="/mercator/images/explorer.en.png" width="700"></a></p>
 <table>
 <thead>
@@ -207,7 +201,78 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 </tbody>
 </table>
 <hr />
-<h3 id="2-semantics-of-directional-buttons">2. Semantics of Directional Buttons</h3>
+<h2 id="2-understanding-the-filter-field">2. Understanding the Filter Field</h2>
+<blockquote>
+<p>⚠️ <strong>Critical point</strong>: the Filter field has a dual effect that is essential to understand before exploring the graph.</p>
+</blockquote>
+<h3 id="21-effect-1-restricting-the-object-dropdown-list">2.1 Effect 1 — Restricting the "Object" dropdown list</h3>
+<p>This is the most intuitive use. By entering a view in the Filter field (e.g. <code>Applications</code>), the "Object" dropdown will only display assets belonging to that view. This avoids having to search for an asset across the entire CMDB.</p>
+<h3 id="22-effect-2-limiting-asset-visibility-in-the-graph-a-common-pitfall">2.2 Effect 2 — Limiting asset visibility in the graph (a common pitfall)</h3>
+<p>This is the least expected effect, and the most frequent source of errors. <strong>The filter does not simply restrict the "Object" list: it also determines which asset types will be displayed in the graph during exploration.</strong></p>
+<p>In practice: if you explore a <code>logical-server</code> with only <code>Logical Infrastructure</code> in the filter, any applications linked to that server will <strong>never</strong> appear in the graph, even if they exist in Mercator and are correctly associated. They are simply excluded because their type is not covered by the active filter.</p>
+<p><strong>Illustrated example:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Active filter</th>
+<th>Explored asset</th>
+<th>Result in the graph</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Logical Infrastructure</code></td>
+<td><code>LOGICAL-SERVER-RH-11</code></td>
+<td>Visible: <code>NETWORK-CORE-11</code>, <code>SUBNET-CORE-11</code>, <code>SUBNET-VIRT-111</code> — but not <code>RH-Solution</code></td>
+</tr>
+<tr>
+<td><code>Applications</code> + <code>Logical Infrastructure</code></td>
+<td><code>LOGICAL-SERVER-RH-11</code></td>
+<td>Also visible: <code>RH-Solution</code> and <code>DB-RH-PROD</code></td>
+</tr>
+<tr>
+<td><em>(empty)</em></td>
+<td>Any asset</td>
+<td>All linked assets are visible, across all layers</td>
+</tr>
+</tbody>
+</table>
+<p><a href="/mercator/images/exploration_filtre_infra.png"><img src="/mercator/images/exploration_filtre_infra.png" width="700"></a>
+<em>With filter "Logical Infrastructure" only: RH-Solution does not appear.</em></p>
+<p><a href="/mercator/images/exploration_filtre_full.png"><img src="/mercator/images/exploration_filtre_full.png" width="700"></a>
+<em>With filters "Applications" + "Logical Infrastructure": RH-Solution and DB-RH-PROD appear.</em></p>
+<h3 id="23-practical-rule-which-filter-should-i-use">2.3 Practical rule: which filter should I use?</h3>
+<table>
+<thead>
+<tr>
+<th>Objective</th>
+<th>Recommended filter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quickly find an asset in a specific view</td>
+<td>Enter only the targeted view (e.g. <code>Applications</code>)</td>
+</tr>
+<tr>
+<td>Cross-layer exploration (application + infrastructure)</td>
+<td>Enter <strong>all</strong> relevant views, or leave empty</td>
+</tr>
+<tr>
+<td>Full impact analysis (all layers)</td>
+<td><strong>Leave the filter empty</strong> to exclude nothing</td>
+</tr>
+<tr>
+<td>Exploration limited to a single layer (e.g. network only)</td>
+<td>Enter only that layer's view</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tip</strong>: when in doubt about what you are looking for, always start with an <strong>empty</strong> filter. You can narrow it down afterwards if the graph becomes too dense.</p>
+</blockquote>
+<hr />
+<h2 id="3-semantics-of-directional-buttons">3. Semantics of Directional Buttons</h2>
 <p>The direction is relative to the <strong>Mercator layer hierarchy</strong>, aligned with ArchiMate:</p>
 <pre><code>↑ UP    ═══════════════════════════════════════════════  toward 100 (Business)
          Layer 1: Entities, Processes, Actors       (100–260)
@@ -248,7 +313,7 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 </tbody>
 </table>
 <hr />
-<h3 id="3-step-by-step-usage-procedure">3. Step-by-Step Usage Procedure</h3>
+<h2 id="4-step-by-step-usage-procedure">4. Step-by-Step Usage Procedure</h2>
 <pre><code>Step 1 ─ Enter a filter (optional)
           └─ &quot;Filter&quot; field: e.g. &quot;Applications&quot;
              Restricts the object list to a specific view
@@ -280,8 +345,8 @@ Step 8 ─ Iterate (optional)
              Repeat from Step 4
 </code></pre>
 <hr />
-<h2 id="4-exploration-examples">4. Exploration Examples</h2>
-<h3 id="41-business-impact-of-an-application">4.1 Business Impact of an Application</h3>
+<h2 id="5-exploration-examples">5. Exploration Examples</h2>
+<h3 id="51-business-impact-of-an-application">5.1 Business Impact of an Application</h3>
 <blockquote>
 <p><strong>Context:</strong> Which business processes and actors depend on <code>HR-Solution</code>?</p>
 </blockquote>
@@ -319,7 +384,7 @@ Step 8 ─ Iterate (optional)
 </code></pre>
 <p>You obtain the list of all processes and actors that functionally depend on this application.</p>
 <hr />
-<h3 id="42-infrastructure-supporting-an-application">4.2 Infrastructure Supporting an Application</h3>
+<h3 id="52-infrastructure-supporting-an-application">5.2 Infrastructure Supporting an Application</h3>
 <blockquote>
 <p><strong>Context:</strong> What physical hardware does <code>HR-Solution</code> run on? (for DRP, ITIL impact analysis, CMDB)</p>
 </blockquote>
@@ -360,7 +425,7 @@ Step 8 ─ Iterate (optional)
 </code></pre>
 <p>You obtain the complete chain from the application down to the physical site.</p>
 <hr />
-<h3 id="43-full-impact-analysis-before-maintenance-incident">4.3 Full Impact Analysis (Before Maintenance / Incident)</h3>
+<h3 id="53-full-impact-analysis-before-maintenance-incident">5.3 Full Impact Analysis (Before Maintenance / Incident)</h3>
 <blockquote>
 <p><strong>Context:</strong> Full view of ALL dependencies of <code>HR-Solution</code> before maintenance.</p>
 </blockquote>
@@ -401,7 +466,7 @@ Step 8 ─ Iterate (optional)
 </code></pre>
 <p>Ideal for <strong>architecture dossiers</strong> and <strong>impact analyses</strong>.</p>
 <hr />
-<h3 id="44-direction-selection-by-use-case">4.4 Direction Selection by Use Case</h3>
+<h3 id="54-direction-selection-by-use-case">5.4 Direction Selection by Use Case</h3>
 <table>
 <thead>
 <tr>
@@ -449,7 +514,7 @@ Step 8 ─ Iterate (optional)
 </tbody>
 </table>
 <hr />
-<h2 id="5-bpmn-archimate-mercator-mapping">5. BPMN — ArchiMate — Mercator Mapping</h2>
+<h2 id="6-bpmn-archimate-mercator-mapping">6. BPMN — ArchiMate — Mercator Mapping</h2>
 <table>
 <thead>
 <tr>
@@ -578,8 +643,8 @@ Step 8 ─ Iterate (optional)
 </tbody>
 </table>
 <hr />
-<h2 id="6-best-practices">6. Best Practices</h2>
-<h3 id="61-exploration-recommendations">6.1 Exploration Recommendations</h3>
+<h2 id="7-best-practices">7. Best Practices</h2>
+<h3 id="71-exploration-recommendations">7.1 Exploration Recommendations</h3>
 <p><strong>Start with level 1 or 2</strong>
 For highly connected assets (e.g., a central application), starting with 1 or 2 levels avoids an unreadable graph.
 Increase progressively from there.</p>
@@ -588,7 +653,7 @@ The Filter field restricts available objects to a specific view, avoiding the ne
 <p><strong>Physical Mode</strong>
 Enable the Physical toggle only when you want to visualize physical network links (WAN/LAN/MAN). When disabled, the
 exploration stays at the logical level.</p>
-<h3 id="62-asset-entry-recommendations">6.2 Asset Entry Recommendations</h3>
+<h3 id="72-asset-entry-recommendations">7.2 Asset Entry Recommendations</h3>
 <ul>
 <li>Follow Mercator numbering: create assets from the physical layer (600+) before associating them to logical layers.</li>
 <li>Physical containment relationships must be entered in order: <strong>Site → Building → Bay → Physical Server</strong>.</li>
@@ -598,7 +663,7 @@ exploration stays at the logical level.</p>
 <li><code>external-connected-entities</code> (540) can be linked to the business layer (partners) or the network layer (connections)
   depending on context.</li>
 </ul>
-<h3 id="63-use-cases-by-user-profile">6.3 Use Cases by User Profile</h3>
+<h3 id="73-use-cases-by-user-profile">7.3 Use Cases by User Profile</h3>
 <table>
 <thead>
 <tr>

@@ -70,12 +70,6 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Exploration</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#1-interface">1 Interface</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#2-semantique-des-boutons-directionnels">2 Sémantique des boutons directionnels</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#3-procedure-dutilisation-pas-a-pas">3 Procédure d'utilisation pas à pas</a>
-    </li>
     </ul>
                 </li>
               </ul>
@@ -134,7 +128,7 @@
 <p>L'outil <strong>Exploration</strong> (<code>Outils → Exploration</code>) permet de naviguer dynamiquement dans le graphe de relations entre les
 assets. Il révèle les dépendances entre couches : vers le <strong>haut</strong> (abstrait / métier) ou vers le <strong>bas</strong> (concret /
 physique).</p>
-<h3 id="1-interface">1 Interface</h3>
+<h2 id="1-interface">1. Interface</h2>
 <p><a href="/mercator/images/explorer.fr.png"><img src="/mercator/images/explorer.fr.png" width="700"></a></p>
 <table>
 <thead>
@@ -208,7 +202,78 @@ physique).</p>
 </tbody>
 </table>
 <hr />
-<h3 id="2-semantique-des-boutons-directionnels">2 Sémantique des boutons directionnels</h3>
+<h2 id="2-comprendre-le-champ-filtre">2. Comprendre le champ Filtre</h2>
+<blockquote>
+<p>⚠️ <strong>Point critique</strong> : le champ Filtre a un double effet qu'il est essentiel de comprendre avant d'explorer le graphe.</p>
+</blockquote>
+<h3 id="21-effet-1-restreindre-la-liste-deroulante-objet">2.1 Effet 1 — Restreindre la liste déroulante "Objet"</h3>
+<p>C'est l'usage le plus intuitif. En saisissant une vue dans le champ Filtre (ex : <code>Applications</code>), la liste déroulante "Objet" n'affiche plus que les assets appartenant à cette vue. Cela évite de chercher un asset dans l'intégralité de la CMDB.</p>
+<h3 id="22-effet-2-limiter-la-visibilite-des-assets-dans-le-graphe-piege-frequent">2.2 Effet 2 — Limiter la visibilité des assets dans le graphe (piège fréquent)</h3>
+<p>C'est l'effet le moins attendu, et la source d'erreurs la plus courante. <strong>Le filtre ne se contente pas de restreindre la liste "Objet" : il conditionne également les types d'assets qui s'afficheront dans le graphe lors de l'exploration.</strong></p>
+<p>Concrètement : si vous explorez un <code>logical-server</code> avec uniquement <code>Infrastructure logique</code> dans le filtre, les applications liées à ce serveur n'apparaîtront <strong>jamais</strong> dans le graphe, même si elles existent dans Mercator et sont correctement associées. Elles sont simplement exclues car leur type n'est pas couvert par le filtre actif.</p>
+<p><strong>Exemple illustré :</strong></p>
+<table>
+<thead>
+<tr>
+<th>Filtre actif</th>
+<th>Asset exploré</th>
+<th>Résultat dans le graphe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Infrastructure logique</code></td>
+<td><code>LOGICAL-SERVER-RH-11</code></td>
+<td>On voit : <code>NETWORK-CORE-11</code>, <code>SUBNET-CORE-11</code>, <code>SUBNET-VIRT-111</code> — mais pas <code>RH-Solution</code></td>
+</tr>
+<tr>
+<td><code>Applications</code> + <code>Infrastructure logique</code></td>
+<td><code>LOGICAL-SERVER-RH-11</code></td>
+<td>On voit en plus : <code>RH-Solution</code> et <code>DB-RH-PROD</code></td>
+</tr>
+<tr>
+<td><em>(vide)</em></td>
+<td>N'importe quel asset</td>
+<td>Tous les assets liés sont visibles, toutes couches confondues</td>
+</tr>
+</tbody>
+</table>
+<p><a href="/mercator/images/exploration_filtre_infra.fr.png"><img src="/mercator/images/exploration_filtre_infra.fr.png" width="700"></a>
+<em>Avec filtre "Infrastructure logique" uniquement : RH-Solution n'apparaît pas.</em></p>
+<p><a href="/mercator/images/exploration_filtre_full.fr.png"><img src="/mercator/images/exploration_filtre_full.fr.png" width="700"></a>
+<em>Avec filtres "Applications" + "Infrastructure logique" : RH-Solution et DB-RH-PROD apparaissent.</em></p>
+<h3 id="23-regle-pratique-quel-filtre-choisir">2.3 Règle pratique : quel filtre choisir ?</h3>
+<table>
+<thead>
+<tr>
+<th>Objectif</th>
+<th>Filtre recommandé</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trouver rapidement un asset dans une vue précise</td>
+<td>Saisir uniquement la vue ciblée (ex : <code>Applications</code>)</td>
+</tr>
+<tr>
+<td>Exploration cross-couches (application + infrastructure)</td>
+<td>Saisir <strong>toutes</strong> les vues concernées, ou laisser vide</td>
+</tr>
+<tr>
+<td>Analyse d'impact complète (toutes couches)</td>
+<td><strong>Laisser le filtre vide</strong> pour ne rien exclure</td>
+</tr>
+<tr>
+<td>Exploration limitée à une seule couche (ex : réseau uniquement)</td>
+<td>Saisir uniquement la vue de cette couche</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Conseil</strong> : en cas de doute sur ce que l'on cherche, commencez toujours avec le filtre <strong>vide</strong>. Vous pouvez le restreindre ensuite si le graphe devient trop dense.</p>
+</blockquote>
+<hr />
+<h2 id="3-semantique-des-boutons-directionnels">3. Sémantique des boutons directionnels</h2>
 <p>La direction est relative à la <strong>hiérarchie des couches Mercator</strong>, alignée sur ArchiMate :</p>
 <pre><code>↑ HAUT  ═══════════════════════════════════════════════  vers 100 (Métier)
          Couche 1 : Entités, Processus, Acteurs (100–260)
@@ -249,7 +314,7 @@ physique).</p>
 </tbody>
 </table>
 <hr />
-<h3 id="3-procedure-dutilisation-pas-a-pas">3 Procédure d'utilisation pas à pas</h3>
+<h2 id="4-procedure-dutilisation-pas-a-pas">4. Procédure d'utilisation pas à pas</h2>
 <pre><code>Étape 1 ─ Saisir un filtre (optionnel)
           └─ Champ &quot;Filtre&quot; : ex. &quot;Applications&quot;
              Restreint la liste des objets à une vue spécifique
@@ -281,8 +346,8 @@ physique).</p>
              Répéter à partir de l'étape 4
 </code></pre>
 <hr />
-<h2 id="4-exemples-dexploration">4. Exemples d'Exploration</h2>
-<h3 id="41-impact-metier-dune-application">4.1 Impact métier d'une application</h3>
+<h2 id="5-exemples-dexploration">5. Exemples d'Exploration</h2>
+<h3 id="51-impact-metier-dune-application">5.1 Impact métier d'une application</h3>
 <blockquote>
 <p><strong>Contexte :</strong> Quels processus métier et acteurs dépendent de <code>RH-Solution</code> ?</p>
 </blockquote>
@@ -320,7 +385,7 @@ physique).</p>
 </code></pre>
 <p>Vous obtenez la liste de tous les processus et acteurs qui dépendent fonctionnellement de cette application.</p>
 <hr />
-<h3 id="42-infrastructure-supportant-une-application">4.2 Infrastructure supportant une application</h3>
+<h3 id="52-infrastructure-supportant-une-application">5.2 Infrastructure supportant une application</h3>
 <blockquote>
 <p><strong>Contexte :</strong> Sur quel matériel physique repose <code>RH-Solution</code> ? (pour PRA, analyse d'impact ITIL, CMDB)</p>
 </blockquote>
@@ -361,7 +426,7 @@ physique).</p>
 </code></pre>
 <p>Vous obtenez la chaîne complète depuis l'application jusqu'au site physique.</p>
 <hr />
-<h3 id="43-analyse-dimpact-complete-avant-maintenance-incident">4.3 Analyse d'impact complète (avant maintenance / incident)</h3>
+<h3 id="53-analyse-dimpact-complete-avant-maintenance-incident">5.3 Analyse d'impact complète (avant maintenance / incident)</h3>
 <blockquote>
 <p><strong>Contexte :</strong> Vue complète de TOUTES les dépendances de <code>RH-Solution</code> avant une maintenance.</p>
 </blockquote>
@@ -402,7 +467,7 @@ physique).</p>
 </code></pre>
 <p>Idéal pour les <strong>dossiers d'architecture</strong> et les <strong>analyses d'impact</strong>.</p>
 <hr />
-<h3 id="44-selection-de-la-direction-selon-le-cas-dusage">4.4 Sélection de la direction selon le cas d'usage</h3>
+<h3 id="54-selection-de-la-direction-selon-le-cas-dusage">5.4 Sélection de la direction selon le cas d'usage</h3>
 <table>
 <thead>
 <tr>
@@ -450,7 +515,7 @@ physique).</p>
 </tbody>
 </table>
 <hr />
-<h2 id="5-correspondance-bpmn-archimate-mercator">5. Correspondance BPMN — ArchiMate — Mercator</h2>
+<h2 id="6-correspondance-bpmn-archimate-mercator">6. Correspondance BPMN — ArchiMate — Mercator</h2>
 <table>
 <thead>
 <tr>
@@ -579,18 +644,17 @@ physique).</p>
 </tbody>
 </table>
 <hr />
-<h2 id="6-bonnes-pratiques">6. Bonnes Pratiques</h2>
-<h3 id="61-recommandations-pour-lexploration">6.1 Recommandations pour l'exploration</h3>
+<h2 id="7-bonnes-pratiques">7. Bonnes Pratiques</h2>
+<h3 id="71-recommandations-pour-lexploration">7.1 Recommandations pour l'exploration</h3>
 <p><strong>Commencer par le niveau 1 ou 2</strong>
 Pour les assets très connectés (ex : application centrale), démarrer avec 1 ou 2 niveaux évite un graphe illisible.
 Augmenter ensuite progressivement.</p>
-<p><strong>Utiliser le filtre pour cibler les vues</strong>
-Le champ Filtre restreint les objets disponibles à une vue spécifique. Cela évite de chercher un asset dans toute la
-CMDB.</p>
+<p><strong>Utiliser le filtre avec discernement</strong>
+Comme expliqué au chapitre 2, le filtre conditionne non seulement la liste des objets disponibles, mais aussi les assets visibles dans le graphe. Pour une exploration cross-couches, pensez à ajouter toutes les vues pertinentes ou à laisser le filtre vide.</p>
 <p><strong>Mode Physique</strong>
 Activer le toggle Physique uniquement quand vous souhaitez visualiser les liaisons réseau physiques (WAN/LAN/MAN).
 Désactivé, l'exploration reste au niveau logique.</p>
-<h3 id="62-recommandations-pour-la-saisie-des-assets">6.2 Recommandations pour la saisie des assets</h3>
+<h3 id="72-recommandations-pour-la-saisie-des-assets">7.2 Recommandations pour la saisie des assets</h3>
 <ul>
 <li>Respecter la numérotation Mercator : créer les assets de la couche physique (600+) avant de les associer aux couches
   logiques.</li>
@@ -602,7 +666,7 @@ Désactivé, l'exploration reste au niveau logique.</p>
 <li>Les <code>external-connected-entities</code> (540) peuvent être rattachées à la couche métier (partenaires) ou réseau (
   connexions) selon le contexte.</li>
 </ul>
-<h3 id="63-cas-dusage-par-profil-utilisateur">6.3 Cas d'usage par profil utilisateur</h3>
+<h3 id="73-cas-dusage-par-profil-utilisateur">7.3 Cas d'usage par profil utilisateur</h3>
 <table>
 <thead>
 <tr>
