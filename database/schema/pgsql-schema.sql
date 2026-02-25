@@ -2138,7 +2138,7 @@ CREATE TABLE public.oauth_auth_codes (
 --
 
 CREATE TABLE public.oauth_clients (
-    id bigint NOT NULL,
+    id character varying(36) NOT NULL,
     user_id bigint,
     name character varying(255) NOT NULL,
     secret character varying(100),
