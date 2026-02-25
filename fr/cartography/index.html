@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/cartography/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Mapping - Mercator</title>
+    <title>Cartographie - Mercator</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Mapping";
+        var mkdocs_page_name = "Cartographie";
         var mkdocs_page_input_path = "cartography.fr.md";
         var mkdocs_page_url = "/mercator/fr/cartography/";
       </script>
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Mapping</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Cartographie</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#vision-rgpd">Vision RGPD</a>
     </li>
@@ -66,19 +66,23 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturité</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Cas d'usage</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Modèle de données</a>
                 </li>
               </ul>
               <ul>
@@ -102,11 +106,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API avancée (filtres)</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
+                <li class="toctree-l1"><a class="reference internal" href="../references/">Références</a>
                 </li>
               </ul>
       </div>
@@ -123,7 +127,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../" class="icon icon-home" aria-label="Documents"></a></li>
-      <li class="breadcrumb-item active">Mapping</li>
+      <li class="breadcrumb-item active">Cartographie</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/cartography.fr.md" class="icon icon-github"> Editer dans GitHub</a>
     </li>
@@ -158,59 +162,6 @@ plages d’adresses IP, des VLAN et des fonctions de filtrage et routage ;</p>
 <h3 id="vision-infrastructure">Vision infrastructure</h3>
 <p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou utilisés
 par celui-ci.</p>
-<h2 id="niveaux-de-maturite">Niveaux de maturité</h2>
-<p>Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. C'est un indicateur de l'effort
-restant à fournir pour atteindre une cartographie complète, conformément aux recommandations
-du <a href="https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/">guide de cartographie du système d'information de l'ANSSI</a>.</p>
-<p>Cette maturité est divisée en trois niveaux :</p>
-<ul>
-<li>la <strong>granularité minimale de niveau 1</strong> qui contient les informations indispensables à la cartographie ;</li>
-<li>la <strong>granularité intermédiaire de niveau 2</strong> qui contient les informations importantes à la cartographie ;</li>
-<li>la <strong>granularité fine de niveau 3</strong> qui contient les informations utiles à la gestion de la sécurité du système
-  d'information.</li>
-</ul>
-<p><a href="../images/maturity.png"><img src="/mercator/images/maturity.png" width="600"></a></p>
-<h3 id="signification-des-champs-marques-dun-cardinal">Signification des champs marqués d'un cardinal</h3>
-<p>Certains libellés de champs sont suivis d'un symbole <strong>#</strong> de couleur orange. Ces marqueurs indiquent que le champ
-contribue au calcul du niveau de maturité de la cartographie, selon le niveau concerné :</p>
-<table>
-<thead>
-<tr>
-<th>Marqueur</th>
-<th>Signification</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>#</code></td>
-<td>Champ contribuant au niveau de maturité 1 — granularité minimale</td>
-</tr>
-<tr>
-<td><code>##</code></td>
-<td>Champ contribuant au niveau de maturité 2 — granularité intermédiaire</td>
-</tr>
-<tr>
-<td><code>###</code></td>
-<td>Champ contribuant au niveau de maturité 3 — granularité fine</td>
-</tr>
-</tbody>
-</table>
-<h3 id="calcul-du-niveau-de-maturite">Calcul du niveau de maturité</h3>
-<p>Un élément est considéré comme <strong>conforme</strong> lorsque tous les champs marqués <code>#</code> correspondant au niveau visé sont
-renseignés et que les liens attendus avec d'autres éléments de la cartographie sont établis.</p>
-<p>Un élément est considéré comme <strong>non conforme</strong> lorsque :</p>
-<ul>
-<li>un champ marqué <code>#</code> est vide ou non renseigné (ex. : absence de description ou de responsable),</li>
-<li>un lien attendu vers un autre élément est manquant (ex. : une application qui ne soutient aucun processus métier, un
-  serveur non rattaché à une application).</li>
-</ul>
-<p>Le niveau de maturité est calculé selon la formule suivante :</p>
-<pre><code class="language-text">Niveau de maturité (%) = (Nombre d'éléments conformes / Nombre total d'éléments) × 100
-</code></pre>
-<h3 id="identification-visuelle-des-elements-non-conformes">Identification visuelle des éléments non conformes</h3>
-<p>Dans les listes, les entrées <strong>non conformes</strong> sont surlignées en <strong>jaune</strong>, signalant qu'au moins un champ marqué <code>#</code>
-n'a pas été renseigné. Cela permet d'identifier rapidement les éléments qui nécessitent une attention particulière pour
-progresser vers une cartographie complète.</p>
 <h2 id="besoins-de-securite">Besoins de sécurité</h2>
 <p>Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et
 traçabilité avec l'échelle suivante :</p>

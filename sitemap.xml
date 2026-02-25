@@ -71,6 +71,13 @@
         <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/import/"/>
     </url>
     <url>
+        <loc>https://dbarzin.githubs.io/mercator/maturity/</loc>
+        <lastmod>2026-02-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/maturity/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/maturity/"/>
+    </url>
+    <url>
         <loc>https://dbarzin.githubs.io/mercator/model/</loc>
         <lastmod>2026-02-25</lastmod>
         <changefreq>daily</changefreq>
@@ -187,6 +194,7 @@
         <lastmod>2026-02-25</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/maturity/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/maturity/"/>
     </url>
     <url>
         <loc>https://dbarzin.githubs.io/mercator/fr/model/</loc>

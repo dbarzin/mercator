@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/maturity/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Maturity - Mercator</title>
+    <title>Maturité - Mercator</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Maturity";
+        var mkdocs_page_name = "Maturit\u00e9";
         var mkdocs_page_input_path = "maturity.fr.md";
         var mkdocs_page_url = "/mercator/fr/maturity/";
       </script>
@@ -44,11 +44,25 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Maturité</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#signification-des-champs-marques-dun-cardinal">Signification des champs marqués d'un cardinal</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#calcul-du-niveau-de-maturite">Calcul du niveau de maturité</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#identification-visuelle-des-elements-non-conformes">Identification visuelle des éléments non conformes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#elements-de-conformite">Elements de conformité</a>
+    </li>
+    </ul>
                 </li>
               </ul>
               <ul>
@@ -56,15 +70,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Cas d'usage</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Modèle de données</a>
                 </li>
               </ul>
               <ul>
@@ -88,11 +102,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API avancée (filtres)</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
+                <li class="toctree-l1"><a class="reference internal" href="../references/">Références</a>
                 </li>
               </ul>
       </div>
@@ -109,7 +123,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../" class="icon icon-home" aria-label="Documents"></a></li>
-      <li class="breadcrumb-item active">Maturity</li>
+      <li class="breadcrumb-item active">Maturité</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/maturity.fr.md" class="icon icon-github"> Editer dans GitHub</a>
     </li>
@@ -120,239 +134,403 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="niveaux-de-maturite">Niveaux de maturité</h2>
-<h3 id="niveaux">Niveaux</h3>
-<p>Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie.
-C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète.
-Ce pourcentage est calculé en divisant le nombre d'éléments conformes par le nombre total d'élements.</p>
-<p><a href="../images/maturity.png"><img src="images/maturity.png" width="600"></a></p>
-<p>Cette maturité est divisée en trois niveaux correspondant aux trois niveaux de granularité :</p>
+<p>Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. C'est un indicateur de l'effort
+restant à fournir pour atteindre une cartographie complète, conformément aux recommandations
+du <a href="https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/">guide de cartographie du système d'information de l'ANSSI</a>.</p>
+<p>Cette maturité est divisée en trois niveaux :</p>
 <ul>
-<li>La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie ;</li>
-<li>La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;</li>
-<li>La granularité fine de niveau 3 qui contient les informations utiles à la gestion de la sécurité du système d'information.</li>
+<li>la <strong>granularité minimale de niveau 1</strong> qui contient les informations indispensables à la cartographie ;</li>
+<li>la <strong>granularité intermédiaire de niveau 2</strong> qui contient les informations importantes à la cartographie ;</li>
+<li>la <strong>granularité fine de niveau 3</strong> qui contient les informations utiles à la gestion de la sécurité du système
+  d'information.</li>
 </ul>
-<h3 id="regles-de-calcul">Règles de calcul</h3>
-<p>Un objet est conforme si toutes les informations sur l'objet ont été fournies.
-S'il manque des informations, l'objet est non-conforme.</p>
-<p>Cela peut être l'absence d'un attribut : une application sans description, l'absence d'un point de contact pour une entité,
-la criticité qui n'est pas spécifiés... ou l'absence d'une relation avec d'autres objets : un serveur sans applications, un processus sans acteurs,
-une application qui ne sert aucun processus...</p>
-<p>Les règles appliquées à ce calcul sont les suivantes :</p>
-<ul>
-<li>
-<p>Un élément peut être conforme au niveau n, et ne pas être conforme au niveau n+1. L'inverse n'est pas vrais.</p>
-</li>
-<li>
-<p>S'il 'y a pas de nouveaux attributs qui entre en compte pour passer du niveau n au niveau n+1, l'objet conforme au niveau n reste conforme au niveau n+1.</p>
-</li>
-</ul>
-<p>En fonction du nombre d'objets pris en compte dans le calcul de conformité, à chaque niveau,
-le pourcentage de conformité du niveau n peut être inférieur, égal ou suppérieur au pourcentage du niveau n+1</p>
-<h3 id="exigences-de-conformite">Exigences de conformité</h3>
+<p><a href="../images/maturity.png"><img src="/mercator/images/maturity.png" width="600"></a></p>
+<h3 id="signification-des-champs-marques-dun-cardinal">Signification des champs marqués d'un cardinal</h3>
+<p>Certains libellés de champs sont suivis d'un symbole <strong>#</strong> de couleur orange. Ces marqueurs indiquent que le champ
+contribue au calcul du niveau de maturité de la cartographie, selon le niveau concerné :</p>
 <table>
 <thead>
 <tr>
-<th>Objet</th>
-<th style="text-align: center;">Niveau</th>
-<th>Exigences</th>
+<th>Marqueur</th>
+<th>Signification</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Écosystème</strong></td>
-<td style="text-align: center;"></td>
+<td><code>#</code></td>
+<td>Champ contribuant au niveau de maturité 1 — granularité minimale</td>
+</tr>
+<tr>
+<td><code>##</code></td>
+<td>Champ contribuant au niveau de maturité 2 — granularité intermédiaire</td>
+</tr>
+<tr>
+<td><code>###</code></td>
+<td>Champ contribuant au niveau de maturité 3 — granularité fine</td>
+</tr>
+</tbody>
+</table>
+<h3 id="calcul-du-niveau-de-maturite">Calcul du niveau de maturité</h3>
+<p>Un élément est considéré comme <strong>conforme</strong> lorsque tous les champs marqués <code>#</code> correspondant au niveau visé sont
+renseignés et que les liens attendus avec d'autres éléments de la cartographie sont établis.</p>
+<p>Un élément est considéré comme <strong>non conforme</strong> lorsque :</p>
+<ul>
+<li>un champ marqué <code>#</code> est vide ou non renseigné (ex. : absence de description ou de responsable),</li>
+<li>un lien attendu vers un autre élément est manquant (ex. : une application qui ne soutient aucun processus métier, un
+  serveur non rattaché à une application).</li>
+</ul>
+<p>Le niveau de maturité est calculé selon la formule suivante :</p>
+<pre><code class="language-text">Niveau de maturité (%) = (Nombre d'éléments conformes / Nombre total d'éléments) × 100
+</code></pre>
+<h3 id="identification-visuelle-des-elements-non-conformes">Identification visuelle des éléments non conformes</h3>
+<p>Dans les listes, les entrées <strong>non conformes</strong> sont surlignées en <strong>jaune</strong>, signalant qu'au moins un champ marqué <code>#</code>
+n'a pas été renseigné. Cela permet d'identifier rapidement les éléments qui nécessitent une attention particulière pour
+progresser vers une cartographie complète.</p>
+<h3 id="elements-de-conformite">Elements de conformité</h3>
+<p>Le calcul des niveaux de conformité pour chaque objet de la cartographie est basé sur la présence des éléments
+suivants :</p>
+<table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Niveau</th>
+<th>Elements requis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ecosystème</strong></td>
+<td></td>
 <td></td>
 </tr>
 <tr>
-<td>Entité</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, un point de contact et supporter au moins un processus</td>
+<td>Entités</td>
+<td>1</td>
+<td>Description, niveau de sécurité, point de contact, au moins un processus</td>
 </tr>
 <tr>
-<td>Entité</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir un niveau de sécurité</td>
+<td>Relations</td>
+<td>1</td>
+<td>Description, type</td>
 </tr>
 <tr>
-<td>Relation</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir un type et une description</td>
+<td>Relations</td>
+<td>2</td>
+<td>Importance</td>
 </tr>
 <tr>
-<td>Relation</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir une importance</td>
-</tr>
-<tr>
-<td><strong>Système d'Information</strong></td>
-<td style="text-align: center;"></td>
+<td><strong>Métier</strong></td>
+<td></td>
 <td></td>
 </tr>
 <tr>
-<td>Macro-Processus</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir une description, des éléments d'entrée/sortie et un besoins de sécurité (CIDT)</td>
+<td>Macro-processus</td>
+<td>2</td>
+<td>Description, niveaux de sécurité</td>
 </tr>
 <tr>
-<td>Macro-Processus</td>
-<td style="text-align: center;">3</td>
-<td>doit avoir un propriétaire</td>
-</tr>
-<tr>
-<td>Processus</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, des éléments d'entrée/sortie, un propriétaire</td>
+<td>Macro-processus</td>
+<td>3</td>
+<td>Responsable</td>
 </tr>
 <tr>
 <td>Processus</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir un niveau de sécurité et faire partie d'un macro-processus</td>
+<td>1</td>
+<td>Description, entrée-sorties, responsable</td>
 </tr>
 <tr>
-<td>Activité</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir une description</td>
+<td>Processus</td>
+<td>2</td>
+<td>Macro-processus, besoins de sécurité</td>
 </tr>
 <tr>
-<td>Opération</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description</td>
+<td>Activités</td>
+<td>2</td>
+<td>Description</td>
 </tr>
 <tr>
-<td>Opération</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir un acteur</td>
+<td>Opérations</td>
+<td>1</td>
+<td>Description</td>
 </tr>
 <tr>
-<td>Opération</td>
-<td style="text-align: center;">3</td>
-<td>doit avoir une tâche</td>
+<td>Opérations</td>
+<td>2</td>
+<td>Acteurs</td>
 </tr>
 <tr>
-<td>Tâche</td>
-<td style="text-align: center;">3</td>
-<td>doit avoir une description et faire partie d'une opération</td>
+<td>Opérations</td>
+<td>3</td>
+<td>Tâches</td>
+</tr>
+<tr>
+<td>Tâches</td>
+<td>3</td>
+<td>Description</td>
 </tr>
 <tr>
 <td>Acteur</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir un contact, une nature et un type</td>
+<td>2</td>
+<td>Contact, nature, type</td>
 </tr>
 <tr>
-<td>Information</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, un propriétaire et un mode de stockage</td>
+<td>Informations</td>
+<td>1</td>
+<td>Description, propriétaire, administrateur, stockage</td>
 </tr>
 <tr>
-<td>Information</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir un niveau de sécurité et de sensibilité</td>
+<td>Informations</td>
+<td>2</td>
+<td>Besoins de sécurité, sensibilité</td>
 </tr>
 <tr>
-<td><strong>Vue applicative</strong></td>
-<td style="text-align: center;"></td>
+<td><strong>Système d'information</strong></td>
+<td></td>
 <td></td>
 </tr>
 <tr>
-<td>Block applicatif</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir une description</td>
+<td>Bloc applicatif</td>
+<td>2</td>
+<td>Description, responsable, applications</td>
 </tr>
 <tr>
-<td>Application</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, un responsable, une technologie, un type des utilisateurs et servir un processus</td>
+<td>Applications</td>
+<td>1</td>
+<td>Description, technologie, type, utilisateurs, processus</td>
 </tr>
 <tr>
-<td>Application</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir une entité responsable et un besoin de sécurité</td>
+<td>Applications</td>
+<td>2</td>
+<td>Responsable, niveaux de sécurité</td>
 </tr>
 <tr>
-<td>Application</td>
-<td style="text-align: center;">3</td>
-<td>doit être identifiées par une CPE</td>
+<td>Application Services</td>
+<td>2</td>
+<td>Description, applications</td>
 </tr>
 <tr>
-<td>Service applicatif</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir une description et une application</td>
-</tr>
-<tr>
-<td>Module applicatif</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir une description</td>
+<td>Application Modules</td>
+<td>2</td>
+<td>Description</td>
 </tr>
 <tr>
 <td>Base de données</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, une entité responsable, un responsable et un type</td>
+<td>1</td>
+<td>Description, type, entité responsable, responsable</td>
 </tr>
 <tr>
 <td>Base de données</td>
-<td style="text-align: center;">2</td>
-<td>doit avoir un niveau de sécurité</td>
+<td>2</td>
+<td>Besoins de sécurité</td>
 </tr>
 <tr>
-<td>Flux applicatif</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, une source et une destination</td>
+<td>Flux</td>
+<td>1</td>
+<td>Description, source, destination</td>
 </tr>
 <tr>
-<td><strong>Vue de l'administration</strong></td>
-<td style="text-align: center;"></td>
+<td><strong>Administration</strong></td>
+<td></td>
 <td></td>
 </tr>
 <tr>
-<td>Zone d'administration</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description</td>
+<td>Zones</td>
+<td>1</td>
+<td>Description</td>
 </tr>
 <tr>
-<td>Service d'annuaire</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, une solution et faire partie d'une zone</td>
+<td>Annuaires</td>
+<td>1</td>
+<td>Description, solution, zone d'administration</td>
 </tr>
 <tr>
-<td>Forêt active directory / LDAP</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description et faire partie d'une zone</td>
+<td>Forêt</td>
+<td>1</td>
+<td>Description, zone d'administration</td>
 </tr>
 <tr>
-<td>Domains active directory / LDAP</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, une nombre de domain contrôleur, un nombre d'utilisateurn un nombre de machines et des relations inter-domaine</td>
+<td>Domaines</td>
+<td>1</td>
+<td>Description, Contrôleur de domaine, nombre d'utilisateurs, nombre de machines, relation inter domaine</td>
 </tr>
 <tr>
-<td><strong>Vue logique</strong></td>
-<td style="text-align: center;"></td>
+<td><strong>Logique</strong></td>
+<td></td>
 <td></td>
 </tr>
 <tr>
 <td>Réseaux</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir un type de protocol, un responsable, un responsable sécurité et des besoins de sécurité</td>
+<td>1</td>
+<td>Description, responsable, responsable sécurité, besoins de sécurité</td>
 </tr>
 <tr>
-<td>Sous-réseau</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, une adresse IP, une passerelle par défaut, un type d'allocation d'adresse IP, un responsable d'exploitation et un VLAN</td>
+<td>Sous-réseaux</td>
+<td>1</td>
+<td>Description, adresse, passerelle par défaut, type d'allocation IP, DMZ, WiFi, VLAN</td>
 </tr>
 <tr>
-<td>Passerelle</td>
-<td style="text-align: center;">1</td>
-<td>doit avoir une description, un tupe d'authentification et une adresse IP</td>
+<td>Passerelles</td>
+<td>1</td>
+<td>Description, authentification, range IP</td>
 </tr>
 <tr>
-<td>Entité externe connectée</td>
+<td>Entités externes connectées</td>
+<td>2</td>
+<td>Type, contacts</td>
+</tr>
+<tr>
+<td>Commutateurs</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Routeurs</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Dispositifs de sécurité</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Clusters</td>
+<td>1</td>
+<td>Description, type</td>
+</tr>
+<tr>
+<td>Serveurs logiques</td>
+<td>1</td>
+<td>Description, OS, environnement, adresse IP, applications, serveurs physique ou clusters</td>
+</tr>
+<tr>
+<td>VLans</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>2</td>
+<td>Description, Type, date de début de validité, date de fin de validité, applications ou serveur logique</td>
+</tr>
+<tr>
+<td><strong>Infrastructure physique</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sites</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Buildings</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Baies</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Serveurs physique</td>
+<td>1</td>
+<td>Description, configuration, site, building, responsable</td>
+</tr>
+<tr>
+<td>Poste de travail</td>
+<td>1</td>
+<td>Description, site, building</td>
+</tr>
+<tr>
+<td>Téléphones</td>
+<td>1</td>
+<td>Description, site, building</td>
+</tr>
+<tr>
+<td>Stockage</td>
+<td>1</td>
+<td>Description, site, building</td>
+</tr>
+<tr>
+<td>Périphériques</td>
+<td>1</td>
+<td>Description, site, building, responsable</td>
+</tr>
+<tr>
+<td>Commutateurs physique</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>Routeurs physique</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>Terminaux WiFi</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>Dispositifs de sécurité physique</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>LANs</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+</tbody>
+</table>
+<h2 id="besoins-de-securite">Besoins de sécurité</h2>
+<p>Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et
+traçabilité avec l'échelle suivante :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Niveau</th>
+<th style="text-align: center;">Description</th>
+<th style="text-align: center;">Couleur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Insignifiant</td>
+<td style="text-align: center;">Blanc</td>
+</tr>
+<tr>
 <td style="text-align: center;">1</td>
-<td>doit avoir un type et un contact</td>
+<td style="text-align: center;">Faible</td>
+<td style="text-align: center;"><span style="color:green">Vert</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">Moyen</td>
+<td style="text-align: center;"><span style="color:yellow;">Jaune</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">Fort</td>
+<td style="text-align: center;"><span style="color:orange">Orange</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">Très fort</td>
+<td style="text-align: center;"><span style="color:red">Rouge</span></td>
 </tr>
 </tbody>
 </table>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Navigation de pied de page">
+        <a href="../application/" class="btn btn-neutral float-left" title="Application"><span class="icon icon-circle-arrow-left"></span> Précédent</a>
+        <a href="../bpmn/" class="btn btn-neutral float-right" title="BPMN 2.0">Suivant <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -379,6 +557,10 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
         </span>
     
     
+      <span><a href="../application/" style="color: #fcfcfc">&laquo; Précédent</a></span>
+    
+    
+      <span><a href="../bpmn/" style="color: #fcfcfc">Suivant &raquo;</a></span>
     
   </span>
 </div>

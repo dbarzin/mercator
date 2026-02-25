@@ -66,6 +66,10 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturity</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
                 </li>
               </ul>
@@ -155,59 +159,6 @@ databases.</p>
 address ranges, VLANs and filtering and routing functions;</p>
 <h3 id="infrastructure-view">Infrastructure view</h3>
 <p>The physical infrastructure view describes the physical equipment that makes up or is used by the information system.</p>
-<h2 id="maturity-levels">Maturity Levels</h2>
-<p>Maturity levels represent the completeness percentage of the cartography. It is an indicator of the remaining effort
-required to achieve a complete mapping, in accordance with the recommendations of the
-<a href="https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/">ANSSI Information System Mapping Guide</a>.</p>
-<p>This maturity is divided into three levels:</p>
-<ul>
-<li><strong>Level 1 minimum granularity</strong>, which contains the information essential to the cartography;</li>
-<li><strong>Level 2 intermediate granularity</strong>, which contains the information important to the cartography;</li>
-<li><strong>Level 3 fine granularity</strong>, which contains the information useful for managing the security of the information
-  system.</li>
-</ul>
-<p><a href="../images/maturity.png"><img src="/mercator/images/maturity.png" width="600" alt="Cartography maturity levels"></a></p>
-<h3 id="meaning-of-fields-marked-with-a-hash">Meaning of Fields Marked with a Hash (#)</h3>
-<p>Some field labels are followed by an <strong>#</strong> symbol in orange. These markers indicate that the field
-contributes to the calculation of the cartography maturity level, according to the relevant level:</p>
-<table>
-<thead>
-<tr>
-<th>Marker</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>#</code></td>
-<td>Field contributing to maturity level 1 — minimum granularity</td>
-</tr>
-<tr>
-<td><code>##</code></td>
-<td>Field contributing to maturity level 2 — intermediate granularity</td>
-</tr>
-<tr>
-<td><code>###</code></td>
-<td>Field contributing to maturity level 3 — fine granularity</td>
-</tr>
-</tbody>
-</table>
-<h3 id="calculating-the-maturity-level">Calculating the Maturity Level</h3>
-<p>An element is considered <strong>compliant</strong> when all fields marked <code>#</code> corresponding to the target level are
-filled in and the expected links with other cartography elements have been established.</p>
-<p>An element is considered <strong>non-compliant</strong> when:</p>
-<ul>
-<li>a field marked <code>#</code> is empty or not filled in (e.g., missing description or owner),</li>
-<li>an expected link to another element is missing (e.g., an application not supporting any business process, a
-  server not associated with any application).</li>
-</ul>
-<p>The maturity level is calculated using the following formula:</p>
-<pre><code class="language-text">Maturity level (%) = (Number of compliant elements / Total number of elements) × 100
-</code></pre>
-<h3 id="visual-identification-of-non-compliant-elements">Visual Identification of Non-Compliant Elements</h3>
-<p>In lists, <strong>non-compliant</strong> entries are highlighted in <strong>yellow</strong>, indicating that at least one field marked <code>#</code>
-has not been filled in. This allows quick identification of elements requiring particular attention in order
-to progress toward a complete cartography.</p>
 <h2 id="security-needs">Security needs</h2>
 <p>Information security needs are expressed in terms of confidentiality, integrity, availability and traceability with the
 following scale:</p>
