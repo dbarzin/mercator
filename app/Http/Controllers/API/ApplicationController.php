@@ -49,7 +49,7 @@ class ApplicationController extends APIController
         $application['processes']      = $application->processes()->pluck('id');
         $application['services']       = $application->services()->pluck('id');
         $application['databases']      = $application->databases()->pluck('id');
-        $application['logicalServers'] = $application->logicalServers()->pluck('id');
+        $application['logical_servers'] = $application->logicalServers()->pluck('id');
         $application['activities'] = $application->activities()->pluck('id');
         $application['containers'] = $application->containers()->pluck('id');
 
