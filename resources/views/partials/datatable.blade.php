@@ -13,7 +13,7 @@ table = $('{{ $id }}').DataTable({
                 orderable: false,
                 render: DataTable.render.select(),
             },
-            // Dernière colonne allignée à droite
+            // Dernière colonne alignée à droite
             {
                 targets: -1,
                 // className: 'dt-body-right'

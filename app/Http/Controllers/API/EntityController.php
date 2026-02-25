@@ -29,7 +29,7 @@ class EntityController extends APIController
         abort_if(Gate::denies('entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /** @var Entity $entity */
-        $entity = Entity::create($request->all());
+        $entity = Entity::query()->create($request->all());
 
         if ($request->has('processes') && $request->input('processes') !== null) {
             $entity->processes()->sync($request->input('processes', []));
@@ -71,7 +71,7 @@ class EntityController extends APIController
     {
         abort_if(Gate::denies('entity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Entity::whereIn('id', $request->input('ids', []))->delete();
+        Entity::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
