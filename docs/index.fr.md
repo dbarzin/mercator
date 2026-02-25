@@ -1,3 +1,5 @@
+🇫🇷 [Lire en français](/mercator/fr/) &nbsp;|&nbsp; 🇬🇧 [Read in English](/)
+
 ## Introduction
 
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme

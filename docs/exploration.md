@@ -5,7 +5,7 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 
 ## 1. Interface
 
-[<img src="images/explorer.en.png" width="700">](images/explorer.en.png)
+[<img src="/mercator/images/explorer.png" width="700">](images/explorer.en.png)
 
 | UI Element      | Type          | Role                                                     |
 |-----------------|---------------|----------------------------------------------------------|
@@ -50,10 +50,10 @@ simply excluded because their type is not covered by the active filter.
 | `Applications` + `Logical Infrastructure` | `LOGICAL-SERVER-RH-11` | Also visible: `RH-Solution` and `DB-RH-PROD`                                            |
 | *(empty)*                                 | Any asset              | All linked assets are visible, across all layers                                        |
 
-[<img src="images/exploration_filtre_infra.png" width="700">](images/exploration_filtre_infra.png)
+[<img src="/mercator/images/exploration_filtre_infra.png" width="700">](images/exploration_filtre_infra.png)
 *With filter "Logical Infrastructure" only: RH-Solution does not appear.*
 
-[<img src="images/exploration_filtre_full.png" width="700">](images/exploration_filtre_full.png)
+[<img src="/mercator/images/exploration_filtre_full.png" width="700">](images/exploration_filtre_full.png)
 *With filters "Applications" + "Logical Infrastructure": RH-Solution and DB-RH-PROD appear.*
 
 ### 2.3 Practical rule: which filter should I use?

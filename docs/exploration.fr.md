@@ -6,7 +6,7 @@ physique).
 
 ## 1. Interface
 
-[<img src="images/explorer.fr.png" width="700">](images/explorer.fr.png)
+[<img src="/mercator/fr/images/explorer.png" width="700">](images/explorer.fr.png)
 
 | Élément UI       | Type             | Rôle                                                         |
 |------------------|------------------|--------------------------------------------------------------|
@@ -27,42 +27,49 @@ physique).
 
 ## 2. Comprendre le champ Filtre
 
-> ⚠️ **Point critique** : le champ Filtre a un double effet qu'il est essentiel de comprendre avant d'explorer le graphe.
+> ⚠️ **Point critique** : le champ Filtre a un double effet qu'il est essentiel de comprendre avant d'explorer le
+> graphe.
 
 ### 2.1 Effet 1 — Restreindre la liste déroulante "Objet"
 
-C'est l'usage le plus intuitif. En saisissant une vue dans le champ Filtre (ex : `Applications`), la liste déroulante "Objet" n'affiche plus que les assets appartenant à cette vue. Cela évite de chercher un asset dans l'intégralité de la CMDB.
+C'est l'usage le plus intuitif. En saisissant une vue dans le champ Filtre (ex : `Applications`), la liste déroulante "
+Objet" n'affiche plus que les assets appartenant à cette vue. Cela évite de chercher un asset dans l'intégralité de la
+CMDB.
 
 ### 2.2 Effet 2 — Limiter la visibilité des assets dans le graphe (piège fréquent)
 
-C'est l'effet le moins attendu, et la source d'erreurs la plus courante. **Le filtre ne se contente pas de restreindre la liste "Objet" : il conditionne également les types d'assets qui s'afficheront dans le graphe lors de l'exploration.**
+C'est l'effet le moins attendu, et la source d'erreurs la plus courante. **Le filtre ne se contente pas de restreindre
+la liste "Objet" : il conditionne également les types d'assets qui s'afficheront dans le graphe lors de l'exploration.**
 
-Concrètement : si vous explorez un `logical-server` avec uniquement `Infrastructure logique` dans le filtre, les applications liées à ce serveur n'apparaîtront **jamais** dans le graphe, même si elles existent dans Mercator et sont correctement associées. Elles sont simplement exclues car leur type n'est pas couvert par le filtre actif.
+Concrètement : si vous explorez un `logical-server` avec uniquement `Infrastructure logique` dans le filtre, les
+applications liées à ce serveur n'apparaîtront **jamais** dans le graphe, même si elles existent dans Mercator et sont
+correctement associées. Elles sont simplement exclues car leur type n'est pas couvert par le filtre actif.
 
 **Exemple illustré :**
 
-| Filtre actif             | Asset exploré           | Résultat dans le graphe                                                      |
-|--------------------------|-------------------------|------------------------------------------------------------------------------|
-| `Infrastructure logique` | `LOGICAL-SERVER-RH-11`  | On voit : `NETWORK-CORE-11`, `SUBNET-CORE-11`, `SUBNET-VIRT-111` — mais pas `RH-Solution` |
-| `Applications` + `Infrastructure logique` | `LOGICAL-SERVER-RH-11` | On voit en plus : `RH-Solution` et `DB-RH-PROD`                |
-| *(vide)*                 | N'importe quel asset    | Tous les assets liés sont visibles, toutes couches confondues                |
+| Filtre actif                              | Asset exploré          | Résultat dans le graphe                                                                   |
+|-------------------------------------------|------------------------|-------------------------------------------------------------------------------------------|
+| `Infrastructure logique`                  | `LOGICAL-SERVER-RH-11` | On voit : `NETWORK-CORE-11`, `SUBNET-CORE-11`, `SUBNET-VIRT-111` — mais pas `RH-Solution` |
+| `Applications` + `Infrastructure logique` | `LOGICAL-SERVER-RH-11` | On voit en plus : `RH-Solution` et `DB-RH-PROD`                                           |
+| *(vide)*                                  | N'importe quel asset   | Tous les assets liés sont visibles, toutes couches confondues                             |
 
-[<img src="images/exploration_filtre_infra.fr.png" width="700">](images/exploration_filtre_infra.fr.png)
+[<img src="/mercator/fr/images/exploration_filtre_infra.png" width="700">](images/exploration_filtre_infra.fr.png)
 *Avec filtre "Infrastructure logique" uniquement : RH-Solution n'apparaît pas.*
 
-[<img src="images/exploration_filtre_full.fr.png" width="700">](images/exploration_filtre_full.fr.png)
+[<img src="/mercator/fr/images/exploration_filtre_full.png" width="700">](images/exploration_filtre_full.fr.png)
 *Avec filtres "Applications" + "Infrastructure logique" : RH-Solution et DB-RH-PROD apparaissent.*
 
 ### 2.3 Règle pratique : quel filtre choisir ?
 
-| Objectif                                                        | Filtre recommandé                                         |
-|-----------------------------------------------------------------|-----------------------------------------------------------|
-| Trouver rapidement un asset dans une vue précise                | Saisir uniquement la vue ciblée (ex : `Applications`)     |
-| Exploration cross-couches (application + infrastructure)        | Saisir **toutes** les vues concernées, ou laisser vide    |
-| Analyse d'impact complète (toutes couches)                      | **Laisser le filtre vide** pour ne rien exclure           |
-| Exploration limitée à une seule couche (ex : réseau uniquement) | Saisir uniquement la vue de cette couche                  |
+| Objectif                                                        | Filtre recommandé                                      |
+|-----------------------------------------------------------------|--------------------------------------------------------|
+| Trouver rapidement un asset dans une vue précise                | Saisir uniquement la vue ciblée (ex : `Applications`)  |
+| Exploration cross-couches (application + infrastructure)        | Saisir **toutes** les vues concernées, ou laisser vide |
+| Analyse d'impact complète (toutes couches)                      | **Laisser le filtre vide** pour ne rien exclure        |
+| Exploration limitée à une seule couche (ex : réseau uniquement) | Saisir uniquement la vue de cette couche               |
 
-> 💡 **Conseil** : en cas de doute sur ce que l'on cherche, commencez toujours avec le filtre **vide**. Vous pouvez le restreindre ensuite si le graphe devient trop dense.
+> 💡 **Conseil** : en cas de doute sur ce que l'on cherche, commencez toujours avec le filtre **vide**. Vous pouvez le
+> restreindre ensuite si le graphe devient trop dense.
 
 ---
 
@@ -257,7 +264,9 @@ Pour les assets très connectés (ex : application centrale), démarrer avec 1 o
 Augmenter ensuite progressivement.
 
 **Utiliser le filtre avec discernement**
-Comme expliqué au chapitre 2, le filtre conditionne non seulement la liste des objets disponibles, mais aussi les assets visibles dans le graphe. Pour une exploration cross-couches, pensez à ajouter toutes les vues pertinentes ou à laisser le filtre vide.
+Comme expliqué au chapitre 2, le filtre conditionne non seulement la liste des objets disponibles, mais aussi les assets
+visibles dans le graphe. Pour une exploration cross-couches, pensez à ajouter toutes les vues pertinentes ou à laisser
+le filtre vide.
 
 **Mode Physique**
 Activer le toggle Physique uniquement quand vous souhaitez visualiser les liaisons réseau physiques (WAN/LAN/MAN).

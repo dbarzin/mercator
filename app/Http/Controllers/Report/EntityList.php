@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use App\Services\ExcelExportHelper;
 use Carbon\Carbon;
 use Gate;
 use Mercator\Core\Models\Entity;
@@ -49,11 +50,16 @@ class EntityList extends Controller
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
+        $excelExportHelper = new ExcelExportHelper();
+
         // Populate the Timesheet
         $row = 2;
         foreach ($entities as $entity) {
             $sheet->setCellValue("A{$row}", $entity->name);
-            $sheet->setCellValue("B{$row}", $html->toRichTextObject($entity->description));
+            
+            $sheet->setCellValue("B{$row}", $excelExportHelper->prepareRichText($entity->description));
+            $sheet->getStyle("B{$row}")->getAlignment()->setWrapText(true);
+
             $sheet->setCellValue("C{$row}", $entity->is_external ? trans('global.yes') : trans('global.no'));
             $sheet->setCellValue("D{$row}", $entity->entity_type);
             $sheet->setCellValue("E{$row}", $html->toRichTextObject($entity->security_level));
