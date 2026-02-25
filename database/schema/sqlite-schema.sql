@@ -39,7 +39,7 @@ CREATE INDEX "oauth_refresh_tokens_access_token_id_index" on "oauth_refresh_toke
   "access_token_id"
 );
 CREATE TABLE IF NOT EXISTS "oauth_clients"(
-  "id" integer primary key autoincrement not null,
+  "id" varchar NOT NULL,
   "user_id" integer,
   "name" varchar not null,
   "secret" varchar,
