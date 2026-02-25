@@ -4,7 +4,7 @@
 
 The cartography report contains all the objects making up the cartography and the links between them.
 
-[<img src="/mercator/images/report.png" width="600">](/mercator/images/report.png)
+[![report.png](images/report.png)](images/report.png)
 
 This is a Word document containing information on all the objects in the selected views at the desired level of
 granularity.

@@ -1,6 +1,6 @@
 ## Application
 
-[<img src="/mercator/images/homepage.png" width="600">](/mercator/images/homepage.png)
+[![homepage.png](images/homepage.png)](images/homepage.png)
 
 ### Main page
 
@@ -8,15 +8,15 @@ The main page is divided into three parts:
 
 * Compliance levels
 
-   [<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
+   [![maturity.png](images/maturity.png)](images/maturity.png)
 
 * The distribution of cartography objects by domain. 
 
-   [<img src="/mercator/images/repartition.png" width="600">](/mercator/images/repartition.png)
+   [![repartition.png](images/repartition.png)](images/repartition.png)
 
 * The global proportional map of cartography objects.
 
-   [<img src="/mercator/images/treemap.png" width="600">](/mercator/images/treemap.png)
+   [![treemap.png](images/treemap.png)](images/treemap.png)
 
 Each item is selectable and gives access to the list of selected map objects.
 
@@ -41,7 +41,7 @@ It is possible to explore the cartography. This function is available via the "d
 - The "Object" field is used to select an element of the cartography and add it to the exploration.
 - The "Delete" button is used to remove an element from the cartography exploration.
 
-   [<img src="/mercator/images/explore.png" width="600">](/mercator/images/explore.png)
+   [![explore.png](images/explore.png)](images/explore.png)
 
 Double-click on an object to display all its connections.
 

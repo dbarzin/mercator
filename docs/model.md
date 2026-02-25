@@ -1,6 +1,6 @@
 ## Data model
 
-[<img src="/mercator/images/model.png" width="700">](/mercator/images/model.png)
+[<img src="images/model.png" width="700">](images/model.png)
 
 ### GDPR view
 
@@ -76,7 +76,7 @@ By default, this table is populated with the security measures of ISO 27001:2022
 The ecosystem view describes all the entities or systems that revolve around the information system considered in the
 mapping.
 
-[<img src="/mercator/images/ecosystem.png" width="600">](/mercator/images/ecosystem.png)
+[![ecosystem.png](images/ecosystem.png)](images/ecosystem.png)
 
 This view not only delimits the scope of the mapping, but also provides an overall view of the ecosystem without being
 limited to the individual study of each entity.
@@ -171,7 +171,7 @@ The financial values of a contract can be indicated in dedicated fields.
 The business view of the information system describes all the organization's business processes and the players
 involved, independently of the technological choices made by the organization and the resources made available to it.
 
-[<img src="/mercator/images/information_system.png" width="600">](/mercator/images/information_system.png)
+[![information_system.png](images/information_system.png)](images/information_system.png)
 
 The business view is essential, as it allows you to reposition technical elements in their business environment, and
 thus understand their context of use.
@@ -446,7 +446,7 @@ A process can be linked to an information from these two objects.
 
 The application view is used to describe part of what is classically referred to as the "computer system".
 
-[<img src="/mercator/images/applications.png" width="600">](/mercator/images/applications.png)
+[![applications.png](images/applications.png)](images/applications.png)
 
 This view describes the technological solutions that support business processes, mainly applications.
 
@@ -904,7 +904,7 @@ In the app, an user can be defined as administrator of an application from an ap
 
 The logical infrastructure view corresponds to the logical distribution of the network.
 
-[<img src="/mercator/images/logical.png" width="400">](/mercator/images/logical.png)
+[<img src="images/logical.png" width="400">](images/logical.png)
 
 It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that
 handles the traffic.
@@ -1380,7 +1380,7 @@ In the app, a VLAN can be linked to a logic switch from these two objects.
 
 The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
 
-[<img src="/mercator/images/physical.png" width="700">](/mercator/images/physical.png)
+[<img src="images/physical.png" width="700">](images/physical.png)
 
 This view corresponds to the geographical distribution of network equipment within the various sites.
 

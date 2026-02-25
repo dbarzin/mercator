@@ -33,7 +33,7 @@ suivantes :
   clairement les responsabilités
 - **Informations** : Les objets de données BPMN peuvent être associés aux informations de la vue écosystème
 
-[<img src="/mercator/images/bpmn-1.png" width="500">](/mercator/images/bpmn-1.png)
+[<img src="images/bpmn-1.png" width="500">](images/bpmn-1.png)
 
 Cette intégration maintient une cohérence entre la modélisation des processus métier (BPMN) et
 la cartographie technique du SI. Elle permet de :
@@ -53,7 +53,7 @@ entre participants. Elles peuvent être représentées soit comme des conversati
 interactions basiques, soit comme des sub-conversations (hexagone double bordure) lorsqu'elles encapsulent des échanges
 plus complexes nécessitant une décomposition.
 
-[<img src="/mercator/images/bpmn-2.png" width="400">](/mercator/images/bpmn-2.png)
+[<img src="images/bpmn-2.png" width="400">](images/bpmn-2.png)
 
 Cette notation permet de documenter les protocoles de communication entre différents acteurs métier ou systèmes, en
 complément de la modélisation des processus internes à chaque participant. Les conversations BPMN offrent ainsi une vue
@@ -69,7 +69,7 @@ Le module BPMN propose une palette complète d'éléments conformes à la norme 
 - **Événement intermédiaire** : Événement survenant durant le processus
 - **Événement de fin** : Point de terminaison d'un processus
 
-  [<img src="/mercator/images/bpmn-events.png" width="300">](/mercator/images/bpmn-events.png)
+  [<img src="images/bpmn-events.png" width="300">](images/bpmn-events.png)
 
 ### Activités (Activities)
 
@@ -79,7 +79,7 @@ Le module BPMN propose une palette complète d'éléments conformes à la norme 
 - **Tâche de service** : Tâche automatisée
 - **Tâche de script** : Exécution de code
 
-  [<img src="/mercator/images/bpmn-tasks.png" width="500">](/mercator/images/bpmn-tasks.png)
+  [<img src="images/bpmn-tasks.png" width="500">](images/bpmn-tasks.png)
 
 ### Passerelles (Gateways)
 
@@ -88,7 +88,7 @@ Le module BPMN propose une palette complète d'éléments conformes à la norme 
 - **Passerelle inclusive** : Activation d'un ou plusieurs chemins
 - **Passerelle événementielle** : Attente d'événements multiples
 
-  [<img src="/mercator/images/bpmn-gateways.png" width="400">](/mercator/images/bpmn-gateways.png)
+  [<img src="images/bpmn-gateways.png" width="400">](images/bpmn-gateways.png)
 
 ### Flux et connexions
 
@@ -100,18 +100,18 @@ Le module BPMN propose une palette complète d'éléments conformes à la norme 
   processus.
 -
 
-[<img src="/mercator/images/bpmn-flows.png" width="400">](/mercator/images/bpmn-flows.png)
+[<img src="images/bpmn-flows.png" width="400">](images/bpmn-flows.png)
 
 ### Artefacts
 
 - **Objet de données (Data Object)** : Représentation d'informations
 - **Stockage de données (Data Store)** : Lieu de persistance des données
 
-  [<img src="/mercator/images/bpmn-data.png" width="300">](/mercator/images/bpmn-data.png)
+  [<img src="images/bpmn-data.png" width="300">](images/bpmn-data.png)
 
 - **Annotation** : Commentaires et notes explicatives
 
-  [<img src="/mercator/images/bpmn-annotation.png" width="150">](/mercator/images/bpmn-annotation.png)
+  [<img src="images/bpmn-annotation.png" width="150">](images/bpmn-annotation.png)
 
 ## Lanes (couloirs)
 

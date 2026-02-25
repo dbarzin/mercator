@@ -2,7 +2,7 @@ docs_dir: docs
 
 # Project information
 site_name: Mercator
-site_description: Mapping the information system !
+site_description: Mapping the Information System !
 
 # Repository
 repo_url: https://github.com/dbarzin/mercator
@@ -11,70 +11,53 @@ edit_uri: edit/master/docs
 # Copyright
 copyright: Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.
 
+site_url: https://dbarzin.githubs.io/mercator/
+
 theme:
   name: readthedocs
 
 plugins:
   - search
   - i18n:
+      docs_structure: suffix
       languages:
-        fr: "Français"
-        en: "English"
-      default_language: 'en'
-      no_translation:
-        fr: "Cette page n'a pas été traduite"
-        en: "This page isn't translated to English."
-      translate_nav:
-        fr:
-          section title: "Section"
-          subsection: "Souse-section"
-          page title: "Titre"
-        en:
-          section title: "Section"
-          subsection: "Subsection"
-          page title: "Page with title translated"
+        - locale: en
+          default: true
+          name: English
+          build: true
+          nav_translations:
+            section title: "Section"
+            subsection: "Subsection"
+            page title: "Page with title translated"
+        - locale: fr
+          name: Français
+          build: true
+          nav_translations:
+            section title: "Section"
+            subsection: "Sous-section"
+            page title: "Titre"
 
-
-site_name: Mercator
-site_url: https://dbarzin.githubs.io/mercator/
 nav:
   - Introduction: index.md
-  - Introduction: index.fr.md
   - Mapping: cartography.md
-  - Cartographie: cartography.fr.md
   - Application: application.md
-  - Application: application.fr.md
   - BPMN 2.0: bpmn.md
-  - BPMN 2.0: bpmn.fr.md
   - Reports: reports.md
-  - Rapports: reports.fr.md
   - Use cases: usecases.md
-  - Cas d'utilisation: usecases.fr.md
   - Data model: model.md
-  - Modèle de données: model.fr.md
   - Exploration: exploration.md
-  - Exploration: exploration.fr.md
   - Administration: admin.md
-  - Administration: admin.fr.md
   - Configuration: config.md
-  - Configuration: config.fr.md
   - Import: import.md
-  - Import: import.fr.md
   - API: api.md
-  - API: api.fr.md
   - API advanced (filters): apifilters.md
-  - API avancé (filtres): apifilters.fr.md
   - References: references.md
-  - Références: references.fr.md
 
 extra:
-  # Default mkdocs-material alternate links for untranslated pages
-  # https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector
   alternate:
     - name: English
-      link: ""
+      link: /
       lang: en
-
     - name: Français
-      link: index.fr.md
+      link: /fr/
       lang: fr

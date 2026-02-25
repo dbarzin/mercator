@@ -30,7 +30,7 @@ BPMN elements integrate with Mercator's information system view objects accordin
 - **Actors**: Roles and actors are represented in lanes/pools, clearly identifying responsibilities
 - **Information**: BPMN data objects can be associated with information from the ecosystem view
 
-[<img src="/mercator/images/bpmn-1.png" width="500">](/mercator/images/bpmn-1.png)
+[<img src="images/bpmn-1.png" width="500">](images/bpmn-1.png)
 
 This integration maintains consistency between business process modeling (BPMN) and the technical IS cartography.
 It enables:
@@ -49,7 +49,7 @@ They can be represented either as standard conversations (simple hexagon) for ba
 sub-conversations
 (double-bordered hexagon) when they encapsulate more complex exchanges requiring decomposition.
 
-[<img src="/mercator/images/bpmn-2.png" width="400">](/mercator/images/bpmn-2.png)
+[<img src="images/bpmn-2.png" width="400">](images/bpmn-2.png)
 
 This notation documents communication protocols between different business actors or systems, complementing the modeling
 of internal processes for each participant. BPMN conversations thus provide an architectural view of
@@ -65,7 +65,7 @@ The BPMN module offers a complete set of elements compliant with the BPMN 2.0 st
 - **Intermediate Event**: Event occurring during the process
 - **End Event**: Ending point of a process
 
-[<img src="/mercator/images/bpmn-events.png" width="300">](/mercator/images/bpmn-events.png)
+[<img src="images/bpmn-events.png" width="300">](images/bpmn-events.png)
 
 ### Activities
 
@@ -75,7 +75,7 @@ The BPMN module offers a complete set of elements compliant with the BPMN 2.0 st
 - **Service task**: Automated task
 - **Script task**: Code execution
 
-[<img src="/mercator/images/bpmn-tasks.png" width="500">](/mercator/images/bpmn-tasks.png)
+[<img src="images/bpmn-tasks.png" width="500">](images/bpmn-tasks.png)
 
 ### Gateways
 
@@ -84,7 +84,7 @@ The BPMN module offers a complete set of elements compliant with the BPMN 2.0 st
 - **Inclusive gateway**: Activation of one or more paths
 - **Event gateway**: Waiting for multiple events
 
-[<img src="/mercator/images/bpmn-gateways.png" width="400">](/mercator/images/bpmn-gateways.png)
+[<img src="images/bpmn-gateways.png" width="400">](images/bpmn-gateways.png)
 
 ### Flows and Connections
 
@@ -100,18 +100,18 @@ The BPMN module offers a complete set of elements compliant with the BPMN 2.0 st
 
 -
 
-[<img src="/mercator/images/bpmn-flows.png" width="400">](/mercator/images/bpmn-flows.png)
+[<img src="images/bpmn-flows.png" width="400">](images/bpmn-flows.png)
 
 ### Artifacts
 
 - **Data Object**: Information representation
 - **Data Store**: Data persistence location
 
-[<img src="/mercator/images/bpmn-data.png" width="300">](/mercator/images/bpmn-data.png)
+[<img src="images/bpmn-data.png" width="300">](images/bpmn-data.png)
 
 - **Annotation**: Comments and explanatory notes
 
-[<img src="/mercator/images/bpmn-annotation.png" width="150">](/mercator/images/bpmn-annotation.png)
+[<img src="images/bpmn-annotation.png" width="150">](images/bpmn-annotation.png)
 
 ## Lanes
 

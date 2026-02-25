@@ -4,7 +4,7 @@
 
 Le rapport de cartographie contient l’ensemble des objets composant la cartographie et les liens entre eux.
 
-[<img src="/mercator/images/report.png" width="600">](/mercator/images/report.png)
+[<img src="images/report.png" width="600">](images/report.png)
 
 C'est un document au format Word qui contient les informations de tous les objets des vues sélectionnées au niveau de
 granularité souhaité.
