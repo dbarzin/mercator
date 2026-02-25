@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="fr" >
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/api/" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/api/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>API - Mercator</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
         var mkdocs_page_name = "API";
-        var mkdocs_page_input_path = "api.md";
-        var mkdocs_page_url = "/mercator/api/";
+        var mkdocs_page_input_path = "api.fr.md";
+        var mkdocs_page_url = "/mercator/fr/api/";
       </script>
     
     <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
+      <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
       <script>hljs.highlightAll();</script> 
@@ -30,17 +30,17 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> Mercator
+          <a href="../" class="icon icon-home"> Mercator
         </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Rechercher des documents" aria-label="Rechercher des documents" title="Tapez vos mots clés ici" />
   </form>
 </div>
       </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navigation">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                <li class="toctree-l1"><a class="reference internal" href="../">Introduction</a>
                 </li>
               </ul>
               <ul>
@@ -86,39 +86,39 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">API</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#install-the-api-on-mercator">Install the API on Mercator</a>
+    <li class="toctree-l2"><a class="reference internal" href="#installer-lapi-sur-mercator">Installer l'API sur Mercator</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#apis">APIs</a>
+    <li class="toctree-l2"><a class="reference internal" href="#les-apis">Les APIs</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#actions-managed-by-the-resource-controller">Actions managed by the resource controller</a>
+    <li class="toctree-l2"><a class="reference internal" href="#actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#access-rights">Access rights</a>
+    <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#linking-objects">Linking objects</a>
+    <li class="toctree-l2"><a class="reference internal" href="#liaison-entre-les-objets">Liaison entre les objets</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+    <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#php">PHP</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#authentification">Authentification</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#users-list">Users list</a>
+    <li class="toctree-l4"><a class="reference internal" href="#liste-des-utilisateurs">Liste des utilisateurs</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get-a-user">Get a user</a>
+    <li class="toctree-l4"><a class="reference internal" href="#recuperer-un-utilisateur">Récupérer un utilisateur</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#update-a-user">Update a user</a>
+    <li class="toctree-l4"><a class="reference internal" href="#mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#python">Python</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#bash">Bash</a>
+    <li class="toctree-l3"><a class="reference internal" href="#bash">bash</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#powershell">PowerShell</a>
+    <li class="toctree-l3"><a class="reference internal" href="#powershell">Powershell</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</a>
+    <li class="toctree-l4"><a class="reference internal" href="#etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</a>
+    <li class="toctree-l4"><a class="reference internal" href="#etape-2-utilisation-du-jeton-pour-interroger-les-serveurs-logiques">Étape 2 — Utilisation du jeton pour interroger les serveurs logiques</a>
     </li>
         </ul>
     </li>
@@ -140,18 +140,18 @@
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+      <nav class="wy-nav-top" role="navigation" aria-label="Menu de navigation sur mobile">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">Mercator</a>
+          <a href="../">Mercator</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+    <li><a href="../" class="icon icon-home" aria-label="Documents"></a></li>
       <li class="breadcrumb-item active">API</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/dbarzin/mercator/edit/master/docs/api.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/api.fr.md" class="icon icon-github"> Editer dans GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -160,95 +160,96 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="api">API</h2>
-<p>Cartography can be modified or updated via a REST API.</p>
-<p>A REST API (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
-is an application programming interface that respects the constraints of the REST
-architecture and enables interaction with RESTful web services.</p>
-<h3 id="install-the-api-on-mercator">Install the API on Mercator</h3>
-<p>To install the API in Mercator, you need to install Passport by running this command:</p>
+<p>La cartographie peut être modifiée ou mise à jour via une REST API.</p>
+<p>Une API REST (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
+est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST
+et permet d'interagir avec les services web RESTful.</p>
+<h3 id="installer-lapi-sur-mercator">Installer l'API sur Mercator</h3>
+<p>pour installer l'API dans Mercator, il est nécessaire d'installer Passport en lançant cette commande :</p>
 <pre><code class="language-bash">php artisan passport:install
 </code></pre>
 <ul>
-<li>The Docker environment supports this functionality natively, via the entrypoint.</li>
+<li>l'environnement Docker prend en charge cette fonctionnalité nativement, via l'entrypoint.</li>
 </ul>
-<h3 id="apis">APIs</h3>
-<p>For each object in the cartography data model, there is an API.
-The list of APIs can be found in /route/api.php</p>
-<p><strong>GDPR view</strong></p>
+<h3 id="les-apis">Les APIs</h3>
+<p>Pour chaque objet du modèle de données de la cartographie, il existe une API.
+La liste des API se trouve dans le fichier /route/api.php</p>
+<p><em>Note:</em> Pour visualiser le datamodel d'une API, cliquer sur son nom.</p>
+<p><strong>Vue du RGPD</strong></p>
 <ul>
-<li><a href="../model/#register">/api/data-processings</a></li>
-<li><a href="../model/#security-measures">/api/security-controls</a></li>
+<li><a href="../model/#registre">/api/data-processings</a></li>
+<li><a href="../model/#mesures-de-securite">/api/security-controls</a></li>
 </ul>
-<p><strong>Ecosystem view</strong></p>
+<p><strong>Vues de l'écosystème</strong></p>
 <ul>
-<li><a href="../model/#entities">/api/entities</a></li>
-<li><a href="../model/#relationships">/api/relations</a></li>
+<li><a href="../model/#entites">/api/entities</a></li>
+<li><a href="../model/#relations">/api/relations</a></li>
 </ul>
-<p><strong>Information system business view</strong></p>
+<p><strong>Vue métier du système d'information</strong></p>
 <ul>
-<li><a href="../model/#macro-processes">/api/macro-processuses</a></li>
-<li><a href="../model/#processes">/api/processes</a></li>
-<li><a href="../model/#activities">/api/activities</a></li>
+<li><a href="../model/#macro-processus">/api/macro-processuses</a></li>
+<li><a href="../model/#processus">/api/processes</a></li>
+<li><a href="../model/#activites">/api/activities</a></li>
 <li><a href="../model/#operations">/api/operations</a></li>
-<li><a href="../model/#tasks">/api/tasks</a></li>
-<li><a href="../model/#actors">/api/actors</a></li>
+<li><a href="../model/#taches">/api/tasks</a></li>
+<li><a href="../model/#acteurs">/api/actors</a></li>
 <li><a href="../model/#information">/api/information</a></li>
 </ul>
-<p><strong>Application view</strong></p>
+<p><strong>Vue des applications</strong></p>
 <ul>
-<li><a href="../model/#applications-blocks">/api/application-blocks</a></li>
+<li><a href="../model/#blocs-applicatif">/api/application-blocks</a></li>
 <li><a href="../model/#applications">/api/applications</a></li>
-<li><a href="../model/#applications-services">/api/application-services</a></li>
-<li><a href="../model/#application-modules">/api/application-modules</a></li>
-<li><a href="../model/#databases">/api/databases</a></li>
-<li><a href="../model/#flows">/api/fluxes</a></li>
+<li><a href="../model/#services-applicatif">/api/application-services</a></li>
+<li><a href="../model/#modules-applicatif">/api/application-modules</a></li>
+<li><a href="../model/#bases-de-donnees">/api/databases</a></li>
+<li><a href="../model/#flux">/api/fluxes</a></li>
 </ul>
-<p><strong>Administration view</strong></p>
+<p><strong>Vue de l'administration</strong></p>
 <ul>
-<li><a href="../model/#administration-areas">/api/zone-admins</a></li>
-<li><a href="../model/#administration-directory-services">/api/annuaires</a></li>
-<li><a href="../model/#active-directory-forests-ldap-tree-structure">/api/forest-ads</a></li>
-<li><a href="../model/#active-directory-domains-ldap">/api/domaine-ads</a></li>
-<li><a href="../model/#users">/api/admin-users</a></li>
+<li><a href="../model/#zones-dadministration">/api/zone-admins</a></li>
+<li><a href="../model/#services-dannuaire-dadministration">/api/annuaires</a></li>
+<li><a href="../model/#forets-active-directory-arborescence-ldap">/api/forest-ads</a></li>
+<li><a href="../model/#domaines-active-directory-ldap">/api/domaine-ads</a></li>
+<li><a href="../model/#utilisateurs">/api/admin-users</a></li>
 </ul>
-<p><strong>Logical infrastructure view</strong></p>
+<p><strong>Vue de l'infrastructure logique</strong></p>
 <ul>
-<li><a href="../model/#networks">/api/networks</a></li>
-<li><a href="../model/#subnetworks">/api/subnetworks</a></li>
-<li><a href="../model/#external-input-gateways">/api/gateways</a></li>
-<li><a href="../model/#connected-external-entities">/api/external-connected-entities</a></li>
-<li><a href="../model/#network-switches">/api/network-switches</a></li>
-<li><a href="../model/#logical-routers">/api/routers</a></li>
-<li><a href="../model/#security-equipments">/api/security-devices</a></li>
-<li><a href="../model/#dhcp-servers">/api/dhcp-servers</a></li>
-<li><a href="../model/#dns-servers">/api/dnsservers</a></li>
+<li><a href="../model/#reseaux">/api/networks</a></li>
+<li><a href="../model/#sous-reseaux">/api/subnetworks</a></li>
+<li><a href="../model/#passerelles-dentrees-depuis-lexterieur">/api/gateways</a></li>
+<li><a href="../model/#entites-exterieures-connectees">/api/external-connected-entities</a></li>
+<li><a href="../model/#commutateurs-reseau">/api/network-switches</a></li>
+<li><a href="../model/#routeurs-logiques">/api/routers</a></li>
+<li><a href="../model/#equipements-de-securite">/api/security-devices</a></li>
+<li><a href="../model/#serveurs-dhcp">/api/dhcp-servers</a></li>
+<li><a href="../model/#serveurs-dns">/api/dnsservers</a></li>
 <li><a href="../model/#clusters">/api/clusters</a></li>
-<li><a href="../model/#logical-servers">/api/logical-servers</a></li>
-<li><a href="../model/#containers">/api/containers</a></li>
-<li><a href="../model/#logical-flows">/api/logical-flows</a></li>
-<li><a href="../model/#certificates">/api/certificates</a></li>
+<li><a href="../model/#serveurs-logiques">/api/logical-servers</a></li>
+<li><a href="../model/#flux-logiques">/api/logical-flows</a></li>
+<li><a href="../model/#conteneurs">/api/containers</a></li>
+<li><a href="../model/#certificats">/api/certificates</a></li>
 <li><a href="../model/#vlans">/api/vlans</a></li>
 </ul>
-<p><strong>Physical infrastructure view</strong></p>
+<p><strong>Vue de l'infrastructure physique</strong></p>
 <ul>
 <li><a href="../model/#sites">/api/sites</a></li>
-<li><a href="../model/#buildings-rooms">/api/buildings</a></li>
-<li><a href="../model/#racks">/api/bays</a></li>
-<li><a href="../model/#physical-servers">/api/physical-servers</a></li>
-<li><a href="../model/#workstations">/api/workstations</a></li>
-<li><a href="../model/#storage-infrastructures">/api/storage-devices</a></li>
-<li><a href="../model/#peripherals">/api/peripherals</a></li>
-<li><a href="../model/#phones">/api/phones</a></li>
-<li><a href="../model/#physical-switches">/api/physical-switches</a></li>
-<li><a href="../model/#physical-routers">/api/physical-routers</a></li>
-<li><a href="../model/#wifi-terminals">/api/wifi-terminals</a></li>
-<li><a href="../model/#physical-security-equipments">/api/physical-security-devices</a></li>
+<li><a href="../model/#batiments-salles">/api/buildings</a></li>
+<li><a href="../model/#baies">/api/bays</a></li>
+<li><a href="../model/#serveurs-physiques">/api/physical-servers</a></li>
+<li><a href="../model/#postes-de-travail">/api/workstations</a></li>
+<li><a href="../model/#infrastructures-de-stockage">/api/storage-devices</a></li>
+<li><a href="../model/#peripheriques">/api/peripherals</a></li>
+<li><a href="../model/#telephones">/api/phones</a></li>
+<li><a href="../model/#commutateurs-physiques">/api/physical-switches</a></li>
+<li><a href="../model/#routeurs-physiques">/api/physical-routers</a></li>
+<li><a href="../model/#bornes-wifi">/api/wifi-terminals</a></li>
+<li><a href="../model/#equipements-de-securite-physique">/api/physical-security-devices</a></li>
+<li><a href="../model/#liens-physiques">/api/physical-links</a></li>
 <li><a href="../model/#wans">/api/wans</a></li>
 <li><a href="../model/#mans">/api/mans</a></li>
 <li><a href="../model/#lans">/api/lans</a></li>
-<li><a href="../model/#physical-links">/api/physical-links</a></li>
 </ul>
-<p><strong>Reports</strong></p>
+<p><strong>Rapport</strong></p>
 <ul>
 <li>/api/report/cartography</li>
 <li>/api/report/entities</li>
@@ -267,12 +268,12 @@ The list of APIs can be found in /route/api.php</p>
 <li>/api/report/impacts</li>
 <li>/api/report/rto</li>
 </ul>
-<h3 id="actions-managed-by-the-resource-controller">Actions managed by the resource controller</h3>
-<p>Requests and URIs for each api are shown in the table below.</p>
+<h3 id="actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</h3>
+<p>Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.</p>
 <table>
 <thead>
 <tr>
-<th>Request</th>
+<th>Requête</th>
 <th>URI</th>
 <th>Action</th>
 </tr>
@@ -280,59 +281,60 @@ The list of APIs can be found in /route/api.php</p>
 <tbody>
 <tr>
 <td>GET</td>
-<td>/api/objects</td>
-<td>returns the list of objects</td>
+<td>/api/objets</td>
+<td>renvoie la liste des objets</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/api/objects/{id}</td>
-<td>returns the object with ID <code>{id}</code></td>
+<td>/api/objets/{id}</td>
+<td>renvoie l'objet {id}</td>
 </tr>
 <tr>
 <td>POST</td>
-<td>/api/objects</td>
-<td>creates a new object</td>
+<td>/api/objets</td>
+<td>sauve un nouvel objet</td>
 </tr>
 <tr>
 <td>PUT/PATCH</td>
-<td>/api/objects/{id}</td>
-<td>updates the object with ID <code>{id}</code></td>
+<td>/api/objets/{id}</td>
+<td>met à jour l'objet {id}</td>
 </tr>
 <tr>
 <td>DELETE</td>
-<td>/api/objects/{id}</td>
-<td>deletes the object with ID <code>{id}</code></td>
+<td>/api/objets/{id}</td>
+<td>supprime l'objet {id}</td>
 </tr>
 <tr>
 <td>POST</td>
-<td>/api/objects/mass-store</td>
-<td>creates multiple objects in a single request</td>
+<td>/api/objets/mass-store</td>
+<td>crée plusieurs objets en une requête</td>
 </tr>
 <tr>
 <td>PUT/PATCH</td>
-<td>/api/objects/mass-update</td>
-<td>updates multiple objects at once</td>
+<td>/api/objets/mass-update</td>
+<td>met à jour plusieurs objets à la fois</td>
 </tr>
 <tr>
 <td>DELETE</td>
-<td>/api/objects/mass-destroy</td>
-<td>deletes multiple objects at once</td>
+<td>/api/objets/mass-destroy</td>
+<td>supprime plusieurs objets à la fois</td>
 </tr>
 </tbody>
 </table>
-<p>The fields to be supplied are those described in the <a href="/mercator/model/">data model</a>.</p>
-<p>To get access to advanced filters, feel free to check the related page: <a href="../apifilters/">API Advanced (filters)</a></p>
-<h3 id="access-rights">Access rights</h3>
-<p>To access the APIs, you must identify yourself as a Mercator application user.
-This user must have a role in Mercator that allows him/her to access/modify the objects
-objects accessed via the API.</p>
-<p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
-header of the API request.</p>
-<h3 id="linking-objects">Linking objects</h3>
-<p>Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a
-‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:</p>
+<p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
+<p>Pour voir les fonctions avancées de filtres : voir la page <a href="../apifilters/">API avancée (filtres)</a></p>
+<h3 id="droits-dacces">Droits d'accès</h3>
+<p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accéder aux API.
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
+accédés par l'API.</p>
+<p>Lorsque l'authentification réussit, l'API envoie un "access_token" qui doit être passé dans
+l'entête "Authorization" de la requête de l'API.</p>
+<h3 id="liaison-entre-les-objets">Liaison entre les objets</h3>
+<p>Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier un processus à
+une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire,
+nous suivons ces étapes :</p>
 <ul>
-<li>Step 1: Ensure you have the application_id for the applications you want to link.</li>
+<li>Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</li>
 </ul>
 <pre><code>{
   &quot;id&quot;: 201,
@@ -346,20 +348,20 @@ header of the API request.</p>
 }
 </code></pre>
 <ul>
-<li>Step 2: Link the process to the applications. Either with an update or a store, we can add:</li>
+<li>Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons
+  ajouter :</li>
 </ul>
 <pre><code>{
   &quot;id&quot;: 101,
-  &quot;name&quot;: &quot;process&quot;,
-  &quot;applications[]&quot;: [201, 202]
+  &quot;name&quot;: &quot;processus&quot;,
+  &quot;application_id[]&quot;: [201, 202]
 }
 </code></pre>
-<p>The names of all extra fields
-are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']</p>
-<h3 id="examples">Examples</h3>
-<p>Please find below few examples with differents languages</p>
+<p>Les noms de tous les champs supplémentaires
+sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].</p>
+<h3 id="exemples">Exemples</h3>
+<p>Voici quelques exemples d'utilisation de l'API avec différents langages :</p>
 <h4 id="php">PHP</h4>
-<p>Here are a few examples of how to use the API with PHP:</p>
 <h5 id="authentification">Authentification</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
@@ -402,7 +404,7 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
 
     var_dump($response);
 </code></pre>
-<h5 id="users-list">Users list</h5>
+<h5 id="liste-des-utilisateurs">Liste des utilisateurs</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -430,7 +432,7 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
     var_dump($response);
 
 </code></pre>
-<h5 id="get-a-user">Get a user</h5>
+<h5 id="recuperer-un-utilisateur">Récupérer un utilisateur</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -456,7 +458,7 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
 
     var_dump($response);
 </code></pre>
-<h5 id="update-a-user">Update a user</h5>
+<h5 id="mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</h5>
 <pre><code class="language-php">&lt;?php
    $curl = curl_init();
 
@@ -466,7 +468,6 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
         CURLOPT_MAXREDIRS =&gt; 10,
         CURLOPT_TIMEOUT =&gt; 30,
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
-        CURLOPT_POST =&gt; true,
         CURLOPT_CUSTOMREQUEST =&gt; &quot;PUT&quot;,
         CURLOPT_POSTFIELDS =&gt; http_build_query(
             array(
@@ -481,6 +482,7 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
             &quot;accept: application/json&quot;,
             &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
             &quot;cache-control: no-cache&quot;,
+            &quot;content-type: application/x-www-form-urlencoded&quot;,
         ),
     ));
 
@@ -491,7 +493,7 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
     var_dump($response);
 </code></pre>
 <h4 id="python">Python</h4>
-<p>Here's an example of how to use the API in Python :</p>
+<p>Voici un exemple d'utilisation de l'API en Python</p>
 <pre><code class="language-python">#!/usr/bin/python3
 
 import requests
@@ -511,27 +513,19 @@ vheaders['Authorization'] = &quot;Bearer &quot; + response.json()['access_token'
 
 print(&quot;Get workstations&quot;)
 response = requests.get(&quot;http://127.0.0.1:8000/api/workstations&quot;, headers=vheaders)
-print(response.json())
+data=response.json()
+print(data)
 print(response.status_code)
 
 </code></pre>
-<h4 id="bash">Bash</h4>
-<p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a>
-and <a href="https://stedolan.github.io/jq/">JQ</a></p>
-<pre><code># valid login and password
-data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
-
-# get a token after correct login
-token=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; http://localhost:8000/api/login | jq -r .access_token)
-
-# query users and decode JSON data with JQ.
-curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Bearer ${token}&quot; &quot;http://127.0.0.1:8000/api/users&quot; | jq .
-
-</code></pre>
-<p>Other Bash example</p>
+<h4 id="bash">bash</h4>
+<p>Voici un exemple d'utilisation de l'API en ligne de commande avec <a href="https://curl.se/docs/manpage.html">CURL</a>
+et <a href="https://stedolan.github.io/jq/">JQ</a></p>
 <pre><code>#!/usr/bin/bash
 
 API_URL=http://127.0.0.1:8000/api
+OBJECT=applications
+OBJECT_ID=45
 
 # valid login and password
 
@@ -542,10 +536,7 @@ data='{&quot;login&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;
 TOKEN=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; ${API_URL}/login | jq -r .access_token)
 
 # Récupération de l'objet
-
-OBJECT_ID=10
-
-RESPONSE=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+RESPONSE=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
  -H &quot;Accept: application/json&quot;)
 
@@ -554,11 +545,11 @@ echo &quot;Objet récupéré: ${RESPONSE}&quot;
 # Mise à jour d'une valeur avec une requête PUT
 
 RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -c '.data')
-RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -r '.operating_system=&quot;Linux&quot;')
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -r '.activities=[1]')
 
 echo &quot;Objet modifié: ${RESPONSE}&quot;
 
-curl -s -X PUT &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+curl -s -X PUT &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
   -H &quot;Authorization: Bearer ${TOKEN}&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;cache-control: no-cache&quot; \
@@ -566,56 +557,57 @@ curl -s -X PUT &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
 
 # Vérification de la mise à jour
 
-UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
   -H &quot;Authorization: Bearer ${TOKEN}&quot; \
   -H &quot;Accept: application/json&quot;)
 
 echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
+
 </code></pre>
-<h4 id="powershell">PowerShell</h4>
-<p>The following <strong>PowerShell</strong> script demonstrates how to authenticate with the API and retrieve the list of logical
-servers.</p>
-<h5 id="step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</h5>
-<pre><code class="language-powershell"># Define the login endpoint and credentials
+<h4 id="powershell">Powershell</h4>
+<p>Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs
+logiques.</p>
+<h5 id="etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</h5>
+<pre><code class="language-powershell"># Définir l’URL d’authentification et les identifiants
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
 $loginBody = @{
     login = &quot;admin@admin.com&quot;
     password = &quot;password&quot;
 }
 
-# Send the authentication request
+# Envoyer la requête d’authentification
 try {
     $loginResponse = Invoke-RestMethod -Uri $loginUri -Method Post -Body $loginBody -ContentType &quot;application/x-www-form-urlencoded&quot;
     $token = $loginResponse.access_token
-    Write-Host &quot;Access token successfully retrieved.&quot;
+    Write-Host &quot;Jeton d’accès récupéré avec succès.&quot;
 } catch {
-    Write-Error &quot;Authentication failed: $_&quot;
+    Write-Error &quot;Échec de l’authentification : $_&quot;
     return
 }
 </code></pre>
-<h5 id="step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</h5>
-<pre><code class="language-powershell"># Define the endpoint and authorization headers
+<h5 id="etape-2-utilisation-du-jeton-pour-interroger-les-serveurs-logiques">Étape 2 — Utilisation du jeton pour interroger les serveurs logiques</h5>
+<pre><code class="language-powershell"># Définir l’endpoint et les en-têtes d’autorisation
 $endPoint = &quot;logical-servers&quot;
-$apiUri = &quot;http://127.0.0.1:8000/api/$endPoint&quot;
+$apiUri = &quot;https://127.0.0.1:8000/api/$endPoint&quot;
 $headers = @{
     'Authorization' = &quot;Bearer $token&quot;
     'Accept'        = 'application/json'
 }
 
-# Send the GET request
+# Envoyer la requête GET
 try {
     $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
     $servers | Format-Table id, name, operating_system, description
 } catch {
-    Write-Error &quot;Request failed: $_&quot;
+    Write-Error &quot;Échec de la requête : $_&quot;
 }
 </code></pre>
               
             </div>
           </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../import/" class="btn btn-neutral float-left" title="Import"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../apifilters/" class="btn btn-neutral float-right" title="API advanced (filters)">Next <span class="icon icon-circle-arrow-right"></span></a>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Navigation de pied de page">
+        <a href="../import/" class="btn btn-neutral float-left" title="Import"><span class="icon icon-circle-arrow-left"></span> Précédent</a>
+        <a href="../apifilters/" class="btn btn-neutral float-right" title="API advanced (filters)">Suivant <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -625,7 +617,7 @@ try {
       <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
   </div>
 
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Générée avec <a href="https://www.mkdocs.org/">MkDocs</a> avec un <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a> fourni par <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
           
         </div>
@@ -643,18 +635,18 @@ try {
         </span>
     
     
-      <span><a href="../import/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../import/" style="color: #fcfcfc">&laquo; Précédent</a></span>
     
     
-      <span><a href="../apifilters/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../apifilters/" style="color: #fcfcfc">Suivant &raquo;</a></span>
     
   </span>
 </div>
-    <script src="../js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "..";</script>
-    <script src="../js/theme_extra.js"></script>
-    <script src="../js/theme.js"></script>
-      <script src="../search/main.js"></script>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
     <script>
         jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);

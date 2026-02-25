@@ -121,14 +121,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <ul>
-<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../exploration.fr/">Français</a></li>
-</ul>
-<h2 id="exploration-feature">Exploration Feature</h2>
+                <h2 id="exploration-feature">Exploration Feature</h2>
 <p>The <strong>Exploration</strong> tool (<code>Tools → Exploration</code>) allows you to dynamically navigate through the asset relationship
 graph. It reveals dependencies between layers: upward (abstract / business) or downward (concrete / physical).</p>
 <h2 id="1-interface">1. Interface</h2>
-<p><a href="/mercator/images/explorer.en.png"><img src="/mercator/images/explorer.en.png" width="700"></a></p>
+<p><a href="../images/explorer.png"><img src="/mercator/images/explorer.png" width="700"></a></p>
 <table>
 <thead>
 <tr>
@@ -206,10 +203,14 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 <p>⚠️ <strong>Critical point</strong>: the Filter field has a dual effect that is essential to understand before exploring the graph.</p>
 </blockquote>
 <h3 id="21-effect-1-restricting-the-object-dropdown-list">2.1 Effect 1 — Restricting the "Object" dropdown list</h3>
-<p>This is the most intuitive use. By entering a view in the Filter field (e.g. <code>Applications</code>), the "Object" dropdown will only display assets belonging to that view. This avoids having to search for an asset across the entire CMDB.</p>
+<p>This is the most intuitive use. By entering a view in the Filter field (e.g. <code>Applications</code>), the "Object" dropdown will
+only display assets belonging to that view. This avoids having to search for an asset across the entire CMDB.</p>
 <h3 id="22-effect-2-limiting-asset-visibility-in-the-graph-a-common-pitfall">2.2 Effect 2 — Limiting asset visibility in the graph (a common pitfall)</h3>
-<p>This is the least expected effect, and the most frequent source of errors. <strong>The filter does not simply restrict the "Object" list: it also determines which asset types will be displayed in the graph during exploration.</strong></p>
-<p>In practice: if you explore a <code>logical-server</code> with only <code>Logical Infrastructure</code> in the filter, any applications linked to that server will <strong>never</strong> appear in the graph, even if they exist in Mercator and are correctly associated. They are simply excluded because their type is not covered by the active filter.</p>
+<p>This is the least expected effect, and the most frequent source of errors. <strong>The filter does not simply restrict the "
+Object" list: it also determines which asset types will be displayed in the graph during exploration.</strong></p>
+<p>In practice: if you explore a <code>logical-server</code> with only <code>Logical Infrastructure</code> in the filter, any applications linked
+to that server will <strong>never</strong> appear in the graph, even if they exist in Mercator and are correctly associated. They are
+simply excluded because their type is not covered by the active filter.</p>
 <p><strong>Illustrated example:</strong></p>
 <table>
 <thead>
@@ -237,9 +238,9 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 </tr>
 </tbody>
 </table>
-<p><a href="/mercator/images/exploration_filtre_infra.png"><img src="/mercator/images/exploration_filtre_infra.png" width="700"></a>
+<p><a href="../images/exploration_filtre_infra.png"><img src="/mercator/images/exploration_filtre_infra.png" width="700"></a>
 <em>With filter "Logical Infrastructure" only: RH-Solution does not appear.</em></p>
-<p><a href="/mercator/images/exploration_filtre_full.png"><img src="/mercator/images/exploration_filtre_full.png" width="700"></a>
+<p><a href="../images/exploration_filtre_full.png"><img src="/mercator/images/exploration_filtre_full.png" width="700"></a>
 <em>With filters "Applications" + "Logical Infrastructure": RH-Solution and DB-RH-PROD appear.</em></p>
 <h3 id="23-practical-rule-which-filter-should-i-use">2.3 Practical rule: which filter should I use?</h3>
 <table>
@@ -269,7 +270,8 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 </tbody>
 </table>
 <blockquote>
-<p>💡 <strong>Tip</strong>: when in doubt about what you are looking for, always start with an <strong>empty</strong> filter. You can narrow it down afterwards if the graph becomes too dense.</p>
+<p>💡 <strong>Tip</strong>: when in doubt about what you are looking for, always start with an <strong>empty</strong> filter. You can narrow it down
+afterwards if the graph becomes too dense.</p>
 </blockquote>
 <hr />
 <h2 id="3-semantics-of-directional-buttons">3. Semantics of Directional Buttons</h2>

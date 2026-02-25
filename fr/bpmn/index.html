@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/bpmn/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>BPMN 2.0 - Mercator</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "BPMN 2.0";
+        var mkdocs_page_input_path = "bpmn.fr.md";
+        var mkdocs_page_url = "/mercator/fr/bpmn/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../" class="icon icon-home"> Mercator
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Rechercher des documents" aria-label="Rechercher des documents" title="Tapez vos mots clés ici" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navigation">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">BPMN 2.0</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#vue-du-systeme-dinformation">Vue du système d'information</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#conversations-bpmn">Conversations BPMN</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#elements-du-diagramme-bpmn">Éléments du diagramme BPMN</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#evenements-events">Événements (Events)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#activites-activities">Activités (Activities)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#passerelles-gateways">Passerelles (Gateways)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#flux-et-connexions">Flux et connexions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#artefacts">Artefacts</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lanes-couloirs">Lanes (couloirs)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#orientation">Orientation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#association-aux-acteurs">Association aux acteurs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#annotations-bpmn">Annotations BPMN</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#vue-et-navigation">Vue et navigation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#mode-visualisation">Mode visualisation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#acces-depuis-la-cartographie">Accès depuis la cartographie</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conversations-et-sous-processus">Conversations et sous-processus</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#association-de-conversations">Association de conversations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#navigation-entre-diagrammes">Navigation entre diagrammes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#import-et-export">Import et Export</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#format-bpmn-20-xml">Format BPMN 2.0 XML</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#export-svg">Export SVG</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bonnes-pratiques">Bonnes pratiques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#modelisation">Modélisation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#organisation">Organisation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#maintenance">Maintenance</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cas-dusage">Cas d'usage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#analyse-dimpact">Analyse d'impact</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#conformite">Conformité</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#onboarding">Onboarding</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#transformation-digitale">Transformation digitale</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Menu de navigation sur mobile">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Mercator</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../" class="icon icon-home" aria-label="Documents"></a></li>
+      <li class="breadcrumb-item active">BPMN 2.0</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/bpmn.fr.md" class="icon icon-github"> Editer dans GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="module-bpmn-20">Module BPMN 2.0</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Le module BPMN (Business Process Model and Notation) disponible dans la version Enterprise de Mercator
+permet de créer, éditer et visualiser des diagrammes de processus métier selon la norme BPMN 2.0.</p>
+<p>Ce module offre une intégration complète avec la cartographie du système d'information, permettant de relier
+les éléments graphiques BPMN aux entités de Mercator.</p>
+<h2 id="association-avec-la-cartographie-mercator">Association avec la cartographie Mercator</h2>
+<p>Les diagrammes BPMN permettent de modéliser des processus métier en les reliant aux éléments de la cartographie
+Mercator : processus, macro-processus, activités et acteurs.</p>
+<p>Ces liens bidirectionnels entre les diagrammes BPMN et les objets de cartographie offrent une traçabilité complète. Un
+processus Mercator peut être associé à un ou plusieurs diagrammes BPMN qui en détaillent l'exécution, tandis qu'un
+diagramme BPMN peut référencer plusieurs processus, activités ou acteurs de la cartographie.</p>
+<p>Cette intégration facilite la compréhension des flux métier en permettant de naviguer entre la vue cartographique (qui
+fait quoi) et la vue processus (comment c'est fait), tout en maintenant la cohérence des informations au sein de
+l'organisation.</p>
+<h3 id="vue-du-systeme-dinformation">Vue du système d'information</h3>
+<p>Les éléments BPMN s'intègrent aux objets de la vue du système d'information de Mercator selon les correspondances
+suivantes :</p>
+<ul>
+<li><strong>Activités</strong> : Les activités métier de Mercator correspondent aux sous-processus BPMN de haut niveau</li>
+<li><strong>Opérations</strong> : Les opérations détaillées peuvent être modélisées comme des sous-processus BPMN spécifiques</li>
+<li><strong>Tâches</strong> : Les tâches BPMN sont directement liées aux tâches opérationnelles de la cartographie</li>
+<li><strong>Acteurs</strong> : Les rôles et acteurs sont représentés dans les couloirs (lanes/pools), permettant d'identifier
+  clairement les responsabilités</li>
+<li><strong>Informations</strong> : Les objets de données BPMN peuvent être associés aux informations de la vue écosystème</li>
+</ul>
+<p><a href="../../images/bpmn-1.png"><img src="/mercator/images/bpmn-1.png" width="500"></a></p>
+<p>Cette intégration maintient une cohérence entre la modélisation des processus métier (BPMN) et
+la cartographie technique du SI. Elle permet de :</p>
+<ul>
+<li>Tracer les flux de données à travers l'organisation</li>
+<li>Identifier les dépendances entre la vue métier et l'infrastructure technique</li>
+<li>Aligner les processus métier avec les composants techniques qui les supportent</li>
+</ul>
+<h3 id="conversations-bpmn">Conversations BPMN</h3>
+<p>Les diagrammes BPMN dans Mercator supportent les éléments de conversation définis dans la spécification BPMN 2.0. Les
+conversation links permettent de représenter les échanges de messages entre participants (pools), matérialisés
+visuellement par des lignes doubles parallèles.</p>
+<p>Les conversations regroupent logiquement plusieurs conversation links pour modéliser un ensemble cohérent d'échanges
+entre participants. Elles peuvent être représentées soit comme des conversations standards (hexagone simple) pour les
+interactions basiques, soit comme des sub-conversations (hexagone double bordure) lorsqu'elles encapsulent des échanges
+plus complexes nécessitant une décomposition.</p>
+<p><a href="../../images/bpmn-2.png"><img src="/mercator/images/bpmn-2.png" width="400"></a></p>
+<p>Cette notation permet de documenter les protocoles de communication entre différents acteurs métier ou systèmes, en
+complément de la modélisation des processus internes à chaque participant. Les conversations BPMN offrent ainsi une vue
+architecturale des interactions inter-organisationnelles ou inter-départementales.</p>
+<h2 id="elements-du-diagramme-bpmn">Éléments du diagramme BPMN</h2>
+<p>Le module BPMN propose une palette complète d'éléments conformes à la norme BPMN 2.0 :</p>
+<h3 id="evenements-events">Événements (Events)</h3>
+<ul>
+<li><strong>Événement de début</strong> : Point de départ d'un processus</li>
+<li><strong>Événement intermédiaire</strong> : Événement survenant durant le processus</li>
+<li><strong>Événement de fin</strong> : Point de terminaison d'un processus</li>
+</ul>
+<p><a href="../../images/bpmn-events.png"><img src="/mercator/images/bpmn-events.png" width="300"></a></p>
+<h3 id="activites-activities">Activités (Activities)</h3>
+<ul>
+<li><strong>Tâche (Task)</strong> : Unité de travail atomique</li>
+<li><strong>Sous-processus (Sub-Process)</strong> : Processus décomposable en tâches</li>
+<li><strong>Tâche utilisateur</strong> : Tâche nécessitant une interaction humaine</li>
+<li><strong>Tâche de service</strong> : Tâche automatisée</li>
+<li><strong>Tâche de script</strong> : Exécution de code</li>
+</ul>
+<p><a href="../../images/bpmn-tasks.png"><img src="/mercator/images/bpmn-tasks.png" width="500"></a></p>
+<h3 id="passerelles-gateways">Passerelles (Gateways)</h3>
+<ul>
+<li><strong>Passerelle exclusive</strong> : Choix d'un seul chemin parmi plusieurs</li>
+<li><strong>Passerelle parallèle</strong> : Exécution simultanée de plusieurs chemins</li>
+<li><strong>Passerelle inclusive</strong> : Activation d'un ou plusieurs chemins</li>
+<li><strong>Passerelle événementielle</strong> : Attente d'événements multiples</li>
+</ul>
+<p><a href="../../images/bpmn-gateways.png"><img src="/mercator/images/bpmn-gateways.png" width="400"></a></p>
+<h3 id="flux-et-connexions">Flux et connexions</h3>
+<ul>
+<li><strong>Flux de séquence</strong> : Définit l'ordre d'exécution des activités dans un processus.</li>
+<li><strong>Flux de message</strong> : Représente la communication entre différents participants (pools) d'un processus.</li>
+<li><strong>Flux conditionnel</strong> : Flux de séquence accompagné d'une condition d'activation.</li>
+<li><strong>Flux par défaut</strong> : Flux de séquence utilisé lorsqu'aucune condition des autres flux sortants n'est satisfaite.</li>
+<li><strong>Association</strong> : Lien non directionnel reliant des artefacts (annotations, objets de données) aux éléments du
+  processus.
+-</li>
+</ul>
+<p><a href="../../images/bpmn-flows.png"><img src="/mercator/images/bpmn-flows.png" width="400"></a></p>
+<h3 id="artefacts">Artefacts</h3>
+<ul>
+<li><strong>Objet de données (Data Object)</strong> : Représentation d'informations</li>
+<li><strong>Stockage de données (Data Store)</strong> : Lieu de persistance des données</li>
+</ul>
+<p><a href="../../images/bpmn-data.png"><img src="/mercator/images/bpmn-data.png" width="300"></a></p>
+<ul>
+<li><strong>Annotation</strong> : Commentaires et notes explicatives</li>
+</ul>
+<p><a href="../../images/bpmn-annotation.png"><img src="/mercator/images/bpmn-annotation.png" width="150"></a></p>
+<h2 id="lanes-couloirs">Lanes (couloirs)</h2>
+<p>Les lanes permettent d'organiser les responsabilités dans un processus :</p>
+<h3 id="orientation">Orientation</h3>
+<ul>
+<li><strong>Lanes horizontales</strong> : Organisation traditionnelle, les acteurs sont listés verticalement</li>
+<li><strong>Lanes verticales</strong> : Organisation alternative, les acteurs sont listés horizontalement</li>
+</ul>
+<h3 id="association-aux-acteurs">Association aux acteurs</h3>
+<p>Chaque lane peut être associée à un acteur de la cartographie Mercator :</p>
+<ul>
+<li><strong>Entités organisationnelles</strong> : Départements, services, équipes</li>
+<li><strong>Rôles</strong> : Fonctions et responsabilités</li>
+<li><strong>Acteurs externes</strong> : Partenaires, fournisseurs, clients</li>
+</ul>
+<p>L'association des lanes aux acteurs permet d'identifier clairement les responsabilités et
+de générer des matrices RACI automatiquement.</p>
+<h2 id="annotations-bpmn">Annotations BPMN</h2>
+<p>Les annotations permettent d'enrichir la documentation du processus :</p>
+<ul>
+<li><strong>Notes explicatives</strong> : Clarifications sur des étapes complexes</li>
+<li><strong>Règles métier</strong> : Conditions et contraintes applicables</li>
+<li><strong>Références</strong> : Liens vers des documents externes ou normes</li>
+<li><strong>Commentaires</strong> : Remarques pour la maintenance et l'amélioration</li>
+</ul>
+<p>Les annotations sont positionnées librement sur le diagramme et reliées aux éléments concernés par des associations.</p>
+<h2 id="vue-et-navigation">Vue et navigation</h2>
+<h3 id="mode-visualisation">Mode visualisation</h3>
+<p>Le mode visualisation offre une expérience interactive :</p>
+<ul>
+<li><strong>Navigation par clic</strong> : Cliquer sur un élément BPMN associé redirige vers la fiche correspondante dans la
+  cartographie</li>
+<li><strong>Informations contextuelles</strong> : Survol des éléments pour afficher les détails</li>
+<li><strong>Zoom et déplacement</strong> : Navigation fluide dans les diagrammes complexes</li>
+<li><strong>Vue d'ensemble</strong> : Minimap pour se repérer dans les grands processus</li>
+</ul>
+<p>Cette intégration bidirectionnelle entre BPMN et cartographie facilite l'analyse d'impact et la traçabilité.</p>
+<h3 id="acces-depuis-la-cartographie">Accès depuis la cartographie</h3>
+<p>Depuis les fiches processus, activités et tâches de Mercator, un bouton permet d'accéder directement au
+diagramme BPMN associé.</p>
+<h2 id="conversations-et-sous-processus">Conversations et sous-processus</h2>
+<h3 id="association-de-conversations">Association de conversations</h3>
+<p>Les flux de message BPMN représentent des conversations pouvant pointer vers :</p>
+<ul>
+<li><strong>Autres diagrammes BPMN</strong> : Processus collaboratifs et échanges inter-processus</li>
+<li><strong>Processus externes</strong> : Interactions avec des systèmes tiers</li>
+<li><strong>Sous-processus détaillés</strong> : Navigation hiérarchique dans les processus complexes</li>
+</ul>
+<p>Cette fonctionnalité permet de modéliser des architectures de processus distribuées tout en maintenant
+la lisibilité de chaque diagramme.</p>
+<h3 id="navigation-entre-diagrammes">Navigation entre diagrammes</h3>
+<p>Un clic sur un flux de message associé à un autre diagramme BPMN ouvre ce dernier,
+permettant une exploration intuitive des processus interconnectés.</p>
+<h2 id="import-et-export">Import et Export</h2>
+<h3 id="format-bpmn-20-xml">Format BPMN 2.0 XML</h3>
+<p><strong>Import</strong> :</p>
+<ul>
+<li>Support complet de la norme BPMN 2.0</li>
+<li>Préservation des waypoints et du positionnement</li>
+<li>Récupération des associations existantes si les identifiants correspondent</li>
+</ul>
+<p><strong>Export</strong> :</p>
+<ul>
+<li>Génération de fichiers BPMN 2.0 conformes</li>
+<li>Conservation des métadonnées et associations Mercator</li>
+<li>Compatible avec les outils BPMN standard (Camunda, Bonita, etc.)</li>
+</ul>
+<h3 id="export-svg">Export SVG</h3>
+<p>L'export en SVG permet :</p>
+<ul>
+<li><strong>Documentation</strong> : Insertion dans des documents Word, PDF</li>
+<li><strong>Présentation</strong> : Qualité vectorielle pour les slides</li>
+<li><strong>Publication</strong> : Intégration dans des intranets et wikis</li>
+<li><strong>Archivage</strong> : Format ouvert et pérenne</li>
+</ul>
+<p>Le SVG généré préserve la mise en forme, les couleurs et la lisibilité du diagramme original.</p>
+<h2 id="bonnes-pratiques">Bonnes pratiques</h2>
+<h3 id="modelisation">Modélisation</h3>
+<ol>
+<li><strong>Simplicité</strong> : Privilégier la clarté à l'exhaustivité</li>
+<li><strong>Cohérence</strong> : Utiliser les mêmes conventions de nommage que la cartographie</li>
+<li><strong>Association systématique</strong> : Lier tous les éléments BPMN aux entités Mercator</li>
+<li><strong>Documentation</strong> : Utiliser les annotations pour les règles métier complexes</li>
+</ol>
+<h3 id="organisation">Organisation</h3>
+<ol>
+<li><strong>Découpage</strong> : Créer des sous-processus pour les workflows &gt;20 éléments</li>
+<li><strong>Lanes</strong> : Une lane par acteur principal, éviter la multiplication excessive</li>
+<li><strong>Données</strong> : Positionner les data objects près des activités qui les manipulent</li>
+<li><strong>Navigation</strong> : Utiliser les conversations pour lier les processus interconnectés</li>
+</ol>
+<h3 id="maintenance">Maintenance</h3>
+<ol>
+<li><strong>Versioning</strong> : Exporter régulièrement en BPMN 2.0 pour historisation</li>
+<li><strong>Révision</strong> : Synchroniser les modifications avec la cartographie</li>
+<li><strong>Validation</strong> : Vérifier que les associations restent valides après réorganisation</li>
+<li><strong>Archivage</strong> : Conserver les exports SVG des versions majeures</li>
+</ol>
+<h2 id="cas-dusage">Cas d'usage</h2>
+<h3 id="analyse-dimpact">Analyse d'impact</h3>
+<p>Identifier rapidement les systèmes et acteurs impactés par un changement de processus grâce aux associations.</p>
+<h3 id="conformite">Conformité</h3>
+<p>Démontrer la traçabilité entre processus métier et contrôles techniques pour les audits RGPD, ISO 27001, etc.</p>
+<h3 id="onboarding">Onboarding</h3>
+<p>Faciliter la compréhension du SI par les nouveaux collaborateurs via des diagrammes visuels reliés à la cartographie
+détaillée.</p>
+<h3 id="transformation-digitale">Transformation digitale</h3>
+<p>Cartographier l'état actuel (AS-IS) et modéliser l'état cible (TO-BE) avec comparaison visuelle.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Navigation de pied de page">
+        <a href="../application/" class="btn btn-neutral float-left" title="Application"><span class="icon icon-circle-arrow-left"></span> Précédent</a>
+        <a href="../reports/" class="btn btn-neutral float-right" title="Reports">Suivant <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
+  </div>
+
+  Générée avec <a href="https://www.mkdocs.org/">MkDocs</a> avec un <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a> fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dbarzin/mercator" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../application/" style="color: #fcfcfc">&laquo; Précédent</a></span>
+    
+    
+      <span><a href="../reports/" style="color: #fcfcfc">Suivant &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
