@@ -24,7 +24,48 @@ graph. It reveals dependencies between layers: upward (abstract / business) or d
 
 ---
 
-## 2. Semantics of Directional Buttons
+## 2. Understanding the Filter Field
+
+> ⚠️ **Critical point**: the Filter field has a dual effect that is essential to understand before exploring the graph.
+
+### 2.1 Effect 1 — Restricting the "Object" dropdown list
+
+This is the most intuitive use. By entering a view in the Filter field (e.g. `Applications`), the "Object" dropdown will only display assets belonging to that view. This avoids having to search for an asset across the entire CMDB.
+
+### 2.2 Effect 2 — Limiting asset visibility in the graph (a common pitfall)
+
+This is the least expected effect, and the most frequent source of errors. **The filter does not simply restrict the "Object" list: it also determines which asset types will be displayed in the graph during exploration.**
+
+In practice: if you explore a `logical-server` with only `Logical Infrastructure` in the filter, any applications linked to that server will **never** appear in the graph, even if they exist in Mercator and are correctly associated. They are simply excluded because their type is not covered by the active filter.
+
+**Illustrated example:**
+
+| Active filter | Explored asset | Result in the graph |
+|---|---|---|
+| `Logical Infrastructure` | `LOGICAL-SERVER-RH-11` | Visible: `NETWORK-CORE-11`, `SUBNET-CORE-11`, `SUBNET-VIRT-111` — but not `RH-Solution` |
+| `Applications` + `Logical Infrastructure` | `LOGICAL-SERVER-RH-11` | Also visible: `RH-Solution` and `DB-RH-PROD` |
+| *(empty)* | Any asset | All linked assets are visible, across all layers |
+
+[<img src="/mercator/images/exploration_filtre_infra.png" width="700">](/mercator/images/exploration_filtre_infra.png)
+*With filter "Logical Infrastructure" only: RH-Solution does not appear.*
+
+[<img src="/mercator/images/exploration_filtre_full.png" width="700">](/mercator/images/exploration_filtre_full.png)
+*With filters "Applications" + "Logical Infrastructure": RH-Solution and DB-RH-PROD appear.*
+
+### 2.3 Practical rule: which filter should I use?
+
+| Objective | Recommended filter |
+|---|---|
+| Quickly find an asset in a specific view | Enter only the targeted view (e.g. `Applications`) |
+| Cross-layer exploration (application + infrastructure) | Enter **all** relevant views, or leave empty |
+| Full impact analysis (all layers) | **Leave the filter empty** to exclude nothing |
+| Exploration limited to a single layer (e.g. network only) | Enter only that layer's view |
+
+> 💡 **Tip**: when in doubt about what you are looking for, always start with an **empty** filter. You can narrow it down afterwards if the graph becomes too dense.
+
+---
+
+## 3. Semantics of Directional Buttons
 
 The direction is relative to the **Mercator layer hierarchy**, aligned with ArchiMate:
 
@@ -46,7 +87,7 @@ The direction is relative to the **Mercator layer hierarchy**, aligned with Arch
 
 ---
 
-## 3. Step-by-Step Usage Procedure
+## 4. Step-by-Step Usage Procedure
 
 ```
 Step 1 ─ Enter a filter (optional)
@@ -82,9 +123,9 @@ Step 8 ─ Iterate (optional)
 
 ---
 
-## 4. Exploration Examples
+## 5. Exploration Examples
 
-### 4.1 Business Impact of an Application
+### 5.1 Business Impact of an Application
 
 > **Context:** Which business processes and actors depend on `HR-Solution`?
 
@@ -108,7 +149,7 @@ You obtain the list of all processes and actors that functionally depend on this
 
 ---
 
-### 4.2 Infrastructure Supporting an Application
+### 5.2 Infrastructure Supporting an Application
 
 > **Context:** What physical hardware does `HR-Solution` run on? (for DRP, ITIL impact analysis, CMDB)
 
@@ -135,7 +176,7 @@ You obtain the complete chain from the application down to the physical site.
 
 ---
 
-### 4.3 Full Impact Analysis (Before Maintenance / Incident)
+### 5.3 Full Impact Analysis (Before Maintenance / Incident)
 
 > **Context:** Full view of ALL dependencies of `HR-Solution` before maintenance.
 
@@ -162,7 +203,7 @@ Ideal for **architecture dossiers** and **impact analyses**.
 
 ---
 
-### 4.4 Direction Selection by Use Case
+### 5.4 Direction Selection by Use Case
 
 | Use Case                              | Direction | Layers Traversed                               |
 |---------------------------------------|-----------|------------------------------------------------|
@@ -176,7 +217,7 @@ Ideal for **architecture dossiers** and **impact analyses**.
 
 ---
 
-## 5. BPMN — ArchiMate — Mercator Mapping
+## 6. BPMN — ArchiMate — Mercator Mapping
 
 | Mercator Asset               | BPMN 2.0          | ArchiMate 3.1         | TOGAF                 |
 |------------------------------|-------------------|-----------------------|-----------------------|
@@ -206,9 +247,9 @@ Ideal for **architecture dossiers** and **impact analyses**.
 
 ---
 
-## 6. Best Practices
+## 7. Best Practices
 
-### 6.1 Exploration Recommendations
+### 7.1 Exploration Recommendations
 
 **Start with level 1 or 2**
 For highly connected assets (e.g., a central application), starting with 1 or 2 levels avoids an unreadable graph.
@@ -221,7 +262,7 @@ The Filter field restricts available objects to a specific view, avoiding the ne
 Enable the Physical toggle only when you want to visualize physical network links (WAN/LAN/MAN). When disabled, the
 exploration stays at the logical level.
 
-### 6.2 Asset Entry Recommendations
+### 7.2 Asset Entry Recommendations
 
 - Follow Mercator numbering: create assets from the physical layer (600+) before associating them to logical layers.
 - Physical containment relationships must be entered in order: **Site → Building → Bay → Physical Server**.
@@ -231,7 +272,7 @@ exploration stays at the logical level.
 - `external-connected-entities` (540) can be linked to the business layer (partners) or the network layer (connections)
   depending on context.
 
-### 6.3 Use Cases by User Profile
+### 7.3 Use Cases by User Profile
 
 | Profile                  | Preferred Direction | Typical Use Case                                                |
 |--------------------------|---------------------|-----------------------------------------------------------------|

@@ -50,7 +50,7 @@ Concrètement : si vous explorez un `logical-server` avec uniquement `Infrastruc
 [<img src="/mercator/images/exploration_filtre_infra.fr.png" width="700">](/mercator/images/exploration_filtre_infra.fr.png)
 *Avec filtre "Infrastructure logique" uniquement : RH-Solution n'apparaît pas.*
 
-[<img src="/mercator/images/exploration_filtre_complet.fr.png" width="700">](/mercator/images/exploration_filtre_complet.fr.png)
+[<img src="/mercator/images/exploration_filtre_full.fr.png" width="700">](/mercator/images/exploration_filtre_full.fr.png)
 *Avec filtres "Applications" + "Infrastructure logique" : RH-Solution et DB-RH-PROD apparaissent.*
 
 ### 2.3 Règle pratique : quel filtre choisir ?
