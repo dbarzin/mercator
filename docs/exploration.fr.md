@@ -25,7 +25,48 @@ physique).
 
 ---
 
-## 2. Sémantique des boutons directionnels
+## 2. Comprendre le champ Filtre
+
+> ⚠️ **Point critique** : le champ Filtre a un double effet qu'il est essentiel de comprendre avant d'explorer le graphe.
+
+### 2.1 Effet 1 — Restreindre la liste déroulante "Objet"
+
+C'est l'usage le plus intuitif. En saisissant une vue dans le champ Filtre (ex : `Applications`), la liste déroulante "Objet" n'affiche plus que les assets appartenant à cette vue. Cela évite de chercher un asset dans l'intégralité de la CMDB.
+
+### 2.2 Effet 2 — Limiter la visibilité des assets dans le graphe (piège fréquent)
+
+C'est l'effet le moins attendu, et la source d'erreurs la plus courante. **Le filtre ne se contente pas de restreindre la liste "Objet" : il conditionne également les types d'assets qui s'afficheront dans le graphe lors de l'exploration.**
+
+Concrètement : si vous explorez un `logical-server` avec uniquement `Infrastructure logique` dans le filtre, les applications liées à ce serveur n'apparaîtront **jamais** dans le graphe, même si elles existent dans Mercator et sont correctement associées. Elles sont simplement exclues car leur type n'est pas couvert par le filtre actif.
+
+**Exemple illustré :**
+
+| Filtre actif             | Asset exploré           | Résultat dans le graphe                                                      |
+|--------------------------|-------------------------|------------------------------------------------------------------------------|
+| `Infrastructure logique` | `LOGICAL-SERVER-RH-11`  | On voit : `NETWORK-CORE-11`, `SUBNET-CORE-11`, `SUBNET-VIRT-111` — mais pas `RH-Solution` |
+| `Applications` + `Infrastructure logique` | `LOGICAL-SERVER-RH-11` | On voit en plus : `RH-Solution` et `DB-RH-PROD`                |
+| *(vide)*                 | N'importe quel asset    | Tous les assets liés sont visibles, toutes couches confondues                |
+
+[<img src="/mercator/images/exploration_filtre_infra.fr.png" width="700">](/mercator/images/exploration_filtre_infra.fr.png)
+*Avec filtre "Infrastructure logique" uniquement : RH-Solution n'apparaît pas.*
+
+[<img src="/mercator/images/exploration_filtre_complet.fr.png" width="700">](/mercator/images/exploration_filtre_complet.fr.png)
+*Avec filtres "Applications" + "Infrastructure logique" : RH-Solution et DB-RH-PROD apparaissent.*
+
+### 2.3 Règle pratique : quel filtre choisir ?
+
+| Objectif                                                        | Filtre recommandé                                         |
+|-----------------------------------------------------------------|-----------------------------------------------------------|
+| Trouver rapidement un asset dans une vue précise                | Saisir uniquement la vue ciblée (ex : `Applications`)     |
+| Exploration cross-couches (application + infrastructure)        | Saisir **toutes** les vues concernées, ou laisser vide    |
+| Analyse d'impact complète (toutes couches)                      | **Laisser le filtre vide** pour ne rien exclure           |
+| Exploration limitée à une seule couche (ex : réseau uniquement) | Saisir uniquement la vue de cette couche                  |
+
+> 💡 **Conseil** : en cas de doute sur ce que l'on cherche, commencez toujours avec le filtre **vide**. Vous pouvez le restreindre ensuite si le graphe devient trop dense.
+
+---
+
+## 3. Sémantique des boutons directionnels
 
 La direction est relative à la **hiérarchie des couches Mercator**, alignée sur ArchiMate :
 
@@ -47,7 +88,7 @@ La direction est relative à la **hiérarchie des couches Mercator**, alignée s
 
 ---
 
-## 3. Procédure d'utilisation pas à pas
+## 4. Procédure d'utilisation pas à pas
 
 ```
 Étape 1 ─ Saisir un filtre (optionnel)
@@ -83,9 +124,9 @@ La direction est relative à la **hiérarchie des couches Mercator**, alignée s
 
 ---
 
-## 4. Exemples d'Exploration
+## 5. Exemples d'Exploration
 
-### 4.1 Impact métier d'une application
+### 5.1 Impact métier d'une application
 
 > **Contexte :** Quels processus métier et acteurs dépendent de `RH-Solution` ?
 
@@ -109,7 +150,7 @@ Vous obtenez la liste de tous les processus et acteurs qui dépendent fonctionne
 
 ---
 
-### 4.2 Infrastructure supportant une application
+### 5.2 Infrastructure supportant une application
 
 > **Contexte :** Sur quel matériel physique repose `RH-Solution` ? (pour PRA, analyse d'impact ITIL, CMDB)
 
@@ -136,7 +177,7 @@ Vous obtenez la chaîne complète depuis l'application jusqu'au site physique.
 
 ---
 
-### 4.3 Analyse d'impact complète (avant maintenance / incident)
+### 5.3 Analyse d'impact complète (avant maintenance / incident)
 
 > **Contexte :** Vue complète de TOUTES les dépendances de `RH-Solution` avant une maintenance.
 
@@ -163,7 +204,7 @@ Idéal pour les **dossiers d'architecture** et les **analyses d'impact**.
 
 ---
 
-### 4.4 Sélection de la direction selon le cas d'usage
+### 5.4 Sélection de la direction selon le cas d'usage
 
 | Cas d'usage                             | Direction  | Couches traversées                                |
 |-----------------------------------------|------------|---------------------------------------------------|
@@ -177,7 +218,7 @@ Idéal pour les **dossiers d'architecture** et les **analyses d'impact**.
 
 ---
 
-## 5. Correspondance BPMN — ArchiMate — Mercator
+## 6. Correspondance BPMN — ArchiMate — Mercator
 
 | Asset Mercator               | BPMN 2.0           | ArchiMate 3.1         | TOGAF                 |
 |------------------------------|--------------------|-----------------------|-----------------------|
@@ -207,23 +248,22 @@ Idéal pour les **dossiers d'architecture** et les **analyses d'impact**.
 
 ---
 
-## 6. Bonnes Pratiques
+## 7. Bonnes Pratiques
 
-### 6.1 Recommandations pour l'exploration
+### 7.1 Recommandations pour l'exploration
 
 **Commencer par le niveau 1 ou 2**
 Pour les assets très connectés (ex : application centrale), démarrer avec 1 ou 2 niveaux évite un graphe illisible.
 Augmenter ensuite progressivement.
 
-**Utiliser le filtre pour cibler les vues**
-Le champ Filtre restreint les objets disponibles à une vue spécifique. Cela évite de chercher un asset dans toute la
-CMDB.
+**Utiliser le filtre avec discernement**
+Comme expliqué au chapitre 2, le filtre conditionne non seulement la liste des objets disponibles, mais aussi les assets visibles dans le graphe. Pour une exploration cross-couches, pensez à ajouter toutes les vues pertinentes ou à laisser le filtre vide.
 
 **Mode Physique**
 Activer le toggle Physique uniquement quand vous souhaitez visualiser les liaisons réseau physiques (WAN/LAN/MAN).
 Désactivé, l'exploration reste au niveau logique.
 
-### 6.2 Recommandations pour la saisie des assets
+### 7.2 Recommandations pour la saisie des assets
 
 - Respecter la numérotation Mercator : créer les assets de la couche physique (600+) avant de les associer aux couches
   logiques.
@@ -235,7 +275,7 @@ Désactivé, l'exploration reste au niveau logique.
 - Les `external-connected-entities` (540) peuvent être rattachées à la couche métier (partenaires) ou réseau (
   connexions) selon le contexte.
 
-### 6.3 Cas d'usage par profil utilisateur
+### 7.3 Cas d'usage par profil utilisateur
 
 | Profil                      | Direction privilégiée | Cas d'usage typique                                          |
 |-----------------------------|-----------------------|--------------------------------------------------------------|
