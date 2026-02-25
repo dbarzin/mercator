@@ -42,22 +42,6 @@ if [ "${DB_CONNECTION}" = "mysql" ] || [ "${DB_CONNECTION}" = "mariadb" ]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Passport: clean legacy v12 tables before migrating
-# (idempotent — les tables peuvent ne pas exister sur une fresh install)
-# ---------------------------------------------------------------------------
-echo "🔧 Cleaning legacy Passport v12 tables (if any)..."
-php artisan tinker --execute="
-  Schema::dropIfExists('oauth_personal_access_clients');
-  Schema::dropIfExists('oauth_access_tokens');
-  Schema::dropIfExists('oauth_refresh_tokens');
-  Schema::dropIfExists('oauth_auth_codes');
-  Schema::dropIfExists('oauth_clients');
-  Schema::dropIfExists('oauth_device_codes');
-  DB::table('migrations')->where('migration', 'like', '%oauth%')->delete();
-  DB::table('migrations')->where('migration', 'like', '%passport%')->delete();
-" 2>/dev/null || true
-
-# ---------------------------------------------------------------------------
 # Migrations AVANT passport:install
 # passport:install a besoin que les tables oauth_ soient créées par migrate
 # ---------------------------------------------------------------------------
@@ -73,9 +57,13 @@ fi
 # Passport v13: generate encryption keys + personal access client
 # Doit être lancé APRES migrate (les tables oauth_ doivent exister)
 # ---------------------------------------------------------------------------
-echo "🔑 Installing Passport..."
-php artisan passport:install --force
-php artisan passport:client --personal --provider=users --no-interaction || true
+echo "🔑 Generating Passport encryption keys..."
+php artisan passport:keys --force
+
+echo "🔑 Creating personal access client..."
+php artisan passport:client --personal --provider=users --no-interaction
+
+echo "🔑 Passport installation complete"
 
 # ---------------------------------------------------------------------------
 # Production optimizations
@@ -90,8 +78,12 @@ fi
 # ---------------------------------------------------------------------------
 # Storage link (safe to run multiple times)
 # ---------------------------------------------------------------------------
+echo "✅ Add storage link"
 php artisan storage:link --force 2>/dev/null || true
 
+# ---------------------------------------------------------------------------
+# Mercator initialization complete
+# ---------------------------------------------------------------------------
 echo "✅ Mercator initialization complete — starting services"
 
 exec "$@"
