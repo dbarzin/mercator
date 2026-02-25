@@ -50,7 +50,7 @@ Des notifications d'expiration des certificats peuvent être envoyés à des pé
 
 L'écran de configuration est accessible via le menu "Configuration" -> "Certificats".
 
-[<img src="/mercator/images/certificates.png" width="600">](/mercator/images/certificates.png)
+[<img src="images/certificates.png" width="600">](images/certificates.png)
 
 Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification spécifiée.
 
@@ -64,7 +64,7 @@ rechecrhe est faite localement.
 
 L'écran de configuration est accessible via le menu "Configuration" -> "CVE"
 
-[<img src="/mercator/images/cve.png" width="600">](/mercator/images/cve.png)
+[<img src="images/cve.png" width="600">](images/cve.png)
 
 Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au
 provider de CVE.

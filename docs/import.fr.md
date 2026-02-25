@@ -6,7 +6,7 @@ Cette interface permet d’**importer** et d’**exporter** des données de la c
 
 La page d'import / export des données est accessible via le menu "Configration" -> "Import".
 
-[<img src="/mercator/images/import.fr.png" width="700">](/mercator/images/import.fr.png)
+[<img src="images/import.fr.png" width="700">](images/import.fr.png)
 
 ### Fonctionnalités disponibles
 

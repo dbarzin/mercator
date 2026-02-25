@@ -6,7 +6,7 @@ physique).
 
 ## 1. Interface
 
-[<img src="/mercator/images/explorer.fr.png" width="700">](/mercator/images/explorer.fr.png)
+[<img src="images/explorer.fr.png" width="700">](images/explorer.fr.png)
 
 | Élément UI       | Type             | Rôle                                                         |
 |------------------|------------------|--------------------------------------------------------------|
@@ -47,10 +47,10 @@ Concrètement : si vous explorez un `logical-server` avec uniquement `Infrastruc
 | `Applications` + `Infrastructure logique` | `LOGICAL-SERVER-RH-11` | On voit en plus : `RH-Solution` et `DB-RH-PROD`                |
 | *(vide)*                 | N'importe quel asset    | Tous les assets liés sont visibles, toutes couches confondues                |
 
-[<img src="/mercator/images/exploration_filtre_infra.fr.png" width="700">](/mercator/images/exploration_filtre_infra.fr.png)
+[<img src="images/exploration_filtre_infra.fr.png" width="700">](images/exploration_filtre_infra.fr.png)
 *Avec filtre "Infrastructure logique" uniquement : RH-Solution n'apparaît pas.*
 
-[<img src="/mercator/images/exploration_filtre_full.fr.png" width="700">](/mercator/images/exploration_filtre_full.fr.png)
+[<img src="images/exploration_filtre_full.fr.png" width="700">](images/exploration_filtre_full.fr.png)
 *Avec filtres "Applications" + "Infrastructure logique" : RH-Solution et DB-RH-PROD apparaissent.*
 
 ### 2.3 Règle pratique : quel filtre choisir ?

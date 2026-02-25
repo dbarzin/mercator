@@ -34,7 +34,7 @@ The physical infrastructure view describes the physical equipment that makes up 
 
 The maturity levels represent the percentage of completeness of the mapping. It is an indicator of the effort remaining to be provided to achieve complete mapping.
 
-[<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
+[![maturity.png](images/maturity.png)](images/maturity.png)
 
 This maturity is divided into three levels:
 

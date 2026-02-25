@@ -48,7 +48,7 @@ Certificate expiry notifications can be sent at set times.
 
 The configuration screen can be accessed via the "Configuration" -> "Certificates" menu.
 
-[<img src="/mercator/images/certificates.png" width="600">](/mercator/images/certificates.png)
+[![certificates.png](images/certificates.png)](images/certificates.png)
 
 The "Test" button sends a test e-mail to the specified notification address.
 
@@ -56,12 +56,12 @@ The "Test" button sends a test e-mail to the specified notification address.
 
 Vulnerability detection notifications based on application names and CPE can be sent at set times.
 
-CVEs are retrieved using the [Vulnerability Lookup](github.com/vulnerability-lookup/vulnerability-lookup) project. The
-search is performed locally.
+CVEs are retrieved using the [Vulnerability Lookup](https://github.com/vulnerability-lookup/vulnerability-lookup)
+project. The search is performed locally.
 
 The configuration screen can be accessed via the "Configuration" -> "CVE" menu.
 
-[<img src="/mercator/images/cve.png" width="600">](/mercator/images/cve.png)
+[![cve.png](images/cve.png)](images/cve.png)
 
 The "Test Mail" button sends a test mail to the specified notification address and tests access to the CVE provider.
 
