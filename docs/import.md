@@ -6,7 +6,7 @@ This interface allows you to import and export information system mapping data v
 
 The data import/export page is accessible via the "Configuration" -> "Import" menu.
 
-[<img src="images/import.png" width="700">](images/import.png)
+[<img src="/mercator/images/import.png" width="700">](images/import.png)
 
 ### Available Features
 

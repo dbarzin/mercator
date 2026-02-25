@@ -1,6 +1,6 @@
 ## Data model
 
-[<img src="images/model.png" width="700">](images/model.png)
+[<img src="/mercator/images/model.png" width="700">](images/model.png)
 
 ### GDPR view
 
@@ -904,7 +904,7 @@ In the app, an user can be defined as administrator of an application from an ap
 
 The logical infrastructure view corresponds to the logical distribution of the network.
 
-[<img src="images/logical.png" width="400">](images/logical.png)
+[<img src="/mercator/images/logical.png" width="400">](images/logical.png)
 
 It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that
 handles the traffic.
@@ -1380,7 +1380,7 @@ In the app, a VLAN can be linked to a logic switch from these two objects.
 
 The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
 
-[<img src="images/physical.png" width="700">](images/physical.png)
+[<img src="/mercator/images/physical.png" width="700">](images/physical.png)
 
 This view corresponds to the geographical distribution of network equipment within the various sites.
 

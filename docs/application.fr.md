@@ -1,6 +1,6 @@
 ## Application
 
-[<img src="images/homepage.fr.png" width="600">](images/homepage.fr.png)
+[<img src="/mercator/fr/images/homepage.png" width="600">](images/homepage.fr.png)
 
 ### Page principale
 
@@ -8,15 +8,15 @@ La page principale est divisée en trois parties :
 
 * Les niveaux de conformité
 
-   [<img src="images/maturity.png" width="600">](images/maturity.png)
+  [<img src="/mercator/images/maturity.png" width="600">](images/maturity.png)
 
 * La répartition des objets de la cartographie par domaine
 
-   [<img src="images/repartition.fr.png" width="600">](images/repartition.fr.png)
+  [<img src="/mercator/fr/images/repartition.png" width="600">](images/repartition.fr.png)
 
 * La carte proportionnelle globale des objets de la cartographie
 
-   [<img src="images/treemap.fr.png" width="600">](images/treemap.fr.png)
+  [<img src="/mercator/fr/images/treemap.png" width="600">](images/treemap.fr.png)
 
 Chaque élément est sélectionnable et donne accès à la liste des objets de la cartographie sélectionnés.
 
@@ -37,11 +37,10 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
 
 Il est possible d'explorer la cartographie. Cette fonction est disponible via le menu "documentation".
 
-
 - Le menu déroulant filtre permet de limiter l'exploration à un ou plusieurs domaines.
 - Le champ "Objet" permet de sélectionner un élément de la cartographie et de l'ajouter à l'exploration.
 - Le bouton "Supprimer" permet de supprimer un élément de l'exploration de la cartographie.
 
-   [<img src="images/explore.fr.png" width="600">](images/explore.fr.png)
+  [<img src="/mercator/fr/images/explore.png" width="600">](images/explore.fr.png)
 
 Un double click sur un objet affiche toutes ses connexions.
