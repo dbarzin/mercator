@@ -51,7 +51,7 @@ This maturity is divided into three levels:
 
 [<img src="/mercator/images/maturity.png" width="600">](images/maturity.png)
 
-### Meaning of Fields Marked with #
+### Meaning of Fields Marked with cardinal
 
 Some field labels are followed by an **#** symbol in orange. These markers indicate that the field
 contributes to the calculation of the cartography maturity level, according to the relevant level:

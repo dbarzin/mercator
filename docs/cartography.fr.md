@@ -54,7 +54,7 @@ Cette maturité est divisée en trois niveaux :
 
 [<img src="/mercator/images/maturity.png" width="600">](images/maturity.png)
 
-### Signification des champs marqués d'un #
+### Signification des champs marqués d'un cardinal
 
 Certains libellés de champs sont suivis d'un symbole **#** de couleur orange. Ces marqueurs indiquent que le champ
 contribue au calcul du niveau de maturité de la cartographie, selon le niveau concerné :
