@@ -1425,7 +1425,7 @@ DROP TABLE IF EXISTS `oauth_clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_clients` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` varchar(36) NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `secret` varchar(100) DEFAULT NULL,
