@@ -49,7 +49,7 @@ This maturity is divided into three levels:
 - **Level 3 fine granularity**, which contains the information useful for managing the security of the information
   system.
 
-[<img src="/mercator/images/maturity.png" width="600">](images/maturity.png)
+[<img src="/mercator/images/maturity.png" width="600" alt="Cartography maturity levels">](images/maturity.png)
 
 ### Meaning of Fields Marked with cardinal
 
