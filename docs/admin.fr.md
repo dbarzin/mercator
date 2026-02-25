@@ -59,8 +59,9 @@ Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification s
 Des notifications de détection de CVE sur base du nom des applications et des CPE peuvent être envoyées à des périodes
 définies.
 
-Les CVE sont récupérées avec le projet [Vulnerability Lookup](github.com/vulnerability-lookup/vulnerability-lookup). La
-rechecrhe est faite localement.
+Les CVE sont récupérées avec
+leprojet [Vulnerability Lookup](https://github.com/vulnerability-lookup/vulnerability-lookup).
+La recherche est faite localement.
 
 L'écran de configuration est accessible via le menu "Configuration" -> "CVE"
 

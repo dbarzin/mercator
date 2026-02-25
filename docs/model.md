@@ -1809,7 +1809,7 @@ Source and destination devices can be:
 | Logical switch           |   ✅    |      ✅      |
 | Logical router           |   ✅    |      ✅      |
 
-#### WAN
+#### WANs
 
 WANs (Wide Area Networks) are computer networks linking equipment over long distances. They generally interconnect MANs
 or LANs.
