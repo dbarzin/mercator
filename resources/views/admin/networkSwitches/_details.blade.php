@@ -1,3 +1,7 @@
+@props([
+    'networkSwitch',
+    'withLink' => false
+])
 <table class="table table-bordered table-striped table-report" id="{{ $networkSwitch->getUID() }}">
     <tbody>
         <tr>
@@ -5,7 +9,11 @@
                 {{ trans('cruds.networkSwitch.fields.name') }}
             </th>
             <td>
-                {{ $networkSwitch->name }}
+            @if ($withLink)
+            <a href="{{ route('admin.network-switches.show', $networkSwitch->id) }}">{{ $networkSwitch->name }}</a>
+            @else
+            {{ $networkSwitch->name }}
+            @endif
             </td>
         </tr>
         <tr>

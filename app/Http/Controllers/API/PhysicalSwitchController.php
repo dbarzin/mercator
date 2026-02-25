@@ -28,8 +28,9 @@ class PhysicalSwitchController extends APIController
     {
         abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var PhysicalSwitch $physicalSwitch */
         $physicalSwitch = PhysicalSwitch::query()->create($request->all());
+
+        $physicalSwitch->networkSwitches()->sync($request->input('network_switches', []));
 
         return response()->json($physicalSwitch, 201);
     }
@@ -37,6 +38,8 @@ class PhysicalSwitchController extends APIController
     public function show(PhysicalSwitch $physicalSwitch)
     {
         abort_if(Gate::denies('physical_switch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $physicalSwitch['network_switches'] = $physicalSwitch->networkSwitches()->pluck('id');
 
         return new JsonResource($physicalSwitch);
     }
@@ -46,6 +49,9 @@ class PhysicalSwitchController extends APIController
         abort_if(Gate::denies('physical_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSwitch->update($request->all());
+
+        if ($request->has('network_switches'))
+            $physicalSwitch->networkSwitches()->sync($request->input('network_switches', []));
 
         return response()->json();
     }

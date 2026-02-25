@@ -40,9 +40,10 @@ class NetworkSwitchController extends APIController
     {
         abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var NetworkSwitch $networkSwitch */
         $networkSwitch = NetworkSwitch::query()->create($request->all());
-        $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
+
+        $networkSwitch->physicalSwitches()->sync($request->input('physical_switches', []));
+
         $networkSwitch->vlans()->sync($request->input('vlans', []));
 
         return response()->json($networkSwitch, 201);
@@ -56,6 +57,8 @@ class NetworkSwitchController extends APIController
     public function show(NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('network_switch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $networkSwitch['physical_switches'] = $networkSwitch->physicalSwitches()->pluck('id');
 
         return new JsonResource($networkSwitch);
     }
@@ -72,13 +75,11 @@ class NetworkSwitchController extends APIController
 
         $networkSwitch->update($request->all());
 
-        if ($request->has('physicalSwitches')) {
-            $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
-        }
+        if ($request->has('physical_switches'))
+            $networkSwitch->physicalSwitches()->sync($request->input('physical_switches', []));
 
-        if ($request->has('vlans')) {
+        if ($request->has('vlans'))
             $networkSwitch->vlans()->sync($request->input('vlans', []));
-        }
 
         return response()->json();
     }
@@ -101,7 +102,7 @@ class NetworkSwitchController extends APIController
     {
         abort_if(Gate::denies('network_switch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        NetworkSwitch::whereIn('id', $request->input('ids', []))->delete();
+        NetworkSwitch::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
@@ -122,19 +123,19 @@ class NetworkSwitchController extends APIController
         $fillable           = $networkSwitchModel->getFillable();
 
         foreach ($data['items'] as $item) {
-            $physicalSwitches = $item['physicalSwitches'] ?? null;
+            $physicalSwitches = $item['physical_switches'] ?? null;
             $vlans            = $item['vlans'] ?? null;
 
             // Only model columns, relations are excluded
             $attributes = collect($item)
-                ->except(['physicalSwitches', 'vlans'])
+                ->except(['physical_switches', 'vlans'])
                 ->only($fillable)
                 ->toArray();
 
             /** @var NetworkSwitch $networkSwitch */
             $networkSwitch = NetworkSwitch::query()->create($attributes);
 
-            if (array_key_exists('physicalSwitches', $item)) {
+            if (array_key_exists('physical_switches', $item)) {
                 $networkSwitch->physicalSwitches()->sync($physicalSwitches ?? []);
             }
 
@@ -167,7 +168,7 @@ class NetworkSwitchController extends APIController
 
         foreach ($data['items'] as $rawItem) {
             $id               = $rawItem['id'];
-            $physicalSwitches = $rawItem['physicalSwitches'] ?? null;
+            $physicalSwitches = $rawItem['physical_switches'] ?? null;
             $vlans            = $rawItem['vlans'] ?? null;
 
             /** @var NetworkSwitch $networkSwitch */
@@ -175,7 +176,7 @@ class NetworkSwitchController extends APIController
 
             // Only model columns (no id or relations)
             $attributes = collect($rawItem)
-                ->except(['id', 'physicalSwitches', 'vlans'])
+                ->except(['id', 'physical_switches', 'vlans'])
                 ->only($fillable)
                 ->toArray();
 
@@ -183,7 +184,7 @@ class NetworkSwitchController extends APIController
                 $networkSwitch->update($attributes);
             }
 
-            if (array_key_exists('physicalSwitches', $rawItem)) {
+            if (array_key_exists('physical_switches', $rawItem)) {
                 $networkSwitch->physicalSwitches()->sync($physicalSwitches ?? []);
             }
 
