@@ -1,3 +1,7 @@
+@props([
+    'storageDevice',
+    'withLink' => false
+])
 <table class="table table-bordered table-striped table-report" id="{{ $storageDevice->getUID() }}">
     <tbody>
         <tr>
@@ -5,7 +9,11 @@
                 {{ trans('cruds.storageDevice.fields.name') }}
             </th>
             <td width="40%" colspan="2">
+            @if ($withLink)
+            <a href="{{ route('admin.storage-devices.show', $storageDevice->id) }}">{{ $storageDevice->name }}</a>
+            @else
                 {{ $storageDevice->name }}
+            @endif
             </td>
             <th width="10%">
                 {{ trans('cruds.storageDevice.fields.type') }}
