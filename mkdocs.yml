@@ -28,6 +28,7 @@ plugins:
           nav_translations:
             Introduction: "Introduction"
             Mapping: "Mapping"
+            Maturity: "Maturity"
             Application: "Application"
             BPMN 2.0: "BPMN 2.0"
             Reports: "Reports"
@@ -46,6 +47,7 @@ plugins:
           nav_translations:
             Introduction: "Introduction"
             Mapping: "Cartographie"
+            Maturity: "Maturité"
             Application: "Application"
             BPMN 2.0: "BPMN 2.0"
             Reports: "Rapports"
@@ -63,6 +65,7 @@ nav:
   - Introduction: index.md
   - Mapping: cartography.md
   - Application: application.md
+  - Maturity: maturity.md
   - BPMN 2.0: bpmn.md
   - Reports: reports.md
   - Use cases: usecases.md
