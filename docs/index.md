@@ -1,4 +1,4 @@
-🇫🇷 [Lire en français](/mercator/fr/) &nbsp;|&nbsp; 🇬🇧 [Read in English](/)
+🇫🇷 [Lire en français](/mercator/fr/) &nbsp;|&nbsp; 🇬🇧 [Read in English](/mercator)
 
 ## Introduction
 
