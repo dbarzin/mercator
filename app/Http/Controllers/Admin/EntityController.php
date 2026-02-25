@@ -22,7 +22,6 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         $entities = Entity::query()
             ->with('processes')
         // $entities = Entity::with('processes', 'applications', 'databases')

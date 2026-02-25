@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // Active les sessions partagées entre web et API
-        $middleware->statefulApi();
+        // $middleware->statefulApi();
 
         // Middleware globaux
         $middleware->use([
@@ -28,24 +28,29 @@ return Application::configure(basePath: dirname(__DIR__))
         // Middlewares spécifiques au groupe 'web'
         $middleware->web(append: [
             \App\Http\Middleware\ForceXForwardedProto::class,
-            \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            // \App\Http\Middleware\EncryptCookies::class,
+            // \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            // \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UseCachedAuthUser::class,
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\LicenseWarning::class,
             \App\Http\Middleware\SecurityHeaders::class,
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class, // ✅
         ]);
 
+
         $middleware->api(prepend: [
+            \App\Http\Middleware\EncryptCookies::class,      // ✅ déchiffre mercator_session et laravel_token
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class, // ✅ charge la session existante
             "throttle:api",
         ]);
 
         $middleware->api(append: [
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UseCachedAuthUser::class,
         ]);
 
