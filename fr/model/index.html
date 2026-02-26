@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie / Vues</a>
                 </li>
               </ul>
               <ul>
@@ -52,15 +52,19 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturité</a>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Niveaux de maturité</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">Module BPMN 2.0</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Fonctionnalité Exploration</a>
                 </li>
               </ul>
               <ul>
@@ -216,19 +220,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Guide de Configuration de Mercator</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Interface Import / Export de Données</a>
                 </li>
               </ul>
               <ul>
@@ -236,7 +236,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API avancée (filtres)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API avancées (filtres)</a>
                 </li>
               </ul>
               <ul>
@@ -267,7 +267,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="modele-de-donnees">Modèle de données</h2>
+                <h1 id="modele-de-donnees">Modèle de données</h1>
+<p>🇬🇧 <a href="/mercator/model">Read in English</a></p>
 <p><a href="../images/model.png"><img src="/mercator/fr/images/model.png" width="700"></a></p>
 <h3 id="vue-du-rgpd">Vue du RGPD</h3>
 <p>La vue du RGPD contient l'ensemble des données nécessaires au maintien du registre des traitements et fait le lien avec
@@ -3084,6 +3085,11 @@ Un document peut être rattaché à une entité extérieure connectée depuis un
 <td style="text-align: left;">Adresse IP du commutateur</td>
 </tr>
 <tr>
+<td style="text-align: left;">physical_switches</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste des IDs des switches physiques liés</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -4749,6 +4755,11 @@ dans l'application pour la table <em>workstations</em> ont été regroupés dans
 </tbody>
 </table>
 <h4 id="infrastructures-de-stockage">Infrastructures de stockage</h4>
+<pre><code class="language-markdown">***NOTE***: Les infrastructures de stockage sont conservées pour la rétrocompatibilité, mais cette table n'est pas maintenue.
+ On peut remplacer cet asset par:
+- Un serveur logique
+- Un serveur physique 
+</code></pre>
 <p>Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en
 réseau (NAS), réseau de stockage (SAN), disque dur…</p>
 <table>
@@ -5773,7 +5784,7 @@ Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les o
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Navigation de pied de page">
         <a href="../usecases/" class="btn btn-neutral float-left" title="Cas d'usage"><span class="icon icon-circle-arrow-left"></span> Précédent</a>
-        <a href="../exploration/" class="btn btn-neutral float-right" title="Exploration">Suivant <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../admin/" class="btn btn-neutral float-right" title="Administration">Suivant <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -5804,7 +5815,7 @@ Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les o
       <span><a href="../usecases/" style="color: #fcfcfc">&laquo; Précédent</a></span>
     
     
-      <span><a href="../exploration/" style="color: #fcfcfc">Suivant &raquo;</a></span>
+      <span><a href="../admin/" style="color: #fcfcfc">Suivant &raquo;</a></span>
     
   </span>
 </div>

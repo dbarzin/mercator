@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/exploration/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Exploration - Mercator</title>
+    <title>Fonctionnalité Exploration - Mercator</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Exploration";
+        var mkdocs_page_name = "Fonctionnalit\u00e9 Exploration";
         var mkdocs_page_input_path = "exploration.fr.md";
         var mkdocs_page_url = "/mercator/fr/exploration/";
       </script>
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie / Vues</a>
                 </li>
               </ul>
               <ul>
@@ -52,15 +52,67 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturité</a>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Niveaux de maturité</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">Module BPMN 2.0</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Fonctionnalité Exploration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-interface">1. Interface</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-comprendre-le-champ-filtre">2. Comprendre le champ Filtre</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#21-effet-1-restreindre-la-liste-deroulante-objet">2.1 Effet 1 — Restreindre la liste déroulante "Objet"</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#22-effet-2-limiter-la-visibilite-des-assets-dans-le-graphe-piege-frequent">2.2 Effet 2 — Limiter la visibilité des assets dans le graphe (piège fréquent)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#23-regle-pratique-quel-filtre-choisir">2.3 Règle pratique : quel filtre choisir ?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-semantique-des-boutons-directionnels">3. Sémantique des boutons directionnels</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-procedure-dutilisation-pas-a-pas">4. Procédure d'utilisation pas à pas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-exemples-dexploration">5. Exemples d'Exploration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#51-impact-metier-dune-application">5.1 Impact métier d'une application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#52-infrastructure-supportant-une-application">5.2 Infrastructure supportant une application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#53-analyse-dimpact-complete-avant-maintenance-incident">5.3 Analyse d'impact complète (avant maintenance / incident)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#54-selection-de-la-direction-selon-le-cas-dusage">5.4 Sélection de la direction selon le cas d'usage</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-correspondance-bpmn-archimate-mercator">6. Correspondance BPMN — ArchiMate — Mercator</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#relations-archimate-dans-mercator">Relations ArchiMate dans Mercator</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-bonnes-pratiques">7. Bonnes Pratiques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#71-recommandations-pour-lexploration">7.1 Recommandations pour l'exploration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#72-recommandations-pour-la-saisie-des-assets">7.2 Recommandations pour la saisie des assets</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#73-cas-dusage-par-profil-utilisateur">7.3 Cas d'usage par profil utilisateur</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">Références</a>
+    </li>
+    </ul>
                 </li>
               </ul>
               <ul>
@@ -71,22 +123,16 @@
                 <li class="toctree-l1"><a class="reference internal" href="../model/">Modèle de données</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Exploration</a>
-    <ul class="current">
-    </ul>
-                </li>
-              </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Guide de Configuration de Mercator</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Interface Import / Export de Données</a>
                 </li>
               </ul>
               <ul>
@@ -94,7 +140,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API avancée (filtres)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API avancées (filtres)</a>
                 </li>
               </ul>
               <ul>
@@ -115,7 +161,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../" class="icon icon-home" aria-label="Documents"></a></li>
-      <li class="breadcrumb-item active">Exploration</li>
+      <li class="breadcrumb-item active">Fonctionnalité Exploration</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/exploration.fr.md" class="icon icon-github"> Editer dans GitHub</a>
     </li>
@@ -125,7 +171,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="fonctionnalite-exploration">Fonctionnalité Exploration</h2>
+                <h1 id="fonctionnalite-exploration">Fonctionnalité Exploration</h1>
+<p>🇬🇧 <a href="/mercator/exploration">Read in English</a></p>
 <p>L'outil <strong>Exploration</strong> (<code>Outils → Exploration</code>) permet de naviguer dynamiquement dans le graphe de relations entre les
 assets. Il révèle les dépendances entre couches : vers le <strong>haut</strong> (abstrait / métier) ou vers le <strong>bas</strong> (concret /
 physique).</p>
@@ -725,8 +772,8 @@ Désactivé, l'exploration reste au niveau logique.</p>
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Navigation de pied de page">
-        <a href="../model/" class="btn btn-neutral float-left" title="Modèle de données"><span class="icon icon-circle-arrow-left"></span> Précédent</a>
-        <a href="../admin/" class="btn btn-neutral float-right" title="Administration">Suivant <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../reports/" class="btn btn-neutral float-left" title="Rapports"><span class="icon icon-circle-arrow-left"></span> Précédent</a>
+        <a href="../usecases/" class="btn btn-neutral float-right" title="Cas d'usage">Suivant <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -754,10 +801,10 @@ Désactivé, l'exploration reste au niveau logique.</p>
         </span>
     
     
-      <span><a href="../model/" style="color: #fcfcfc">&laquo; Précédent</a></span>
+      <span><a href="../reports/" style="color: #fcfcfc">&laquo; Précédent</a></span>
     
     
-      <span><a href="../admin/" style="color: #fcfcfc">Suivant &raquo;</a></span>
+      <span><a href="../usecases/" style="color: #fcfcfc">Suivant &raquo;</a></span>
     
   </span>
 </div>
