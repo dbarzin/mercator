@@ -1,6 +1,6 @@
-🇫🇷 [Lire en français](/mercator/fr/) &nbsp;|&nbsp; 🇬🇧 [Read in English](/mercator)
+# Introduction
 
-## Introduction
+🇫🇷 [Lire en français](/mercator/fr/)
 
 Mercator is a Web application for managing the mapping of an information system as described in the
 [Mapping the Information System Guide](https://messervices.cyber.gouv.fr/guides/en-mapping-information-system)

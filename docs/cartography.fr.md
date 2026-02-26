@@ -1,4 +1,6 @@
-## Vues
+# Cartographie / Vues
+
+🇬🇧 [Read in English](/mercator/cartography)
 
 La cartographie est composée de trois vues allant progressivement du métier vers la technique, elles-mêmes déclinées en
 vues :

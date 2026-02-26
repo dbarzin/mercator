@@ -1,4 +1,6 @@
-## Rapports
+# Rapports
+
+🇬🇧 [Read in English](/mercator/reports)
 
 ### Rapport de cartographie
 

@@ -1,4 +1,6 @@
-## Data model
+# Data model
+
+🇫🇷 [Lire en français](/mercator/fr/model)
 
 [<img src="/mercator/images/model.png" width="700">](images/model.png)
 
@@ -1035,6 +1037,7 @@ Network switches are the components that manage connections between the various 
 | name        | varchar(255) | Name of the switch        |
 | description | longtext     | Description of the switch |
 | ip          | varchar(255) | IP address of the switch  |
+| physical_switches | List int [,] | IDs List of Physical switched attached |
 | created_at  | timestamp    | Date of creation          |
 | updated_at  | timestamp    | Date of update            |
 | deleted_at  | timestamp    | Date of deletion          |
@@ -1565,6 +1568,13 @@ been gathered in the following table:
 The "vendor", "product" and "version" fields are not used and therefore are absent of the app.
 
 #### Storage infrastructures
+
+```markdown
+ ***NOTE***: This storage infrastructures table is kept for legacy compatibility, but it is not maintained anymore.
+ You can replace this asset by :
+- A Logical Server
+- A Physical Server
+```
 
 Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area
 network (SAN), hard disk...

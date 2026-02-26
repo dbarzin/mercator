@@ -1,4 +1,6 @@
-## References
+# References
+
+🇫🇷 [Lire en français](/mercator/fr/references)
 
 The references used in this documentation are :
 

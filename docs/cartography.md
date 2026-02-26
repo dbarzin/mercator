@@ -1,4 +1,6 @@
-## Views
+# Views /Cartograpgy
+
+🇫🇷 [Lire en français](/mercator/fr/cartography)
 
 The cartography is made up of three views progressively moving from business to technical, themselves broken down into
 views:
