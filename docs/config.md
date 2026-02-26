@@ -1,4 +1,6 @@
-# **Mercator Configuration Guide**
+# Mercator Configuration Guide
+
+🇫🇷 [Lire en français](/mercator/fr/config)
 
 This document describes all configuration options available in Mercator, including LDAP integration, Active Directory
 nested group support, mail settings, caching, and optional features.

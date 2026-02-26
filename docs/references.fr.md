@@ -1,4 +1,6 @@
-## Références
+# Références
+
+🇬🇧 [Read in English](/mercator/references)
 
 Les références utilisées dans cette documentation sont :
 

@@ -1,4 +1,6 @@
-## Administration
+# Administration
+
+🇬🇧 [Read in English](/mercator/admin)
 
 ### Gestion des utilisateurs
 

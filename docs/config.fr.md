@@ -1,4 +1,6 @@
-# **Guide de Configuration de Mercator**
+# Guide de Configuration de Mercator
+
+🇬🇧 [Read in English](/mercator/config)
 
 Ce document décrit l’ensemble des options de configuration disponibles dans Mercator, notamment l’intégration LDAP, la
 prise en charge des groupes imbriqués pour Active Directory, la configuration du mail, le cache et les fonctionnalités

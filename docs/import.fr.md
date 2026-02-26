@@ -1,4 +1,6 @@
-## Interface Import / Export de Données
+# Interface Import / Export de Données
+
+🇬🇧 [Read in English](/mercator/import)
 
 Cette interface permet d’**importer** et d’**exporter** des données de la cartographie du système d'information via des
 feuilles de calcul.

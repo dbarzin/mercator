@@ -1,5 +1,7 @@
 # Module BPMN 2.0
 
+🇬🇧 [Read in English](/mercator/bpmn)
+
 ## Introduction
 
 Le module BPMN (Business Process Model and Notation) disponible dans la version Enterprise de Mercator

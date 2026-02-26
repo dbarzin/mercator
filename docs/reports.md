@@ -1,4 +1,6 @@
-## Reports
+# Reports
+
+🇫🇷 [Lire en français](/mercator/fr/reports)
 
 ### Mapping report
 

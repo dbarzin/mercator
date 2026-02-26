@@ -1,4 +1,6 @@
-## API
+# API
+
+🇫🇷 [Lire en français](/mercator/fr/api)
 
 Cartography can be modified or updated via a REST API.
 
