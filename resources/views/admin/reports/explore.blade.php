@@ -543,7 +543,7 @@ Physique :
                     const attrFilter = getAttrFilter();
                     const matchAttr = attrFilter.length === 0 ||
                         (targetNode.type === 'applications' &&
-                            attrFilter.some(a => (targetNode.attributes || '').split(',').map(s => s.trim()).includes(a)));
+                            attrFilter.some(a => (targetNode.attributes || '').split(' ').map(s => s.trim()).includes(a)));
 
                     if (
                         (
@@ -703,7 +703,7 @@ Physique :
                 let matchAttr = true;
                 if (attrFilter.length > 0) {
                     if (value.type === 'applications') {
-                        const nodeAttrs = (value.attributes || '').split(',').map(s => s.trim());
+                        const nodeAttrs = (value.attributes || '').split(' ').map(s => s.trim());
                         matchAttr = attrFilter.some(a => nodeAttrs.includes(a));
                     } else {
                         // Les non-applications sont masquees quand un attribut est selectionne
