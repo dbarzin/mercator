@@ -88,6 +88,27 @@ class ExplorerController extends Controller
             'edges' => $edges,
         ], 200, [], JSON_UNESCAPED_UNICODE);
     }
+    public function getAttributes(): \Illuminate\Http\JsonResponse
+    {
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $rows = DB::table('m_applications')
+            ->select('attributes')
+            ->whereNull('deleted_at')
+            ->whereNotNull('attributes')
+            ->where('attributes', '!=', '')
+            ->get();
+
+        // Sépare les attributs par virgule et déduplique les valeurs
+        $attributes = collect($rows)
+            ->flatMap(fn($r) => array_map('trim', explode(',', $r->attributes)))
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values();
+
+        return response()->json($attributes);
+    }
 
     /**
      * Build node and edge collections representing the system graph across all views.
@@ -1007,7 +1028,7 @@ class ExplorerController extends Controller
     private function buildApplications(): void
     {
         $applications = DB::table('m_applications')
-            ->select('id', 'name', 'icon_id', 'application_block_id')
+            ->select('id', 'name', 'icon_id', 'application_block_id', 'attributes')
             ->whereNull('deleted_at')
             ->get();
 
@@ -1017,7 +1038,9 @@ class ExplorerController extends Controller
                 $this->formatId(MApplication::$prefix, $app->id),
                 $app->name,
                 $this->getIcon($app->icon_id, '/images/application.png'),
-                'applications', 310
+                'applications', 310,
+                null,
+                $app->attributes
             );
 
             if ($app->application_block_id !== null) {
@@ -1446,7 +1469,7 @@ class ExplorerController extends Controller
     /**
      * Helper methods
      */
-    private function addNode(int $vue, string $id, string $label, string $image, string $type, int $order, ?string $title = null): void
+    private function addNode(int $vue, string $id, string $label, string $image, string $type, int $order, ?string $title = null, ?string $attributes = null): void
     {
         $this->nodes[] = [
             'vue' => $vue,
@@ -1456,6 +1479,7 @@ class ExplorerController extends Controller
             'type' => $type,
             'order' => $order,
             'title' => $title,
+            'attributes' => $attributes,
         ];
     }
 

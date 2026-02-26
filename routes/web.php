@@ -350,7 +350,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
 
     Route::get('/reports/explore/data', [Admin\ExplorerController::class, 'getGraphData'])
         ->name('reports.explore.data');
-
+    Route::get('/reports/explore/attributes', [Admin\ExplorerController::class, 'getAttributes'])
+        ->name('reports.explore.attributes');
 
     // Maturity levels
     Route::get('report/maturity1', [Admin\HomeController::class, 'maturity1'])->name('report.maturity1');
