@@ -88,10 +88,12 @@ class ExplorerController extends Controller
             'edges' => $edges,
         ], 200, [], JSON_UNESCAPED_UNICODE);
     }
+
     public function getAttributes(): \Illuminate\Http\JsonResponse
     {
         abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // TODO : Généraliser à d'autres objets
         $rows = DB::table('m_applications')
             ->select('attributes')
             ->whereNull('deleted_at')
@@ -99,9 +101,9 @@ class ExplorerController extends Controller
             ->where('attributes', '!=', '')
             ->get();
 
-        // Sépare les attributs par virgule et déduplique les valeurs
+        // Sépare les attributs par espace et déduplique les valeurs
         $attributes = collect($rows)
-            ->flatMap(fn($r) => array_map('trim', explode(',', $r->attributes)))
+            ->flatMap(fn($r) => array_map('trim', explode(' ', $r->attributes)))
             ->filter()
             ->unique()
             ->sort()

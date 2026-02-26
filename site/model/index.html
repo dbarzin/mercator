@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Views /Cartograpgy</a>
                 </li>
               </ul>
               <ul>
@@ -52,11 +52,19 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturity Levels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0 Module</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration Feature</a>
                 </li>
               </ul>
               <ul>
@@ -214,19 +222,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Mercator Configuration Guide</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Data Import/Export Interface</a>
                 </li>
               </ul>
               <ul>
@@ -234,7 +238,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API Advanced (filters)</a>
                 </li>
               </ul>
               <ul>
@@ -265,7 +269,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="data-model">Data model</h2>
+                <h1 id="data-model">Data model</h1>
+<p>🇫🇷 <a href="/mercator/fr/model">Lire en français</a></p>
 <p><a href="../images/model.png"><img src="/mercator/images/model.png" width="700"></a></p>
 <h3 id="gdpr-view">GDPR view</h3>
 <p>The GDPR view contains all the data required to maintain the data processing register, and provides a link with the
@@ -3230,6 +3235,11 @@ A document can be attached to a connected external entity from a connected exter
 <td style="text-align: left;">IP address of the switch</td>
 </tr>
 <tr>
+<td style="text-align: left;">physical_switches</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of Physical switched attached</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -4886,6 +4896,11 @@ been gathered in the following table:</p>
 </table>
 <p>The "vendor", "product" and "version" fields are not used and therefore are absent of the app.</p>
 <h4 id="storage-infrastructures">Storage infrastructures</h4>
+<pre><code class="language-markdown"> ***NOTE***: This storage infrastructures table is kept for legacy compatibility, but it is not maintained anymore.
+ You can replace this asset by :
+- A Logical Server
+- A Physical Server
+</code></pre>
 <p>Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area
 network (SAN), hard disk...</p>
 <table>
@@ -5890,7 +5905,7 @@ A WAN can be linked to a LAN from a WAN object.</p>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../usecases/" class="btn btn-neutral float-left" title="Use cases"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../exploration/" class="btn btn-neutral float-right" title="Exploration">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../admin/" class="btn btn-neutral float-right" title="Administration">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -5921,7 +5936,7 @@ A WAN can be linked to a LAN from a WAN object.</p>
       <span><a href="../usecases/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../exploration/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../admin/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

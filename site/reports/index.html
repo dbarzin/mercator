@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Views /Cartograpgy</a>
                 </li>
               </ul>
               <ul>
@@ -52,7 +52,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturity Levels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0 Module</a>
                 </li>
               </ul>
               <ul class="current">
@@ -84,9 +88,11 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#compliance">Compliance</a>
-    </li>
     </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration Feature</a>
                 </li>
               </ul>
               <ul>
@@ -98,19 +104,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Mercator Configuration Guide</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Data Import/Export Interface</a>
                 </li>
               </ul>
               <ul>
@@ -118,7 +120,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API Advanced (filters)</a>
                 </li>
               </ul>
               <ul>
@@ -149,7 +151,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="reports">Reports</h2>
+                <h1 id="reports">Reports</h1>
+<p>🇫🇷 <a href="/mercator/fr/reports">Lire en français</a></p>
 <h3 id="mapping-report">Mapping report</h3>
 <p>The cartography report contains all the objects making up the cartography and the links between them.</p>
 <p><a href="../images/report.png"><img alt="report.png" src="../images/report.png" /></a></p>
@@ -189,310 +192,12 @@ actually present in the corresponding premises, sites and bays.</p>
 <p>This list is used to audit changes made to the mapping.</p>
 <p>A map that never changes is not up-to-date. This report identifies the changes (creations, deletions and modifications)
 made to the cartography by object type over the course of a year.</p>
-<h3 id="compliance">Compliance</h3>
-<p>The calculation of conformity levels for each mapping object is based on the presence of the following elements:</p>
-<table>
-<thead>
-<tr>
-<th>Object</th>
-<th>Level</th>
-<th>Required elements</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Ecosystem</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Entities</td>
-<td>1</td>
-<td>Description, security level, point of contact, at least one process</td>
-</tr>
-<tr>
-<td>Relationships</td>
-<td>1</td>
-<td>Description, type</td>
-</tr>
-<tr>
-<td>Relationships</td>
-<td>2</td>
-<td>Importance</td>
-</tr>
-<tr>
-<td><strong>Business</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Macro-processes</td>
-<td>2</td>
-<td>Description, io_elements, security levels</td>
-</tr>
-<tr>
-<td>Macro-processes</td>
-<td>3</td>
-<td>Responsible</td>
-</tr>
-<tr>
-<td>Process</td>
-<td>1</td>
-<td>Description, input-output, responsible</td>
-</tr>
-<tr>
-<td>Process</td>
-<td>2</td>
-<td>Macro-processes, security requirements</td>
-</tr>
-<tr>
-<td>Activities</td>
-<td>2</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Operations</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Operations</td>
-<td>2</td>
-<td>Actors</td>
-</tr>
-<tr>
-<td>Operations</td>
-<td>3</td>
-<td>Tasks</td>
-</tr>
-<tr>
-<td>Tasks</td>
-<td>3</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Actor</td>
-<td>2</td>
-<td>Contact, nature, type</td>
-</tr>
-<tr>
-<td>Information</td>
-<td>1</td>
-<td>Description, owner, administrator, storage</td>
-</tr>
-<tr>
-<td>Information</td>
-<td>2</td>
-<td>Security Requirements, Sensitivity</td>
-</tr>
-<tr>
-<td><strong>Information system</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Application block</td>
-<td>2</td>
-<td>Description, responsible, applications</td>
-</tr>
-<tr>
-<td>Applications</td>
-<td>1</td>
-<td>Description, technology, type, users, process</td>
-</tr>
-<tr>
-<td>Applications</td>
-<td>2</td>
-<td>Responsible, security levels</td>
-</tr>
-<tr>
-<td>Application Services</td>
-<td>2</td>
-<td>Description, applications</td>
-</tr>
-<tr>
-<td>Application Modules</td>
-<td>2</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Database</td>
-<td>1</td>
-<td>Description, type, responsible entity, responsible person</td>
-</tr>
-<tr>
-<td>Database</td>
-<td>2</td>
-<td>Security requirements</td>
-</tr>
-<tr>
-<td>Flows</td>
-<td>1</td>
-<td>Description, source, destination</td>
-</tr>
-<tr>
-<td><strong>Administration</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Zones</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Directories</td>
-<td>1</td>
-<td>Description, solution, administration area</td>
-</tr>
-<tr>
-<td>Forest</td>
-<td>1</td>
-<td>Description, administration area</td>
-</tr>
-<tr>
-<td>Domains</td>
-<td>1</td>
-<td>Description, domain controller, number of users, number of machines, inter-domain relationship</td>
-</tr>
-<tr>
-<td><strong>Logical</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Networks</td>
-<td>1</td>
-<td>Description, manager, security manager, security requirements</td>
-</tr>
-<tr>
-<td>Subnets</td>
-<td>1</td>
-<td>Description, address, default gateway, IP allocation type, DMZ, WiFi, VLAN</td>
-</tr>
-<tr>
-<td>Gateways</td>
-<td>1</td>
-<td>Description, authentication, IP range</td>
-</tr>
-<tr>
-<td>Connected external devices</td>
-<td>2</td>
-<td>Type, contacts</td>
-</tr>
-<tr>
-<td>Switches</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Routers</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Security devices</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Clusters</td>
-<td>1</td>
-<td>Description, type</td>
-</tr>
-<tr>
-<td>Logical servers</td>
-<td>1</td>
-<td>Description, OS, environment, IP address, applications, physical servers or clusters</td>
-</tr>
-<tr>
-<td>VLans</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Certificates</td>
-<td>2</td>
-<td>Description, Type, validity start date, validity end date, applications or logical server</td>
-</tr>
-<tr>
-<td><strong>Physical infrastructure</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Sites</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Buildings</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Bays</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Physical servers</td>
-<td>1</td>
-<td>Description, configuration, site, building, responsible</td>
-</tr>
-<tr>
-<td>Workstations</td>
-<td>1</td>
-<td>Description, site, building</td>
-</tr>
-<tr>
-<td>Telephones</td>
-<td>1</td>
-<td>Description, site, building</td>
-</tr>
-<tr>
-<td>Storage</td>
-<td>1</td>
-<td>Description, site, building</td>
-</tr>
-<tr>
-<td>Peripherals</td>
-<td>1</td>
-<td>Description, site, building, responsible</td>
-</tr>
-<tr>
-<td>Physical switches</td>
-<td>1</td>
-<td>Description, type, site, building</td>
-</tr>
-<tr>
-<td>Physical routers</td>
-<td>1</td>
-<td>Description, type, site, building</td>
-</tr>
-<tr>
-<td>WiFi terminals</td>
-<td>1</td>
-<td>Description, type, site, building</td>
-</tr>
-<tr>
-<td>Physical security devices</td>
-<td>1</td>
-<td>Description, type, site, building</td>
-</tr>
-<tr>
-<td>LANs</td>
-<td>1</td>
-<td>Description</td>
-</tr>
-</tbody>
-</table>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../bpmn/" class="btn btn-neutral float-left" title="BPMN 2.0"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../usecases/" class="btn btn-neutral float-right" title="Use cases">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../bpmn/" class="btn btn-neutral float-left" title="BPMN 2.0 Module"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../exploration/" class="btn btn-neutral float-right" title="Exploration Feature">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -523,7 +228,7 @@ made to the cartography by object type over the course of a year.</p>
       <span><a href="../bpmn/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../usecases/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../exploration/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

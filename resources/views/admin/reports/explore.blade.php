@@ -71,7 +71,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
 <button type="button" class="btn btn-danger" onclick="network.deleteSelected()">
 <i class="bi bi-dash-circle"></i>&nbsp;{{ trans("cruds.report.explorer.delete") }}
 </button>
@@ -724,6 +724,7 @@ Physique :
                 credentials: 'same-origin'
             });
             const attributes = await response.json();
+            console.log("attributes=",attributes);
             attributes.forEach(attr => {
                 $('#attr-filter').append('<option value="' + attr + '">' + attr + '</option>');
             });
