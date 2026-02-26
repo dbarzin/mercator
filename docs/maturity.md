@@ -40,7 +40,7 @@ An element is considered **non-compliant** when:
 The maturity level is calculated using the following formula:
 
 ```text
-Maturity level (%) = (Number of compliant elements / Total number of elements) × 100
+Maturity level (%) = (Number of compliant elements / Total number of elements) 
 ```
 
 ### Visual Identification of Non-Compliant Elements

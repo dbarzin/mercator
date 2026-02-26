@@ -40,7 +40,7 @@ Un élément est considéré comme **non conforme** lorsque :
 Le niveau de maturité est calculé selon la formule suivante :
 
 ```text
-Niveau de maturité (%) = (Nombre d'éléments conformes / Nombre total d'éléments) × 100
+Niveau de maturité (%) = (Nombre d'éléments conformes / Nombre total d'éléments)
 ```
 
 ### Identification visuelle des éléments non conformes
