@@ -93,23 +93,27 @@ class ExplorerController extends Controller
     {
         abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // TODO : Généraliser à d'autres objets
-        $rows = DB::table('m_applications')
-            ->select('attributes')
-            ->whereNull('deleted_at')
-            ->whereNotNull('attributes')
-            ->where('attributes', '!=', '')
-            ->get();
+        $tables = [
+            'm_applications', 'logical_servers', 'clusters', 'entities',
+            'buildings', 'physical_security_devices', 'relations', 'security_devices', 'fluxes',
+        ];
+        $allAttributes = collect();
+        foreach ($tables as $table) {
+            try {
+                $rows = DB::table($table)
+                    ->select('attributes')
+                    ->whereNull('deleted_at')
+                    ->whereNotNull('attributes')
+                    ->where('attributes', '!=', '')
+                    ->get();
+                $allAttributes = $allAttributes->merge(
+                    collect($rows)->flatMap(fn($r) => array_map('trim', explode(' ', $r->attributes)))->filter()
+                );
+            } catch (\Exception $e) {}
+        }
+        $result = $allAttributes->unique()->sort()->values();
 
-        // Sépare les attributs par espace et déduplique les valeurs
-        $attributes = collect($rows)
-            ->flatMap(fn($r) => array_map('trim', explode(' ', $r->attributes)))
-            ->filter()
-            ->unique()
-            ->sort()
-            ->values();
-
-        return response()->json($attributes);
+        return response()->json($result);
     }
 
     /**
@@ -182,7 +186,7 @@ class ExplorerController extends Controller
     private function buildBuildings(): void
     {
         $buildings = DB::table('buildings')
-            ->select('id', 'name', 'building_id', 'site_id', 'icon_id')
+            ->select('id', 'name', 'building_id', 'site_id', 'icon_id', 'attributes')
             ->whereNull('deleted_at')
             ->get();
 
@@ -193,7 +197,9 @@ class ExplorerController extends Controller
                 $building->name,
                 $this->getIcon($building->icon_id, '/images/building.png'),
                 'buildings',
-                605
+                605,
+                null,
+                $building->attributes
             );
 
             if ($building->building_id !== null) {
@@ -498,7 +504,7 @@ class ExplorerController extends Controller
     private function buildPhysicalSecurityDevices(): void
     {
         $devices = DB::table('physical_security_devices')
-            ->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id')
+            ->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id', 'attributes')
             ->whereNull('deleted_at')
             ->get();
 
@@ -510,7 +516,8 @@ class ExplorerController extends Controller
                 $this->getIcon($device->icon_id, '/images/security.png'),
                 'physical-security-devices',
                 660,
-                $device->address_ip
+                $device->address_ip,
+                $device->attributes
             );
 
             $this->linkToLocationOrSite(
@@ -814,7 +821,7 @@ class ExplorerController extends Controller
     private function buildClusters(): void {
         // Clusters
         $clusters = DB::table('clusters')
-            ->select('id', 'name', 'icon_id', 'address_ip')
+            ->select('id', 'name', 'icon_id', 'address_ip', 'attributes')
             ->whereNull('deleted_at')->get();
         foreach ($clusters as $cluster) {
             $this->addNode(
@@ -823,7 +830,8 @@ class ExplorerController extends Controller
                 $cluster->name,
                 $cluster->icon_id === null ? '/images/cluster.png' : "/admin/documents/{$cluster->icon_id}",
                 'clusters', 580,
-                $cluster->address_ip
+                $cluster->address_ip,
+                $cluster->attributes
             );
         }
 
@@ -856,7 +864,7 @@ class ExplorerController extends Controller
     private function buildLogicalServers(): void
     {
         $this->logicalServers = DB::table('logical_servers')
-            ->select('id', 'name', 'icon_id', 'address_ip')
+            ->select('id', 'name', 'icon_id', 'address_ip', 'attributes')
             ->whereNull('deleted_at')
             ->get();
 
@@ -867,7 +875,8 @@ class ExplorerController extends Controller
                 $server->name,
                 $this->getIcon($server->icon_id, '/images/lserver.png'),
                 'logical-servers', 560,
-                $server->address_ip
+                $server->address_ip,
+                $server->attributes
             );
 
             $this->linkDeviceToSubnetworks(
@@ -1413,7 +1422,7 @@ class ExplorerController extends Controller
     private function buildEntities(): void
     {
         $entities = DB::table('entities')
-            ->select('id', 'name', 'icon_id', 'parent_entity_id')
+            ->select('id', 'name', 'icon_id', 'parent_entity_id', 'attributes')
             ->whereNull('deleted_at')
             ->get();
 
@@ -1423,7 +1432,9 @@ class ExplorerController extends Controller
                 $this->formatId(Entity::$prefix, $entity->id),
                 $entity->name,
                 $this->getIcon($entity->icon_id, '/images/entity.png'),
-                'entities', 150
+                'entities', 150,
+                null,
+                $entity->attributes
             );
 
             if ($entity->parent_entity_id !== null) {
@@ -1443,7 +1454,7 @@ class ExplorerController extends Controller
     private function buildRelations(): void
     {
         $relations = DB::table('relations')
-            ->select('id', 'name', 'source_id', 'destination_id')
+            ->select('id', 'name', 'source_id', 'destination_id', 'attributes')
             ->whereNull('deleted_at')
             ->get();
 
@@ -1453,7 +1464,9 @@ class ExplorerController extends Controller
                 $this->formatId(Relation::$prefix, $relation->id),
                 $relation->name,
                 '/images/relation.png',
-                'relations', 100
+                'relations', 100,
+                null,
+                $relation->attributes
             );
 
             $this->addFluxEdge(null, false,
