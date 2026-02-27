@@ -40,7 +40,7 @@
             </div>
 
             <div class="form-group">
-                <button id="btn-save" class="btn btn-danger" type="submit">
+                <button id="btn-save" class="btn btn-success" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>
