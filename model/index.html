@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/model/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Data model - Mercator</title>
+    <title>Model - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Data model";
+        var mkdocs_page_name = "Model";
         var mkdocs_page_input_path = "model.md";
         var mkdocs_page_url = "/mercator/model/";
       </script>
@@ -72,7 +72,7 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Data model</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Model</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#gdpr-view">GDPR view</a>
         <ul>
@@ -130,8 +130,10 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application-flows">Application Flows</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#administration-areas">Administration areas</a>
+        </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#administration-areas">Administration areas</a>
+        <ul>
     <li class="toctree-l3"><a class="reference internal" href="#administration-area">Administration area</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#administration-directory-services">Administration directory services</a>
@@ -259,7 +261,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Data model</li>
+      <li class="breadcrumb-item active">Model</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/model.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -269,8 +271,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="data-model">Data model</h1>
-<p>🇫🇷 <a href="/mercator/fr/model">Lire en français</a></p>
+                <h2 id="data-model">Data model</h2>
 <p><a href="../images/model.png"><img src="/mercator/images/model.png" width="700"></a></p>
 <h3 id="gdpr-view">GDPR view</h3>
 <p>The GDPR view contains all the data required to maintain the data processing register, and provides a link with the
@@ -2285,9 +2286,10 @@ important to avoid representing all firewall filtering rules in terms of flows.<
 </tbody>
 </table>
 <p>In the app, an information can be linked with an application flow from an application flow object.</p>
-<h4 id="administration-areas">Administration areas</h4>
+<h3 id="administration-areas">Administration areas</h3>
 <p><em>Nota</em>: OVI is coming from the French military programme law. The closest equivalents in EU regulations are OES
 (Operators of Essential Services, EU 2016/1148, NIS) and EE (Essential Entities, EU 2022/2555, NIS 2).</p>
+<p><a href="../images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <h4 id="administration-area">Administration area</h4>
 <p>An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more)
 administrator(s).</p>
@@ -2481,7 +2483,20 @@ them to be administered.</p>
 <h4 id="active-directory-domains-ldap">Active Directory domains / LDAP</h4>
 <p>Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts,
 objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).</p>
-<p>Table <em>domaines_ads</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>domaines_ads</em></span></td>
+<td style="text-align: left;"><code>/api/domaines-ads</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2548,7 +2563,20 @@ objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).</p>
 A logical server can be linked with an AD domain / LDAP from these two objects.</p>
 <h4 id="users">Users</h4>
 <p>Users are user accounts with privileged rights on IT systems.</p>
-<p>Table <em>admin_users</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>admin_users</em></span></td>
+<td style="text-align: left;"><code>/api/admin-users</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3233,11 +3261,6 @@ A document can be attached to a connected external entity from a connected exter
 <td style="text-align: left;">ip</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">IP address of the switch</td>
-</tr>
-<tr>
-<td style="text-align: left;">physical_switches</td>
-<td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs List of Physical switched attached</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -4896,11 +4919,6 @@ been gathered in the following table:</p>
 </table>
 <p>The "vendor", "product" and "version" fields are not used and therefore are absent of the app.</p>
 <h4 id="storage-infrastructures">Storage infrastructures</h4>
-<pre><code class="language-markdown"> ***NOTE***: This storage infrastructures table is kept for legacy compatibility, but it is not maintained anymore.
- You can replace this asset by :
-- A Logical Server
-- A Physical Server
-</code></pre>
 <p>Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area
 network (SAN), hard disk...</p>
 <table>
