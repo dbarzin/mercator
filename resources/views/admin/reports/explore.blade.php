@@ -42,7 +42,7 @@
                                         <label for="attr-filter">Attributs</label>
                                         <select class="form-control select2" id="attr-filter" multiple>
                                         </select>
-                                        <span class="help-block">Filtrer par attribut d'application</span>
+                                        <span class="help-block">Filtrer par attribut</span>
                                     </div>
                                 </td>
                                 <td width="10">
@@ -521,6 +521,13 @@ Physique :
             deployFromNode(activeNode, depth, visitedNodes, filter, getDirection());
         }
 
+        function matchesAttrFilter(node, attrFilter) {
+            if (attrFilter.length === 0) return true;
+            if (!node.attributes) return false;
+            const nodeAttrs = node.attributes.split(' ').map(s => s.trim()).filter(Boolean);
+            return attrFilter.some(a => nodeAttrs.includes(a));
+        }
+
         function deployFromNode(nodeId, depth, visitedNodes, filter, direction = 3) {
             if (depth <= 0 || visitedNodes.has(nodeId)) {
                 return;
@@ -541,9 +548,7 @@ Physique :
                     if (targetNode == null)
                         continue;
                     const attrFilter = getAttrFilter();
-                    const matchAttr = attrFilter.length === 0 ||
-                        (targetNode.type === 'applications' &&
-                            attrFilter.some(a => (targetNode.attributes || '').split(' ').map(s => s.trim()).includes(a)));
+                    const matchAttr = matchesAttrFilter(targetNode, attrFilter);
 
                     if (
                         (
@@ -698,18 +703,7 @@ Physique :
                 // Filtre par vue
                 const matchVue = cur_filter.length === 0 || cur_filter.includes(value.vue);
 
-                // Filtre par attribut - s'applique uniquement aux applications
-                // Si un attribut est selectionne, on ne montre QUE les applications qui matchent
-                let matchAttr = true;
-                if (attrFilter.length > 0) {
-                    if (value.type === 'applications') {
-                        const nodeAttrs = (value.attributes || '').split(' ').map(s => s.trim());
-                        matchAttr = attrFilter.some(a => nodeAttrs.includes(a));
-                    } else {
-                        // Les non-applications sont masquees quand un attribut est selectionne
-                        matchAttr = false;
-                    }
-                }
+                const matchAttr = matchesAttrFilter(value, attrFilter);
 
                 if (matchVue && matchAttr) {
                     $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
@@ -724,7 +718,6 @@ Physique :
                 credentials: 'same-origin'
             });
             const attributes = await response.json();
-            console.log("attributes=",attributes);
             attributes.forEach(attr => {
                 $('#attr-filter').append('<option value="' + attr + '">' + attr + '</option>');
             });
