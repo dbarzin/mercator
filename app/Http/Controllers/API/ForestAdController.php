@@ -30,12 +30,16 @@ class ForestAdController extends APIController
 
         $forestAd = ForestAd::query()->create($request->all());
 
+        $forestAd->domaines()->sync($request->input('domaines', []));
+
         return response()->json($forestAd, 201);
     }
 
     public function show(ForestAd $forestAd)
     {
         abort_if(Gate::denies('forest_ad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $forestAd['domaines'] = $forestAd->domaines()->pluck('id');
 
         return new JsonResource($forestAd);
     }
@@ -45,6 +49,10 @@ class ForestAdController extends APIController
         abort_if(Gate::denies('forest_ad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $forestAd->update($request->all());
+
+        if ($request->has('domaines')) {
+            $forestAd->domaines()->sync($request->input('domaines', []));
+        }
 
         return response()->json();
     }
@@ -62,7 +70,7 @@ class ForestAdController extends APIController
     {
         abort_if(Gate::denies('forest_ad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        ForestAd::whereIn('id', $request->input('ids', []))->delete();
+        ForestAd::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

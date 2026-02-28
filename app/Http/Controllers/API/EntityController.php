@@ -31,9 +31,7 @@ class EntityController extends APIController
         /** @var Entity $entity */
         $entity = Entity::query()->create($request->all());
 
-        if ($request->has('processes') && $request->input('processes') !== null) {
-            $entity->processes()->sync($request->input('processes', []));
-        }
+        $entity->processes()->sync($request->input('processes', []));
 
         return response()->json($entity, Response::HTTP_CREATED);
     }
