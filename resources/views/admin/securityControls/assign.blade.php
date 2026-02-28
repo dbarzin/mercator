@@ -62,7 +62,7 @@
         <button id="btn-cancel" class="btn btn-secondary" type="button"  onclick="window.location.href='/admin/security-controls'">
             {{ trans('global.back_to_list') }}
         </button>
-        <button id="btn-save" class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-success" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>
