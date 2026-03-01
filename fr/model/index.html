@@ -132,7 +132,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#ladministration">L’administration</a>
+    <li class="toctree-l2"><a class="reference internal" href="#zone-dadministration">Zone d’administration</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#zones-dadministration">Zones d’administration</a>
     </li>
@@ -220,14 +220,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../config/">Guide de Configuration de Mercator</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../import/">Interface Import / Export de Données</a>
                 </li>
               </ul>
@@ -237,6 +229,14 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API avancées (filtres)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration de Mercator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Guide de Configuration de Mercator</a>
                 </li>
               </ul>
               <ul>
@@ -1988,7 +1988,7 @@ d’informatique et une homogénéité technologique.</p>
 <tr>
 <td style="text-align: left;">application_services</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">Liens vers les applications-services</td>
+<td style="text-align: left;">Liens vers les IDs des applications-services</td>
 </tr>
 <tr>
 <td style="text-align: left;">vendor</td>
@@ -2269,9 +2269,8 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 </table>
 <p>Dans l'application, une information peut être rattaché à un flux applicatif depuis un objet flux applicatif.</p>
 <hr />
-<h3 id="ladministration">L’administration</h3>
-<p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des
-utilisateurs du système d’information.</p>
+<h3 id="zone-dadministration">Zone d’administration</h3>
+<p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des utilisateurs du système d’information.</p>
 <p><a href="../../images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <p>Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les
 opérateurs d’importance vitale (OIV).</p>
@@ -2451,6 +2450,11 @@ comme Mercator.</p>
 <td style="text-align: left;">Référence vers la zone d'administration</td>
 </tr>
 <tr>
+<td style="text-align: left;">domaines</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liens vers les IDs des domaines active directory</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -2482,8 +2486,8 @@ GPO, par exemple) ainsi que les droits des objets.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><span style="color: blue;"><em>domaines_ads</em></span></td>
-<td style="text-align: left;"><code>/api/domaines-ads</code></td>
+<td style="text-align: left;"><span style="color: blue;"><em>domaine_ads</em></span></td>
+<td style="text-align: left;"><code>/api/domaine-ads</code></td>
 </tr>
 </tbody>
 </table>
@@ -3287,9 +3291,9 @@ Dans l'application, un équipement de sécurité physique peut être rattaché �
 logique depuis ces deux objets.<br />
 Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.</p>
 <h4 id="serveurs-dhcp">Serveurs DHCP</h4>
-<p>Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.
-Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide de
-l'ANSSI (cf. Références).</p>
+<pre><code class="language-markdown">***NOTE***: Les serveurs dhcp sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
+</code></pre>
+<p>Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.</p>
 <table>
 <thead>
 <tr>
@@ -3351,10 +3355,10 @@ l'ANSSI (cf. Références).</p>
 </tbody>
 </table>
 <h4 id="serveurs-dns">Serveurs DNS</h4>
+<pre><code class="language-markdown">***NOTE***: Les serveurs dns sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
+</code></pre>
 <p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant
-la conversion d’un nom de domaine en adresse IP.<br />
-Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide
-de l'ANSSI (cf. Références).</p>
+la conversion d’un nom de domaine en adresse IP.  </p>
 <table>
 <thead>
 <tr>
@@ -5784,7 +5788,7 @@ Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les o
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Navigation de pied de page">
         <a href="../usecases/" class="btn btn-neutral float-left" title="Cas d'usage"><span class="icon icon-circle-arrow-left"></span> Précédent</a>
-        <a href="../admin/" class="btn btn-neutral float-right" title="Administration">Suivant <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../import/" class="btn btn-neutral float-right" title="Interface Import / Export de Données">Suivant <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -5815,7 +5819,7 @@ Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les o
       <span><a href="../usecases/" style="color: #fcfcfc">&laquo; Précédent</a></span>
     
     
-      <span><a href="../admin/" style="color: #fcfcfc">Suivant &raquo;</a></span>
+      <span><a href="../import/" style="color: #fcfcfc">Suivant &raquo;</a></span>
     
   </span>
 </div>
