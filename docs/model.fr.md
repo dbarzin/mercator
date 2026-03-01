@@ -1068,7 +1068,7 @@ Une application peut être rattachée à un équipement de sécurité logique de
 
 #### Serveurs DHCP
 ```markdown
-***NOTE***: Les serveurs dhcp sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considéré comme non utile et masqué par défaut.
+***NOTE***: Les serveurs dhcp sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
 ```
 
 Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.
@@ -1089,7 +1089,7 @@ Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gest
 
 #### Serveurs DNS
 ```markdown
-***NOTE***: Les serveurs dns sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considéré comme non utile et masqué par défaut.
+***NOTE***: Les serveurs dns sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
 ```
 Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant
 la conversion d’un nom de domaine en adresse IP.  

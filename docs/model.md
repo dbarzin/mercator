@@ -808,7 +808,6 @@ objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).
 |:-------------------------------------------------|:--------------------|
 | <span style="color: blue;">*domaine_ads*</span> | `/api/domaine-ads` |
 
-
 | Champ                  | Type         | Description                             |
 |:-----------------------|:-------------|:----------------------------------------|
 | id                     | int unsigned | auto_increment                          |
@@ -849,60 +848,6 @@ Users are user accounts with privileged rights on IT systems.
 | created_at  | timestamp    | Date of creation             |
 | updated_at  | timestamp    | Date of update               |
 | deleted_at  | timestamp    | Date of deletion             |
-
-The data model export lists applications which an user is administrator.
-
-In the app, an user can be defined as administrator of an application from an application object.
-
-#### Active Directory domains / LDAP
-
-Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts, objects
-rights, and a part of IT policies (e.g. Group Policy Object - GPO).
-
-| Table                                            | api                 |
-|:-------------------------------------------------|:--------------------|
-| <span style="color: blue;">*domaines_ads*</span> | `/api/domaines-ads` |
-
-| Field                  | Type         | Description                             |
-|:-----------------------|:-------------|:----------------------------------------|
-| id                     | int unsigned | auto_increment                          |
-| name                   | varchar(255) | AD Domain / LDAP name                   |
-| description            | longtext     | Domain description                      |
-| domain_ctrl_cnt        | int signed   | Number of domain controllers            |
-| user_count             | int signed   | Number of domain users                  |
-| machine_count          | int signed   | Number of domain computers              |
-| relation_inter_domaine | varchar(255) | Cross domains relationships description |
-| created_at             | timestamp    | Date of creation                        |
-| updated_at             | timestamp    | Date of update                          |
-| deleted_at             | timestamp    | Date of deletion                        |
-
-The data model export lists AD forests / LDAP trees linked with an AD domain / LDAP.
-
-In the app, an AD forest / LDAP tree can be linked with an AD domain / LDAP from these two objects.
-A logical server can be linked with an AD domain / LDAP from these two objects.
-
-#### Users
-
-Users are user accounts with privileged rights on IT systems.
-
-| Table                                           | api                |
-|:------------------------------------------------|:-------------------|
-| <span style="color: blue;">*admin_users*</span> | `/api/admin-users` |
-
-| Field       | Type         | Description                         |
-|:------------|:-------------|:------------------------------------|
-| id          | int unsigned | auto_increment                      |
-| user_id     | varchar(255) | Unique ID number / other of an user | 
-| firstname   | varchar(255) | User's first name                   |
-| lastname    | varchar(255) | User's last name                    |
-| type        | varchar(255) | User type                           |
-| attributes  | varchar(255) | User's tags                         |
-| icon_id     | int unsigned | Link to a specific icon             |
-| description | longtext     | DUser description                   |
-| domain_id   | int unsigned | Link to the users's domain          |
-| created_at  | timestamp    | Date of creation                    |
-| updated_at  | timestamp    | Date of update                      |
-| deleted_at  | timestamp    | Date of deletion                    |
 
 The data model export lists applications which an user is administrator.
 
@@ -1115,8 +1060,8 @@ An application can be linked a to logical security device from these two objects
 
 #### DHCP servers
 ```markdown
-***NOTE***: The DHCP servers are kept for backward compatibility and to to be compliant with ANSSI's guidelines.
-- ANSSI is the french cybersecurity regulation authority.
+***NOTE***: The DHCP servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+- ANSSI is the French cybersecurity regulation authority.
 This object is considered barely usefull and obsolete. It's hidden by default.
 ```
 
@@ -1138,14 +1083,12 @@ DHCP servers are physical or virtual devices that manage a network's IP addresse
 
 #### DNS servers
 ```markdown
-***NOTE***: The DNS servers are kept for backward compatibility and to to be compliant with ANSSI's guidelines.
-- ANSSI is the french cybersecurity regulation authority.
+***NOTE***: The DNS servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+- ANSSI is the French cybersecurity regulation authority.
 This object is considered barely usefull and obsolete. It's hidden by default.
 ```
 
 Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
-
-*Nota*: 
 
 | Table                                          | api               |
 |:-----------------------------------------------|:------------------|
@@ -1579,7 +1522,7 @@ The "vendor", "product" and "version" fields are not used and therefore are abse
 #### Storage infrastructures
 ```markdown
 ***NOTE***: The storage infrastructures are kept for compatibility, but this table is not maintained anymore.
- It is possible to prepace this asset by:
+ It is possible to replace this asset by:
 - A logical server.
 - A physical server.
 ```
