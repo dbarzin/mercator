@@ -1,4 +1,6 @@
-## Data model
+# Data model
+
+🇫🇷 [Lire en français](/mercator/fr/model)
 
 [<img src="/mercator/images/model.png" width="700">](images/model.png)
 
@@ -637,7 +639,7 @@ homogeneity.
 | id                   | int unsigned | auto_increment                               |
 | name                 | varchar(255) | Name of the application module               |
 | description          | longtext     | Description of the application module        |
-| application_services | List int [,] | IDs list of related to applications-services |
+| application_services | List int [,] | IDs list of related applications-services |
 | created_at           | timestamp    | Date of creation                             |
 | updated_at           | timestamp    | Date of update                               |
 | deleted_at           | timestamp    | Date of deletion                             |
@@ -792,6 +794,7 @@ These objects represent an organized grouping of Active Directory domains or LDA
 | name          | varchar(255) | Name of Active Directory or LDAP forests        |
 | description   | longtext     | Description of Active Directory or LDAP forests |
 | zone_admin_id | int unsigned | Reference to Administration zone                |
+| domaines      | List int [,] | IDs list of related active directory domaines   |
 | created_at    | timestamp    | Date of creation                                |
 | updated_at    | timestamp    | Date of update                                  |
 | deleted_at    | timestamp    | Date of deletion                                |
@@ -803,7 +806,7 @@ objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).
 
 | Table                                            | api                 |
 |:-------------------------------------------------|:--------------------|
-| <span style="color: blue;">*domaines_ads*</span> | `/api/domaines-ads` |
+| <span style="color: blue;">*domaine_ads*</span> | `/api/domaine-ads` |
 
 
 | Champ                  | Type         | Description                             |
@@ -1111,13 +1114,13 @@ In the app, physical security device can be linked to a logical security device 
 An application can be linked a to logical security device from these two objects.
 
 #### DHCP servers
+```markdown
+***NOTE***: The DHCP servers are kept for backward compatibility and to to be compliant with ANSSI's guidelines.
+- ANSSI is the french cybersecurity regulation authority.
+This object is considered barely usefull and obsolete. It's hidden by default.
+```
 
-DHCP servers are physical or virtual devices that manage a network's IP addresses. This object is considered barely
-usefull and obsolete. It's hidden by default.
-
-The DHCP server object is kept to be compliant with ANSSI's guidelines.
-
-*Nota*: ANSSI is the french cybersecurity regulation authority.
+DHCP servers are physical or virtual devices that manage a network's IP addresses.
 
 | Table                                            | api                 |
 |:-------------------------------------------------|:--------------------|
@@ -1134,13 +1137,15 @@ The DHCP server object is kept to be compliant with ANSSI's guidelines.
 | deleted_at  | timestamp    | Date of deletion                |
 
 #### DNS servers
+```markdown
+***NOTE***: The DNS servers are kept for backward compatibility and to to be compliant with ANSSI's guidelines.
+- ANSSI is the french cybersecurity regulation authority.
+This object is considered barely usefull and obsolete. It's hidden by default.
+```
 
 Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
-This object is considered barely usefull and obsolete. It's hidden by default.
 
-The DNS server object is kept to be compliant with ANSSI's guidelines.
-
-*Nota*: ANSSI is the french cybersecurity regulation authority.
+*Nota*: 
 
 | Table                                          | api               |
 |:-----------------------------------------------|:------------------|
@@ -1572,6 +1577,12 @@ been gathered in the following table:
 The "vendor", "product" and "version" fields are not used and therefore are absent of the app.
 
 #### Storage infrastructures
+```markdown
+***NOTE***: The storage infrastructures are kept for compatibility, but this table is not maintained anymore.
+ It is possible to prepace this asset by:
+- A logical server.
+- A physical server.
+```
 
 Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area
 network (SAN), hard disk...

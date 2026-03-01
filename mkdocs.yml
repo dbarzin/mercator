@@ -72,11 +72,11 @@ nav:
   - exploration.md
   - usecases.md
   - model.md
-  - admin.md
-  - config.md
   - import.md
   - api.md
   - apifilters.md
+  - admin.md
+  - config.md
   - references.md
 # nav:
 #   - Introduction: index.md
