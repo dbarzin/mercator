@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/cartography/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Mapping - Mercator</title>
+    <title>Views /Cartograpgy - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Mapping";
+        var mkdocs_page_name = "Views /Cartograpgy";
         var mkdocs_page_input_path = "cartography.md";
         var mkdocs_page_url = "/mercator/cartography/";
       </script>
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Mapping</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Views /Cartograpgy</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#gdpr-view">GDPR view</a>
     </li>
@@ -58,6 +58,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#infrastructure-view">Infrastructure view</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#security-needs">Security needs</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -66,11 +68,19 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturity Levels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0 Module</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration Feature</a>
                 </li>
               </ul>
               <ul>
@@ -82,19 +92,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Data Import/Export Interface</a>
                 </li>
               </ul>
               <ul>
@@ -102,7 +100,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API Advanced (filters)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin/">Mercator administration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Mercator Configuration Guide</a>
                 </li>
               </ul>
               <ul>
@@ -123,7 +129,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Mapping</li>
+      <li class="breadcrumb-item active">Views /Cartograpgy</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/cartography.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -133,7 +139,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="views">Views</h2>
+                <h1 id="views-cartograpgy">Views /Cartograpgy</h1>
+<p>🇫🇷 <a href="/mercator/fr/cartography">Lire en français</a></p>
 <p>The cartography is made up of three views progressively moving from business to technical, themselves broken down into
 views:</p>
 <h3 id="gdpr-view">GDPR view</h3>
@@ -155,59 +162,6 @@ databases.</p>
 address ranges, VLANs and filtering and routing functions;</p>
 <h3 id="infrastructure-view">Infrastructure view</h3>
 <p>The physical infrastructure view describes the physical equipment that makes up or is used by the information system.</p>
-<h2 id="maturity-levels">Maturity Levels</h2>
-<p>Maturity levels represent the completeness percentage of the cartography. It is an indicator of the remaining effort
-required to achieve a complete mapping, in accordance with the recommendations of the
-<a href="https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/">ANSSI Information System Mapping Guide</a>.</p>
-<p>This maturity is divided into three levels:</p>
-<ul>
-<li><strong>Level 1 minimum granularity</strong>, which contains the information essential to the cartography;</li>
-<li><strong>Level 2 intermediate granularity</strong>, which contains the information important to the cartography;</li>
-<li><strong>Level 3 fine granularity</strong>, which contains the information useful for managing the security of the information
-  system.</li>
-</ul>
-<p><a href="../images/maturity.png"><img src="/mercator/images/maturity.png" width="600"></a></p>
-<h3 id="meaning-of-fields-marked-with-cardinal">Meaning of Fields Marked with cardinal</h3>
-<p>Some field labels are followed by an <strong>#</strong> symbol in orange. These markers indicate that the field
-contributes to the calculation of the cartography maturity level, according to the relevant level:</p>
-<table>
-<thead>
-<tr>
-<th>Marker</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>#</code></td>
-<td>Field contributing to maturity level 1 — minimum granularity</td>
-</tr>
-<tr>
-<td><code>##</code></td>
-<td>Field contributing to maturity level 2 — intermediate granularity</td>
-</tr>
-<tr>
-<td><code>###</code></td>
-<td>Field contributing to maturity level 3 — fine granularity</td>
-</tr>
-</tbody>
-</table>
-<h3 id="calculating-the-maturity-level">Calculating the Maturity Level</h3>
-<p>An element is considered <strong>compliant</strong> when all fields marked <code>#</code> corresponding to the target level are
-filled in and the expected links with other cartography elements have been established.</p>
-<p>An element is considered <strong>non-compliant</strong> when:</p>
-<ul>
-<li>a field marked <code>#</code> is empty or not filled in (e.g., missing description or owner),</li>
-<li>an expected link to another element is missing (e.g., an application not supporting any business process, a
-  server not associated with any application).</li>
-</ul>
-<p>The maturity level is calculated using the following formula:</p>
-<pre><code>Maturity level (%) = (Number of compliant elements / Total number of elements) × 100
-</code></pre>
-<h3 id="visual-identification-of-non-compliant-elements">Visual Identification of Non-Compliant Elements</h3>
-<p>In lists, <strong>non-compliant</strong> entries are highlighted in <strong>yellow</strong>, indicating that at least one field marked <code>#</code>
-has not been filled in. This allows quick identification of elements requiring particular attention in order
-to progress toward a complete cartography.</p>
 <h2 id="security-needs">Security needs</h2>
 <p>Information security needs are expressed in terms of confidentiality, integrity, availability and traceability with the
 following scale:</p>

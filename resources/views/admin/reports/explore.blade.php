@@ -39,6 +39,16 @@
                                 </td>
                                 <td width="400">
                                     <div class="form-group">
+                                        <label for="attr-filter">Attributs</label>
+                                        <select class="form-control select2" id="attr-filter" multiple>
+                                        </select>
+                                        <span class="help-block">Filtrer par attribut</span>
+                                    </div>
+                                </td>
+                                <td width="10">
+                                </td>
+                                <td width="400">
+                                    <div class="form-group">
                                         <label for="title">{{ trans("cruds.report.explorer.object") }}</label>
                                         <select class="form-control select2" id="node">
                                             <option></option>
@@ -61,7 +71,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
 <button type="button" class="btn btn-danger" onclick="network.deleteSelected()">
 <i class="bi bi-dash-circle"></i>&nbsp;{{ trans("cruds.report.explorer.delete") }}
 </button>
@@ -178,7 +188,7 @@ Physique :
                 // Masquer le loading, afficher les contrôles
                 loadingIndicator.style.display = 'none';
                 controls.style.display = 'block';
-
+                loadAttributes();
                 console.log(`✓ Graphe chargé: ${data.nodes.length} nœuds, ${data.edges.length} liens`);
 
                 // Ajouter le/les nœuds passés en paramètre URL
@@ -248,6 +258,7 @@ Physique :
                     image: node.image,
                     type: node.type,
                     order: node.order,
+                    attributes: node.attributes || null,
                     edges: edgesByNode.get(node.id) || []
                 });
             });
@@ -510,6 +521,13 @@ Physique :
             deployFromNode(activeNode, depth, visitedNodes, filter, getDirection());
         }
 
+        function matchesAttrFilter(node, attrFilter) {
+            if (attrFilter.length === 0) return true;
+            if (!node.attributes) return false;
+            const nodeAttrs = node.attributes.split(' ').map(s => s.trim()).filter(Boolean);
+            return attrFilter.some(a => nodeAttrs.includes(a));
+        }
+
         function deployFromNode(nodeId, depth, visitedNodes, filter, direction = 3) {
             if (depth <= 0 || visitedNodes.has(nodeId)) {
                 return;
@@ -529,18 +547,23 @@ Physique :
                     let targetNode = _nodes.get(targetNodeId);
                     if (targetNode == null)
                         continue;
+                    const attrFilter = getAttrFilter();
+                    const matchAttr = matchesAttrFilter(targetNode, attrFilter);
+
                     if (
-                        (filter.length === 0)
-                        ||
                         (
-                            filter.includes(targetNode.vue) &&
-                            (edge.edgeType !== 'CABLE')  &&
-                            (edge.edgeType !== 'FLUX')
-                        )
-                        ||
-                        (filter.includes("8") && (edge.edgeType === 'CABLE'))
-                        ||
-                        (filter.includes("9") && (edge.edgeType === 'FLUX'))
+                            (filter.length === 0)
+                            ||
+                            (
+                                filter.includes(targetNode.vue) &&
+                                (edge.edgeType !== 'CABLE')  &&
+                                (edge.edgeType !== 'FLUX')
+                            )
+                            ||
+                            (filter.includes("8") && (edge.edgeType === 'CABLE'))
+                            ||
+                            (filter.includes("9") && (edge.edgeType === 'FLUX'))
+                        ) && matchAttr
                     ) {
                         // Check order Up
                         if ((direction === 1) && (node.order <= targetNode.order))
@@ -673,23 +696,37 @@ Physique :
 
         function apply_filter() {
             cur_filter = $('#filters').val();
-            if (cur_filter.length == 0) {
-                for (let [node, value] of _nodes)
+            const attrFilter = getAttrFilter();
+
+            $("#node").empty();
+            for (let [node, value] of _nodes) {
+                // Filtre par vue
+                const matchVue = cur_filter.length === 0 || cur_filter.includes(value.vue);
+
+                const matchAttr = matchesAttrFilter(value, attrFilter);
+
+                if (matchVue && matchAttr) {
                     $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
-            } else {
-                let activated = 0, disabled = 0;
-                $("#node").empty();
-                for (let [node, value] of _nodes) {
-                    if (cur_filter.includes(value.vue)) {
-                        $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
-                        activated++;
-                    } else
-                        disabled++;
                 }
             }
             $('#node').val(null).trigger("change");
         }
 
+        async function loadAttributes() {
+            const response = await fetch('{{ route("admin.reports.explore.attributes") }}', {
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                credentials: 'same-origin'
+            });
+            const attributes = await response.json();
+            attributes.forEach(attr => {
+                $('#attr-filter').append('<option value="' + attr + '">' + attr + '</option>');
+            });
+            $('#attr-filter').trigger('change');
+        }
+
+        function getAttrFilter() {
+            return $('#attr-filter').val() || [];
+        }
         document.addEventListener('DOMContentLoaded', () => {
             // Charger les données via AJAX
             loadGraphData();
@@ -701,6 +738,9 @@ Physique :
             });
 
             $('#filters').val(null).trigger('change');
+            $('#attr-filter')
+                .on('select2:select', function (e) { apply_filter(); })
+                .on('select2:unselect', function (e) { apply_filter(); });
             $('#node').val(null);
 
             $('#filters')

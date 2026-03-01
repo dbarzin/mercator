@@ -1,4 +1,6 @@
-## API
+# API
+
+🇫🇷 [Lire en français](/mercator/fr/api)
 
 Cartography can be modified or updated via a REST API.
 
@@ -67,8 +69,8 @@ __Logical infrastructure view__
 - [/api/network-switches](./model.md#network-switches)
 - [/api/routers](./model.md#logical-routers)
 - [/api/security-devices](./model.md#security-equipments)
-- [/api/dhcp-servers](./model.md#dhcp-servers)
-- [/api/dnsservers](./model.md#dns-servers)
+- [/api/dhcp-servers *(usage not recommended)*](./model.md#dhcp-servers)
+- [/api/dnsservers *(usage not recommended)*](./model.md#dns-servers)
 - [/api/clusters](./model.md#clusters)
 - [/api/logical-servers](./model.md#logical-servers)
 - [/api/containers](./model.md#containers)
@@ -83,7 +85,7 @@ __Physical infrastructure view__
 - [/api/bays](./model.md#racks)
 - [/api/physical-servers](./model.md#physical-servers)
 - [/api/workstations](./model.md#workstations)
-- [/api/storage-devices](./model.md#storage-infrastructures)
+- [/api/storage-devices *(usage not recommended)*](./model.md#storage-infrastructures)
 - [/api/peripherals](./model.md#peripherals)
 - [/api/phones](./model.md#phones)
 - [/api/physical-switches](./model.md#physical-switches)

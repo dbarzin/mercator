@@ -1,4 +1,6 @@
-## Modèle de données
+# Modèle de données
+
+🇬🇧 [Read in English](/mercator/model)
 
 [<img src="/mercator/fr/images/model.png" width="700">](images/model.fr.png)
 
@@ -633,7 +635,7 @@ d’informatique et une homogénéité technologique.
 | id                   | int unsigned | auto_increment                          |
 | name                 | varchar(255) | Nom du service applicatif               |
 | description          | longtext     | Description du module applicatif        |
-| application_services | List int [,] | Liens vers les applications-services    |
+| application_services | List int [,] | Liens vers les IDs des applications-services    |
 | vendor               | varchar(255) | Vendeur / éditeur pour recherche CPE    |
 | product              | varchar(255) | Produit d'un éditeur pour recherche CPE |
 | version              | varchar(255) | Version d'un produit pour recherche CPE |
@@ -729,10 +731,9 @@ Dans l'application, une information peut être rattaché à un flux applicatif d
 
 ---
 
-### L’administration
+### Zone d’administration
 
-La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des
-utilisateurs du système d’information.
+La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des utilisateurs du système d’information.
 
 [<img src="/mercator/images/administration.png" width="400">](images/administration.png)
 
@@ -791,15 +792,16 @@ Ces objets représentent un regroupement organisé de domaines Active Directory 
 |:-----------------------------------------------|:------------------|
 | <span style="color: blue;">*forest_ads*</span> | `/api/forest-ads` |
 
-| Champ         | Type         | Description                                                        |
-|:--------------|:-------------|:-------------------------------------------------------------------|
-| id            | int unsigned | auto_increment                                                     |
-| name          | varchar(255) | Nom de la forêt Active Directory ou de l'arborescence LDAP         |
-| description   | longtext     | Description de la forêt Active Directory ou de l'arborescence LDAP |
-| zone_admin_id | int unsigned | Référence vers la zone d'administration                            |
-| created_at    | timestamp    | Date de création                                                   |
-| updated_at    | timestamp    | Date de mise à jour                                                |
-| deleted_at    | timestamp    | Date de suppression                                                |
+| Champ         | Type          | Description                                                        |
+|:--------------|:--------------|:-------------------------------------------------------------------|
+| id            | int unsigned  | auto_increment                                                     |
+| name          | varchar(255)  | Nom de la forêt Active Directory ou de l'arborescence LDAP         |
+| description   | longtext      | Description de la forêt Active Directory ou de l'arborescence LDAP |
+| zone_admin_id | int unsigned  | Référence vers la zone d'administration                            |
+| domaines      | List int [,]  | Liens vers les IDs des domaines active directory                   |
+| created_at    | timestamp     | Date de création                                                   |
+| updated_at    | timestamp     | Date de mise à jour                                                |
+| deleted_at    | timestamp     | Date de suppression                                                |
 
 L'export du modèle de données référence les domaines rattachés à une forêt AD / Arborescence LDAP.  
 Dans l'application, un domaine peut être rattaché à une forêt AD / arborescence LDAP depuis ces deux objets.
@@ -812,7 +814,7 @@ GPO, par exemple) ainsi que les droits des objets.
 
 | Table                                            | api                 |
 |:-------------------------------------------------|:--------------------|
-| <span style="color: blue;">*domaines_ads*</span> | `/api/domaines-ads` |
+| <span style="color: blue;">*domaine_ads*</span> | `/api/domaine-ads` |
 
 | Champ                  | Type         | Description                              |
 |:-----------------------|:-------------|:-----------------------------------------|
@@ -995,6 +997,7 @@ Les commutateurs réseau sont les composants gérant les connexions entre les di
 | name        | varchar(255) | Nom du commutateur         |
 | description | longtext     | Description du commutateur |
 | ip          | varchar(255) | Adresse IP du commutateur  |
+| physical_switches | List int [,] | Liste des IDs des switches physiques liés |
 | created_at  | timestamp    | Date de création           |
 | updated_at  | timestamp    | Date de mise à jour        |
 | deleted_at  | timestamp    | Date de suppression        |
@@ -1064,10 +1067,11 @@ logique depuis ces deux objets.
 Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.
 
 #### Serveurs DHCP
+```markdown
+***NOTE***: Les serveurs dhcp sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
+```
 
 Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.
-Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide de
-l'ANSSI (cf. Références).
 
 | Table                                            | api                 |
 |:-------------------------------------------------|:--------------------|
@@ -1084,11 +1088,11 @@ l'ANSSI (cf. Références).
 | deleted_at  | timestamp    | Date de suppression      |
 
 #### Serveurs DNS
-
+```markdown
+***NOTE***: Les serveurs dns sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
+```
 Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant
 la conversion d’un nom de domaine en adresse IP.  
-Cet objet est considéré comme peu utile et masqué par défaut. Il est gardé afin de rester conforme au guide
-de l'ANSSI (cf. Références).
 
 | Table                                          | api               |
 |:-----------------------------------------------|:------------------|
@@ -1515,6 +1519,12 @@ dans l'application pour la table *workstations* ont été regroupés dans le tab
 | physical_swicth_id  | int unsigned | Référence vers le commutateur physique  |
 
 #### Infrastructures de stockage
+```markdown
+***NOTE***: Les infrastructures de stockage sont conservées pour la rétrocompatibilité, mais cette table n'est pas maintenue.
+ On peut remplacer cet asset par:
+- Un serveur logique
+- Un serveur physique 
+```
 
 Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en
 réseau (NAS), réseau de stockage (SAN), disque dur…

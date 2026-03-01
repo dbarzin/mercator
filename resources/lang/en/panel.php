@@ -23,6 +23,7 @@ return [
         'application_flows' => 'Application flows',
         'applications' => 'Applications',
         'config' => 'Configuration',
+        'doc' => 'Documentation',
         'help' => 'Help',
         'ecosystem' => 'Ecosystem',
         'explore' => 'Exploration',

@@ -1,4 +1,6 @@
-## Exploration Feature
+# Exploration Feature
+
+🇫🇷 [Lire en français](/mercator/fr/exploration)
 
 The **Exploration** tool (`Tools → Exploration`) allows you to dynamically navigate through the asset relationship
 graph. It reveals dependencies between layers: upward (abstract / business) or downward (concrete / physical).

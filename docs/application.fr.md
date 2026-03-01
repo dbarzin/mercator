@@ -1,4 +1,7 @@
-## Application
+# Application
+
+🇬🇧 [Read in English](/mercator/application)
+
 
 [<img src="/mercator/fr/images/homepage.png" width="600">](images/homepage.fr.png)
 

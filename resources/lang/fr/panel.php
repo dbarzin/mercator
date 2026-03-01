@@ -23,6 +23,7 @@ return [
         'application_flows' => 'Flux applicatifs',
         'applications' => 'Applications',
         'config' => 'Configuration',
+        'doc' => 'Documentation',
         'help' => 'Aide',
         'ecosystem' => 'Ecosystème',
         'explore' => 'Exploration',
@@ -40,6 +41,7 @@ return [
         'tools' => 'Outils',
         'patching' => 'Correctifs',
         'views' => 'Vues',
+
     ],
     'repartition' => 'Répartition par domaine',
     'site_title' => 'Mercator',

@@ -1,4 +1,6 @@
-## Data Import/Export Interface
+# Data Import/Export Interface
+
+🇫🇷 [Lire en français](/mercator/fr/import)
 
 This interface allows you to import and export information system mapping data via Excel files.
 

@@ -63,7 +63,7 @@ class StorageDeviceController extends APIController
     {
         abort_if(Gate::denies('storage_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        StorageDevice::whereIn('id', $request->input('ids', []))->delete();
+        StorageDevice::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

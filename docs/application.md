@@ -1,4 +1,6 @@
-## Application
+# Application
+
+🇫🇷 [Lire en français](/mercator/fr/application)
 
 [![homepage.png](images/homepage.png)](images/homepage.png)
 

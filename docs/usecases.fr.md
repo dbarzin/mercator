@@ -1,4 +1,6 @@
-## Cas d'utilisation
+# Cas d'usage
+
+🇬🇧 [Read in English](/mercator/usecases)
 
 Mercator permet d'aider à la mise en place d'un grand nombre de mesures de sécurité recommandées par la norme ISO 27002.
 En suivant les cas d'utilisation décrits ci-dessous, vous pouvez mettre en place un processus de cartographie des

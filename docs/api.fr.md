@@ -1,4 +1,6 @@
-## API
+# API
+
+🇬🇧 [Read in English](/mercator/api)
 
 La cartographie peut être modifiée ou mise à jour via une REST API.
 
@@ -69,8 +71,8 @@ __Vue de l'infrastructure logique__
 - [/api/network-switches](./model.fr.md#commutateurs-reseau)
 - [/api/routers](./model.fr.md#routeurs-logiques)
 - [/api/security-devices](./model.fr.md#equipements-de-securite)
-- [/api/dhcp-servers](./model.fr.md#serveurs-dhcp)
-- [/api/dnsservers](./model.fr.md#serveurs-dns)
+- [/api/dhcp-servers *(usage non recommandé)*](./model.fr.md#serveurs-dhcp)
+- [/api/dnsservers *(usage non recommandé)*](./model.fr.md#serveurs-dns)
 - [/api/clusters](./model.fr.md#clusters)
 - [/api/logical-servers](./model.fr.md#serveurs-logiques)
 - [/api/logical-flows](./model.fr.md#flux-logiques)
@@ -85,7 +87,7 @@ __Vue de l'infrastructure physique__
 - [/api/bays](./model.fr.md#baies)
 - [/api/physical-servers](./model.fr.md#serveurs-physiques)
 - [/api/workstations](./model.fr.md#postes-de-travail)
-- [/api/storage-devices](./model.fr.md#infrastructures-de-stockage)
+- [/api/storage-devices *(usage non recommandé)*](./model.fr.md#infrastructures-de-stockage)
 - [/api/peripherals](./model.fr.md#peripheriques)
 - [/api/phones](./model.fr.md#telephones)
 - [/api/physical-switches](./model.fr.md#commutateurs-physiques)

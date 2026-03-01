@@ -29,7 +29,7 @@ class ApplicationController extends APIController
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /** @var MApplication $application */
-        $application = MApplication::create($request->all());
+        $application = MApplication::query()->create($request->all());
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('application_services', []));

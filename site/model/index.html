@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Views /Cartograpgy</a>
                 </li>
               </ul>
               <ul>
@@ -52,11 +52,19 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0</a>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturity Levels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0 Module</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration Feature</a>
                 </li>
               </ul>
               <ul>
@@ -122,8 +130,10 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application-flows">Application Flows</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#administration-areas">Administration areas</a>
+        </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#administration-areas">Administration areas</a>
+        <ul>
     <li class="toctree-l3"><a class="reference internal" href="#administration-area">Administration area</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#administration-directory-services">Administration directory services</a>
@@ -133,10 +143,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#active-directory-domains-ldap">Active Directory domains / LDAP</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#users">Users</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#active-directory-domains-ldap_1">Active Directory domains / LDAP</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#users_1">Users</a>
     </li>
         </ul>
     </li>
@@ -214,19 +220,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Data Import/Export Interface</a>
                 </li>
               </ul>
               <ul>
@@ -234,7 +228,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API advanced (filters)</a>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API Advanced (filters)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin/">Mercator administration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Mercator Configuration Guide</a>
                 </li>
               </ul>
               <ul>
@@ -265,7 +267,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="data-model">Data model</h2>
+                <h1 id="data-model">Data model</h1>
+<p>🇫🇷 <a href="/mercator/fr/model">Lire en français</a></p>
 <p><a href="../images/model.png"><img src="/mercator/images/model.png" width="700"></a></p>
 <h3 id="gdpr-view">GDPR view</h3>
 <p>The GDPR view contains all the data required to maintain the data processing register, and provides a link with the
@@ -2021,7 +2024,7 @@ homogeneity.</p>
 <tr>
 <td style="text-align: left;">application_services</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs list of related to applications-services</td>
+<td style="text-align: left;">IDs list of related applications-services</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -2280,9 +2283,10 @@ important to avoid representing all firewall filtering rules in terms of flows.<
 </tbody>
 </table>
 <p>In the app, an information can be linked with an application flow from an application flow object.</p>
-<h4 id="administration-areas">Administration areas</h4>
+<h3 id="administration-areas">Administration areas</h3>
 <p><em>Nota</em>: OVI is coming from the French military programme law. The closest equivalents in EU regulations are OES
 (Operators of Essential Services, EU 2016/1148, NIS) and EE (Essential Entities, EU 2022/2555, NIS 2).</p>
+<p><a href="../images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <h4 id="administration-area">Administration area</h4>
 <p>An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more)
 administrator(s).</p>
@@ -2457,6 +2461,11 @@ them to be administered.</p>
 <td style="text-align: left;">Reference to Administration zone</td>
 </tr>
 <tr>
+<td style="text-align: left;">domaines</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related active directory domaines</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -2476,7 +2485,20 @@ them to be administered.</p>
 <h4 id="active-directory-domains-ldap">Active Directory domains / LDAP</h4>
 <p>Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts,
 objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).</p>
-<p>Table <em>domaines_ads</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>domaine_ads</em></span></td>
+<td style="text-align: left;"><code>/api/domaine-ads</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2543,7 +2565,20 @@ objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).</p>
 A logical server can be linked with an AD domain / LDAP from these two objects.</p>
 <h4 id="users">Users</h4>
 <p>Users are user accounts with privileged rights on IT systems.</p>
-<p>Table <em>admin_users</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>admin_users</em></span></td>
+<td style="text-align: left;"><code>/api/admin-users</code></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2592,176 +2627,6 @@ A logical server can be linked with an AD domain / LDAP from these two objects.<
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">User description</td>
-</tr>
-<tr>
-<td style="text-align: left;">domain_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Link to the users's domain</td>
-</tr>
-<tr>
-<td style="text-align: left;">created_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of creation</td>
-</tr>
-<tr>
-<td style="text-align: left;">updated_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of update</td>
-</tr>
-<tr>
-<td style="text-align: left;">deleted_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<p>The data model export lists applications which an user is administrator.</p>
-<p>In the app, an user can be defined as administrator of an application from an application object.</p>
-<h4 id="active-directory-domains-ldap_1">Active Directory domains / LDAP</h4>
-<p>Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts, objects
-rights, and a part of IT policies (e.g. Group Policy Object - GPO).</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Table</th>
-<th style="text-align: left;">api</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><span style="color: blue;"><em>domaines_ads</em></span></td>
-<td style="text-align: left;"><code>/api/domaines-ads</code></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Field</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">auto_increment</td>
-</tr>
-<tr>
-<td style="text-align: left;">name</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">AD Domain / LDAP name</td>
-</tr>
-<tr>
-<td style="text-align: left;">description</td>
-<td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Domain description</td>
-</tr>
-<tr>
-<td style="text-align: left;">domain_ctrl_cnt</td>
-<td style="text-align: left;">int signed</td>
-<td style="text-align: left;">Number of domain controllers</td>
-</tr>
-<tr>
-<td style="text-align: left;">user_count</td>
-<td style="text-align: left;">int signed</td>
-<td style="text-align: left;">Number of domain users</td>
-</tr>
-<tr>
-<td style="text-align: left;">machine_count</td>
-<td style="text-align: left;">int signed</td>
-<td style="text-align: left;">Number of domain computers</td>
-</tr>
-<tr>
-<td style="text-align: left;">relation_inter_domaine</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Cross domains relationships description</td>
-</tr>
-<tr>
-<td style="text-align: left;">created_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of creation</td>
-</tr>
-<tr>
-<td style="text-align: left;">updated_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of update</td>
-</tr>
-<tr>
-<td style="text-align: left;">deleted_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<p>The data model export lists AD forests / LDAP trees linked with an AD domain / LDAP.</p>
-<p>In the app, an AD forest / LDAP tree can be linked with an AD domain / LDAP from these two objects.
-A logical server can be linked with an AD domain / LDAP from these two objects.</p>
-<h4 id="users_1">Users</h4>
-<p>Users are user accounts with privileged rights on IT systems.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Table</th>
-<th style="text-align: left;">api</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><span style="color: blue;"><em>admin_users</em></span></td>
-<td style="text-align: left;"><code>/api/admin-users</code></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Field</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">auto_increment</td>
-</tr>
-<tr>
-<td style="text-align: left;">user_id</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Unique ID number / other of an user</td>
-</tr>
-<tr>
-<td style="text-align: left;">firstname</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">User's first name</td>
-</tr>
-<tr>
-<td style="text-align: left;">lastname</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">User's last name</td>
-</tr>
-<tr>
-<td style="text-align: left;">type</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">User type</td>
-</tr>
-<tr>
-<td style="text-align: left;">attributes</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">User's tags</td>
-</tr>
-<tr>
-<td style="text-align: left;">icon_id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Link to a specific icon</td>
-</tr>
-<tr>
-<td style="text-align: left;">description</td>
-<td style="text-align: left;">longtext</td>
-<td style="text-align: left;">DUser description</td>
 </tr>
 <tr>
 <td style="text-align: left;">domain_id</td>
@@ -3423,10 +3288,11 @@ systems (IPS: Intrusion Prevention System) and equipment monitoring systems.</p>
 <p>In the app, physical security device can be linked to a logical security device from these two objects.<br />
 An application can be linked a to logical security device from these two objects.</p>
 <h4 id="dhcp-servers">DHCP servers</h4>
-<p>DHCP servers are physical or virtual devices that manage a network's IP addresses. This object is considered barely
-usefull and obsolete. It's hidden by default.</p>
-<p>The DHCP server object is kept to be compliant with ANSSI's guidelines.</p>
-<p><em>Nota</em>: ANSSI is the french cybersecurity regulation authority.</p>
+<pre><code class="language-markdown">***NOTE***: The DHCP servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+- ANSSI is the French cybersecurity regulation authority.
+This object is considered barely usefull and obsolete. It's hidden by default.
+</code></pre>
+<p>DHCP servers are physical or virtual devices that manage a network's IP addresses.</p>
 <table>
 <thead>
 <tr>
@@ -3488,10 +3354,11 @@ usefull and obsolete. It's hidden by default.</p>
 </tbody>
 </table>
 <h4 id="dns-servers">DNS servers</h4>
-<p>Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
-This object is considered barely usefull and obsolete. It's hidden by default.</p>
-<p>The DNS server object is kept to be compliant with ANSSI's guidelines.</p>
-<p><em>Nota</em>: ANSSI is the french cybersecurity regulation authority.</p>
+<pre><code class="language-markdown">***NOTE***: The DNS servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+- ANSSI is the French cybersecurity regulation authority.
+This object is considered barely usefull and obsolete. It's hidden by default.
+</code></pre>
+<p>Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.</p>
 <table>
 <thead>
 <tr>
@@ -4886,6 +4753,11 @@ been gathered in the following table:</p>
 </table>
 <p>The "vendor", "product" and "version" fields are not used and therefore are absent of the app.</p>
 <h4 id="storage-infrastructures">Storage infrastructures</h4>
+<pre><code class="language-markdown">***NOTE***: The storage infrastructures are kept for compatibility, but this table is not maintained anymore.
+ It is possible to replace this asset by:
+- A logical server.
+- A physical server.
+</code></pre>
 <p>Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area
 network (SAN), hard disk...</p>
 <table>
@@ -5890,7 +5762,7 @@ A WAN can be linked to a LAN from a WAN object.</p>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../usecases/" class="btn btn-neutral float-left" title="Use cases"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../exploration/" class="btn btn-neutral float-right" title="Exploration">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../import/" class="btn btn-neutral float-right" title="Data Import/Export Interface">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -5921,7 +5793,7 @@ A WAN can be linked to a LAN from a WAN object.</p>
       <span><a href="../usecases/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../exploration/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../import/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

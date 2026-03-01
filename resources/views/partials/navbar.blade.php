@@ -138,6 +138,15 @@
                         <li><a class="dropdown-item" href="/admin/doc/guide">
                                 <i class="bi bi-book-fill"></i>{{ trans('panel.menu.guide') }}</a>
                         </li>
+                        @if (Auth::user()->language==='fr')
+                        <li><a class="dropdown-item" target="_blank" href="https://dbarzin.github.io/mercator/fr/">
+                                <i class="bi bi-book-fill"></i>{{ trans('panel.menu.doc') }}</a>
+                        </li>
+                        @else
+                        <li><a class="dropdown-item" target="_blank" href="https://dbarzin.github.io/mercator/">
+                                <i class="bi bi-book-fill"></i>{{ trans('panel.menu.doc') }}</a>
+                        </li>
+                        @endif
                         <li><a class="dropdown-item" href="/admin/doc/about">
                                 <i class="bi bi-info-circle-fill"></i>{{ trans('panel.menu.about') }}</a>
                         </li>
