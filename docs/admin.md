@@ -1,4 +1,4 @@
-# Administration
+# Mercator administration
 
 🇫🇷 [Lire en français](/mercator/fr/admin)
 

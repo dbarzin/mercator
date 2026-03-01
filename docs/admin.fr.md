@@ -1,4 +1,4 @@
-# Administration
+# Administration de Mercator
 
 🇬🇧 [Read in English](/mercator/admin)
 
