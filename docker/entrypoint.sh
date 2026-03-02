@@ -42,6 +42,14 @@ if [ "${DB_CONNECTION}" = "mysql" ] || [ "${DB_CONNECTION}" = "mariadb" ]; then
 fi
 
 # ---------------------------------------------------------------------------
+# Passport v13: publish migrations (id column changed from INT to UUID)
+# Must run BEFORE migrate, otherwise oauth_clients.id stays as integer
+# and passport:client --personal fails with "Incorrect integer value: '<uuid>'"
+# ---------------------------------------------------------------------------
+echo "📦 Publishing Passport migrations..."
+php artisan vendor:publish --tag=passport-migrations --force
+
+# ---------------------------------------------------------------------------
 # Migrations AVANT passport:install
 # passport:install a besoin que les tables oauth_ soient créées par migrate
 # ---------------------------------------------------------------------------
