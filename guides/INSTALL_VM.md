@@ -468,13 +468,13 @@ Get the sources from GIT
     cd /var/www/mercator
     git pull
 
-Migrate the database
-
-    php artisan migrate
-
 Install PHP libraries
 
     composer install
+
+Migrate the database
+
+    php artisan migrate
 
 Empty caches
 
