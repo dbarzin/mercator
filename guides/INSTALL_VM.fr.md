@@ -485,13 +485,13 @@ Récupérer les sources de GIT
     cd /var/www/mercator
     sudo -u www-data git pull
 
-Migrer la base de données
-
-    sudo -u www-data php artisan migrate
-
 Installer les librairies PHP
 
     sudo -u www-data composer install
+
+Migrer la base de données
+
+    sudo -u www-data php artisan migrate
 
 Vider les caches
 
