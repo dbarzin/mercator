@@ -42,8 +42,7 @@ if [ "${DB_CONNECTION}" = "mysql" ] || [ "${DB_CONNECTION}" = "mariadb" ]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Migrations AVANT passport:install
-# passport:install a besoin que les tables oauth_ soient créées par migrate
+# Migrations
 # ---------------------------------------------------------------------------
 echo "🗄️  Running database migrations..."
 if [ "${USE_DEMO_DATA}" = "1" ] || [ "${SEED_DATABASE}" = "1" ]; then
