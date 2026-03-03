@@ -43,7 +43,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
 
         $middleware->api(prepend: [
-            \App\Http\Middleware\ForceJsonResponse::class,   // ✅ force les erreurs en JSON sur l'API            \App\Http\Middleware\EncryptCookies::class,      // ✅ déchiffre mercator_session et laravel_token
+            \App\Http\Middleware\ForceJsonResponse::class,   // ✅ force les erreurs en JSON sur l'API
+            \App\Http\Middleware\EncryptCookies::class,      // ✅ déchiffre mercator_session et laravel_token
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class, // ✅ charge la session existante
             "throttle:api",
