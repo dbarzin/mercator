@@ -2126,7 +2126,7 @@ CREATE TABLE public.oauth_access_tokens (
 CREATE TABLE public.oauth_auth_codes (
     id character varying(100) NOT NULL,
     user_id bigint NOT NULL,
-    client_id bigint NOT NULL,
+    client_id character varying(36) NOT NULL,
     scopes text,
     revoked boolean NOT NULL,
     expires_at timestamp(0) without time zone
@@ -2177,7 +2177,7 @@ ALTER SEQUENCE public.oauth_clients_id_seq OWNED BY public.oauth_clients.id;
 
 CREATE TABLE public.oauth_personal_access_clients (
     id bigint NOT NULL,
-    client_id bigint NOT NULL,
+    client_id character varying(36) NOT NULL,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
