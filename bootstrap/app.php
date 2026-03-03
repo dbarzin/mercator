@@ -43,7 +43,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
 
         $middleware->api(prepend: [
-            \App\Http\Middleware\EncryptCookies::class,      // ✅ déchiffre mercator_session et laravel_token
+            \App\Http\Middleware\ForceJsonResponse::class,   // ✅ force les erreurs en JSON sur l'API            \App\Http\Middleware\EncryptCookies::class,      // ✅ déchiffre mercator_session et laravel_token
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class, // ✅ charge la session existante
             "throttle:api",
@@ -90,5 +90,14 @@ return Application::configure(basePath: dirname(__DIR__))
         );
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+
+                return response()->json([
+                    'message' => $e->getMessage() ?: 'Server Error',
+                    'code'    => $status,
+                ], $status);
+            }
+        });
     })->create();
