@@ -2109,7 +2109,7 @@ ALTER SEQUENCE public.networks_id_seq OWNED BY public.networks.id;
 CREATE TABLE public.oauth_access_tokens (
     id character varying(100) NOT NULL,
     user_id bigint,
-    client_id bigint NOT NULL,
+    client_id character varying(36) NOT NULL,
     name character varying(255),
     scopes text,
     revoked boolean NOT NULL,
