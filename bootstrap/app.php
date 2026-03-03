@@ -94,9 +94,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
             if ($request->is('api/*')) {
                 $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+                $message = ($status >= 500 && !config('app.debug'))
+                    ? 'Server Error'
+                    : ($e->getMessage() ?: 'Server Error');
 
                 return response()->json([
-                    'message' => $e->getMessage() ?: 'Server Error',
+                    'message' => $message,
                     'code'    => $status,
                 ], $status);
             }
