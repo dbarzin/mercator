@@ -18,7 +18,7 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $mans = Man::all()->sortBy('name');
+        $mans = Man::with('wans', 'lans', 'parentMan')->get()->sortBy('name');
 
         return view('admin.mans.index', compact('mans'));
     }
@@ -51,7 +51,8 @@ class ManController extends Controller
 
         $wans = Wan::query()->orderBy('name')->pluck('name', 'id');
         $lans = Lan::query()->orderBy('name')->pluck('name', 'id');
-        $mans = Man::query()->orderBy('name')->pluck('name', 'id');
+        $mans = Man::query()->where('id', '!=', $man->id)
+            ->orderBy('name')->pluck('name', 'id');
 
         $man->load('lans');
 

@@ -24,7 +24,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label class="label-maturity-1"
-                                   for="description">{{ trans('cruds.building.fields.description') }}</label>
+                                   for="description">{{ trans('cruds.wan.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description"
@@ -34,7 +34,7 @@
                                     {{ $errors->first('description') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.building.fields.description_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.wan.fields.description_helper') }}</span>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label for="buildings">{{ trans('cruds.man.fields.wans') }}</label>
+                            <label for="wans">{{ trans('cruds.man.fields.wans') }}</label>
                             <select class="form-control select2 {{ $errors->has('wans') ? 'is-invalid' : '' }}"
                                     name="wans[]"
                                     id="wans[]" multiple>
@@ -51,9 +51,9 @@
                                     <option value="{{ $id }}" {{ in_array($id, old('wans', [])) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('buildings'))
+                            @if($errors->has('wans'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('buildings') }}
+                                    {{ $errors->first('wans') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.man.fields.wans_helper') }}</span>

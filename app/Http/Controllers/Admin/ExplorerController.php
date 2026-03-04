@@ -560,6 +560,11 @@ class ExplorerController extends Controller
             ->whereNull('deleted_at')
             ->get();
 
+        $wanLinksByMan = DB::table('man_wan')
+            ->select('man_id', 'wan_id')
+            ->get()
+            ->groupBy('man_id');
+
         foreach ($mans as $man) {
             $this->addNode(
                 6,
@@ -570,16 +575,12 @@ class ExplorerController extends Controller
                 680
             );
 
-            if ($man->parent_man_id!==null)
+            if ($man->parent_man_id !== null)
                 $this->addLinkEdge(
                     $this->formatId(Man::$prefix, $man->id),
                     $this->formatId(Man::$prefix, $man->parent_man_id));
             else {
-                $wans = DB::table('man_wan')
-                    ->select('wan_id')
-                    ->where('man_id', $man->id)
-                    ->get();
-                foreach ($wans as $wan) {
+                foreach (($wanLinksByMan->get($man->id) ?? collect()) as $wan) {
                     $this->addLinkEdge(
                         $this->formatId(Man::$prefix, $man->id),
                         $this->formatId(Wan::$prefix, $wan->wan_id));
