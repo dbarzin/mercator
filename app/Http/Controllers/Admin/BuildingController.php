@@ -36,10 +36,10 @@ class BuildingController extends Controller
 
         // Lists
         $attributes_list = $this->getAttributes();
-        $type_list = Building::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Select icons
-        $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Building::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         return view(
             'admin.buildings.create',
@@ -51,13 +51,13 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $sites = Site::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
         $attributes_list = $this->getAttributes();
-        $type_list = Building::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Select icons
-        $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Building::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $request->merge($building->only($building->getFillable()));
         $request->flash();
@@ -100,7 +100,7 @@ class BuildingController extends Controller
         $building->save();
 
         // set children
-        Building::whereIn('id', $childrenIds)
+        Building::query()->whereIn('id', $childrenIds)
             ->update(['building_id' => $building->id]);
 
         return redirect()->route('admin.buildings.index');
@@ -113,9 +113,9 @@ class BuildingController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $attributes_list = $this->getAttributes();
-        $type_list = Building::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         // Select icons
-        $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Building::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $building->load('site');
 
@@ -161,10 +161,10 @@ class BuildingController extends Controller
         $building->update($request->all());
 
         // update children
-        Building::where('building_id', $building->id)
+        Building::query()->where('building_id', $building->id)
             ->update(['building_id' => null]);
 
-        Building::whereIn('id', $childrenIds)
+        Building::query()->whereIn('id', $childrenIds)
             ->update(['building_id' => $building->id]);
 
         return redirect()->route('admin.buildings.index');
@@ -195,7 +195,12 @@ class BuildingController extends Controller
 
     public function massDestroy(MassDestroyBuildingRequest $request)
     {
-        Building::whereIn('id', request('ids'))->delete();
+        Building::query()->whereIn('id', request('ids'))->delete();
+
+        // due to soft delete, also set null to all children
+        Building::query()
+            ->whereIn('building_id', request('ids'))
+            ->update(['building_id' => null]);
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

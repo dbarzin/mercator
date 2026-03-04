@@ -5658,16 +5658,16 @@
         },
         {
             "name": "sourcentis/mercator-core",
-            "version": "1.55.0",
+            "version": "1.59.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dbarzin/mercator-core.git",
-                "reference": "69183179ff1bd6b4c590c3ed43cf19bbfd6ebd55"
+                "reference": "d626f31c773b8d48b5fc94d36fd9444c344dacbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/69183179ff1bd6b4c590c3ed43cf19bbfd6ebd55",
-                "reference": "69183179ff1bd6b4c590c3ed43cf19bbfd6ebd55",
+                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/d626f31c773b8d48b5fc94d36fd9444c344dacbc",
+                "reference": "d626f31c773b8d48b5fc94d36fd9444c344dacbc",
                 "shasum": ""
             },
             "require": {
@@ -5699,9 +5699,9 @@
             "description": "Mercator core services (modules, licensing, menus, domain models).",
             "support": {
                 "issues": "https://github.com/dbarzin/mercator-core/issues",
-                "source": "https://github.com/dbarzin/mercator-core/tree/v1.55.0"
+                "source": "https://github.com/dbarzin/mercator-core/tree/v1.59.0"
             },
-            "time": "2026-02-22T18:33:46+00:00"
+            "time": "2026-03-04T06:58:18+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

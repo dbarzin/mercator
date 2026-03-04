@@ -551,13 +551,12 @@ class ExplorerController extends Controller
             );
         }
 
-        $this->linkJoinTable('man_wan', Man::$prefix, Wan::$prefix, 'man_id', 'wan_id');
     }
 
     private function buildMAN(): void
     {
         $mans = DB::table('mans')
-            ->select('id', 'name')
+            ->select('id', 'name', 'parent_man_id')
             ->whereNull('deleted_at')
             ->get();
 
@@ -570,7 +569,25 @@ class ExplorerController extends Controller
                 'mans',
                 680
             );
+
+            if ($man->parent_man_id!==null)
+                $this->addLinkEdge(
+                    $this->formatId(Man::$prefix, $man->id),
+                    $this->formatId(Man::$prefix, $man->parent_man_id));
+            else {
+                $wans = DB::table('man_wan')
+                    ->select('wan_id')
+                    ->where('man_id', $man->id)
+                    ->get();
+                foreach ($wans as $wan) {
+                    $this->addLinkEdge(
+                        $this->formatId(Man::$prefix, $man->id),
+                        $this->formatId(Wan::$prefix, $wan->wan_id));
+                }
+            }
+
         }
+
 
         $this->linkJoinTable('lan_man', Lan::$prefix, Man::$prefix, 'lan_id', 'man_id');
     }
