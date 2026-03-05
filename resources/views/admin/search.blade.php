@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 
 @section("content")
-    <div class="card">
 
         @if (empty($searchableData))
-        <div class="card-header">
-            Empty
+        <div class="card">
+            <div class="card-header">
+                Empty
+            </div>
         </div>
         @else
 
@@ -18,7 +19,8 @@
             @if ($curModel!==$item['model'])
 
                 @if ($curModel!==null)
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
                 @endif
@@ -27,11 +29,12 @@
                     $curModel = $item['model'];
                 @endphp
 
+                    <div class="card mt-2">
                     <div class="card-header">
                         {{ $item['name'] }}
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body ">
                         <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover datatable datatable-{{ $curModel }}">
                     <thead>
