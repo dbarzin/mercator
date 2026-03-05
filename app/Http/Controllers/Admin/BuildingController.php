@@ -51,18 +51,22 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Location
         $sites = Site::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
 
-        // Lists
         $attributes_list = $this->getAttributes();
         $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        // Select icons
         $icons = Building::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        $request->merge($building->only($building->getFillable()));
+        $data = $building->only($building->getFillable());
+
+        // Convertir la chaîne "attr1 attr2" en tableau pour old('attributes')
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->flash();
 
         return view(
@@ -70,7 +74,6 @@ class BuildingController extends Controller
             compact('sites', 'buildings', 'icons', 'attributes_list', 'type_list')
         );
     }
-
     public function store(StoreBuildingRequest $request)
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
