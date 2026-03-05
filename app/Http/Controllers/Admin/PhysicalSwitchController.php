@@ -45,7 +45,8 @@ class PhysicalSwitchController extends Controller
         // NetworkSwitches
         $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        // Types
+        $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.physicalSwitches.create',
@@ -57,12 +58,19 @@ class PhysicalSwitchController extends Controller
     {
         abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Select icons
+        $icons = PhysicalSwitch::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        // Location
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // NetworkSwitches
         $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        // Types
+        $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Get PhysicalSwitch
         $physicalSwitch = PhysicalSwitch::find($request['id']);
@@ -76,7 +84,7 @@ class PhysicalSwitchController extends Controller
 
         return view(
             'admin.physicalSwitches.create',
-            compact('sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
+            compact('icons', 'sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
         );
     }
 
@@ -108,8 +116,8 @@ class PhysicalSwitchController extends Controller
         // NetworkSwitches
         $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        // types
-        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        // Types
+        $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $physicalSwitch->load('site', 'building', 'bay');
 
