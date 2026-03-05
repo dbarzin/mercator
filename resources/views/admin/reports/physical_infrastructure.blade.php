@@ -467,7 +467,7 @@ S{{ $phone->site->id }} -> PHONE{{ $phone->id }}
 @endcan
 @can('physical_switch_access')
 @foreach($physicalSwitches as $switch)
-SWITCH{{ $switch->id }} [label="{{ $switch->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="#{{$switch->getUID()}}"]
+SWITCH{{ $switch->id }} [label="{{ $switch->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $switch->icon_id === null ? '/images/switch.png' : route('admin.documents.show', $switch->icon_id) }}"  href="#{{$switch->getUID()}}"]
 @if ($switch->bay!=null)
 BAY{{ $switch->bay->id }} -> SWITCH{{ $switch->id }}
 @elseif ($switch->building!=null)
@@ -544,6 +544,11 @@ d3.select("#graph").graphviz()
     @endforeach
     .addImage("/images/phone.png", "64px", "64px")
     .addImage("/images/switch.png", "64px", "64px")
+    @foreach($physicalSwitches as $switch)
+    @if ($switch->icon_id!==null)
+    .addImage("{{ route('admin.documents.show', $switch->icon_id) }}", "64px", "64px")
+    @endif
+    @endforeach
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/security.png", "64px", "64px")
