@@ -54,7 +54,7 @@ body {
 
 /* Fix anchor navbar */
 [id] {
-    scroll-margin-top: 70px;
+    scroll-margin-top: 10px;
 }
 
 /***************************************************************************/
@@ -699,5 +699,35 @@ table .navbar-brand-full {
 }
 
 /***************************************************************************/
+
+/* Positionnement uniquement sur les pages avec card graphique sticky */
+#content-home:has(.graph-card-sticky) {
+    position: fixed;
+    top: 56px;
+    left: 230px;
+    right: 0;
+    bottom: 0;
+    margin: 0 !important;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#content-home:has(.graph-card-sticky).content-expanded {
+    left: 0;
+}
+
+/* La card graphique ne rétrécit pas */
+.graph-card-sticky {
+    flex-shrink: 0;
+}
+
+.report-scroll-area {
+    flex: 1;
+    min-height: 0; /* ← c'est ça qui manque */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 /*********************************************************/
