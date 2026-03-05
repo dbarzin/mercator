@@ -416,7 +416,7 @@ class ExplorerController extends Controller
     private function buildPhysicalSwitches(): void
     {
         $switches = DB::table('physical_switches')
-            ->select('id', 'name', 'bay_id', 'building_id', 'site_id')
+            ->select('id', 'name', 'icon_id', 'bay_id', 'building_id', 'site_id')
             ->whereNull('deleted_at')
             ->get();
 
@@ -425,7 +425,7 @@ class ExplorerController extends Controller
                 6,
                 $this->formatId(PhysicalSwitch::$prefix, $switch->id),
                 $switch->name,
-                '/images/switch.png',
+                $this->getIcon($switch->icon_id, '/images/switch.png'),
                 'physical-switches',
                 640
             );

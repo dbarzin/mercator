@@ -15,17 +15,7 @@
             {{ $physicalSwitch->name }}
             @endif
             </td>
-        </tr>
-        <tr>
-            <th>
-                {{ trans('cruds.physicalSwitch.fields.description') }}
-            </th>
-            <td>
-                {!! $physicalSwitch->description !!}
-            </td>
-        </tr>
-        <tr>
-            <th>
+            <th width="10%">
                 {{ trans('cruds.physicalSwitch.fields.type') }}
             </th>
             <td>
@@ -34,9 +24,24 @@
         </tr>
         <tr>
             <th>
+                {{ trans('cruds.physicalSwitch.fields.description') }}
+            </th>
+            <td colspan="2">
+                {!! $physicalSwitch->description !!}
+            </td>
+            <td style="text-align: center; width: 10%">
+                @if ($physicalSwitch->icon_id === null)
+                    <img src='/images/switch.png' width='60' height='60'>
+                @else
+                    <img src='{{ route('admin.documents.show', $physicalSwitch->icon_id) }}' width='60' height='60'>
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <th>
                 {{ trans('cruds.physicalSwitch.fields.site') }}
             </th>
-            <td>
+            <td colspan="3">
                 @if ($physicalSwitch->site!=null)
                     <a href="{{ route('admin.sites.show', $physicalSwitch->site->id) }}">
                     {{ $physicalSwitch->site->name ?? '' }}
@@ -48,7 +53,7 @@
             <th>
                 {{ trans('cruds.physicalSwitch.fields.building') }}
             </th>
-            <td>
+            <td colspan="3">
                 @if ($physicalSwitch->building!=null)
                     <a href="{{ route('admin.buildings.show', $physicalSwitch->building->id) }}">
                     {{ $physicalSwitch->building->name ?? '' }}
@@ -60,7 +65,7 @@
             <th>
                 {{ trans('cruds.physicalSwitch.fields.bay') }}
             </th>
-            <td>
+            <td colspan="3">
                 @if ($physicalSwitch->bay!=null)
                     <a href="{{ route('admin.bays.show', $physicalSwitch->bay->id) }}">
                     {{ $physicalSwitch->bay->name ?? '' }}
@@ -72,7 +77,7 @@
             <th>
                 {{ trans('cruds.physicalSwitch.fields.network_switches') }}
             </th>
-            <td>
+            <td colspan="3">
                 @foreach($physicalSwitch->networkSwitches as $networkSwitch)
                     <a href="{{ route('admin.network-switches.show', $networkSwitch->id) }}">
                     {{ $networkSwitch->name }}
