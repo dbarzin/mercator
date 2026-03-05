@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('oauth_device_codes', function (Blueprint $table) {
-            $table->char('id', 80)->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->foreignUuid('client_id')->index();
-            $table->char('user_code', 8)->unique();
-            $table->text('scopes');
-            $table->boolean('revoked');
-            $table->dateTime('user_approved_at')->nullable();
-            $table->dateTime('last_polled_at')->nullable();
-            $table->dateTime('expires_at')->nullable();
-        });
+        if (!Schema::hasTable('oauth_device_codes'))
+            Schema::create('oauth_device_codes', function (Blueprint $table) {
+                $table->char('id', 80)->primary();
+                $table->foreignId('user_id')->nullable()->index();
+                $table->foreignUuid('client_id')->index();
+                $table->char('user_code', 8)->unique();
+                $table->text('scopes');
+                $table->boolean('revoked');
+                $table->dateTime('user_approved_at')->nullable();
+                $table->dateTime('last_polled_at')->nullable();
+                $table->dateTime('expires_at')->nullable();
+            });
     }
 
     /**
