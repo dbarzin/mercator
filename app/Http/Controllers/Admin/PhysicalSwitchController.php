@@ -88,6 +88,7 @@ class PhysicalSwitchController extends Controller
 
         // Save icon
         $this->iconUploadService->handle($request, $physicalSwitch);
+        $physicalSwitch->save();
 
         return redirect()->route('admin.physical-switches.index');
     }
