@@ -468,7 +468,7 @@
                                         <th>{{ trans('cruds.applicationModule.fields.services') }}</th>
                                         <td>
                                             @foreach($applicationModule->applicationServices as $service)
-                                                <a href="#MODULE{{ $service->id }}">{{ $service->name }}</a>
+                                                <a href="#SERVICE{{ $service->id }}">{{ $service->name }}</a>
                                                 {{ $loop->last ? '' : ',' }}
                                             @endforeach
                                         </td>

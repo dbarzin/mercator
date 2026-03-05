@@ -589,8 +589,10 @@ digraph  {
 
 document.addEventListener("DOMContentLoaded", function () {
     $('#site').on('change', function () {
-        if (this.form.building)
-            this.form.building.value = '';
+        const buildings = this.form.querySelector('#buildings');
+        if (buildings) {
+            Array.from(buildings.options).forEach((opt) => { opt.selected = false; });
+        }
         this.form.submit();
     });
 
