@@ -51,8 +51,11 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Location
         $sites = Site::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
+
+        // Lists
         $attributes_list = $this->getAttributes();
         $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 

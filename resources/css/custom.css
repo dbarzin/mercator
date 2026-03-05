@@ -52,8 +52,12 @@ body {
     color: #000000;
 }
 
-/* Fix anchor navbar */
 [id] {
+    scroll-margin-top: 70px;
+}
+
+/* Smaller offset only for the internal report scroller */
+.report-scroll-area [id] {
     scroll-margin-top: 10px;
 }
 

@@ -46,7 +46,7 @@
                     <div class="col-sm-8">
                         <input name="show_ip" id='show_ip' type="checkbox" value="1" class="form-check-input"
                                {{ Session::get('show_ip') ? 'checked' : '' }} onchange="this.form.subnetwork.value='';this.form.submit()">
-                        <label for="is_external">Afficher les adresses IP</label>
+                        <label for="show_ip">Afficher les adresses IP</label>
                     </div>
                 </div>
                 <div id="graph-container">
@@ -410,7 +410,7 @@
                     {{ trans("cruds.wifiTerminal.title") }}
                 </div>
                 <div class="card-body">
-                    <p>{{ trans("cruds.workstation.description") }}</p>
+                    <p>{{ trans("cruds.wifiTerminal.description") }}</p>
                     @foreach($wifiTerminals as $wifiTerminal)
                         <div class="row">
                             <div class="col">
