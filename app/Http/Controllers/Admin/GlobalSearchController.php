@@ -57,7 +57,7 @@ class GlobalSearchController extends Controller
         'Certificate' => 'cruds.certificate.title',
         'DataProcessing' => 'cruds.dataProcessing.title',
         'SecurityControl' => 'cruds.securityControl.title',
-        'LogicalFlow' => 'cruds.LogicalFlow.title',
+        'LogicalFlow' => 'cruds.logicalFlow.title',
         'Graph' => 'cruds.graph.title',
         'Container' => 'cruds.container.title',
         'Cluster' => 'cruds.cluster.title',
