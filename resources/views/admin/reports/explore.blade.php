@@ -338,8 +338,8 @@ Physique :
                 }
             };
             */
-
             const options = {
+                /*
                 physics: {
                     enabled: true,
                     stabilization: {
@@ -356,6 +356,8 @@ Physique :
 
                     solver: 'barnesHut',
                     },
+
+                 */
                 nodes: {
                     shape: 'image',
                     size: 25
@@ -370,7 +372,6 @@ Physique :
                     keyboard: true
                 }
             };
-
             network = new vis.Network(container, data, options);
 
             // Setup event handlers
