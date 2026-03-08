@@ -1,3 +1,7 @@
+@props([
+    'entity',
+    'withLink' => false,
+])
 <table class="table table-bordered table-striped table-report" id="{{ $entity->getUID() }}">
     <tbody>
         <tr>
@@ -5,7 +9,11 @@
                 {{ trans('cruds.entity.fields.name') }}
             </th>
             <td>
+            @if ($withLink)
+            <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</a>
+            @else
                 {{ $entity->name }}
+            @endif
             </td>
             <th width="10%">
                 {{ trans('cruds.entity.fields.entity_type') }}
