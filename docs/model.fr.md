@@ -39,6 +39,9 @@ Le registre des activités de traitement contient les informations prévues à l
 | transfert                      | longtext     | Transferts de données                   |
 | retention                      | longtext     | Durées de rétention                     |
 | controls                       | longtext     | Mesures de sécurité                     |
+| informations                   | List int [,] | Liste d'id des informations liées       |
+| applications                   | List int [,] | Liste d'id des applications liées       |
+| processes                      | List int [,] | Liste d'id des processus liés           |
 | created_at                     | timestamp    | Date de création                        |
 | updated_at                     | timestamp    | Date de mise à jour                     |
 | deleted_at                     | timestamp    | Date de suppression                     |
