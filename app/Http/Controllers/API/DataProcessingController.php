@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\MassDestroyDataProcessingRequest;
-use App\Http\Requests\MassStoreDataProcessingRequest;
-use App\Http\Requests\MassUpdateDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
 use Gate;
@@ -29,7 +27,8 @@ class DataProcessingController extends APIController
         abort_if(Gate::denies('data_processing_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /** @var DataProcessing $dataProcessing */
-        $dataProcessing = DataProcessing::create($request->all());
+        $dataProcessing = DataProcessing::query()->create($request->all());
+
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
@@ -41,6 +40,10 @@ class DataProcessingController extends APIController
     {
         abort_if(Gate::denies('data_processing_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $dataProcessing['processes']    = $dataProcessing->processes()->pluck('id');
+        $dataProcessing['informations'] = $dataProcessing->informations()->pluck('id');
+        $dataProcessing['applications'] = $dataProcessing->applications()->pluck('id');
+
         return new JsonResource($dataProcessing);
     }
 
@@ -49,9 +52,12 @@ class DataProcessingController extends APIController
         abort_if(Gate::denies('data_processing_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $dataProcessing->update($request->all());
-        $dataProcessing->processes()->sync($request->input('processes', []));
-        $dataProcessing->informations()->sync($request->input('informations', []));
-        $dataProcessing->applications()->sync($request->input('applications', []));
+        if ($request->has('processes'))
+            $dataProcessing->processes()->sync($request->input('processes', []));
+        if ($request->has('informations'))
+            $dataProcessing->informations()->sync($request->input('informations', []));
+        if ($request->has('applications'))
+            $dataProcessing->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
@@ -69,93 +75,9 @@ class DataProcessingController extends APIController
     {
         abort_if(Gate::denies('data_processing_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        DataProcessing::whereIn('id', $request->input('ids', []))->delete();
+        DataProcessing::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function massStore(MassStoreDataProcessingRequest $request)
-    {
-        // L’authorize() du FormRequest gère déjà data_processing_create
-        $data       = $request->validated();
-        $createdIds = [];
-
-        $model    = new DataProcessing();
-        $fillable = $model->getFillable();
-
-        foreach ($data['items'] as $item) {
-            $processes    = $item['processes'] ?? null;
-            $informations = $item['informations'] ?? null;
-            $applications = $item['applications'] ?? null;
-
-            // Ne garde que les colonnes du modèle, sans les relations
-            $attributes = collect($item)
-                ->except(['processes', 'informations', 'applications'])
-                ->only($fillable)
-                ->toArray();
-
-            /** @var DataProcessing $dataProcessing */
-            $dataProcessing = DataProcessing::query()->create($attributes);
-
-            if (array_key_exists('processes', $item)) {
-                $dataProcessing->processes()->sync($processes ?? []);
-            }
-            if (array_key_exists('informations', $item)) {
-                $dataProcessing->informations()->sync($informations ?? []);
-            }
-            if (array_key_exists('applications', $item)) {
-                $dataProcessing->applications()->sync($applications ?? []);
-            }
-
-            $createdIds[] = $dataProcessing->id;
-        }
-
-        return response()->json([
-            'status' => 'ok',
-            'count'  => count($createdIds),
-            'ids'    => $createdIds,
-        ], Response::HTTP_CREATED);
-    }
-
-    public function massUpdate(MassUpdateDataProcessingRequest $request)
-    {
-        // L’authorize() du FormRequest gère déjà data_processing_edit
-        $data     = $request->validated();
-        $model    = new DataProcessing();
-        $fillable = $model->getFillable();
-
-        foreach ($data['items'] as $rawItem) {
-            $id           = $rawItem['id'];
-            $processes    = $rawItem['processes'] ?? null;
-            $informations = $rawItem['informations'] ?? null;
-            $applications = $rawItem['applications'] ?? null;
-
-            /** @var DataProcessing $dataProcessing */
-            $dataProcessing = DataProcessing::query()->findOrFail($id);
-
-            // Ne garde que les colonnes du modèle, sans l'id ni les relations
-            $attributes = collect($rawItem)
-                ->except(['id', 'processes', 'informations', 'applications'])
-                ->only($fillable)
-                ->toArray();
-
-            if (! empty($attributes)) {
-                $dataProcessing->update($attributes);
-            }
-
-            if (array_key_exists('processes', $rawItem)) {
-                $dataProcessing->processes()->sync($processes ?? []);
-            }
-            if (array_key_exists('informations', $rawItem)) {
-                $dataProcessing->informations()->sync($informations ?? []);
-            }
-            if (array_key_exists('applications', $rawItem)) {
-                $dataProcessing->applications()->sync($applications ?? []);
-            }
-        }
-
-        return response()->json([
-            'status' => 'ok',
-        ]);
-    }
 }
