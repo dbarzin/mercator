@@ -190,10 +190,9 @@
             @endforeach
         </td>
     </tr>
-
-
-
-
+    </tbody>
+    </table>
+    </div>
         <div class="card-footer">
             {{ trans('global.created_at') }} {{ $dataProcessing->created_at ? $dataProcessing->created_at->format(trans('global.timestamp')) : '' }}
             |
