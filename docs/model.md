@@ -39,6 +39,9 @@ The register of processing activities contains the information required by artic
 | transfer                       | longtext     | Data transfers                        |
 | retention                      | longtext     | Retention periods                     |
 | controls                       | longtext     | Security Measures                     |
+| informations                   | List int [,] | IDs list of related informations      |
+| applications                   | List int [,] | IDs list of related applications      |
+| processes                      | List int [,] | IDs list of related processes         |
 | created_at                     | timestamp    | Date of creation                      |
 | updated_at                     | timestamp    | Date of update                        |
 | deleted_at                     | timestamp    | Date of deletion                      |
@@ -235,7 +238,7 @@ Processes are made up of activities, entities involved in this process, and info
 | macroprocess_id    | int unsigned | Reference to macro-process       |
 | activities         | List int [,] | IDs list of related activities   |
 | entities           | List int [,] | IDs list of related entities     |
-| informations       | List int [,] | IDs list of related information  |
+| informations       | List int [,] | IDs list of related informations |
 | applications       | List int [,] | IDs list of related applications |
 | operations         | List int [,] | IDs list of related operations   |
 | created_at         | timestamp    | Date of creation                 |
