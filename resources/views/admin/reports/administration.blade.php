@@ -60,7 +60,6 @@
 
                 <div class="card-body">
                     <p>{{ trans('cruds.zoneAdmin.title') }}</p>
-                    <ul>
                         @foreach($zones as $zone)
                             <div class="row">
                                 <div class="col-sm-6">
@@ -98,9 +97,7 @@
                                             </td>
                                         </tr>
                                         </tbody>
-                                        </tr>
                                     </table>
-                                    <br>
                                 </div>
                             </div>
                     @endforeach
@@ -119,7 +116,6 @@
 
                 <div class="card-body">
                     <p>{{ trans('cruds.annuaire.description') }}</p>
-                    <ul>
                         @foreach($annuaires as $annuaire)
                             <div class="row">
                                 <div class="col-sm-6">
@@ -147,7 +143,6 @@
                                             </td>
                                         </tr>
                                         </tbody>
-                                        </tr>
                                     </table>
                                     <br>
                                 </div>
@@ -160,7 +155,6 @@
 
     @can('forest_ad_access')
         @if ($forests->count()>0)
-            <br>
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.forestAd.title') }}
@@ -168,7 +162,6 @@
 
                 <div class="card-body">
                     <p>{{ trans('cruds.forestAd.description') }}</p>
-                    <ul>
                         @foreach($forests as $forest)
                             <div class="row">
                                 <div class="col-sm-6">
@@ -215,14 +208,12 @@
 
     @can('domaine_ad_access')
         @if ($domains->count()>0)
-            <br>
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.domaineAd.title') }}
                 </div>
                 <div class="card-body">
                     <p>{{ trans('cruds.domaineAd.description') }}</p>
-                    <ul>
                         @foreach($domains as $domain)
                             <div class="row">
                                 <div class="col-sm-6">
@@ -291,14 +282,12 @@
     @endcan
     @can('admin_user_access')
         @if ($adminUsers->count()>0)
-            <br>
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.adminUser.title') }}
                 </div>
                 <div class="card-body">
                     <p>{{ trans('cruds.adminUser.description') }}</p>
-                    <ul>
                         @foreach($adminUsers as $adminUser)
                             <div class="row">
                                 <div class="col-sm-6">
