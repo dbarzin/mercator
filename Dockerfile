@@ -27,6 +27,8 @@ RUN apk add --no-cache \
     # Install composer
     && curl -sS https://getcomposer.org/installer | php \
     && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer \
+    # Create Purifier folder
+    && mkdir -p /var/www/mercator/storage/app/purifier \
     # Create application user and group
     && addgroup -g 1000 -S www \
     && adduser -u 1000 -S mercator -G www \
