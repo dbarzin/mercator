@@ -98,7 +98,7 @@ class DomaineAdController extends APIController
             $domaineAd = DomaineAd::query()->create($attributes);
 
             if (array_key_exists('forestAds', $item) && $forestAds !== null) {
-                $domaineAd->forestAds()->sync($forestAds ?? []);
+                $domaineAd->forestAds()->sync($forestAds);
             }
 
             $createdIds[] = $domaineAd->id;
@@ -136,7 +136,7 @@ class DomaineAdController extends APIController
             }
 
             if (array_key_exists('forestAds', $rawItem) && $forestAds !== null) {
-                $domaineAd->forestAds()->sync($forestAds ?? []);
+                $domaineAd->forestAds()->sync($forestAds);
             }
         }
 
