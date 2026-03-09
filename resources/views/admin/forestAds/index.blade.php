@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.forestAd.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('forest_ad_create')
         <div style="margin-bottom: 10px;" class="row">

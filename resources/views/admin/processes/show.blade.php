@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $process->name }}
+@endsection
+
 @section('content')
 
 <div class="form-group">

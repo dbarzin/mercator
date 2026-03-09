@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.certificate.title_singular') }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.certificates.store") }}" enctype="multipart/form-data">
     @csrf

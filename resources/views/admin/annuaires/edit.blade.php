@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $annuaire->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.annuaires.update", [$annuaire->id]) }}" enctype="multipart/form-data">
         @method('PUT')

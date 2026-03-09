@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $flux->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.fluxes.update", [$flux->id]) }}" enctype="multipart/form-data">
         @method('PUT')

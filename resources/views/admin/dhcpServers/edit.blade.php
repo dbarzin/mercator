@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $dhcpServer->name }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.dhcp-servers.update", [$dhcpServer->id]) }}" enctype="multipart/form-data">
     @method('PUT')

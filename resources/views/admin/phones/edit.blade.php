@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $phone->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.phones.update", [$phone->id]) }}" enctype="multipart/form-data">
         @method('PUT')

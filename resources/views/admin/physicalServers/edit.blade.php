@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $physicalServer->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.physical-servers.update", [$physicalServer->id]) }}"
           enctype="multipart/form-data">

@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    {{ trans('doc.about.title') }}
+@endsection
+
 @section('content')
 <div class="card">
     <div class="card-header">

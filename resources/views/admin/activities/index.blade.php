@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.activity.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 <div style="margin-bottom: 10px;" class="row">
     @can('activity_create')

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans("panel.level_3.title_long") }}
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-12">

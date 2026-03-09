@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    {{ trans("cruds.menu.physical_infrastructure.title") }}
+@endsection
+
 @section('content')
 <div class="graph-card-sticky">
     <div class="card mb-3">

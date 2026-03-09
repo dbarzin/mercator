@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $macroProcessus->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.macro-processuses.update", [$macroProcessus->id]) }}"
           enctype="multipart/form-data">

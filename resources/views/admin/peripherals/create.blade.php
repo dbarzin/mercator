@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.peripheral.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.peripherals.store") }}" enctype="multipart/form-data">
         @csrf

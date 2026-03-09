@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $networkSwitch->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.network-switches.update", [$networkSwitch->id]) }}"
           enctype="multipart/form-data">

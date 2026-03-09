@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $domaineAd->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.domaine-ads.update", [$domaineAd->id]) }}"
           enctype="multipart/form-data">

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $applicationModule->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.application-modules.update", [$applicationModule->id]) }}"
           enctype="multipart/form-data">

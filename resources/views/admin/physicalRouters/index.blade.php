@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.physicalRouter.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('physical_router_create')
         <div style="margin-bottom: 10px;" class="row">

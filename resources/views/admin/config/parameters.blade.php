@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.configuration.parameters.title') }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route('admin.config.parameters.save') }}" enctype="multipart/form-data">
     @method('PUT')

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $storageDevice->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.storage-devices.update", [$storageDevice->id]) }}"
           enctype="multipart/form-data">

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('panel.menu.patching') }}
+@endsection
+
 @section('content')
 
 <form method="POST" action='{{ route("admin.patching.server") }}' enctype="multipart/form-data">

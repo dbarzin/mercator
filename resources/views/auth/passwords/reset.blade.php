@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+    {{ trans('global.reset_password') }}
+@endsection
+
 @section('styles')
 <style>
     body {

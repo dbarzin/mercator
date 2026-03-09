@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $securityControl->name }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.security-controls.update", [$securityControl->id]) }}" enctype="multipart/form-data">
     @method('PUT')
