@@ -45,6 +45,7 @@ class SecurityHeaders
         return $response;
     }
 
+    /*
     private function buildCsp(string $nonce): string
     {
         $isDev = app()->environment('local');
@@ -91,5 +92,5 @@ class SecurityHeaders
 
         return implode('; ', $directives);
     }
-
+    */
 }

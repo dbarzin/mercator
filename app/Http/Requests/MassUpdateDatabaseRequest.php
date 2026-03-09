@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Gate;
+use Illuminate\Foundation\Http\FormRequest;
 use Mercator\Core\Models\Database;
 use Symfony\Component\HttpFoundation\Response;
 

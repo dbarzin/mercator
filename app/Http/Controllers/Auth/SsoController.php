@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -12,6 +11,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Mercator\Core\Models\AuditLog;
 use Mercator\Core\Models\Role;
 use Mercator\Core\Models\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SsoController extends Controller
 {

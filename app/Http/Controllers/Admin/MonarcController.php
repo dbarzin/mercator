@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MospService;
 use Mercator\Core\Models\Building;
 use Mercator\Core\Models\Entity;
 use Mercator\Core\Models\Information;
 use Mercator\Core\Models\MApplication;
 use Mercator\Core\Models\Process;
 use Mercator\Core\Models\Site;
-use App\Services\MospService;
 
 class MonarcController extends Controller
 {
@@ -41,6 +41,8 @@ class MonarcController extends Controller
 
         // dd($referentials);
 
+        return null;
+        /*
         return view(
             'monarc',
             compact(
@@ -54,6 +56,7 @@ class MonarcController extends Controller
                 'buildings'
             )
         );
+        */
     }
 
     private function getNames(): void

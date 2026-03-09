@@ -1,9 +1,9 @@
 <?php
 
-// app/Services/ExcelExportHelper.php
 namespace App\Services;
 
 use PhpOffice\PhpSpreadsheet\Helper\Html;
+use PhpOffice\PhpSpreadsheet\RichText\RichText;
 
 class ExcelExportHelper
 {
@@ -14,7 +14,7 @@ class ExcelExportHelper
         $this->html = new Html();
     }
 
-    public function prepareRichText(?string $value): string|RichText
+    public function prepareRichText(?string $value): string | RichText
     {
         if (empty($value)) {
             return '';

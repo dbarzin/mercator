@@ -96,7 +96,7 @@ class EntityController extends APIController
             $entity = Entity::query()->create($attributes);
 
             if (array_key_exists('processes', $item) && $processes !== null) {
-                $entity->processes()->sync($processes ?? []);
+                $entity->processes()->sync($processes);
             }
 
             $createdIds[] = $entity->id;
@@ -134,7 +134,7 @@ class EntityController extends APIController
             }
 
             if (array_key_exists('processes', $rawItem) && $processes !== null) {
-                $entity->processes()->sync($processes ?? []);
+                $entity->processes()->sync($processes);
             }
         }
 
