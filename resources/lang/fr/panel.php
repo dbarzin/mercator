@@ -41,7 +41,9 @@ return [
         'tools' => 'Outils',
         'patching' => 'Correctifs',
         'views' => 'Vues',
-
+    ],
+    'page' => [
+        'untitled' => 'Page sans titre',
     ],
     'repartition' => 'Répartition par domaine',
     'site_title' => 'Mercator',
