@@ -8,6 +8,9 @@ echo $(date +%Y.%m.%d) > version.txt
 VERSION=$(cat version.txt | tr -d ' \n')
 echo "[✔] Using version: $VERSION"
 
+# Clean logs
+truncate --size 0 ./storage/logs/laravel.log
+
 ### --- 1. Mettre à jour .env ---
 if grep -q "^APP_VERSION=" .env; then
   sed -i "s/^APP_VERSION=.*/APP_VERSION=$VERSION/" .env

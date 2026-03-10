@@ -12,7 +12,7 @@ RUN apk add --no-cache \
     mariadb-client mariadb-connector-c-dev \
     openldap-dev libzip-dev \
     libpng libpng-dev \
-    nginx gettext supervisor \
+    nginx gettext supervisor su-exec \
     # Dépendances temporaires pour la compilation
     && apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
@@ -27,8 +27,6 @@ RUN apk add --no-cache \
     # Install composer
     && curl -sS https://getcomposer.org/installer | php \
     && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer \
-    # Create Purifier folder
-    && mkdir -p /var/www/mercator/storage/app/purifier \
     # Create application user and group
     && addgroup -g 1000 -S www \
     && adduser -u 1000 -S mercator -G www \
@@ -44,7 +42,9 @@ RUN apk add --no-cache \
 WORKDIR /var/www/mercator
 
 # Copy configuration files (avant le code pour meilleur cache Docker)
+COPY --chown=root:root docker/nginx-main.conf /etc/nginx/nginx.conf
 COPY --chown=mercator:www docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY --chown=root:root docker/php-fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY --chown=mercator:www docker/supervisord.conf /etc/supervisord.conf
 COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chown=mercator:www docker/wait-for-db.sh /usr/local/bin/wait-for-db.sh
@@ -52,8 +52,8 @@ COPY --chown=mercator:www docker/wait-for-db.sh /usr/local/bin/wait-for-db.sh
 # Set permissions for scripts
 RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/wait-for-db.sh
 
-# Switch to application user
-USER mercator:www
+# Note: pas de USER ici — l'entrypoint tourne en root pour gérer les volumes,
+# puis cède les privilèges à mercator:www via su-exec avant d'exec supervisord.
 
 # Copy composer files first (pour optimiser le cache des layers)
 COPY --chown=mercator:www composer.json composer.lock ./
@@ -66,17 +66,21 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 COPY --chown=mercator:www . .
 
 # For Openshift environment: ensure group-writable permissions
+# Note: les répertoires runtime (storage/app/purifier, framework/*, logs) sont
+# recréés au démarrage par entrypoint.sh car un volume monté les écraserait.
 RUN chmod -R g=u /var/www/mercator
 
 # Copy version file and set default environment (SQLite for standalone mode)
 COPY --chown=mercator:www version.txt ./version.txt
-RUN cp .env.sqlite .env
+RUN cp .env.sqlite .env \
+    && chown mercator:www .env
 
 # Run composer scripts after copying the full source
 RUN composer run-script post-install-cmd --no-interaction || true
 
 # Prepare SQLite database (for standalone/demo mode)
-RUN mkdir -p sql && touch sql/db.sqlite
+RUN mkdir -p sql && touch sql/db.sqlite \
+    && chown -R mercator:www sql
 
 # Expose HTTP port
 EXPOSE 8080

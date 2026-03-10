@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // start Paginator
         Paginator::useBootstrap();
 
         // Enregistrer les vues avec un namespace

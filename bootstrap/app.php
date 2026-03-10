@@ -13,8 +13,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Active les sessions partagées entre web et API
-        // $middleware->statefulApi();
 
         // Middleware globaux
         $middleware->use([
@@ -28,12 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Middlewares spécifiques au groupe 'web'
         $middleware->web(append: [
             \App\Http\Middleware\ForceXForwardedProto::class,
-            // \App\Http\Middleware\EncryptCookies::class,
-            // \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            // \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UseCachedAuthUser::class,
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\LicenseWarning::class,
@@ -51,7 +44,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->api(append: [
-            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UseCachedAuthUser::class,
         ]);
 
@@ -93,6 +85,15 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
             if ($request->is('api/*')) {
+                // ValidationException → 422 avec détail des erreurs
+                if ($e instanceof \Illuminate\Validation\ValidationException) {
+                    return response()->json([
+                        'message' => $e->getMessage(),
+                        'errors'  => $e->errors(),
+                        'code'    => 422,
+                    ], 422);
+                }
+
                 $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
                 $message = ($status >= 500 && !config('app.debug'))
                     ? 'Server Error'
@@ -104,4 +105,5 @@ return Application::configure(basePath: dirname(__DIR__))
                 ], $status);
             }
         });
-    })->create();
+    })
+    ->create();
