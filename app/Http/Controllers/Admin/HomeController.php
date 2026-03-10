@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 // GDPR
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
 use Mercator\Core\Models\Annuaire;
@@ -54,7 +55,6 @@ use Mercator\Core\Models\Wan;
 use Mercator\Core\Models\WifiTerminal;
 use Mercator\Core\Models\Workstation;
 use Mercator\Core\Models\ZoneAdmin;
-use Illuminate\Support\Facades\DB;
 
 // ecosystem
 // information system
