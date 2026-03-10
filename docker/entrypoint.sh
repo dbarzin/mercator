@@ -28,13 +28,14 @@ if [ "$1" = "--init-only" ]; then
   export LOG_CHANNEL=${LOG_CHANNEL:-single}
 
   # APP_KEY: generate if missing
-  if [ -z "${APP_KEY}" ]; then
+  APP_KEY_VALUE="${APP_KEY:-$(sed -n 's/^APP_KEY=//p' "${APP_DIR}/.env" 2>/dev/null | head -n1)}"
+  if [ -z "${APP_KEY_VALUE}" ]; then
     echo "⚠️  APP_KEY not set — generating a new one..."
     php artisan key:generate --force
-    APP_KEY=$(grep "^APP_KEY=" "${APP_DIR}/.env" | cut -d '=' -f2-)
-    export APP_KEY
-    echo "✅ APP_KEY loaded: ${APP_KEY:0:20}..."
+    APP_KEY_VALUE=$(sed -n 's/^APP_KEY=//p' "${APP_DIR}/.env" | head -n1)
   fi
+  export APP_KEY="${APP_KEY_VALUE}"
+  echo "✅ APP_KEY loaded: ${APP_KEY:0:20}..."
 
   # Database: wait only for MySQL/MariaDB
   if [ "${DB_CONNECTION}" = "mysql" ] || [ "${DB_CONNECTION}" = "mariadb" ]; then
@@ -92,7 +93,7 @@ export PHP_INI_SCAN_DIR="/usr/local/etc/php/conf.d"
 cat > /usr/local/etc/php/conf.d/mercator-errors.ini << 'INIEOF'
 ; Assure que les erreurs PHP fatales (avant bootstrap Laravel) remontent dans les logs Docker
 log_errors = On
-error_log = /proc/1/fd/2
+error_log = /proc/self/fd/2
 error_reporting = E_ALL
 display_errors = Off
 INIEOF
