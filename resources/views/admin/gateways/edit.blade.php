@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $gateway->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.gateways.update", [$gateway->id]) }}" enctype="multipart/form-data">
         @method('PUT')

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $physicalSwitch->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.physical-switches.update", [$physicalSwitch->id]) }}"
           enctype="multipart/form-data">

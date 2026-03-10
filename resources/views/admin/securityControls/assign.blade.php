@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    Assigner des mesures de sécurité
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route('admin.security-controls-associate') }}" enctype="multipart/form-data">
     @method('PUT')

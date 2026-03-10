@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.gateway.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('gateway_create')
         <div style="margin-bottom: 10px;" class="row">

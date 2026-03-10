@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $logicalServer->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.logical-servers.update", [$logicalServer->id]) }}"
           enctype="multipart/form-data">

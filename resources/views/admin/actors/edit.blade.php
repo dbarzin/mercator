@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $actor->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.actors.update", [$actor->id]) }}" enctype="multipart/form-data">
         @method('PUT')

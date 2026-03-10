@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('panel.menu.options') }}
+@endsection
+
 @section('content')
 
 <div class="card">

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $user->name }}
+@endsection
+
 @section('content')
     <div class="form-group">
         <a class="btn btn-default" href="{{ route('admin.users.index') }}">

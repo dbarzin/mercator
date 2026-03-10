@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $cluster->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.clusters.update", [$cluster->id]) }}" enctype="multipart/form-data">
         @method('PUT')

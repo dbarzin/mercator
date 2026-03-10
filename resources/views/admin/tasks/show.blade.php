@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $task->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <div class="form-group">

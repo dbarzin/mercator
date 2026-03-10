@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.flux.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.fluxes.store") }}" enctype="multipart/form-data">
         @csrf

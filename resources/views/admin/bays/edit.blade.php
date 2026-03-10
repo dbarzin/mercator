@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $bay->name }}
+@endsection
+
 @section('content')
     <div class="card">
         <div class="card-header">

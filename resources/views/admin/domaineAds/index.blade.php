@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.domaineAd.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('domaine_ad_create')
         <div style="margin-bottom: 10px;" class="row">

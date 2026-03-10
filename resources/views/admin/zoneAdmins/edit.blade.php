@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $zoneAdmin->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.zone-admins.update", [$zoneAdmin->id]) }}">
         @method('PUT')

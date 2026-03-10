@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $entity->name }}
+@endsection
+
 @section('content')
 
 <div class="form-group">

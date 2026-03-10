@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.storageDevice.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('storage_device_create')
         <div style="margin-bottom: 10px;" class="row">

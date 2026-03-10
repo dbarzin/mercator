@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    {{ trans("cruds.report.explorer.title") }}
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-12">

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.dnsserver.title_singular') }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.dnsservers.store") }}" enctype="multipart/form-data">
     @csrf

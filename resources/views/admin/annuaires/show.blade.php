@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $annuaire->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.annuaires.index') }}">

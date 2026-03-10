@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.role.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('role_create')
     <div style="margin-bottom: 10px;" class="row">

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $dnsserver->name }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.dnsservers.update", [$dnsserver->id]) }}" enctype="multipart/form-data">
     @method('PUT')

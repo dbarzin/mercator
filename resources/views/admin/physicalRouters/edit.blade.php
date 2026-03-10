@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $physicalRouter->name }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.physical-routers.update", [$physicalRouter->id]) }}"

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $wan->name }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.wans.update", [$wan->id]) }}" enctype="multipart/form-data">
     @method('PUT')

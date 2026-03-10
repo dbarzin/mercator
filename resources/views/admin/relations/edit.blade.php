@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $relation->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.relations.update", [$relation->id]) }}" enctype="multipart/form-data"
           id="relationForm">

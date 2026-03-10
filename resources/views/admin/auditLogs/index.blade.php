@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.auditLog.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 
     <div class="card">

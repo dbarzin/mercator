@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    {{ trans('global.search') }}
+@endsection
+
 @section('content')
 
 @if (empty($searchableData))

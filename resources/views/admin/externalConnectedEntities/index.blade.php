@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.externalConnectedEntity.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('external_connected_entity_create')
         <div style="margin-bottom: 10px;" class="row">

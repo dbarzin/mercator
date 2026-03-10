@@ -43,6 +43,9 @@ return [
         'patching' => 'Patching',
         'views' => 'Views',
     ],
+    'page' => [
+        'untitled' => 'Untitled page',
+    ],
     'repartition' => 'Breakdown by domain',
     'site_title' => 'Mercator',
     'treemap' => 'Global proportional map',

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $peripheral->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.peripherals.update", [$peripheral->id]) }}"
           enctype="multipart/form-data">

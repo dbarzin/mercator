@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $information->name }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.information.update", [$information->id]) }}"

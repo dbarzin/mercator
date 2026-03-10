@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $physicalServer->name }}
+@endsection
+
 @section('content')
     <div class="form-group">
         <a class="btn btn-default" href="{{ route('admin.physical-servers.index') }}">

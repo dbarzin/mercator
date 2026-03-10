@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $externalConnectedEntity->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.external-connected-entities.update", [$externalConnectedEntity->id]) }}"
           enctype="multipart/form-data">
