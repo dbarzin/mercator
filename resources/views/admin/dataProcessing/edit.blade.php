@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $dataProcessing->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.data-processings.update", [$dataProcessing->id]) }}"
           enctype="multipart/form-data">

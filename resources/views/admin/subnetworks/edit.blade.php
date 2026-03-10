@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $subnetwork->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.subnetworks.update", [$subnetwork->id]) }}"
           enctype="multipart/form-data">

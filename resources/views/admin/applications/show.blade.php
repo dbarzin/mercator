@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $application->name }}
+@endsection
+
 @section('content')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">

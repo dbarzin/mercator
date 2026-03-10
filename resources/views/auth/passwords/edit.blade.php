@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    {{ trans('global.change_password') }}
+@endsection
+
 @section('content')
 <div class="card">
     <div class="card-header">

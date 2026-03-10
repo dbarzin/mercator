@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $physicalSecurityDevice->name }}
+@endsection
+
 @section('content')
     <div class="form-group">
         <a class="btn btn-default" href="{{ route('admin.physical-security-devices.index') }}">

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.networkSwitch.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.network-switches.store") }}" enctype="multipart/form-data">
         @csrf

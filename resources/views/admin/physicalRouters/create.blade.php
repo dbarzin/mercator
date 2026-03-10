@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.physicalRouter.title_singular') }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.physical-routers.store") }}" enctype="multipart/form-data">

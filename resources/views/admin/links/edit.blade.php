@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ trans('cruds.physicalLink.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route('admin.links.update', [$link->id]) }}" enctype="multipart/form-data">
         @method('PUT')

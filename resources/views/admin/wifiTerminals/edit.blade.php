@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $wifiTerminal->name }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.wifi-terminals.update", [$wifiTerminal->id]) }}"

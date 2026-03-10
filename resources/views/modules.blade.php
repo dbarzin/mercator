@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    {{ trans('cruds.module.title') }}
+@endsection
+
 @section('content')
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-6">

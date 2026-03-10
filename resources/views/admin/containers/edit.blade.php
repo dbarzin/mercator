@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $container->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route('admin.containers.update', [$container->id]) }}" enctype="multipart/form-data">
         @method('PUT')

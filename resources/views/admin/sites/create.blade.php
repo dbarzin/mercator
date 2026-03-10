@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.site.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.sites.store") }}" enctype="multipart/form-data">
         @csrf

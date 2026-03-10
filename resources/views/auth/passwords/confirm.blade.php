@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+    {{ __('Confirm Password') }}
+@endsection
+
 @section('styles')
 <style>
     body {

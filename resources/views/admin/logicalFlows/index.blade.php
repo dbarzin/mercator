@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.logicalFlow.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('logical_flow_create')
         <div style="margin-bottom: 10px;" class="row">

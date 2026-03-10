@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $adminUser->user_id }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.admin-users.index') }}">

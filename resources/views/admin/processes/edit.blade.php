@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $process->name }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.processes.update", [$process->id]) }}" enctype="multipart/form-data">

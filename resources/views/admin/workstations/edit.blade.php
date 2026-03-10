@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $workstation->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.workstations.update", [$workstation->id]) }}"
           enctype="multipart/form-data">

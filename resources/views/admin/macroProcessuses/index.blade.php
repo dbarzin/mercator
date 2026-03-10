@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.macroProcessus.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('macro_processus_create')
     <div style="margin-bottom: 10px;" class="row">

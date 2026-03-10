@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.graph.title_singular') }} {{ old('name', $name) }}
+@endsection
+
 @section('content')
     <form method="POST" action='{{ route("admin.graphs.update", [$id]) }}' enctype="multipart/form-data" id="grahForm">
         @method('PUT')

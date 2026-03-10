@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.configuration.cve.title') }}
+@endsection
+
 @section('content')
 
 <div class="card">

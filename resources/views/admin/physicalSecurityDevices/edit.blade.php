@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $physicalSecurityDevice->name }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.physical-security-devices.update", [$physicalSecurityDevice->id]) }}"

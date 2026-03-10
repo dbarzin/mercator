@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.domaineAd.title_singular') }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.domaine-ads.store") }}" enctype="multipart/form-data">
     @csrf

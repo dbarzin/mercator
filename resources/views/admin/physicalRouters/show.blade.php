@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $physicalRouter->name }}
+@endsection
+
 @section('content')
 
 <div class="form-group">

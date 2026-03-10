@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ trans('panel.site_title') }}</title>
+    <title>@yield('title', trans('panel.page.untitled')) | {{ trans('panel.site_title') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
     <script>

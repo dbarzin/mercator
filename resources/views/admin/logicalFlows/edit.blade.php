@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $logicalFlow->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.logical-flows.update", [$logicalFlow->id]) }}"
           enctype="multipart/form-data">

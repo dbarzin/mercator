@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.configuration.certificate.title') }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route('admin.config.cert.save') }}" enctype="multipart/form-data">
     @method('PUT')

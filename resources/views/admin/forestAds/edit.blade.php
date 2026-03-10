@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $forestAd->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.forest-ads.update", [$forestAd->id]) }}" enctype="multipart/form-data">
         @method('PUT')
