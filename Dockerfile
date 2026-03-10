@@ -42,7 +42,7 @@ RUN apk add --no-cache \
 WORKDIR /var/www/mercator
 
 # Copy configuration files (avant le code pour meilleur cache Docker)
-COPY --chown=mercator:www docker/nginx-main.conf /etc/nginx/nginx.conf
+COPY --chown=root:root docker/nginx-main.conf /etc/nginx/nginx.conf
 COPY --chown=mercator:www docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY --chown=root:root docker/php-fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY --chown=mercator:www docker/supervisord.conf /etc/supervisord.conf
