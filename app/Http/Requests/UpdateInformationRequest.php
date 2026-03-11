@@ -27,17 +27,29 @@ class UpdateInformationRequest extends BaseFormRequest
                     ->ignore($this->route('information')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
+            'processes' => [
+                'array',
+            ],
             'processes.*' => [
                 'integer',
             ],
-            'processes' => [
+            'parents' => [
                 'array',
+            ],
+            'parents.*' => [
+                'integer',
+            ],
+            'children' => [
+                'array',
+            ],
+            'children.*' => [
+                'integer',
             ],
             'security_need' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:5',
             ],
         ];
     }

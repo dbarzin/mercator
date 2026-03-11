@@ -1291,6 +1291,19 @@ class ExplorerController extends Controller
         $this->linkJoinTable('database_information',
             Information::$prefix, Database::$prefix,
             'information_id', 'database_id');
+
+        $links = DB::table('information_information')
+            ->select('information_id', 'child_information_id')
+            ->get();
+
+        foreach ($links as $link) {
+            $this->addEdge(null, false,
+                $this->formatId(Information::$prefix, $link->information_id),
+                $this->formatId(Information::$prefix, $link->child_information_id),
+                'FLUX', null);
+        }
+
+
     }
 
     private function buildProcesses(): void

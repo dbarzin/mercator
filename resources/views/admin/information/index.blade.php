@@ -37,13 +37,19 @@
                             {{ trans('cruds.information.fields.owner') }}
                         </th>
                         <th>
-                            {{ trans('cruds.information.fields.sensitivity') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.information.fields.security_need') }}
                             @if (config('mercator-config.parameters.security_need_auth'))
                             + {{ trans("global.authenticity_short") }}
                             @endif
+                        </th>
+                        <th>
+                            {{ trans('cruds.information.fields.sensitivity') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.information.fields.parents') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.information.fields.children') }}
                         </th>
                         <th>
                             &nbsp;
@@ -83,9 +89,6 @@
                             </td>
                             <td>
                                 {!! $information->owner ?? '' !!}
-                            </td>
-                            <td>
-                                {{ $information->sensitivity ?? '' }}
                             </td>
                             <td nowrap>
                                 @php
@@ -156,6 +159,21 @@
                                         echo "<span> * </span>";
                                     }
                                 @endphp
+                            </td>
+                            <td>
+                                {{ $information->sensitivity ?? '' }}
+                            </td>
+                            <td>
+                            @foreach($information->parents as $parent)
+                                <a href="{{ route('admin.information.show', $parent->id) }}">{{$parent->name}}</a>
+                                @if(!$loop->last), @endif
+                            @endforeach
+                            </td>
+                            <td>
+                            @foreach($information->children as $child)
+                                <a href="{{ route('admin.information.show', $child->id) }}">{{$child->name}}</a>
+                                @if(!$loop->last), @endif
+                            @endforeach
                             </td>
                             <td nowrap>
                                 @can('information_show')
