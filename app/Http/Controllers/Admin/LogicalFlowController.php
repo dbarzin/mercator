@@ -290,7 +290,7 @@ class LogicalFlowController extends Controller
             $logicalFlow->security_device_source_id = intval(substr($request->src_id, 10));
         } elseif (str_starts_with($request->src_id, 'SUBNETWORK_')) {
             $logicalFlow->subnetwork_source_id = intval(substr($request->src_id, 11));
-        } elseif (str_starts_with($request->src_id, 'CUSTER_')) {
+        } elseif (str_starts_with($request->src_id, 'CLUSTER_')) {
             $logicalFlow->cluster_source_id = intval(substr($request->src_id, 8));
         }
         // Dest device

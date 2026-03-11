@@ -126,7 +126,7 @@
                 </a>)
             @elseif ($logicalFlow->clusterSource!==null)
                 {{ $logicalFlow->clusterSource->address }}
-                (<a href="{{ route('admin.clusters.show',$logicalFlow->custerSource->id) }}">
+                (<a href="{{ route('admin.clusters.show',$logicalFlow->clusterSource->id) }}">
                     {{ $logicalFlow->clusterSource->name }}
                 </a>)
             @endif
@@ -181,7 +181,7 @@
                 </a>)
             @elseif ($logicalFlow->clusterDest!==null)
                 {{ $logicalFlow->clusterDest->address }}
-                (<a href="{{ route('admin.subnetworks.show',$logicalFlow->clusterDest->id) }}">
+                (<a href="{{ route('admin.clusters.show',$logicalFlow->clusterDest->id) }}">
                     {{ $logicalFlow->clusterDest->name }}
                 </a>)
             @endif
