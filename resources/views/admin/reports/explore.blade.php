@@ -417,9 +417,6 @@ Physique :
                     (filter.includes("8") && (edge.edgeType === 'CABLE'))
                     ||
                     (filter.includes("9") && (edge.edgeType === 'FLUX'))
-                    ||
-                    // Information system
-                    (filter.includes("2") && (edge.edgeType === 'MEMBER'))
                 ) {
                 if (nodes.get(targetNode.id) != null) {
                     console.log("targetNode=", targetNode);
@@ -605,7 +602,7 @@ Physique :
                                     ||
                                     (filter.includes("9") && (neighborEdge.edgeType === 'FLUX'))
                                     ||
-                                    (filter.includes("2") && (edge.edgeType === 'FLUX'))
+                                    (filter.includes("2") && (neighborEdge.edgeType === 'FLUX'))
                                 ) {
                                     addEdge(targetNodeId, neighborEdge.attachedNodeId);
                                     }

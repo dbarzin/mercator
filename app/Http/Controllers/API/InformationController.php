@@ -58,9 +58,9 @@ class InformationController extends APIController
         if ($request->has('processes'))
             $information->processes()->sync($request->input('processes', []));
         if ($request->has('parents'))
-            $information->processes()->sync($request->input('parents', []));
+            $information->parents()->sync($request->input('parents', []));
         if ($request->has('children'))
-            $information->processes()->sync($request->input('children', []));
+            $information->children()->sync($request->input('children', []));
 
         return response()->json();
     }
