@@ -417,6 +417,9 @@ Physique :
                     (filter.includes("8") && (edge.edgeType === 'CABLE'))
                     ||
                     (filter.includes("9") && (edge.edgeType === 'FLUX'))
+                    ||
+                    // Information system
+                    (filter.includes("2") && (edge.edgeType === 'MEMBER'))
                 ) {
                 if (nodes.get(targetNode.id) != null) {
                     console.log("targetNode=", targetNode);
@@ -568,6 +571,8 @@ Physique :
                             (filter.includes("8") && (edge.edgeType === 'CABLE'))
                             ||
                             (filter.includes("9") && (edge.edgeType === 'FLUX'))
+                            ||
+                            (filter.includes("2") && (edge.edgeType === 'FLUX'))
                         ) && matchAttr
                     ) {
                         // Check order Up
@@ -599,6 +604,8 @@ Physique :
                                     (filter.includes("8") && (neighborEdge.edgeType === 'CABLE'))
                                     ||
                                     (filter.includes("9") && (neighborEdge.edgeType === 'FLUX'))
+                                    ||
+                                    (filter.includes("2") && (edge.edgeType === 'FLUX'))
                                 ) {
                                     addEdge(targetNodeId, neighborEdge.attachedNodeId);
                                     }
@@ -672,12 +679,16 @@ Physique :
                         smooth: getSmooth(sourceNodeId, targetNodeId)
                     });
 
-                } else if (edge.edgeType === 'LINK') {
+                } else if ((edge.edgeType === 'LINK')) {
+                    console.log("add edge=", edge);
                     edges.add({
                         from: sourceNodeId,
                         to: targetNodeId,
                         smooth: getSmooth(sourceNodeId, targetNodeId)
                     });
+                }
+                else {
+                    console.error("Unknown edge type:", edge.edgeType);
                 }
             }
         }

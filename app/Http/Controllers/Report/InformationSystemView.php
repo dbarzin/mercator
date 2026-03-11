@@ -145,7 +145,7 @@ class InformationSystemView extends Controller
                 });
 
             // TODO : improve me
-            $actors = Actor::All()->sortBy('name')
+            $actors = Actor::query()->orderBy('name')->get()
                 ->filter(function ($item) use ($operations) {
                     foreach ($operations as $operation) {
                         foreach ($operation->actors as $actor) {
@@ -158,19 +158,32 @@ class InformationSystemView extends Controller
                     return false;
                 });
 
-            // TODO : improve me
-            $informations = Information::All()->sortBy('name')
-                ->filter(function ($item) use ($processes) {
-                    foreach ($processes as $process) {
-                        foreach ($process->information as $information) {
-                            if ($item->id === $information->id) {
-                                return true;
-                            }
-                        }
-                    }
+            // Collecter les IDs des informations liés aux processus
+            $directIds = collect($processes)
+                ->flatMap(fn($process) => $process->information->pluck('id'))
+                ->unique();
 
-                    return false;
-                });
+            // Descendre récursivement dans les enfants
+            $allIds = $directIds->toArray();
+            $toProcess = $directIds->toArray();
+
+            while (!empty($toProcess)) {
+                $childIds = Information::query()->whereIn('id', $toProcess)
+                    ->with('children:id')
+                    ->get()
+                    ->flatMap(fn($info) => $info->children->pluck('id'))
+                    ->diff($allIds)   // évite les cycles et les doublons
+                    ->unique()
+                    ->values();
+
+                $toProcess = $childIds->toArray();
+                $allIds = array_merge($allIds, $toProcess);
+            }
+
+            $informations = Information::query()->whereIn('id', $allIds)
+                ->orderBy('name')
+                ->get();
+
         } else {
             $macroProcessuses = MacroProcessus::All()->sortBy('name');
             $processes = Process::All()->sortBy('name');
@@ -178,7 +191,7 @@ class InformationSystemView extends Controller
             $operations = Operation::All()->sortBy('name');
             $tasks = Task::All()->sortBy('name');
             $actors = Actor::All()->sortBy('name');
-            $informations = Information::All()->sortBy('name');
+            $informations = Information::query()->orderBy('name')->with('children')->get();
             $all_process = null;
         }
 

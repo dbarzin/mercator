@@ -32,6 +32,8 @@ class InformationController extends APIController
         $information = Information::query()->create($request->all());
 
         $information->processes()->sync($request->input('processes', []));
+        $information->parents()->sync($request->input('parents', []));
+        $information->children()->sync($request->input('children', []));
 
         return response()->json($information, 201);
     }
@@ -39,6 +41,10 @@ class InformationController extends APIController
     public function show(Information $information)
     {
         abort_if(Gate::denies('information_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $information['processes'] = $information->processes()->pluck('id');
+        $information['parents'] =$information->parents()->pluck('id');
+        $information['children'] =$information->children()->pluck('id');
 
         return new JsonResource($information);
     }
@@ -48,7 +54,13 @@ class InformationController extends APIController
         abort_if(Gate::denies('information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $information->update($request->all());
-        $information->processes()->sync($request->input('processes', []));
+
+        if ($request->has('processes'))
+            $information->processes()->sync($request->input('processes', []));
+        if ($request->has('parents'))
+            $information->processes()->sync($request->input('parents', []));
+        if ($request->has('children'))
+            $information->processes()->sync($request->input('children', []));
 
         return response()->json();
     }
@@ -66,7 +78,7 @@ class InformationController extends APIController
     {
         abort_if(Gate::denies('information_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Information::whereIn('id', $request->input('ids', []))->delete();
+        Information::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

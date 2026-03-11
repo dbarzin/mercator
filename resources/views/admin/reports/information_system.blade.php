@@ -262,49 +262,55 @@
     <script>
         let dotSrc = `
 digraph  {
-    @foreach($macroProcessuses as $macroProcess)
-        MP{{ $macroProcess->id }} [label="{{ $macroProcess->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/macroprocess.png"  href="#{{ $macroProcess->getUID() }}"]
-    @endforeach
-        @foreach($processes as $process)
-        P{{ $process->id }} [label="{{ $process->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#{{ $process->getUID() }}"]
-        @foreach($process->activities as $activity)
+@foreach($macroProcessuses as $macroProcess)
+    MP{{ $macroProcess->id }} [label="{{ $macroProcess->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/macroprocess.png"  href="#{{ $macroProcess->getUID() }}"]
+@endforeach
+@foreach($processes as $process)
+    P{{ $process->id }} [label="{{ $process->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#{{ $process->getUID() }}"]
+    @foreach($process->activities as $activity)
         P{{$process->id}} -> A{{$activity->id}}
-        @endforeach
+    @endforeach
+    @can('information_access')
         @foreach($process->information as $information)
-        P{{ $process->id }} -> I{{ $information->id }}
+            P{{ $process->id }} -> I{{ $information->id }}
         @endforeach
-        @if ($process->macroprocess_id!=null)
+    @endcan
+    @if ($process->macroprocess_id!=null)
         MP{{ $process->macroprocess_id }} -> P{{$process->id}}
-        @endif
-        @foreach($process->operations as $operation)
+    @endif
+    @foreach($process->operations as $operation)
         P{{ $process->id }} -> O{{ $operation->id }}
-        @endforeach
-        @endforeach
-        @foreach($activities as $activity)
-        A{{ $activity->id }} [label="{{ $activity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/activity.png"  href="#{{ $activity->getUID() }}"]
-        @foreach($activity->operations as $operation)
+    @endforeach
+@endforeach
+
+@foreach($activities as $activity)
+    A{{ $activity->id }} [label="{{ $activity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/activity.png"  href="#{{ $activity->getUID() }}"]
+    @foreach($activity->operations as $operation)
         A{{ $activity->id }} -> O{{ $operation->id }}
-        @endforeach
-        @endforeach
-        @foreach($operations as $operation)
-        O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#{{ $operation->getUID() }}"]
-        @foreach($operation->tasks as $task)
+    @endforeach
+@endforeach
+@foreach($operations as $operation)
+    O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#{{ $operation->getUID() }}"]
+    @foreach($operation->tasks as $task)
         O{{ $operation->id }} -> T{{ $task->id }}
-        @endforeach
-        @foreach($operation->actors as $actor)
-        O{{ $operation->id }} -> ACT{{ $actor->id }}
-        @endforeach
-        @endforeach
-        @foreach($tasks as $task)
-        T{{ $task->id }} [label="{{ $task->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png"  href="#{{ $task->getUID() }}"]
     @endforeach
-        @foreach($actors as $actor)
-        ACT{{ $actor->id }} [label="{{ $actor->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/actor.png"  href="#{{ $actor->getUID() }}"]
+    @foreach($operation->actors as $actor)
+    O{{ $operation->id }} -> ACT{{ $actor->id }}
     @endforeach
-        @foreach($informations as $information)
-        I{{ $information->id }} [label="{{ $information->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/information.png"  href="#{{ $information->getUID() }}"]
+@endforeach
+@foreach($tasks as $task)
+    T{{ $task->id }} [label="{{ $task->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png"  href="#{{ $task->getUID() }}"]
+@endforeach
+@foreach($actors as $actor)
+    ACT{{ $actor->id }} [label="{{ $actor->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/actor.png"  href="#{{ $actor->getUID() }}"]
+@endforeach
+@foreach($informations as $information)
+    I{{ $information->id }} [label="{{ $information->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/information.png"  href="#{{ $information->getUID() }}"]
+    @foreach($information->children as $child)
+      I{{ $information->id }} -> I{{ $child->id }}
     @endforeach
-        }`;
+@endforeach
+}`;
 
         document.addEventListener('DOMContentLoaded', () => {
             d3.select("#graph").graphviz()
