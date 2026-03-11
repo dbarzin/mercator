@@ -94,7 +94,7 @@
                 </a>)
             @elseif ($logicalFlow->physicalServerSource!==null)
                 {{ $logicalFlow->physicalServerSource->address_ip }}
-                (<a href="{{ route('admin.physical-server.show',$logicalFlow->physicalServerSource->id) }}">
+                (<a href="{{ route('admin.physical-servers.show',$logicalFlow->physicalServerSource->id) }}">
                     {{ $logicalFlow->physicalServerSource->name }}
                 </a>)
             @elseif ($logicalFlow->storageDeviceSource!==null)
@@ -124,6 +124,11 @@
                 (<a href="{{ route('admin.subnetworks.show',$logicalFlow->subnetworkSource->id) }}">
                     {{ $logicalFlow->subnetworkSource->name }}
                 </a>)
+            @elseif ($logicalFlow->clusterSource!==null)
+                {{ $logicalFlow->clusterSource->address }}
+                (<a href="{{ route('admin.clusters.show',$logicalFlow->custerSource->id) }}">
+                    {{ $logicalFlow->clusterSource->name }}
+                </a>)
             @endif
         </td>
         <td>
@@ -144,7 +149,7 @@
                 </a>)
             @elseif ($logicalFlow->physicalServerDest!==null)
                 {{ $logicalFlow->physicalServerDest->address_ip }}
-                (<a href="{{ route('admin.physical-server.show',$logicalFlow->physicalServerDest->id) }}">
+                (<a href="{{ route('admin.physical-servers.show',$logicalFlow->physicalServerDest->id) }}">
                     {{ $logicalFlow->physicalServerDest->name }}
                 </a>)
             @elseif ($logicalFlow->storageDeviceDest!==null)
@@ -173,6 +178,11 @@
                 {{ $logicalFlow->subnetworkDest->address }}
                 (<a href="{{ route('admin.subnetworks.show',$logicalFlow->subnetworkDest->id) }}">
                     {{ $logicalFlow->subnetworkDest->name }}
+                </a>)
+            @elseif ($logicalFlow->clusterDest!==null)
+                {{ $logicalFlow->clusterDest->address }}
+                (<a href="{{ route('admin.subnetworks.show',$logicalFlow->clusterDest->id) }}">
+                    {{ $logicalFlow->clusterDest->name }}
                 </a>)
             @endif
         </td>

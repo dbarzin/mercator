@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateLogicalFlowRequest;
 use App\Rules\Cidr;
 use Gate;
 use Illuminate\Support\Collection;
+use Mercator\Core\Models\Cluster;
 use Mercator\Core\Models\LogicalFlow;
 use Mercator\Core\Models\LogicalServer;
 use Mercator\Core\Models\Peripheral;
@@ -20,9 +21,6 @@ use Mercator\Core\Models\StorageDevice;
 use Mercator\Core\Models\Subnetwork;
 use Mercator\Core\Models\Workstation;
 use Symfony\Component\HttpFoundation\Response;
-
-// Models
-// Framework
 
 class LogicalFlowController extends Controller
 {
@@ -38,6 +36,7 @@ class LogicalFlowController extends Controller
             'storageDeviceSource',
             'workstationSource',
             'physicalSecurityDeviceSource',
+            'clusterSource',
             'subnetworkSource',
             'logicalServerDest',
             'peripheralDest',
@@ -46,6 +45,7 @@ class LogicalFlowController extends Controller
             'workstationDest',
             'physicalSecurityDeviceDest',
             'subnetworkDest',
+            'clusterDest',
             ])
             ->orderby('name')
             ->get();
@@ -68,6 +68,7 @@ class LogicalFlowController extends Controller
         $securityDevices = SecurityDevice::query()->orderBy('name')->pluck('name', 'id');
         $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->pluck('name', 'id');
         $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id');
+        $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
 
         // Build device list
         $devices = Collection::make();
@@ -94,6 +95,9 @@ class LogicalFlowController extends Controller
         }
         foreach ($subnetworks as $key => $value) {
             $devices->put('SUBNETWORK_'.$key, $value);
+        }
+        foreach ($clusters as $key => $value) {
+            $devices->put('CLUSTER_'.$key, $value);
         }
 
         // Lists
@@ -154,6 +158,8 @@ class LogicalFlowController extends Controller
             $link->security_device_source_id = intval(substr($request->src_id, 10));
         } elseif (str_starts_with($request->src_id, 'SUBNETWORK_')) {
             $link->subnetwork_source_id = intval(substr($request->src_id, 11));
+        } elseif (str_starts_with($request->src_id, 'CLUSTER_')) {
+            $link->cluster_source_id = intval(substr($request->src_id, 8));
         }
         // Dest device
         if (str_starts_with($request->dest_id, 'LSERVER_')) {
@@ -172,6 +178,8 @@ class LogicalFlowController extends Controller
             $link->security_device_dest_id = intval(substr($request->dest_id, 10));
         } elseif (str_starts_with($request->dest_id, 'SUBNETWORK_')) {
             $link->subnetwork_dest_id = intval(substr($request->dest_id, 11));
+        } elseif (str_starts_with($request->dest_id, 'CLUSTER_')) {
+            $link->cluster_dest_id = intval(substr($request->dest_id, 8));
         }
 
         $link->update();
@@ -194,6 +202,7 @@ class LogicalFlowController extends Controller
         $physicalSecurityDevices = PhysicalSecurityDevice::query()->orderBy('name')->pluck('name', 'id');
         $securityDevices = SecurityDevice::query()->orderBy('name')->pluck('name', 'id');
         $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id');
+        $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
 
         // Build device list
         $devices = Collection::make();
@@ -220,6 +229,9 @@ class LogicalFlowController extends Controller
         }
         foreach ($subnetworks as $key => $value) {
             $devices->put('SUBNETWORK_'.$key, $value);
+        }
+        foreach ($clusters as $key => $value) {
+            $devices->put('CLUSTER_'.$key, $value);
         }
 
         // Lists
@@ -278,6 +290,8 @@ class LogicalFlowController extends Controller
             $logicalFlow->security_device_source_id = intval(substr($request->src_id, 10));
         } elseif (str_starts_with($request->src_id, 'SUBNETWORK_')) {
             $logicalFlow->subnetwork_source_id = intval(substr($request->src_id, 11));
+        } elseif (str_starts_with($request->src_id, 'CUSTER_')) {
+            $logicalFlow->cluster_source_id = intval(substr($request->src_id, 8));
         }
         // Dest device
         if (str_starts_with($request->dest_id, 'LSERVER_')) {
@@ -296,6 +310,8 @@ class LogicalFlowController extends Controller
             $logicalFlow->security_device_dest_id = intval(substr($request->dest_id, 10));
         } elseif (str_starts_with($request->dest_id, 'SUBNETWORK_')) {
             $logicalFlow->subnetwork_dest_id = intval(substr($request->dest_id, 11));
+        } elseif (str_starts_with($request->dest_id, 'CLUSTER_')) {
+            $logicalFlow->cluster_dest_id = intval(substr($request->dest_id, 8));
         }
 
         $logicalFlow->update($request->all());
@@ -321,7 +337,7 @@ class LogicalFlowController extends Controller
 
     public function massDestroy(MassDestroyLogicalFlowRequest $request)
     {
-        LogicalFlow::whereIn('id', request('ids'))->delete();
+        LogicalFlow::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
