@@ -234,7 +234,7 @@
                         </div>
                     </div>
                 </div>
-
+                </div>
                 <!---------------------------------------------------------------------------------------------------->
                 <div class="card-header">
                     {{ trans("cruds.logicalServer.fields.configuration") }}
