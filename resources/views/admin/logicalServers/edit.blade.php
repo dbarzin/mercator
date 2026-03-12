@@ -225,7 +225,7 @@
                             <label for="net_services">{{ trans('cruds.logicalServer.fields.net_services') }}</label>
                             <input class="form-control {{ $errors->has('net_services') ? 'is-invalid' : '' }}"
                                    type="text" name="net_services" id="net_services"
-                                   value="{{ old('net_services', $logicalServer->net_services) }}">
+                                   value="{{ old('net_services', $logicalServer->net_services) }}"/>
                             @if($errors->has('net_services'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('net_services') }}
@@ -236,7 +236,6 @@
 
                     </div>
                 </div>
-
             </div>
             <!---------------------------------------------------------------------------------------------------->
             <div class="card-header">
@@ -377,6 +376,7 @@
                                    for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
                             <select class="form-control select2 {{ $errors->has('domains') ? 'is-invalid' : '' }}"
                                     name="domain_id" id="domain_id">
+                                <option></option>
                                 @foreach($domains as $id => $name)
                                     <option value="{{ $id }}" {{ $id==old('domain_id', $logicalServer->domain_id) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
