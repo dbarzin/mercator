@@ -1,130 +1,256 @@
-# Présentation
+# Démarrage de Mercator avec Docker
 
-Ce dossier contient les éléments permettant de dockeriser l'application Mercator avec docker-compose.
+## Vue d'ensemble
 
-# Utilisation
+Mercator est distribué sous forme d'image Docker disponible sur le GitHub Container Registry :
 
-## Initialisation
+```
+ghcr.io/dbarzin/mercator:latest
+```
 
-Copier le dépot source
+Le conteneur est conçu pour fonctionner **sans privilèges root**. Toutes les opérations système sont réalisées au moment
+du build de l'image. Au démarrage, le conteneur s'exécute entièrement sous l'utilisateur `mercator` (UID 1000).
 
-    git clone https://github.com/dbarzin/mercator
+---
 
-Aller dans le répertoire mercator
+## Architecture du conteneur
 
-    cd mercator/docker
+Un seul conteneur `mercator-app` fait tourner trois processus gérés par **supervisord** :
 
-Recopier le fichier de configuration ../.env.example et docker-compose.yml.tmpl
+```
+supervisord (mercator)
+├── php-fpm        — exécute le code PHP Laravel
+├── nginx          — sert l'application sur le port 8080
+├── queue          — traite les jobs en arrière-plan
+├── scheduler      — exécute les tâches planifiées Laravel
+└── laravel-log    — relaie laravel.log vers docker logs
+```
 
-    cp  ../.env.example .env
-    cp docker-compose.yml.tmpl docker-compose.yml
+---
 
-Modifier la variable DB_HOST=db ; la valeur doit correspondre au nom du container dans docker-compose.yml (db)
+## Séquence de démarrage
 
-    sed -i -e 's/DB_HOST=127.0.0.1/DB_HOST=db/' .env
+Lors de chaque `docker run` ou redémarrage du conteneur, l'`entrypoint.sh` s'exécute en deux phases avant de lancer
+supervisord.
 
-Toutes les valeurs du fichier peuvent être modifiées selon votre convenance, mais celle-ci doivent être fixées :
+### Phase 1 — Préparation des répertoires
 
-URL du service d'un point de vue externe (en dehors du reverse-proxy)
+```
+entrypoint.sh (phase 1)
+│
+├── Création des répertoires runtime si absents
+│   ├── storage/app/purifier
+│   ├── storage/app/public
+│   ├── storage/framework/cache/data
+│   ├── storage/framework/sessions
+│   ├── storage/framework/views
+│   └── storage/logs/
+│       └── laravel.log  ← créé vide si absent
+│
+└── Appel de la phase 2 (--init-only)
+```
 
-    APP_URL=https://mercator.mydomain.com/
-    ASSET_URL=https://mercator.mydomain.com/
+### Phase 2 — Initialisation Laravel
 
-Base de données Mysql
+```
+entrypoint.sh (phase 2 : --init-only)
+│
+├── APP_KEY
+│   ├── Lecture depuis la variable d'environnement APP_KEY
+│   ├── ou depuis le fichier .env
+│   └── Génération automatique si absente (key:generate)
+│
+├── Attente de la base de données (MySQL/MariaDB uniquement)
+│   └── Boucle jusqu'à ce que le serveur réponde
+│
+├── Migrations
+│   ├── migrate --seed  si USE_DEMO_DATA=1 ou SEED_DATABASE=1
+│   └── migrate         sinon
+│
+├── Laravel Passport
+│   ├── passport:keys --force  (génère/renouvelle les clés RSA)
+│   └── passport:client --personal  (créé uniquement si aucun client n'existe)
+│
+├── Optimisations (uniquement si APP_ENV=production)
+│   ├── config:cache
+│   ├── route:cache
+│   └── view:cache
+│
+└── Lien symbolique storage:link
+```
 
-    DB_CONNECTION=mysql
-    DB_HOST=db
-    DB_PORT=3306
-    DB_DATABASE=mercator
-    DB_USERNAME=mercator_user
-    DB_PASSWORD=s3cr3t
+### Phase 3 — Démarrage des services
 
-- la valeur pour `APP_URL` doit correspondre au nom du service dans le `docker-compose.yml`
-- de même, le nom du service est db dans ce même fichier (`DB_HOST`)
+Une fois l'initialisation terminée, supervisord prend le relais et démarre tous les processus en parallèle.
 
-## Reverse-proxy
+---
 
-Deux modèles de configuration du reverse-proxy sont fournis dans le répertoires assets pour Apache et Nginx. D'autre
-part, la commande permettant de générer le certificat let's Encrypt sera de la forme:
+## Prérequis sur l'hôte
 
-    certbot --nginx --non-interactive --agree-tos --email admin@mydomain.com --no-eff-email --domain mercator.mydomain.com
+Avant le premier démarrage, si tu utilises des volumes montés localement, créer les répertoires avec les bonnes
+permissions :
 
-## Start
+```bash
+mkdir -p ./docs ./app
+chown -R 1000:1000 ./docs ./app
+```
 
-Avant le démarrage de l'application, il est nécessaire de procéder à un build du container ; ensuite, l'ordre habituel
-des commandes docker-compose s'enchainent.
+> **Pourquoi ?** Docker crée les répertoires manquants en `root`. Le conteneur tourne en UID 1000 (mercator) et ne
+> pourrait pas y écrire.
 
-Aller dans le répertoire d'exploitation docker
+---
 
-    cd docker
+## Déploiement avec Docker Compose
 
-Recopier le fichier docker-compose.yml.tmp afin d'apporter vos propres adaptations
+### Fichier `docker-compose.yml` minimal
 
-    cp docker-compose.yml.tmpl docker-compose.yml
+```yaml
+services:
+  mercator-db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_DATABASE: mercator
+      MYSQL_USER: mercator
+      MYSQL_PASSWORD: changeme
+    healthcheck:
+      test: [ "CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - mercator_db_data:/var/lib/mysql
 
-Build du container mercator en local
+  mercator-app:
+    image: ghcr.io/dbarzin/mercator:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./docs:/var/www/mercator/storage/docs
+      - ./app:/var/www/mercator/storage/app
+    environment:
+      APP_ENV: production
+      APP_URL: https://mercator.yourdomain.com
+      DB_CONNECTION: mariadb
+      DB_HOST: mercator-db
+      DB_PORT: 3306
+      DB_DATABASE: mercator
+      DB_USERNAME: mercator
+      DB_PASSWORD: changeme
+    depends_on:
+      mercator-db:
+        condition: service_healthy
 
-    docker-compose build
+volumes:
+  mercator_db_data:
+```
 
-Démarrage des 2 services app et db
+### Démarrage
 
-    docker-compose up -d
+```bash
+docker compose up -d
+```
 
-L'application répond sur le port 8080 ; login par défaut: admin@admin.com / password
+### Suivi des logs de démarrage
 
-    wget http://127.0.0.1
+```bash
+docker logs -f mercator-app
+```
 
-Pour observer les logs applicatifs
+---
 
-    docker-compose logs -ft
+## Variables d'environnement
 
-## Restart
+| Variable          | Valeur par défaut | Description                                                                   |
+|-------------------|-------------------|-------------------------------------------------------------------------------|
+| `APP_ENV`         | `production`      | Environnement Laravel (`production`, `local`)                                 |
+| `APP_URL`         | —                 | URL publique de l'application                                                 |
+| `APP_KEY`         | auto-généré       | Clé de chiffrement Laravel (base64, 32 octets)                                |
+| `APP_DEBUG`       | `false`           | Activer les messages d'erreur détaillés                                       |
+| `APP_FORCE_HTTPS` | `false`           | Forcer les redirections HTTPS                                                 |
+| `DB_CONNECTION`   | `sqlite`          | Driver base de données (`mariadb`, `mysql`, `pgsql`, `sqlite`)                |
+| `DB_HOST`         | —                 | Hôte du serveur de base de données                                            |
+| `DB_PORT`         | `3306`            | Port du serveur de base de données                                            |
+| `DB_DATABASE`     | —                 | Nom de la base de données                                                     |
+| `DB_USERNAME`     | —                 | Utilisateur de la base de données                                             |
+| `DB_PASSWORD`     | —                 | Mot de passe de la base de données                                            |
+| `USE_DEMO_DATA`   | `0`               | Injecter les données de démonstration au premier démarrage (`1` pour activer) |
+| `SEED_DATABASE`   | `0`               | Injecter les données initiales au premier démarrage (`1` pour activer)        |
+| `CACHE_DRIVER`    | `file`            | Driver de cache (`file`, `redis`, `database`)                                 |
+| `SESSION_DRIVER`  | `file`            | Driver de session (`file`, `redis`, `database`)                               |
 
-Aller dans le répertoire d'exploitation docker
+---
 
-    cd docker
+## Mise à jour de Mercator
 
-Arret des 2 services db et app
+```bash
+# Récupérer la nouvelle image
+docker compose pull
 
-    docker-compose down
+# Redémarrer le conteneur (les migrations s'exécutent automatiquement)
+docker compose up -d
+```
 
-Redémarrage de l'application:
+> Les migrations sont **idempotentes** : elles ne s'exécutent que si de nouvelles migrations sont détectées. La base de
+> données et les données existantes sont préservées.
 
-    docker-compose up -d
+---
 
-Il est nécessaire de faire un restart à chaque fois :
+## Mode standalone (SQLite)
 
-- que le code source est modifié
-- que la configuration est modifiée
-- que l'environnement d'exécution est modifié en particulier `entrypoint.sh`
+Sans aucune configuration de base de données, Mercator démarre en mode SQLite avec une base locale :
 
-## Debug
+```bash
+docker run -p 8080:8080 ghcr.io/dbarzin/mercator:latest
+```
 
-Il est possible d'ouvrir un shell intéractif sur l'un des deux services app ou db
+Ce mode est adapté pour une démonstration ou un test rapide. Les données sont perdues à l'arrêt du conteneur sauf si un
+volume est monté sur `/var/www/mercator/sql`.
 
-ouverture d'un shell ; app ou db
+---
 
-    docker exec -it app /bin/bash
+## Déploiement dans Portainer
 
-# Exploitation
+1. Aller dans **Stacks** → **Add stack**
+2. Coller le contenu du `docker-compose.yml` dans l'éditeur
+3. Cliquer sur **Deploy the stack**
 
-## Backup
+> ⚠️ Ne pas définir de directive `user:` dans la configuration du stack. Le conteneur gère lui-même son utilisateur (
+`mercator`, UID 1000) via le `Dockerfile`.
 
-- les seules données à sauvegarder résident dans la base Mysql. Des éléments sont fournis sur dans la procédure
-  d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) de Mercator.
-- le script `./bin/mysql/backup` permet de réaliser l'opération de backup simplement ; il est monté dans le container
-  docker par un `bind` (primitive `volumes` dans le docker-compose.yml)
-- pour l'activer il suffit d'invoquer : `docker-compose exec db /app/backup`
-- la base de données est sauvegardée dans un volume local : `./data/backup/sql/mercator.sql.gz`
+---
 
-## Restore
+## Résolution des problèmes courants
 
-fixme.
+### `Unable to set application key. No APP_KEY variable was found`
 
-# FIXME
+Le fichier `.env` ne contient pas de ligne `APP_KEY=`. Mercator la crée automatiquement depuis la version 2026.03.12. Si
+le problème persiste sur une image plus ancienne, ajouter la variable dans le `docker-compose.yml` :
 
-- donner des indications concernant la procédure de MAJ applicative.
-- le fonctionnement de l'application derrière un reverse-proxy ne fonctionne pas ;
-  voir [ticket](https://github.com/mqu/mercator/issues/1) :
-    - bug résiduel concernant le formulaire d'authentification qui passe en HTTP(80) au lieu de HTTPS(443). Le reste du
-      paramétrage semble OK.
+```yaml
+environment:
+  APP_KEY: base64:VOTRE_CLE_ICI
+```
+
+Générer une clé :
+
+```bash
+docker run --rm ghcr.io/dbarzin/mercator:latest php artisan key:generate --show
+```
+
+### `Error: Can't drop privilege as nonroot user`
+
+supervisord tente de démarrer avec des changements d'utilisateur mais tourne déjà en non-root. Vérifier que :
+
+- La directive `user:` est absente du `docker-compose.yml`
+- Portainer ne force pas le mode non-root dans ses paramètres de sécurité
+
+### Erreurs de permissions sur les volumes montés
+
+Les répertoires `./docs` et `./app` doivent appartenir à UID 1000 :
+
+```bash
+chown -R 1000:1000 ./docs ./app
+```
