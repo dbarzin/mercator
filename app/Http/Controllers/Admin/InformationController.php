@@ -17,7 +17,10 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $information = Information::all()->sortBy('name');
+        $information = Information::query()
+            ->with('parents','children')
+            ->orderBy('name')
+            ->get();
 
         return view('admin.information.index', compact('information'));
     }
