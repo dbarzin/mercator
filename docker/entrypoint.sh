@@ -31,10 +31,14 @@ if [ "$1" = "--init-only" ]; then
 
   export LOG_CHANNEL=${LOG_CHANNEL:-single}
 
-  # APP_KEY: generate if missing
+  # APP_KEY: s'assurer que la ligne APP_KEY= existe dans .env avant key:generate
   APP_KEY_VALUE="${APP_KEY:-$(sed -n 's/^APP_KEY=//p' "${APP_DIR}/.env" 2>/dev/null | head -n1)}"
   if [ -z "${APP_KEY_VALUE}" ]; then
     echo "⚠️  APP_KEY not set — generating a new one..."
+    # Ajouter la ligne APP_KEY= si absente (key:generate ne peut pas écrire sans elle)
+    if ! grep -q '^APP_KEY=' "${APP_DIR}/.env" 2>/dev/null; then
+      echo "APP_KEY=" >> "${APP_DIR}/.env"
+    fi
     php artisan key:generate --force
     APP_KEY_VALUE=$(sed -n 's/^APP_KEY=//p' "${APP_DIR}/.env" | head -n1)
   fi
@@ -92,6 +96,14 @@ fi
 # PHASE 1 — opérations système puis init Laravel
 # ---------------------------------------------------------------------------
 
+# Vérification critique : supervisord doit démarrer en root
+if [ "$(id -u)" != "0" ]; then
+  echo "❌ ERROR: entrypoint must run as root (current uid=$(id -u))"
+  echo "   → Remove 'user:' from your docker-compose/stack configuration"
+  echo "   → supervisord requires root to spawn processes with different users"
+  exit 1
+fi
+
 # OpenShift: dynamic UID support (nss_wrapper workaround)
 if ! whoami &>/dev/null; then
   if [ -w /etc/passwd ]; then
@@ -108,59 +120,34 @@ mkdir -p \
   "${APP_DIR}/storage/framework/views" \
   "${APP_DIR}/storage/logs"
 
-# chown uniquement si on est root (UID 0)
-if [ "$(id -u)" = "0" ]; then
-  chown -R "${APP_USER}:www" "${APP_DIR}/storage"
-  chmod -R g=u "${APP_DIR}/storage"
-fi
+chown -R "${APP_USER}:www" "${APP_DIR}/storage"
+chmod -R g=u "${APP_DIR}/storage"
 
 # Créer laravel.log pour que le programme tail de supervisord démarre sans erreur
 touch "${APP_DIR}/storage/logs/laravel.log"
-if [ "$(id -u)" = "0" ]; then
-  chown "${APP_USER}:www" "${APP_DIR}/storage/logs/laravel.log"
-fi
+chown "${APP_USER}:www" "${APP_DIR}/storage/logs/laravel.log"
 
 # ---------------------------------------------------------------------------
-# Lancer l'init Laravel :
-#   - Si on est root ET que su-exec fonctionne → switch vers mercator
-#   - Si su-exec échoue (capabilities manquantes) → continuer en root
-#   - Si on est déjà mercator (UID 1000) → appel direct sans switch
+# Lancer l'init Laravel en tant que mercator via su-exec
 # ---------------------------------------------------------------------------
-CURRENT_UID=$(id -u)
-
-if [ "${CURRENT_UID}" = "${APP_UID}" ]; then
-  # Déjà le bon utilisateur (ex: USER mercator dans Dockerfile ou --user en CLI)
-  echo "🔄 Running Laravel init as current user (uid=${CURRENT_UID})..."
-  "$0" "--init-only" "$@"
-
-elif [ "${CURRENT_UID}" = "0" ]; then
-  # Root : tentative de switch via su-exec
-  echo "🔄 Running Laravel init as ${APP_USER} (via su-exec)..."
-  if su-exec "${APP_USER}" "$0" "--init-only" "$@" 2>/tmp/su-exec-err; then
-    : # succès
-  else
-    SU_ERR=$(cat /tmp/su-exec-err)
-    if echo "${SU_ERR}" | grep -q "Operation not permitted\|setgroups\|EPERM"; then
-      echo "⚠️  su-exec failed (missing CAP_SETUID/CAP_SETGID) — running init as root"
-      echo "   → Add 'cap_add: [SETUID, SETGID]' to your docker-compose/stack for proper isolation"
-      "$0" "--init-only" "$@"
-    else
-      echo "❌ su-exec failed: ${SU_ERR}"
-      exit 1
-    fi
-  fi
-
+echo "🔄 Running Laravel init as ${APP_USER} (via su-exec)..."
+if su-exec "${APP_USER}" "$0" "--init-only" "$@" 2>/tmp/su-exec-err; then
+  : # succès
 else
-  # UID inconnu — tenter quand même
-  echo "🔄 Running Laravel init as uid=${CURRENT_UID}..."
-  "$0" "--init-only" "$@"
+  SU_ERR=$(cat /tmp/su-exec-err)
+  if echo "${SU_ERR}" | grep -q "Operation not permitted\|setgroups\|EPERM"; then
+    echo "⚠️  su-exec failed (missing CAP_SETUID/CAP_SETGID) — running init as root"
+    echo "   → Add 'cap_add: [SETUID, SETGID]' to your docker-compose/stack for proper isolation"
+    "$0" "--init-only" "$@"
+  else
+    echo "❌ su-exec failed: ${SU_ERR}"
+    exit 1
+  fi
 fi
 
 # Log de démarrage dans laravel.log
 echo "✅ Mercator ${VERSION} started — env=${APP_ENV:-unknown} db=${DB_CONNECTION:-unknown}" \
   >> "${APP_DIR}/storage/logs/laravel.log"
 
-# supervisord doit tourner en root pour spawner les programmes
-# avec leurs utilisateurs respectifs (user= dans supervisord.conf)
 echo "✅ Mercator initialization complete — starting services"
 exec "$@"
