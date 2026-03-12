@@ -12,7 +12,6 @@ set -e
 
 APP_DIR=/var/www/mercator
 APP_USER=mercator
-APP_GROUP=www
 
 VERSION=$(cat "${APP_DIR}/version.txt" 2>/dev/null || echo "unknown")
 echo "🚀 Starting Mercator version: ${VERSION}"
@@ -52,12 +51,14 @@ if [ "$1" = "--init-only" ]; then
     php artisan migrate --force
   fi
 
-  # Passport v13
+  # Passport v13 — --force évite une erreur si les clés existent déjà
   echo "🔑 Generating Passport encryption keys..."
-  php artisan passport:keys || true
+  php artisan passport:keys --force || true
 
   # Créer le client personnel uniquement s'il n'en existe pas
-  CLIENT_COUNT=$(php artisan tinker --execute="echo \DB::table('oauth_clients')->count();" 2>/dev/null | tail -1)
+  # On filtre la sortie de tinker pour ne garder que la dernière ligne numérique
+  CLIENT_COUNT=$(php artisan tinker --execute="echo \DB::table('oauth_clients')->count();" 2>/dev/null \
+    | grep -E '^[0-9]+$' | tail -1)
   if [ "$CLIENT_COUNT" = "0" ] || [ -z "$CLIENT_COUNT" ]; then
     echo "🔑 Creating personal access client..."
     php artisan passport:client --personal --provider=users --no-interaction
@@ -103,25 +104,22 @@ mkdir -p \
   "${APP_DIR}/storage/framework/views" \
   "${APP_DIR}/storage/logs"
 
-chown -R "${APP_USER}:${APP_GROUP}" "${APP_DIR}/storage"
+chown -R "${APP_USER}:www" "${APP_DIR}/storage"
 chmod -R g=u "${APP_DIR}/storage"
 # Créer laravel.log pour que le programme tail de supervisord démarre sans erreur
 touch "${APP_DIR}/storage/logs/laravel.log"
-chown "${APP_USER}:${APP_GROUP}" "${APP_DIR}/storage/logs/laravel.log"
+chown "${APP_USER}:www" "${APP_DIR}/storage/logs/laravel.log"
 
 # Lancer l'init Laravel en tant que mercator (bloquant, exit 0 attendu)
+# Note: on ne spécifie PAS le groupe dans su-exec pour éviter l'appel setgroups()
+# qui nécessite CAP_SETGID (absent sur les serveurs Linux avec profil seccomp strict).
+# Le groupe primaire de mercator (www) est utilisé automatiquement.
 echo "🔄 Running Laravel init as ${APP_USER}..."
-su-exec "${APP_USER}:${APP_GROUP}" "$0" "--init-only" "$@"
+su-exec "${APP_USER}" "$0" "--init-only" "$@"
 
-# Log de démarrage applicatif (une seule fois, avant supervisord)
-su-exec "${APP_USER}:${APP_GROUP}" php "${APP_DIR}/artisan" tinker \
-  --execute="\Log::info('Mercator started', [
-    'version'     => config('app.version', env('APP_VERSION', 'unknown')),
-    'environment' => config('app.env'),
-    'url'         => config('app.url'),
-    'db'          => config('database.default'),
-    'php'         => PHP_VERSION,
-  ]);" 2>/dev/null || true
+# Log de démarrage dans laravel.log (sans tinker pour éviter une dépendance à la DB ici)
+echo "✅ Mercator ${VERSION} started — env=${APP_ENV:-unknown} db=${DB_CONNECTION:-unknown}" \
+  >> "${APP_DIR}/storage/logs/laravel.log"
 
 # supervisord doit tourner en root pour spawner les programmes
 # avec leurs utilisateurs respectifs (user= dans supervisord.conf)
