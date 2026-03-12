@@ -663,6 +663,7 @@ class ExplorerController extends Controller
         $this->buildGateways();
         $this->buildExternalConnectedEntities();
         $this->buildLogicalServers();
+        $this->buildRouters();
         $this->buildCertificates();
         $this->buildLogicalFlows();
         $this->buildContainers();
@@ -913,9 +914,38 @@ class ExplorerController extends Controller
             LogicalServer::$prefix, PhysicalServer::$prefix,
             'logical_server_id', 'physical_server_id');
 
-        // add domaine
-
     }
+// xxxx
+
+    private function buildRouters(): void
+    {
+        $routers = DB::table('routers')
+            ->select('id', 'name', 'ip_addresses')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($routers as $router) {
+            $this->addNode(
+                5,
+                $this->formatId(Router::$prefix, $router->id),
+                $router->name,
+                '/images/router.png',
+                'routers', 560
+            );
+
+            foreach (explode(',', $router->ip_addresses ?? '') as $ip)
+                $this->linkDeviceToSubnetworks(
+                    $ip,
+                    $this->formatId(Router::$prefix, $router->id));
+        }
+
+        $this->linkJoinTable('physical_router_router',
+            PhysicalRouter::$prefix, Router::$prefix,
+            'physical_router_id', 'router_id');
+        
+    }
+
+
 
     private function buildCertificates(): void
     {
