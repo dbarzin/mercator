@@ -3,27 +3,32 @@ set -e
 
 # ---------------------------------------------------------------------------
 # Mercator - Docker Entrypoint
-# Phase 1 (root)    : répertoires runtime, permissions sur volumes montés
-#                     puis appel de l'init Laravel en tant que mercator,
-#                     puis exec supervisord en ROOT (requis pour spawner
-#                     les programmes avec leurs utilisateurs respectifs)
-# Phase 2 (mercator): initialisation Laravel uniquement (--init-only)
+#
+# Stratégie : l'entrypoint tourne en ROOT pour les opérations système
+# (répertoires, permissions), puis re-exec lui-même en tant que mercator
+# via su-exec UNIQUEMENT si disponible et fonctionnel.
+#
+# Si su-exec échoue (capabilities manquantes : CAP_SETUID/CAP_SETGID),
+# on détecte qu'on tourne déjà sous le bon UID et on continue sans switch.
+#
+# Phase 1 (root ou UID 0)  : mkdir, chown, chmod, puis init Laravel
+# Phase 2 (--init-only)    : init Laravel (migrations, passport, cache)
 # ---------------------------------------------------------------------------
 
 APP_DIR=/var/www/mercator
 APP_USER=mercator
+APP_UID=1000
 
 VERSION=$(cat "${APP_DIR}/version.txt" 2>/dev/null || echo "unknown")
 echo "🚀 Starting Mercator version: ${VERSION}"
 export APP_VERSION="${VERSION}"
 
 # ---------------------------------------------------------------------------
-# PHASE 2 — mercator : initialisation Laravel (appelé par la phase 1)
+# PHASE 2 — initialisation Laravel (appelé par la phase 1)
 # ---------------------------------------------------------------------------
 if [ "$1" = "--init-only" ]; then
   shift
 
-  # Logs Laravel : tail -F laravel.log vers stdout → visibles dans docker logs
   export LOG_CHANNEL=${LOG_CHANNEL:-single}
 
   # APP_KEY: generate if missing
@@ -56,7 +61,6 @@ if [ "$1" = "--init-only" ]; then
   php artisan passport:keys --force || true
 
   # Créer le client personnel uniquement s'il n'en existe pas
-  # On filtre la sortie de tinker pour ne garder que la dernière ligne numérique
   CLIENT_COUNT=$(php artisan tinker --execute="echo \DB::table('oauth_clients')->count();" 2>/dev/null \
     | grep -E '^[0-9]+$' | tail -1)
   if [ "$CLIENT_COUNT" = "0" ] || [ -z "$CLIENT_COUNT" ]; then
@@ -85,7 +89,7 @@ if [ "$1" = "--init-only" ]; then
 fi
 
 # ---------------------------------------------------------------------------
-# PHASE 1 — root : création des répertoires, permissions, puis init + démarrage
+# PHASE 1 — opérations système puis init Laravel
 # ---------------------------------------------------------------------------
 
 # OpenShift: dynamic UID support (nss_wrapper workaround)
@@ -104,20 +108,55 @@ mkdir -p \
   "${APP_DIR}/storage/framework/views" \
   "${APP_DIR}/storage/logs"
 
-chown -R "${APP_USER}:www" "${APP_DIR}/storage"
-chmod -R g=u "${APP_DIR}/storage"
+# chown uniquement si on est root (UID 0)
+if [ "$(id -u)" = "0" ]; then
+  chown -R "${APP_USER}:www" "${APP_DIR}/storage"
+  chmod -R g=u "${APP_DIR}/storage"
+fi
+
 # Créer laravel.log pour que le programme tail de supervisord démarre sans erreur
 touch "${APP_DIR}/storage/logs/laravel.log"
-chown "${APP_USER}:www" "${APP_DIR}/storage/logs/laravel.log"
+if [ "$(id -u)" = "0" ]; then
+  chown "${APP_USER}:www" "${APP_DIR}/storage/logs/laravel.log"
+fi
 
-# Lancer l'init Laravel en tant que mercator (bloquant, exit 0 attendu)
-# Note: on ne spécifie PAS le groupe dans su-exec pour éviter l'appel setgroups()
-# qui nécessite CAP_SETGID (absent sur les serveurs Linux avec profil seccomp strict).
-# Le groupe primaire de mercator (www) est utilisé automatiquement.
-echo "🔄 Running Laravel init as ${APP_USER}..."
-su-exec "${APP_USER}" "$0" "--init-only" "$@"
+# ---------------------------------------------------------------------------
+# Lancer l'init Laravel :
+#   - Si on est root ET que su-exec fonctionne → switch vers mercator
+#   - Si su-exec échoue (capabilities manquantes) → continuer en root
+#   - Si on est déjà mercator (UID 1000) → appel direct sans switch
+# ---------------------------------------------------------------------------
+CURRENT_UID=$(id -u)
 
-# Log de démarrage dans laravel.log (sans tinker pour éviter une dépendance à la DB ici)
+if [ "${CURRENT_UID}" = "${APP_UID}" ]; then
+  # Déjà le bon utilisateur (ex: USER mercator dans Dockerfile ou --user en CLI)
+  echo "🔄 Running Laravel init as current user (uid=${CURRENT_UID})..."
+  "$0" "--init-only" "$@"
+
+elif [ "${CURRENT_UID}" = "0" ]; then
+  # Root : tentative de switch via su-exec
+  echo "🔄 Running Laravel init as ${APP_USER} (via su-exec)..."
+  if su-exec "${APP_USER}" "$0" "--init-only" "$@" 2>/tmp/su-exec-err; then
+    : # succès
+  else
+    SU_ERR=$(cat /tmp/su-exec-err)
+    if echo "${SU_ERR}" | grep -q "Operation not permitted\|setgroups\|EPERM"; then
+      echo "⚠️  su-exec failed (missing CAP_SETUID/CAP_SETGID) — running init as root"
+      echo "   → Add 'cap_add: [SETUID, SETGID]' to your docker-compose/stack for proper isolation"
+      "$0" "--init-only" "$@"
+    else
+      echo "❌ su-exec failed: ${SU_ERR}"
+      exit 1
+    fi
+  fi
+
+else
+  # UID inconnu — tenter quand même
+  echo "🔄 Running Laravel init as uid=${CURRENT_UID}..."
+  "$0" "--init-only" "$@"
+fi
+
+# Log de démarrage dans laravel.log
 echo "✅ Mercator ${VERSION} started — env=${APP_ENV:-unknown} db=${DB_CONNECTION:-unknown}" \
   >> "${APP_DIR}/storage/logs/laravel.log"
 
