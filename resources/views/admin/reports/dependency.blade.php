@@ -40,22 +40,25 @@ Analyse de dépendances
 
                         {{-- Filtre attributs --}}
                         <td width="400">
-                            <label for="attr-filter" >Attributs</label>
-                            <select class="form-control select2" id="attr-filter" name="attr[]" multiple>
-                                {{-- Options peuplées dynamiquement via AJAX, sélection restaurée en JS --}}
-                            </select>
-                            <span class="help-block">Filtrer par attribut</span>
+                            <div class="form-group">
+                                <label for="attr-filter" >Attributs</label>
+                                <select class="form-control select2" id="attr-filter" name="attr[]" multiple>
+                                    {{-- Options peuplées dynamiquement via AJAX, sélection restaurée en JS --}}
+                                </select>
+                                <span class="help-block">Filtrer par attribut</span>
+                            </div>
                         </td>
                         <td width="10"></td>
 
                         {{-- Nœud de départ --}}
                         <td width="400">
                             <div class="form-group">
-                                <label for="node" >Nœud de départ</label>
+                                <label for="node" >Objet</label>
                                 <select name="node" id="node" class="form-control select2"
                                         data-placeholder="Chargement…">
                                     <option value=""></option>
                                 </select>
+                                <span class="help-block">Nœud de départ</span>
                             </div>
                         </td>
                     </tr>
@@ -70,7 +73,7 @@ Analyse de dépendances
                         <td width="10"></td>
                         {{-- Profondeur --}}
                         <td width="90">
-                            <label for="depth" class="form-label fw-semibold">Profondeur</label>
+                            <label for="depth">Profondeur</label>
                             <select name="depth" id="depth" class="form-control">
                                 @foreach([1, 2, 3, 4, 5] as $d)
                                     <option value="{{ $d }}" @selected((int) request('depth', 3) === $d)>{{ $d }}</option>
@@ -79,7 +82,7 @@ Analyse de dépendances
                         </td>
                         <td width="10"></td>
                         <td colspan="4">
-                            <label class="form-label fw-semibold">Direction</label>
+                            <label>Direction</label>
                             <div class="btn-group w-100" role="group" aria-label="Direction">
                                 <input type="radio" class="btn-check" name="direction"
                                        id="dir-up" value="up" autocomplete="off"

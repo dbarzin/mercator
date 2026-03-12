@@ -106,7 +106,12 @@
                                 <li><a class="dropdown-item" href="/admin/report/explore">
                                         <i class="bi bi-globe2"></i>{{ trans('panel.menu.explore') }}</a>
                                 </li>
+                                <li><a class="dropdown-item" href="/admin/report/dependency">
+                                    <i class="bi bi-diagram-2"></i>{{ trans('panel.menu.dependency') }}</a>
+                                </li>
                             @endcan
+
+
                             @can('patching_access')
                                 <li><a class="dropdown-item" href="/admin/patching/index">
                                         <i class="bi bi-tools"></i>{{ trans('panel.menu.patching') }}</a>
