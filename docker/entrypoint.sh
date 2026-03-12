@@ -87,17 +87,6 @@ fi
 # PHASE 1 — root : création des répertoires, permissions, puis init + démarrage
 # ---------------------------------------------------------------------------
 
-# Forcer PHP à rapporter toutes les erreurs fatales vers stderr
-# (capturé par supervisord → logs Docker), indépendamment de Laravel
-export PHP_INI_SCAN_DIR="/usr/local/etc/php/conf.d"
-cat > /usr/local/etc/php/conf.d/mercator-errors.ini << 'INIEOF'
-; Assure que les erreurs PHP fatales (avant bootstrap Laravel) remontent dans les logs Docker
-log_errors = On
-error_log = /proc/self/fd/2
-error_reporting = E_ALL
-display_errors = Off
-INIEOF
-
 # OpenShift: dynamic UID support (nss_wrapper workaround)
 if ! whoami &>/dev/null; then
   if [ -w /etc/passwd ]; then

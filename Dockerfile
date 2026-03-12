@@ -38,6 +38,10 @@ RUN apk add --no-cache \
     # Fin de la configuration système
     && true
 
+# PHP error reporting for Docker logs (static — created at build time)
+RUN printf '; Assure que les erreurs PHP fatales remontent dans les logs Docker\nlog_errors = On\nerror_log = /proc/self/fd/2\nerror_reporting = E_ALL\ndisplay_errors = Off\n' \
+    > /usr/local/etc/php/conf.d/mercator-errors.ini
+
 # Set working directory
 WORKDIR /var/www/mercator
 
