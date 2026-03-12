@@ -937,6 +937,11 @@ class ExplorerController extends Controller
         $this->linkJoinTable('certificate_logical_server',
             Certificate::$prefix, LogicalServer::$prefix,
             'certificate_id', 'logical_server_id');
+
+        $this->linkJoinTable('certificate_m_application',
+            Certificate::$prefix, MApplication::$prefix,
+            'certificate_id', 'm_application_id');;
+
     }
 
     private function buildLogicalFlows(): void
