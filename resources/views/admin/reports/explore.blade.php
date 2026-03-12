@@ -7,11 +7,13 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <div class="card explorer-screen">
+            <div class="card explorer-screen" style="height: auto;">
                 <div class="card-header">
                     {{ trans("cruds.report.explorer.title") }}
                 </div>
-                <div class="card-body">
+
+                {{-- ─── Contrôles ──────────────────────────────────────────────── --}}
+                <div class="card-body" style="flex: 0 0 auto;">
                     <!-- Loading indicator -->
                     <div id="loading-indicator" class="alert alert-info">
                         <i class="fas fa-spinner fa-spin"></i>
@@ -129,11 +131,45 @@ Physique :
                             </tr>
                         </table>
                     </div>
+                </div>{{-- /.card-body contrôles --}}
+
+            </div>{{-- /.card contrôles --}}
+
+            {{-- ─── Card graphe (séparée par 10px de fond gris) ────────────────── --}}
+            <div class="card mt-2">
+
+                {{-- ─── Zone réseau ─────────────────────────────────────────────── --}}
+                <div class="card-body p-0">
+                    <div id="mynetwork" style="width: 100%; height: 650px; flex: none; background-color: #ffffff;"></div>
+                    {{-- ─── Resize handle ─────────────────────────────────────── --}}
+                    <div id="network-resize-handle"
+                         style="height: 8px; cursor: ns-resize;
+                                background: linear-gradient(to bottom, #dee2e6, #adb5bd);
+                                border-top: 1px solid #ced4da;"
+                         title="Glisser pour redimensionner"></div>
                 </div>
-                <div id="mynetwork" style="height:700px;"></div>
-            </div>
-        </div>
-    </div>
+
+                {{-- ─── Footer ──────────────────────────────────────────────────── --}}
+                <div class="card-footer">
+                    <div class="d-flex align-items-center gap-3">
+                        <span>Moteur&nbsp;:</span>
+                        <div class="btn-group" role="group" aria-label="Moteur physique">
+                            @foreach(['barnesHut' => 'Barnes-Hut', 'forceAtlas2Based' => 'Force Atlas 2', 'repulsion' => 'Repulsion', 'hierarchicalRepulsion' => 'Hiérarchique'] as $solver => $label)
+                                <input type="radio" class="btn-check" name="physics-solver"
+                                       id="solver-{{ $solver }}" value="{{ $solver }}" autocomplete="off"
+                                       {{ $solver === 'barnesHut' ? 'checked' : '' }}>
+                                <label class="btn btn-outline-secondary btn-sm" for="solver-{{ $solver }}">
+                                    {{ $label }}
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+            </div>{{-- /.card graphe --}}
+
+        </div>{{-- /.col-lg-12 --}}
+    </div>{{-- /.row --}}
     <ul id="explore_context"></ul>
 @endsection
 
@@ -143,19 +179,20 @@ Physique :
     @vite(['resources/js/vis-network.js'])
     <script>
 
-        let nodes = null;
-        let edges = null;
-        let network = null;
+        let nodes       = null;
+        let edges       = null;
+        let network     = null;
         let needSavePNG = false;
-        let _nodes = new Map();
+        let _nodes      = new Map();
 
-        /**
-         * Charger les données du graphe depuis l'API
-         */
+        // ─────────────────────────────────────────────
+        // Chargement des données
+        // ─────────────────────────────────────────────
+
         async function loadGraphData() {
             const loadingIndicator = document.getElementById('loading-indicator');
-            const loadingText = document.getElementById('loading-text');
-            const controls = document.getElementById('explorer-controls');
+            const loadingText      = document.getElementById('loading-text');
+            const controls         = document.getElementById('explorer-controls');
 
             try {
                 loadingText.textContent = 'Chargement des données du graphe...';
@@ -177,32 +214,25 @@ Physique :
                 const data = await response.json();
 
                 loadingText.textContent = 'Construction du graphe...';
-
-                // Construire la Map des nœuds
                 buildNodesMap(data.nodes, data.edges);
 
                 loadingText.textContent = 'Initialisation de la visualisation...';
-
-                // Peupler le sélecteur de nœuds
                 populateNodeSelector(data.nodes);
-
-                // Initialiser le réseau vis.js
                 initializeNetwork();
 
-                // Masquer le loading, afficher les contrôles
                 loadingIndicator.style.display = 'none';
-                controls.style.display = 'block';
-                loadAttributes();
+                controls.style.display         = 'block';
+
+                // Charger les attributs APRÈS que les contrôles sont visibles
+                await loadAttributes();
+
                 console.log(`✓ Graphe chargé: ${data.nodes.length} nœuds, ${data.edges.length} liens`);
 
                 // Ajouter le/les nœuds passés en paramètre URL
                 const urlParams = new URLSearchParams(window.location.search);
                 const nodeParam = urlParams.get('node');
-
                 if (nodeParam) {
-                    // Split par virgule si plusieurs nœuds (ex: ?node=SITE_1,APP_2,SERVER_3)
-                    const nodeIds = nodeParam.split(',');
-                    nodeIds.forEach(nodeId => {
+                    nodeParam.split(',').forEach(nodeId => {
                         const trimmedId = nodeId.trim();
                         if (trimmedId && _nodes.has(trimmedId)) {
                             addNode(trimmedId);
@@ -212,318 +242,145 @@ Physique :
 
             } catch (error) {
                 console.error('Erreur lors du chargement:', error);
-                loadingIndicator.className = 'alert alert-danger';
-                loadingText.textContent = `Erreur: ${error.message}`;
+                loadingIndicator.className  = 'alert alert-danger';
+                loadingText.textContent     = `Erreur: ${error.message}`;
             }
-
         }
 
-        /**
-         * Construire la Map des nœuds avec leurs edges
-         */
+        // ─────────────────────────────────────────────
+        // Construction de la Map des nœuds
+        // ─────────────────────────────────────────────
+
         function buildNodesMap(nodesData, edgesData) {
-            // Index des edges par nœud pour recherche rapide
             const edgesByNode = new Map();
 
             edgesData.forEach(edge => {
                 // Edge sortant
-                if (!edgesByNode.has(edge.from)) {
-                    edgesByNode.set(edge.from, []);
-                }
+                if (!edgesByNode.has(edge.from)) edgesByNode.set(edge.from, []);
                 edgesByNode.get(edge.from).push({
                     attachedNodeId: edge.to,
-                    name: edge.name,
-                    edgeType: edge.type,
-                    edgeDirection: 'TO',
-                    bidirectional: edge.bidirectional,
-                    color: edge.color
+                    name:           edge.name,
+                    edgeType:       edge.type,
+                    edgeDirection:  'TO',
+                    bidirectional:  edge.bidirectional,
+                    color:          edge.color
                 });
                 // Edge entrant
-                if (!edgesByNode.has(edge.to)) {
-                    edgesByNode.set(edge.to, []);
-                }
+                if (!edgesByNode.has(edge.to)) edgesByNode.set(edge.to, []);
                 edgesByNode.get(edge.to).push({
                     attachedNodeId: edge.from,
-                    name: edge.name,
-                    edgeType: edge.type,
-                    edgeDirection: 'FROM',
-                    bidirectional: edge.bidirectional,
-                    color: edge.color
+                    name:           edge.name,
+                    edgeType:       edge.type,
+                    edgeDirection:  'FROM',
+                    bidirectional:  edge.bidirectional,
+                    color:          edge.color
                 });
             });
 
-            // Construire la Map finale des nœuds
             nodesData.forEach(node => {
                 _nodes.set(node.id, {
-                    id: node.id,
-                    vue: String(node.vue),
-                    label: node.label,
-                    title: node.title || undefined,
-                    image: node.image,
-                    type: node.type,
-                    order: node.order,
+                    id:         node.id,
+                    vue:        String(node.vue),
+                    label:      node.label,
+                    title:      node.title || undefined,
+                    image:      node.image,
+                    type:       node.type,
+                    order:      node.order,
                     attributes: node.attributes || null,
-                    edges: edgesByNode.get(node.id) || []
+                    edges:      edgesByNode.get(node.id) || []
                 });
             });
         }
 
-        /**
-         * Peupler le sélecteur de nœuds
-         */
+        // ─────────────────────────────────────────────
+        // Sélecteur de nœuds
+        // ─────────────────────────────────────────────
+
         function populateNodeSelector(nodesData) {
             const selector = document.getElementById('node');
             selector.innerHTML = '<option></option>';
-
             nodesData.forEach(node => {
-                const option = document.createElement('option');
-                option.value = node.id;
+                const option       = document.createElement('option');
+                option.value       = node.id;
                 option.textContent = node.label;
                 selector.appendChild(option);
             });
+            // FIX #5 : rafraîchir Select2 après injection des options
+            $('#node').trigger('change');
         }
 
-        /**
-         * Initialiser le réseau vis.js
-         */
-        function initializeNetwork() {
-            // Create an array with nodes
-            nodes = new vis.DataSet([]);
+        // ─────────────────────────────────────────────
+        // Initialisation vis.js
+        // ─────────────────────────────────────────────
 
-            // Create an array with edges
+        function initializeNetwork() {
+            nodes = new vis.DataSet([]);
             edges = new vis.DataSet([]);
 
-            // Create a network
             const container = document.getElementById('mynetwork');
-
-            const data = {
-                nodes: nodes,
-                edges: edges
-            };
-
-            /*
-            var options = {
-                nodes: {
-                    shape: 'image',
-                    brokenImage: '/images/missing.png',
-                    size: 30,
-                    font: {
-                        color: '#000000',
-                        size: 12,
-                        face: 'arial',
-                        strokeWidth: 2,
-                        strokeColor: '#ffffff'
-                    }
-                },
-                edges: {
-                    width: 0.15,
-                    color: {inherit: 'from'},
-                    smooth: {
-                        type: 'continuous'
-                    },
-                    arrows: {
-                        to: {
-                            enabled: false
-                        }
-                    }
-                },
-                physics: {
-                    enabled: true,
-                    forceAtlas2Based: {
-                        gravitationalConstant: -26,
-                        centralGravity: 0.005,
-                        springLength: 230,
-                        springConstant: 0.18
-                    },
-                    maxVelocity: 146,
-                    solver: 'forceAtlas2Based',
-                    timestep: 0.35,
-                    stabilization: {iterations: 150}
-                }
-            };
-            */
             const options = {
-                /*
-                physics: {
-                    enabled: true,
-                    stabilization: {
-                        enabled: true,
-                        iterations: 1500
-                    },
-                    barnesHut: {
-                        gravitationalConstant: -3000,
-                        centralGravity: 0.1,
-                        springLength: 150,
-                        springConstant: 0.04,
-                        avoidOverlap: 1.0
-                    },
-
-                    solver: 'barnesHut',
-                    },
-
-                 */
                 nodes: {
                     shape: 'image',
-                    size: 25
+                    size:  25
                 },
                 edges: {
-                    smooth: {
-                        type: 'continuous'
-                    }
+                    smooth: { type: 'continuous' }
                 },
                 interaction: {
                     navigationButtons: true,
-                    keyboard: true
+                    keyboard:          true
                 }
             };
-            network = new vis.Network(container, data, options);
 
-            // Setup event handlers
+            network = new vis.Network(container, { nodes, edges }, options);
             setupEventHandlers();
         }
 
-        // Add a node base on the node.id
+        // ─────────────────────────────────────────────
+        // Ajout d'un nœud
+        // ─────────────────────────────────────────────
+
         function addNode(id) {
             const newNode = _nodes.get(id);
-            if (newNode == null)
-                return;
-            // Check node already present
+            if (newNode == null) return;
+
             if (!nodes.get(newNode.id)) {
-                // Add new Node
-                if (getShowIP() && (newNode.title!=null)) {
-                    const modifiedNode = { ...newNode};
-                    modifiedNode.label = newNode.label + "\n" + newNode.title;
-                    network.body.data.nodes.add(modifiedNode);
-                    }
-                else
-                    network.body.data.nodes.add(newNode);
+                const nodeToAdd = buildVisNode(newNode);
+                network.body.data.nodes.add(nodeToAdd);
             }
 
-            // Loop on all edges using unified addEdge
-            const edgeList = newNode.edges;
             const filter = getFilter();
-            console.log("filter=",filter);
-            for (const edge of edgeList) {
+            console.log("filter=", filter);
+
+            for (const edge of newNode.edges) {
                 const targetNode = _nodes.get(edge.attachedNodeId);
                 if (targetNode === undefined) continue;
-                if (
-                    (filter.length === 0)
-                    ||
-                    (filter.includes(targetNode.vue) && (
-                        (edge.edgeType !== 'CABLE') && (edge.edgeDirection === 'FLUX')
-                        )
-                    )
-                    ||
-                    (filter.includes("8") && (edge.edgeType === 'CABLE'))
-                    ||
-                    (filter.includes("9") && (edge.edgeType === 'FLUX'))
-                ) {
-                if (nodes.get(targetNode.id) != null) {
-                    console.log("targetNode=", targetNode);
+
+                const passesFilter =
+                    filter.length === 0
+                    || (filter.includes(targetNode.vue) && edge.edgeType !== 'CABLE' && edge.edgeType !== 'FLUX')
+                    || (filter.includes("8") && edge.edgeType === 'CABLE')
+                    || (filter.includes("9") && edge.edgeType === 'FLUX');
+
+                if (passesFilter && nodes.get(targetNode.id) != null) {
                     addEdge(newNode.id, targetNode.id);
-                    }
                 }
             }
         }
 
-        // Check that an edge already exists between 2 nodes
-        function exists(from, to, label) {
-            if (label === null)
-                return edges.get({
-                    filter: function (item) {
-                        return (
-                            ((item.from === from) && (item.to === to)) ||
-                            ((item.to === from) && (item.from === to))
-                            );
-                    }
-                });
-            else
-                return edges.get({
-                    filter: function (item) {
-                        return (
-                            ((item.from === from) && (item.to === to) && (item.label === label)) ||
-                            ((item.to === from) && (item.from === to) && (item.label === label))
-                            );
-                    }
-                });
-        }
-
-        function setupEventHandlers() {
-            network.on("afterDrawing", function (ctx) {
-                if (needSavePNG) {
-                    document.getElementById('canvasImg').href = ctx.canvas.toDataURL();
-                    needSavePNG = false;
-                }
-            });
-
-            var activeNode;
-            network.on("oncontext", function (params) {
-                console.log('Context menu on node:', params);
-                params.event.preventDefault();
-                activeNode = this.getNodeAt(params.pointer.DOM);
-                console.log(activeNode);
-                if (activeNode !== undefined) {
-                    showContextMenu(params.event.pageX, params.event.pageY, activeNode);
-                }
-            });
-
-            // Gestion du double-clic pour déployer
-            network.on('doubleClick', async function(params) {
-                if (params.nodes.length > 0) {
-                    const nodeId = params.nodes[0];
-                    await deployFromNode(nodeId, 1, new Set(), getFilter(), getDirection());
-                }
-            });
-
-            document.addEventListener('click', function () {
-                if (document.getElementById('explore_context') !== null) {
-                    document.getElementById('explore_context').style.display = 'none';
-                    document.getElementById('explore_context').innerHTML = '';
-                }
-            });
-        }
-
-        const contextMenu = document.getElementById("explore_context");
-
-        function displayContextMenu(left, top) {
-            contextMenu.style.display = "block";
-            contextMenu.style.opacity = "1";
-            contextMenu.style.top = top + "px";
-            contextMenu.style.left = left + "px";
-        }
-
-        function hideContextMenu() {
-            contextMenu.style.opacity = "0";
-            contextMenu.style.display = "none";
-        }
-
-        function showContextMenu(left, top, nodeId) {
-            const node = _nodes.get(nodeId);
-            const type = node.type;
-            const id = nodeId.split("_").pop();
-            contextMenu.innerHTML = "<li><a href='/admin/" + type + "/" + id + "'>{{ trans("global.view") }}</a></li>" +
-                "<li><a href='/admin/" + type + "/" + id + "/edit'>{{ trans("global.edit") }}</a></li>" +
-                "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span></li>"
-            displayContextMenu(left, top);
-
-            let hideNode = document.getElementById("hideNode");
-            hideNode.addEventListener("click", function () {
-                network.body.data.nodes.remove(node);
-                hideContextMenu();
-            });
-
-        }
+        // ─────────────────────────────────────────────
+        // Déploiement
+        // ─────────────────────────────────────────────
 
         function deployAll() {
-            let activeNode = network.getSelectedNodes()[0];
+            const activeNode = network.getSelectedNodes()[0];
             if (!activeNode) {
                 alert("{{ trans("cruds.report.explorer.please_select") }}");
                 return;
             }
-            let depth = parseInt(document.getElementById('depth').value);
-            let visitedNodes = new Set();
-            let filter = getFilter();
-            deployFromNode(activeNode, depth, visitedNodes, filter, getDirection());
+            const depth        = parseInt(document.getElementById('depth').value);
+            const visitedNodes = new Set();
+            deployFromNode(activeNode, depth, visitedNodes, getFilter(), getDirection());
         }
 
         function matchesAttrFilter(node, attrFilter) {
@@ -534,100 +391,77 @@ Physique :
         }
 
         function deployFromNode(nodeId, depth, visitedNodes, filter, direction = 3) {
-            if (depth <= 0 || visitedNodes.has(nodeId)) {
-                return;
-            }
+            if (depth <= 0 || visitedNodes.has(nodeId)) return;
             visitedNodes.add(nodeId);
-            let node = _nodes.get(nodeId);
-            if (!node) {
-                return;
-            }
+
+            const node = _nodes.get(nodeId);
+            if (!node) return;
 
             console.log("filter=", filter);
 
-            let edgeList = node.edges;
-            for (const edge of edgeList) {
-                let targetNodeId = edge.attachedNodeId;
-                if (nodes.get(targetNodeId) === null) {
-                    let targetNode = _nodes.get(targetNodeId);
-                    if (targetNode == null)
-                        continue;
-                    const attrFilter = getAttrFilter();
-                    const matchAttr = matchesAttrFilter(targetNode, attrFilter);
+            const attrFilter = getAttrFilter();
 
-                    if (
-                        (
-                            (filter.length === 0)
-                            ||
-                            (
-                                filter.includes(targetNode.vue) &&
-                                (edge.edgeType !== 'CABLE')  &&
-                                (edge.edgeType !== 'FLUX')
-                            )
-                            ||
-                            (filter.includes("8") && (edge.edgeType === 'CABLE'))
-                            ||
-                            (filter.includes("9") && (edge.edgeType === 'FLUX'))
-                            ||
-                            (filter.includes("2") && (edge.edgeType === 'FLUX'))
-                        ) && matchAttr
-                    ) {
-                        // Check order Up
-                        if ((direction === 1) && (node.order <= targetNode.order))
-                            continue;
-                        // Check order Down
-                        if ((direction === 2) && (node.order >= targetNode.order))
-                            continue;
+            for (const edge of node.edges) {
+                const targetNodeId = edge.attachedNodeId;
+                if (nodes.get(targetNodeId) !== null) continue;   // déjà affiché
 
-                        // Add new node
-                        if (getShowIP() && (targetNode.title!=null)) {
-                            const modified_node = { ...targetNode};
-                            modified_node.label = targetNode.label + "\n" + targetNode.title;
-                            network.body.data.nodes.add(modified_node);
-                            }
-                        else
-                            network.body.data.nodes.add(targetNode);
+                const targetNode = _nodes.get(targetNodeId);
+                if (targetNode == null) continue;
 
-                        // Add edges between new node and other nodes
-                        _nodes.get(targetNodeId).edges.forEach(neighborEdge => {
-                            // Target node present
-                            if (nodes.get(neighborEdge.attachedNodeId) !== null) {
-                                console.log("neighborEdge=", neighborEdge);
-                                if (
-                                    (filter.length === 0)
-                                    ||
-                                    (neighborEdge.edgeType === 'LINK')
-                                    ||
-                                    (filter.includes("8") && (neighborEdge.edgeType === 'CABLE'))
-                                    ||
-                                    (filter.includes("9") && (neighborEdge.edgeType === 'FLUX'))
-                                    ||
-                                    (filter.includes("2") && (neighborEdge.edgeType === 'FLUX'))
-                                ) {
-                                    addEdge(targetNodeId, neighborEdge.attachedNodeId);
-                                    }
-                                }
-                            }
-                        );
+                const matchAttr = matchesAttrFilter(targetNode, attrFilter);
 
-                        setTimeout(function () {
-                            deployFromNode(targetNodeId, depth - 1, visitedNodes, filter, direction);
-                        }, 500);
+                const passesFilter =
+                    (
+                        filter.length === 0
+                        || (filter.includes(targetNode.vue) && edge.edgeType !== 'CABLE' && edge.edgeType !== 'FLUX')
+                        || (filter.includes("8") && edge.edgeType === 'CABLE')
+                        || (filter.includes("9") && edge.edgeType === 'FLUX')
+                        || (filter.includes("2") && edge.edgeType === 'FLUX')
+                    ) && matchAttr;
+
+                if (!passesFilter) continue;
+
+                // Vérification direction
+                if (direction === 1 && node.order <= targetNode.order) continue;
+                if (direction === 2 && node.order >= targetNode.order) continue;
+
+                // Ajouter le nœud cible
+                network.body.data.nodes.add(buildVisNode(targetNode));
+
+                // Ajouter les arêtes vers les voisins déjà présents
+                for (const neighborEdge of _nodes.get(targetNodeId).edges) {
+                    if (nodes.get(neighborEdge.attachedNodeId) === null) continue;
+
+                    const neighborPassesFilter =
+                        filter.length === 0
+                        || neighborEdge.edgeType === 'LINK'
+                        || (filter.includes("8") && neighborEdge.edgeType === 'CABLE')
+                        || (filter.includes("9") && neighborEdge.edgeType === 'FLUX')
+                        || (filter.includes("2") && neighborEdge.edgeType === 'FLUX');
+
+                    if (neighborPassesFilter) {
+                        console.log("neighborEdge=", neighborEdge);
+                        addEdge(targetNodeId, neighborEdge.attachedNodeId);
                     }
                 }
+
+                setTimeout(function () {
+                    deployFromNode(targetNodeId, depth - 1, visitedNodes, filter, direction);
+                }, 500);
             }
         }
 
+        // ─────────────────────────────────────────────
+        // Gestion des arêtes
+        // ─────────────────────────────────────────────
+
         const FONT_OPTIONS = {
-            align: 'middle',
-            background: 'white',
+            align:       'middle',
+            background:  'white',
             strokeWidth: 2,
             strokeColor: 'white'
         };
 
-        /**
-         * Calcule la courbure en fonction du nombre de liens déjà présents entre deux nœuds.
-         */
         function getSmooth(sourceNodeId, targetNodeId) {
             const count = edges.get().filter(e =>
                 (e.from === sourceNodeId && e.to === targetNodeId) ||
@@ -637,10 +471,20 @@ Physique :
             if (count === 0) return { enabled: false };
 
             return {
-                enabled: true,
-                type: count % 2 === 1 ? 'curvedCW' : 'curvedCCW',
-                roundness: Math.min(Math.ceil(count / 2) * 0.3, 1.0)
+                enabled:    true,
+                type:       count % 2 === 1 ? 'curvedCW' : 'curvedCCW',
+                roundness:  Math.min(Math.ceil(count / 2) * 0.3, 1.0)
             };
+        }
+
+        function exists(from, to, label, symmetric = true) {
+            return edges.get({
+                filter: function (item) {
+                    const direct  = (item.from === from) && (item.to === to)   && (label === null || item.label === label);
+                    const reverse = (item.from === to)   && (item.to === from) && (label === null || item.label === label);
+                    return symmetric ? (direct || reverse) : direct;
+                }
+            });
         }
 
         function addEdge(sourceNodeId, targetNodeId) {
@@ -648,76 +492,153 @@ Physique :
 
             for (const edge of edgeList) {
                 if (edge.attachedNodeId !== targetNodeId) continue;
-                if (exists(sourceNodeId, targetNodeId, edge.name).length > 0) continue;
 
                 if (edge.edgeType === 'FLUX') {
-                    const isFrom = edge.edgeDirection === 'FROM';
+                    const isFrom    = edge.edgeDirection === 'FROM';
                     const [from, to] = isFrom
                         ? [targetNodeId, sourceNodeId]
                         : [sourceNodeId, targetNodeId];
 
+                    if (exists(from, to, edge.name, false).length > 0) continue;
+
                     edges.add({
-                        label: edge.name,
+                        label:  edge.name,
                         from,
                         to,
                         smooth: getSmooth(from, to),
-                        font: FONT_OPTIONS,
+                        font:   FONT_OPTIONS,
                         arrows: edge.bidirectional
                             ? { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } }
                             : { to: { enabled: true, type: 'arrow' } }
                     });
 
                 } else if (edge.edgeType === 'CABLE') {
+                    if (exists(sourceNodeId, targetNodeId, null).length > 0) continue;
+
                     edges.add({
-                        from: sourceNodeId,
-                        to: targetNodeId,
-                        color: edge.color ?? 'blue',
-                        width: 3,
+                        from:   sourceNodeId,
+                        to:     targetNodeId,
+                        color:  edge.color ?? 'blue',
+                        width:  3,
                         smooth: getSmooth(sourceNodeId, targetNodeId)
                     });
 
-                } else if ((edge.edgeType === 'LINK')) {
+                } else if (edge.edgeType === 'LINK') {
+                    if (exists(sourceNodeId, targetNodeId, null).length > 0) continue;
+
                     console.log("add edge=", edge);
                     edges.add({
-                        from: sourceNodeId,
-                        to: targetNodeId,
+                        from:   sourceNodeId,
+                        to:     targetNodeId,
                         smooth: getSmooth(sourceNodeId, targetNodeId)
                     });
-                }
-                else {
+
+                } else {
                     console.error("Unknown edge type:", edge.edgeType);
                 }
             }
         }
+
+        // ─────────────────────────────────────────────
+        // Événements réseau
+        // ─────────────────────────────────────────────
+
+        function setupEventHandlers() {
+            network.on("afterDrawing", function (ctx) {
+                if (needSavePNG) {
+                    document.getElementById('canvasImg').href = ctx.canvas.toDataURL();
+                    needSavePNG = false;
+                }
+            });
+
+            network.on("oncontext", function (params) {
+                console.log('Context menu on node:', params);
+                params.event.preventDefault();
+                const activeNode = this.getNodeAt(params.pointer.DOM);
+                if (activeNode !== undefined) {
+                    showContextMenu(params.event.pageX, params.event.pageY, activeNode);
+                }
+            });
+
+            network.on('doubleClick', function (params) {
+                if (params.nodes.length > 0) {
+                    deployFromNode(params.nodes[0], 1, new Set(), getFilter(), getDirection());
+                }
+            });
+
+            document.addEventListener('click', function () {
+                const ctx = document.getElementById('explore_context');
+                if (ctx) {
+                    ctx.style.display = 'none';
+                    ctx.innerHTML     = '';
+                }
+            });
+        }
+
+        // ─────────────────────────────────────────────
+        // Menu contextuel
+        // ─────────────────────────────────────────────
+
+        const contextMenu = document.getElementById("explore_context");
+
+        function displayContextMenu(left, top) {
+            contextMenu.style.display = "block";
+            contextMenu.style.opacity = "1";
+            contextMenu.style.top     = top  + "px";
+            contextMenu.style.left    = left + "px";
+        }
+
+        function hideContextMenu() {
+            contextMenu.style.opacity = "0";
+            contextMenu.style.display = "none";
+        }
+
+        function showContextMenu(left, top, nodeId) {
+            const node = _nodes.get(nodeId);
+            const type = node.type;
+            const id   = nodeId.split("_").pop();
+            contextMenu.innerHTML =
+                "<li><a href='/admin/" + type + "/" + id + "'>{{ trans("global.view") }}</a></li>" +
+                "<li><a href='/admin/" + type + "/" + id + "/edit'>{{ trans("global.edit") }}</a></li>" +
+                "<li id='hideNode' style='color: #167495; cursor: pointer;'><span>{{ trans("global.hide") }}</span></li>";
+
+            displayContextMenu(left, top);
+
+            document.getElementById("hideNode").addEventListener("click", function () {
+                network.body.data.nodes.remove(node);
+                hideContextMenu();
+            });
+        }
+
+        // ─────────────────────────────────────────────
+        // Filtres
+        // ─────────────────────────────────────────────
+
         function getFilter() {
-            const filter = [];
-            for (let option of document.getElementById('filters').options)
-                if (option.selected)
-                    filter.push(option.value);
-            return filter
+            return Array.from(document.getElementById('filters').options)
+                .filter(o => o.selected)
+                .map(o => o.value);
         }
 
         // 1 up, 2 down, 3 both
         function getDirection() {
-            if (document.getElementById('direction-up').checked)
-                return 1;
-            else if (document.getElementById('direction-down').checked)
-                return 2;
-            else
-                return 3;
+            if (document.getElementById('direction-up').checked)   return 1;
+            if (document.getElementById('direction-down').checked) return 2;
+            return 3;
+        }
+
+        function getAttrFilter() {
+            return $('#attr-filter').val() || [];
         }
 
         function apply_filter() {
-            cur_filter = $('#filters').val();
+            const curFilter  = $('#filters').val() || [];
             const attrFilter = getAttrFilter();
 
             $("#node").empty();
-            for (let [node, value] of _nodes) {
-                // Filtre par vue
-                const matchVue = cur_filter.length === 0 || cur_filter.includes(value.vue);
-
+            for (const [, value] of _nodes) {
+                const matchVue  = curFilter.length === 0 || curFilter.includes(value.vue);
                 const matchAttr = matchesAttrFilter(value, attrFilter);
-
                 if (matchVue && matchAttr) {
                     $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
                 }
@@ -726,112 +647,148 @@ Physique :
         }
 
         async function loadAttributes() {
-            const response = await fetch('{{ route("admin.reports.explore.attributes") }}', {
-                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-                credentials: 'same-origin'
-            });
-            const attributes = await response.json();
-            attributes.forEach(attr => {
-                $('#attr-filter').append('<option value="' + attr + '">' + attr + '</option>');
-            });
-            $('#attr-filter').trigger('change');
-        }
+            try {
+                const response = await fetch('{{ route("admin.reports.explore.attributes") }}', {
+                    headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                    credentials: 'same-origin'
+                });
 
-        function getAttrFilter() {
-            return $('#attr-filter').val() || [];
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            // Charger les données via AJAX
-            loadGraphData();
-
-            $('body').keydown(function (event) {
-                if ((event.keyCode == 8) || (event.keyCode == 46)) {
-                    network.deleteSelected()
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            });
 
-            $('#filters').val(null).trigger('change');
-            $('#attr-filter')
-                .on('select2:select', function (e) { apply_filter(); })
-                .on('select2:unselect', function (e) { apply_filter(); });
-            $('#node').val(null);
-
-            $('#filters')
-                .on('select2:select', function (e) {
-                    apply_filter();
+                const attributes = await response.json();
+                attributes.forEach(attr => {
+                    $('#attr-filter').append('<option value="' + attr + '">' + attr + '</option>');
                 });
+                $('#attr-filter').trigger('change');
 
-            $('#filters')
-                .on('select2:unselect', function (e) {
-                    apply_filter();
-                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des attributs:', error);
+            }
+        }
 
-// Gestion du toggle Physique
-let physicsEnabled = true;
+        // ─────────────────────────────────────────────
+        // Helpers
+        // ─────────────────────────────────────────────
 
-const toggleBtn = document.getElementById('physicsToggle');
-const icon = toggleBtn.querySelector('i');
-const text = toggleBtn.querySelector('span');
+        function buildVisNode(node) {
+            if (getShowIP() && node.title != null) {
+                return { ...node, label: node.label + "\n" + node.title };
+            }
+            return node;
+        }
 
-toggleBtn.addEventListener('click', function() {
-    physicsEnabled = !physicsEnabled;
+        function getShowIP() {
+            return document.getElementById('toggleIP').classList.contains('active');
+        }
 
-    if (physicsEnabled) {
-        // Mode actif (vert, play)
-        toggleBtn.classList.remove('physics-inactive', 'btn-danger');
-        toggleBtn.classList.add('physics-active', 'btn-success');
-        icon.className = 'bi bi-play-fill';
-        // Activer votre animation physique
-        network.setOptions({physics: true});
-    } else {
-        // Mode inactif (rouge, stop)
-        toggleBtn.classList.remove('physics-active', 'btn-success');
-        toggleBtn.classList.add('physics-inactive', 'btn-danger');
-        icon.className = 'bi bi-pause-fill';
-
-        // Désactiver votre animation physique
-        network.setOptions({physics: false});
-    }
-});
-
-    // Gestion du toggle IP
-
-    const toggleIP = document.getElementById('toggleIP');
-
-    // Restaurer l'état au chargement
-    if (localStorage.getItem('showIP') === 'true') {
-        toggleIP.classList.add('active');
-        refreshNodeLabels(true);
-    }
-
-    toggleIP.addEventListener('click', function () {
-        const isActive = this.classList.contains('active');
-        localStorage.setItem('showIP', isActive);
-        refreshNodeLabels(isActive);
-    });
-
-
-});
-
-    function getShowIP() {
-        return  document.getElementById('toggleIP').classList.contains('active');
-    }
-
-    function refreshNodeLabels(showIP)
-     {
-         if (!nodes) return;
-        nodes.forEach(function(visNode) {
-            const srcNode = _nodes.get(visNode.id);
-            if (srcNode) {
+        function refreshNodeLabels(showIP) {
+            if (!nodes) return;
+            nodes.forEach(function (visNode) {
+                const srcNode = _nodes.get(visNode.id);
+                if (!srcNode) return;
                 const newLabel = (showIP && srcNode.title)
                     ? srcNode.label + "\n" + srcNode.title
                     : srcNode.label;
                 if (visNode.label !== newLabel) {
                     nodes.update({ id: visNode.id, label: newLabel });
                 }
+            });
+        }
+
+        // ─────────────────────────────────────────────
+        // DOMContentLoaded
+        // ─────────────────────────────────────────────
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGraphData();
+
+            $('body').keydown(function (event) {
+                if (event.keyCode === 8 || event.keyCode === 46) {
+                    network.deleteSelected();
+                }
+            });
+
+            $('#filters').val(null).trigger('change');
+            $('#attr-filter')
+                .on('select2:select',   () => apply_filter())
+                .on('select2:unselect', () => apply_filter());
+            $('#node').val(null);
+            $('#filters')
+                .on('select2:select',   () => apply_filter())
+                .on('select2:unselect', () => apply_filter());
+
+            // ── Toggle physique ───────────────────────────────────────────────
+            let physicsEnabled = true;
+            const toggleBtn    = document.getElementById('physicsToggle');
+            const icon         = toggleBtn.querySelector('i');
+
+            toggleBtn.addEventListener('click', function () {
+                physicsEnabled = !physicsEnabled;
+                if (physicsEnabled) {
+                    toggleBtn.classList.replace('btn-danger',      'btn-success');
+                    toggleBtn.classList.replace('physics-inactive','physics-active');
+                    icon.className = 'bi bi-play-fill';
+                    network.setOptions({ physics: true });
+                } else {
+                    toggleBtn.classList.replace('btn-success',    'btn-danger');
+                    toggleBtn.classList.replace('physics-active', 'physics-inactive');
+                    icon.className = 'bi bi-pause-fill';
+                    network.setOptions({ physics: false });
+                }
+            });
+
+            // ── Toggle IP ─────────────────────────────────────────────────────
+            const toggleIP = document.getElementById('toggleIP');
+            if (localStorage.getItem('showIP') === 'true') {
+                toggleIP.classList.add('active');
             }
+
+            toggleIP.addEventListener('click', function () {
+                const isActive = this.classList.contains('active');
+                localStorage.setItem('showIP', String(isActive));
+                refreshNodeLabels(isActive);
+            });
+
+            // ── Sélection du moteur physique ─────────────────────────────────
+            document.querySelectorAll('input[name="physics-solver"]').forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (!network) return;
+                    network.setOptions({
+                        physics: { solver: this.value }
+                    });
+                });
+            });
+
+            // ── Resize handle ─────────────────────────────────────────────────
+            const resizeHandle = document.getElementById('network-resize-handle');
+            const networkEl    = document.getElementById('mynetwork');
+            let dragging = false, startY = 0, startH = 0;
+
+            resizeHandle.addEventListener('mousedown', e => {
+                dragging = true;
+                startY   = e.clientY;
+                startH   = networkEl.offsetHeight;
+                document.body.style.cssText += 'cursor:ns-resize;user-select:none;';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', e => {
+                if (!dragging) return;
+                networkEl.style.height = Math.max(200, startH + (e.clientY - startY)) + 'px';
+                if (network) network.redraw();
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (!dragging) return;
+                dragging = false;
+                document.body.style.cursor     = '';
+                document.body.style.userSelect = '';
+                if (network) network.fit();
+            });
         });
-    }
+
     </script>
 
     @parent

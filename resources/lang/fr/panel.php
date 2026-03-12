@@ -27,6 +27,7 @@ return [
         'help' => 'Aide',
         'ecosystem' => 'Ecosystème',
         'explore' => 'Exploration',
+        'dependency' => 'Dépendances',
         'guide' => 'Guide',
         'gdpr' => 'RGPD',
         'information_system' => "Système d'information",
