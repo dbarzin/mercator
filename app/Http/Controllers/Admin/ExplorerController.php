@@ -882,7 +882,7 @@ class ExplorerController extends Controller
     private function buildLogicalServers(): void
     {
         $this->logicalServers = DB::table('logical_servers')
-            ->select('id', 'name', 'icon_id', 'address_ip', 'attributes')
+            ->select('id', 'name', 'icon_id', 'address_ip', 'domain_id', 'attributes')
             ->whereNull('deleted_at')
             ->get();
 
@@ -900,9 +900,21 @@ class ExplorerController extends Controller
             $this->linkDeviceToSubnetworks(
                 $server->address_ip,
                 $this->formatId(LogicalServer::$prefix, $server->id));
+
+            if ($server->domain_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(LogicalServer::$prefix, $server->id),
+                    $this->formatId(DomaineAd::$prefix, $server->domain_id)
+                );
+            }
         }
 
-        $this->linkJoinTable('logical_server_physical_server', LogicalServer::$prefix, PhysicalServer::$prefix, 'logical_server_id', 'physical_server_id');
+        $this->linkJoinTable('logical_server_physical_server',
+            LogicalServer::$prefix, PhysicalServer::$prefix,
+            'logical_server_id', 'physical_server_id');
+
+        // add domaine
+
     }
 
     private function buildCertificates(): void
@@ -922,7 +934,9 @@ class ExplorerController extends Controller
             );
         }
 
-        $this->linkJoinTable('certificate_logical_server', Certificate::$prefix, LogicalServer::$prefix, 'certificate_id', 'logical_server_id');
+        $this->linkJoinTable('certificate_logical_server',
+            Certificate::$prefix, LogicalServer::$prefix,
+            'certificate_id', 'logical_server_id');
     }
 
     private function buildLogicalFlows(): void
