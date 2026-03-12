@@ -792,9 +792,9 @@ class ExplorerController extends Controller
             );
         }
 
-        $this->linkJoinTable('external_connected_entity_network',
-            ExternalConnectedEntity::$prefix, Network::$prefix,
-            'external_connected_entity_id', 'network_id');
+        $this->linkJoinTable('external_connected_entity_subnetwork',
+            ExternalConnectedEntity::$prefix, Subnetwork::$prefix,
+            'external_connected_entity_id', 'subnetwork_id');
     }
 
     private function buildContainers(): void
