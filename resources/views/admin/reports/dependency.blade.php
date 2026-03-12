@@ -159,37 +159,52 @@ Analyse de dépendances
 
     </div>
 
-    {{-- ─── Moteur de rendu + téléchargement SVG (sous le graphe) ──────────── --}}
-    <div class="card-footer" id="graph-footer" style="display: none;">
-        <form method="GET" action="{{ url()->current() }}" id="engine-form">
-            {{-- Conserver tous les paramètres courants --}}
-            <input type="hidden" name="node"      value="{{ request('node') }}">
-            <input type="hidden" name="direction" value="{{ request('direction', 'both') }}">
-            <input type="hidden" name="depth"     value="{{ request('depth', 3) }}">
-            @foreach(request('vue', []) as $v)
-                <input type="hidden" name="vue[]" value="{{ $v }}">
-            @endforeach
-            @foreach(request('attr', []) as $a)
-                <input type="hidden" name="attr[]" value="{{ $a }}">
-            @endforeach
+{{-- ─── Moteur de rendu + téléchargement SVG (sous le graphe) ──────────── --}}
+<div class="card-footer" id="graph-footer" style="display: none;">
+    <form method="GET" action="{{ url()->current() }}" id="engine-form">
+        {{-- Conserver tous les paramètres courants --}}
+        <input type="hidden" name="node"      value="{{ request('node') }}">
+        <input type="hidden" name="direction" value="{{ request('direction', 'both') }}">
+        <input type="hidden" name="depth"     value="{{ request('depth', 3) }}">
+        @foreach(request('vue', []) as $v)
+            <input type="hidden" name="vue[]" value="{{ $v }}">
+        @endforeach
+        @foreach(request('attr', []) as $a)
+            <input type="hidden" name="attr[]" value="{{ $a }}">
+        @endforeach
 
-            <div class="d-flex align-items-center gap-3">
-                <a href="#" id="downloadSvg" title="Télécharger le SVG">
-                    <i class="bi bi-download"></i>
-                </a>
-                <span>Rendu :</span>
+        <div class="d-flex align-items-center gap-3">
+
+            {{-- Téléchargement SVG --}}
+            <a href="#" id="downloadSvg" class="btn btn-outline-secondary btn-sm"
+               title="Télécharger le graphe en SVG">
+                <i class="bi bi-download"></i>&nbsp;SVG
+            </a>
+
+            {{-- Séparateur --}}
+            <span class="text-muted small">Moteur de rendu :</span>
+
+            {{-- Groupe de boutons radio --}}
+            <div class="btn-group btn-group-sm" role="group" aria-label="Moteur de rendu">
                 @php($engines = ['dot', 'fdp', 'osage', 'circo'])
                 @foreach($engines as $eng)
-                    <label class="mb-0">
-                        <input type="radio" name="engine" value="{{ $eng }}"
-                               @checked(request('engine', 'dot') === $eng)
-                               onchange="this.form.submit();">
+                    <input type="radio"
+                           class="btn-check"
+                           name="engine"
+                           id="engine-{{ $eng }}"
+                           value="{{ $eng }}"
+                           autocomplete="off"
+                           @checked(request('engine', 'dot') === $eng)
+                           onchange="this.form.submit();">
+                    <label class="btn btn-outline-primary" for="engine-{{ $eng }}">
                         {{ $eng }}
                     </label>
                 @endforeach
             </div>
-        </form>
-    </div>
+
+        </div>
+    </form>
+</div>
 
 </div>
 
