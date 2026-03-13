@@ -295,6 +295,10 @@ class ExplorerController extends Controller
                     $ip,
                     $this->formatId(Workstation::$prefix, $workstation->id));
         }
+
+        $this->linkJoinTable('m_application_workstation',
+            MApplication::$prefix, Workstation::$prefix,
+            'm_application_id', 'workstation_id');
     }
 
     private function buildPhones(): void
@@ -338,7 +342,7 @@ class ExplorerController extends Controller
                 6,
                 $this->formatId(Peripheral::$prefix, $peripheral->id),
                 $peripheral->name,
-                $peripheral->icon_id === null ? '/images/peripheral.png' : "/admin/documents/{$peripheral->icon_id}",
+                $this->getIcon($peripheral->icon_id, '/images/peripheral.png'),
                 'peripherals',
                 630,
                 $peripheral->address_ip
@@ -482,15 +486,11 @@ class ExplorerController extends Controller
                 655,
                 $wifiTerminal->address_ip);
 
-            if ($wifiTerminal->building_id !== null) {
-                $this->addLinkEdge(
-                    $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
-                    $this->formatId(Building::$prefix, $wifiTerminal->building_id));
-            } elseif ($wifiTerminal->site_id !== null) {
-                $this->addLinkEdge(
-                    $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
-                    $this->formatId(Site::$prefix, $wifiTerminal->site_id));
-            }
+            $this->linkToLocationOrSite(
+                $this->formatId(WifiTerminal::$prefix, $wifiTerminal->id),
+                $wifiTerminal->building_id,
+                $wifiTerminal->site_id
+            );
 
             foreach (explode(',', $wifiTerminal->address_ip ?? '') as $address) {
                 $this->linkDeviceToSubnetworks(
@@ -709,6 +709,10 @@ class ExplorerController extends Controller
                     $this->formatId(NetworkSwitch::$prefix, $switch->id));
 
         }
+
+        $this->linkJoinTable('network_switch_vlan',
+            NetworkSwitch::$prefix, Vlan::$prefix,
+            'network_switch_id', 'vlan_id');
     }
 
     private function buildSubnetworks(): void
@@ -787,6 +791,10 @@ class ExplorerController extends Controller
                 'external-connected-entities', 540,
             );
         }
+
+        $this->linkJoinTable('external_connected_entity_subnetwork',
+            ExternalConnectedEntity::$prefix, Subnetwork::$prefix,
+            'external_connected_entity_id', 'subnetwork_id');
     }
 
     private function buildContainers(): void
@@ -801,7 +809,7 @@ class ExplorerController extends Controller
                 5,
                 $this->formatId(Container::$prefix, $container->id),
                 $container->name,
-                $container->icon_id === null ? '/images/container.png' : "/admin/documents/{$container->icon_id}",
+                $this->getIcon($container->icon_id, '/images/container.png'),
                 'containers', 550
             );
         }
@@ -847,7 +855,7 @@ class ExplorerController extends Controller
                 5,
                 $this->formatId(Cluster::$prefix, $cluster->id),
                 $cluster->name,
-                $cluster->icon_id === null ? '/images/cluster.png' : "/admin/documents/{$cluster->icon_id}",
+                $this->getIcon($cluster->icon_id, '/images/cluster.png'),
                 'clusters', 580,
                 $cluster->address_ip,
                 $cluster->attributes
@@ -862,7 +870,7 @@ class ExplorerController extends Controller
                 $this->formatId(LogicalServer::$prefix, $join->logical_server_id));
         }
 
-        // Cluster - Logical Servers
+        // Cluster - Physical Servers
         $joins = DB::table('cluster_physical_server')->select('cluster_id', 'physical_server_id')->get();
         foreach ($joins as $join) {
             $this->addLinkEdge(
@@ -915,7 +923,6 @@ class ExplorerController extends Controller
             'logical_server_id', 'physical_server_id');
 
     }
-// xxxx
 
     private function buildRouters(): void
     {
@@ -1022,7 +1029,7 @@ class ExplorerController extends Controller
                 }
                 foreach ($this->peripherals as $peripheral) {
                     if ($flow->isDestination($peripheral->address_ip)) {
-                        array_push($sources, $this->formatId('PERIF_', $peripheral->id));
+                        array_push($destinations, $this->formatId('PERIF_', $peripheral->id));
                     }
                 }
                 // TODO: other objects
@@ -1058,25 +1065,25 @@ class ExplorerController extends Controller
         $fluxes = DB::table('fluxes')->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
             if ($flux->application_source_id !== null) {
-                $src_id = MApplication::$prefix . $flux->application_source_id;
+                $src_id = $this->formatId(MApplication::$prefix, $flux->application_source_id);
             } elseif ($flux->service_source_id !== null) {
-                $src_id = ApplicationService::$prefix . $flux->service_source_id;
+                $src_id = $this->formatId(ApplicationService::$prefix, $flux->service_source_id);
             } elseif ($flux->module_source_id !== null) {
-                $src_id = ApplicationModule::$prefix . $flux->module_source_id;
+                $src_id = $this->formatId(ApplicationModule::$prefix, $flux->module_source_id);
             } elseif ($flux->database_source_id !== null) {
-                $src_id = Database::$prefix . $flux->database_source_id;
+                $src_id = $this->formatId(Database::$prefix, $flux->database_source_id);
             } else {
                 continue;
             }
 
             if ($flux->application_dest_id !== null) {
-                $dest_id = MApplication::$prefix . $flux->application_dest_id;
+                $dest_id = $this->formatId(MApplication::$prefix, $flux->application_dest_id);
             } elseif ($flux->service_dest_id !== null) {
-                $dest_id = ApplicationService::$prefix . $flux->service_dest_id;
+                $dest_id = $this->formatId(ApplicationService::$prefix, $flux->service_dest_id);
             } elseif ($flux->module_dest_id !== null) {
-                $dest_id = ApplicationModule::$prefix . $flux->module_dest_id;
+                $dest_id = $this->formatId(ApplicationModule::$prefix, $flux->module_dest_id);
             } elseif ($flux->database_dest_id !== null) {
-                $dest_id =  Database::$prefix  . $flux->database_dest_id;
+                $dest_id = $this->formatId(Database::$prefix, $flux->database_dest_id);
             } else {
                 continue;
             }
@@ -1202,6 +1209,9 @@ class ExplorerController extends Controller
         $this->linkJoinTable('database_m_application',
             Database::$prefix, MApplication::$prefix,
             'database_id', 'm_application_id');
+        $this->linkJoinTable('database_entity',
+            Database::$prefix, Entity::$prefix,
+            'database_id', 'entity_id');
     }
 
     /**
@@ -1582,17 +1592,14 @@ class ExplorerController extends Controller
                              string $from, string $to,
                              string $type, ?string $color): void
     {
-        $edge = [
+        $this->edges[] = [
             'name' => $name,
             'bidirectional' => $bidirectional,
             'from' => $from,
             'to' => $to,
             'type' => $type,
-            'color' => $color
+            'color' => $color,
         ];
-        if ($color !== null)
-            $edge['color'] = $color;
-        $this->edges[] = $edge;
     }
 
     private function addLinkEdge(string $from, string $to): void

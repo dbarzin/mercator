@@ -56,6 +56,10 @@
                 <a href="{{ route('admin.routers.show', $link->router_src_id) }}">
                     {{ $link->routerSrc->name }}
                 </a>
+                @elseif ($link->networkSwitchSrc!=null)
+                <a href="{{ route('admin.network-switches.show', $link->network_switch_src_id) }}">
+                    {{ $link->networkSwitchSrc->name }}
+                </a>
                 @endif
             </td>
         </tr>
@@ -111,6 +115,10 @@
                 @elseif ($link->routerDest!=null)
                 <a href="{{ route('admin.routers.show', $link->router_dest_id) }}">
                     {{ $link->routerDest->name }}
+                </a>
+                @elseif ($link->networkSwitchDest!=null)
+                <a href="{{ route('admin.network-switches.show', $link->network_switch_dest_id) }}">
+                    {{ $link->networkSwitchDest->name }}
                 </a>
                 @endif
             </td>

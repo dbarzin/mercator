@@ -70,7 +70,7 @@
                                 <td style="text-align: right; vertical-align: top;">
                                     &nbsp;
                                     <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();"
-                                       href="#"><i class="fas fa-camera-retro"></i>
+                                       href="#"><i class="bi bi-camera-fill"></i>
                                         Photo
                                     </a>
                                     <a id="canvasImg" download="filename"></a>
@@ -149,22 +149,25 @@ Physique :
                          title="Glisser pour redimensionner"></div>
                 </div>
 
-                {{-- ─── Footer ──────────────────────────────────────────────────── --}}
-                <div class="card-footer">
-                    <div class="d-flex align-items-center gap-3">
-                        <span>Moteur&nbsp;:</span>
-                        <div class="btn-group" role="group" aria-label="Moteur physique">
+                    {{-- ─── Footer ──────────────────────────────────────────────────── --}}
+                    <div class="card-footer">
+                        <div class="d-flex align-items-center gap-3">
+                            <label class="d-inline-flex align-items-center mb-0">
+                                Moteur :
+                            </label>
                             @foreach(['barnesHut' => 'Barnes-Hut', 'forceAtlas2Based' => 'Force Atlas 2', 'repulsion' => 'Repulsion', 'hierarchicalRepulsion' => 'Hiérarchique'] as $solver => $label)
-                                <input type="radio" class="btn-check" name="physics-solver"
-                                       id="solver-{{ $solver }}" value="{{ $solver }}" autocomplete="off"
-                                       {{ $solver === 'barnesHut' ? 'checked' : '' }}>
-                                <label class="btn btn-outline-secondary btn-sm" for="solver-{{ $solver }}">
-                                    {{ $label }}
+                                <label class="d-inline-flex align-items-center mb-0">
+                                    <input
+                                            type="radio"
+                                            name="physics-solver"
+                                            value="{{ $solver }}"
+                                            @checked($solver === 'barnesHut')
+                                    >
+                                    <span>{{ $label }}</span>
                                 </label>
                             @endforeach
                         </div>
                     </div>
-                </div>
 
             </div>{{-- /.card graphe --}}
 
