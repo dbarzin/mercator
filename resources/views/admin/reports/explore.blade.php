@@ -149,22 +149,25 @@ Physique :
                          title="Glisser pour redimensionner"></div>
                 </div>
 
-                {{-- ─── Footer ──────────────────────────────────────────────────── --}}
-                <div class="card-footer">
-                    <div class="d-flex align-items-center gap-3">
-                        <span>Moteur&nbsp;:</span>
-                        <div class="btn-group" role="group" aria-label="Moteur physique">
+                    {{-- ─── Footer ──────────────────────────────────────────────────── --}}
+                    <div class="card-footer">
+                        <div class="d-flex align-items-center gap-3">
+                            <label class="inline-flex items-center">
+                                Moteur :
+                            </label>
                             @foreach(['barnesHut' => 'Barnes-Hut', 'forceAtlas2Based' => 'Force Atlas 2', 'repulsion' => 'Repulsion', 'hierarchicalRepulsion' => 'Hiérarchique'] as $solver => $label)
-                                <input type="radio" class="btn-check" name="physics-solver"
-                                       id="solver-{{ $solver }}" value="{{ $solver }}" autocomplete="off"
-                                       {{ $solver === 'barnesHut' ? 'checked' : '' }}>
-                                <label class="btn btn-outline-secondary btn-sm" for="solver-{{ $solver }}">
-                                    {{ $label }}
+                                <label class="inline-flex items-center ps-1">
+                                    <input
+                                            type="radio"
+                                            name="physics-solver"
+                                            value="{{ $solver }}"
+                                            @checked($solver === 'barnesHut')
+                                    >
+                                    <span>{{ $label }}</span>
                                 </label>
                             @endforeach
                         </div>
                     </div>
-                </div>
 
             </div>{{-- /.card graphe --}}
 

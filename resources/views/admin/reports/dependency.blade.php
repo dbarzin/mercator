@@ -176,35 +176,28 @@ Analyse de dépendances
         <div class="d-flex align-items-center gap-3">
 
             {{-- Téléchargement SVG --}}
-            <a href="#" id="downloadSvg" class="btn btn-outline-secondary btn-sm"
-               title="Télécharger le graphe en SVG">
-                <i class="bi bi-download"></i>&nbsp;SVG
-            </a>
+            <label class="inline-flex items-center ps-1 pe-1">
+                <a href="#" id="downloadSvg"><i class="bi bi-download"></i></a>
+            </label>
 
             {{-- Séparateur --}}
-            <span class="text-muted small">Moteur de rendu :</span>
+            <label class="inline-flex items-center">
+                Rendu :
+            </label>
 
-            {{-- Groupe de boutons radio --}}
-            <div class="btn-group btn-group-sm" role="group" aria-label="Moteur de rendu">
-                @php($engines = ['dot', 'fdp', 'osage', 'circo'])
-                @foreach($engines as $eng)
-                    <input type="radio"
-                           class="btn-check"
-                           name="engine"
-                           id="engine-{{ $eng }}"
-                           value="{{ $eng }}"
-                           autocomplete="off"
-                           @checked(request('engine', 'dot') === $eng)
-                           onchange="this.form.submit();">
-                    <label class="btn btn-outline-primary" for="engine-{{ $eng }}">
-                        {{ $eng }}
-                    </label>
-                @endforeach
-            </div>
-
-        </div>
-    </form>
-</div>
+            {{-- Radio buttons simples --}}
+            @foreach(['dot', 'fdp', 'osage', 'circo'] as $eng)
+                <label class="inline-flex items-center ps-1">
+                    <input
+                            type="radio"
+                            name="engine"
+                            value="{{ $eng }}"
+                            @checked(request('engine', 'dot') === $eng)
+                            onchange="document.getElementById('engine-form').submit();"
+                    >
+                    <span>{{ $eng }}</span>
+                </label>
+            @endforeach
 
 </div>
 
