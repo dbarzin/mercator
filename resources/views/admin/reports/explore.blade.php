@@ -70,7 +70,7 @@
                                 <td style="text-align: right; vertical-align: top;">
                                     &nbsp;
                                     <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();"
-                                       href="#"><i class="fas fa-camera-retro"></i>
+                                       href="#"><i class="bi bi-camera-fill"></i>
                                         Photo
                                     </a>
                                     <a id="canvasImg" download="filename"></a>
@@ -152,11 +152,11 @@ Physique :
                     {{-- ─── Footer ──────────────────────────────────────────────────── --}}
                     <div class="card-footer">
                         <div class="d-flex align-items-center gap-3">
-                            <label class="inline-flex items-center">
+                            <label class="d-inline-flex align-items-center mb-0">
                                 Moteur :
                             </label>
                             @foreach(['barnesHut' => 'Barnes-Hut', 'forceAtlas2Based' => 'Force Atlas 2', 'repulsion' => 'Repulsion', 'hierarchicalRepulsion' => 'Hiérarchique'] as $solver => $label)
-                                <label class="inline-flex items-center ps-1">
+                                <label class="d-inline-flex align-items-center mb-0">
                                     <input
                                             type="radio"
                                             name="physics-solver"
