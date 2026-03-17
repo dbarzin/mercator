@@ -659,8 +659,8 @@ class ExplorerController extends Controller
     private function buildLogicalView(): void
     {
         $this->buildNetworks();
-        $this->buildNetworkSwitches();
         $this->buildSubnetworks();
+        $this->buildNetworkSwitches();
         $this->buildGateways();
         $this->buildExternalConnectedEntities();
         $this->buildLogicalServers();
