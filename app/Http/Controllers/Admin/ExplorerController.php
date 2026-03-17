@@ -43,6 +43,7 @@ use Mercator\Core\Models\PhysicalSwitch;
 use Mercator\Core\Models\Process;
 use Mercator\Core\Models\Relation;
 use Mercator\Core\Models\Router;
+use Mercator\Core\Models\SecurityDevice;
 use Mercator\Core\Models\Site;
 use Mercator\Core\Models\StorageDevice;
 use Mercator\Core\Models\Subnetwork;
@@ -663,6 +664,7 @@ class ExplorerController extends Controller
         $this->buildGateways();
         $this->buildExternalConnectedEntities();
         $this->buildLogicalServers();
+        $this->buildLogicalSecurityDevices();
         $this->buildRouters();
         $this->buildCertificates();
         $this->buildLogicalFlows();
@@ -923,6 +925,41 @@ class ExplorerController extends Controller
             'logical_server_id', 'physical_server_id');
 
     }
+
+    private function buildLogicalSecurityDevices(): void
+    {
+        $securityDevices = DB::table('security_devices')
+            ->select('id', 'name', 'attributes', 'icon_id','address_ip')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($securityDevices as $securityDevice) {
+            $this->addNode(
+                5,
+                $this->formatId(SecurityDevice::$prefix, $securityDevice->id),
+                $securityDevice->name,
+                $this->getIcon($securityDevice->icon_id, '/images/security.png'),
+                'security-devices', 560,
+                $securityDevice->address_ip,
+                $securityDevice->attributes
+            );
+
+            $this->linkDeviceToSubnetworks(
+                $securityDevice->address_ip,
+                $this->formatId(SecurityDevice::$prefix, $securityDevice->id));
+        }
+
+        $this->linkJoinTable('physical_security_device_security_device',
+            PhysicalSecurityDevice::$prefix, SecurityDevice::$prefix,
+            'physical_security_device_id', 'security_device_id');
+
+        $this->linkJoinTable('m_application_security_device',
+            MApplication::$prefix, SecurityDevice::$prefix,
+            'm_application_id', 'security_device_id');
+
+
+    }
+
 
     private function buildRouters(): void
     {
