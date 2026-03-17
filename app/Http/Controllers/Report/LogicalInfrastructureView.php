@@ -107,6 +107,7 @@ class LogicalInfrastructureView extends Controller
                     return redirect()->back()->with('error', 'Subnetwork not found');
                 }
             }
+            // Tri descending -> first macth to find the subnetwork
             $subnetworks = $subnetworks->sortByDesc(function($subnet) {
                 return $subnet->getMaskLength();
             });

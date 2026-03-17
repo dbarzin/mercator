@@ -688,34 +688,6 @@ class ExplorerController extends Controller
         }
     }
 
-    private function buildNetworkSwitches(): void
-    {
-        $switches = DB::table('network_switches')
-            ->select('id', 'name', 'ip')
-            ->whereNull('deleted_at')
-            ->get();
-
-        foreach ($switches as $switch) {
-            $this->addNode(
-                5,
-                $this->formatId(NetworkSwitch::$prefix, $switch->id),
-                $switch->name,
-                '/images/switch.png',
-                'network-switches', 510,
-                $switch->ip
-            );
-
-            if ($switch->ip!=null)
-                $this->linkDeviceToSubnetworks(
-                    $switch->ip,
-                    $this->formatId(NetworkSwitch::$prefix, $switch->id));
-
-        }
-
-        $this->linkJoinTable('network_switch_vlan',
-            NetworkSwitch::$prefix, Vlan::$prefix,
-            'network_switch_id', 'vlan_id');
-    }
 
     private function buildSubnetworks(): void
     {
@@ -725,9 +697,14 @@ class ExplorerController extends Controller
                 $this->formatId(Subnetwork::$prefix, $subnetwork->id),
                 $subnetwork->name,
                 '/images/network.png',
-                'subnetworks', 515,
+                'subnetworks', 510,
                 $subnetwork->address
             );
+
+            // Tri descending by subnet mask length
+            $this->subnetworks = $this->subnetworks->sortByDesc(function($subnet) {
+                return ExplorerController::getMaskLength($subnet->address);
+            });
 
             if ($subnetwork->subnetwork_id !== null) {
                 $this->addLinkEdge(
@@ -752,10 +729,37 @@ class ExplorerController extends Controller
                     $this->formatId(Gateway::$prefix, $subnetwork->gateway_id)
                 );
             }
+        }
+    }
 
 
+    private function buildNetworkSwitches(): void
+    {
+        $switches = DB::table('network_switches')
+            ->select('id', 'name', 'ip')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($switches as $switch) {
+            $this->addNode(
+                5,
+                $this->formatId(NetworkSwitch::$prefix, $switch->id),
+                $switch->name,
+                '/images/switch.png',
+                'network-switches', 520,
+                $switch->ip
+            );
+
+            if ($switch->ip!=null)
+                $this->linkDeviceToSubnetworks(
+                    $switch->ip,
+                    $this->formatId(NetworkSwitch::$prefix, $switch->id));
 
         }
+
+        $this->linkJoinTable('network_switch_vlan',
+            NetworkSwitch::$prefix, Vlan::$prefix,
+            'network_switch_id', 'vlan_id');
     }
 
     private function buildGateways(): void
@@ -908,9 +912,11 @@ class ExplorerController extends Controller
                 $server->attributes
             );
 
-            $this->linkDeviceToSubnetworks(
-                $server->address_ip,
-                $this->formatId(LogicalServer::$prefix, $server->id));
+            foreach (explode(',', $server->address_ip ?? '') as $address) {
+                $this->linkDeviceToSubnetworks(
+                    $address,
+                    $this->formatId(LogicalServer::$prefix, $server->id));
+            }
 
             if ($server->domain_id !== null) {
                 $this->addLinkEdge(
@@ -1676,36 +1682,22 @@ class ExplorerController extends Controller
     }
 
 
-    private function linkDeviceToSubnetworks(?string $addressIp, string $deviceId): void
+    private function linkDeviceToSubnetworks(?string $addressIp, string $id)
     {
-        if ($addressIp === null) {
+        if ($addressIp === null)
             return;
-        }
-
-        $addresses = explode(',', $addressIp);
-        $smallestSubnetwork = null;
-        $smallestSize = PHP_INT_MAX;
 
         foreach ($this->subnetworks as $subnetwork) {
-            foreach ($addresses as $address) {
-                if ($subnetwork->contains(trim($address))) {
-                    $size = $subnetwork->getMaskLength();
-                    if ($size < $smallestSize) {
-                        $smallestSize = $size;
-                        $smallestSubnetwork = $subnetwork;
-                    }
-                    break;
-                }
+            if ($subnetwork->contains($addressIp)) {
+                $this->addLinkEdge(
+                    $id,
+                    $this->formatId(Subnetwork::$prefix, $subnetwork->id));
+                // Only one link per subnet
+                return;
             }
         }
-
-        if ($smallestSubnetwork !== null) {
-            $this->addLinkEdge(
-                $this->formatId(Subnetwork::$prefix, $smallestSubnetwork->id),
-                $deviceId
-            );
-        }
     }
+
     private function linkJoinTable(string $table, string $fromPrefix, string $toPrefix, string $fromColumn, string $toColumn): void
     {
         $joins = DB::table($table)->select($fromColumn, $toColumn)->get();
@@ -1717,4 +1709,25 @@ class ExplorerController extends Controller
             );
         }
     }
+
+    private static function getMaskLength(?string $address): int
+    {
+        // No address defined
+        if ($address === null) {
+            return 0;
+        }
+
+        // Split CIDR notation
+        $parts = explode('/', $address);
+
+        // Invalid format (no prefix length)
+        if (count($parts) < 2) {
+            return 0;
+        }
+
+        // Return the mask length as integer
+        return (int) $parts[1];
+    }
+
+
 }
