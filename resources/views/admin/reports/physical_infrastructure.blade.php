@@ -519,47 +519,56 @@ S{{ $physicalSecurityDevice->site->id }} -> PSD{{ $physicalSecurityDevice->id }}
 }`;
 
 document.addEventListener('DOMContentLoaded', () => {
-d3.select("#graph").graphviz()
-    .addImage("/images/site.png", "64px", "64px")
-    @foreach($sites as $site)
-    @if ($site->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $site->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/building.png", "64px", "64px")
-    .addImage("/images/bay.png", "64px", "64px")
-    .addImage("/images/server.png", "64px", "64px")
-    .addImage("/images/workstation.png", "64px", "64px")
-    @foreach($workstations as $workstation)
-    @if ($workstation->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/storage.png", "64px", "64px")
-    .addImage("/images/peripheral.png", "64px", "64px")
-    @foreach($peripherals as $peripheral)
-    @if ($peripheral->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    @foreach($buildings as $building)
-    @if ($building->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $building->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/phone.png", "64px", "64px")
-    .addImage("/images/switch.png", "64px", "64px")
-    @foreach($physicalSwitches as $switch)
-    @if ($switch->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $switch->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/router.png", "64px", "64px")
-    .addImage("/images/wifi.png", "64px", "64px")
-    .addImage("/images/security.png", "64px", "64px")
-    .engine("{{ $engine }}")
-    .renderDot(dotSrc);
+    const images = new Set([
+        "/images/site.png",
+        @foreach($sites as $site)
+        @if ($site->icon_id !== null)
+        "{{ route('admin.documents.show', $site->icon_id) }}",
+        @endif
+        @endforeach
+        "/images/building.png",
+        "/images/bay.png",
+        "/images/server.png",
+        "/images/workstation.png",
+        @foreach($workstations as $workstation)
+        @if ($workstation->icon_id !== null)
+        "{{ route('admin.documents.show', $workstation->icon_id) }}",
+        @endif
+        @endforeach
+        "/images/storage.png",
+        "/images/peripheral.png",
+        @foreach($peripherals as $peripheral)
+        @if ($peripheral->icon_id !== null)
+        "{{ route('admin.documents.show', $peripheral->icon_id) }}",
+        @endif
+        @endforeach
+        @foreach($buildings as $building)
+        @if ($building->icon_id !== null)
+        "{{ route('admin.documents.show', $building->icon_id) }}",
+        @endif
+        @endforeach
+        "/images/phone.png",
+        "/images/switch.png",
+        @foreach($physicalSwitches as $switch)
+        @if ($switch->icon_id !== null)
+        "{{ route('admin.documents.show', $switch->icon_id) }}",
+        @endif
+        @endforeach
+        "/images/router.png",
+        "/images/wifi.png",
+        "/images/security.png",
+        @foreach($physicalSecurityDevices as $device)
+        @if ($device->icon_id !== null)
+        "{{ route('admin.documents.show', $device->icon_id) }}",
+        @endif
+        @endforeach
+    ]);
+
+    let graph = d3.select("#graph").graphviz();
+    images.forEach(url => graph = graph.addImage(url, "64px", "64px"));
+    graph.engine("{{ $engine }}").renderDot(dotSrc);
 });
+
 </script>
 @parent
 @endsection
