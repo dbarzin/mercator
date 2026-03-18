@@ -779,7 +779,7 @@ digraph  {
 
 @can('security_device_access')
     @foreach($securityDevices as $securityDevice)
-        SECURITY{{ $securityDevice->id }} [label="{{ $securityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $securityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($securityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#{{$securityDevice->getUID()}}"]
+        SECURITY{{ $securityDevice->id }} [label="{{ $securityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $securityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($securityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $securityDevice->icon_id === null ? '/images/securitydevice.png' : route('admin.documents.show', $securityDevice->icon_id) }}" href="#{{$securityDevice->getUID()}}"]
         @foreach(explode(',',$securityDevice->address_ip) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
@@ -887,6 +887,11 @@ document.addEventListener('DOMContentLoaded', () => {
         @foreach($logicalServers as $logicalServer)
         @if ($logicalServer->icon_id!==null)
         .addImage("{{ route('admin.documents.show', $logicalServer->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
+        @foreach($securityDevices as $securityDevice)
+        @if ($securityDevice->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $securityDevice->icon_id) }}", "64px", "64px")
         @endif
         @endforeach
         @foreach($peripherals as $peripheral)
