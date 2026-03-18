@@ -506,7 +506,7 @@ S{{ $wifiTerminal->site->id }} -> WIFI{{ $wifiTerminal->id }}
 @endcan
 @can('physical_security_device_access')
 @foreach($physicalSecurityDevices as $physicalSecurityDevice)
-PSD{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/security.png" href="#{{$physicalSecurityDevice->getUID()}}"]
+PSD{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $physicalSecurityDevice->icon_id === null ? '/images/security.png' : route('admin.documents.show', $physicalSecurityDevice->icon_id) }}" href="#{{$physicalSecurityDevice->getUID()}}"]
 @if ($physicalSecurityDevice->bay!=null)
 BAY{{ $physicalSecurityDevice->bay->id }} -> PSD{{ $physicalSecurityDevice->id }}
 @elseif ($physicalSecurityDevice->building!=null)
