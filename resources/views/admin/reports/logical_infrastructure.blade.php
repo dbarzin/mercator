@@ -368,10 +368,36 @@
                 <div class="card-body">
                     <p>{{ trans("cruds.physicalSecurityDevice.description") }}</p>
                     @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+                        @if ($physicalSecurityDevice->address_ip!==null)
                         <div class="row">
                             <div class="col">
                                 @include('admin.physicalSecurityDevices._details', [
                                     'physicalSecurityDevice' => $physicalSecurityDevice,
+                                    'withLink' => true,
+                                ])
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    @endcan
+
+    @can('security_device_access')
+        @if ($securityDevices->count()>0)
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.securityDevice.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.securityDevice.description") }}</p>
+                    @foreach($securityDevices as $securityDevice)
+                        <div class="row">
+                            <div class="col">
+                                @include('admin.securityDevices._details', [
+                                    'securityDevice' => $securityDevice,
                                     'withLink' => true,
                                 ])
                             </div>
@@ -737,11 +763,27 @@ digraph  {
 
 @can('physical_security_device_access')
     @foreach($physicalSecurityDevices as $physicalSecurityDevice)
-        SECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $physicalSecurityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#{{$physicalSecurityDevice->getUID()}}"]
+    @if ($physicalSecurityDevice->address_ip!==null)
+        PSECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $physicalSecurityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#{{$physicalSecurityDevice->getUID()}}"]
         @foreach(explode(',',$physicalSecurityDevice->address_ip) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
-                SUBNET{{ $subnetwork->id }} -> SECURITY{{ $physicalSecurityDevice->id }}
+                SUBNET{{ $subnetwork->id }} -> PSECURITY{{ $physicalSecurityDevice->id }}
+                @break(2)
+                @endif
+                @endforeach
+            @endforeach
+        @endif
+    @endforeach
+@endcan
+
+@can('security_device_access')
+    @foreach($securityDevices as $securityDevice)
+        SECURITY{{ $securityDevice->id }} [label="{{ $securityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $securityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($securityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#{{$securityDevice->getUID()}}"]
+        @foreach(explode(',',$securityDevice->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                SUBNET{{ $subnetwork->id }} -> SECURITY{{ $securityDevice->id }}
                 @break(2)
                 @endif
             @endforeach

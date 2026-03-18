@@ -1,26 +1,30 @@
+@props([
+    'physicalSecurityDevice',
+    'withLink' => false,
+])
 <table class="table table-bordered table-striped table-report" id="{{ $physicalSecurityDevice->getUID() }}">
     <tbody>
     <tr>
         <th width='10%'>
             {{ trans('cruds.physicalSecurityDevice.fields.name') }}
         </th>
-        <td colspan='2'>
+        <td width="20%">
+        @if($withLink)
+        <a href="{{ route('admin.physical-security-devices.show', $physicalSecurityDevice->id) }}">{{ $physicalSecurityDevice->name }}</a>
+        @else
             {{ $physicalSecurityDevice->name }}
+        @endif
         </td>
-    </tr>
-    <tr>
         <th width='10%'>
             {{ trans('cruds.physicalSecurityDevice.fields.type') }}
         </th>
-        <td colspan='2'>
+        <td width="20%">
             {{ $physicalSecurityDevice->type }}
         </td>
-    </tr>
-    <tr>
-        <th>
+        <th width='10%'>
             {{ trans('cruds.physicalSecurityDevice.fields.attributes') }}
         </th>
-        <td colspan="2">
+        <td width="20%">
             @foreach(explode(" ",$physicalSecurityDevice->attributes) as $attribute)
                 <span class="badge badge-info">{{ $attribute }}</span>
             @endforeach
@@ -30,7 +34,7 @@
         <th>
             {{ trans('cruds.physicalSecurityDevice.fields.description') }}
         </th>
-        <td>
+        <td colspan="4">
             {!! $physicalSecurityDevice->description !!}
         </td>
         <td width="10%">
@@ -47,7 +51,7 @@
         <th>
             {{ trans('cruds.physicalSecurityDevice.fields.address_ip') }}
         </th>
-        <td colspan="2">
+        <td colspan="5">
             {{ $physicalSecurityDevice->address_ip }}
         </td>
     </tr>
@@ -55,7 +59,7 @@
         <th>
             {{ trans('cruds.physicalSecurityDevice.fields.security_devices') }}
         </th>
-        <td colspan="2">
+        <td colspan="5">
             @foreach($physicalSecurityDevice->securityDevices as $device)
                 <a href="{{ route('admin.security-devices.show', $device->id) }}">{{ $device->name }}</a>
                 @if(!$loop->last)
@@ -68,31 +72,27 @@
         <th width='10%'>
             {{ trans('cruds.physicalSecurityDevice.fields.site') }}
         </th>
-        <td colspan="2">
+        <td>
             @if($physicalSecurityDevice->site!=null)
                 <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site->id) }}">
                     {{ $physicalSecurityDevice->site->name ?? '' }}
                 </a>
             @endif
         </td>
-    </tr>
-    <tr>
         <th width='10%'>
             {{ trans('cruds.physicalSecurityDevice.fields.building') }}
         </th>
-        <td colspan="2">
+        <td>
             @if($physicalSecurityDevice->building!=null)
                 <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">
                     {{ $physicalSecurityDevice->building->name ?? '' }}
                 </a>
             @endif
         </td>
-    </tr>
-    <tr>
         <th width='10%'>
             {{ trans('cruds.physicalSecurityDevice.fields.bay') }}
         </th>
-        <td colspan="2">
+        <td>
             @if($physicalSecurityDevice->bay!=null)
                 <a href="{{ route('admin.bays.show', $physicalSecurityDevice->bay->id) }}">
                     {{ $physicalSecurityDevice->bay->name ?? '' }}
