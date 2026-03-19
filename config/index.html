@@ -213,6 +213,9 @@ Local accounts always remain available for fallback if configured.</p>
 account.</p>
 <pre><code>LDAP_AUTO_PROVISION=true
 </code></pre>
+<p>The local account will be created with the following role:</p>
+<pre><code>LDAP_AUTO_PROVISION_ROLE=user
+</code></pre>
 <hr />
 <h3 id="21-ldap-connection-settings">2.1 LDAP Connection Settings</h3>
 <pre><code>LDAP_HOST=ldap.example.com
@@ -370,6 +373,12 @@ To activate LDAPRecord logging:</p>
 <td><code>LDAP_AUTO_PROVISION</code></td>
 <td>false</td>
 <td>Creates user in DB on first LDAP login</td>
+</tr>
+<tr>
+<td>Auto-provision role</td>
+<td><code>LDAP_AUTO_PROVISION_ROLE</code></td>
+<td>null</td>
+<td>Role assigned to newly created users</td>
 </tr>
 <tr>
 <td>Nested groups</td>

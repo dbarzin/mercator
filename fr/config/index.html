@@ -218,6 +218,9 @@ Les comptes locaux restent toujours disponibles en fallback si vous les activez.
 Mercator peut créer automatiquement le compte local correspondant.</p>
 <pre><code>LDAP_AUTO_PROVISION=true
 </code></pre>
+<p>L'utilisateur sera créé avec le rôle suivant :</p>
+<pre><code>LDAP_AUTO_PROVISION_ROLE=user
+</code></pre>
 <hr />
 <h3 id="21-parametres-de-connexion-ldap">2.1 Paramètres de Connexion LDAP</h3>
 <pre><code>LDAP_HOST=ldap.example.com
@@ -382,6 +385,12 @@ MAIL_FROM_NAME=&quot;Mercator&quot;
 <td><code>LDAP_AUTO_PROVISION</code></td>
 <td>false</td>
 <td>Crée automatiquement l’utilisateur</td>
+</tr>
+<tr>
+<td>Auto-provision role</td>
+<td><code>LDAP_AUTO_PROVISION_ROLE</code></td>
+<td>null</td>
+<td>Role assigné aux utilisateur nouvellement créés</td>
 </tr>
 <tr>
 <td>Groupes imbriqués</td>
