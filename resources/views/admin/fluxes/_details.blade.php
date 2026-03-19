@@ -8,7 +8,7 @@
         <th width="10%">
             {{ trans('cruds.flux.fields.name') }}
         </th>
-        <th width="30%">
+        <td width="30%">
         @if ($withLink)
         <a href="{{ route('admin.fluxes.show', $flux->id) }}">{{ $flux->name }}</a>
         @else
@@ -24,7 +24,7 @@
         <th width="10%">
             {{ trans('cruds.flux.fields.attributes') }}
         </th>
-        <th width="20%">
+        <td width="20%">
             @foreach(explode(" ",$flux->attributes) as $attribute)
                 <span class="badge badge-info">{{ $attribute }}</span>
             @endforeach
@@ -47,22 +47,22 @@
             @if ($flux->application_source!=null)
                 <a href="{{ route('admin.applications.show',$flux->application_source->id) }}">
                     {{ $flux->application_source->name }}
-                </a>
+                </a> [Application]
             @endif
             @if($flux->service_source!=null)
                 <a href="{{ route('admin.application-services.show', $flux->service_source->id) }}">
                     {{ $flux->service_source->name }}
-                </a>
+                </a> [Service]
             @endif
             @if ($flux->module_source!=null)
                 <a href="{{ route('admin.application-modules.show', $flux->module_source->id) }}">
                     {{ $flux->module_source->name }}
-                </a>
+                </a> [Module]
             @endif
             @if ($flux->database_source!=null)
                 <a href="{{ route('admin.databases.show',$flux->database_source->id) }}">
                     {{ $flux->database_source->name }}
-                </a>
+                </a> [Database]
             @endif
         </td>
 
@@ -73,22 +73,22 @@
             @if ($flux->application_dest!=null)
                 <a href="{{ route('admin.applications.show',$flux->application_dest->id) }}">
                     {{ $flux->application_dest->name }}
-                </a>
+                </a> [Application]
             @endif
             @if ($flux->service_dest!=null)
                 <a href="{{ route('admin.application-services.show', $flux->service_dest->id) }}">
                     {{ $flux->service_dest->name }}
-                </a>
+                </a> [Service]
             @endif
             @if ($flux->module_dest!=null)
                 <a href="{{ route('admin.application-modules.show', $flux->module_dest->id) }}">
                     {{ $flux->module_dest->name }}
-                </a>
+                </a> [Module]
             @endif
             @if ($flux->database_dest!=null)
                 <a href="{{ route('admin.databases.show',$flux->database_dest->id) }}">
                     {{ $flux->database_dest->name }}
-                </a>
+                </a> [Database]
             @endif
         </td>
     </tr>

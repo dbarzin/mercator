@@ -29,18 +29,18 @@
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <label class="recommended" for="type">{{ trans('cruds.certificate.fields.type') }}</label>
+                        <label class="label-maturity-2" for="type">{{ trans('cruds.certificate.fields.type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                             @if (!$type_list->contains(old('type')))
                                 <option> {{ old('type') }}</option>
                             @endif
                             @foreach($type_list as $t)
-                                <option {{ (old('users') ? old('users') : $certificate->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                                <option {{ (old('type') ? old('type') : $certificate->type) == $t ? 'selected' : '' }}>{{$t}}</option>
                             @endforeach
                         </select>
-                        @if($errors->has('types'))
+                        @if($errors->has('type'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('types') }}
+                                {{ $errors->first('type') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.certificate.fields.type_helper') }}</span>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="form-group">
-                <label class="recommended" for="description">{{ trans('cruds.certificate.fields.description') }}</label>
+                <label class="label-maturity-2" for="description">{{ trans('cruds.certificate.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $certificate->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-sm">
                      <div class="form-group">
-                        <label for="logical_servers">{{ trans('cruds.certificate.fields.start_validity') }}</label>
+                        <label class="label-maturity-2" for="start_validity">{{ trans('cruds.certificate.fields.start_validity') }}</label>
                         <input class="form-control date-input" type="date" name="start_validity" id="start_validity" value="{{ old('start_validity', $certificate->start_validity) }}">
                         @if($errors->has('start_validity'))
                             <div class="invalid-feedback">
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-sm">
                      <div class="form-group">
-                        <label for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>
+                        <label class="label-maturity-2" for="end_validity">{{ trans('cruds.certificate.fields.end_validity') }}</label>
                         <input class="form-control date-input" type="date" id="end_validity" name="end_validity" value="{{ old('end_validity', $certificate->end_validity) }}">
                         @if($errors->has('end_validity'))
                             <div class="invalid-feedback">
@@ -86,7 +86,7 @@
                 </div>
                 <div class="col-sm">
                      <div class="form-group">
-                        <label for="logical_servers">{{ trans('cruds.certificate.fields.status') }}</label>
+                        <label class="label-maturity-2" for="status">{{ trans('cruds.certificate.fields.status') }}</label>
                         <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
                             <option></option>
                             <option value="0" {{ old('status', $certificate->status)==0 ? 'selected' : '' }}>{{ trans('cruds.certificate.fields.status_good') }}</option>
@@ -102,7 +102,7 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
-                        <label class="recommended" for="logical_servers">{{ trans('cruds.certificate.fields.logical_servers') }}</label>
+                        <label class="label-maturity-2" for="logical_servers">{{ trans('cruds.certificate.fields.logical_servers') }}</label>
                         <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
                             @foreach($logical_servers as $id => $logical_server)
                                 <option value="{{ $id }}" {{ (in_array($id, old('logical_servers', [])) || $certificate->logical_servers->contains($id)) ? 'selected' : '' }}>{{ $logical_server }}</option>
@@ -121,7 +121,7 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
-                        <label class="recommended" for="applications">{{ trans('cruds.certificate.fields.applications') }}</label>
+                        <label class="label-maturity-2" for="applications">{{ trans('cruds.certificate.fields.applications') }}</label>
                         <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
                             @foreach($applications as $id => $application)
                                 <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $certificate->applications->contains($id)) ? 'selected' : '' }}>{{ $application }}</option>

@@ -43,16 +43,16 @@ class FluxController extends Controller
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
-            $items->put('APP_'.$key, $value);
+            $items->put(MApplication::$prefix . $key, $value . ' [Application]');
         }
         foreach ($services as $key => $value) {
-            $items->put('SRV_'.$key, $value);
+            $items->put(ApplicationService::$prefix . $key, $value . ' [Service]');
         }
         foreach ($modules as $key => $value) {
-            $items->put('MOD_'.$key, $value);
+            $items->put(ApplicationModule::$prefix . $key, $value . ' [Module]');
         }
         foreach ($databases as $key => $value) {
-            $items->put('DB_'.$key, $value);
+            $items->put(Database::$prefix . $key, $value . ' [Database]');
         }
 
         return view(
@@ -70,51 +70,51 @@ class FluxController extends Controller
         $flux->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Source item
-        if (str_starts_with($request->src_id, 'APP_')) {
-            $flux->application_source_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, MApplication::$prefix)) {
+            $flux->application_source_id = intval(substr($request->src_id, strlen(MApplication::$prefix)));
         } else {
             $flux->application_source_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'SRV_')) {
-            $flux->service_source_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, ApplicationService::$prefix)) {
+            $flux->service_source_id = intval(substr($request->src_id, strlen(ApplicationService::$prefix)));
         } else {
             $flux->service_source_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'MOD_')) {
-            $flux->module_source_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, ApplicationModule::$prefix)) {
+            $flux->module_source_id = intval(substr($request->src_id, strlen(ApplicationModule::$prefix)));
         } else {
             $flux->module_source_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'DB_')) {
-            $flux->database_source_id = intval(substr($request->src_id, 3));
+        if (str_starts_with($request->src_id, Database::$prefix)) {
+            $flux->database_source_id = intval(substr($request->src_id, strlen(Database::$prefix)));
         } else {
             $flux->database_source_id = null;
         }
 
         // Dest item
-        if (str_starts_with($request->dest_id, 'APP_')) {
-            $flux->application_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, MApplication::$prefix)) {
+            $flux->application_dest_id = intval(substr($request->dest_id, strlen(Mapplication::$prefix)));
         } else {
             $flux->application_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'SRV_')) {
-            $flux->service_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, ApplicationService::$prefix)) {
+            $flux->service_dest_id = intval(substr($request->dest_id, strlen(ApplicationService::$prefix)));
         } else {
             $flux->service_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'MOD_')) {
-            $flux->module_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, ApplicationModule::$prefix)) {
+            $flux->module_dest_id = intval(substr($request->dest_id, strlen(ApplicationModule::$prefix)));
         } else {
             $flux->module_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'DB_')) {
-            $flux->database_dest_id = intval(substr($request->dest_id, 3));
+        if (str_starts_with($request->dest_id, Database::$prefix)) {
+            $flux->database_dest_id = intval(substr($request->dest_id, strlen(Database::$prefix)));
         } else {
             $flux->database_dest_id = null;
         }
@@ -144,16 +144,16 @@ class FluxController extends Controller
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
-            $items->put('APP_'.$key, $value);
+            $items->put( MApplication::$prefix . $key, $value . ' [Application]');
         }
         foreach ($services as $key => $value) {
-            $items->put('SRV_'.$key, $value);
+            $items->put(ApplicationService::$prefix . $key, $value . ' [Service]');
         }
         foreach ($modules as $key => $value) {
-            $items->put('MOD_'.$key, $value);
+            $items->put(ApplicationModule::$prefix . $key, $value . ' [Module]');
         }
         foreach ($databases as $key => $value) {
-            $items->put('DB_'.$key, $value);
+            $items->put(Database::$prefix . $key, $value . ' [Database]');
         }
 
         return view(
@@ -170,51 +170,51 @@ class FluxController extends Controller
         $flux->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Source item
-        if (str_starts_with($request->src_id, 'APP_')) {
-            $flux->application_source_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, MApplication::$prefix)) {
+            $flux->application_source_id = intval(substr($request->src_id, strlen(MApplication::$prefix)));
         } else {
             $flux->application_source_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'SRV_')) {
-            $flux->service_source_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, ApplicationService::$prefix)) {
+            $flux->service_source_id = intval(substr($request->src_id, strlen(ApplicationService::$prefix)));
         } else {
             $flux->service_source_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'MOD_')) {
-            $flux->module_source_id = intval(substr($request->src_id, 4));
+        if (str_starts_with($request->src_id, ApplicationModule::$prefix)) {
+            $flux->module_source_id = intval(substr($request->src_id, strlen(ApplicationModule::$prefix)));
         } else {
             $flux->module_source_id = null;
         }
 
-        if (str_starts_with($request->src_id, 'DB_')) {
-            $flux->database_source_id = intval(substr($request->src_id, 3));
+        if (str_starts_with($request->src_id, Database::$prefix)) {
+            $flux->database_source_id = intval(substr($request->src_id, strlen(Database::$prefix)));
         } else {
             $flux->database_source_id = null;
         }
 
         // Dest item
-        if (str_starts_with($request->dest_id, 'APP_')) {
-            $flux->application_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, MApplication::$prefix)) {
+            $flux->application_dest_id = intval(substr($request->dest_id, strlen(MApplication::$prefix)));
         } else {
             $flux->application_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'SRV_')) {
-            $flux->service_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, ApplicationService::$prefix)) {
+            $flux->service_dest_id = intval(substr($request->dest_id, strlen(ApplicationService::$prefix)));
         } else {
             $flux->service_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'MOD_')) {
-            $flux->module_dest_id = intval(substr($request->dest_id, 4));
+        if (str_starts_with($request->dest_id, ApplicationModule::$prefix)) {
+            $flux->module_dest_id = intval(substr($request->dest_id, strlen(ApplicationModule::$prefix)));
         } else {
             $flux->module_dest_id = null;
         }
 
-        if (str_starts_with($request->dest_id, 'DB_')) {
-            $flux->database_dest_id = intval(substr($request->dest_id, 3));
+        if (str_starts_with($request->dest_id, Database::$prefix)) {
+            $flux->database_dest_id = intval(substr($request->dest_id, strlen(Database::$prefix)));
         } else {
             $flux->database_dest_id = null;
         }
@@ -264,7 +264,7 @@ class FluxController extends Controller
 
     private function getAttributes()
     {
-        $attributes_list = Flux::select('attributes')
+        $attributes_list = Flux::query()->select('attributes')
             ->where('attributes', '<>', null)
             ->distinct()
             ->pluck('attributes');
