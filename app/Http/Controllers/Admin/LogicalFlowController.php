@@ -46,7 +46,7 @@ class LogicalFlowController extends Controller
             'physicalSecurityDeviceDest',
             'subnetworkDest',
             'clusterDest',
-            ])
+        ])
             ->orderby('name')
             ->get();
 
@@ -73,36 +73,46 @@ class LogicalFlowController extends Controller
         // Build device list
         $devices = Collection::make();
         foreach ($logicalServers as $key => $value) {
-            $devices->put('LSERVER_'.$key, $value);
+            $devices->put(LogicalServer::$prefix . $key, $value);
         }
         foreach ($peripherals as $key => $value) {
-            $devices->put('PERIF_'.$key, $value);
+            $devices->put(Peripheral::$prefix . $key, $value);
         }
         foreach ($physicalServers as $key => $value) {
-            $devices->put('PSERVER_'.$key, $value);
+            $devices->put(PhysicalServer::$prefix . $key, $value);
         }
         foreach ($storageDevices as $key => $value) {
-            $devices->put('STORAGE_'.$key, $value);
+            $devices->put(StorageDevice::$prefix . $key, $value);
         }
         foreach ($workstations as $key => $value) {
-            $devices->put('WORK_'.$key, $value);
+            $devices->put(Workstation::$prefix . $key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
-            $devices->put('PSECURITY_'.$key, $value);
+            $devices->put(PhysicalSecurityDevice::$prefix . $key, $value);
         }
         foreach ($securityDevices as $key => $value) {
-            $devices->put('LSECURITY_'.$key, $value);
+            $devices->put(SecurityDevice::$prefix . $key, $value);
         }
         foreach ($subnetworks as $key => $value) {
-            $devices->put('SUBNETWORK_'.$key, $value);
+            $devices->put(Subnetwork::$prefix . $key, $value);
         }
         foreach ($clusters as $key => $value) {
-            $devices->put('CLUSTER_'.$key, $value);
+            $devices->put(Cluster::$prefix . $key, $value);
         }
 
         // Lists
-        $interface_list = LogicalFlow::select('interface')->whereNotNull('interface')->distinct()->orderBy('interface')->pluck('interface');
-        $protocol_list = LogicalFlow::select('protocol')->whereNotNull('protocol')->distinct()->orderBy('protocol')->pluck('protocol');
+        $interface_list = LogicalFlow::query()
+            ->select('interface')
+            ->whereNotNull('interface')
+            ->distinct()
+            ->orderBy('interface')
+            ->pluck('interface');
+        $protocol_list = LogicalFlow::query()
+            ->select('protocol')
+            ->whereNotNull('protocol')
+            ->distinct()
+            ->orderBy('protocol')
+            ->pluck('protocol');
 
         return view(
             'admin.logicalFlows.create',
@@ -142,44 +152,45 @@ class LogicalFlowController extends Controller
         $link = LogicalFlow::create($request->all());
 
         // Source device
-        if (str_starts_with($request->src_id, 'LSERVER_')) {
-            $link->logical_server_source_id = intval(substr($request->src_id, 8));
-        } elseif (str_starts_with($request->src_id, 'PERIF_')) {
-            $link->peripheral_source_id = intval(substr($request->src_id, 6));
-        } elseif (str_starts_with($request->src_id, 'PSERVER_')) {
-            $link->physical_server_source_id = intval(substr($request->src_id, 8));
-        } elseif (str_starts_with($request->src_id, 'STORAGE_')) {
-            $link->storage_device_source_id = intval(substr($request->src_id, 4));
-        } elseif (str_starts_with($request->src_id, 'WORK_')) {
-            $link->workstation_source_id = intval(substr($request->src_id, 5));
-        } elseif (str_starts_with($request->src_id, 'PSECURITY_')) {
-            $link->physical_security_device_source_id = intval(substr($request->src_id, 10));
-        } elseif (str_starts_with($request->src_id, 'LSECURITY_')) {
-            $link->security_device_source_id = intval(substr($request->src_id, 10));
-        } elseif (str_starts_with($request->src_id, 'SUBNETWORK_')) {
-            $link->subnetwork_source_id = intval(substr($request->src_id, 11));
-        } elseif (str_starts_with($request->src_id, 'CLUSTER_')) {
-            $link->cluster_source_id = intval(substr($request->src_id, 8));
+        if (str_starts_with($request->src_id, LogicalServer::$prefix)) {
+            $link->logical_server_source_id = intval(substr($request->src_id, strlen(LogicalServer::$prefix)));
+        } elseif (str_starts_with($request->src_id, Peripheral::$prefix)) {
+            $link->peripheral_source_id = intval(substr($request->src_id, strlen(Peripheral::$prefix)));
+        } elseif (str_starts_with($request->src_id, PhysicalServer::$prefix)) {
+            $link->physical_server_source_id = intval(substr($request->src_id, strlen(PhysicalServer::$prefix)));
+        } elseif (str_starts_with($request->src_id, StorageDevice::$prefix)) {
+            $link->storage_device_source_id = intval(substr($request->src_id, strlen(StorageDevice::$prefix)));
+        } elseif (str_starts_with($request->src_id, Workstation::$prefix)) {
+            $link->workstation_source_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));
+        } elseif (str_starts_with($request->src_id, PhysicalSecurityDevice::$prefix)) {
+            $link->physical_security_device_source_id = intval(substr($request->src_id, strlen(PhysicalSecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->src_id, SecurityDevice::$prefix)) {
+            $link->security_device_source_id = intval(substr($request->src_id, strlen(SecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->src_id, Subnetwork::$prefix)) {
+            $link->subnetwork_source_id = intval(substr($request->src_id, strlen(Subnetwork::$prefix)));
+        } elseif (str_starts_with($request->src_id, Cluster::$prefix)) {
+            $link->cluster_source_id = intval(substr($request->src_id, strlen(Cluster::$prefix)));
         }
+
         // Dest device
-        if (str_starts_with($request->dest_id, 'LSERVER_')) {
-            $link->logical_server_dest_id = intval(substr($request->dest_id, 8));
-        } elseif (str_starts_with($request->dest_id, 'PERIF_')) {
-            $link->peripheral_dest_id = intval(substr($request->dest_id, 6));
-        } elseif (str_starts_with($request->dest_id, 'PSERVER_')) {
-            $link->physical_server_dest_id = intval(substr($request->dest_id, 8));
-        } elseif (str_starts_with($request->dest_id, 'STORAGE_')) {
-            $link->storage_device_dest_id = intval(substr($request->dest_id, 8));
-        } elseif (str_starts_with($request->dest_id, 'WORK_')) {
-            $link->workstation_dest_id = intval(substr($request->dest_id, 5));
-        } elseif (str_starts_with($request->dest_id, 'PSECURITY_')) {
-            $link->physical_security_device_dest_id = intval(substr($request->dest_id, 10));
-        } elseif (str_starts_with($request->dest_id, 'LSECURITY_')) {
-            $link->security_device_dest_id = intval(substr($request->dest_id, 10));
-        } elseif (str_starts_with($request->dest_id, 'SUBNETWORK_')) {
-            $link->subnetwork_dest_id = intval(substr($request->dest_id, 11));
-        } elseif (str_starts_with($request->dest_id, 'CLUSTER_')) {
-            $link->cluster_dest_id = intval(substr($request->dest_id, 8));
+        if (str_starts_with($request->dest_id, LogicalServer::$prefix)) {
+            $link->logical_server_dest_id = intval(substr($request->dest_id, strlen(LogicalServer::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Peripheral::$prefix)) {
+            $link->peripheral_dest_id = intval(substr($request->dest_id, strlen(Peripheral::$prefix)));
+        } elseif (str_starts_with($request->dest_id, PhysicalServer::$prefix)) {
+            $link->physical_server_dest_id = intval(substr($request->dest_id, strlen(PhysicalServer::$prefix)));
+        } elseif (str_starts_with($request->dest_id, StorageDevice::$prefix)) {
+            $link->storage_device_dest_id = intval(substr($request->dest_id, strlen(StorageDevice::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Workstation::$prefix)) {
+            $link->workstation_dest_id = intval(substr($request->dest_id, strlen(Workstation::$prefix)));
+        } elseif (str_starts_with($request->dest_id, PhysicalSecurityDevice::$prefix)) {
+            $link->physical_security_device_dest_id = intval(substr($request->dest_id, strlen(PhysicalSecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->dest_id, SecurityDevice::$prefix)) {
+            $link->security_device_dest_id = intval(substr($request->dest_id, strlen(SecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Subnetwork::$prefix)) {
+            $link->subnetwork_dest_id = intval(substr($request->dest_id, strlen(Subnetwork::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Cluster::$prefix)) {
+            $link->cluster_dest_id = intval(substr($request->dest_id, strlen(Cluster::$prefix)));
         }
 
         $link->update();
@@ -207,31 +218,31 @@ class LogicalFlowController extends Controller
         // Build device list
         $devices = Collection::make();
         foreach ($logicalServers as $key => $value) {
-            $devices->put('LSERVER_'.$key, $value);
+            $devices->put(LogicalServer::$prefix . $key, $value);
         }
         foreach ($peripherals as $key => $value) {
-            $devices->put('PERIF_'.$key, $value);
+            $devices->put(Peripheral::$prefix . $key, $value);
         }
         foreach ($physicalServers as $key => $value) {
-            $devices->put('PSERVER_'.$key, $value);
+            $devices->put(PhysicalServer::$prefix . $key, $value);
         }
         foreach ($storageDevices as $key => $value) {
-            $devices->put('STORAGE_'.$key, $value);
+            $devices->put(StorageDevice::$prefix . $key, $value);
         }
         foreach ($workstations as $key => $value) {
-            $devices->put('WORK_'.$key, $value);
+            $devices->put(Workstation::$prefix . $key, $value);
         }
         foreach ($physicalSecurityDevices as $key => $value) {
-            $devices->put('PSECURITY_'.$key, $value);
+            $devices->put(PhysicalSecurityDevice::$prefix . $key, $value);
         }
         foreach ($securityDevices as $key => $value) {
-            $devices->put('LSECURITY_'.$key, $value);
+            $devices->put(SecurityDevice::$prefix . $key, $value);
         }
         foreach ($subnetworks as $key => $value) {
-            $devices->put('SUBNETWORK_'.$key, $value);
+            $devices->put(Subnetwork::$prefix . $key, $value);
         }
         foreach ($clusters as $key => $value) {
-            $devices->put('CLUSTER_'.$key, $value);
+            $devices->put(Cluster::$prefix . $key, $value);
         }
 
         // Lists
@@ -274,44 +285,45 @@ class LogicalFlowController extends Controller
         );
 
         // Source device
-        if (str_starts_with($request->src_id, 'LSERVER_')) {
-            $logicalFlow->logical_server_source_id = intval(substr($request->src_id, 8));
-        } elseif (str_starts_with($request->src_id, 'PERIF_')) {
-            $logicalFlow->peripheral_source_id = intval(substr($request->src_id, 6));
-        } elseif (str_starts_with($request->src_id, 'PSERVER_')) {
-            $logicalFlow->physical_server_source_id = intval(substr($request->src_id, 8));
-        } elseif (str_starts_with($request->src_id, 'STORAGE_')) {
-            $logicalFlow->storage_device_source_id = intval(substr($request->src_id, 8));
-        } elseif (str_starts_with($request->src_id, 'WORK_')) {
-            $logicalFlow->workstation_source_id = intval(substr($request->src_id, 5));
-        } elseif (str_starts_with($request->src_id, 'PSECURITY_')) {
-            $logicalFlow->physical_security_device_source_id = intval(substr($request->src_id, 10));
-        } elseif (str_starts_with($request->src_id, 'LSECURITY_')) {
-            $logicalFlow->security_device_source_id = intval(substr($request->src_id, 10));
-        } elseif (str_starts_with($request->src_id, 'SUBNETWORK_')) {
-            $logicalFlow->subnetwork_source_id = intval(substr($request->src_id, 11));
-        } elseif (str_starts_with($request->src_id, 'CLUSTER_')) {
-            $logicalFlow->cluster_source_id = intval(substr($request->src_id, 8));
+        if (str_starts_with($request->src_id, LogicalServer::$prefix)) {
+            $logicalFlow->logical_server_source_id = intval(substr($request->src_id, strlen(LogicalServer::$prefix)));
+        } elseif (str_starts_with($request->src_id, Peripheral::$prefix)) {
+            $logicalFlow->peripheral_source_id = intval(substr($request->src_id, strlen(Peripheral::$prefix)));
+        } elseif (str_starts_with($request->src_id, PhysicalServer::$prefix)) {
+            $logicalFlow->physical_server_source_id = intval(substr($request->src_id, strlen(PhysicalServer::$prefix)));
+        } elseif (str_starts_with($request->src_id, StorageDevice::$prefix)) {
+            $logicalFlow->storage_device_source_id = intval(substr($request->src_id, strlen(StorageDevice::$prefix)));
+        } elseif (str_starts_with($request->src_id, Workstation::$prefix)) {
+            $logicalFlow->workstation_source_id = intval(substr($request->src_id, strlen(Workstation::$prefix)));
+        } elseif (str_starts_with($request->src_id, PhysicalSecurityDevice::$prefix)) {
+            $logicalFlow->physical_security_device_source_id = intval(substr($request->src_id, strlen(PhysicalSecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->src_id, SecurityDevice::$prefix)) {
+            $logicalFlow->security_device_source_id = intval(substr($request->src_id, strlen(SecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->src_id, Subnetwork::$prefix)) {
+            $logicalFlow->subnetwork_source_id = intval(substr($request->src_id, strlen(Subnetwork::$prefix)));
+        } elseif (str_starts_with($request->src_id, Cluster::$prefix)) {
+            $logicalFlow->cluster_source_id = intval(substr($request->src_id, strlen(Cluster::$prefix)));
         }
+
         // Dest device
-        if (str_starts_with($request->dest_id, 'LSERVER_')) {
-            $logicalFlow->logical_server_dest_id = intval(substr($request->dest_id, 8));
-        } elseif (str_starts_with($request->dest_id, 'PERIF_')) {
-            $logicalFlow->peripheral_dest_id = intval(substr($request->dest_id, 6));
-        } elseif (str_starts_with($request->dest_id, 'PSERVER_')) {
-            $logicalFlow->physical_server_dest_id = intval(substr($request->dest_id, 8));
-        } elseif (str_starts_with($request->dest_id, 'STORAGE_')) {
-            $logicalFlow->storage_device_dest_id = intval(substr($request->dest_id, 8));
-        } elseif (str_starts_with($request->dest_id, 'WORK_')) {
-            $logicalFlow->workstation_dest_id = intval(substr($request->dest_id, 5));
-        } elseif (str_starts_with($request->dest_id, 'PSECURITY_')) {
-            $logicalFlow->physical_security_device_dest_id = intval(substr($request->dest_id, 10));
-        } elseif (str_starts_with($request->dest_id, 'LSECURITY_')) {
-            $logicalFlow->security_device_dest_id = intval(substr($request->dest_id, 10));
-        } elseif (str_starts_with($request->dest_id, 'SUBNETWORK_')) {
-            $logicalFlow->subnetwork_dest_id = intval(substr($request->dest_id, 11));
-        } elseif (str_starts_with($request->dest_id, 'CLUSTER_')) {
-            $logicalFlow->cluster_dest_id = intval(substr($request->dest_id, 8));
+        if (str_starts_with($request->dest_id, LogicalServer::$prefix)) {
+            $logicalFlow->logical_server_dest_id = intval(substr($request->dest_id, strlen(LogicalServer::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Peripheral::$prefix)) {
+            $logicalFlow->peripheral_dest_id = intval(substr($request->dest_id, strlen(Peripheral::$prefix)));
+        } elseif (str_starts_with($request->dest_id, PhysicalServer::$prefix)) {
+            $logicalFlow->physical_server_dest_id = intval(substr($request->dest_id, strlen(PhysicalServer::$prefix)));
+        } elseif (str_starts_with($request->dest_id, StorageDevice::$prefix)) {
+            $logicalFlow->storage_device_dest_id = intval(substr($request->dest_id, strlen(StorageDevice::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Workstation::$prefix)) {
+            $logicalFlow->workstation_dest_id = intval(substr($request->dest_id, strlen(Workstation::$prefix)));
+        } elseif (str_starts_with($request->dest_id, PhysicalSecurityDevice::$prefix)) {
+            $logicalFlow->physical_security_device_dest_id = intval(substr($request->dest_id, strlen(PhysicalSecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->dest_id, SecurityDevice::$prefix)) {
+            $logicalFlow->security_device_dest_id = intval(substr($request->dest_id, strlen(SecurityDevice::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Subnetwork::$prefix)) {
+            $logicalFlow->subnetwork_dest_id = intval(substr($request->dest_id, strlen(Subnetwork::$prefix)));
+        } elseif (str_starts_with($request->dest_id, Cluster::$prefix)) {
+            $logicalFlow->cluster_dest_id = intval(substr($request->dest_id, strlen(Cluster::$prefix)));
         }
 
         $logicalFlow->update($request->all());
