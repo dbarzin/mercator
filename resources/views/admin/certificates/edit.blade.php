@@ -60,7 +60,7 @@
             </div>
 
             <div class="row">
-                <div class="col-sm">
+                <div class="col-3">
                      <div class="form-group">
                         <label class="label-maturity-2" for="start_validity">{{ trans('cruds.certificate.fields.start_validity') }}</label>
                         <input class="form-control date-input" type="date" name="start_validity" id="start_validity" value="{{ old('start_validity', $certificate->start_validity) }}">
@@ -72,7 +72,7 @@
                         <span class="help-block">{{ trans('cruds.certificate.fields.start_validity_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-3">
                      <div class="form-group">
                         <label class="label-maturity-2" for="end_validity">{{ trans('cruds.certificate.fields.end_validity') }}</label>
                         <input class="form-control date-input" type="date" id="end_validity" name="end_validity" value="{{ old('end_validity', $certificate->end_validity) }}">
@@ -84,9 +84,9 @@
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-3">
                      <div class="form-group">
-                        <label class="label-maturity-2" for="status">{{ trans('cruds.certificate.fields.status') }}</label>
+                        <label for="status">{{ trans('cruds.certificate.fields.status') }}</label>
                         <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
                             <option></option>
                             <option value="0" {{ old('status', $certificate->status)==0 ? 'selected' : '' }}>{{ trans('cruds.certificate.fields.status_good') }}</option>

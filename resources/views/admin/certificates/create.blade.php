@@ -62,21 +62,21 @@
             </div>
         </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-3">
                      <div class="form-group">
                         <label class="label-maturity-2" for="start_validity">{{ trans('cruds.certificate.fields.start_validity') }}</label>
                         <input class="form-control date-input" type="date" name="start_validity" id="start_validity" value="{{ old('start_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.start_validity_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                      <div class="form-group">
                         <label class="label-maturity-2" for="end_validity">{{ trans('cruds.certificate.fields.end_validity') }}</label>
                         <input class="form-control date-input" type="date" name="end_validity" id="end_validity" value="{{ old('end_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                      <div class="form-group">
                         <label for="status">{{ trans('cruds.certificate.fields.status') }}</label>
 
