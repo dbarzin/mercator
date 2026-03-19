@@ -95,7 +95,7 @@ class FluxController extends Controller
         }
 
         // Dest item
-        if (str_starts_with($request->dest_id, Mapplication::$prefix)) {
+        if (str_starts_with($request->dest_id, MApplication::$prefix)) {
             $flux->application_dest_id = intval(substr($request->dest_id, strlen(Mapplication::$prefix)));
         } else {
             $flux->application_dest_id = null;
@@ -153,7 +153,7 @@ class FluxController extends Controller
             $items->put(ApplicationModule::$prefix . $key, $value . ' [Module]');
         }
         foreach ($databases as $key => $value) {
-            $items->put(Database::$prefix . $key, $value . ' [Database]');;
+            $items->put(Database::$prefix . $key, $value . ' [Database]');
         }
 
         return view(
