@@ -42,6 +42,12 @@ account.
 LDAP_AUTO_PROVISION=true
 ```
 
+The local account will be created with the following role:
+
+```
+LDAP_AUTO_PROVISION_ROLE=user
+```
+
 ---
 
 ### 2.1 LDAP Connection Settings
@@ -256,14 +262,15 @@ volumes:
 
 ## 10. Summary Table
 
-| Feature          | Variable                | Default          | Notes                                  |
-|------------------|-------------------------|------------------|----------------------------------------|
-| Enable LDAP      | `LDAP_ENABLED`          | false            | Activates LDAP login                   |
-| Local fallback   | `LDAP_FALLBACK_LOCAL`   | false            | Allows local login when LDAP fails     |
-| Auto-provision   | `LDAP_AUTO_PROVISION`   | false            | Creates user in DB on first LDAP login |
-| Nested groups    | `LDAP_NESTED_GROUPS`    | false            | AD only                                |
-| Required group   | `LDAP_GROUP`            | “”               | Restricts login                        |
-| LDAP user base   | `LDAP_USERS_BASE_DN`    | “”               | Search base                            |
-| Login attributes | `LDAP_LOGIN_ATTRIBUTES` | `sAMAccountName` | CSV list                               |
-| LDAP logging     | `LDAP_LOGGING`          | false            | Writes to `ldap.log`                   |
+| Feature             | Variable                   | Default          | Notes                                  |
+|---------------------|----------------------------|------------------|----------------------------------------|
+| Enable LDAP         | `LDAP_ENABLED`             | false            | Activates LDAP login                   |
+| Local fallback      | `LDAP_FALLBACK_LOCAL`      | false            | Allows local login when LDAP fails     |
+| Auto-provision      | `LDAP_AUTO_PROVISION`      | false            | Creates user in DB on first LDAP login |
+| Auto-provision role | `LDAP_AUTO_PROVISION_ROLE` | null             | Role assigned to newly created users   |
+| Nested groups       | `LDAP_NESTED_GROUPS`       | false            | AD only                                |
+| Required group      | `LDAP_GROUP`               | “”               | Restricts login                        |
+| LDAP user base      | `LDAP_USERS_BASE_DN`       | “”               | Search base                            |
+| Login attributes    | `LDAP_LOGIN_ATTRIBUTES`    | `sAMAccountName` | CSV list                               |
+| LDAP logging        | `LDAP_LOGGING`             | false            | Writes to `ldap.log`                   |
 
