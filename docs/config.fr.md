@@ -43,6 +43,12 @@ Mercator peut créer automatiquement le compte local correspondant.
 LDAP_AUTO_PROVISION=true
 ```
 
+L'utilisateur sera créé avec le rôle suivant :
+
+```
+LDAP_AUTO_PROVISION_ROLE=user
+```
+
 ---
 
 ### 2.1 Paramètres de Connexion LDAP
@@ -265,14 +271,15 @@ volumes:
 
 ## 10. Tableau Récapitulatif
 
-| Fonction          | Variable                | Défaut           | Notes                                |
-|-------------------|-------------------------|------------------|--------------------------------------|
-| Activer LDAP      | `LDAP_ENABLED`          | false            | Active la connexion LDAP             |
-| Fallback local    | `LDAP_FALLBACK_LOCAL`   | false            | Permet le login local si LDAP échoue |
-| Auto-provision    | `LDAP_AUTO_PROVISION`   | false            | Crée automatiquement l’utilisateur   |
-| Groupes imbriqués | `LDAP_NESTED_GROUPS`    | false            | AD uniquement                        |
-| Groupe requis     | `LDAP_GROUP`            | “”               | Restreint l’accès                    |
-| Base LDAP         | `LDAP_USERS_BASE_DN`    | “”               | DN de recherche                      |
-| Attributs login   | `LDAP_LOGIN_ATTRIBUTES` | `sAMAccountName` | Liste CSV                            |
-| Logs LDAP         | `LDAP_LOGGING`          | false            | Fichier `ldap.log`                   |
+| Fonction            | Variable                   | Défaut           | Notes                                           |
+|---------------------|----------------------------|------------------|-------------------------------------------------|
+| Activer LDAP        | `LDAP_ENABLED`             | false            | Active la connexion LDAP                        |
+| Fallback local      | `LDAP_FALLBACK_LOCAL`      | false            | Permet le login local si LDAP échoue            |
+| Auto-provision      | `LDAP_AUTO_PROVISION`      | false            | Crée automatiquement l’utilisateur              |
+| Auto-provision role | `LDAP_AUTO_PROVISION_ROLE` | null             | Role assigné aux utilisateur nouvellement créés |
+| Groupes imbriqués   | `LDAP_NESTED_GROUPS`       | false            | AD uniquement                                   |
+| Groupe requis       | `LDAP_GROUP`               | “”               | Restreint l’accès                               |
+| Base LDAP           | `LDAP_USERS_BASE_DN`       | “”               | DN de recherche                                 |
+| Attributs login     | `LDAP_LOGIN_ATTRIBUTES`    | `sAMAccountName` | Liste CSV                                       |
+| Logs LDAP           | `LDAP_LOGGING`             | false            | Fichier `ldap.log`                              |
 
