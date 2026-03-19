@@ -14,33 +14,38 @@
         </div>
 
         <div class="card-body">
-            <div class="form-group">
-                <label class="label-required" for="name">{{ trans('cruds.certificate.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $certificate->name) }}" required autofocus/>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="label-required" for="name">{{ trans('cruds.certificate.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $certificate->name) }}" required autofocus/>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.certificate.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.certificate.fields.name_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="type">{{ trans('cruds.certificate.fields.type') }}</label>
-                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
-                    @if (!$type_list->contains(old('type')))
-                        <option> {{ old('type') }}</option>
-                    @endif
-                    @foreach($type_list as $t)
-                        <option {{ (old('users') ? old('users') : $certificate->type) == $t ? 'selected' : '' }}>{{$t}}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('types'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('types') }}
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="recommended" for="type">{{ trans('cruds.certificate.fields.type') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                            @if (!$type_list->contains(old('type')))
+                                <option> {{ old('type') }}</option>
+                            @endif
+                            @foreach($type_list as $t)
+                                <option {{ (old('users') ? old('users') : $certificate->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('types'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('types') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.certificate.fields.type_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.certificate.fields.type_helper') }}</span>
+                </div>
             </div>
 
             <div class="form-group">
