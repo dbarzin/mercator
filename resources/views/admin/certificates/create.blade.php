@@ -64,14 +64,14 @@
             <div class="row">
                 <div class="col-4">
                      <div class="form-group">
-                        <label class="label-maturity-2" for="end_validity">{{ trans('cruds.certificate.fields.start_validity') }}</label>
+                        <label class="label-maturity-2" for="start_validity">{{ trans('cruds.certificate.fields.start_validity') }}</label>
                         <input class="form-control date-input" type="date" name="start_validity" id="start_validity" value="{{ old('start_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.start_validity_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-4">
                      <div class="form-group">
-                        <label class="label-maturity-2" for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>
+                        <label class="label-maturity-2" for="end_validity">{{ trans('cruds.certificate.fields.end_validity') }}</label>
                         <input class="form-control date-input" type="date" name="end_validity" id="end_validity" value="{{ old('end_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
@@ -95,8 +95,8 @@
             <div class="form-group">
                 <label class="label-maturity-2" for="logical_servers">{{ trans('cruds.certificate.fields.logical_servers') }}</label>
                 <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
-                    @foreach($logical_servers as $id => $logical_servers)
-                        <option value="{{ $id }}" {{ in_array($id, old('logical_servers', [])) ? 'selected' : '' }}>{{ $logical_servers }}</option>
+                    @foreach($logical_servers as $id => $name)
+                        <option value="{{ $id }}" {{ in_array($id, old('logical_servers', [])) ? 'selected' : '' }}>{{ $name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('logical_servers'))
@@ -110,8 +110,8 @@
             <div class="form-group">
                 <label class="label-maturity-2" for="applications">{{ trans('cruds.certificate.fields.applications') }}</label>
                 <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
-                    @foreach($applications as $id => $application)
-                        <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $application }}</option>
+                    @foreach($applications as $id => $name)
+                        <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('applications'))
