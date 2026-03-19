@@ -9,19 +9,17 @@
         <th width="10%">
             {{ trans('cruds.certificate.fields.name') }}
         </th>
-        <td>
+        <td width="20%">
         @if($withLink)
             <a href="{{ route('admin.certificates.show', $certificate->id) }}">{{ $certificate->name }}</a>
         @else
             {{ $certificate->name }}
         @endif
         </td>
-    </tr>
-    <tr>
         <th width="10%">
             {{ trans('cruds.certificate.fields.type') }}
         </th>
-        <td>
+        <td width="60%" colspan="3">
             {{ $certificate->type }}
         </td>
     </tr>
@@ -29,31 +27,27 @@
         <th>
             {{ trans('cruds.certificate.fields.description') }}
         </th>
-        <td>
+        <td colspan="5">
             {!! $certificate->description !!}
         </td>
     </tr>
     <tr>
-        <th>
+        <th width="10%">
             {{ trans('cruds.certificate.fields.start_validity') }}
         </th>
-        <td>
+        <td width="20%">
             {{ $certificate->start_validity }}
         </td>
-    </tr>
-    <tr>
-        <th>
+        <th width="10%">
             {{ trans('cruds.certificate.fields.end_validity') }}
         </th>
-        <td>
+        <td width="20%">
             {{ $certificate->end_validity }}
         </td>
-    </tr>
-    <tr>
-        <th>
+        <th width="10%">
             {{ trans('cruds.certificate.fields.last_notification') }}
         </th>
-        <td>
+        <td width="30%">
             {{ $certificate->last_notification }}
             <br>
             {{ trans('cruds.certificate.fields.last_notification_helper') }}
@@ -63,7 +57,7 @@
         <th>
             {{ trans('cruds.certificate.fields.logical_servers') }}
         </th>
-        <td>
+        <td colspan="5">
             @foreach($certificate->logical_servers as $server)
                 <a href="{{ route('admin.logical-servers.show', $server->id) }}">
                     {{ $server->name }}
@@ -78,7 +72,7 @@
         <th>
             {{ trans('cruds.certificate.fields.applications') }}
         </th>
-        <td>
+        <td colspan="5">
             @foreach($certificate->applications as $application)
                 <a href="{{ route('admin.applications.show', $application->id) }}">
                     {{ $application->name }}
