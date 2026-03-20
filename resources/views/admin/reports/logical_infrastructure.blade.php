@@ -703,7 +703,7 @@ digraph  {
 @can('certificate_access')
     @foreach($certificates as $certificate)
     @if ($certificate->logical_servers->count()>0)
-    CERT{{ $certificate->id }} [label="{{ $certificate->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="#CERT{{$certificate->id}}"]
+    CERT{{ $certificate->id }} [label="{{ $certificate->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="#{{$certificate->getUID()}}"]
     @endif
     @endforeach
 @endcan
@@ -735,7 +735,7 @@ digraph  {
 
 @can('wifi_terminal_access')
     @foreach($wifiTerminals as $wifiTerminal)
-        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!==null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
+        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!==null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#{{$wifiTerminal->getUID()}}"]
         @foreach(explode(',',$wifiTerminal->address_ip) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
@@ -749,7 +749,7 @@ digraph  {
 
 @can('phone_access')
     @foreach($phones as $phone)
-    PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!==null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
+    PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!==null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#{{$phone->getUID()}}"]
     @foreach(explode(',',$phone->address_ip) as $address)
         @foreach($subnetworks as $subnetwork)
             @if ($subnetwork->contains($address))
