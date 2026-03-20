@@ -23,9 +23,9 @@
             </td>
             <td width="10%">
                 @if ($container->icon_id === null)
-                <img src='/images/container.png' width='120' height='120'>
+                <img src='/images/container.png' width='60' height='60'>
                 @else
-                <img src='{{ route('admin.documents.show', $container->icon_id) }}' width='120' height='120'>
+                <img src='{{ route('admin.documents.show', $container->icon_id) }}' width='60' height='60'>
                 @endif
             </td>
         </tr>
