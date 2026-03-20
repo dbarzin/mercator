@@ -39,10 +39,10 @@
             </td>
             <td width="10%">
                 @if ($securityDevice->icon_id === null)
-                    <img src='/images/securitydevice.png' width='120' height='120'>
+                    <img src='/images/securitydevice.png' width='60' height='60'>
                 @else
-                    <img src='{{ route('admin.documents.show', $securityDevice->icon_id) }}' width='120'
-                         height='120'>
+                    <img src='{{ route('admin.documents.show', $securityDevice->icon_id) }}' width='60'
+                         height='60'>
                 @endif
             </td>
         </tr>

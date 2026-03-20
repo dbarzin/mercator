@@ -44,9 +44,9 @@
         </td>
         <td width="10%">
             @if ($cluster->icon_id === null)
-                <img src='/images/cluster.png' width='120' height='120'>
+                <img src='/images/cluster.png' width='60' height='60'>
             @else
-                <img src='{{ route('admin.documents.show', $cluster->icon_id) }}' width='120' height='120'>
+                <img src='{{ route('admin.documents.show', $cluster->icon_id) }}' width='60' height='60'>
             @endif
         </td>
     </tr>

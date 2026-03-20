@@ -28,8 +28,9 @@ class PhysicalSecurityDeviceController extends APIController
     {
         abort_if(Gate::denies('physical_security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var PhysicalSecurityDevice $device */
         $device = PhysicalSecurityDevice::query()->create($request->all());
+
+        $device->securityDevices()->sync($request->input('security_devices', []));
 
         return response()->json($device, 201);
     }
@@ -38,6 +39,8 @@ class PhysicalSecurityDeviceController extends APIController
     {
         abort_if(Gate::denies('physical_security_device_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $physicalSecurityDevice['security_devices'] = $physicalSecurityDevice->securityDevices()->pluck('id');
+        
         return new JsonResource($physicalSecurityDevice);
     }
 
@@ -46,6 +49,10 @@ class PhysicalSecurityDeviceController extends APIController
         abort_if(Gate::denies('physical_security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSecurityDevice->update($request->all());
+
+        if ($request->has('security_devices')) {
+            $physicalSecurityDevice->securityDevices()->sync($request->input('security_devices', []));
+        }
 
         return response()->json();
     }

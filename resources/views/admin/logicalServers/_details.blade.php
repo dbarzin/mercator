@@ -40,10 +40,10 @@
         </td>
         <td width="10%">
             @if ($logicalServer->icon_id === null)
-                <img src='/images/lserver.png' width='120' height='120'>
+                <img src='/images/lserver.png' width='60' height='60'>
             @else
-                <img src='{{ route('admin.documents.show', $logicalServer->icon_id) }}' width='100'
-                     height='100'>
+                <img src='{{ route('admin.documents.show', $logicalServer->icon_id) }}' width='60'
+                     height='60'>
             @endif
         </td>
     </tr>
