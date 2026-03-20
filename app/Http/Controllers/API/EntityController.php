@@ -28,7 +28,6 @@ class EntityController extends APIController
     {
         abort_if(Gate::denies('entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var Entity $entity */
         $entity = Entity::query()->create($request->all());
 
         $entity->processes()->sync($request->input('processes', []));
@@ -40,6 +39,8 @@ class EntityController extends APIController
     {
         abort_if(Gate::denies('entity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $entity['processes'] = $entity->processes()->pluck('id');
+
         return new JsonResource($entity);
     }
 
@@ -49,7 +50,7 @@ class EntityController extends APIController
 
         $entity->update($request->all());
 
-        if ($request->has('processes') && $request->input('processes') !== null) {
+        if ($request->has('processes')) {
             $entity->processes()->sync($request->input('processes', []));
         }
 
