@@ -764,7 +764,7 @@ digraph  {
 @can('physical_security_device_access')
     @foreach($physicalSecurityDevices as $physicalSecurityDevice)
     @if ($physicalSecurityDevice->address_ip!==null)
-        PSECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $physicalSecurityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#{{$physicalSecurityDevice->getUID()}}"]
+        PSECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $physicalSecurityDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="{{ $physicalSecurityDevice->icon_id === null ? '/images/securitydevice.png' : route('admin.documents.show', $physicalSecurityDevice->icon_id) }}" href="#{{$physicalSecurityDevice->getUID()}}"]
         @foreach(explode(',',$physicalSecurityDevice->address_ip) as $address)
             @foreach($subnetworks as $subnetwork)
                 @if ($subnetwork->contains($address))
