@@ -894,6 +894,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .addImage("{{ route('admin.documents.show', $securityDevice->icon_id) }}", "64px", "64px")
         @endif
         @endforeach
+        @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+        @if ($physicalSecurityDevice->icon_id!==null)
+        .addImage("{{ route('admin.documents.show', $physicalSecurityDevice->icon_id) }}", "64px", "64px")
+        @endif
+        @endforeach
         @foreach($peripherals as $peripheral)
         @if ($peripheral->icon_id!==null)
         .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
