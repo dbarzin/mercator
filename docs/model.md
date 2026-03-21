@@ -1724,6 +1724,7 @@ Physical security device includes temperature sensors, cameras, security doors, 
 | site_id     | int unsigned | Reference to site               |
 | building_id | int unsigned | Reference to building / room    |
 | bay_id      | int unsigned | Reference to rack               |
+| security_devices |  List int [,] | IDs list of related security devices (logical) |
 | address_ip  | varchar(255) | IP sddress                      |
 | created_at  | timestamp    | Date of creation                |
 | updated_at  | timestamp    | Date of update                  |
