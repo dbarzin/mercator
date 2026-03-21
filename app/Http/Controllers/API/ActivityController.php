@@ -28,8 +28,8 @@ class ActivityController extends APIController
     {
         abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activity = $this->storeResource($request->validated());
-
+        $activity = Activity::query()->create($request->all());
+        
         return response()->json($activity, Response::HTTP_CREATED);
     }
 
@@ -37,7 +37,6 @@ class ActivityController extends APIController
     {
         abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // On encapsule le modèle dans une JsonResource pour rester cohérent
         return $this->asJsonResource($activity);
     }
 
@@ -45,7 +44,7 @@ class ActivityController extends APIController
     {
         abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $this->updateResource($activity, $request->validated());
+        $activity->update($request->all());
 
         return response()->json();
     }
@@ -70,6 +69,8 @@ class ActivityController extends APIController
 
     public function massStore(MassStoreActivityRequest $request)
     {
+        abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $data       = $request->validated();
         $createdIds = $this->massStoreItems($data['items']);
 
@@ -82,6 +83,8 @@ class ActivityController extends APIController
 
     public function massUpdate(MassUpdateActivityRequest $request)
     {
+        abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $data = $request->validated();
 
         $this->massUpdateItems($data['items']);

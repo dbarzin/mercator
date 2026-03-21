@@ -1726,6 +1726,7 @@ Les équipements de sécurité physique sont des sondes de températures, des ca
 | site_id     | int unsigned | Référence vers le site                    |
 | building_id | int unsigned | Référence vers le building / salle        |
 | bay_id      | int unsigned | Référence vers la baie                    |
+| security_devices |  List int [,] | Liste des id de(s) equipements de sécurité (logiques) associés  |
 | address_ip  | varchar(255) | Adresse(s) IP de l'équipement             |
 | created_at  | timestamp    | Date de création                          |
 | updated_at  | timestamp    | Date de mise à jour                       |
