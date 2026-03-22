@@ -540,7 +540,8 @@ return [
             'data_subject_rights_helper' => "Décrire les droits exercés par les personnes concernées et les modalités pratiques pour les exercer (contact DPO, formulaire, adresse postale…).",
             'automated_decision_making' => "Prise de décision automatisée",
             'automated_decision_making_helper' => "Indiquer si le traitement implique une prise de décision automatisée (y compris le profilage) produisant des effets juridiques ou significatifs sur les personnes concernées (Art. 22 RGPD).",
-            'update_date' => "Date de dernière mise à jour"
+            'update_date' => "Date de dernière mise à jour",
+            'update_date_helper' => "Date de la dernière mise à jour de ce traitement"
 
         ],
         'report_title' => 'Registre des traitements',

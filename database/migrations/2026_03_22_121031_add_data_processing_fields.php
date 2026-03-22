@@ -30,6 +30,7 @@ return new class extends Migration
             $table->dropColumn('data_collection_obligation');
             $table->dropColumn('data_subject_rights');
             $table->dropColumn('automated_decision_making');
+            $table->dropColumn('update_date');
         });
     }
 };

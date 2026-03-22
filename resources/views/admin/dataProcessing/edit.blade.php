@@ -183,7 +183,6 @@
                     <span class="help-block">{{ trans('cruds.dataProcessing.fields.data_collection_obligation_helper') }}</span>
                 </div>
 
-ok
                 <div class="form-group">
                     <label class="recommended"
                            for="recipients">{{ trans('cruds.dataProcessing.fields.recipients') }}</label>
@@ -245,7 +244,7 @@ ok
                 <div class="form-group">
                     <label class="recommended"
                            for="data_subject_rights">{{ trans('cruds.dataProcessing.fields.data_subject_rights') }}</label>
-                    <textarea class="form-control ckeditor {{ $errors->has('automated_decision_making') ? 'is-invalid' : '' }}"
+                    <textarea class="form-control ckeditor {{ $errors->has('data_subject_rights') ? 'is-invalid' : '' }}"
                               name="data_subject_rights"
                               id="data_subject_rights">{!! old('data_subject_rights', $dataProcessing->data_subject_rights) !!}</textarea>
                     @if($errors->has('data_subject_rights'))
@@ -264,7 +263,7 @@ ok
                             <input class="form-control {{ $errors->has('update_date') ? 'is-invalid' : '' }}"
                                       type="date" name="update_date"
                                       id="update_date" value="{{ old('update_date', $dataProcessing->update_date?->format('Y-m-d')) }}"/>
-                            @if($errors->has('updateDate'))
+                            @if($errors->has('update_date'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('update_date') }}
                                 </div>
