@@ -523,6 +523,16 @@ return [
             'lawfulness_vital_interest' => 'Safeguarding vital interests',
             'lawfulness_public_interest' => 'Public interest',
             'lawfulness_legitimate_interest' => 'Legitimate interests',
+
+            'data_source' => 'Data source',
+            'data_source_helper' => "Indicate the origin of the personal data collected: directly from the data subject, or from a third party (another organisation, public source, partner, etc.).",
+            'data_collection_obligation' => "Mandatory or optional nature of data collection and consequences of non-provision",
+            'data_collection_obligation_helper' => "Specify whether the provision of data is mandatory or optional, and indicate the consequences of non-provision (e.g. inability to process the request, degraded service…).",
+            'data_subject_rights' => "Rights of data subjects",
+            'data_subject_rights_helper' => "Describe the rights available to data subjects and the practical arrangements for exercising them (DPO contact, online form, postal address…).",
+            'automated_decision_making' => "Automated decision-making",
+            'automated_decision_making_helper' => "Indicate whether the processing involves automated decision-making (including profiling) that produces legal or similarly significant effects on data subjects (Art. 22 GDPR).",
+            'update_date' => "Date of last update"
         ],
         'title' => 'Register',
         'title_singular' => 'Data processing',
