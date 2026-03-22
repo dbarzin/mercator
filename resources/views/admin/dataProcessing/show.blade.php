@@ -38,6 +38,7 @@
 
 <table class="table table-bordered table-striped table-report">
     <tbody>
+
     <tr>
         <th width="10%">
             {{ trans('cruds.dataProcessing.fields.responsible') }}
@@ -46,6 +47,7 @@
             {!! $dataProcessing->responsible !!}
         </td>
     </tr>
+
 
     <tr>
         <th>
@@ -103,6 +105,7 @@
             {!! $dataProcessing->lawfulness !!}
         </td>
     </tr>
+
     <tr>
         <th>
             {{ trans('cruds.dataProcessing.fields.categories') }}
@@ -114,13 +117,31 @@
 
     <tr>
         <th>
+            {{ trans('cruds.dataProcessing.fields.data_source') }}
+        </th>
+        <td colspan='3'>
+            {!! $dataProcessing->data_source !!}
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            {{ trans('cruds.dataProcessing.fields.data_collection_obligation') }}
+        </th>
+        <td colspan='3'>
+            {!! $dataProcessing->data_collection_obligation !!}
+        </td>
+    </tr>
+
+
+    <tr>
+        <th>
             {{ trans('cruds.dataProcessing.fields.recipients') }}
         </th>
         <td colspan='3'>
             {!! $dataProcessing->recipients !!}
         </td>
     </tr>
-
 
     <tr>
         <th>
@@ -133,6 +154,16 @@
 
     <tr>
         <th>
+            {{ trans('cruds.dataProcessing.fields.automated_decision_making') }}
+        </th>
+        <td colspan='3'>
+            {!! $dataProcessing->automated_decision_making !!}
+        </td>
+    </tr>
+
+
+    <tr>
+        <th>
             {{ trans('cruds.dataProcessing.fields.retention') }}
         </th>
         <td colspan='3'>
@@ -142,6 +173,30 @@
 
     <tr>
         <th>
+            {{ trans('cruds.dataProcessing.fields.data_subject_rights') }}
+        </th>
+        <td colspan='3'>
+            {!! $dataProcessing->data_subject_rights !!}
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            {{ trans('cruds.dataProcessing.fields.update_date') }}
+        </th>
+        <td colspan='3'>
+            {{ $dataProcessing->update_date?->format('d-m-Y') }}
+        </td>
+    </tr>
+
+    </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped table-report">
+        <tbody>
+
+        <tr>
+            <th width="10%">
             {{ trans('cruds.dataProcessing.fields.processes') }}
         </th>
         <td colspan='3'>
@@ -197,6 +252,8 @@
     </tr>
     </tbody>
     </table>
+
+
     </div>
         <div class="card-footer">
             {{ trans('global.created_at') }} {{ $dataProcessing->created_at ? $dataProcessing->created_at->format(trans('global.timestamp')) : '' }}

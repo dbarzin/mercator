@@ -8,7 +8,7 @@
         <th width="10%">
             {{ trans('cruds.dataProcessing.fields.name') }}
         </th>
-        <td>
+        <td width="50%">
         @if($withLink)
         <a href="{{ route('admin.data-processings.show', $dataProcessing->id) }}">{{ $dataProcessing->name }}</a>
         @else
@@ -18,7 +18,7 @@
         <th width="10%">
             {{ trans('cruds.dataProcessing.fields.legal_basis') }}
         </th>
-        <td>
+        <td width="30%">
             {{ $dataProcessing->legal_basis }}
         </td>
     </tr>

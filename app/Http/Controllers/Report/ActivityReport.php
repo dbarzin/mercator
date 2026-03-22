@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Report;
 
 // GDPR
 // ecosystem
-use Mercator\Core\Models\DataProcessing;
 use Carbon\Carbon;
 use Gate;
+use Mercator\Core\Models\DataProcessing;
 use Symfony\Component\HttpFoundation\Response;
 
 // information system
@@ -120,14 +120,29 @@ class ActivityReport extends ReportController
             $section->addTitle(trans('cruds.dataProcessing.fields.categories'), 2);
             self::addText($section, $dataProcessing->categories);
 
+            $section->addTitle(trans('cruds.dataProcessing.fields.data_source'), 2);
+            self::addText($section, $dataProcessing->data_source);
+
+            $section->addTitle(trans('cruds.dataProcessing.fields.data_collection_obligation'), 2);
+            self::addText($section, $dataProcessing->data_collection_obligation);
+            
             $section->addTitle(trans('cruds.dataProcessing.fields.recipients'), 2);
             self::addText($section, $dataProcessing->recipients);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.transfert'), 2);
             self::addText($section, $dataProcessing->transfert);
 
+            $section->addTitle(trans('cruds.dataProcessing.fields.automated_decision_making'), 2);
+            self::addText($section, $dataProcessing->automated_decision_making);
+
             $section->addTitle(trans('cruds.dataProcessing.fields.retention'), 2);
             self::addText($section, $dataProcessing->retention);
+
+            $section->addTitle(trans('cruds.dataProcessing.fields.data_subject_rights'), 2);
+            self::addText($section, $dataProcessing->data_subject_rights);
+
+            $section->addTitle(trans('cruds.dataProcessing.fields.update_date'), 2);
+            self::addText($section, $dataProcessing->update_date?->format('d-m-Y'));
 
             // Processes
             $section->addTitle(trans('cruds.dataProcessing.fields.processes'), 2);

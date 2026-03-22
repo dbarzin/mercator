@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Report;
 
-use Mercator\Core\Models\DataProcessing;
-use Carbon\Carbon;
 use Gate;
+use Mercator\Core\Models\DataProcessing;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,9 +27,14 @@ class ActivityList extends ReportController
             trans('cruds.dataProcessing.fields.purpose'),
             trans('cruds.dataProcessing.fields.lawfulness'),
             trans('cruds.dataProcessing.fields.categories'),
+            trans('cruds.dataProcessing.fields.data_source'),
+            trans('cruds.dataProcessing.fields.data_collection_obligation'),
             trans('cruds.dataProcessing.fields.recipients'),
             trans('cruds.dataProcessing.fields.transfert'),
+            trans('cruds.dataProcessing.fields.automated_decision_making'),
             trans('cruds.dataProcessing.fields.retention'),
+            trans('cruds.dataProcessing.fields.data_subject_rights'),
+            trans('cruds.dataProcessing.fields.update_date'),
             trans('cruds.dataProcessing.fields.processes'),
             trans('cruds.dataProcessing.fields.applications'),
             trans('cruds.dataProcessing.fields.information'),
@@ -45,7 +49,8 @@ class ActivityList extends ReportController
         $sheet->getStyle('1')->getFont()->setBold(true);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
-        $sheet->getStyle('A:N')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('A:M')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('O:R')->getAlignment()->setWrapText(true);
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -63,6 +68,10 @@ class ActivityList extends ReportController
         $sheet->getColumnDimension('L')->setWidth(350, 'pt');
         $sheet->getColumnDimension('M')->setWidth(350, 'pt');
         $sheet->getColumnDimension('N')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('O')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('P')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('Q')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('R')->setWidth(350, 'pt');
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
@@ -76,10 +85,14 @@ class ActivityList extends ReportController
             $sheet->setCellValue("D{$row}", $html->toRichTextObject($dataProcessing->purpose));
             $sheet->setCellValue("E{$row}", $html->toRichTextObject($dataProcessing->lawfulness));
             $sheet->setCellValue("F{$row}", $html->toRichTextObject($dataProcessing->categories));
-            $sheet->setCellValue("G{$row}", $html->toRichTextObject($dataProcessing->recipients));
-            $sheet->setCellValue("H{$row}", $html->toRichTextObject($dataProcessing->transfert));
-            $sheet->setCellValue("I{$row}", $html->toRichTextObject($dataProcessing->retention));
-
+            $sheet->setCellValue("G{$row}", $html->toRichTextObject($dataProcessing->data_source));
+            $sheet->setCellValue("H{$row}", $html->toRichTextObject($dataProcessing->data_collection_obligation));
+            $sheet->setCellValue("I{$row}", $html->toRichTextObject($dataProcessing->recipients));
+            $sheet->setCellValue("J{$row}", $html->toRichTextObject($dataProcessing->transfert));
+            $sheet->setCellValue("K{$row}", $html->toRichTextObject($dataProcessing->automated_decision_making));
+            $sheet->setCellValue("L{$row}", $html->toRichTextObject($dataProcessing->retention));
+            $sheet->setCellValue("M{$row}", $html->toRichTextObject($dataProcessing->data_subject_rights));
+            $sheet->setCellValue("N{$row}", $dataProcessing->update_date?->format('d/m/Y') ?? '');
             // processes
             $txt = '';
             foreach ($dataProcessing->processes as $p) {
@@ -88,7 +101,7 @@ class ActivityList extends ReportController
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("J{$row}", $txt);
+            $sheet->setCellValue("O{$row}", $txt);
 
             // Applications
             $txt = '';
@@ -98,7 +111,7 @@ class ActivityList extends ReportController
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("K{$row}", $txt);
+            $sheet->setCellValue("P{$row}", $txt);
 
             // Informations
             $txt = '';
@@ -108,11 +121,11 @@ class ActivityList extends ReportController
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("L{$row}", $txt);
+            $sheet->setCellValue("Q{$row}", $txt);
 
             // TODO : improve me using union
             // https://laravel.com/docs/10.x/queries#unions
-            $allControls = Collect();
+            $allControls = collect();
             foreach ($dataProcessing->processes as $process) {
                 foreach ($process->securityControls as $sc) {
                     $allControls->push($sc->name);
@@ -124,10 +137,10 @@ class ActivityList extends ReportController
                 }
             }
 
-            $allControls->unique();
+            $allControls = $allControls->unique();
             $txt = implode(', ', $allControls->toArray());
 
-            $sheet->setCellValue("M{$row}", $txt);
+            $sheet->setCellValue("R{$row}", $txt);
 
             $row++;
         }
@@ -136,7 +149,7 @@ class ActivityList extends ReportController
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/register-'.Carbon::today()->format('Ymd').'.xlsx');
+        $path = storage_path('app/register-' . now()->format('Ymd') . '.xlsx');
 
         $writer->save($path);
 
