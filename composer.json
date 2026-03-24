@@ -28,7 +28,8 @@
     "socialiteproviders/keycloak": "^5.3",
     "sourcentis/mercator-core": "^1.55",
     "spatie/laravel-query-builder": "^6.3",
-    "yajra/laravel-datatables-oracle": "^11.1"
+    "yajra/laravel-datatables-oracle": "^11.1",
+    "ext-ldap": "*"
   },
   "require-dev": {
     "fakerphp/faker": "^1.23",
