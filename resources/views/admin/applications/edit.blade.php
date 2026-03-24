@@ -125,7 +125,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <label for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
+                            <label class="label-maturity-2" for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
                             <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}"
                                     name="entity_resp_id" id="entity_resp_id">
                                 <option value="">...</option>

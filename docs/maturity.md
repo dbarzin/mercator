@@ -75,7 +75,7 @@ The calculation of conformity levels for each mapping object is based on the pre
 | **Information system**      |       |                                                                                                |
 | Application block           | 2     | Description, responsible, applications                                                         |
 | Applications                | 1     | Description, technology, type, users, process                                                  |
-| Applications                | 2     | Responsible, security levels                                                                   |
+| Applications                | 2     | Responsible, responsible entity, security levels                                               |
 | Application Services        | 2     | Description, applications                                                                      |
 | Application Modules         | 2     | Description                                                                                    |
 | Database                    | 1     | Description, type, responsible entity, responsible person                                      |
