@@ -89,24 +89,6 @@ class LoginController extends Controller
                 $query->in($base);
             }
 
-            // Group
-            $group = trim((string) config('app.ldap_group'));
-            $useNested = (bool) config('app.ldap_nested_groups');
-
-            if ($group !== '') {
-                if ($useNested) {
-                    // Nested groups for Active Directory using LDAP_MATCHING_RULE_IN_CHAIN
-                    // Generates filter: (memberOf:1.2.840.113556.1.4.1941:=<GROUP_DN>)
-                    $query->whereRaw(
-                        'memberOf',
-                        ':1.2.840.113556.1.4.1941:=',
-                        $group
-                    );
-                } else {
-                    // Standard non-recursive group membership
-                    $query->whereEquals('memberOf', $group);
-                }
-            }
             // Attributs de login à tester côté LDAP (uid, sAMAccountName, etc.)
             $attrs = array_values(array_filter(array_map('trim', explode(',', (string) config('app.ldap_login_attributes')))));
             if (empty($attrs)) {
@@ -115,14 +97,27 @@ class LoginController extends Controller
                 return null;
             }
 
-            // Filtre OR sur les attributs configurés
-            $first = true;
-            foreach ($attrs as $attr) {
-                if ($first) {
-                    $query->whereEquals($attr, $appUsername);
-                    $first = false;
+            // Filtre OR sur les attributs de login injecté via rawFilter().
+            $escaped = ldap_escape($appUsername, '', LDAP_ESCAPE_FILTER);
+            $attrFilters = array_map(fn (string $attr) => "({$attr}={$escaped})", $attrs);
+            $loginFilter = count($attrFilters) === 1
+                ? $attrFilters[0]
+                : '(|'.implode('', $attrFilters).')';
+            $query->rawFilter($loginFilter);
+
+            // Filtre de groupe (ajouté après la closure de login pour préserver la priorité)
+            $group = trim((string) config('app.ldap_group'));
+            $useNested = (bool) config('app.ldap_nested_groups');
+
+            if ($group !== '') {
+                if ($useNested) {
+                    // whereRaw() ne supporte pas la syntaxe OID de la matching rule AD.
+                    // rawFilter() injecte directement le filtre LDAP sans interprétation.
+                    // Génère : (memberOf:1.2.840.113556.1.4.1941:=<GROUP_DN>)
+                    $query->rawFilter("(memberOf:1.2.840.113556.1.4.1941:={$group})");
                 } else {
-                    $query->orWhereEquals($attr, $appUsername);
+                    // Appartenance directe au groupe (non récursive)
+                    $query->whereEquals('memberOf', $group);
                 }
             }
 
@@ -201,7 +196,7 @@ class LoginController extends Controller
                     if ($roleName !== null) {
                         $role = Role::query()->where('title', $roleName)->firstOrFail();
                         $local->roles()->sync([$role->id]);
-                        }
+                    }
                 }
 
                 if ($local) {
@@ -212,7 +207,7 @@ class LoginController extends Controller
                     return true;
                 }
 
-                // LDAP OK mais pas d'utilisateur local et pas d’auto-provision
+                // LDAP OK mais pas d'utilisateur local et pas d'auto-provision
                 return false;
             }
 
@@ -256,5 +251,4 @@ class LoginController extends Controller
 
         return $this->loggedOut($request) ?: redirect('/');
     }
-
 }
