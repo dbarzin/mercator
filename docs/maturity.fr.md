@@ -76,7 +76,7 @@ suivants :
 | **Système d'information**        |        |                                                                                                        |
 | Bloc applicatif                  | 2      | Description, responsable, applications                                                                 |
 | Applications                     | 1      | Description, technologie, type, utilisateurs, processus                                                |
-| Applications                     | 2      | Responsable, niveaux de sécurité                                                                       |
+| Applications                     | 2      | Responsable, entité responsable, niveaux de sécurité                                                   |
 | Application Services             | 2      | Description, applications                                                                              |
 | Application Modules              | 2      | Description                                                                                            |
 | Base de données                  | 1      | Description, type, entité responsable, responsable                                                     |
