@@ -31,7 +31,7 @@ bgcolor="{{ $tableau20[$idColor++ % 20] }}"
 
 @foreach($building->physicalSwitches as $switch)
     @if ($switch->bay_id===null)
-        SWITCH{{ $switch->id }} [label="{{ $switch->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="#{{$switch->getUID()}}"]
+        SWITCH{{ $switch->id }} [label="{{ $switch->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $switch->icon_id === null ? "/images/switch.png" : route('admin.documents.show', $switch->icon_id) }}" href="#{{$switch->getUID()}}"]
     @endif
 @endforeach
 
@@ -67,7 +67,7 @@ bgcolor="{{ $tableau20[$idColor++ % 20] }}"
     @endforeach
 
     @foreach($bay->physicalSecurityDevices as $physicalSecurityDevice)
-        PSD{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/security.png" href="#{{$physicalSecurityDevice->getUID()}}"]
+        PSD{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $physicalSecurityDevice->icon_id === null ? "/images/security.png" : route('admin.documents.show', $physicalSecurityDevice->icon_id) }}" href="#{{$physicalSecurityDevice->getUID()}}"]
     @endforeach
 
     @foreach($bay->physicalRouters as $router)

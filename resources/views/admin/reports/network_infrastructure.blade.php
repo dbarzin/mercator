@@ -629,9 +629,19 @@ d3.select("#graph").graphviz()
     @endforeach
     .addImage("/images/phone.png", "64px", "64px")
     .addImage("/images/switch.png", "64px", "64px")
+    @foreach($physicalSwitches as $switch)
+    @if ($switch->icon_id!==null)
+    .addImage("{{ route('admin.documents.show', $switch->icon_id) }}", "64px", "64px")
+    @endif
+    @endforeach
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/security.png", "64px", "64px")
+    @foreach($physicalSecurityDevices as $device)
+    @if ($device->icon_id!==null)
+    .addImage("{{ route('admin.documents.show', $device->icon_id) }}", "64px", "64px")
+    @endif
+    @endforeach
     .engine("{{ $engine }}")
     .renderDot(dotSrc);
 });
