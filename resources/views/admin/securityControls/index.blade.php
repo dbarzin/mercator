@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.securityControl.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('security_control_create')
     <div style="margin-bottom: 10px;" class="row">

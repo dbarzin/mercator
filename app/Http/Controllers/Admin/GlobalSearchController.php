@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -56,12 +55,12 @@ class GlobalSearchController extends Controller
         'ApplicationModule' => 'cruds.applicationModule.title',
         'MacroProcessus' => 'cruds.macroProcessus.title',
         'Certificate' => 'cruds.certificate.title',
-        'Activity' => 'cruds.activity.title',
         'DataProcessing' => 'cruds.dataProcessing.title',
         'SecurityControl' => 'cruds.securityControl.title',
-        'LogicalFlow' => 'cruds.LogicalFlow.title',
+        'LogicalFlow' => 'cruds.logicalFlow.title',
         'Graph' => 'cruds.graph.title',
-        'Container' => 'cruds.graph.title',
+        'Container' => 'cruds.container.title',
+        'Cluster' => 'cruds.cluster.title',
     ];
 
     public function search(Request $request)
@@ -75,14 +74,16 @@ class GlobalSearchController extends Controller
         }
 
         foreach ($this->models as $model => $translation) {
-            $modelClass = 'App\\Models\\'.$model;
+            $modelClass = 'Mercator\\Core\\Models\\'.$model;
             $query = $modelClass::query();
 
-            $fields = $modelClass::$searchable;
+            $fields = property_exists($modelClass, 'searchable') ? $modelClass::$searchable : [];
 
-            foreach ($fields as $field) {
-                $query->orWhere($field, 'LIKE', '%'.$term.'%');
-            }
+            if (empty($fields))
+                continue;
+
+                foreach ($fields as $field)
+                $query->orWhere($field, 'LIKE', '%'.$this->escapeLike($term).'%');
 
             $results = $query->take(100)->get();
 
@@ -93,9 +94,9 @@ class GlobalSearchController extends Controller
                 $parsedData['fields'] = $fields;
                 $formattedFields = [];
 
-                foreach ($fields as $field) {
+
+                foreach ($fields as $field)
                     $formattedFields[$field] = Str::title(str_replace('_', ' ', $field));
-                }
 
                 $parsedData['fields_formated'] = $formattedFields;
 
@@ -111,4 +112,10 @@ class GlobalSearchController extends Controller
 
         return view('admin.search', compact('searchableData'));
     }
+
+    private function escapeLike(string $value): string
+    {
+        return addcslashes($value, '%_\\');
+    }
+
 }

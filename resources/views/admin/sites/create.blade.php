@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.site.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.sites.store") }}" enctype="multipart/form-data">
         @csrf
@@ -10,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.site.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.site.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required maxlength="32"
                                    autofocus/>
@@ -26,7 +31,8 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.site.fields.description') }}</label>
+                            <label class="label-maturity-1"
+                                   for="description">{{ trans('cruds.site.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description" id="description">{!! old('description') !!}</textarea>
@@ -62,7 +68,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.sites.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

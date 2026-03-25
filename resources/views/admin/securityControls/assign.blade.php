@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    Assigner des mesures de sécurité
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route('admin.security-controls-associate') }}" enctype="multipart/form-data">
     @method('PUT')
@@ -13,7 +18,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required">Application / Processus</label>
+                        <label class="label-required">Application / Processus</label>
                         <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="source" id="source" onchange="">
                             <option></option>
                             <optgroup label="Processes">
@@ -62,7 +67,7 @@
         <button id="btn-cancel" class="btn btn-secondary" type="button"  onclick="window.location.href='/admin/security-controls'">
             {{ trans('global.back_to_list') }}
         </button>
-        <button id="btn-save" class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-success" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

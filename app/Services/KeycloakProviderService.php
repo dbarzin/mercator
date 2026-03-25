@@ -1,34 +1,48 @@
 <?php
 
-
 namespace App\Services;
 
-use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
+use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Socialite\Two\ProviderInterface;
+use Laravel\Socialite\Two\User as SocialiteUser;
 
 class KeycloakProviderService extends AbstractProvider implements ProviderInterface
 {
-    public function user()
+    /**
+     * Retrieve the authenticated user from Keycloak and return it as a SocialiteUser with tokens attached.
+     *
+     * Exchanges the authorization code for an access token, obtains user info using that token,
+     * maps the info into a SocialiteUser, and attaches the access token plus any refresh token
+     * and expiration returned by Keycloak.
+     *
+     * @return \Laravel\Socialite\Two\User The mapped SocialiteUser with `token`, optional `refreshToken`, and optional `expiresIn` set.
+     *
+     * @throws \Laravel\Socialite\Two\InvalidStateException If the OAuth state is invalid.
+     */
+    public function user(): SocialiteUser
     {
         if ($this->hasInvalidState()) {
-            throw new InvalidStateException();
+            throw new InvalidStateException;
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
+        $user = $this->getUserByToken($response['access_token']);
 
-        $user = $this->mapUserToObject($this->getUserByToken(
-            $token = Arr::get($response, 'access_token')
-        ));
+        $socialiteUser = $this->mapUserToObject($user);
 
-        return array_merge($user, [
-            'access_token' => $token,
-            'refresh_token' => Arr::get($response, 'refresh_token'),
-            'expires_in' => Arr::get($response, 'expires_in'),
-        ]);
+        $socialiteUser->setToken($response['access_token']);
+        if (isset($response['refresh_token'])) {
+            $socialiteUser->setRefreshToken($response['refresh_token']);
+        }
+        if (isset($response['expires_in'])) {
+            $socialiteUser->setExpiresIn($response['expires_in']);
+        }
+
+        return $socialiteUser;
     }
 
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
         return $this->buildAuthUrlFromBase(
             config('services.keycloak.base_url').'/realms/daara/protocol/openid-connect/auth',
@@ -36,7 +50,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         );
     }
 
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
         return config('services.keycloak.base_url').'/realms/daara/protocol/openid-connect/token';
     }
@@ -56,16 +70,18 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         return json_decode($response->getBody(), true);
     }
 
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): SocialiteUser
     {
-        return [
-            'id' => $user['sub'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-        ];
+        return (new SocialiteUser)->setRaw($user)->map([
+            'id' => $user['sub'] ?? $user['id'] ?? null,
+            'nickname' => $user['preferred_username'] ?? null,
+            'name' => $user['name'] ?? trim(($user['given_name'] ?? '').' '.($user['family_name'] ?? '')) ?: null,
+            'email' => $user['email'] ?? null,
+            'avatar' => $user['picture'] ?? null,
+        ]);
     }
 
-    protected function getTokenFields($code)
+    protected function getTokenFields($code): array
     {
         return [
             'grant_type' => 'authorization_code',
@@ -76,7 +92,7 @@ class KeycloakProviderService extends AbstractProvider implements ProviderInterf
         ];
     }
 
-    protected function getCodeFields($state = null)
+    protected function getCodeFields($state = null): array
     {
         return array_merge(
             parent::getCodeFields($state),

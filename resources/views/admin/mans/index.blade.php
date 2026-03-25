@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.man.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('man_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -26,6 +31,15 @@
                             {{ trans('cruds.man.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.man.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.man.fields.wans') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.man.fields.parent_man') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.man.fields.lans') }}
                         </th>
                         <th>
@@ -45,8 +59,29 @@
                                 </a>
                             </td>
                             <td>
-                                @foreach($man->lans as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
+                            {!! $man->description !!}
+                            </td>
+                            <td>
+                                @foreach($man->wans as $wan)
+                                <a href="{{ route('admin.wans.show', $wan) }}">
+                                {{ $wan->name  }}
+                                </a>
+                                @if(!$loop->last), @endif
+                                @endforeach
+                            </td>
+                            <td>
+                            @if($man->parentMan!==null)
+                                <a href="{{ route('admin.mans.show', $man->parentMan) }}">
+                                {{ $man->parentMan->name  }}
+                                </a>
+                            @endif
+                            </td>
+                            <td>
+                                @foreach($man->lans as $lan)
+                                <a href="{{ route('admin.lans.show', $lan) }}">
+                                {{ $lan->name  }}
+                                </a>
+                                @if(!$loop->last), @endif
                                 @endforeach
                             </td>
                             <td nowrap>

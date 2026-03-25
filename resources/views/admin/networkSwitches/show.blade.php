@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $networkSwitch->name }}
+@endsection
+
 @section('content')
 
 <div class="form-group">
@@ -6,7 +11,7 @@
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SWITCH_{{$networkSwitch->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$networkSwitch->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
@@ -29,51 +34,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.networkSwitch.title') }}
     </div>
-
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.networkSwitch.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $networkSwitch->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.networkSwitch.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $networkSwitch->description !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.networkSwitch.fields.ip') }}
-                    </th>
-                    <td>
-                        {{ $networkSwitch->ip }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.networkSwitch.fields.physical_switches') }}
-                    </th>
-                    <td>
-                        @foreach($networkSwitch->physicalSwitches as $physicalSwitch)
-                            <a href="{{ route('admin.physical-switches.show', $physicalSwitch->id) }}">
-                            {{ $physicalSwitch->name }}
-                            </a>
-                            @if (!$loop->last)
-                            ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        @include('admin.networkSwitches._details', [
+            'networkSwitch' => $networkSwitch,
+            'withLink' => false,
+        ])
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $networkSwitch->created_at ? $networkSwitch->created_at->format(trans('global.timestamp')) : '' }} |

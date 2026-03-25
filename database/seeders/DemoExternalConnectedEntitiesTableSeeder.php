@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoExternalConnectedEntitiesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoExternalConnectedEntitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('external_connected_entities')->delete();
-        
-        
-        
+
     }
 }

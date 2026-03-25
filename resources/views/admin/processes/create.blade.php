@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.process.title_singular') }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.processes.store") }}" enctype="multipart/form-data">
@@ -11,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.process.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.process.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" maxlength=64 required autofocus/>
                             @if($errors->has('name'))
@@ -25,7 +30,7 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-2"
                                    for="macroprocessus_id">{{ trans('cruds.process.fields.macroprocessus') }}</label>
                             <select class="form-control select2 {{ $errors->has('macroprocessus') ? 'is-invalid' : '' }}"
                                     name="macroprocess_id" id="macroprocess_id">
@@ -48,7 +53,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.process.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -81,7 +86,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended" for="in_out">{{ trans('cruds.process.fields.in_out') }}</label>
+                    <label class="label-maturity-1" for="in_out">{{ trans('cruds.process.fields.in_out') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('in_out') ? 'is-invalid' : '' }}"
                               name="in_out" id="in_out">{!! old('in_out') !!}</textarea>
                     @if($errors->has('in_out'))
@@ -98,7 +103,7 @@
                             <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                                 <tr>
                                     <td width='20%' nowrap>
-                                        <label class="recommended"
+                                        <label class="label-maturity-2"
                                                for="security_need">{{ trans('cruds.process.fields.security_need') }}</label>
                                     </td>
                                     <td align="right">
@@ -188,11 +193,11 @@
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="recommended" for="owner">{{ trans('cruds.process.fields.owner') }}</label>
+                            <label class="label-maturity-1" for="owner">{{ trans('cruds.process.fields.owner') }}</label>
                             <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}"
                                     name="owner" id="owner">
                                 @if (!$owner_list->contains(old('owner')))
-                                    <option> {{ old('owner') }}</option>'
+                                    <option> {{ old('owner') }}</option>
                                 @endif
                                 @foreach($owner_list as $t)
                                     <option {{ old('owner') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -312,7 +317,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.processes.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

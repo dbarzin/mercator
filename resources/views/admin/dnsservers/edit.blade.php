@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $dnsserver->name }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.dnsservers.update", [$dnsserver->id]) }}" enctype="multipart/form-data">
     @method('PUT')
@@ -11,7 +16,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.dnsserver.fields.name') }}</label>
+                <label class="label-required" for="name">{{ trans('cruds.dnsserver.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $dnsserver->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">

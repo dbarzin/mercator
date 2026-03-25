@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyInformationRequest;
 use App\Http\Requests\StoreInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
-use App\Models\Information;
-use App\Models\Process;
 use Gate;
+use Mercator\Core\Models\Information;
+use Mercator\Core\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationController extends Controller
@@ -18,7 +17,10 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $information = Information::all()->sortBy('name');
+        $information = Information::query()
+            ->with('parents','children')
+            ->orderBy('name')
+            ->get();
 
         return view('admin.information.index', compact('information'));
     }
@@ -28,6 +30,7 @@ class InformationController extends Controller
         abort_if(Gate::denies('information_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
+        $information_list = Information::all()->sortBy('name')->pluck('name', 'id');
 
         // lists
         $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
@@ -40,14 +43,18 @@ class InformationController extends Controller
             'owner_list',
             'storage_list',
             'sensitivity_list',
-            'administrator_list'
+            'administrator_list',
+            'information_list'
         ));
     }
 
     public function store(StoreInformationRequest $request)
     {
         $information = Information::create($request->all());
+
         $information->processes()->sync($request->input('processes', []));
+        $information->parents()->sync($request->input('parents', []));
+        $information->children()->sync($request->input('children', []));
 
         return redirect()->route('admin.information.index');
     }
@@ -60,6 +67,7 @@ class InformationController extends Controller
 
         // links
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
+        $information_list = Information::all()->sortBy('name')->pluck('name', 'id');
 
         // lists
         $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
@@ -73,14 +81,18 @@ class InformationController extends Controller
             'owner_list',
             'storage_list',
             'sensitivity_list',
-            'administrator_list'
+            'administrator_list',
+            'information_list'
         ));
     }
 
     public function update(UpdateInformationRequest $request, Information $information)
     {
         $information->update($request->all());
+
         $information->processes()->sync($request->input('processes', []));
+        $information->parents()->sync($request->input('parents', []));
+        $information->children()->sync($request->input('children', []));
 
         return redirect()->route('admin.information.index');
     }
@@ -89,7 +101,7 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $information->load('processes');
+        $information->load('processes', 'parents', 'children');
 
         return view('admin.information.show', compact('information'));
     }
@@ -105,7 +117,7 @@ class InformationController extends Controller
 
     public function massDestroy(MassDestroyInformationRequest $request)
     {
-        Information::whereIn('id', request('ids'))->delete();
+        Information::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoFluxesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoFluxesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('fluxes')->delete();
-        
-        
-        
+
     }
 }

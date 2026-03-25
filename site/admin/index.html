@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/admin/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Administration - Mercator</title>
+    <title>Mercator administration - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Administration";
+        var mkdocs_page_name = "Mercator administration";
         var mkdocs_page_input_path = "admin.md";
         var mkdocs_page_url = "/mercator/admin/";
       </script>
@@ -44,11 +44,27 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Views /Cartograpgy</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturity Levels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0 Module</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration Feature</a>
                 </li>
               </ul>
               <ul>
@@ -60,11 +76,19 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Data Import/Export Interface</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API Advanced (filters)</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Administration</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Mercator administration</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#user-management">User management</a>
     </li>
@@ -72,17 +96,13 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#certificate-management">Certificate management</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#cve-management">CVE management</a>
+    <li class="toctree-l2"><a class="reference internal" href="#vulnerabilities-management">Vulnerabilities management</a>
     </li>
     </ul>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Mercator Configuration Guide</a>
                 </li>
               </ul>
               <ul>
@@ -103,7 +123,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Administration</li>
+      <li class="breadcrumb-item active">Mercator administration</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/admin.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -113,10 +133,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <ul>
-<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../admin.fr/">Français</a></li>
-</ul>
-<h2 id="administration">Administration</h2>
+                <h1 id="mercator-administration">Mercator administration</h1>
+<p>🇫🇷 <a href="/mercator/fr/admin">Lire en français</a></p>
 <h3 id="user-management">User management</h3>
 <p>Mercator application users are entered in the application database.</p>
 <p>Table <em>users</em> :</p>
@@ -187,7 +205,7 @@
 </tbody>
 </table>
 <p>Passwords are hashed using Laravel's standard hash function.</p>
-<p>Mercator can be connected to an LDAP directory (see LoginController.php). </p>
+<p>Mercator can be connected to an LDAP directory (see LoginController.php).</p>
 <h3 id="role-management">Role management</h3>
 <p>For each object in the cartography, there is a :</p>
 <ul>
@@ -203,25 +221,26 @@
 <li>Auditor: auditors have the right to access and display all objects except users and configuration.</li>
 <li>Administrator: the administrator has all rights without exception.</li>
 </ul>
-<p>New roles can be created as required. </p>
+<p>New roles can be created as required.</p>
 <h3 id="certificate-management">Certificate management</h3>
 <p>Certificate expiry notifications can be sent at set times.</p>
 <p>The configuration screen can be accessed via the "Configuration" -&gt; "Certificates" menu.</p>
-<p><a href="/mercator/images/certificates.png"><img src="/mercator/images/certificates.png" width="600"></a></p>
+<p><a href="../images/certificates.png"><img alt="certificates.png" src="../images/certificates.png" /></a></p>
 <p>The "Test" button sends a test e-mail to the specified notification address.</p>
-<h3 id="cve-management">CVE management</h3>
-<p>CVE detection notifications based on application names can be sent at set times.</p>
-<p>CVEs are retrieved using the [CVE-Search] project (https://github.com/cve-search/cve-search). The search is performed locally.</p>
+<h3 id="vulnerabilities-management">Vulnerabilities management</h3>
+<p>Vulnerability detection notifications based on application names and CPE can be sent at set times.</p>
+<p>CVEs are retrieved using the <a href="https://github.com/vulnerability-lookup/vulnerability-lookup">Vulnerability Lookup</a>
+project. The search is performed locally.</p>
 <p>The configuration screen can be accessed via the "Configuration" -&gt; "CVE" menu.</p>
-<p><a href="/mercator/images/cve.png"><img src="/mercator/images/cve.png" width="600"></a></p>
+<p><a href="../images/cve.png"><img alt="cve.png" src="../images/cve.png" /></a></p>
 <p>The "Test Mail" button sends a test mail to the specified notification address and tests access to the CVE provider.</p>
 <p>The "Test Provider" button tests access to the CVE-Search project provider.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../reports/" class="btn btn-neutral float-left" title="Reports"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../import/" class="btn btn-neutral float-right" title="Import">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../apifilters/" class="btn btn-neutral float-left" title="API Advanced (filters)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../config/" class="btn btn-neutral float-right" title="Mercator Configuration Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -249,10 +268,10 @@
         </span>
     
     
-      <span><a href="../reports/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../apifilters/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../import/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../config/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

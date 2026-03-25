@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.configuration.documents.title') }}
+@endsection
+
 @section('content')
 
 <?php

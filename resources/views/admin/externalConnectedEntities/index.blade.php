@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.externalConnectedEntity.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('external_connected_entity_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -58,8 +63,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($externalConnectedEntities as $key => $externalConnectedEntity)
-                        <tr data-entry-id="{{ $externalConnectedEntity->id }}">
+                    @foreach($externalConnectedEntities as $externalConnectedEntity)
+                        <tr data-entry-id="{{ $externalConnectedEntity->id }}"
+                            @if(
+                              ($externalConnectedEntity->type==null)||
+                              ($externalConnectedEntity->contact==null)
+                              )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>

@@ -1,11 +1,16 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $physicalSwitch->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <a class="btn btn-default" href="{{ route('admin.physical-switches.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SWITCH_{{$physicalSwitch->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$physicalSwitch->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
@@ -33,87 +38,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.physicalSwitch.title') }}
     </div>
-
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.physicalSwitch.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $physicalSwitch->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.physicalSwitch.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $physicalSwitch->description !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.physicalSwitch.fields.type') }}
-                    </th>
-                    <td>
-                        {{ $physicalSwitch->type }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.physicalSwitch.fields.site') }}
-                    </th>
-                    <td>
-                        @if ($physicalSwitch->site!=null)
-                            <a href="{{ route('admin.sites.show', $physicalSwitch->site->id) }}">
-                            {{ $physicalSwitch->site->name ?? '' }}
-                            </a>
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.physicalSwitch.fields.building') }}
-                    </th>
-                    <td>
-                        @if ($physicalSwitch->building!=null)
-                            <a href="{{ route('admin.buildings.show', $physicalSwitch->building->id) }}">
-                            {{ $physicalSwitch->building->name ?? '' }}
-                            </a>
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.physicalSwitch.fields.bay') }}
-                    </th>
-                    <td>
-                        @if ($physicalSwitch->bay!=null)
-                            <a href="{{ route('admin.bays.show', $physicalSwitch->bay->id) }}">
-                            {{ $physicalSwitch->bay->name ?? '' }}
-                            </a>
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.physicalSwitch.fields.network_switches') }}
-                    </th>
-                    <td>
-                        @foreach($physicalSwitch->networkSwitches as $networkSwitch)
-                            <a href="{{ route('admin.network-switches.show', $networkSwitch->id) }}">
-                            {{ $networkSwitch->name }}
-                            </a>
-                            @if (!$loop->last)
-                            ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+         @include('admin.physicalSwitches._details', [
+             'physicalSwitch' => $physicalSwitch,
+             'withLink' => false,
+         ])
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $physicalSwitch->created_at ? $physicalSwitch->created_at->format(trans('global.timestamp')) : '' }} |

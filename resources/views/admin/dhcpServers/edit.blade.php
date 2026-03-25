@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $dhcpServer->name }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.dhcp-servers.update", [$dhcpServer->id]) }}" enctype="multipart/form-data">
     @method('PUT')
@@ -11,7 +16,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.dhcpServer.fields.name') }}</label>
+                <label class="label-required" for="name">{{ trans('cruds.dhcpServer.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $dhcpServer->name) }}" required autofocus/>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
@@ -31,7 +36,7 @@
                 <span class="help-block">{{ trans('cruds.dhcpServer.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="address_ip">{{ trans('cruds.dhcpServer.fields.address_ip') }}</label>
+                <label class="label-required" for="address_ip">{{ trans('cruds.dhcpServer.fields.address_ip') }}</label>
                 <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', $dhcpServer->address_ip) }}" required>
                 @if($errors->has('address_ip'))
                     <div class="invalid-feedback">

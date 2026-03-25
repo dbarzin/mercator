@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $macroProcessus->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.macro-processuses.update", [$macroProcessus->id]) }}"
           enctype="multipart/form-data">
@@ -11,7 +16,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.macroProcessus.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.macroProcessus.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $macroProcessus->name) }}" maxlength="64" required
                            autofocus/>
@@ -23,7 +28,7 @@
                     <span class="help-block">{{ trans('cruds.macroProcessus.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended"
+                    <label class="label-maturity-2"
                            for="description">{{ trans('cruds.macroProcessus.fields.description') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"
@@ -36,7 +41,7 @@
                     <span class="help-block">{{ trans('cruds.macroProcessus.fields.description_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended"
+                    <label class="label-maturity-2"
                            for="io_elements">{{ trans('cruds.macroProcessus.fields.io_elements') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('io_elements') ? 'is-invalid' : '' }}"
                               name="io_elements"
@@ -54,7 +59,7 @@
                     <table cellspacing="5" cellpadding="5" border="0">
                         <tr>
                             <td width="140" nowrap>
-                                <label class="recommended"
+                                <label class="label-maturity-2"
                                        for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
                             </td>
                             <td align="right" width="10">
@@ -141,11 +146,11 @@
 
 
                 <div class="form-group">
-                    <label class="recommended" for="owner">{{ trans('cruds.macroProcessus.fields.owner') }}</label>
+                    <label class="label-maturity-3" for="owner">{{ trans('cruds.macroProcessus.fields.owner') }}</label>
                     <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}"
                             name="owner" id="owner">
                         @if (!$owner_list->contains(old('owner')))
-                            <option> {{ old('owner') }}</option>'
+                            <option> {{ old('owner') }}</option>
                         @endif
                         @foreach($owner_list as $t)
                             <option {{ (old('owner') ? old('owner') : $macroProcessus->owner) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -185,7 +190,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.macro-processuses.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

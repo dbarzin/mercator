@@ -1,11 +1,16 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $applicationBlock->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <a class="btn btn-default" href="{{ route('admin.application-blocks.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=BLOCK_{{$applicationBlock->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$applicationBlock->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
@@ -28,49 +33,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.applicationBlock.title') }}
     </div>
-
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.applicationBlock.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $applicationBlock->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationBlock.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $applicationBlock->description !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationBlock.fields.responsible') }}
-                    </th>
-                    <td>
-                        {{ $applicationBlock->responsible }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Applications
-                    </th>
-                    <td>
-                        @foreach($applicationBlock->applications as $key => $application)
-                            <a href="{{ route('admin.applications.show',$application->id) }}">{{ $application->name }}</a>
-                            @if(!$loop->last)
-                            ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    @include('admin.applicationBlocks._details', [
+        'applicationBlock' => $applicationBlock,
+        'withLink' => false,
+    ])
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $applicationBlock->created_at ? $applicationBlock->created_at->format(trans('global.timestamp')) : '' }} |

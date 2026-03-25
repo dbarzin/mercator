@@ -1,14 +1,13 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\LogicalServer;
-use App\Models\PhysicalServer;
-use App\Models\PhysicalSwitch;
-use App\Models\Vlan;
-use App\Models\Workstation;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\NetworkSwitch;
+use Mercator\Core\Models\PhysicalServer;
+use Mercator\Core\Models\Vlan;
+use Mercator\Core\Models\Workstation;
 use Carbon\Carbon;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +23,7 @@ class VLANList extends Controller
 
         $lservers = LogicalServer::orderBy('name')->get();
         $pservers = PhysicalServer::orderBy('name')->get();
-        $switches = PhysicalSwitch::orderBy('name')->get();
+        $switches = NetworkSwitch::orderBy('name')->get();
         $workstations = Workstation::orderBy('name')->get();
 
         $header = [
@@ -33,13 +32,13 @@ class VLANList extends Controller
             'Description',
             'subnet name',
             'subnet address',
-            'Logical Servers',
-            'Physical Servers',
-            'Switches',
+            'Logical servers',
+            'Physical servers',
+            'Logical switches',
             'Workstations',
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -64,7 +63,7 @@ class VLANList extends Controller
         $sheet->getStyle('I')->getAlignment()->setWrapText(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the Timesheet
         $row = 2;
@@ -112,7 +111,7 @@ class VLANList extends Controller
                 // Switches
                 $txt = '';
                 foreach ($switches as $switch) {
-                    foreach (explode(', ', $switch->address_ip) as $ip) {
+                    foreach (explode(', ', $switch->ip) as $ip) {
                         if ($subnet->contains($ip)) {
                             if (strlen($txt) > 0) {
                                 $txt .= ', ';
@@ -149,7 +148,7 @@ class VLANList extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/vlans-' . Carbon::today()->format('Ymd') . '.xlsx');
+        $path = storage_path('app/vlans-'.Carbon::today()->format('Ymd').'.xlsx');
 
         $writer->save($path);
 

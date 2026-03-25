@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.container.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('container_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -19,7 +24,7 @@
             <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th with="10">
+                        <th width="10">
                         </th>
                         <th>
                             {{ trans('cruds.container.fields.name') }}
@@ -56,9 +61,7 @@
                                     class="table-warning"
                             @endif
                             >
-                            <td>
-
-                            </td>
+                            <td></td>
                             <td>
                                 <a href="{{ route('admin.containers.show', $container->id) }}">
                                     {{ $container->name ?? '' }}

@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Annuaire;
-use App\Models\User;
+use Mercator\Core\Models\Annuaire;
+use Mercator\Core\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;
@@ -21,7 +21,7 @@ beforeEach(function () {
         RoleUserTableSeeder::class,
     ]);
 
-    $this->user = User::query()->find(1);
+    $this->user = User::query()->where('login','admin@admin.com')->first();
     $this->actingAs($this->user);
 
 });
@@ -70,22 +70,22 @@ describe('create', function () {
 
 describe('show', function () {
 
-        test('can display object', function () {
-            $name =  fake()->word();
-            $annuaire = Annuaire::factory()->create(['name' => $name]);
+    test('can display object', function () {
+        $name = fake()->word();
+        $annuaire = Annuaire::factory()->create(['name' => $name]);
 
-            $response = $this->get(route('admin.annuaires.show', $annuaire->id));
+        $response = $this->get(route('admin.annuaires.show', $annuaire->id));
 
-            $response->assertOk();
-            $response->assertViewIs('admin.annuaires.show');
-            $response->assertSee($name);
-        });
+        $response->assertOk();
+        $response->assertViewIs('admin.annuaires.show');
+        $response->assertSee($name);
+    });
 
     test('denies access without permission', function () {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $name =  fake()->word();
+        $name = fake()->word();
         $annuaire = Annuaire::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.annuaires.show', $annuaire->id));
@@ -97,7 +97,7 @@ describe('show', function () {
 
 describe('edit', function () {
     test('can display edit form', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $annuaire = Annuaire::factory()->create(['name' => $name]);
 
         $response = $this->get(route('admin.annuaires.edit', $annuaire));
@@ -122,7 +122,7 @@ describe('edit', function () {
 
 describe('update', function () {
     test('can update annuaire', function () {
-        $name =  fake()->word();
+        $name = fake()->word();
         $annuaire = Annuaire::factory()->create(['name' => $name]);
 
         $data = [
@@ -152,15 +152,15 @@ describe('destroy', function () {
 
     });
 
-test('denies access without permission', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+    test('denies access without permission', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-    $annuaire = Annuaire::factory()->create();
+        $annuaire = Annuaire::factory()->create();
 
-    $response = $this->delete(route('admin.annuaires.destroy', $annuaire));
+        $response = $this->delete(route('admin.annuaires.destroy', $annuaire));
 
-    $response->assertForbidden();
+        $response->assertForbidden();
     });
 });
 
@@ -199,6 +199,5 @@ describe('massDestroy', function () {
 
         $response->assertForbidden();
     });
-
 
 });

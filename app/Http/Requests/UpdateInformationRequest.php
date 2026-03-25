@@ -1,23 +1,22 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdateInformationRequest extends FormRequest
+class UpdateInformationRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description', 'constraints'];
+    public function authorize() : bool
     {
         abort_if(Gate::denies('information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [
@@ -28,17 +27,29 @@ class UpdateInformationRequest extends FormRequest
                     ->ignore($this->route('information')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
+            'processes' => [
+                'array',
+            ],
             'processes.*' => [
                 'integer',
             ],
-            'processes' => [
+            'parents' => [
                 'array',
+            ],
+            'parents.*' => [
+                'integer',
+            ],
+            'children' => [
+                'array',
+            ],
+            'children.*' => [
+                'integer',
             ],
             'security_need' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:5',
             ],
         ];
     }

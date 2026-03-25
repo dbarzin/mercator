@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoNetworkSwitchesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoNetworkSwitchesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('network_switches')->delete();
-        
-        
-        
+
     }
 }

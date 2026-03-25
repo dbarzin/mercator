@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoActorOperationTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,43 +13,35 @@ class DemoActorOperationTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('actor_operation')->delete();
-        
-        \DB::table('actor_operation')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('actor_operation')->insert([
+            0 => [
                 'operation_id' => 2,
                 'actor_id' => 1,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'operation_id' => 1,
                 'actor_id' => 1,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'operation_id' => 1,
                 'actor_id' => 4,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'operation_id' => 2,
                 'actor_id' => 5,
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'operation_id' => 3,
                 'actor_id' => 6,
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'operation_id' => 5,
                 'actor_id' => 4,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

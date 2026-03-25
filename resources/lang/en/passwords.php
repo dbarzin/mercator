@@ -1,4 +1,5 @@
 <?php
+
 return [
     'password' => 'The password must be at least 6 characters long and the confirmation must match.',
     'reset' => 'Your password has been reset.',

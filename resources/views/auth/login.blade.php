@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+    {{ trans('global.login') }}
+@endsection
+
 @section('styles')
     <style>
         body {

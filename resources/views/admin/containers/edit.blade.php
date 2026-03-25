@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $container->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route('admin.containers.update', [$container->id]) }}" enctype="multipart/form-data">
         @method('PUT')
@@ -12,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.container.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.container.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $container->name) }}" required
                                    maxlength="32" autofocus/>
@@ -31,7 +36,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type" maxlength='255'>
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $container->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -152,7 +157,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.containers.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

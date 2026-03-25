@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoDataProcessingMApplicationTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,33 +13,27 @@ class DemoDataProcessingMApplicationTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('data_processing_m_application')->delete();
-        
-        \DB::table('data_processing_m_application')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('data_processing_m_application')->insert([
+            0 => [
                 'data_processing_id' => 1,
                 'm_application_id' => 15,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'data_processing_id' => 1,
                 'm_application_id' => 3,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'data_processing_id' => 2,
                 'm_application_id' => 1,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'data_processing_id' => 4,
                 'm_application_id' => 12,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

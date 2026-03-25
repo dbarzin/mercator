@@ -9,13 +9,9 @@ class PermissionsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
     public function run(): void
     {
-        \Log::info('PermissionsTableSeeder');
-
         if (DB::table('permissions')->count() === 0) {
             DB::table('permissions')->insert([
                 ['id' => 1, 'title' => 'user_management_access'],
@@ -326,6 +322,7 @@ class PermissionsTableSeeder extends Seeder
                 ['id' => 306, 'title' => 'tools_access'],
                 ['id' => 307, 'title' => 'explore_access'],
                 ['id' => 308, 'title' => 'reports_access'],
+                ['id' => 309, 'title' => 'module_manage']
             ]);
         }
     }

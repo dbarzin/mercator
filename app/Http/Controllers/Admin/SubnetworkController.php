@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySubnetworkRequest;
 use App\Http\Requests\StoreSubnetworkRequest;
 use App\Http\Requests\UpdateSubnetworkRequest;
-use App\Models\Gateway;
-use App\Models\Network;
-use App\Models\Subnetwork;
-use App\Models\Vlan;
+use Mercator\Core\Models\Gateway;
+use Mercator\Core\Models\Network;
+use Mercator\Core\Models\Subnetwork;
+use Mercator\Core\Models\Vlan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +19,10 @@ class SubnetworkController extends Controller
     {
         abort_if(Gate::denies('subnetwork_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetwork::all()->sortBy('name');
+        $subnetworks = Subnetwork::query()
+            ->with('network','vlan')
+            ->orderBy('name')
+            ->get();
 
         return view('admin.subnetworks.index', compact('subnetworks'));
     }
@@ -32,14 +34,27 @@ class SubnetworkController extends Controller
         return redirect()->route('admin.subnetworks.index');
     }
 
+    /**
+     * Display the form to create a new Subnetwork and prepare selection lists for the view.
+     *
+     * Prepares ordered lists for gateways, vlans, networks, subnetworks and distinct non-null
+     * values for ip_allocation_type, responsible_exp, dmz, wifi, and zone. Aborts with HTTP 403
+     * if the current user is not authorized to create subnetworks.
+     *
+     * @return \Illuminate\View\View The create view populated with the prepared lists:
+     *                               `gateways`, `vlans`, `networks`, `subnetworks`,
+     *                               `ip_allocation_type_list`, `responsible_exp_list`,
+     *                               `dmz_list`, `wifi_list`, and `zone_list`.
+     */
     public function create()
     {
         abort_if(Gate::denies('subnetwork_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $connected_subnets = Subnetwork::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $gateways = Gateway::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = Network::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $gateways = Gateway::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = Network::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subnetworks = Subnetwork::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // lists
         $ip_allocation_type_list = Subnetwork::select('ip_allocation_type')->where('ip_allocation_type', '<>', null)->distinct()->orderBy('ip_allocation_type')->pluck('ip_allocation_type');
@@ -54,6 +69,7 @@ class SubnetworkController extends Controller
                 'gateways',
                 'vlans',
                 'networks',
+                'subnetworks',
                 'ip_allocation_type_list',
                 'responsible_exp_list',
                 'dmz_list',
@@ -63,14 +79,24 @@ class SubnetworkController extends Controller
         );
     }
 
+    /**
+     * Display the edit form for a given subnetwork.
+     *
+     * Loads the `connected_subnets` and `gateway` relationships on the provided model
+     * and prepares lists used to populate select inputs in the edit view.
+     *
+     * @param  \Mercator\Core\Models\Subnetwork  $subnetwork  The Subnetwork model to edit.
+     * @return \Illuminate\View\View The edit view populated with the subnetwork and selection lists.
+     */
     public function edit(Subnetwork $subnetwork)
     {
         abort_if(Gate::denies('subnetwork_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $connected_subnets = Subnetwork::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $gateways = Gateway::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = Network::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $gateways = Gateway::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = Network::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subnetworks = Subnetwork::query()->whereKeyNot($subnetwork->id)->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // lists
         $ip_allocation_type_list = Subnetwork::select('ip_allocation_type')->where('ip_allocation_type', '<>', null)->distinct()->orderBy('ip_allocation_type')->pluck('ip_allocation_type');
@@ -88,6 +114,7 @@ class SubnetworkController extends Controller
                 'gateways',
                 'vlans',
                 'networks',
+                'subnetworks',
                 'ip_allocation_type_list',
                 'responsible_exp_list',
                 'dmz_list',

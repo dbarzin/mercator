@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoOauthClientsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoOauthClientsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('oauth_clients')->delete();
-        
-        
-        
+
     }
 }

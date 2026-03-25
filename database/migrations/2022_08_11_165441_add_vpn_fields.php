@@ -14,16 +14,16 @@ class AddVpnFields extends Migration
     public function up()
     {
         Schema::table('external_connected_entities', function (Blueprint $table) {
-            $table->dropColumn("responsible_sec");
+            $table->dropColumn('responsible_sec');
         });
 
         Schema::table('external_connected_entities', function (Blueprint $table) {
-            $table->longText('description')->nullable()->after("name");
-            $table->string("type")->nullable()->after("description");
+            $table->longText('description')->nullable()->after('name');
+            $table->string('type')->nullable()->after('description');
             $table->unsignedInteger('entity_id')->after('type')->nullable()->index('entity_id_fk_1295034');
             $table->unsignedInteger('network_id')->after('entity_id')->nullable()->index('network_id_fk_8596554');
-            $table->string("src")->nullable()->after("network_id");
-            $table->string("dest")->nullable()->after("src");
+            $table->string('src')->nullable()->after('network_id');
+            $table->string('dest')->nullable()->after('src');
         });
 
         Schema::table('external_connected_entities', function (Blueprint $table) {
@@ -43,7 +43,7 @@ class AddVpnFields extends Migration
     {
         Schema::table('external_connected_entities', function (Blueprint $table) {
             $table->dropColumn(['description', 'type']);
-            $table->string("responsible_sec")->nullable()->after("name");
+            $table->string('responsible_sec')->nullable()->after('name');
 
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('network_id_fk_8596554');

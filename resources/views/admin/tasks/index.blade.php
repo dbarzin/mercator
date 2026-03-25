@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('task_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -38,10 +43,9 @@
                 </thead>
                 <tbody>
                     @foreach($tasks as $key => $task)
-                        <tr data-entry-id="{{ $task->id }}">
-                            <td>
-
-                            </td>
+                        <tr data-entry-id="{{ $task->id }}"
+                         @if ($task->description===null) class="table-warning" @endif >
+                            <td></td>
                             <td>
                                 <a href="{{ route('admin.tasks.show', $task->id) }}">
                                 {{ $task->name ?? '' }}

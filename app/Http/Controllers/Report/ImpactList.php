@@ -1,20 +1,26 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
-use App\Http\Controllers\Controller;
-use App\Models\Activity;
-use App\Models\ActivityImpact;
+use Mercator\Core\Models\Activity;
+use Mercator\Core\Models\ActivityImpact;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 
-class ImpactList extends Controller
+class ImpactList extends ReportController
 {
-    public function generateExcel()
+    /**
+     * @throws Exception
+     */
+    public function generateExcel(): Response
     {
+        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // 1. Récupérer toutes les activités et impacts
         $activities = Activity::query()
             ->with('impacts')
@@ -29,7 +35,7 @@ class ImpactList extends Controller
         $centered = ['alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]];
 
         // 3. Créer une nouvelle feuille Excel
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         // 4. Écrire l'en-tête (ligne 1)
@@ -62,15 +68,12 @@ class ImpactList extends Controller
             }
         }
 
-        // 6. Générer le fichier Excel en téléchargement
         $writer = new Xlsx($spreadsheet);
-        $filename = 'impacts-'.Carbon::today()->format('Ymd').'.xlsx';
+        $path = storage_path('impacts-'.Carbon::today()->format('Ymd').'.xlsx');
+        $writer->save($path);
 
-        // 7. Envoyer en réponse HTTP
-        return response()->streamDownload(function () use ($writer): void {
-            $writer->save('php://output');
-        }, $filename, [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        ]);
+        return response()
+            ->download($path)
+            ->deleteFileAfterSend(true);
     }
 }

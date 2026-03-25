@@ -1,12 +1,15 @@
-## Interface Import / Export de Données
+# Interface Import / Export de Données
 
-Cette interface permet d’**importer** et d’**exporter** des données de la cartographie du système d'information via des feuilles de calcul.
+🇬🇧 [Read in English](/mercator/import)
+
+Cette interface permet d’**importer** et d’**exporter** des données de la cartographie du système d'information via des
+feuilles de calcul.
 
 ### Accès à la page
 
 La page d'import / export des données est accessible via le menu "Configration" -> "Import".
 
-[<img src="/mercator/images/import.fr.png" width="700">](/mercator/images/import.fr.png)
+[<img src="/mercator/fr/images/import.png" width="700">](images/import.fr.png)
 
 ### Fonctionnalités disponibles
 
@@ -43,14 +46,13 @@ Permet de mettre à jour ou d’ajouter des données à partir d’une feuille d
 
 #### Comportement à l’import
 
-| Cas | Action appliquée |
-|-----|------------------|
-| Ligne avec ID + données | 🔁 Mise à jour de l’enregistrement |
-| Ligne avec ID seul | ❌ Suppression de l’enregistrement |
-| Ligne sans ID | ➕ Création d’un nouvel enregistrement |
+| Cas                     | Action appliquée                      |
+|-------------------------|---------------------------------------|
+| Ligne avec ID + données | 🔁 Mise à jour de l’enregistrement    |
+| Ligne avec ID seul      | ❌ Suppression de l’enregistrement     |
+| Ligne sans ID           | ➕ Création d’un nouvel enregistrement |
 
 Si une erreur est détectée dans le fichier, aucune modification n’est appliquée.
-
 
 #### Exemple d’en-tête attendu
 

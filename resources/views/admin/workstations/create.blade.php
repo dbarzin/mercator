@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.workstation.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.workstations.store") }}" enctype="multipart/form-data">
         @csrf
@@ -10,7 +15,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.workstation.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.workstation.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -27,7 +32,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -47,7 +52,7 @@
                             <select class="form-control select2-free {{ $errors->has('status') ? 'is-invalid' : '' }}"
                                     name="status" id="status">
                                 @if (!$type_list->contains(old('status')))
-                                    <option> {{ old('status') }}</option>'
+                                    <option> {{ old('status') }}</option>
                                 @endif
                                 @foreach($status_list as $status)
                                     <option {{ old('status') == $status ? 'selected' : '' }}>{{$status}}</option>
@@ -65,7 +70,8 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.workstation.fields.description') }}</label>
+                            <label class="label-maturity-1"
+                                   for="description">{{ trans('cruds.workstation.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description" id="description">{!! old('description') !!}</textarea>
@@ -108,7 +114,7 @@
                         <select class="form-control select2-free {{ $errors->has('status') ? 'is-invalid' : '' }}"
                                 name="manufacturer" id="manufacturer">
                             @if (!$type_list->contains(old('manufacturer')))
-                                <option> {{ old('manufacturer') }}</option>'
+                                <option> {{ old('manufacturer') }}</option>
                             @endif
                             @foreach($manufacturer_list as $manufacturer)
                                 <option {{ old('manufacturer') == $manufacturer ? 'selected' : '' }}>{{$manufacturer}}</option>
@@ -126,7 +132,7 @@
                         <select class="form-control select2-free {{ $errors->has('status') ? 'is-invalid' : '' }}"
                                 name="model" id="model">
                             @if (!$model_list->contains(old('model')))
-                                <option> {{ old('model') }}</option>'
+                                <option> {{ old('model') }}</option>
                             @endif
                             @foreach($model_list as $model)
                                 <option {{ old('model') == $model ? 'selected' : '' }}>{{$model}}</option>
@@ -158,7 +164,7 @@
                             <select class="form-control select2-free {{ $errors->has('cpu') ? 'is-invalid' : '' }}"
                                     name="cpu" id="cpu">
                                 @if (!$type_list->contains(old('cpu')))
-                                    <option> {{ old('cpu') }}</option>'
+                                    <option> {{ old('cpu') }}</option>
                                 @endif
                                 @foreach($cpu_list as $c)
                                     <option {{ old('cpu') == $c ? 'selected' : '' }}>{{$c}}</option>
@@ -291,7 +297,7 @@
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$type_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $os)
                                     <option {{ old('operating_system')  == $os ? 'selected' : '' }}>{{$os}}</option>
@@ -382,7 +388,7 @@
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="network_port_type" id="network_port_type">
                                 @if (!$type_list->contains(old('network_port_type')))
-                                    <option> {{ old('network_port_type') }}</option>'
+                                    <option> {{ old('network_port_type') }}</option>
                                 @endif
                                 @foreach($network_port_type_list as $type)
                                     <option {{ old('network_port_type')  == $type ? 'selected' : '' }}>{{$type}}</option>
@@ -407,7 +413,8 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label for="site_id">{{ trans('cruds.workstation.fields.site') }}</label>
+                            <label class="label-maturity-1"
+                                   for="site_id">{{ trans('cruds.workstation.fields.site') }}</label>
                             <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}"
                                     name="site_id" id="site_id">
                                 @foreach($sites as $id => $site)
@@ -424,7 +431,8 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label for="building_id">{{ trans('cruds.workstation.fields.building') }}</label>
+                            <label class="label-maturity-1"
+                                   for="building_id">{{ trans('cruds.workstation.fields.building') }}</label>
                             <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                     name="building_id" id="building_id">
                                 @foreach($buildings as $id => $building)
@@ -446,7 +454,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.workstations.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

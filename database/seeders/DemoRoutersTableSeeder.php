@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoRoutersTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoRoutersTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('routers')->delete();
-        
-        
-        
+
     }
 }

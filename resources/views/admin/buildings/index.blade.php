@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.building.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
     @can('building_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -49,8 +54,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($buildings as $key => $building)
-                        <tr data-entry-id="{{ $building->id }}">
+                    @foreach($buildings as $building)
+                        <tr data-entry-id="{{ $building->id }}"
+                            @if (
+                                ($building->description===null)
+                                )
+                                class="table-warning"
+                                @endif
+                        >
                             <td>
 
                             </td>

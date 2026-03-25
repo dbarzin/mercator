@@ -44,11 +44,27 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Views /Cartograpgy</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maturity/">Maturity Levels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bpmn/">BPMN 2.0 Module</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exploration/">Exploration Feature</a>
                 </li>
               </ul>
               <ul>
@@ -60,15 +76,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Data Import/Export Interface</a>
                 </li>
               </ul>
               <ul class="current">
@@ -84,31 +92,47 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#linking-objects">Linking objects</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#php">PHP</a>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
+    <li class="toctree-l3"><a class="reference internal" href="#php">PHP</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#authentification">Authentification</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#users-list">Users list</a>
+    <li class="toctree-l4"><a class="reference internal" href="#users-list">Users list</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#get-a-user">Get a user</a>
+    <li class="toctree-l4"><a class="reference internal" href="#get-a-user">Get a user</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#update-a-user">Update a user</a>
+    <li class="toctree-l4"><a class="reference internal" href="#update-a-user">Update a user</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
+    <li class="toctree-l3"><a class="reference internal" href="#python">Python</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#bash">Bash</a>
+    <li class="toctree-l3"><a class="reference internal" href="#bash">Bash</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#powershell">PowerShell</a>
+    <li class="toctree-l3"><a class="reference internal" href="#powershell">PowerShell</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</a>
+    <li class="toctree-l4"><a class="reference internal" href="#step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</a>
+    <li class="toctree-l4"><a class="reference internal" href="#step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
     </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../apifilters/">API Advanced (filters)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin/">Mercator administration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../config/">Mercator Configuration Guide</a>
                 </li>
               </ul>
               <ul>
@@ -139,10 +163,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <ul>
-<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../api.fr/">Français</a></li>
-</ul>
-<h2 id="api">API</h2>
+                <h1 id="api">API</h1>
+<p>🇫🇷 <a href="/mercator/fr/api">Lire en français</a></p>
 <p>Cartography can be modified or updated via a REST API.</p>
 <p>A REST API (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
 is an application programming interface that respects the constraints of the REST
@@ -157,79 +179,98 @@ architecture and enables interaction with RESTful web services.</p>
 <h3 id="apis">APIs</h3>
 <p>For each object in the cartography data model, there is an API.
 The list of APIs can be found in /route/api.php</p>
-<p><em>GDPR view</em></p>
+<p><strong>GDPR view</strong></p>
 <ul>
-<li>/api/data-processings</li>
-<li>/api/security-controls</li>
+<li><a href="../model/#register">/api/data-processings</a></li>
+<li><a href="../model/#security-measures">/api/security-controls</a></li>
 </ul>
-<p><em>Ecosystem view</em></p>
+<p><strong>Ecosystem view</strong></p>
 <ul>
-<li>/api/entities</li>
-<li>/api/relations</li>
+<li><a href="../model/#entities">/api/entities</a></li>
+<li><a href="../model/#relationships">/api/relations</a></li>
 </ul>
-<p><em>Information system business view</em></p>
+<p><strong>Information system business view</strong></p>
 <ul>
-<li>/api/macro-processuses</li>
-<li>/api/processes</li>
-<li>/api/activities</li>
-<li>/api/operations</li>
-<li>/api/tasks</li>
-<li>/api/actors</li>
-<li>/api/information</li>
+<li><a href="../model/#macro-processes">/api/macro-processuses</a></li>
+<li><a href="../model/#processes">/api/processes</a></li>
+<li><a href="../model/#activities">/api/activities</a></li>
+<li><a href="../model/#operations">/api/operations</a></li>
+<li><a href="../model/#tasks">/api/tasks</a></li>
+<li><a href="../model/#actors">/api/actors</a></li>
+<li><a href="../model/#information">/api/information</a></li>
 </ul>
-<p><em>Application view</em></p>
+<p><strong>Application view</strong></p>
 <ul>
-<li>/api/application-blocks</li>
-<li>/api/applications</li>
-<li>/api/application-services</li>
-<li>/api/application-modules</li>
-<li>/api/databases</li>
-<li>/api/fluxes</li>
+<li><a href="../model/#applications-blocks">/api/application-blocks</a></li>
+<li><a href="../model/#applications">/api/applications</a></li>
+<li><a href="../model/#applications-services">/api/application-services</a></li>
+<li><a href="../model/#application-modules">/api/application-modules</a></li>
+<li><a href="../model/#databases">/api/databases</a></li>
+<li><a href="../model/#flows">/api/fluxes</a></li>
 </ul>
-<p><em>Administration view</em></p>
+<p><strong>Administration view</strong></p>
 <ul>
-<li>/api/zone-admins</li>
-<li>/api/annuaires</li>
-<li>/api/forest-ads</li>
-<li>/api/domaine-ads</li>
-<li>/api/admin-users</li>
+<li><a href="../model/#administration-areas">/api/zone-admins</a></li>
+<li><a href="../model/#administration-directory-services">/api/annuaires</a></li>
+<li><a href="../model/#active-directory-forests-ldap-tree-structure">/api/forest-ads</a></li>
+<li><a href="../model/#active-directory-domains-ldap">/api/domaine-ads</a></li>
+<li><a href="../model/#users">/api/admin-users</a></li>
 </ul>
-<p><em>Logical infrastructure view</em></p>
+<p><strong>Logical infrastructure view</strong></p>
 <ul>
-<li>/api/networks</li>
-<li>/api/subnetworks</li>
-<li>/api/gateways</li>
-<li>/api/external-connected-entities</li>
-<li>/api/network-switches</li>
-<li>/api/routers</li>
-<li>/api/security-devices</li>
-<li>/api/dhcp-servers</li>
-<li>/api/dnsservers</li>
-<li>/api/clusters</li>
-<li>/api/logical-servers</li>
-<li>/api/logical-flows</li>
-<li>/api/certificates</li>
-<li>/api/vlans</li>
+<li><a href="../model/#networks">/api/networks</a></li>
+<li><a href="../model/#subnetworks">/api/subnetworks</a></li>
+<li><a href="../model/#external-input-gateways">/api/gateways</a></li>
+<li><a href="../model/#connected-external-entities">/api/external-connected-entities</a></li>
+<li><a href="../model/#network-switches">/api/network-switches</a></li>
+<li><a href="../model/#logical-routers">/api/routers</a></li>
+<li><a href="../model/#security-equipments">/api/security-devices</a></li>
+<li><a href="../model/#dhcp-servers">/api/dhcp-servers <em>(usage not recommended)</em></a></li>
+<li><a href="../model/#dns-servers">/api/dnsservers <em>(usage not recommended)</em></a></li>
+<li><a href="../model/#clusters">/api/clusters</a></li>
+<li><a href="../model/#logical-servers">/api/logical-servers</a></li>
+<li><a href="../model/#containers">/api/containers</a></li>
+<li><a href="../model/#logical-flows">/api/logical-flows</a></li>
+<li><a href="../model/#certificates">/api/certificates</a></li>
+<li><a href="../model/#vlans">/api/vlans</a></li>
 </ul>
-<p><em>Physical infrastructure view</em></p>
+<p><strong>Physical infrastructure view</strong></p>
 <ul>
-<li>/api/sites</li>
-<li>/api/buildings</li>
-<li>/api/bays</li>
-<li>/api/physical-servers</li>
-<li>/api/workstations</li>
-<li>/api/storage-devices</li>
-<li>/api/peripherals</li>
-<li>/api/phones</li>
-<li>/api/physical-switches</li>
-<li>/api/physical-routers</li>
-<li>/api/wifi-terminals</li>
-<li>/api/physical-security-devices</li>
-<li>/api/wans</li>
-<li>/api/mans</li>
-<li>/api/lans</li>
-<li>/api/physical-links</li>
-<li>/api/fluxes</li>
+<li><a href="../model/#sites">/api/sites</a></li>
+<li><a href="../model/#buildings-rooms">/api/buildings</a></li>
+<li><a href="../model/#racks">/api/bays</a></li>
+<li><a href="../model/#physical-servers">/api/physical-servers</a></li>
+<li><a href="../model/#workstations">/api/workstations</a></li>
+<li><a href="../model/#storage-infrastructures">/api/storage-devices <em>(usage not recommended)</em></a></li>
+<li><a href="../model/#peripherals">/api/peripherals</a></li>
+<li><a href="../model/#phones">/api/phones</a></li>
+<li><a href="../model/#physical-switches">/api/physical-switches</a></li>
+<li><a href="../model/#physical-routers">/api/physical-routers</a></li>
+<li><a href="../model/#wifi-terminals">/api/wifi-terminals</a></li>
+<li><a href="../model/#physical-security-equipments">/api/physical-security-devices</a></li>
+<li><a href="../model/#wans">/api/wans</a></li>
+<li><a href="../model/#mans">/api/mans</a></li>
+<li><a href="../model/#lans">/api/lans</a></li>
+<li><a href="../model/#physical-links">/api/physical-links</a></li>
+</ul>
+<p><strong>Reports</strong></p>
+<ul>
+<li>/api/report/cartography</li>
+<li>/api/report/entities</li>
+<li>/api/report/applicationsByBlocks</li>
+<li>/api/report/directory</li>
+<li>/api/report/logicalServers</li>
+<li>/api/report/securityNeeds</li>
+<li>/api/report/logicalServerConfigs</li>
+<li>/api/report/externalAccess</li>
+<li>/api/report/physicalInventory</li>
+<li>/api/report/vlans</li>
+<li>/api/report/workstations</li>
+<li>/api/report/cve</li>
+<li>/api/report/activityList</li>
+<li>/api/report/activityReport</li>
+<li>/api/report/impacts</li>
+<li>/api/report/rto</li>
 </ul>
 <h3 id="actions-managed-by-the-resource-controller">Actions managed by the resource controller</h3>
 <p>Requests and URIs for each api are shown in the table below.</p>
@@ -248,28 +289,44 @@ The list of APIs can be found in /route/api.php</p>
 <td>returns the list of objects</td>
 </tr>
 <tr>
-<td>GET /api/objets/{id}</td>
-<td id="id">returns object</td>
-<td></td>
+<td>GET</td>
+<td>/api/objects/{id}</td>
+<td>returns the object with ID <code>{id}</code></td>
 </tr>
 <tr>
 <td>POST</td>
 <td>/api/objects</td>
-<td>save new object</td>
+<td>creates a new object</td>
 </tr>
 <tr>
 <td>PUT/PATCH</td>
-<td>/api/objets/{id}</td>
-<td id="id">update object</td>
+<td>/api/objects/{id}</td>
+<td>updates the object with ID <code>{id}</code></td>
 </tr>
 <tr>
 <td>DELETE</td>
-<td>/api/objets/{id}</td>
-<td id="id">delete object</td>
+<td>/api/objects/{id}</td>
+<td>deletes the object with ID <code>{id}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/api/objects/mass-store</td>
+<td>creates multiple objects in a single request</td>
+</tr>
+<tr>
+<td>PUT/PATCH</td>
+<td>/api/objects/mass-update</td>
+<td>updates multiple objects at once</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/api/objects/mass-destroy</td>
+<td>deletes multiple objects at once</td>
 </tr>
 </tbody>
 </table>
 <p>The fields to be supplied are those described in the <a href="/mercator/model/">data model</a>.</p>
+<p>To get access to advanced filters, feel free to check the related page: <a href="../apifilters/">API Advanced (filters)</a></p>
 <h3 id="access-rights">Access rights</h3>
 <p>To access the APIs, you must identify yourself as a Mercator application user.
 This user must have a role in Mercator that allows him/her to access/modify the objects
@@ -304,7 +361,9 @@ header of the API request.</p>
 </code></pre>
 <p>The names of all extra fields
 are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']</p>
-<h3 id="php">PHP</h3>
+<h3 id="examples">Examples</h3>
+<p>Please find below few examples with differents languages</p>
+<h4 id="php">PHP</h4>
 <p>Here are a few examples of how to use the API with PHP:</p>
 <h5 id="authentification">Authentification</h5>
 <pre><code class="language-php">&lt;?php
@@ -436,7 +495,7 @@ are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations
 
     var_dump($response);
 </code></pre>
-<h3 id="python">Python</h3>
+<h4 id="python">Python</h4>
 <p>Here's an example of how to use the API in Python :</p>
 <pre><code class="language-python">#!/usr/bin/python3
 
@@ -461,7 +520,7 @@ print(response.json())
 print(response.status_code)
 
 </code></pre>
-<h3 id="bash">Bash</h3>
+<h4 id="bash">Bash</h4>
 <p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a>
 and <a href="https://stedolan.github.io/jq/">JQ</a></p>
 <pre><code># valid login and password
@@ -518,10 +577,10 @@ UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&qu
 
 echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
 </code></pre>
-<h3 id="powershell">PowerShell</h3>
+<h4 id="powershell">PowerShell</h4>
 <p>The following <strong>PowerShell</strong> script demonstrates how to authenticate with the API and retrieve the list of logical
 servers.</p>
-<h4 id="step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</h4>
+<h5 id="step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</h5>
 <pre><code class="language-powershell"># Define the login endpoint and credentials
 $loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
 $loginBody = @{
@@ -539,7 +598,7 @@ try {
     return
 }
 </code></pre>
-<h4 id="step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</h4>
+<h5 id="step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</h5>
 <pre><code class="language-powershell"># Define the endpoint and authorization headers
 $endPoint = &quot;logical-servers&quot;
 $apiUri = &quot;http://127.0.0.1:8000/api/$endPoint&quot;
@@ -560,8 +619,8 @@ try {
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../import/" class="btn btn-neutral float-left" title="Import"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../references/" class="btn btn-neutral float-right" title="References">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../import/" class="btn btn-neutral float-left" title="Data Import/Export Interface"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../apifilters/" class="btn btn-neutral float-right" title="API Advanced (filters)">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -592,7 +651,7 @@ try {
       <span><a href="../import/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../references/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../apifilters/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

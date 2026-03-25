@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Entity;
-use App\Models\Relation;
 use Gate;
 use Illuminate\Http\Request;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\Relation;
 use Symfony\Component\HttpFoundation\Response;
 
 class EcosystemView extends Controller
@@ -21,7 +20,7 @@ class EcosystemView extends Controller
     */
     public function generate(Request $request)
     {
-        abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $perimeter = in_array($request->perimeter, $this::ALLOWED_PERIMETERS) ?
                    $request->perimeter : $this::SANITIZED_PERIMETER;
@@ -33,7 +32,7 @@ class EcosystemView extends Controller
         $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités */
         foreach ($entitiesGroups as $entity_type => $entOfGroup) {
             $entities = $entities->concat($entOfGroup);
-            if ($entity_type !== null) {
+            if ($entity_type != null) {
                 $isTypeExists = $isTypeExists || ($entity_type === $typeFilter);
                 $entityTypes->push($entity_type);
             }

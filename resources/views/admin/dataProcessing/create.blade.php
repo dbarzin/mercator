@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.dataProcessing.title_singular') }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.data-processings.store") }}" enctype="multipart/form-data">
         @csrf
@@ -11,7 +16,7 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" maxlength=64 value="{{ old('name', '') }}" required autofocus/>
                             @if($errors->has('name'))
@@ -29,7 +34,7 @@
                                     multiple name="legal_bases[]" id="legal_bases">
                                 <option></option>
                                 @foreach($legal_basis_list as $lb)
-                                    <option {{ str_contains(old('legal_bases') ,$lb) ? 'selected' : '' }}>{{$lb}}</option>
+                                    <option {{ in_array($lb, old('legal_bases', []), true) ? 'selected' : '' }}>{{$lb}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('legal_basis'))
@@ -145,6 +150,32 @@
 
                 <div class="form-group">
                     <label class="recommended"
+                           for="dataSource">{{ trans('cruds.dataProcessing.fields.data_source') }}</label>
+                    <textarea class="form-control ckeditor {{ $errors->has('data_source') ? 'is-invalid' : '' }}"
+                              name="data_source" id="data_source">{!! old('data_source') !!}</textarea>
+                    @if($errors->has('data_source'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('data_source') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.dataProcessing.fields.data_source_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="recommended"
+                           for="data_collection_obligation">{{ trans('cruds.dataProcessing.fields.data_collection_obligation') }}</label>
+                    <textarea class="form-control ckeditor {{ $errors->has('data_collection_obligation') ? 'is-invalid' : '' }}"
+                              name="data_collection_obligation" id="data_collection_obligation">{!! old('data_collection_obligation') !!}</textarea>
+                    @if($errors->has('data_collection_obligation'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('data_collection_obligation') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.dataProcessing.fields.data_collection_obligation_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="recommended"
                            for="recipients">{{ trans('cruds.dataProcessing.fields.recipients') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('recipients') ? 'is-invalid' : '' }}"
                               name="recipients" id="recipients">{!! old('recipients') !!}</textarea>
@@ -171,6 +202,19 @@
 
                 <div class="form-group">
                     <label class="recommended"
+                           for="automated_decision_making">{{ trans('cruds.dataProcessing.fields.automated_decision_making') }}</label>
+                    <textarea class="form-control ckeditor {{ $errors->has('automated_decision_making') ? 'is-invalid' : '' }}"
+                              name="automated_decision_making" id="automated_decision_making">{!! old('automated_decision_making') !!}</textarea>
+                    @if($errors->has('automated_decision_making'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('automated_decision_making') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.dataProcessing.fields.automated_decision_making_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="recommended"
                            for="retention">{{ trans('cruds.dataProcessing.fields.retention') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('retention') ? 'is-invalid' : '' }}"
                               name="retention" id="retention">{!! old('retention') !!}</textarea>
@@ -182,6 +226,36 @@
                     <span class="help-block">{{ trans('cruds.dataProcessing.fields.retention_helper') }}</span>
                 </div>
 
+                <div class="form-group">
+                    <label class="recommended"
+                           for="data_subject_rights">{{ trans('cruds.dataProcessing.fields.data_subject_rights') }}</label>
+                    <textarea class="form-control ckeditor {{ $errors->has('data_subject_rights') ? 'is-invalid' : '' }}"
+                              name="data_subject_rights" id="data_subject_rights">{!! old('data_subject_rights') !!}</textarea>
+                    @if($errors->has('data_subject_rights'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('data_subject_rights') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.dataProcessing.fields.data_subject_rights_helper') }}</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label class="recommended"
+                                   for="update_date">{{ trans('cruds.dataProcessing.fields.update_date') }}</label>
+                            <input class="form-control {{ $errors->has('update_date') ? 'is-invalid' : '' }}"
+                                   type="date" name="update_date" id="update_date" value="{{ old('update_date') }}"/>
+                                   @if($errors->has('update_date'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('update_date') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div></div>
 
                 <div class="form-group">
                     <label for="operations">{{ trans('cruds.dataProcessing.fields.processes') }}</label>
@@ -193,8 +267,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}"
                             name="processes[]" id="processes" multiple>
-                        @foreach($processes as $id => $processes)
-                            <option value="{{ $id }}" {{ in_array($id, old('processes', [])) ? 'selected' : '' }}>{{ $processes }}</option>
+                        @foreach($processes as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('processes', [])) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('processes'))
@@ -267,7 +341,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.data-processings.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

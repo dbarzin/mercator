@@ -1,22 +1,23 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
-use App\Models\Document;
-use App\Models\MApplication;
-use App\Models\Workstation;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Workstation;
+use App\Services\IconUploadService;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('workstation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -30,7 +31,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -83,7 +84,7 @@ class WorkstationController extends Controller
             ->pluck('network_port_type');
 
         // Get Workstation
-        $workstation = Workstation::find($request->id);
+        $workstation = Workstation::find($request['id']);
 
         // Workstation not found
         abort_if($workstation === null, Response::HTTP_NOT_FOUND, '404 Not Found');
@@ -118,27 +119,8 @@ class WorkstationController extends Controller
         $workstation = Workstation::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $workstation);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $workstation->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $workstation->icon_id = intval($request->iconSelect);
-        } else {
-            $workstation->icon_id = null;
-        }
         $workstation->save();
 
         // Sync applications
@@ -151,7 +133,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -229,7 +211,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -238,8 +220,6 @@ class WorkstationController extends Controller
 
         // Get icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
-
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
@@ -311,27 +291,7 @@ class WorkstationController extends Controller
     public function update(UpdateWorkstationRequest $request, Workstation $workstation)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $workstation->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $workstation->icon_id = intval($request->iconSelect);
-        } else {
-            $workstation->icon_id = null;
-        }
+        $this->iconUploadService->handle($request, $workstation);
 
         $workstation->update($request->all());
         $workstation->applications()->sync($request->input('applications', []));

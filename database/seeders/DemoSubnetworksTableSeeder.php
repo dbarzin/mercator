@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoSubnetworksTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoSubnetworksTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('subnetworks')->delete();
-        
-        
-        
+
     }
 }

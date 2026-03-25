@@ -1,20 +1,18 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
-use App\Models\Cluster;
-use App\Models\Database;
-use App\Models\Document;
-use App\Models\DomaineAd;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
-use App\Models\PhysicalServer;
-use App\Services\CartographerService;
+use Mercator\Core\Models\Cluster;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\DomaineAd;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\PhysicalServer;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,17 +21,7 @@ use Yajra\DataTables\DataTables;
 
 class LogicalServerController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService)
-    {
-        $this->cartographerService = $cartographerService;
-    }
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
 
     public function getData(Request $request)
     {
@@ -175,16 +163,14 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::with('cartographers')->get();
-        $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
-        $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
-        $icons = LogicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $physicalServers = PhysicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $databases = Database::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
+        $domains = DomaineAd::query()->orderBy('name')->pluck('name', 'id');
+        $icons = LogicalServer::query()->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        // Filtre sur les cartographes si nécessaire
-        $applications = $this->cartographerService->filterOnCartographers($applications);
-
+        // Lists
         $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
         $operating_system_list = LogicalServer::select('operating_system')->whereNotNull('operating_system')->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->whereNotNull('environment')->distinct()->orderBy('environment')->pluck('environment');
@@ -219,27 +205,7 @@ class LogicalServerController extends Controller
         $logicalServer = LogicalServer::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $logicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $logicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $logicalServer->icon_id = null;
-        }
+        $this->iconUploadService->handle($request, $logicalServer);
 
         // Save LogicalServer
         $logicalServer->save();
@@ -257,16 +223,14 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
-        $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
-        $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
-        $icons = LogicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $physicalServers = PhysicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $databases = Database::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
+        $domains = DomaineAd::query()->orderBy('name')->pluck('name', 'id');
+        $icons = LogicalServer::query()->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        $applications = MApplication::with('cartographers')->get();
-        // Filtre sur les cartographes si nécessaire
-        $applications = $this->cartographerService->filterOnCartographers($applications);
-
+        // Lists
         $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
@@ -298,28 +262,9 @@ class LogicalServerController extends Controller
         $request['active'] = $request->has('active');
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $logicalServer);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $logicalServer->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $logicalServer->icon_id = intval($request->iconSelect);
-        } else {
-            $logicalServer->icon_id = null;
-        }
-
+        // Save LogicalServer
         $logicalServer->update($request->all());
 
         // Relations

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $externalConnectedEntity->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.external-connected-entities.update", [$externalConnectedEntity->id]) }}"
           enctype="multipart/form-data">
@@ -12,7 +17,7 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label class="required"
+                            <label class="label-required"
                                    for="name">{{ trans('cruds.externalConnectedEntity.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $externalConnectedEntity->name) }}"
@@ -33,7 +38,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $externalConnectedEntity->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -263,7 +268,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.external-connected-entities.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

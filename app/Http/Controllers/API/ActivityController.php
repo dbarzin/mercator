@@ -1,72 +1,96 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
+use App\Http\Requests\MassStoreActivityRequest;
+use App\Http\Requests\MassUpdateActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-use App\Http\Resources\Admin\ActivityResource;
-use App\Models\Activity;
 use Gate;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Activity;
+use Symfony\Component\HttpFoundation\Response;
 
-class ActivityController extends Controller
+class ActivityController extends APIController
 {
-    public function index()
+    protected string $modelClass = Activity::class;
+
+    public function index(Request $request)
     {
-        abort_if(Gate::denies('activity_access'), ResponseAlias::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activities = Activity::all();
-
-        return response()->json($activities);
+        return $this->indexResource($request);
     }
 
     public function store(StoreActivityRequest $request)
     {
-        abort_if(Gate::denies('activity_create'), ResponseAlias::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activity = Activity::create($request->all());
-        $activity->operations()->sync($request->input('operations', []));
-        $activity->processes()->sync($request->input('processes', []));
-
-        return response()->json($activity, 201);
+        $activity = Activity::query()->create($request->all());
+        
+        return response()->json($activity, Response::HTTP_CREATED);
     }
 
-    public function show(Activity $activity)
+    public function show(Activity $activity): JsonResource
     {
-        abort_if(Gate::denies('activity_show'), ResponseAlias::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ActivityResource($activity);
+        return $this->asJsonResource($activity);
     }
 
     public function update(UpdateActivityRequest $request, Activity $activity)
     {
-        abort_if(Gate::denies('activity_edit'), ResponseAlias::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activity->update($request->all());
-        $activity->operations()->sync($request->input('operations', []));
-        $activity->processes()->sync($request->input('processes', []));
 
         return response()->json();
     }
 
     public function destroy(Activity $activity)
     {
-        abort_if(Gate::denies('activity_delete'), ResponseAlias::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activity->delete();
+        $this->destroyResource($activity);
 
         return response()->json();
     }
 
     public function massDestroy(MassDestroyActivityRequest $request)
     {
-        abort_if(Gate::denies('activity_delete'), ResponseAlias::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Activity::whereIn('id', request('ids'))->delete();
+        $this->massDestroyByIds($request->input('ids', []));
 
-        return response(null, ResponseAlias::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreActivityRequest $request)
+    {
+        abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data       = $request->validated();
+        $createdIds = $this->massStoreItems($data['items']);
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateActivityRequest $request)
+    {
+        abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = $request->validated();
+
+        $this->massUpdateItems($data['items']);
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

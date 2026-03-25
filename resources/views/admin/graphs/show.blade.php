@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.graph.title_singular') }} {{ $graph->name }}
+@endsection
+
 @section('content')
 
 <div class="form-group">
@@ -31,13 +36,14 @@
     <div class="card-header">
         {{ trans('cruds.graph.title_singular') }} - {{ $graph->name }}
     </div>
-    <div class="card-body">
-        <div class="row resizable-div" id="myDiv">
-            <div class="col-lg-12">
-                <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">
-                </div>
-            </div>
-        </div>
+    <div id="graph-container"
+         style="
+         position: relative;
+         overflow: auto;
+         width: 100%;
+         height: 800px;
+         cursor: default;
+         touch-action: none;">
     </div>
 </div>
 <div class="form-group">

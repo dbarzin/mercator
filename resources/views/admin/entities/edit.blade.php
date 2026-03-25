@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $entity->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.entities.update", [$entity->id]) }}" enctype="multipart/form-data">
         @method('PUT')
@@ -12,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $entity->name) }}" required
                                    maxlength="64" autofocus/>
@@ -31,7 +36,7 @@
                             <select class="form-control select2-free {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
                                     name="entity_type" id="entity_type">
                                 @if (!$entityTypes->contains(old('entity_type')))
-                                    <option> {{ old('entity_type') }}</option>'
+                                    <option> {{ old('entity_type') }}</option>
                                 @endif
                                 @foreach($entityTypes as $t)
                                     <option {{ (old('entity_type') ? old('entity_type') : $entity->entity_type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -79,7 +84,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.entity.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -113,7 +118,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('contact_point') ? 'is-invalid' : '' }}"
                               name="contact_point"
@@ -126,7 +131,7 @@
                     <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="security_level">{{ trans('cruds.entity.fields.security_level') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}"
                               name="security_level"
@@ -189,7 +194,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="processes">{{ trans('cruds.entity.fields.processes') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all"
@@ -216,7 +221,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.entities.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

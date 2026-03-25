@@ -1,36 +1,32 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMApplicationRequest;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
-use App\Models\Activity;
-use App\Models\AdminUser;
-use App\Models\ApplicationBlock;
-use App\Models\ApplicationService;
-use App\Models\Database;
-use App\Models\Document;
-use App\Models\Entity;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
-use App\Models\Process;
-use App\Models\User;
+use App\Services\IconUploadService;
 use Gate;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Mercator\Core\Models\Activity;
+use Mercator\Core\Models\AdminUser;
+use Mercator\Core\Models\ApplicationBlock;
+use Mercator\Core\Models\ApplicationService;
+use Mercator\Core\Models\Container;
+use Mercator\Core\Models\Database;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Process;
+use Mercator\Core\Models\SecurityDevice;
+use Mercator\Core\Models\User;
 use Symfony\Component\HttpFoundation\Response;
-
-// use App\Services\CartographerService;
-// CoreUI Gates
-// Laravel Gate
 
 class MApplicationController extends Controller
 {
-    /**
-     * Services
-     */
-    // protected CartographerService $cartographerService;
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
 
     public function index()
     {
@@ -51,12 +47,65 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        return view('admin.applications.create', $this->getCreateFormData());
+    }
+
+    public function clone(Request $request, int $id)
+    {
+        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = $this->getCreateFormData();
+
+        // Récupérer l'application avec ses relations
+        $application = MApplication::query()
+            ->with([
+                'entities',
+                'processes',
+                'activities',
+                'services',
+                'databases',
+                'workstations',
+                'logicalServers',
+                'containers',
+                'securityDevices',
+                'administrators',
+                'securityControls',
+            ])
+            ->findOrFail($id);
+
+        // Préparer les données du formulaire
+        $formData = $application->only($application->getFillable());
+        $formData['name'] = $application->name . ' (copy)';
+
+        // Ajouter les IDs des relations pour pré-sélection
+        $formData['entities'] = $application->entities->pluck('id')->toArray();
+        $formData['processes'] = $application->processes->pluck('id')->toArray();
+        $formData['activities'] = $application->activities->pluck('id')->toArray();
+        $formData['services'] = $application->services->pluck('id')->toArray();
+        $formData['databases'] = $application->databases->pluck('id')->toArray();
+        $formData['workstations'] = $application->workstations->pluck('id')->toArray();
+        $formData['logical_servers'] = $application->logicalServers->pluck('id')->toArray();
+        $formData['containers'] = $application->containers->pluck('id')->toArray();
+        $formData['security_devices'] = $application->securityDevices->pluck('id')->toArray();
+        $formData['administrators'] = $application->administrators->pluck('id')->toArray();
+        $formData['security_controls'] = $application->securityControls->pluck('id')->toArray();
+
+        $request->merge($formData);
+        $request->flash();
+
+        return view('admin.applications.create', $data);
+    }
+
+    private function getCreateFormData(): array
+    {
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $containers = Container::all()->sortBy('name')->pluck('name', 'id');
+        $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
@@ -83,7 +132,7 @@ class MApplicationController extends Controller
         sort($res);
         $attributes_list = array_unique($res);
 
-        // Get Reponsibles
+        // Get Responsibles
         $responsible_list = MApplication::select('responsible')
             ->whereNotNull('responsible')
             ->distinct()
@@ -103,31 +152,29 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        return view(
-            'admin.applications.create',
-            compact(
-                'entities',
-                'processes',
-                'activities',
-                'services',
-                'databases',
-                'logical_servers',
-                'applicationBlocks',
-                'icons',
-                'users',
-                'type_list',
-                'technology_list',
-                'users_list',
-                'external_list',
-                'responsible_list',
-                'referent_list',
-                'editor_list',
-                'cartographers_list',
-                'attributes_list'
-            )
+        return compact(
+            'entities',
+            'processes',
+            'activities',
+            'services',
+            'databases',
+            'logical_servers',
+            'containers',
+            'security_devices',
+            'applicationBlocks',
+            'icons',
+            'users',
+            'type_list',
+            'technology_list',
+            'users_list',
+            'external_list',
+            'responsible_list',
+            'referent_list',
+            'editor_list',
+            'cartographers_list',
+            'attributes_list'
         );
     }
-
     public function store(StoreMApplicationRequest $request)
     {
         $request->merge(['responsible' => implode(', ', $request->responsibles !== null ? $request->responsibles : [])]);
@@ -141,27 +188,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $application->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $application->icon_id = intval($request->iconSelect);
-        } else {
-            $application->icon_id = null;
-        }
+        $this->iconUploadService->handle($request, $application);
 
         // Save application
         $application->save();
@@ -172,8 +199,9 @@ class MApplicationController extends Controller
         $application->activities()->sync($request->input('activities', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
-        $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->containers()->sync($request->input('containers', []));
+        $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
@@ -195,18 +223,21 @@ class MApplicationController extends Controller
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $containers = Container::all()->sortBy('name')->pluck('name', 'id');
+        $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // rto-rpo
-        $application->rto_days = intdiv($application->rto, 60 * 24);
-        $application->rto_hours = intdiv($application->rto, 60) % 24;
-        $application->rto_minutes = $application->rto % 60;
+        // TODO : Add a function in MApplication for it
+        $application['rto_days'] = intdiv($application->rto, 60 * 24);
+        $application['rto_hours'] = intdiv($application->rto, 60) % 24;
+        $application['rto_minutes'] = $application->rto % 60;
 
-        $application->rpo_days = intdiv($application->rpo, 60 * 24);
-        $application->rpo_hours = intdiv($application->rpo, 60) % 24;
-        $application->rpo_minutes = $application->rpo % 60;
+        $application['rpo_days'] = intdiv($application->rpo, 60 * 24);
+        $application['rpo_hours'] = intdiv($application->rpo, 60) % 24;
+        $application['rpo_minutes'] = $application->rpo % 60;
 
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -245,7 +276,7 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'cartographers');
+        $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock');
 
         return view(
             'admin.applications.edit',
@@ -256,6 +287,8 @@ class MApplicationController extends Controller
                 'services',
                 'databases',
                 'logical_servers',
+                'containers',
+                'security_devices',
                 'applicationBlocks',
                 'icons',
                 'users',
@@ -283,27 +316,7 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $application->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $application->icon_id = intval($request->iconSelect);
-        } else {
-            $application->icon_id = null;
-        }
+        $this->iconUploadService->handle($request, $application);
 
         // Other fields
         $application->update($request->all());
@@ -314,8 +327,9 @@ class MApplicationController extends Controller
         $application->activities()->sync($request->input('activities', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
-        $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->containers()->sync($request->input('containers', []));
+        $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
@@ -324,50 +338,27 @@ class MApplicationController extends Controller
         return redirect()->route('admin.applications.index');
     }
 
-    public function show(MApplication $application)
+    public function show(MApplication $application): View
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
+        $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'applicationSourceFluxes', 'applicationDestFluxes');
 
         return view('admin.applications.show', compact('application'));
     }
 
-    public function destroy(MApplication $application)
+    public function destroy(MApplication $application): Response
     {
         abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // Check for cartographers
-        // LaravelGate::authorize('is-cartographer-m-application', $application);
 
         $application->delete();
 
         return redirect()->route('admin.applications.index');
     }
 
-    // Return the icon of the application as a PNG file
-
-    public function icon(int $id)
+    public function massDestroy(MassDestroyMApplicationRequest $request): Response
     {
-        // Get applications
-        $application = MApplication::find($id, ['icon']);
-        if ($application === null) {
-            return null;
-        }
-
-        // Get base 64 image
-        $base64Image = $application->icon;
-
-        // Décoder l'image encodée en base64
-        $imageData = base64_decode($base64Image);
-
-        // Retourner une réponse avec le contenu de l'image et le type MIME 'image/png'
-        return response($imageData)
-            ->header('Content-Type', 'image/png');
-    }
-
-    public function massDestroy(MassDestroyMApplicationRequest $request)
-    {
-        MApplication::whereIn('id', request('ids'))->delete();
+        MApplication::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

@@ -28,8 +28,8 @@ class PhysicalRouterNameType extends Migration
     public function down()
     {
         Schema::table('physical_routers', function (Blueprint $table) {
-             $table->char('name')->change();
-        });    
+            $table->char('name')->change();
+        });
         // DB::statement("ALTER TABLE physical_routers CHANGE name name char(255)");
     }
 }

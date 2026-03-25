@@ -1,12 +1,16 @@
 @extends('layouts.admin')
-@section('content')
 
+@section('title')
+    {{ $vlan->name }}
+@endsection
+
+@section('content')
 <div class="form-group">
     <a class="btn btn-default" href="{{ route('admin.vlans.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=VLAN_{{$vlan->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$vlan->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
@@ -23,7 +27,8 @@
     @endcan
 
     @can('vlan_delete')
-        <form action="{{ route('admin.vlans.destroy', $vlan->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+        <form action="{{ route('admin.vlans.destroy', $vlan->id) }}" method="POST"
+              onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
@@ -37,42 +42,14 @@
     </div>
 
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.vlan.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $vlan->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.vlan.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $vlan->description !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.vlan.fields.subnetworks') }}
-                    </th>
-                    <td>
-                        @foreach($vlan->subnetworks as $subnetwork)
-                            <a href="/admin/subnetworks/{{ $subnetwork->id }}">{{ $subnetwork->name }}</a>
-                            @if ($vlan->subnetworks->last()!=$subnetwork)
-                                ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    @include('admin.vlans._details', [
+        'vlan' => $vlan,
+        'withLink' => false,
+    ])
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $vlan->created_at ? $vlan->created_at->format(trans('global.timestamp')) : '' }} |
+        {{ trans('global.created_at') }} {{ $vlan->created_at ? $vlan->created_at->format(trans('global.timestamp')) : '' }}
+        |
         {{ trans('global.updated_at') }} {{ $vlan->updated_at ? $vlan->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>

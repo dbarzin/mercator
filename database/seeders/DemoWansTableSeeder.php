@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoWansTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoWansTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('wans')->delete();
-        
-        
-        
+
     }
 }

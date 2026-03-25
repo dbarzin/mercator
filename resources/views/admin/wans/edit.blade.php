@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $wan->name }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.wans.update", [$wan->id]) }}" enctype="multipart/form-data">
     @method('PUT')
@@ -60,7 +65,7 @@
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.wans.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button id="btn-save" class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-success" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

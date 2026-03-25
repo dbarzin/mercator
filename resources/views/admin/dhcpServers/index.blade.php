@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.dhcpServer.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('dhcp_server_create')
     <div style="margin-bottom: 10px;" class="row">

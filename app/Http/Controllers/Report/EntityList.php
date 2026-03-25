@@ -1,16 +1,20 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Entity;
+use App\Services\ExcelExportHelper;
 use Carbon\Carbon;
 use Gate;
+use Mercator\Core\Models\Entity;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityList extends Controller
 {
+    /**
+     * @throws Exception
+     */
     public function generateExcel()
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -27,7 +31,7 @@ class EntityList extends Controller
             trans('cruds.entity.fields.applications_resp'),
         ];
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -44,13 +48,18 @@ class EntityList extends Controller
         $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
+
+        $excelExportHelper = new ExcelExportHelper();
 
         // Populate the Timesheet
         $row = 2;
         foreach ($entities as $entity) {
             $sheet->setCellValue("A{$row}", $entity->name);
-            $sheet->setCellValue("B{$row}", $html->toRichTextObject($entity->description));
+            
+            $sheet->setCellValue("B{$row}", $excelExportHelper->prepareRichText($entity->description));
+            $sheet->getStyle("B{$row}")->getAlignment()->setWrapText(true);
+
             $sheet->setCellValue("C{$row}", $entity->is_external ? trans('global.yes') : trans('global.no'));
             $sheet->setCellValue("D{$row}", $entity->entity_type);
             $sheet->setCellValue("E{$row}", $html->toRichTextObject($entity->security_level));
@@ -75,6 +84,6 @@ class EntityList extends Controller
 
         $writer->save($path);
 
-        return response()->download($path);
+        return response()->download($path)->deleteFileAfterSend(true);
     }
 }

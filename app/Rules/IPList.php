@@ -1,11 +1,11 @@
 <?php
 
-
 namespace App\Rules;
 
-use Closure;
 use const FILTER_FLAG_IPV6;
 use const FILTER_VALIDATE_IP;
+
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class IPList implements ValidationRule

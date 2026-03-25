@@ -1,11 +1,16 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $applicationService->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <a class="btn btn-default" href="{{ route('admin.application-services.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SERV_{{$applicationService->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$applicationService->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
@@ -28,51 +33,112 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.applicationService.title') }}
     </div>
+
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <tbody>
-                <tr>
-                    <th width='10%'>
-                        {{ trans('cruds.applicationService.fields.name') }}
-                    </th>
-                    <td>
-                        {{ $applicationService->name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationService.fields.description') }}
-                    </th>
-                    <td>
-                        {!! $applicationService->description !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationService.fields.exposition') }}
-                    </th>
-                    <td>
-                        {{ $applicationService->exposition }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.applicationService.fields.modules') }}
-                    </th>
-                    <td>
-                        @foreach($applicationService->modules as $module)
-                            <a href="{{ route('admin.application-modules.show', $module->id) }}">
-                            {{ $module->name }}
-                            </a>
-                            @if ($applicationService->modules->last()!=$module)
-                            ,
-                            @endif
-                        @endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        @include('admin.applicationServices._details', [
+            'applicationService' => $applicationService,
+            'withLink' => false,
+        ])
     </div>
+
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans('cruds.flux.title') }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <table class="table table-bordered table-striped table-report">
+            <tbody>
+            <tr>
+                <th width="20%">
+                    {{ trans('cruds.flux.fields.name') }}
+                </th>
+                <th width="10%">
+                    {{ trans('cruds.flux.fields.nature') }}
+                </th>
+                <th width="10%">
+                    {{ trans('cruds.flux.fields.attributes') }}
+                </th>
+                <th width="20%">
+                    {{ trans('cruds.flux.fields.module_source') }}
+                </th>
+                <th width="20%">
+                    {{ trans('cruds.flux.fields.module_dest') }}
+                </th>
+                <th width="20%">
+                    {{ trans('cruds.flux.fields.information') }}
+                </th>
+            </tr>
+            @foreach($applicationService->serviceSourceFluxes->union($applicationService->serviceDestFluxes) as $flux)
+            <tr>
+                <td>
+                    <a href="{{ route('admin.fluxes.show', $flux->id) }}">{{ $flux->name }}</a>
+                </td>
+                <td>
+                   {{ $flux->nature }}
+                </td>
+                <td>
+                    @foreach(explode(" ",$flux->attributes) as $attribute)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endforeach
+                </td>
+                <td>
+                    @if ($flux->application_source!=null)
+                        <a href="{{ route('admin.applications.show',$flux->application_source->id) }}">
+                            {{ $flux->application_source->name }}
+                        </a>
+                    @endif
+                    @if($flux->service_source!=null)
+                        <a href="{{ route('admin.application-services.show', $flux->service_source->id) }}">
+                            {{ $flux->service_source->name }}
+                        </a>
+                    @endif
+                    @if ($flux->module_source!=null)
+                        <a href="{{ route('admin.application-modules.show', $flux->module_source->id) }}">
+                            {{ $flux->module_source->name }}
+                        </a>
+                    @endif
+                    @if ($flux->database_source!=null)
+                        <a href="{{ route('admin.databases.show',$flux->database_source->id) }}">
+                            {{ $flux->database_source->name }}
+                        </a>
+                    @endif
+                </td>
+                <td>
+                    @if ($flux->application_dest!=null)
+                        <a href="{{ route('admin.applications.show',$flux->application_dest->id) }}">
+                            {{ $flux->application_dest->name }}
+                        </a>
+                    @endif
+                    @if ($flux->service_dest!=null)
+                        <a href="{{ route('admin.application-services.show', $flux->service_dest->id) }}">
+                            {{ $flux->service_dest->name }}
+                        </a>
+                    @endif
+                    @if ($flux->module_dest!=null)
+                        <a href="{{ route('admin.application-modules.show', $flux->module_dest->id) }}">
+                            {{ $flux->module_dest->name }}
+                        </a>
+                    @endif
+                    @if ($flux->database_dest!=null)
+                        <a href="{{ route('admin.databases.show',$flux->database_dest->id) }}">
+                            {{ $flux->database_dest->name }}
+                        </a>
+                    @endif
+                </td>
+                <td>
+                    @foreach($flux->informations as $info)
+                        <a href="{{ route('admin.information.show',$info->id) }}">{{$info->name}}</a>
+                        @if (!$loop->last) , @endif
+                    @endforeach
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    </div>
+
+
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $applicationService->created_at ? $applicationService->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $applicationService->updated_at ? $applicationService->updated_at->format(trans('global.timestamp')) : '' }}

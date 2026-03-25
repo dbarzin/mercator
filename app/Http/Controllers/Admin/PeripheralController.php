@@ -1,25 +1,26 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
-use App\Models\Bay;
-use App\Models\Building;
-use App\Models\Document;
-use App\Models\Entity;
-use App\Models\MApplication;
-use App\Models\Peripheral;
-use App\Models\Site;
+use Mercator\Core\Models\Bay;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\MApplication;
+use Mercator\Core\Models\Peripheral;
+use Mercator\Core\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -65,20 +66,20 @@ class PeripheralController extends Controller
     {
         abort_if(Gate::denies('peripheral_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
-        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
-        $icons = Peripheral::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $sites = Site::query()->orderBy('name')->pluck('name', 'id');
+        $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
+        $bays = Bay::query()->orderBy('name')->pluck('name', 'id');
+        $entities = Entity::query()->orderBy('name')->pluck('name', 'id');
+        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $icons = Peripheral::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
-        $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
-        $domain_list = Peripheral::select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
-        $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = Peripheral::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $domain_list = Peripheral::query()->select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
+        $responsible_list = Peripheral::query()->select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         // Get Peripheral
-        $peripheral = Peripheral::find($request->id);
+        $peripheral = Peripheral::find($request['id']);
 
         // Vlan not found
         abort_if($peripheral === null, Response::HTTP_NOT_FOUND, '404 Not Found');
@@ -109,27 +110,9 @@ class PeripheralController extends Controller
         $peripheral = Peripheral::create($request->all());
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $peripheral);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $peripheral->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $peripheral->icon_id = intval($request->iconSelect);
-        } else {
-            $peripheral->icon_id = null;
-        }
+        // Save Peripheral
         $peripheral->save();
 
         // Save links
@@ -177,27 +160,7 @@ class PeripheralController extends Controller
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)
     {
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $peripheral->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $peripheral->icon_id = intval($request->iconSelect);
-        } else {
-            $peripheral->icon_id = null;
-        }
+        $this->iconUploadService->handle($request, $peripheral);
 
         // Get fields
         $peripheral->update($request->all());

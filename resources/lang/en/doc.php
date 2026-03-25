@@ -1,4 +1,5 @@
 <?php
+
 return [
     'about' => [
         'title' => 'About Mercator',
@@ -23,7 +24,7 @@ return [
 </ul>
 
 <p>For any questions or specific requests, feel free to contact us via <a href='https://www.sourcentis.com'>Sourcentis</a> or through our <a href='https://www.github.com/dbarzin'>GitHub repository</a>.</p>
-"
+",
     ],
     'guide' => [
         'p1' => 'Computer attacks occur in constantly changing environments. To meet these challenges, it is necessary to put in place a comprehensive risk management approach within the organization.',

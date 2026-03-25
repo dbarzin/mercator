@@ -1,4 +1,6 @@
-## Data Import/Export Interface
+# Data Import/Export Interface
+
+🇫🇷 [Lire en français](/mercator/fr/import)
 
 This interface allows you to import and export information system mapping data via Excel files.
 
@@ -6,7 +8,7 @@ This interface allows you to import and export information system mapping data v
 
 The data import/export page is accessible via the "Configuration" -> "Import" menu.
 
-[<img src="/mercator/images/import.png" width="700">](/mercator/images/import.png)
+[<img src="/mercator/images/import.png" width="700">](images/import.png)
 
 ### Available Features
 
@@ -43,11 +45,11 @@ Allows you to update or add data from a structured Excel file.
 
 #### Import behavior
 
-| Case | Action applied |
-|-----|------------------|
-| Row with ID + data | 🔁 Record update |
-| Row with ID only | ❌ Record deletion |
-| Row without ID | ➕ New record creation |
+| Case               | Action applied        |
+|--------------------|-----------------------|
+| Row with ID + data | 🔁 Record update      |
+| Row with ID only   | ❌ Record deletion     |
+| Row without ID     | ➕ New record creation |
 
 If an error is detected in the file, no changes are applied.
 

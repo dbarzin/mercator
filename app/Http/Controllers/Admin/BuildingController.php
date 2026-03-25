@@ -1,21 +1,23 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
-use App\Models\Building;
-use App\Models\Document;
-use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -29,15 +31,15 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $sites = Site::query()->orderBy('name')->pluck('name', 'id');
+        $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
 
         // Lists
         $attributes_list = $this->getAttributes();
-        $type_list = Building::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Select icons
-        $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Building::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         return view(
             'admin.buildings.create',
@@ -45,25 +47,26 @@ class BuildingController extends Controller
         );
     }
 
-    public function clone(Request $request)
+    public function clone(Request $request, Building $building)
     {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $sites = Site::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
+
         $attributes_list = $this->getAttributes();
-        $type_list = Building::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        // Select icons
-        $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Building::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        // Get building
-        $building = Building::find($request->id);
+        $data = $building->only($building->getFillable());
 
-        // Building not found
-        abort_if($building === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+        // Convertir la chaîne "attr1 attr2" en tableau pour old('attributes')
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
 
-        $request->merge($building->only($building->getFillable()));
+        $request->merge($data);
         $request->flash();
 
         return view(
@@ -71,38 +74,39 @@ class BuildingController extends Controller
             compact('sites', 'buildings', 'icons', 'attributes_list', 'type_list')
         );
     }
-
     public function store(StoreBuildingRequest $request)
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
-        $building = Building::create($request->all());
-        // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
-
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $building->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $building->icon_id = intval($request->iconSelect);
-        } else {
-            $building->icon_id = null;
+        // Résoudre automatiquement le site_id si absent
+        if (empty($request->input('site_id')) && !empty($request->input('building_id'))) {
+            $siteId = $this->resolveSiteId($request->input('building_id'));
+            if ($siteId !== null) {
+                $request->merge(['site_id' => $siteId]);
+            }
         }
+
+        // Vérifier les cycles AVANT la création
+        $parentId = $request->input('building_id');
+        $childrenIds = $request->input('buildings', []);
+
+        if ($this->wouldCreateCycleOnCreation($parentId, $childrenIds)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['buildings' => trans('cruds.building.errors.cycle_detected')]);
+        }
+
+        $building = Building::create($request->all());
+
+        // Save icon
+        $this->iconUploadService->handle($request, $building);
+
+        // Save Building
         $building->save();
 
-        // set childrens
-        Building::whereIn('id', $request->input('buildings', []))
+        // set children
+        Building::query()->whereIn('id', $childrenIds)
             ->update(['building_id' => $building->id]);
 
         return redirect()->route('admin.buildings.index');
@@ -115,9 +119,9 @@ class BuildingController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $attributes_list = $this->getAttributes();
-        $type_list = Building::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Building::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         // Select icons
-        $icons = Building::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Building::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $building->load('site');
 
@@ -131,51 +135,52 @@ class BuildingController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
-        // Clear building_id if building is not present
+        $newBuildingId = $request->input('building_id');
+        $childrenIds = $request->input('buildings', []);
+
+        // Vérifier les cycles en tenant compte du parent ET des enfants ensemble
+        if ($this->wouldCreateCycle($building->id, $newBuildingId, $childrenIds)) {
+            $errorField = $newBuildingId !== null ? 'building_id' : 'buildings';
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([$errorField => trans('cruds.building.errors.cycle_detected')]);
+        }
+
+        // Résoudre automatiquement le site_id si absent
+        if (empty($request->input('site_id')) && !empty($request->input('building_id'))) {
+            $siteId = $this->resolveSiteId($request->input('building_id'));
+            if ($siteId !== null) {
+                $request->merge(['site_id' => $siteId]);
+            }
+        }
+
+        // Clear building_id if the building is not present
         if (! $request->has('building_id')) {
             $building->building_id = null;
         }
 
         // Save icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $file = $request->file('iconFile');
-            // Create a new document
-            $document = new Document();
-            $document->filename = $file->getClientOriginalName();
-            $document->mimetype = $file->getClientMimeType();
-            $document->size = $file->getSize();
-            $document->hash = hash_file('sha256', $file->path());
+        $this->iconUploadService->handle($request, $building);
 
-            // Save the document
-            $document->save();
-
-            // Move the file to storage
-            $file->move(storage_path('docs'), $document->id);
-
-            $building->icon_id = $document->id;
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $building->icon_id = intval($request->iconSelect);
-        } else {
-            $building->icon_id = null;
-        }
-
+        // Save Building
         $building->update($request->all());
 
-        // update childrens
-        Building::where('building_id', $building->id)
+        // update children
+        Building::query()->where('building_id', $building->id)
             ->update(['building_id' => null]);
 
-        Building::whereIn('id', $request->input('buildings', []))
+        Building::query()->whereIn('id', $childrenIds)
             ->update(['building_id' => $building->id]);
 
         return redirect()->route('admin.buildings.index');
     }
-
+    
     public function show(Building $building)
     {
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $building->load('site', 'roomBays', 'buildingPhysicalServers', 'buildingWorkstations', 'buildingStorageDevices', 'buildingPeripherals', 'buildingPhones', 'buildingPhysicalSwitches');
+        $building->load('site', 'roomBays', 'physicalServers', 'workstations', 'storageDevices', 'peripherals', 'phones', 'physicalSwitches');
 
         return view('admin.buildings.show', compact('building'));
     }
@@ -186,12 +191,22 @@ class BuildingController extends Controller
 
         $building->delete();
 
+        // due to soft delete, also set null to all children
+        Building::query()
+            ->where("building_id", $building->id)
+            ->update(['building_id' => null]);
+
         return redirect()->route('admin.buildings.index');
     }
 
     public function massDestroy(MassDestroyBuildingRequest $request)
     {
-        Building::whereIn('id', request('ids'))->delete();
+        Building::query()->whereIn('id', request('ids'))->delete();
+
+        // due to soft delete, also set null to all children
+        Building::query()
+            ->whereIn('building_id', request('ids'))
+            ->update(['building_id' => null]);
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
@@ -213,5 +228,191 @@ class BuildingController extends Controller
         sort($res);
 
         return array_unique($res);
+    }
+
+    /**
+     * Charge tous les buildings en mémoire (cache local)
+     *
+     * @return Collection Buildings indexés par ID
+     */
+    private function getAllBuildings(): Collection
+    {
+        return Building::withTrashed()
+            ->select('id', 'building_id', 'site_id')
+            ->get()
+            ->keyBy('id');
+    }
+
+    /**
+     * Récupère tous les ancêtres d'un building en remontant la chaîne
+     *
+     * @param int $buildingId ID du building de départ
+     * @param Collection $buildings Collection de tous les buildings
+     * @return array Liste des IDs des ancêtres (le building lui-même inclus)
+     */
+    private function getAncestors(int $buildingId, Collection $buildings): array
+    {
+        $ancestors = [];
+        $currentId = $buildingId;
+        $visited = [];
+
+        while ($currentId !== null) {
+            if (in_array($currentId, $visited)) {
+                break; // Éviter les boucles infinies
+            }
+
+            $visited[] = $currentId;
+            $ancestors[] = $currentId;
+
+            $currentBuilding = $buildings->get($currentId);
+            $currentId = $currentBuilding?->building_id;
+        }
+
+        return $ancestors;
+    }
+
+    /**
+     * Résout le site_id en remontant la chaîne des buildings parents
+     *
+     * @param int $buildingId ID du building parent
+     * @return int|null ID du site trouvé ou null
+     */
+    private function resolveSiteId(int $buildingId): ?int
+    {
+        $buildings = $this->getAllBuildings();
+        $ancestors = $this->getAncestors($buildingId, $buildings);
+
+        foreach ($ancestors as $ancestorId) {
+            $ancestor = $buildings->get($ancestorId);
+            if ($ancestor && $ancestor->site_id !== null) {
+                return $ancestor->site_id;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Vérifie si une configuration créerait un cycle dans la hiérarchie
+     *
+     * @param int $buildingId ID du building concerné
+     * @param int|null $parentId ID du building parent proposé (null si pas de changement)
+     * @param array $childrenIds IDs des buildings enfants proposés
+     * @return bool true si un cycle serait créé
+     */
+    private function wouldCreateCycle(int $buildingId, ?int $parentId = null, array $childrenIds = []): bool
+    {
+        // Cas simple : un building ne peut pas être son propre parent
+        if ($parentId !== null && $buildingId === $parentId) {
+            return true;
+        }
+
+        // Cas simple : un building ne peut pas être son propre enfant
+        if (in_array($buildingId, $childrenIds)) {
+            return true;
+        }
+
+        // Charger tous les buildings
+        $buildings = $this->getAllBuildings();
+
+        // Vérifier le cycle avec le parent
+        if ($parentId !== null) {
+            // Simuler la hiérarchie : temporairement ignorer le building actuel dans la chaîne
+            $ancestors = $this->getAncestorsExcluding($parentId, $buildingId, $buildings);
+            if (in_array($buildingId, $ancestors)) {
+                return true;
+            }
+        }
+
+        // Vérifier les cycles avec les enfants
+        foreach ($childrenIds as $childId) {
+            // Vérifier si l'enfant proposé a le building actuel dans ses ancêtres
+            // (en excluant le building actuel pour simuler la nouvelle hiérarchie)
+            $childAncestors = $this->getAncestorsExcluding((int)$childId, $buildingId, $buildings);
+            if (in_array($buildingId, $childAncestors)) {
+                return true;
+            }
+
+            // Vérifier aussi si le parent proposé est dans les descendants de l'enfant
+            if ($parentId !== null && in_array($parentId, $childAncestors)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Récupère tous les ancêtres d'un building en excluant un building spécifique
+     * Cela permet de simuler une nouvelle hiérarchie lors de la vérification
+     *
+     * @param int $buildingId ID du building de départ
+     * @param int $excludeId ID du building à exclure de la chaîne
+     * @param Collection $buildings Collection de tous les buildings
+     * @return array Liste des IDs des ancêtres (sans le building exclu)
+     */
+    private function getAncestorsExcluding(int $buildingId, int $excludeId, Collection $buildings): array
+    {
+        $ancestors = [];
+        $currentId = $buildingId;
+        $visited = [];
+
+        while ($currentId !== null) {
+            if (in_array($currentId, $visited)) {
+                break; // Éviter les boucles infinies
+            }
+
+            $visited[] = $currentId;
+
+            // Ajouter à la liste sauf si c'est le building à exclure
+            if ($currentId !== $excludeId) {
+                $ancestors[] = $currentId;
+            }
+
+            $currentBuilding = $buildings->get($currentId);
+
+            // Si on arrive au building exclu, on s'arrête (on simule qu'il n'existe pas/plus)
+            if ($currentId === $excludeId) {
+                break;
+            }
+
+            $currentId = $currentBuilding?->building_id;
+        }
+
+        return $ancestors;
+    }
+
+    /**
+     * Vérifie si la création d'un building avec un parent et des enfants créerait un cycle
+     *
+     * @param int|null $parentId ID du building parent proposé
+     * @param array $childrenIds IDs des buildings enfants proposés
+     * @return bool true si un cycle serait créé
+     */
+    private function wouldCreateCycleOnCreation(?int $parentId, array $childrenIds): bool
+    {
+        if (empty($childrenIds) && $parentId === null) {
+            return false;
+        }
+
+        // Le parent ne peut pas être dans la liste des enfants
+        if ($parentId !== null && in_array($parentId, $childrenIds)) {
+            return true;
+        }
+
+        $buildings = $this->getAllBuildings();
+
+        // Les enfants ne peuvent pas être des ancêtres du parent
+        if ($parentId !== null && !empty($childrenIds)) {
+            $parentAncestors = $this->getAncestors($parentId, $buildings);
+
+            foreach ($childrenIds as $childId) {
+                if (in_array($childId, $parentAncestors)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

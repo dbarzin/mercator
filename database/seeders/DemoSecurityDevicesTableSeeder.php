@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class DemoSecurityDevicesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class DemoSecurityDevicesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('security_devices')->delete();
-        
-        
-        
+
     }
 }

@@ -1,14 +1,13 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAdminUserRequest;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
-use App\Models\AdminUser;
-use App\Models\DomaineAd;
+use Mercator\Core\Models\AdminUser;
+use Mercator\Core\Models\DomaineAd;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -40,11 +40,11 @@ class ApplicationWorkstation extends Migration
         Schema::dropIfExists('m_application_workstation');
 
         Schema::table('workstations', function (Blueprint $table) {
-            $table->dropColumn('operating_system')->nullable();
-            $table->dropColumn('address_ip')->nullable();
-            $table->dropColumn('cpu')->nullable();
-            $table->dropColumn('memory')->nullable();
-            $table->dropColumn('disk')->nullable();
+            $table->dropColumn('operating_system');
+            $table->dropColumn('address_ip');
+            $table->dropColumn('cpu');
+            $table->dropColumn('memory');
+            $table->dropColumn('disk');
         });
     }
 }

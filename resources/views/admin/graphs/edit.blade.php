@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.graph.title_singular') }} {{ old('name', $name) }}
+@endsection
+
 @section('content')
     <form method="POST" action='{{ route("admin.graphs.update", [$id]) }}' enctype="multipart/form-data" id="grahForm">
         @method('PUT')
@@ -13,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.graph.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.graph.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $name) }}" required autofocus
                                    maxlength="64"/>
@@ -44,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row resizable-div" id="myDiv">
+                <div class="row resizable-div" id="editor">
                     <div class="col-lg-12">
                         <table width="100%">
                             <tr>
@@ -210,7 +215,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.graphs.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -249,9 +254,9 @@
             edges: [ <?php
                          foreach ($edges as $edge) {
                              if ($edge["from"] == $node["id"])
-                                 echo '{attachedNodeId:"' . $edge["to"] . ($edge["name"] !== null ? '",name:"' . $edge["name"] : "") . '",edgeType:"' . $edge["type"] . '", edgeDirection: "TO", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
+                                 echo '{attachedNodeId:"' . $edge["to"] . '"' . ($edge["name"] !== null ? ',name:' . json_encode($edge["name"]) : "") . ',edgeType:"' . $edge["type"] . '", edgeDirection: "TO", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
                              if ($edge["to"] == $node["id"])
-                                 echo '{attachedNodeId:"' . $edge["from"] . ($edge["name"] !== null ? '",name:"' . $edge["name"] : "") . '",edgeType:"' . $edge["type"] . '", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
+                                 echo '{attachedNodeId:"' . $edge["from"] . '"' . ($edge["name"] !== null ? ',name:' . json_encode($edge["name"]) : "") . ',edgeType:"' . $edge["type"] . '", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"] ? "true" : "false") . '},';
                          } ?> ]
         });
         @endforeach
@@ -301,7 +306,7 @@
             $('#node')
                 .on('select2:select', function (e) {
                     // Get current filter
-                    cur_node = $('#node').val();
+                    const cur_node = $('#node').val();
                     // console.log(cur_node);
                     document.getElementById('nodeImage').src = _nodes.get(cur_node).image;
                 });
@@ -314,7 +319,7 @@
             //--------------------------------------------------------------
             // Maximisation
             document.getElementById('maximizeBtn').addEventListener('click', function () {
-                const div = document.getElementById('myDiv');
+                const div = document.getElementById('editor');
                 const sidebar = document.getElementById('sidebar');
                 const sidebarFooter = document.querySelector('.sidebar-footer');
 
@@ -332,11 +337,11 @@
             });
             //--------------------------------------------------------------
             // Chargement du graphe
-            loadGraph(`{!! $content !!}`);
+            loadGraph(@json($content));
 
             //--------------------------------------------------------------
             // Save graph
-            form = document.getElementById('grahForm');
+            const form = document.getElementById('grahForm');
             form.addEventListener('submit', function (event) {
                 console.log("save called !");
                 // Prevent the form from submitting immediately

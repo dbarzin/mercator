@@ -1,55 +1,109 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Create The Application
-|--------------------------------------------------------------------------
-|
-| The first thing we will do is create a new Laravel application instance
-| which serves as the "glue" for all the components of Laravel, and is
-| the IoC container for the system binding all of the various parts.
-|
-*/
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpFoundation\Request;
 
-$app = new Illuminate\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
-);
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
 
-/*
-|--------------------------------------------------------------------------
-| Bind Important Interfaces
-|--------------------------------------------------------------------------
-|
-| Next, we need to bind some important interfaces into the container so
-| we will be able to resolve them when needed. The kernels serve the
-| incoming requests to this application from both the web and CLI.
-|
-*/
+        // Middleware globaux
+        $middleware->use([
+            \Illuminate\Http\Middleware\HandleCors::class,
+            \Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
+            \Illuminate\Http\Middleware\ValidatePostSize::class,
+            \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
+            \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        ]);
 
-$app->singleton(
-    Illuminate\Contracts\Http\Kernel::class,
-    App\Http\Kernel::class
-);
+        // Middlewares spécifiques au groupe 'web'
+        $middleware->web(append: [
+            \App\Http\Middleware\ForceXForwardedProto::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\UseCachedAuthUser::class,
+            \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\LicenseWarning::class,
+            \App\Http\Middleware\SecurityHeaders::class,
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class, // ✅
+        ]);
 
-$app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Kernel::class
-);
 
-$app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
-);
+        $middleware->api(prepend: [
+            \App\Http\Middleware\ForceJsonResponse::class,   // ✅ force les erreurs en JSON sur l'API
+            \App\Http\Middleware\EncryptCookies::class,      // ✅ déchiffre mercator_session et laravel_token
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class, // ✅ charge la session existante
+            "throttle:api",
+        ]);
 
-/*
-|--------------------------------------------------------------------------
-| Return The Application
-|--------------------------------------------------------------------------
-|
-| This script returns the application instance. The instance is given to
-| the calling script so we can separate the building of the instances
-| from the actual running of the application and sending responses.
-|
-*/
+        $middleware->api(append: [
+            \App\Http\Middleware\UseCachedAuthUser::class,
+        ]);
 
-return $app;
+        // Alias de middlewares
+        $middleware->alias([
+            'auth' => \App\Http\Middleware\Authenticate::class,
+            'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+            'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+            'can' => \Illuminate\Auth\Middleware\Authorize::class,
+            'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+            'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+            'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+            'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+            'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+            'auth.multi' => \App\Http\Middleware\AuthenticateApiOrWeb::class,
+            'gates' => \App\Http\Middleware\AuthGates::class,  // ✅ Alias pour utilisation manuelle
+        ]);
+
+        // Groupes de middlewares personnalisés
+        $middleware->appendToGroup('api.protected', [
+            'auth.multi',
+            'gates',
+        ]);
+
+        $middleware->appendToGroup('web.protected', [
+            'auth',
+            'gates',
+        ]);
+        
+        // Configurer les trusted proxies
+        $middleware->trustProxies(
+            at: '*',
+            headers: Request::HEADER_X_FORWARDED_FOR |
+            Request::HEADER_X_FORWARDED_HOST |
+            Request::HEADER_X_FORWARDED_PORT |
+            Request::HEADER_X_FORWARDED_PROTO
+        );
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                // ValidationException → 422 avec détail des erreurs
+                if ($e instanceof \Illuminate\Validation\ValidationException) {
+                    return response()->json([
+                        'message' => $e->getMessage(),
+                        'errors'  => $e->errors(),
+                        'code'    => 422,
+                    ], 422);
+                }
+
+                $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+                $message = ($status >= 500 && !config('app.debug'))
+                    ? 'Server Error'
+                    : ($e->getMessage() ?: 'Server Error');
+
+                return response()->json([
+                    'message' => $message,
+                    'code'    => $status,
+                ], $status);
+            }
+        });
+    })
+    ->create();

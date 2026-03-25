@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Console\Commands;
 
-use App\Models\CPEProduct;
-use App\Models\CPEVendor;
-use App\Models\CPEVersion;
+use Mercator\Core\Models\CPEProduct;
+use Mercator\Core\Models\CPEVendor;
+use Mercator\Core\Models\CPEVersion;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -44,7 +43,7 @@ class CPEImport extends Command
         $this->versions = [];
 
         // Init lecteur XML
-        $reader = new \XMLReader();
+        $reader = new \XMLReader;
         if (! $reader->open($file)) {
             $this->error('Could not open XML file');
 

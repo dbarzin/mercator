@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Hash;
@@ -13,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Mercator\Core\Models\User;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -20,8 +19,6 @@ class ForgotPasswordController extends Controller
 {
     /**
      * Show the reset password form
-     *
-     * @return response()
      */
     public function showForgetPasswordForm(): View
     {
@@ -30,8 +27,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Generated a reset token
-     *
-     * @return response()
      */
     public function submitForgetPasswordForm(Request $request): RedirectResponse
     {
@@ -78,18 +73,17 @@ class ForgotPasswordController extends Controller
 
         try {
             // Server settings
-            $mail->isSMTP();                                     // Use SMTP
-            $mail->Host = env('MAIL_HOST');               // Set the SMTP server
-            $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
-            $mail->Username = env('MAIL_USERNAME');           // SMTP username
-            $mail->Password = env('MAIL_PASSWORD');           // SMTP password
-            $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false);  // Enable TLS encryption, `ssl` also accepted
-            $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
-            $mail->Port = env('MAIL_PORT');               // TCP port to connect to
+            $mail->isSMTP();
+            $mail->Host = config('mail.mailers.smtp.host'); // env('MAIL_HOST');
+            $mail->SMTPAuth = config('mail.mailers.smtp.username') !== null;
+            $mail->Username = config('mail.mailers.smtp.username'); // env('MAIL_USERNAME');
+            $mail->Password = config('mail.mailers.smtp.password'); // env('MAIL_PASSWORD');
+            $mail->SMTPSecure = config('mail.mailers.smtp.encryption'); // env('MAIL_SMTP_SECURE', false) ?: false; // 'tls' | 'ssl' | false
+            $mail->SMTPAutoTLS = config('mail.mailers.smtp.auto_tls'); // filter_var(env('MAIL_SMTP_AUTO_TLS', false), FILTER_VALIDATE_BOOLEAN);
+            $mail->Port = (int) config('mail.mailers.smtp.port'); // (int) env('MAIL_PORT', 587);
 
             // Recipients
-            // $mail->setFrom(config('mercator-config.cve.mail-from'));
-            $mail->setFrom(env('MAIL_FROM_ADDRESS'));
+            $mail->setFrom(config('mail.from.address'));
             $mail->addAddress($request->email);
 
             // Content
@@ -102,11 +96,11 @@ class ForgotPasswordController extends Controller
                 "<a href='".route('reset.password.get', $token)."'>Reset Password</a>".
                 '</body></html>';
 
-            // Optional: Add DKIM signing
-            $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
-            $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
-            $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
-            $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+            // DKIM (optionnel)
+            $mail->DKIM_domain = config('mail.dkim.domain'); // env('MAIL_DKIM_DOMAIN');
+            $mail->DKIM_private = config('mail.dkim.private'); //  env('MAIL_DKIM_PRIVATE');
+            $mail->DKIM_selector = config('mail.dkim.selector'); // env('MAIL_DKIM_SELECTOR');
+            $mail->DKIM_passphrase = config('mail.dkim.passphrase'); // env('MAIL_DKIM_PASSPHRASE');
             $mail->DKIM_identity = $mail->From;
 
             // Send email
@@ -131,8 +125,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Show reset password form
-     *
-     * @return response()
      */
     public function showResetPasswordForm($token): View
     {
@@ -144,8 +136,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Reset the password
-     *
-     * @return response()
      */
     public function submitResetPasswordForm(Request $request): RedirectResponse
     {

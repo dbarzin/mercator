@@ -85,8 +85,8 @@ mapping and governance.
 
 For detailed instructions, please refer to the installation guides:
 
-- [Installation on Ubuntu](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
-- [Installation on RedHat](https://github.com/dbarzin/mercator/blob/master/INSTALL.RedHat.md)
+- [Installation on Ubuntu](https://github.com/dbarzin/mercator/blob/master/guides/INSTALL_VM.md)
+- [Installation on RedHat](https://github.com/dbarzin/mercator/blob/master/guides/INSTALL.RedHat.md)
 
 ### 🐳 Docker Installation
 

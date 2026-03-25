@@ -1,23 +1,26 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
-use App\Models\Bay;
-use App\Models\Building;
-use App\Models\NetworkSwitch;
-use App\Models\PhysicalSwitch;
-use App\Models\Site;
+use App\Services\IconUploadService;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
+use Mercator\Core\Models\Bay;
+use Mercator\Core\Models\Building;
+use Mercator\Core\Models\NetworkSwitch;
+use Mercator\Core\Models\PhysicalSwitch;
+use Mercator\Core\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSwitchController extends Controller
 {
+
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         abort_if(Gate::denies('physical_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -31,16 +34,23 @@ class PhysicalSwitchController extends Controller
     {
         abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Select icons
+        $icons = PhysicalSwitch::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        // Location
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // NetworkSwitches
         $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        // Types
+        $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.physicalSwitches.create',
-            compact('sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
+            compact('icons','sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
         );
     }
 
@@ -48,15 +58,22 @@ class PhysicalSwitchController extends Controller
     {
         abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Select icons
+        $icons = PhysicalSwitch::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        // Location
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // NetworkSwitches
         $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        // Types
+        $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         // Get PhysicalSwitch
-        $physicalSwitch = PhysicalSwitch::find($request->id);
+        $physicalSwitch = PhysicalSwitch::find($request['id']);
 
         // Vlan not found
         abort_if($physicalSwitch === null, Response::HTTP_NOT_FOUND, '404 Not Found');
@@ -67,14 +84,19 @@ class PhysicalSwitchController extends Controller
 
         return view(
             'admin.physicalSwitches.create',
-            compact('sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
+            compact('icons', 'sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
         );
     }
 
     public function store(StorePhysicalSwitchRequest $request)
     {
         $physicalSwitch = PhysicalSwitch::create($request->all());
+
         $physicalSwitch->networkSwitches()->sync($request->input('networkSwitches', []));
+
+        // Save icon
+        $this->iconUploadService->handle($request, $physicalSwitch);
+        $physicalSwitch->save();
 
         return redirect()->route('admin.physical-switches.index');
     }
@@ -83,25 +105,37 @@ class PhysicalSwitchController extends Controller
     {
         abort_if(Gate::denies('physical_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Select icons
+        $icons = PhysicalSwitch::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        // Location
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // NetworkSwitches
         $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        // Types
+        $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $physicalSwitch->load('site', 'building', 'bay');
 
         return view(
             'admin.physicalSwitches.edit',
-            compact('sites', 'buildings', 'bays', 'physicalSwitch', 'networkSwitches', 'type_list')
+            compact('icons', 'sites', 'buildings', 'bays', 'physicalSwitch', 'networkSwitches', 'type_list')
         );
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)
     {
         $physicalSwitch->update($request->all());
+
         $physicalSwitch->networkSwitches()->sync($request->input('networkSwitches', []));
+
+        // Save icon
+        $this->iconUploadService->handle($request, $physicalSwitch);
+        $physicalSwitch->save();
 
         return redirect()->route('admin.physical-switches.index');
     }

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $logicalServer->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.logical-servers.update", [$logicalServer->id]) }}"
           enctype="multipart/form-data">
@@ -14,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $logicalServer->name) }}" required
                                    maxlength='64' autofocus/>
@@ -32,7 +37,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type" maxlength='255'>
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $logicalServer->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -49,8 +54,8 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
-                                    name="attributes[]" id="attributes[]" multiple>
+                            <select class="form-control select2-free-tags {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || str_contains($logicalServer->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
                                 @endforeach
@@ -78,7 +83,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.logicalServer.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -120,12 +125,12 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="operating_system">{{ trans('cruds.logicalServer.fields.operating_system') }}</label>
                             <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}"
                                     name="operating_system" id="operating_system">
                                 @if (!$operating_system_list->contains(old('operating_system')))
-                                    <option> {{ old('operating_system') }}</option>'
+                                    <option> {{ old('operating_system') }}</option>
                                 @endif
                                 @foreach($operating_system_list as $t)
                                     <option {{ (old('operating_system') ? old('operating_system') : $logicalServer->operating_system) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -159,7 +164,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="databases">{{ trans('cruds.logicalServer.fields.clusters') }}</label>
                             <select class="form-control select2 {{ $errors->has('clusters') ? 'is-invalid' : '' }}"
                                     name="clusters[]" id="clusters" multiple>
@@ -177,12 +182,12 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="environment">{{ trans('cruds.logicalServer.fields.environment') }}</label>
                             <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}"
                                     name="environment" id="environment">
                                 @if (!$environment_list->contains(old('environment')))
-                                    <option> {{ old('environment') }}</option>'
+                                    <option> {{ old('environment') }}</option>
                                 @endif
                                 @foreach($environment_list as $t)
                                     <option {{ (old('environment') ? old('environment') : $logicalServer->environment) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -200,7 +205,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="address_ip">{{ trans('cruds.logicalServer.fields.address_ip') }}</label>
                             <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text"
                                    name="address_ip" id="address_ip"
@@ -220,7 +225,7 @@
                             <label for="net_services">{{ trans('cruds.logicalServer.fields.net_services') }}</label>
                             <input class="form-control {{ $errors->has('net_services') ? 'is-invalid' : '' }}"
                                    type="text" name="net_services" id="net_services"
-                                   value="{{ old('net_services', $logicalServer->net_services) }}">
+                                   value="{{ old('net_services', $logicalServer->net_services) }}"/>
                             @if($errors->has('net_services'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('net_services') }}
@@ -231,7 +236,6 @@
 
                     </div>
                 </div>
-
             </div>
             <!---------------------------------------------------------------------------------------------------->
             <div class="card-header">
@@ -322,7 +326,7 @@
                     <div class="col-sm">
 
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="applications">{{ trans('cruds.logicalServer.fields.applications') }}</label>
                             <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}"
                                     name="applications[]" id="applications" multiple>
@@ -341,7 +345,7 @@
 
                     <div class="col-sm">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="databases">{{ trans('cruds.logicalServer.fields.databases') }}</label>
                             <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}"
                                     name="databases[]" id="databases" multiple>
@@ -368,10 +372,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
                             <select class="form-control select2 {{ $errors->has('domains') ? 'is-invalid' : '' }}"
                                     name="domain_id" id="domain_id">
+                                <option></option>
                                 @foreach($domains as $id => $name)
                                     <option value="{{ $id }}" {{ $id==old('domain_id', $logicalServer->domain_id) ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
@@ -395,7 +400,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="recommended"
+                            <label class="label-maturity-1"
                                    for="physicalServers">{{ trans('cruds.logicalServer.fields.servers') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all"
@@ -424,7 +429,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.logical-servers.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

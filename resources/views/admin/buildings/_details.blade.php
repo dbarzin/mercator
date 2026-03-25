@@ -1,0 +1,102 @@
+@props([
+    'bay',
+    'withLink' => false
+])
+<table class="table table-bordered table-striped table-report" id="{{ $building->getUID() }}">
+    <tbody>
+    <tr>
+        <th width="10%">
+            {{ trans('cruds.building.fields.name') }}
+        </th>
+        <td width="20%">
+        @if($withLink)
+        <a href="{{ route('admin.buildings.show', $building->id) }}">{{ $building->name }}</a>
+        @else
+        {{ $building->name }}
+        @endif
+        </td>
+        <th width="10%">
+            {{ trans('cruds.building.fields.type') }}
+        </th>
+        <td width="20%">
+            {{ $building->type }}
+        </td>
+        <th width="10%">
+            {{ trans('cruds.building.fields.attributes') }}
+        </th>
+        <td>
+            @foreach(explode(" ",$building->attributes) as $attribute)
+                <span class="badge badge-info">{{ $attribute }}</span>
+            @endforeach
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {{ trans('cruds.building.fields.description') }}
+        </th>
+        <td colspan="4">
+            {!! $building->description !!}
+        </td>
+        <td width="10%" align="center">
+            @if ($building->icon_id === null)
+                <img src='/images/building.png' width='60' height='60'>
+            @else
+                <img src='{{ route('admin.documents.show', $building->icon_id) }}' width='60' height='60'>
+            @endif
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {{ trans('cruds.building.fields.site') }}
+        </th>
+        <td>
+            @if ($building->site!=null)
+                <a href="{{ route('admin.sites.show', $building->site->id) }}">
+                    {{ $building->site->name ?? '' }}
+                </a>
+            @endif
+        </td>
+        <th>
+            {{ trans('cruds.building.fields.parent') }}
+        </th>
+        <td colspan="4">
+            @if ($building->building!=null)
+                <a href="{{ route('admin.buildings.show', $building->building->id) }}">
+                    {{ $building->building->name ?? '' }}
+                </a>
+            @endif
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {{ trans('cruds.building.fields.children') }}
+        </th>
+        <td colspan="6">
+            @foreach($building->buildings as $b)
+                <a href="{{ route('admin.buildings.show', $b->id) }}">
+                    {{ $b->name ?? '' }}
+                </a>
+                @if (!$loop->last)
+                    ,
+                @endif
+            @endforeach
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {{ trans('cruds.building.fields.bays') }}
+        </th>
+        <td colspan="6">
+            @foreach($building->roomBays as $bay)
+                <a href="{{ route('admin.bays.show', $bay->id) }}">
+                    {{ $bay->name ?? '' }}
+                </a>
+                @if ($building->roomBays->last()!=$bay)
+                    ,
+                @endif
+            @endforeach
+        </td>
+    </tr>
+
+    </tbody>
+</table>

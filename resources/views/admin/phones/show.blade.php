@@ -1,8 +1,17 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $phone->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <a class="btn btn-default" href="{{ route('admin.phones.index') }}">
         {{ trans('global.back_to_list') }}
+    </a>
+
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$phone->getUID()}}">
+        {{ trans('global.explore') }}
     </a>
     @can('phone_edit')
         <a class="btn btn-info" href="{{ route('admin.phones.edit', $phone->id) }}">
@@ -28,66 +37,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.phone.title') }}
     </div>
-
     <div class="card-body">
-        <div class="form-group">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th width="10%">
-                            {{ trans('cruds.phone.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $phone->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.phone.fields.type') }}
-                        </th>
-                        <td>
-                            {{ $phone->type }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.phone.fields.description') }}
-                        </th>
-                        <td>
-                            {!! $phone->description !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.phone.fields.address_ip') }}
-                        </th>
-                        <td>
-                            {{ $phone->address_ip }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.phone.fields.site') }}
-                        </th>
-                        <td>
-                            @if ($phone->site!==null)
-                                <a href="{{ route('admin.sites.show', $phone->site_id) }}">{{ $phone->site->name }}</a>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.phone.fields.building') }}
-                        </th>
-                        <td>
-                            @if ($phone->building!==null)
-                                <a href="{{ route('admin.buildings.show', $phone->building_id) }}">{{ $phone->building->name }}</a>
-                            @endif
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @include('admin.phones._details', [
+            'phone' => $phone,
+            'withLink' => false,
+        ])
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $phone->created_at ? $phone->created_at->format(trans('global.timestamp')) : '' }} |

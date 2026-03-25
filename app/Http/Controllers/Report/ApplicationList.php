@@ -1,9 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers\Report;
 
-use App\Models\ApplicationBlock;
+use Mercator\Core\Models\ApplicationBlock;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +54,7 @@ class ApplicationList extends ReportController
             trans('cruds.database.title'),
         );
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
@@ -101,7 +100,7 @@ class ApplicationList extends ReportController
         $sheet->getStyle('1')->getFont()->setBold(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html;
 
         // Populate the sheet
         $row = 2;
@@ -112,7 +111,7 @@ class ApplicationList extends ReportController
                 $sheet->setCellValue(self::col($i++).$row, $application->name);
                 $sheet->setCellValue(self::col($i++).$row, $html->toRichTextObject($application->description));
                 $sheet->setCellValue(self::col($i++).$row, $application->vendor.':'.$application->product.':'.$application->version);
-                $sheet->setCellValue(self::col($i++).$row, $application->entity_resp ? $application->entity_resp->name : '');
+                $sheet->setCellValue(self::col($i++).$row, $application->entityResp ? $application->entityResp->name : '');
                 $sheet->setCellValue(self::col($i++).$row, $application->entities->implode('name', ', '));
                 $sheet->setCellValue(self::col($i++).$row, $application->responsible);
                 $sheet->setCellValue(self::col($i++).$row, $application->processes->implode('name', ', '));

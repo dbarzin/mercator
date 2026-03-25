@@ -1,11 +1,16 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $physicalServer->name }}
+@endsection
+
 @section('content')
     <div class="form-group">
         <a class="btn btn-default" href="{{ route('admin.physical-servers.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
 
-        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=PSERVER_{{$physicalServer->id}}">
+        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$physicalServer->getUID()}}">
             {{ trans('global.explore') }}
         </a>
 
@@ -38,38 +43,10 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.physicalServer.fields.name') }}
-                    </th>
-                    <td width="50%">
-                        {{ $physicalServer->name }}
-                    </td>
-                    <th width="10%">
-                        {{ trans('cruds.physicalServer.fields.type') }}
-                    </th>
-                    <td width="30%" colspan="2">
-                        {{ $physicalServer->type }}
-                    </td>
-                </tr>
-                <th>
-                    {{ trans('cruds.physicalServer.fields.description') }}
-                </th>
-                <td colspan="3">
-                    {!! $physicalServer->description !!}
-                </td>
-                <td width="10%">
-                    @if ($physicalServer->icon_id === null)
-                        <img src='/images/server.png' width='120' height='120'>
-                    @else
-                        <img src='{{ route('admin.documents.show', $physicalServer->icon_id) }}' width='100'
-                             height='100'>
-                    @endif
-                </td>
-                </tbody>
-            </table>
+             @include('admin.physicalServers._details', [
+                 'physicalServer' => $physicalServer,
+                 'withLink' => false,
+             ])
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-header">
@@ -77,7 +54,7 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -122,7 +99,7 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -148,7 +125,7 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">
@@ -223,7 +200,7 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-report">
                 <tbody>
                 <tr>
                     <th width="10%">

@@ -1,44 +1,47 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
+use App\Http\Requests\MassStoreApplicationModuleRequest;
+use App\Http\Requests\MassUpdateApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
-use App\Http\Resources\Admin\ApplicationModuleResource;
-use App\Models\ApplicationModule;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\ApplicationModule;
+use Symfony\Component\HttpFoundation\Response;
 
-class ApplicationModuleController extends Controller
+class ApplicationModuleController extends APIController
 {
-    public function index()
+    protected string $modelClass = ApplicationModule::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('application_module_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationmodules = ApplicationModule::all();
-
-        return response()->json($applicationmodules);
+        return $this->indexResource($request);
     }
 
     public function store(StoreApplicationModuleRequest $request)
     {
         abort_if(Gate::denies('application_module_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationmodule = ApplicationModule::create($request->all());
-        // syncs
-        // $applicationmodule->roles()->sync($request->input('roles', []));
+        $applicationModule = ApplicationModule::query()->create($request->all());
 
-        return response()->json($applicationmodule, 201);
+        $applicationModule->applicationServices()->sync($request->input('application_services', []));
+
+        return response()->json($applicationModule, Response::HTTP_CREATED);
     }
 
     public function show(ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('application_module_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ApplicationModuleResource($applicationModule);
+        $applicationModule['application_services'] = $applicationModule->applicationServices()->pluck('id');
+
+        return new JsonResource($applicationModule);
     }
 
     public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationModule)
@@ -46,8 +49,9 @@ class ApplicationModuleController extends Controller
         abort_if(Gate::denies('application_module_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationModule->update($request->all());
-        // syncs
-        // $applicationModule->roles()->sync($request->input('roles', []));
+
+        if ($request->has('application_services'))
+            $applicationModule->applicationServices()->sync($request->input('application_services', []));
 
         return response()->json();
     }
@@ -65,8 +69,65 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        ApplicationModule::whereIn('id', request('ids'))->delete();
+        ApplicationModule::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreApplicationModuleRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà l’appel Gate::denies('application_module_create')
+        $data       = $request->validated();
+        $createdIds = [];
+
+        $model    = new ApplicationModule();
+        $fillable = $model->getFillable();
+
+        foreach ($data['items'] as $item) {
+            // Ne garde que les colonnes du modèle
+            $attributes = collect($item)
+                ->only($fillable)
+                ->toArray();
+
+            /** @var ApplicationModule $applicationModule */
+            $applicationModule = ApplicationModule::query()->create($attributes);
+
+            $createdIds[] = $applicationModule->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateApplicationModuleRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà l’appel Gate::denies('application_module_edit')
+        $data     = $request->validated();
+        $model    = new ApplicationModule();
+        $fillable = $model->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id = $rawItem['id'];
+
+            /** @var ApplicationModule $applicationModule */
+            $applicationModule = ApplicationModule::query()->findOrFail($id);
+
+            // Ne garde que les colonnes du modèle, sans l'id
+            $attributes = collect($rawItem)
+                ->except(['id'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $applicationModule->update($attributes);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

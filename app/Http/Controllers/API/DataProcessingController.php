@@ -1,45 +1,50 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
-use App\Http\Resources\Admin\DataProcessingResource;
-use App\Models\DataProcessing;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\DataProcessing;
+use Symfony\Component\HttpFoundation\Response;
 
-class DataProcessingController extends Controller
+class DataProcessingController extends APIController
 {
-    public function index()
+    protected string $modelClass = DataProcessing::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('data_processing_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dataProcessings = DataProcessing::all();
-
-        return response()->json($dataProcessings);
+        return $this->indexResource($request);
     }
 
     public function store(StoreDataProcessingRequest $request)
     {
         abort_if(Gate::denies('data_processing_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dataProcessing = DataProcessing::create($request->all());
+        /** @var DataProcessing $dataProcessing */
+        $dataProcessing = DataProcessing::query()->create($request->all());
+
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
 
-        return response()->json($dataProcessing, 201);
+        return response()->json($dataProcessing, Response::HTTP_CREATED);
     }
 
     public function show(DataProcessing $dataProcessing)
     {
         abort_if(Gate::denies('data_processing_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DataProcessingResource($dataProcessing);
+        $dataProcessing['processes']    = $dataProcessing->processes()->pluck('id');
+        $dataProcessing['informations'] = $dataProcessing->informations()->pluck('id');
+        $dataProcessing['applications'] = $dataProcessing->applications()->pluck('id');
+
+        return new JsonResource($dataProcessing);
     }
 
     public function update(UpdateDataProcessingRequest $request, DataProcessing $dataProcessing)
@@ -47,9 +52,12 @@ class DataProcessingController extends Controller
         abort_if(Gate::denies('data_processing_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $dataProcessing->update($request->all());
-        $dataProcessing->processes()->sync($request->input('processes', []));
-        $dataProcessing->informations()->sync($request->input('informations', []));
-        $dataProcessing->applications()->sync($request->input('applications', []));
+        if ($request->has('processes'))
+            $dataProcessing->processes()->sync($request->input('processes', []));
+        if ($request->has('informations'))
+            $dataProcessing->informations()->sync($request->input('informations', []));
+        if ($request->has('applications'))
+            $dataProcessing->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
@@ -67,8 +75,9 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        DataProcessing::whereIn('id', request('ids'))->delete();
+        DataProcessing::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }

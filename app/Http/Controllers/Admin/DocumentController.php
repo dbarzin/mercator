@@ -1,10 +1,9 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Document;
+use Mercator\Core\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -30,7 +29,7 @@ class DocumentController extends Controller
             ->header('Cache-Control', 'no-cache private')
             ->header('Content-Description', 'File Transfer')
             ->header('Content-Type', $document->mimetype)
-            ->header('Content-length', strlen($file_contents))
+            ->header('Content-length', strval(strlen($file_contents)))
             ->header('Content-Disposition', 'attachment; filename="'.$document->filename.'"')
             ->header('Content-Transfer-Encoding', 'binary');
     }
@@ -60,7 +59,7 @@ class DocumentController extends Controller
         }
 
         // Create a new document
-        $document = new Document();
+        $document = new Document;
         $document->filename = $file->getClientOriginalName();
         $document->mimetype = $file->getClientMimeType();
         $document->size = $file->getSize();
@@ -70,7 +69,7 @@ class DocumentController extends Controller
         $document->save();
 
         // Move the file to storage
-        $file->move(storage_path('docs'), $document->id);
+        $file->move(storage_path('docs'), strval($document->id));
 
         // Attach the document to the session
         $documents = session()->get('documents', []);

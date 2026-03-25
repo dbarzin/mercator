@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $user->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.users.update", [$user->id]) }}" enctype="multipart/form-data">
         @method('PUT')
@@ -10,7 +15,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.user.fields.login') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.user.fields.login') }}</label>
                     <input class="form-control {{ $errors->has('login') ? 'is-invalid' : '' }}" type="text" name="login"
                            id="login" value="{{ old('login', $user->login) }}" required autofocus/>
                     @if($errors->has('login'))
@@ -21,7 +26,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.login_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
+                    <label class="label-required" for="name">{{ trans('cruds.user.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $user->name) }}" required/>
                     @if($errors->has('name'))
@@ -32,7 +37,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
+                    <label class="label-required" for="email">{{ trans('cruds.user.fields.email') }}</label>
                     <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
                            name="email" id="email" value="{{ old('email', $user->email) }}" required>
                     @if($errors->has('email'))
@@ -44,7 +49,7 @@
                 </div>
                 @if (Config::get('app.ldap_domain')==null)
                     <div class="form-group">
-                        <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
+                        <label class="label-required" for="password">{{ trans('cruds.user.fields.password') }}</label>
                         <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password"
                                name="password" id="password">
                         @if($errors->has('password'))
@@ -58,7 +63,7 @@
                     <input type="hidden" name="password" value="nopassword"/>
                 @endif
                 <div class="form-group">
-                    <label class="required" for="title">{{ trans("cruds.user.fields.language") }}</label>
+                    <label class="label-required" for="title">{{ trans("cruds.user.fields.language") }}</label>
                     <select class="form-control select2 {{ $errors->has('language') ? 'is-invalid' : '' }}"
                             name="language" id="language">
                         <option value="en" {{ $user->language == 'en' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_en") }}</option>
@@ -73,7 +78,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.language_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
+                    <label class="label-required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all"
                               style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -94,7 +99,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="title">{{ trans("cruds.user.fields.granularity") }}</label>
+                    <label class="label-required" for="title">{{ trans("cruds.user.fields.granularity") }}</label>
                     <select class="form-control select2 {{ $errors->has('granularity') ? 'is-invalid' : '' }}"
                             name="granularity" id="granularity">
                         <option value="1" {{ $user->granularity == 1 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_1") }}</option>
@@ -114,7 +119,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.users.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

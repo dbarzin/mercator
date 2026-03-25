@@ -16,7 +16,7 @@ class Cleanup extends Migration
         Schema::table('vlans', function (Blueprint $table) {
             $table->dropColumn(['address', 'mask', 'zone', 'gateway']);
         });
-    
+
         Schema::table('subnetworks', function (Blueprint $table) {
             $table->dropColumn(['ip_range']);
         });
@@ -54,7 +54,7 @@ class Cleanup extends Migration
         Schema::table('subnetworks', function (Blueprint $table) {
             $table->char('ip_range')->nullable();
         });
-        
+
         Schema::create('network_subnetwork', function (Blueprint $table) {
             $table->unsignedInteger('network_id')->index('network_id_fk_1492377');
             $table->unsignedInteger('subnetword_id')->index('subnetword_id_fk_1492377');

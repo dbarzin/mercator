@@ -1,36 +1,36 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkRequest;
+use App\Http\Requests\MassStoreNetworkRequest;
+use App\Http\Requests\MassUpdateNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
-use App\Http\Resources\Admin\NetworkResource;
-use App\Models\Network;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Network;
+use Symfony\Component\HttpFoundation\Response;
 
-class NetworkController extends Controller
+class NetworkController extends APIController
 {
-    public function index()
+    protected string $modelClass = Network::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('network_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $networks = Network::all();
-
-        return response()->json($networks);
+        return $this->indexResource($request);
     }
 
     public function store(StoreNetworkRequest $request)
     {
         abort_if(Gate::denies('network_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network = Network::create($request->all());
-        // syncs
-        // $network->roles()->sync($request->input('roles', []));
-
+        /** @var Network $network */
+        $network = Network::query()->create($request->all());
+        
         return response()->json($network, 201);
     }
 
@@ -38,7 +38,7 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NetworkResource($network);
+        return new JsonResource($network);
     }
 
     public function update(UpdateNetworkRequest $request, Network $network)
@@ -65,8 +65,65 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Network::whereIn('id', request('ids'))->delete();
+        Network::whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreNetworkRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà le Gate::denies('network_create')
+        $data = $request->validated();
+
+        $createdIds = [];
+        $model      = new Network();
+        $fillable   = $model->getFillable();
+
+        foreach ($data['items'] as $item) {
+            // Colonnes du modèle uniquement
+            $attributes = collect($item)
+                ->only($fillable)
+                ->toArray();
+
+            /** @var Network $network */
+            $network = Network::query()->create($attributes);
+
+            $createdIds[] = $network->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateNetworkRequest $request)
+    {
+        // L’authorize() du FormRequest gère déjà le Gate::denies('network_edit')
+        $data    = $request->validated();
+        $model   = new Network();
+        $fillable = $model->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id = $rawItem['id'];
+
+            /** @var Network $network */
+            $network = Network::query()->findOrFail($id);
+
+            // Colonnes du modèle uniquement (sans id)
+            $attributes = collect($rawItem)
+                ->except(['id'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $network->update($attributes);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

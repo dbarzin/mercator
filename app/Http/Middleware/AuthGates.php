@@ -1,35 +1,52 @@
 <?php
 
-
 namespace App\Http\Middleware;
 
-use App\Models\Role;
 use Closure;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Mercator\Core\Models\Role;
+use Mercator\Core\Models\User;
 
 class AuthGates
 {
     public function handle($request, Closure $next)
     {
-        $user = \Auth::user();
+        $user = Auth::user();
 
         if ($user) {
-            $roles = Role::with('permissions')->get();
-            $permissionsArray = [];
-
-            foreach ($roles as $role) {
-                foreach ($role->permissions as $permissions) {
-                    $permissionsArray[$permissions->title][] = $role->id;
-                }
-            }
-
-            foreach ($permissionsArray as $title => $roles) {
-                Gate::define($title, function (\App\Models\User $user) use ($roles) {
-                    return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
-                });
-            }
+            $this->defineGates();
         }
 
         return $next($request);
+    }
+
+    /**
+     * Définir les Gates basés sur les permissions et rôles
+     */
+    private function defineGates(): void
+    {
+        $permissionsArray = Cache::rememberForever('permissions_roles_map', function () {
+            $roles = Role::with('permissions')->get();
+            $map = [];
+
+            foreach ($roles as $role) {
+                foreach ($role->permissions as $permission) {
+                    $map[$permission->title][] = $role->id;
+                }
+            }
+
+            return $map;
+        });
+
+        foreach ($permissionsArray as $title => $roleIds) {
+            Gate::define($title, function (User $user) use ($roleIds) {
+                return $user->roles
+                    ->pluck('id')
+                    ->intersect($roleIds)
+                    ->isNotEmpty();
+            });
+        }
     }
 }

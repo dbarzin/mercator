@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
-use App\Models\DomaineAd;
-use App\Models\ForestAd;
-use App\Models\LogicalServer;
+use Mercator\Core\Models\DomaineAd;
+use Mercator\Core\Models\ForestAd;
+use Mercator\Core\Models\LogicalServer;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

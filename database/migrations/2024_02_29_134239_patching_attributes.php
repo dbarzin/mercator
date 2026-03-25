@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('m_applications', function(Blueprint $table) {
-            $table->renameColumn('patching_group','attributes');
+        Schema::table('m_applications', function (Blueprint $table) {
+            $table->renameColumn('patching_group', 'attributes');
         });
 
-        Schema::table('logical_servers', function(Blueprint $table) {
-            $table->renameColumn('patching_group','attributes');
+        Schema::table('logical_servers', function (Blueprint $table) {
+            $table->renameColumn('patching_group', 'attributes');
         });
     }
 
@@ -25,12 +25,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('m_applications', function(Blueprint $table) {
-            $table->renameColumn('attributes','patching_group');
+        Schema::table('m_applications', function (Blueprint $table) {
+            $table->renameColumn('attributes', 'patching_group');
         });
 
-        Schema::table('logical_servers', function(Blueprint $table) {
-            $table->renameColumn('attributes','patching_group');
+        Schema::table('logical_servers', function (Blueprint $table) {
+            $table->renameColumn('attributes', 'patching_group');
         });
     }
 };

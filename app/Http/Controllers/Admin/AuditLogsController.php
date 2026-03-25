@@ -1,22 +1,32 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\AuditLog;
 use Gate;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\AuditLog;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuditLogsController extends Controller
 {
+
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('audit_log_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logs = DB::table('audit_logs')
+        $search   = $request->input('search');
+        $perPage  = (int) $request->input('per_page', 100);
+
+        // On borne les valeurs possibles pour éviter les conneries
+        $allowedPerPage = [10, 25, 50, 100, 1000];
+        if (! in_array($perPage, $allowedPerPage)) {
+            $perPage = 100;
+        }
+
+        $query = DB::table('audit_logs')
             ->select(
                 'audit_logs.id',
                 'description',
@@ -27,11 +37,42 @@ class AuditLogsController extends Controller
                 'host',
                 'audit_logs.created_at'
             )
-            ->join('users', 'users.id', '=', 'user_id')
-            ->orderBy('audit_logs.id', 'desc')->paginate(100);
+            ->join('users', 'users.id', '=', 'user_id');
 
-        return view('admin.auditLogs.index', ['logs' => $logs]);
+        if (!empty($search)) {
+
+            // Découpe la recherche en mots séparés
+            $terms = preg_split('/\s+/', trim($search));
+
+            // Pour chaque mot, on impose une condition (AND)
+            foreach ($terms as $term) {
+                $query->where(function ($q) use ($term) {
+                    $q->where('description', 'like', "%{$term}%")
+                        ->orWhere('properties', 'like', "%{$term}%")
+                        ->orWhere('subject_type', 'like', "%{$term}%")
+                        ->orWhere('users.name', 'like', "%{$term}%")
+                        ->orWhere('host', 'like', "%{$term}%");
+                });
+            }
+        }
+
+        $logs = $query
+            ->orderBy('audit_logs.id', 'desc')
+            ->paginate($perPage)
+            ->appends([
+                'search'   => $search,
+                'per_page' => $perPage,
+            ]);
+
+        return view('admin.auditLogs.index', [
+            'logs'      => $logs,
+            'search'    => $search,
+            'perPage'   => $perPage,
+            'perPageOptions' => $allowedPerPage,
+        ]);
     }
+
+
 
     public function show(AuditLog $auditLog)
     {

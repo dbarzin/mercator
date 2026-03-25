@@ -1,24 +1,24 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\IPList;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreClusterRequest extends FormRequest
+class StoreClusterRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('cluster_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [
@@ -29,7 +29,7 @@ class StoreClusterRequest extends FormRequest
             ],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

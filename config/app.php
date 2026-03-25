@@ -43,6 +43,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Force HTTPS
+    |--------------------------------------------------------------------------
+    |
+    | Force HTTPS in production environment:
+    | - null  => use default: force HTTPS only in production
+    | - true  => always force HTTPS (all environments)
+    | - false => never force HTTPS
+    |
+    */
+    'force_https' => env('APP_FORCE_HTTPS', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Trace Database Queries
+    |--------------------------------------------------------------------------
+    |
+    | Enable this to log and display all SQL queries executed by the application.
+    | Useful for debugging performance issues in development. Must be disabled
+    | in production as it exposes sensitive information
+    |
+    */
+
+    'db_trace' => env('APP_DB_TRACE', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |
@@ -134,10 +160,23 @@ return [
     'ldap_enabled' => (bool) env('LDAP_ENABLED', false),
     'ldap_fallback_local' => (bool) env('LDAP_FALLBACK_LOCAL', true),
     'ldap_auto_provision' => (bool) env('LDAP_AUTO_PROVISION', false),
+    'ldap_auto_provision_role' => env('LDAP_AUTO_PROVISION_ROLE', null),
     'ldap_login_attributes' => env('LDAP_LOGIN_ATTRIBUTES', 'uid,cn,mail,sAMAccountName,userPrincipalName'),
     'ldap_users_base_dn' => env('LDAP_USERS_BASE_DN'),
     'ldap_scope' => env('LDAP_SCOPE', null),
     'ldap_group' => env('LDAP_GROUP', null),
+    'ldap_nested_groups' => env('LDAP_NESTED_GROUPS', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | LICENSE
+    |--------------------------------------------------------------------------
+    |
+    | License key required to activate the enterprise modules.
+    | Pulled from the environment variable APP_LICENSE.
+    |
+    */
+    'license' => env('APP_LICENSE', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -191,6 +230,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /* Modules Service Providers */
+        Mercator\Core\Providers\MercatorServiceProvider::class,
+
     ],
 
     /*

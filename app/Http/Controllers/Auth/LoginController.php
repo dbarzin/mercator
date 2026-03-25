@@ -1,18 +1,21 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LdapRecord\Auth\BindException;
 use LdapRecord\Container;
 use LdapRecord\Models\Entry as LdapEntry;
+use Mercator\Core\Models\AuditLog;
+use Mercator\Core\Models\Role;
+use Mercator\Core\Models\User;
 
 class LoginController extends Controller
 {
@@ -29,6 +32,41 @@ class LoginController extends Controller
     public function username(): string
     {
         return 'login';
+    }
+
+    /**
+     * Hook appelé APRES un login réussi (LDAP ou local).
+     *
+     * Ici on :
+     *  - eager-load les rôles / permissions pour éviter le N+1 dans la requête
+     *  - stocke l'utilisateur enrichi en session pour un éventuel middleware
+     */
+    protected function authenticated(Request $request, User $user): void
+    {
+        $user->loadMissing('roles.permissions');
+
+        session([
+            'auth_role_ids'    => $user->roles->pluck('id')->all(),
+            'auth_permissions' => $user->roles
+                ->flatMap->permissions
+                ->pluck('title')
+                ->unique()
+                ->values()
+                ->all(),
+        ]);
+
+        AuditLog::query()->create([
+            'description'  => 'Login',
+            'subject_id'   => $user->id,
+            'subject_type' => User::class,
+            'user_id'      => $user->id,
+            'properties'   => [
+                'user_agent' => $request->userAgent(),
+                'method'     => $request->method(),
+                'url'        => $request->fullUrl(),
+            ],
+            'host'         => $request->ip(),
+        ]);
     }
 
     /**
@@ -51,11 +89,6 @@ class LoginController extends Controller
                 $query->in($base);
             }
 
-            $group = trim((string) config('app.ldap_group'));
-            if ($group !== '') {
-                $query->where('memberOf', $group);
-            }
-
             // Attributs de login à tester côté LDAP (uid, sAMAccountName, etc.)
             $attrs = array_values(array_filter(array_map('trim', explode(',', (string) config('app.ldap_login_attributes')))));
             if (empty($attrs)) {
@@ -64,14 +97,27 @@ class LoginController extends Controller
                 return null;
             }
 
-            // Filtre OR sur les attributs configurés
-            $first = true;
-            foreach ($attrs as $attr) {
-                if ($first) {
-                    $query->whereEquals($attr, $appUsername);
-                    $first = false;
+            // Filtre OR sur les attributs de login injecté via rawFilter().
+            $escaped = ldap_escape($appUsername, '', LDAP_ESCAPE_FILTER);
+            $attrFilters = array_map(fn (string $attr) => "({$attr}={$escaped})", $attrs);
+            $loginFilter = count($attrFilters) === 1
+                ? $attrFilters[0]
+                : '(|'.implode('', $attrFilters).')';
+            $query->rawFilter($loginFilter);
+
+            // Filtre de groupe (ajouté après la closure de login pour préserver la priorité)
+            $group = trim((string) config('app.ldap_group'));
+            $useNested = (bool) config('app.ldap_nested_groups');
+
+            if ($group !== '') {
+                if ($useNested) {
+                    // whereRaw() ne supporte pas la syntaxe OID de la matching rule AD.
+                    // rawFilter() injecte directement le filtre LDAP sans interprétation.
+                    // Génère : (memberOf:1.2.840.113556.1.4.1941:=<GROUP_DN>)
+                    $query->rawFilter("(memberOf:1.2.840.113556.1.4.1941:={$group})");
                 } else {
-                    $query->orWhereEquals($attr, $appUsername);
+                    // Appartenance directe au groupe (non récursive)
+                    $query->whereEquals('memberOf', $group);
                 }
             }
 
@@ -144,15 +190,24 @@ class LoginController extends Controller
                         'login' => $identifier,
                         'password' => Hash::make(Str::random(32)), // inutilisable en local par défaut
                     ]);
+
+                    // Get default Role
+                    $roleName = config('app.ldap_auto_provision_role');
+                    if ($roleName !== null) {
+                        $role = Role::query()->where('title', $roleName)->firstOrFail();
+                        $local->roles()->sync([$role->id]);
+                    }
                 }
 
                 if ($local) {
+                    // 🔐 Login manuel → AuthenticatesUsers appellera ensuite sendLoginResponse()
+                    // qui déclenchera le hook authenticated()
                     $this->guard()->login($local, $remember);
 
                     return true;
                 }
 
-                // LDAP OK mais pas d'utilisateur local et pas d’auto-provision
+                // LDAP OK mais pas d'utilisateur local et pas d'auto-provision
                 return false;
             }
 
@@ -167,5 +222,33 @@ class LoginController extends Controller
             $this->credentials($request), // credentials() retournera login + password car username() = 'login'
             $remember
         );
+    }
+
+    public function logout(Request $request): RedirectResponse | Response
+    {
+        $userId = auth()->id();
+
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        try {
+            AuditLog::query()->create([
+                'description'  => 'Logout',
+                'subject_id'   => $userId,
+                'subject_type' => User::class,
+                'user_id'      => $userId,
+                'properties'   => [
+                    'user_agent' => $request->userAgent(),
+                    'method'     => $request->method(),
+                    'url'        => $request->fullUrl(),
+                ],
+                'host'         => $request->ip(),
+            ]);
+        } catch (\Throwable $e) {
+            Log::warning('Failed to create logout audit log', ['error' => $e->getMessage()]);
+        }
+
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }

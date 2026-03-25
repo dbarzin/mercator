@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWanRequest;
 use App\Http\Requests\StoreWanRequest;
 use App\Http\Requests\UpdateWanRequest;
-use App\Models\Lan;
-use App\Models\Man;
-use App\Models\Wan;
+use Mercator\Core\Models\Lan;
+use Mercator\Core\Models\Man;
+use Mercator\Core\Models\Wan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

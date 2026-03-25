@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('panel.menu.patching') }}
+@endsection
+
 @section('content')
 
 <form method="POST" action='{{ route("admin.patching.server") }}' enctype="multipart/form-data">
@@ -132,7 +137,7 @@
                     <label class="recommended" for="operating_system">{{ trans('cruds.logicalServer.fields.operating_system') }}</label>
                     <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}" name="operating_system" id="operating_system">
                         @if (!$operating_system_list->contains(old('operating_system')))
-                            <option> {{ old('operating_system') }}</option>'
+                            <option> {{ old('operating_system') }}</option>
                         @endif
                         @foreach($operating_system_list as $t)
                             <option {{ (old('operating_system') ? old('operating_system') : $server->operating_system) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -160,7 +165,7 @@
                     <label class="recommended" for="environment">{{ trans('cruds.logicalServer.fields.environment') }}</label>
                     <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}" name="environment" id="environment">
                         @if (!$environment_list->contains(old('environment')))
-                            <option> {{ old('environment') }}</option>'
+                            <option> {{ old('environment') }}</option>
                         @endif
                         @foreach($environment_list as $t)
                             <option {{ (old('environment') ? old('environment') : $server->environment) == $t ? 'selected' : '' }}>{{$t}}</option>

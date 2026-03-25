@@ -1,26 +1,27 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBayRequest;
+use App\Http\Requests\MassStoreBayRequest;
+use App\Http\Requests\MassUpdateBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
-use App\Http\Resources\Admin\BayResource;
-use App\Models\Bay;
 use Gate;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Mercator\Core\Models\Bay;
+use Symfony\Component\HttpFoundation\Response;
 
-class BayController extends Controller
+class BayController extends APIController
 {
-    public function index()
+    protected string $modelClass = Bay::class;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('bay_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bays = Bay::all();
-
-        return response()->json($bays);
+        return $this->indexResource($request);
     }
 
     public function store(StoreBayRequest $request)
@@ -36,7 +37,7 @@ class BayController extends Controller
     {
         abort_if(Gate::denies('bay_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BayResource($bay);
+        return new JsonResource($bay);
     }
 
     public function update(UpdateBayRequest $request, Bay $bay)
@@ -61,8 +62,60 @@ class BayController extends Controller
     {
         abort_if(Gate::denies('bay_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Bay::whereIn('id', request('ids'))->delete();
+        Bay::whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function massStore(MassStoreBayRequest $request)
+    {
+        // L’authorize() du FormRequest protège déjà l’accès
+        $data = $request->validated();
+
+        $createdIds = [];
+        $fillable   = (new Bay())->getFillable();
+
+        foreach ($data['items'] as $item) {
+            $attributes = collect($item)
+                ->only($fillable)
+                ->toArray();
+
+            /** @var Bay $bay */
+            $bay = Bay::create($attributes);
+            $createdIds[] = $bay->id;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'count'  => count($createdIds),
+            'ids'    => $createdIds,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function massUpdate(MassUpdateBayRequest $request)
+    {
+        // L’authorize() du FormRequest protège déjà l’accès
+        $data     = $request->validated();
+        $fillable = (new Bay())->getFillable();
+
+        foreach ($data['items'] as $rawItem) {
+            $id = $rawItem['id'];
+
+            /** @var Bay $bay */
+            $bay = Bay::findOrFail($id);
+
+            $attributes = collect($rawItem)
+                ->except(['id'])
+                ->only($fillable)
+                ->toArray();
+
+            if (! empty($attributes)) {
+                $bay->update($attributes);
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

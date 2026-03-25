@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('cruds.graph.title_singular') }} {{ trans('global.list') }}
+@endsection
+
 @section('content')
 @can('graph_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -19,7 +24,7 @@
             <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th with="10">
+                        <th width="10">
                         </th>
                         <th width="80%">
                             {{ trans('cruds.graph.fields.name') }}

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -11,10 +10,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use ReflectionClass;
 use ReflectionMethod;
@@ -22,14 +23,28 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ImportController extends Controller
 {
-    public function export(Request $request)
+
+    public function show(): View
     {
+        return view('admin/import');
+    }
+    /**
+     * @throws \ReflectionException
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
+    public function export(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        \Log::info('Export - Start');
+
         $request->validate([
             'object' => 'required',
         ]);
 
         // Model name from request
         $modelName = $request->get('object');
+
+        \Log::info("Export - {$modelName}");
 
         // Check permission
         abort_if(Gate::denies($this->permission($modelName, 'access')), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -39,6 +54,8 @@ class ImportController extends Controller
 
         // Récupération brute des enregistrements
         $items = $modelClass::all();
+
+        \Log::info("Export - count : {$items->count()}");
 
         $data = [];
         foreach ($items as $item) {
@@ -75,18 +92,24 @@ class ImportController extends Controller
             $data[] = $row;
         }
 
+        \Log::info('Export - Done.');
+
         // Get header
         $header = array_keys($data[0] ?? []);
 
-        return Excel::download(new GenericExport($data, $header), $modelName.'-'.Carbon::today()->format('Ymd').'.xlsx');
+        return Excel::download(new GenericExport($data, $header), $modelName.'-'.Carbon::today()->format('Ymd').'.xlsx')
+            ->deleteFileAfterSend(true);
     }
 
-    public static function permission($modelName, $action)
+    public static function permission($modelName, $action): string
     {
         return Str::snake($modelName, '_').'_'.$action;
     }
 
-    public function import(Request $request)
+    /**
+     * @throws \Throwable
+     */
+    public function import(Request $request) : \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx',
@@ -98,12 +121,12 @@ class ImportController extends Controller
 
         // Get store validation rules
         $storeRequestClass = '\\App\\Http\\Requests\\Store'.$modelName.'Request';
-        $storeRequestInstance = new $storeRequestClass();
+        $storeRequestInstance = new $storeRequestClass;
         $storeRules = $storeRequestInstance->rules();
 
         // Get update validation rules
         $updateRequestClass = '\\App\\Http\\Requests\\Update'.$modelName.'Request';
-        $updateRequestInstance = new $updateRequestClass();
+        $updateRequestInstance = new $updateRequestClass;
 
         abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -112,7 +135,7 @@ class ImportController extends Controller
         $updateCount = 0;
         $simulatedErrors = [];
 
-        $rows = Excel::toCollection(null, $request->file('file'))->first();
+        $rows = Excel::toCollection((object) null, $request->file('file'))->first();
         $header = $rows->shift();
 
         DB::beginTransaction();
@@ -132,7 +155,7 @@ class ImportController extends Controller
                         }
 
                         try {
-                            $relationInstance = (new $modelClass())->{$key}();
+                            $relationInstance = (new $modelClass)->{$key}();
                             if ($relationInstance instanceof BelongsToMany) {
                                 $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
                                 $attributes->forget($key);
@@ -209,10 +232,15 @@ class ImportController extends Controller
 
     private function resolveModelClass($modelName)
     {
-        $modelClass = 'App\\Models\\'.$modelName;
+        $modelClass = 'Mercator\\Core\\Models\\'.$modelName;
+
+        \Log::info("Import - {$modelClass}");
+
         if (! class_exists($modelClass)) {
             abort(404, "Modèle [{$modelName}] introuvable.");
         }
+
+        \Log::info("Import - {$modelClass} found !");
 
         return $modelClass;
     }
@@ -223,9 +251,9 @@ class ImportController extends Controller
  */
 class GenericExport implements FromArray, WithHeadings, WithStyles
 {
-    protected $data;
+    protected array $data;
 
-    protected $headers;
+    protected array $headers;
 
     public function __construct(array $data, array $headers)
     {

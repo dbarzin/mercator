@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.entity.title_singular') }}
+@endsection
+
 @section('content')
 
     <form method="POST" action="{{ route("admin.entities.store") }}" enctype="multipart/form-data">
@@ -12,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', '') }}" required maxlength="64"
                                    autofocus/>
@@ -86,7 +91,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="recommended1"
+                            <label class="label-maturity-1"
                                    for="description">{{ trans('cruds.entity.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
@@ -119,7 +124,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended1"
+                    <label class="label-maturity-1"
                            for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('contact_point') ? 'is-invalid' : '' }}"
                               name="contact_point" id="contact_point">{!! old('contact_point') !!}</textarea>
@@ -131,7 +136,7 @@
                     <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended2"
+                    <label class="label-maturity-1"
                            for="seurity_level">{{ trans('cruds.entity.fields.security_level') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}"
                               name="security_level" id="security_level">{!! old('security_level') !!}</textarea>
@@ -209,7 +214,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.entities.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

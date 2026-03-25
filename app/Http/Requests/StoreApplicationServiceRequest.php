@@ -1,28 +1,28 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreApplicationServiceRequest extends FormRequest
+class StoreApplicationServiceRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description'];
+
+    public function authorize() : bool
     {
         abort_if(Gate::denies('application_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('application_services')->whereNull('deleted_at'),
             ],

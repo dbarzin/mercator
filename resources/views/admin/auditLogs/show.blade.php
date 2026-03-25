@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.show') }} {{ trans('cruds.auditLog.title') }} #{{ $auditLog->id }}
+@endsection
+
 @section('content')
     <div class="form-group">
         <a class="btn btn-default" href="{{ route('admin.audit-logs.index') }}">
@@ -26,7 +31,7 @@
                         {{ trans('cruds.auditLog.fields.subject_type') }}
                     </th>
                     <td>
-                        {{ $auditLog->subject_type }}
+                        {{ Str::afterLast($auditLog->subject_type, '\\') }}
                     </td>
                 </tr>
                 <tr>
@@ -34,7 +39,7 @@
                         {{ trans('cruds.auditLog.fields.subject_id') }}
                     </th>
                     <td>
-                        <a href="{{ \App\Models\AuditLog::subjectURL($auditLog->subject_type) }}/{{ $auditLog->subject_id }}">
+                        <a href="{{ $auditLog->subjectURL() }}">
                             {{ $auditLog->subject_id }}
                         </a>
                     </td>

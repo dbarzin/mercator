@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $task->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <div class="form-group">
@@ -6,7 +11,7 @@
             {{ trans('global.back_to_list') }}
         </a>
 
-        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=TASK_{{$task->id}}">
+        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$task->getUID()}}">
             {{ trans('global.explore') }}
         </a>
 
@@ -30,34 +35,17 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.task.title') }}
     </div>
-
     <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th width="10%">
-                            {{ trans('cruds.task.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $task->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.task.fields.description') }}
-                        </th>
-                        <td>
-                            {!! $task->description !!}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $task->created_at ? $task->created_at->format(trans('global.timestamp')) : '' }} |
-            {{ trans('global.updated_at') }} {{ $task->updated_at ? $task->updated_at->format(trans('global.timestamp')) : '' }}
-        </div>
+        @include('admin.tasks._details', [
+            'task' => $task,
+            'withLink' => false,
+        ])
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $task->created_at ? $task->created_at->format(trans('global.timestamp')) : '' }} |
+        {{ trans('global.updated_at') }} {{ $task->updated_at ? $task->updated_at->format(trans('global.timestamp')) : '' }}
+    </div>
+</div>
 
     <div class="form-group">
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.tasks.index') }}">

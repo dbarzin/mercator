@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.create') }} {{ trans('cruds.dnsserver.title_singular') }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.dnsservers.store") }}" enctype="multipart/form-data">
     @csrf
@@ -10,7 +15,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.dnsserver.fields.name') }}</label>
+                <label class="label-required" for="name">{{ trans('cruds.dnsserver.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">

@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $adminUser->user_id }}
+@endsection
+
 @section('content')
 <form method="POST" action="{{ route("admin.admin-users.update", [$adminUser->id]) }}" enctype="multipart/form-data">
     @method('PUT')
@@ -13,8 +18,8 @@
 
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label class="required" for="userId">{{ trans('cruds.adminUser.fields.user_id') }}</label>
-                        <input class="form-control {{ $errors->has('userId') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" value="{{ old('user_id', $adminUser->user_id) }}" required autofocus/>
+                        <label class="label-required" for="userId">{{ trans('cruds.adminUser.fields.user_id') }}</label>
+                        <input class="form-control {{ $errors->has('userId') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" maxlength="32" value="{{ old('user_id', $adminUser->user_id) }}" required autofocus/>
                         @if($errors->has('userId'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('userId') }}
@@ -30,7 +35,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="contact">{{ trans('cruds.adminUser.fields.firstname') }}</label>
-                        <input class="form-control {{ $errors->has('firstname') ? 'is-invalid' : '' }}" type="text" name="firstname" id="firstname" value="{{ old('firstname', $adminUser->firstname) }}">
+                        <input class="form-control {{ $errors->has('firstname') ? 'is-invalid' : '' }}" type="text" name="firstname" id="firstname" maxlength="64" value="{{ old('firstname', $adminUser->firstname) }}">
                         @if($errors->has('firstname'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('firstname') }}
@@ -43,7 +48,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="contact">{{ trans('cruds.adminUser.fields.lastname') }}</label>
-                        <input class="form-control {{ $errors->has('lastname') ? 'is-invalid' : '' }}" type="text" name="lastname" id="lastname" value="{{ old('lastname', $adminUser->lastname) }}">
+                        <input class="form-control {{ $errors->has('lastname') ? 'is-invalid' : '' }}" type="text" name="lastname" id="lastname" maxlength="64" value="{{ old('lastname', $adminUser->lastname) }}">
                         @if($errors->has('lastname'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('lastname') }}
@@ -135,7 +140,7 @@
         <a id="btn-cancel"  class="btn btn-default" href="{{ route('admin.admin-users.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button id="btn-save" class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-success" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

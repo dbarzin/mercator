@@ -1,15 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\StoreManRequest;
 use App\Http\Requests\UpdateManRequest;
-use App\Models\Lan;
-use App\Models\Man;
 use Gate;
+use Mercator\Core\Models\Lan;
+use Mercator\Core\Models\Man;
+use Mercator\Core\Models\Wan;
 use Symfony\Component\HttpFoundation\Response;
 
 class ManController extends Controller
@@ -18,7 +18,7 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $mans = Man::all()->sortBy('name');
+        $mans = Man::with('wans', 'lans', 'parentMan')->get()->sortBy('name');
 
         return view('admin.mans.index', compact('mans'));
     }
@@ -27,14 +27,19 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lans = Lan::pluck('name', 'id')->sortBy('name');
+        $lans = Lan::query()->orderBy('name')->pluck('name', 'id');
+        $mans = Man::query()->orderBy('name')->pluck('name', 'id');
+        $wans = Wan::query()->orderBy('name')->pluck('name', 'id');
 
-        return view('admin.mans.create', compact('lans'));
+        return view('admin.mans.create',
+            compact('lans', 'mans', 'wans'));
     }
 
     public function store(StoreManRequest $request)
     {
-        $man = Man::create($request->all());
+        $man = Man::query()->create($request->all());
+
+        $man->wans()->sync($request->input('wans', []));
         $man->lans()->sync($request->input('lans', []));
 
         return redirect()->route('admin.mans.index');
@@ -44,16 +49,22 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lans = Lan::pluck('name', 'id')->sortBy('name');
+        $wans = Wan::query()->orderBy('name')->pluck('name', 'id');
+        $lans = Lan::query()->orderBy('name')->pluck('name', 'id');
+        $mans = Man::query()->where('id', '!=', $man->id)
+            ->orderBy('name')->pluck('name', 'id');
 
         $man->load('lans');
 
-        return view('admin.mans.edit', compact('lans', 'man'));
+        return view('admin.mans.edit',
+            compact('lans', 'mans', 'wans', 'man'));
     }
 
     public function update(UpdateManRequest $request, Man $man)
     {
         $man->update($request->all());
+
+        $man->wans()->sync($request->input('wans', []));
         $man->lans()->sync($request->input('lans', []));
 
         return redirect()->route('admin.mans.index');
@@ -79,7 +90,7 @@ class ManController extends Controller
 
     public function massDestroy(MassDestroyManRequest $request)
     {
-        Man::whereIn('id', request('ids'))->delete();
+        Man::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

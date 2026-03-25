@@ -1,24 +1,23 @@
 <?php
 
-
 namespace App\Http\Requests;
 
 use App\Rules\IPList;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class StorePeripheralRequest extends FormRequest
+class StorePeripheralRequest extends BaseFormRequest
 {
-    public function authorize()
+    protected array $htmlFields = ['description'];
+    public function authorize() : bool
     {
         abort_if(Gate::denies('peripheral_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => [
@@ -30,7 +29,7 @@ class StorePeripheralRequest extends FormRequest
             'iconFile' => ['nullable', 'file', 'mimes:png', 'max:65535'],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                new IPList,
             ],
         ];
     }

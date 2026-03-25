@@ -1,11 +1,16 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ $site->name }}
+@endsection
+
 @section('content')
 <div class="form-group">
     <a class="btn btn-default" href="{{ route('admin.sites.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SITE_{{$site->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$site->getUID()}}">
         {{ trans('global.explore') }}
     </a>
 
@@ -34,52 +39,11 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.site.title') }}
     </div>
-
     <div class="card-body">
-        <div class="form-group">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th width="10%">
-                            {{ trans('cruds.site.fields.name') }}
-                        </th>
-                        <td colspan="2">
-                            {{ $site->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.site.fields.description') }}
-                        </th>
-                        <td>
-                            {!! $site->description !!}
-                        </td>
-                        <td width="10%">
-                            @if ($site->icon_id === null)
-                            <img src='/images/site.png' width='120' height='120'>
-                            @else
-                            <img src='{{ route('admin.documents.show', $site->icon_id) }}' width='120' height='120'>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.site.fields.buildings') }}
-                        </th>
-                        <td colspan="2">
-                            @foreach($site->buildings as $building)
-                                <a href="{{ route('admin.buildings.show', $building->id) }}">
-                                {{ $building->name ?? '' }}
-                                </a>
-                                @if ($site->buildings->last()!=$building)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @include('admin.sites._details', [
+            'site' => $site,
+            'withLink' => false,
+        ])
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $site->created_at ? $site->created_at->format(trans('global.timestamp')) : '' }} |

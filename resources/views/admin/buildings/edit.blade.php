@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+    {{ trans('global.edit') }} {{ $building->name }}
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route("admin.buildings.update", [$building->id]) }}" enctype="multipart/form-data">
         @method('PUT')
@@ -13,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.building.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.building.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $building->name) }}" required
                                    maxlength="32" autofocus/>
@@ -32,7 +37,7 @@
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
-                                    <option> {{ old('type') }}</option>'
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($type_list as $t)
                                     <option {{ (old('type') ? old('type') : $building->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -50,8 +55,8 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.building.fields.attributes') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
-                                    name="attributes[]" id="attributes[]" multiple>
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
                                 @foreach($attributes_list as $a)
                                     <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || in_array($a, explode(' ',$building->attributes)) ? 'selected' : '' }}>{{$a}}</option>
                                 @endforeach
@@ -69,7 +74,8 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.building.fields.description') }}</label>
+                            <label class="label-maturity-1"
+                                   for="description">{{ trans('cruds.building.fields.description') }}</label>
                             <textarea
                                     class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     name="description"
@@ -167,7 +173,7 @@
             <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.buildings.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            <button id="btn-save" class="btn btn-danger" type="submit">
+            <button id="btn-save" class="btn btn-success" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

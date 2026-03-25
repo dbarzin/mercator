@@ -1,17 +1,17 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRoleRequest;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
-use App\Models\Permission;
-use App\Models\Role;
 use Gate;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\Permission;
+use Mercator\Core\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller
@@ -20,7 +20,6 @@ class RolesController extends Controller
      * Triage des permissions pour un meilleur affichage dans la vue Blade
      *
      * @param  Collection  $permissions  Tableau des permissions sur lesquelles le triage sera effectué
-     *
      * @return array Tableau avec les permissions triées
      */
     public function getSortedPerms(Collection $permissions): array
@@ -41,7 +40,7 @@ class RolesController extends Controller
             if (! isset($permissions_sorted[$name])) {
                 $permissions_sorted[$name] = ['name' => $name, 'actions' => []];
             }
-            array_push($permissions_sorted[$name]['actions'], $actionTab);
+            $permissions_sorted[$name]['actions'][] = $actionTab;
         }
 
         return $permissions_sorted;
@@ -74,8 +73,13 @@ class RolesController extends Controller
 
     public function store(StoreRoleRequest $request)
     {
-        $role = Role::create($request->all());
+        abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $role = Role::query()->create($request->all());
         $role->permissions()->sync($request->input('permissions', []));
+
+        // Clean role permissions cache
+        Cache::forget('permissions_roles_map');
 
         return redirect()->route('admin.roles.index');
     }
@@ -87,6 +91,7 @@ class RolesController extends Controller
         // Chargement de toutes les permissions et triage
         $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
         $permissions_sorted = $this->getSortedPerms($permissions);
+
         // Chargement des permissions du rôle
         $role->load('permissions');
 
@@ -95,9 +100,21 @@ class RolesController extends Controller
 
     public function update(UpdateRoleRequest $request, Role $role)
     {
+        abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // Update DB
+
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
+        // Clean role permissions cache
+        Cache::forget('permissions_roles_map');
+
+        // Update utilisateur courrant
+        $user = auth()->user();
+        $user->refresh();
+        auth()->setUser($user);
+
+        // Return
         return redirect()->route('admin.roles.index');
     }
 
@@ -128,7 +145,9 @@ class RolesController extends Controller
 
     public function massDestroy(MassDestroyRoleRequest $request)
     {
-        Role::whereIn('id', request('ids'))->delete();
+        abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        Role::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
