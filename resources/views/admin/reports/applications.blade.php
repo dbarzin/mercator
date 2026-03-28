@@ -290,7 +290,7 @@ const dotSrc = `digraph  {
 }`;
 
 document.addEventListener('DOMContentLoaded', () => {
-    d3.select("#graph").graphviz()
+    d3.select("#graph").graphviz({ useWorker: false })
         .addImage("/images/applicationblock.png", "64px", "64px")
         .addImage("/images/application.png", "64px", "64px")
         .addImage("/images/applicationservice.png", "64px", "64px")

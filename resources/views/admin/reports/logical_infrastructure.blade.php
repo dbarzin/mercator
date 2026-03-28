@@ -861,7 +861,7 @@ digraph  {
 }`;
 
 document.addEventListener('DOMContentLoaded', () => {
-    d3.select("#graph").graphviz()
+    d3.select("#graph").graphviz({ useWorker: false })
         .addImage("/images/cloud.png", "64px", "64px")
         .addImage("/images/network.png", "64px", "64px")
         .addImage("/images/gateway.png", "64px", "64px")

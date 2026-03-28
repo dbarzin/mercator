@@ -673,7 +673,7 @@ digraph  {
         }`;
 
         document.addEventListener('DOMContentLoaded', () => {
-            d3.select("#graph").graphviz()
+            d3.select("#graph").graphviz({ useWorker: false })
                 .addImage("/images/application.png", "64px", "64px")
                 @foreach($applications as $application)
                 @if ($application->icon_id!==null)

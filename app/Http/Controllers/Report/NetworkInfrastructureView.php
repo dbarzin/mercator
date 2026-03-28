@@ -26,6 +26,14 @@ class NetworkInfrastructureView extends Controller
     {
         abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Show ports filter
+        if ($request->has('show_ports')) {
+            $request->session()->put('show_ports', true);
+        } else {
+            $request->session()->put('show_ports', null);
+        }
+
+        // Objects filter
         $buildingIds = null;
         if ($request->site == null) {
             $request->session()->put('site', null);

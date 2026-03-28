@@ -20,7 +20,7 @@
 <script  id="my-worker" type="javascript/worker">
 document.addEventListener('DOMContentLoaded', () => {
 
-d3.select("#graph").graphviz()
+d3.select("#graph").graphviz({ useWorker: false })
     .engine("osage")
     .renderDot(`digraph  {
             fontname=Arial
