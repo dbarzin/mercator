@@ -498,7 +498,7 @@ Analyse de dépendances
         const dotSrc      = buildDotSource(subgraph.nodes, subgraph.edges, PARAMS.node);
         const uniqueImages = [...new Set(subgraph.nodes.map(n => n.image).filter(Boolean))];
 
-        let viz = d3.select('#graph').graphviz().engine(PARAMS.engine);
+        let viz = d3.select('#graph').graphviz({ useWorker: false }).engine(PARAMS.engine);
         for (const img of uniqueImages) viz = viz.addImage(img, '64px', '64px');
         viz.renderDot(dotSrc);
 

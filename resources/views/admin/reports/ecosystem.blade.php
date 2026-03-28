@@ -166,7 +166,7 @@ digraph  {
 @endcan
 }`;
 document.addEventListener('DOMContentLoaded', () => {
-d3.select("#graph").graphviz()
+d3.select("#graph").graphviz({ useWorker: false })
     .addImage("/images/entity.png", "64px", "64px")
     @foreach($entities as $entity)
     @if ($entity->icon_id!==null)

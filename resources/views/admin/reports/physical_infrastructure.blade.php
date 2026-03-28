@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
         @endforeach
     ]);
 
-    let graph = d3.select("#graph").graphviz();
+    let graph = d3.select("#graph").graphviz({ useWorker: false });
     images.forEach(url => graph = graph.addImage(url, "64px", "64px"));
     graph.engine("{{ $engine }}").renderDot(dotSrc);
 });

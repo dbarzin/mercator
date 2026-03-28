@@ -43,6 +43,11 @@
                             </td>
                         </tr>
                     </table>
+                    <div class="col-sm-8">
+                        <input name="show_ports" id='show_ports' type="checkbox" value="1" class="form-check-input"
+                               {{ Session::get('show_ports') ? 'checked' : '' }} onchange="this.form.submit()">
+                        <label for="show_ports">Afficher les ports source/destination</label>
+                    </div>
                 </div>
                 <div id="graph-container">
                     <div id="graph" class="graphviz"></div>
@@ -585,9 +590,15 @@ digraph  {
             $link->network_switch_dest_id === null;
         ?>
 
-    @if($isPhysicalLink && $srcNode && $destNode)
-    {{ $srcNode }} -> {{ $destNode }} [color="{{ $link->color ?? "grey" }}", penwidth=2, arrowhead=none, taillabel="{{ $link->src_port }}", headlabel="{{ $link->dest_port }}", href="{{ route('admin.links.show', $link->id) }}"];
-    @endif
+        @if($isPhysicalLink && $srcNode && $destNode)
+        {{ $srcNode }} -> {{ $destNode }}
+        [color="{{ $link->color ?? "grey" }}", penwidth=2, arrowhead=none,
+        {!! Session::get('show_ports')
+            ? 'taillabel="' . addslashes($link->src_port) . '" headlabel="' . addslashes($link->dest_port) . '",'
+            : '' !!}
+        href="{{ route('admin.links.show', $link->id) }}"];
+        @endif
+
 @endforeach
 }`;
 
@@ -604,7 +615,7 @@ document.addEventListener("DOMContentLoaded", function () {
         this.form.submit();
     });
 
-d3.select("#graph").graphviz()
+d3.select("#graph").graphviz({ useWorker: false })
     .addImage("/images/site.png", "64px", "64px")
     .addImage("/images/building.png", "64px", "64px")
     .addImage("/images/bay.png", "64px", "64px")

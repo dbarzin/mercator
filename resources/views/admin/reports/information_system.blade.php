@@ -313,7 +313,7 @@ digraph  {
 }`;
 
         document.addEventListener('DOMContentLoaded', () => {
-            d3.select("#graph").graphviz()
+            d3.select("#graph").graphviz({ useWorker: false })
                 .addImage("/images/macroprocess.png", "64px", "64px")
                 .addImage("/images/process.png", "64px", "64px")
                 .addImage("/images/activity.png", "64px", "64px")
