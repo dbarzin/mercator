@@ -14,7 +14,9 @@ class PermissionRoleTableSeeder extends Seeder
     {
         if (DB::table('permission_role')->count() === 0) {
 
-            $adminRoleId = DB::table('roles')->where('title', 'Admin')->value('id');
+            $adminRoleId = DB::table('roles')
+                ->where('title', 'Admin')
+                ->value('id');
             
             DB::table('permission_role')->insert([
                 ['role_id' => $adminRoleId, 'permission_id' => 7],
@@ -315,7 +317,9 @@ class PermissionRoleTableSeeder extends Seeder
                 ]
             );
 
-            $userRoleId = DB::table('roles')->where('title', 'User')->value('id');
+            $userRoleId = DB::table('roles')
+                ->where('title', 'User')
+                ->value('id');
 
             DB::table('permission_role')->insert([
                 ['role_id' => $userRoleId, 'permission_id' => 17],
@@ -603,7 +607,9 @@ class PermissionRoleTableSeeder extends Seeder
                 ]
             );
             
-            $auditorRoleId = DB::table('roles')->where('title', 'Auditor')->value('id');
+            $auditorRoleId = DB::table('roles')
+                ->where('title', 'Auditor')
+                ->value('id');
 
             DB::table('permission_role')->insert([
                 ['role_id' => $auditorRoleId, 'permission_id' => 19],
@@ -728,7 +734,9 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $auditorRoleId, 'permission_id' => 314]
             ]);
 
-            $cartographerId = DB::table('roles')->where('title', 'Cartographer')->value('id');
+            $cartographerId = DB::table('roles')
+                ->where('title', 'Cartographer')
+                ->value('id');
 
             DB::table('permission_role')->insert([
                 ['role_id' => $cartographerId, 'permission_id' => 59],
@@ -765,8 +773,8 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $cartographerId, 'permission_id' => 256],
                 ['role_id' => $cartographerId, 'permission_id' => 262],
                 // Documents
-                ['role_id' => $auditorRoleId, 'permission_id' => 312],
-                ['role_id' => $auditorRoleId, 'permission_id' => 314]
+                ['role_id' => $cartographerId, 'permission_id' => 312],
+                ['role_id' => $cartographerId, 'permission_id' => 314]
             ]);
         }
     }

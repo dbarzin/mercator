@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\Permission;
 use Mercator\Core\Models\Role;
 
@@ -37,13 +38,28 @@ return new class extends Migration
                         'title' => 'document_access',
                     ],
                 ]);
+
             // Add permissions in roles :
             // Admin
-            Role::query()->findOrFail(1)->permissions()->sync([310, 311, 312, 313, 314], false);
+            $roleId = DB::table('roles')
+                ->where('title', 'Admin')
+                ->value('id');
+            if ($roleId)
+                Role::query()->findOrFail($roleId)->permissions()->sync([310, 311, 312, 313, 314], false);
+
             // User
-            Role::query()->findOrFail(2)->permissions()->sync([310, 311, 312, 313, 314], false);
+            $roleId = DB::table('roles')
+                ->where('title', 'User')
+                ->value('id');
+            if ($roleId)
+                Role::query()->findOrFail($roleId)->permissions()->sync([310, 311, 312, 313, 314], false);
+
             // Auditor
-            Role::query()->findOrFail(3)->permissions()->sync([312, 314], false);
+            $roleId = DB::table('roles')
+                ->where('title', 'Auditor')
+                ->value('id');
+            if ($roleId)
+                Role::query()->findOrFail($roleId)->permissions()->sync([312, 314], false);
         }
 
     }
