@@ -407,8 +407,8 @@ Dans l'application, une opération peut être rattachée à un acteur depuis l'o
 #### Information
 
 Une information est une donnée faisant l’objet d’un traitement informatique.
-Une information peut etre héritée d'une autre information.
-Une information peut etre liée à plusieurs informations.
+Une information peut être héritée d'une ou plusieurs informations parentes.
+Les informations peuvent former des hiérarchies parent-enfant via des liaisons explicites.
 
 | Table                                           | api                |
 |:------------------------------------------------|:-------------------|
