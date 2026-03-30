@@ -60,16 +60,16 @@
                         {{ $information->owner }}
                     </td>
                     <th width="10%">
-                        {{ trans('cruds.information.fields.storage') }}
-                    </th>
-                    <td width="25%">
-                        {{ $information->storage }}
-                    </td>
-                    <th width="10%">
                         {{ trans('cruds.information.fields.administrator') }}
                     </th>
                     <td width="25%">
                         {{ $information->administrator }}
+                    </td>
+                    <th width="10%">
+                        {{ trans('cruds.information.fields.storage') }}
+                    </th>
+                    <td width="25%">
+                        {{ $information->storage }}
                     </td>
                 </tr>
 

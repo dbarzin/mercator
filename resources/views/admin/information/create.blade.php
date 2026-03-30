@@ -110,7 +110,6 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.information.fields.storage_helper') }}</span>
                     </div>
-
                 </div>
 
             </div>

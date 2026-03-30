@@ -76,27 +76,6 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label class="label-maturity-1"
-                               for="storage">{{ trans('cruds.information.fields.storage') }}</label>
-                        <select class="form-control select2-free {{ $errors->has('storage') ? 'is-invalid' : '' }}"
-                                name="storage" id="storage">
-                            @if (!$owner_list->contains(old('storage')))
-                                <option> {{ old('storage') }}</option>
-                            @endif
-                            @foreach($storage_list as $t)
-                                <option {{ (old('storage') ? old('storage') : $information->storage) == $t ? 'selected' : '' }}>{{$t}}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('storage'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('storage') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.information.fields.storage_helper') }}</span>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label class="label-maturity-1"
                                for="administrator">{{ trans('cruds.information.fields.administrator') }}</label>
                         <select class="form-control select2-free {{ $errors->has('administrator') ? 'is-invalid' : '' }}"
                                 name="administrator" id="administrator">
@@ -114,7 +93,27 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.information.fields.administrator_helper') }}</span>
                     </div>
-
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="label-maturity-1"
+                               for="storage">{{ trans('cruds.information.fields.storage') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('storage') ? 'is-invalid' : '' }}"
+                                name="storage" id="storage">
+                            @if (!$owner_list->contains(old('storage')))
+                                <option> {{ old('storage') }}</option>
+                            @endif
+                            @foreach($storage_list as $t)
+                                <option {{ (old('storage') ? old('storage') : $information->storage) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('storage'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('storage') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.information.fields.storage_helper') }}</span>
+                    </div>
                 </div>
             </div>
             <div class="row">
