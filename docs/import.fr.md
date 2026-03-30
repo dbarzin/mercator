@@ -2,12 +2,11 @@
 
 🇬🇧 [Read in English](/mercator/import)
 
-Cette interface permet d’**importer** et d’**exporter** des données de la cartographie du système d'information via des
-feuilles de calcul.
+Cette interface permet d’**importer** et d’**exporter** des données de la cartographie du système d'information via des feuilles de calcul.
 
 ### Accès à la page
 
-La page d'import / export des données est accessible via le menu "Configration" -> "Import".
+La page d'import / export des données est accessible via le menu "Configuration" -> "Import".
 
 [<img src="/mercator/fr/images/import.png" width="700">](images/import.fr.png)
 
