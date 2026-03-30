@@ -1378,7 +1378,9 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 <p>L'export du modèle de données référence les opérations rattachées à un acteur.</p>
 <p>Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.</p>
 <h4 id="information">Information</h4>
-<p>Une information est une donnée faisant l’objet d’un traitement informatique.</p>
+<p>Une information est une donnée faisant l’objet d’un traitement informatique.
+Une information peut etre héritée d'une autre information.
+Une information peut etre liée à plusieurs informations.</p>
 <table>
 <thead>
 <tr>
@@ -1473,6 +1475,21 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 <td style="text-align: left;">Durée de rétention de l'information</td>
 </tr>
 <tr>
+<td style="text-align: left;">parents</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des informations parentes liées</td>
+</tr>
+<tr>
+<td style="text-align: left;">children</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des informations enfants liés</td>
+</tr>
+<tr>
+<td style="text-align: left;">processes</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id des processus utilisant cette information</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -1496,6 +1513,7 @@ Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>L'export du modèle de données référence les bases de données et processus rattachés à une information.<br />
 Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.<br />
 Un processus peut être rattachée à une information depuis ces deux objets.</p>
+<p><em>Note: le lien processes est une représentation du résultat généré par le endpoint <a href="#processus">processes</a> et son champ </em><em>informations</em>**</p>
 <hr />
 <h3 id="la-vue-des-applications">La vue des applications</h3>
 <p>La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ».</p>
