@@ -1413,7 +1413,9 @@ processes. This role can be carried by a person, a group of people, or an entity
 <p>The data model export lists operations linked with an actor.</p>
 <p>In the app, an operation can be linked with an actor from the object "operation".</p>
 <h4 id="information">Information</h4>
-<p>Information is data processed by a computer.</p>
+<p>Information is data processed by a computer.
+Information can be inherited from another information.
+Information can be linked to multiple information.</p>
 <table>
 <thead>
 <tr>
@@ -1508,6 +1510,21 @@ processes. This role can be carried by a person, a group of people, or an entity
 <td style="text-align: left;">Information retention period</td>
 </tr>
 <tr>
+<td style="text-align: left;">parents</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of linked parents information</td>
+</tr>
+<tr>
+<td style="text-align: left;">children</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of linked children information</td>
+</tr>
+<tr>
+<td style="text-align: left;">processes</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of used processes by this information</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -1531,6 +1548,7 @@ This default configuration can be changed in the menu Configuration &gt; Paramet
 <p>The data model export lists databases and processes linked with information.</p>
 <p>In the app, a database can be linked with an information from the object "database".<br />
 A process can be linked to an information from these two objects.</p>
+<p><em>Note: The link to processes is a view of the result generated through the endpoint <a href="#processes">processes</a> and its field </em><em>informations</em>**</p>
 <hr />
 <h3 id="applications-view">Applications view</h3>
 <p>The application view is used to describe part of what is classically referred to as the "computer system".</p>
