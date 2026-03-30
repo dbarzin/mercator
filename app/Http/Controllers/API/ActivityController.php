@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateActivityRequest;
 use Gate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Mercator\Core\Models\Activity;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +34,7 @@ class ActivityController extends APIController
         return response()->json($activity, Response::HTTP_CREATED);
     }
 
-    public function show(Activity $activity): JsonResource
+    public function show(Activity $activity) : JsonResource
     {
         abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

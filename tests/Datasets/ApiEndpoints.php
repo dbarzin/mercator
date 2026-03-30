@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Document;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
 use Mercator\Core\Models\AdminUser;
@@ -357,6 +358,12 @@ dataset('api_endpoints', [
         [
             'route' => 'physical-links',
             'model' => PhysicalLink::class,
+        ]
+    ],
+    'documents' => [
+        [
+            'route' => 'documents',
+            'model' => Document::class,
         ]
     ],
 ]);
