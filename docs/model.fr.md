@@ -1303,6 +1303,8 @@ applications.
 | end_validity      | date         | Date de fin de validité                  |
 | status            | int signed   | Etat du certificat (RFC 6960)            |
 | last_notification | datetime     | Date d'envoi de la dernière notification |
+| logical_servers   | List int [,] | Liste d'id de(s) serveur(s) logique(s) associés |
+| applications      | List int [,] | Liste d'id de(s) application(s) associée(s)     |
 | created_at        | timestamp    | Date de création                         |
 | updated_at        | timestamp    | Date de mise à jour                      |
 | deleted_at        | timestamp    | Date de suppression                      |
@@ -1314,7 +1316,6 @@ applications.
 
 Le champ "last_notification" n'est pas utilisé pour le moment et est donc absent de l'application.  
 L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.  
-Dans l'application, un certificat peut être rattaché à une application ou un serveur logique depuis un objet certificat.
 
 #### VLANs
 
