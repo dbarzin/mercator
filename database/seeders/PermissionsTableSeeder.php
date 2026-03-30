@@ -322,7 +322,12 @@ class PermissionsTableSeeder extends Seeder
                 ['id' => 306, 'title' => 'tools_access'],
                 ['id' => 307, 'title' => 'explore_access'],
                 ['id' => 308, 'title' => 'reports_access'],
-                ['id' => 309, 'title' => 'module_manage']
+                ['id' => 309, 'title' => 'module_manage'],
+                ['id' => 310, 'title' => 'document_create'],
+                ['id' => 311, 'title' => 'document_edit'],
+                ['id' => 312, 'title' => 'document_show'],
+                ['id' => 313, 'title' => 'document_delete'],
+                ['id' => 314, 'title' => 'document_access']
             ]);
         }
     }
