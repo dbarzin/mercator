@@ -85,6 +85,32 @@
     <li class="toctree-l2"><a class="reference internal" href="#install-the-api-on-mercator">Install the API on Mercator</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#apis">APIs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-gdpr">Endpoints for GDPR</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-ecosystem">Endpoints for Ecosystem</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-information-system-business">Endpoints for Information system business</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-application">Endpoints for Application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-administration-view">Endpoints for Administration view</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-logical-infrastructure">Endpoints for Logical infrastructure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-physical-infrastructure">Endpoints for Physical infrastructure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-configuration">Endpoints for Configuration</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#example-of-adding-a-document-in-mercator">Example of adding a document in Mercator:</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple-of-downloading-a-document-from-mercator">Exemple of downloading a document from mercator:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#endpoints-for-reports">Endpoints for Reports</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#actions-managed-by-the-resource-controller">Actions managed by the resource controller</a>
     </li>
@@ -179,17 +205,17 @@ architecture and enables interaction with RESTful web services.</p>
 <h3 id="apis">APIs</h3>
 <p>For each object in the cartography data model, there is an API.
 The list of APIs can be found in /route/api.php</p>
-<p><strong>GDPR view</strong></p>
+<h4 id="endpoints-for-gdpr">Endpoints for GDPR</h4>
 <ul>
 <li><a href="../model/#register">/api/data-processings</a></li>
 <li><a href="../model/#security-measures">/api/security-controls</a></li>
 </ul>
-<p><strong>Ecosystem view</strong></p>
+<h4 id="endpoints-for-ecosystem">Endpoints for Ecosystem</h4>
 <ul>
 <li><a href="../model/#entities">/api/entities</a></li>
 <li><a href="../model/#relationships">/api/relations</a></li>
 </ul>
-<p><strong>Information system business view</strong></p>
+<h4 id="endpoints-for-information-system-business">Endpoints for Information system business</h4>
 <ul>
 <li><a href="../model/#macro-processes">/api/macro-processuses</a></li>
 <li><a href="../model/#processes">/api/processes</a></li>
@@ -199,7 +225,7 @@ The list of APIs can be found in /route/api.php</p>
 <li><a href="../model/#actors">/api/actors</a></li>
 <li><a href="../model/#information">/api/information</a></li>
 </ul>
-<p><strong>Application view</strong></p>
+<h4 id="endpoints-for-application">Endpoints for Application</h4>
 <ul>
 <li><a href="../model/#applications-blocks">/api/application-blocks</a></li>
 <li><a href="../model/#applications">/api/applications</a></li>
@@ -208,7 +234,7 @@ The list of APIs can be found in /route/api.php</p>
 <li><a href="../model/#databases">/api/databases</a></li>
 <li><a href="../model/#flows">/api/fluxes</a></li>
 </ul>
-<p><strong>Administration view</strong></p>
+<h4 id="endpoints-for-administration-view">Endpoints for Administration view</h4>
 <ul>
 <li><a href="../model/#administration-areas">/api/zone-admins</a></li>
 <li><a href="../model/#administration-directory-services">/api/annuaires</a></li>
@@ -216,7 +242,7 @@ The list of APIs can be found in /route/api.php</p>
 <li><a href="../model/#active-directory-domains-ldap">/api/domaine-ads</a></li>
 <li><a href="../model/#users">/api/admin-users</a></li>
 </ul>
-<p><strong>Logical infrastructure view</strong></p>
+<h4 id="endpoints-for-logical-infrastructure">Endpoints for Logical infrastructure</h4>
 <ul>
 <li><a href="../model/#networks">/api/networks</a></li>
 <li><a href="../model/#subnetworks">/api/subnetworks</a></li>
@@ -234,7 +260,7 @@ The list of APIs can be found in /route/api.php</p>
 <li><a href="../model/#certificates">/api/certificates</a></li>
 <li><a href="../model/#vlans">/api/vlans</a></li>
 </ul>
-<p><strong>Physical infrastructure view</strong></p>
+<h4 id="endpoints-for-physical-infrastructure">Endpoints for Physical infrastructure</h4>
 <ul>
 <li><a href="../model/#sites">/api/sites</a></li>
 <li><a href="../model/#buildings-rooms">/api/buildings</a></li>
@@ -253,7 +279,32 @@ The list of APIs can be found in /route/api.php</p>
 <li><a href="../model/#lans">/api/lans</a></li>
 <li><a href="../model/#physical-links">/api/physical-links</a></li>
 </ul>
-<p><strong>Reports</strong></p>
+<h4 id="endpoints-for-configuration">Endpoints for Configuration</h4>
+<ul>
+<li><a href="../model/#documents">/api/documents</a></li>
+</ul>
+<p>The unique feature of this endpoint is that it allows you to either upload or download a document.
+The syntax is as follows:</p>
+<h5 id="example-of-adding-a-document-in-mercator">Example of adding a document in Mercator:</h5>
+<pre><code class="language-bash">RESPONSE=$(http_call -X POST &quot;$API/api/documents&quot; \
+    -H &quot;Authorization: Bearer $TOKEN&quot; \
+    -H &quot;Accept: application/json&quot; \
+    -F &quot;file=@./rapport.pdf&quot;)
+
+# Display clean JSON (jq uncode, but isn't yet in $() )
+echo &quot;$RESPONSE&quot; | jq .
+
+DOC_ID=$(echo &quot;$RESPONSE&quot; | jq -r '.id // empty' 2&gt;/dev/null)
+</code></pre>
+<h5 id="exemple-of-downloading-a-document-from-mercator">Exemple of downloading a document from mercator:</h5>
+<pre><code class="language-bash"> OUTFILE=&quot;./downloaded_${DOC_ID}.pdf&quot;
+    curl -s -X GET &quot;$API/api/documents/$DOC_ID/download&quot; \
+        -H &quot;Authorization: Bearer $TOKEN&quot; \
+        -H &quot;Accept: application/octet-stream&quot; \
+        -o &quot;$OUTFILE&quot; \
+        -w &quot;HTTP %{http_code}\n&quot;
+</code></pre>
+<h4 id="endpoints-for-reports">Endpoints for Reports</h4>
 <ul>
 <li>/api/report/cartography</li>
 <li>/api/report/entities</li>
