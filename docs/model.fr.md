@@ -407,8 +407,8 @@ Dans l'application, une opération peut être rattachée à un acteur depuis l'o
 #### Information
 
 Une information est une donnée faisant l’objet d’un traitement informatique.
-Une information peut etre héritée d'une autre information.
-Une information peut etre liée à plusieurs informations.
+Une information peut être héritée d'une ou plusieurs informations parentes.
+Les informations peuvent former des hiérarchies parent-enfant via des liaisons explicites.
 
 | Table                                           | api                |
 |:------------------------------------------------|:-------------------|
@@ -431,8 +431,8 @@ Une information peut etre liée à plusieurs informations.
 | constraints        | longtext     | Contraintes légales et réglementaires |
 | retention          | varchar(255) | Durée de rétention de l'information   |
 | parents            | List int [,] | Liste d'id des informations parentes liées |
-| children           | List int [,] | Liste d'id des informations enfants liés |
-| processes          | List int [,] | Liste d'id des processus utilisant cette information | 
+| children           | List int [,] | Liste d'id des informations enfants liées |
+| processes          | List int [,] | Liste d'id des processus utilisant cette information |
 | created_at         | timestamp    | Date de création                      |
 | updated_at         | timestamp    | Date de mise à jour                   |
 | deleted_at         | timestamp    | Date de suppression                   |
