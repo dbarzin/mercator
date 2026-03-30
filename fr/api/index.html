@@ -85,6 +85,32 @@
     <li class="toctree-l2"><a class="reference internal" href="#installer-lapi-sur-mercator">Installer l'API sur Mercator</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#les-apis">Les APIs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-du-rgpd">Les points de terminaison du RGPD</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-de-lecosysteme">Les points de terminaison de l'écosystème</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-du-metier-du-systeme-dinformation">Les points de terminaison du métier du système d'information</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-des-applications">Les points de terminaison des applications</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-de-ladministration">Les points de terminaison de l'administration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-de-linfrastructure-logique">Les points de terminaison de l'infrastructure logique</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-de-linfrastructure-physique">Les points de terminaison de l'infrastructure physique</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-points-de-terminaison-de-la-configuration">Les points de terminaison de la Configuration</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple-dajout-dun-document-dans-mercator">Exemple d'ajout d'un document dans mercator:</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple-de-telechargement-dun-document-de-mercator">Exemple de téléchargement d'un document de mercator:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#les-rapports">Les rapports</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</a>
     </li>
@@ -180,17 +206,17 @@ et permet d'interagir avec les services web RESTful.</p>
 <p>Pour chaque objet du modèle de données de la cartographie, il existe une API.
 La liste des API se trouve dans le fichier /route/api.php</p>
 <p><em>Note:</em> Pour visualiser le datamodel d'une API, cliquer sur son nom.</p>
-<p><strong>Vue du RGPD</strong></p>
+<h4 id="les-points-de-terminaison-du-rgpd">Les points de terminaison du RGPD</h4>
 <ul>
 <li><a href="../model/#registre">/api/data-processings</a></li>
 <li><a href="../model/#mesures-de-securite">/api/security-controls</a></li>
 </ul>
-<p><strong>Vues de l'écosystème</strong></p>
+<h4 id="les-points-de-terminaison-de-lecosysteme">Les points de terminaison de l'écosystème</h4>
 <ul>
 <li><a href="../model/#entites">/api/entities</a></li>
 <li><a href="../model/#relations">/api/relations</a></li>
 </ul>
-<p><strong>Vue métier du système d'information</strong></p>
+<h4 id="les-points-de-terminaison-du-metier-du-systeme-dinformation">Les points de terminaison du métier du système d'information</h4>
 <ul>
 <li><a href="../model/#macro-processus">/api/macro-processuses</a></li>
 <li><a href="../model/#processus">/api/processes</a></li>
@@ -200,7 +226,7 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <li><a href="../model/#acteurs">/api/actors</a></li>
 <li><a href="../model/#information">/api/information</a></li>
 </ul>
-<p><strong>Vue des applications</strong></p>
+<h4 id="les-points-de-terminaison-des-applications">Les points de terminaison des applications</h4>
 <ul>
 <li><a href="../model/#blocs-applicatif">/api/application-blocks</a></li>
 <li><a href="../model/#applications">/api/applications</a></li>
@@ -209,7 +235,7 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <li><a href="../model/#bases-de-donnees">/api/databases</a></li>
 <li><a href="../model/#flux">/api/fluxes</a></li>
 </ul>
-<p><strong>Vue de l'administration</strong></p>
+<h4 id="les-points-de-terminaison-de-ladministration">Les points de terminaison de l'administration</h4>
 <ul>
 <li><a href="../model/#zones-dadministration">/api/zone-admins</a></li>
 <li><a href="../model/#services-dannuaire-dadministration">/api/annuaires</a></li>
@@ -217,7 +243,7 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <li><a href="../model/#domaines-active-directory-ldap">/api/domaine-ads</a></li>
 <li><a href="../model/#utilisateurs">/api/admin-users</a></li>
 </ul>
-<p><strong>Vue de l'infrastructure logique</strong></p>
+<h4 id="les-points-de-terminaison-de-linfrastructure-logique">Les points de terminaison de l'infrastructure logique</h4>
 <ul>
 <li><a href="../model/#reseaux">/api/networks</a></li>
 <li><a href="../model/#sous-reseaux">/api/subnetworks</a></li>
@@ -235,7 +261,7 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <li><a href="../model/#certificats">/api/certificates</a></li>
 <li><a href="../model/#vlans">/api/vlans</a></li>
 </ul>
-<p><strong>Vue de l'infrastructure physique</strong></p>
+<h4 id="les-points-de-terminaison-de-linfrastructure-physique">Les points de terminaison de l'infrastructure physique</h4>
 <ul>
 <li><a href="../model/#sites">/api/sites</a></li>
 <li><a href="../model/#batiments-salles">/api/buildings</a></li>
@@ -254,7 +280,32 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <li><a href="../model/#mans">/api/mans</a></li>
 <li><a href="../model/#lans">/api/lans</a></li>
 </ul>
-<p><strong>Rapport</strong></p>
+<h4 id="les-points-de-terminaison-de-la-configuration">Les points de terminaison de la Configuration</h4>
+<ul>
+<li><a href="../model/#documents">/api/documents</a></li>
+</ul>
+<p>La particularité de ce point de terminaison est qu'il permet d'ajouter ou de télécharger un document.
+La syntaxe est la suivante:</p>
+<h5 id="exemple-dajout-dun-document-dans-mercator">Exemple d'ajout d'un document dans mercator:</h5>
+<pre><code class="language-bash">RESPONSE=$(http_call -X POST &quot;$API/api/documents&quot; \
+    -H &quot;Authorization: Bearer $TOKEN&quot; \
+    -H &quot;Accept: application/json&quot; \
+    -F &quot;file=@./rapport.pdf&quot;)
+
+# Affichage JSON propre (jq décode, mais n'est plus dans $() )
+echo &quot;$RESPONSE&quot; | jq .
+
+DOC_ID=$(echo &quot;$RESPONSE&quot; | jq -r '.id // empty' 2&gt;/dev/null)
+</code></pre>
+<h5 id="exemple-de-telechargement-dun-document-de-mercator">Exemple de téléchargement d'un document de mercator:</h5>
+<pre><code class="language-bash"> OUTFILE=&quot;./downloaded_${DOC_ID}.pdf&quot;
+    curl -s -X GET &quot;$API/api/documents/$DOC_ID/download&quot; \
+        -H &quot;Authorization: Bearer $TOKEN&quot; \
+        -H &quot;Accept: application/octet-stream&quot; \
+        -o &quot;$OUTFILE&quot; \
+        -w &quot;HTTP %{http_code}\n&quot;
+</code></pre>
+<h4 id="les-rapports">Les rapports</h4>
 <ul>
 <li>/api/report/cartography</li>
 <li>/api/report/entities</li>

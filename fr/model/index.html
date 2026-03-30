@@ -216,6 +216,16 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#documents">documents</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple-dinformation-dun-document-pour-une-icone-de-firewall">Exemple d'information d'un document pour une icône de firewall:</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -1379,8 +1389,8 @@ décisions dans le cadre des processus. Ce rôle peut être porté par une perso
 <p>Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.</p>
 <h4 id="information">Information</h4>
 <p>Une information est une donnée faisant l’objet d’un traitement informatique.
-Une information peut etre héritée d'une autre information.
-Une information peut etre liée à plusieurs informations.</p>
+Une information peut être héritée d'une ou plusieurs informations parentes.
+Les informations peuvent former des hiérarchies parent-enfant via des liaisons explicites.</p>
 <table>
 <thead>
 <tr>
@@ -1482,7 +1492,7 @@ Une information peut etre liée à plusieurs informations.</p>
 <tr>
 <td style="text-align: left;">children</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">Liste d'id des informations enfants liés</td>
+<td style="text-align: left;">Liste d'id des informations enfants liées</td>
 </tr>
 <tr>
 <td style="text-align: left;">processes</td>
@@ -4049,6 +4059,16 @@ applications.</p>
 <td style="text-align: left;">Date d'envoi de la dernière notification</td>
 </tr>
 <tr>
+<td style="text-align: left;">logical_servers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) serveur(s) logique(s) associés</td>
+</tr>
+<tr>
+<td style="text-align: left;">applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) application(s) associée(s)</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date de création</td>
@@ -4074,8 +4094,7 @@ applications.</p>
 </li>
 </ul>
 <p>Le champ "last_notification" n'est pas utilisé pour le moment et est donc absent de l'application.<br />
-L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.<br />
-Dans l'application, un certificat peut être rattaché à une application ou un serveur logique depuis un objet certificat.</p>
+L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.  </p>
 <h4 id="vlans">VLANs</h4>
 <p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements
 en s’affranchissant des contraintes physiques.</p>
@@ -5821,6 +5840,90 @@ Un LAN peut être rattaché à un MAN depuis les objets MAN.</p>
 </table>
 <p>L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.<br />
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.</p>
+<h3 id="configuration">Configuration</h3>
+<p>Dans le menu configuration, on trouve la partie documents.</p>
+<h4 id="documents">documents</h4>
+<p>Cette partie permet de voir les documents attachés, mais aussi les icônes personnalisées.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>documents</em></span></td>
+<td style="text-align: left;"><code>/api/documents</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">filename</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du document avec son extension</td>
+</tr>
+<tr>
+<td style="text-align: left;">mimetype</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type du document. Rempli automatiquement</td>
+</tr>
+<tr>
+<td style="text-align: left;">size</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Remplie automatiquement</td>
+</tr>
+<tr>
+<td style="text-align: left;">hash</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Hash du docuemnt. Rempli automatiquement</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Le document est créé dans le répertoire docs référencé par son id</li>
+<li>Le document n'est pas inséré dans la base de donnée.</li>
+</ul>
+<h5 id="exemple-dinformation-dun-document-pour-une-icone-de-firewall">Exemple d'information d'un document pour une icône de firewall:</h5>
+<pre><code class="language-json">    &quot;id&quot;: 1,
+    &quot;filename&quot;: &quot;fw.png&quot;,
+    &quot;mimetype&quot;: &quot;image/png&quot;,
+    &quot;size&quot;: 5295,
+    &quot;hash&quot;: &quot;71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0&quot;,
+    &quot;deleted_at&quot;: null,
+    &quot;created_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;
+</code></pre>
+<p>⚠️ A partir de l'interface utilsiateur, si un document d'icône personnalisé est créé, il peut être utilisé par la même un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.</p>
               
             </div>
           </div><footer>

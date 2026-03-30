@@ -216,6 +216,16 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#documents">documents</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple-of-a-document-fields-for-a-specific-image-of-firewall">Exemple of a document fields for a specific image of firewall:</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -4039,6 +4049,16 @@ A logical server can be linked to a container from a container object.</p>
 <td style="text-align: left;">Certificate statis (RFC 6960)</td>
 </tr>
 <tr>
+<td style="text-align: left;">logical_servers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related logical servers</td>
+</tr>
+<tr>
+<td style="text-align: left;">applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related applications</td>
+</tr>
+<tr>
 <td style="text-align: left;">last_notification</td>
 <td style="text-align: left;">datetime</td>
 <td style="text-align: left;">Last notification sent</td>
@@ -4070,7 +4090,6 @@ A logical server can be linked to a container from a container object.</p>
 </ul>
 <p>The "last_notification" field is not used and therefore is absent in the app.</p>
 <p>The data model export lists applications and logical servers linked with a certificate.</p>
-<p>In the app, a certificate can be linked to a application or a logical server from a certificate object.</p>
 <h4 id="vlans">VLANs</h4>
 <p>A VLAN (Virtual Local Area Network) or virtual LAN enables equipment to be logically grouped together, free from
 physical constraints.</p>
@@ -5795,6 +5814,90 @@ A LAN can be linked to a MAN from a MAN object.</p>
 <p>The data model export lists MANs and WANs linked to a LAN.</p>
 <p>In the app, a MAN can be linked to a LAN from a MAN object.<br />
 A WAN can be linked to a LAN from a WAN object.</p>
+<h3 id="configuration">Configuration</h3>
+<p>Dans le menu configuration, on trouve la partie documents.</p>
+<h4 id="documents">documents</h4>
+<p>Thsi part allow to see all attached documents, including specific image (icons)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>documents</em></span></td>
+<td style="text-align: left;"><code>/api/documents</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">filename</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">file name including extension</td>
+</tr>
+<tr>
+<td style="text-align: left;">mimetype</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type of document. filled automatically</td>
+</tr>
+<tr>
+<td style="text-align: left;">size</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">filled automatically</td>
+</tr>
+<tr>
+<td style="text-align: left;">hash</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Hash du docuemnt. filled automatically</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The document is created in docs directory, referenced by its ID</li>
+<li>The document is not inserted in the database.</li>
+</ul>
+<h5 id="exemple-of-a-document-fields-for-a-specific-image-of-firewall">Exemple of a document fields for a specific image of firewall:</h5>
+<pre><code class="language-json">    &quot;id&quot;: 1,
+    &quot;filename&quot;: &quot;fw.png&quot;,
+    &quot;mimetype&quot;: &quot;image/png&quot;,
+    &quot;size&quot;: 5295,
+    &quot;hash&quot;: &quot;71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0&quot;,
+    &quot;deleted_at&quot;: null,
+    &quot;created_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;
+</code></pre>
+<p>⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be used by another asset of the same category as soon as there is, a least, one asset in the category. </p>
               
             </div>
           </div><footer>
