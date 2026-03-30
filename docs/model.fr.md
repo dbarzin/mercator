@@ -1279,6 +1279,7 @@ Les <span style="color: purple;">*actifs (devices)*</span> sources et destinatio
 | Poste de travail                |   ✅    |      ✅      |
 | Equipement de sécurité logique  |   ✅    |      ✅      |
 | Serveur logique                 |   ✅    |      ✅      |
+| Clusters                        |   ✅    |      ✅      |
 | Sous-réseaux                    |   ✅    |      ✅      |
 
 #### Certificats
