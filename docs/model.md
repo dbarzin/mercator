@@ -409,6 +409,8 @@ In the app, an operation can be linked with an actor from the object "operation"
 #### Information
 
 Information is data processed by a computer.
+Information can be inherited from another information.
+Information can be linked to multiple information.
 
 | Table                                           | api                |
 |:------------------------------------------------|:-------------------|
@@ -430,6 +432,9 @@ Information is data processed by a computer.
 | security_need_auth | int          | Authenticity                     |
 | constraints        | longtext     | Legal and regulatory constraints |
 | retention          | varchar(255) | Information retention period     |
+| parents            | List int [,] | IDs list of linked parents information |
+| children           | List int [,] | IDs list of linked children information |
+| processes          | List int [,] | IDs list of used processes by this information |
 | created_at         | timestamp    | Date of creation                 |
 | updated_at         | timestamp    | Date of update                   |
 | deleted_at         | timestamp    | Date of deletion                 |
@@ -444,6 +449,8 @@ The data model export lists databases and processes linked with information.
 
 In the app, a database can be linked with an information from the object "database".  
 A process can be linked to an information from these two objects.
+
+*Note: The link to processes is a view of the result generated through the endpoint [processes](#processes) and its field **informations***
 
 ---
 
