@@ -1298,6 +1298,8 @@ Certificates are SSL keys, HTTPS certificates, etc. They are associated with log
 | start_validity    | date         | Start date of validity               |
 | end_validity      | date         | End date of validity                 |
 | status            | int          | Certificate statis (RFC 6960)        |
+| logical_servers   | List int [,] | IDs list of related logical servers  |
+| applications      | List int [,] | IDs list of related applications     |
 | last_notification | datetime     | Last notification sent               |
 | created_at        | timestamp    | Date of creation                     |
 | updated_at        | timestamp    | Date of update                       |
@@ -1311,8 +1313,6 @@ Certificates are SSL keys, HTTPS certificates, etc. They are associated with log
 The "last_notification" field is not used and therefore is absent in the app.
 
 The data model export lists applications and logical servers linked with a certificate.
-
-In the app, a certificate can be linked to a application or a logical server from a certificate object.
 
 #### VLANs
 
