@@ -62,7 +62,7 @@ class AnnuaireController extends APIController
     {
         abort_if(Gate::denies('annuaire_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Annuaire::whereIn('id', $request->input('ids', []))->delete();
+        Annuaire::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

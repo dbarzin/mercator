@@ -407,6 +407,8 @@ Dans l'application, une opération peut être rattachée à un acteur depuis l'o
 #### Information
 
 Une information est une donnée faisant l’objet d’un traitement informatique.
+Une information peut être héritée d'une ou plusieurs informations parentes.
+Les informations peuvent former des hiérarchies parent-enfant via des liaisons explicites.
 
 | Table                                           | api                |
 |:------------------------------------------------|:-------------------|
@@ -428,6 +430,9 @@ Une information est une donnée faisant l’objet d’un traitement informatique
 | security_need_auth | int          | Authenticité                          |
 | constraints        | longtext     | Contraintes légales et réglementaires |
 | retention          | varchar(255) | Durée de rétention de l'information   |
+| parents            | List int [,] | Liste d'id des informations parentes liées |
+| children           | List int [,] | Liste d'id des informations enfants liées |
+| processes          | List int [,] | Liste d'id des processus utilisant cette information |
 | created_at         | timestamp    | Date de création                      |
 | updated_at         | timestamp    | Date de mise à jour                   |
 | deleted_at         | timestamp    | Date de suppression                   |
@@ -441,6 +446,8 @@ Il s'active depuis le menu Configuration > Paramètres.
 L'export du modèle de données référence les bases de données et processus rattachés à une information.  
 Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.  
 Un processus peut être rattachée à une information depuis ces deux objets.
+
+*Note: le lien processes est une représentation du résultat généré par le endpoint [processes](#processus) et son champ **informations***
 
 ---
 

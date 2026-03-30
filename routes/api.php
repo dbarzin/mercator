@@ -369,4 +369,11 @@ Route::middleware(['api.protected'])->group(function () {
     Route::get('report/impacts', [Report\ImpactList::class, 'generateExcel'])->name('report.view.impacts');
     Route::get('report/rto', [Report\RTO::class, 'generateExcel'])->name('report.view.rto');
 
+    // Documents
+    Route::get('documents/{document}/download', [API\DocumentController::class, 'download'])->name('documents.download');
+    Route::post('documents/mass-store', [API\DocumentController::class, 'massStore'])->name('documents.mass-store');
+    Route::put('documents/mass-update', [API\DocumentController::class, 'massUpdate'])->name('documents.mass-update');
+    Route::delete('documents/mass-destroy', [API\DocumentController::class, 'massDestroy'])->name('documents.mass-destroy');
+    Route::resource('documents', API\DocumentController::class);
+
 });
