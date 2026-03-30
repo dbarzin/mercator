@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Document;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
 use Mercator\Core\Models\AdminUser;
@@ -15,6 +14,7 @@ use Mercator\Core\Models\Cluster;
 use Mercator\Core\Models\Container;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\DataProcessing;
+use Mercator\Core\Models\Document;
 use Mercator\Core\Models\DomaineAd;
 use Mercator\Core\Models\Entity;
 use Mercator\Core\Models\ExternalConnectedEntity;
