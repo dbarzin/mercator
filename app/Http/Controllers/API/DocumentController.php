@@ -24,7 +24,7 @@ class DocumentController extends APIController
      * Liste les documents (métadonnées uniquement).
      * GET /api/documents
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -160,7 +160,7 @@ class DocumentController extends APIController
 
         $this->destroyResource($document);
 
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
