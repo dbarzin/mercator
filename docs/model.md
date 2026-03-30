@@ -1270,14 +1270,15 @@ Source and destination devices can be:
 
 | *device*                 | Source | Destination |
 |:-------------------------|:------:|:-----------:|
-| Peripherals              |   ✅    |      ✅      |
-| Physical security device |   ✅    |      ✅      |
-| Physical server          |   ✅    |      ✅      |
-| Storage infrastructure   |   ✅    |      ✅      |
-| Workstations             |   ✅    |      ✅      |
-| Logical security device  |   ✅    |      ✅      |
-| Logical server           |   ✅    |      ✅      |
-| Subnetworks              |   ✅    |      ✅      |
+| Peripherals              |   ✅   |     ✅      |
+| Physical security device |   ✅   |     ✅      |
+| Physical server          |   ✅   |     ✅      |
+| Storage infrastructure   |   ✅   |     ✅      |
+| Workstations             |   ✅   |     ✅      |
+| Logical security device  |   ✅   |     ✅      |
+| Logical server           |   ✅   |     ✅      |
+| clusters                 |   ✅   |     ✅      |
+| Subnetworks              |   ✅   |     ✅      |
 
 #### Certificates
 
