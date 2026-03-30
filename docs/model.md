@@ -1270,14 +1270,15 @@ Source and destination devices can be:
 
 | *device*                 | Source | Destination |
 |:-------------------------|:------:|:-----------:|
-| Peripherals              |   ✅    |      ✅      |
-| Physical security device |   ✅    |      ✅      |
-| Physical server          |   ✅    |      ✅      |
-| Storage infrastructure   |   ✅    |      ✅      |
-| Workstations             |   ✅    |      ✅      |
-| Logical security device  |   ✅    |      ✅      |
-| Logical server           |   ✅    |      ✅      |
-| Subnetworks              |   ✅    |      ✅      |
+| Peripherals              |   ✅   |     ✅      |
+| Physical security device |   ✅   |     ✅      |
+| Physical server          |   ✅   |     ✅      |
+| Storage infrastructure   |   ✅   |     ✅      |
+| Workstations             |   ✅   |     ✅      |
+| Logical security device  |   ✅   |     ✅      |
+| Logical server           |   ✅   |     ✅      |
+| clusters                 |   ✅   |     ✅      |
+| Subnetworks              |   ✅   |     ✅      |
 
 #### Certificates
 
@@ -1847,3 +1848,42 @@ The data model export lists MANs and WANs linked to a LAN.
 In the app, a MAN can be linked to a LAN from a MAN object.  
 A WAN can be linked to a LAN from a WAN object.
 
+### Configuration
+
+Dans le menu configuration, on trouve la partie documents.
+
+#### documents
+
+Thsi part allow to see all attached documents, including specific image (icons)
+
+| Table                                     | api          |
+|:------------------------------------------|:-------------|
+| <span style="color: blue;">*documents*</span> | `/api/documents` |
+
+| Champ       | Type         | Description                         |
+|:------------|:-------------|:------------------------------------|
+| id          | int unsigned | auto_increment                      |
+| filename    | varchar(255) | file name including extension          |
+| mimetype    | varchar(255) | Type of document. filled automatically |
+| size        | int unsigned | filled automatically                   |
+| hash        | longtext     | Hash du docuemnt. filled automatically |
+| created_at  | timestamp    | Date of creation                    |
+| updated_at  | timestamp    | Date of update                      |
+| deleted_at  | timestamp    | Date of deletion                    |
+
+- The document is created in docs directory, referenced by its ID
+- The document is not inserted in the database.
+
+##### Exemple of a document fields for a specific image of firewall:
+```json
+    "id": 1,
+    "filename": "fw.png",
+    "mimetype": "image/png",
+    "size": 5295,
+    "hash": "71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0",
+    "deleted_at": null,
+    "created_at": "2026-03-30T08:05:46.000000Z",
+    "updated_at": "2026-03-30T08:05:46.000000Z"
+```
+
+⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be used by another asset of the same category as soon as there is, a least, one asset in the category. 

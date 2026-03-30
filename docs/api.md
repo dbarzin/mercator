@@ -23,17 +23,17 @@ php artisan passport:install
 For each object in the cartography data model, there is an API.
 The list of APIs can be found in /route/api.php
 
-__GDPR view__
+#### Endpoints for GDPR
 
 - [/api/data-processings](./model.md#register)
 - [/api/security-controls](./model.md#security-measures)
 
-__Ecosystem view__
+#### Endpoints for Ecosystem
 
 - [/api/entities](./model.md#entities)
 - [/api/relations](./model.md#relationships)
 
-__Information system business view__
+#### Endpoints for Information system business
 
 - [/api/macro-processuses](./model.md#macro-processes)
 - [/api/processes](./model.md#processes)
@@ -43,7 +43,7 @@ __Information system business view__
 - [/api/actors](./model.md#actors)
 - [/api/information](./model.md#information)
 
-__Application view__
+#### Endpoints for Application
 
 - [/api/application-blocks](./model.md#applications-blocks)
 - [/api/applications](./model.md#applications)
@@ -52,7 +52,7 @@ __Application view__
 - [/api/databases](./model.md#databases)
 - [/api/fluxes](./model.md#flows)
 
-__Administration view__
+#### Endpoints for Administration view
 
 - [/api/zone-admins](./model.md#administration-areas)
 - [/api/annuaires](./model.md#administration-directory-services)
@@ -60,7 +60,7 @@ __Administration view__
 - [/api/domaine-ads](./model.md#active-directory-domains-ldap)
 - [/api/admin-users](./model.md#users)
 
-__Logical infrastructure view__
+#### Endpoints for Logical infrastructure
 
 - [/api/networks](./model.md#networks)
 - [/api/subnetworks](./model.md#subnetworks)
@@ -78,7 +78,7 @@ __Logical infrastructure view__
 - [/api/certificates](./model.md#certificates)
 - [/api/vlans](./model.md#vlans)
 
-__Physical infrastructure view__
+#### Endpoints for Physical infrastructure
 
 - [/api/sites](./model.md#sites)
 - [/api/buildings](./model.md#buildings-rooms)
@@ -97,7 +97,35 @@ __Physical infrastructure view__
 - [/api/lans](./model.md#lans)
 - [/api/physical-links](./model.md#physical-links)
 
-__Reports__
+#### Endpoints for Configuration
+- [/api/documents](./model.md#documents)
+
+The unique feature of this endpoint is that it allows you to either upload or download a document.
+The syntax is as follows:
+##### Example of adding a document in Mercator:
+```bash
+RESPONSE=$(http_call -X POST "$API/api/documents" \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Accept: application/json" \
+    -F "file=@./rapport.pdf")
+
+# Display clean JSON (jq uncode, but isn't yet in $() )
+echo "$RESPONSE" | jq .
+
+DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
+```
+
+##### Exemple of downloading a document from mercator:
+```bash
+ OUTFILE="./downloaded_${DOC_ID}.pdf"
+    curl -s -X GET "$API/api/documents/$DOC_ID/download" \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Accept: application/octet-stream" \
+        -o "$OUTFILE" \
+        -w "HTTP %{http_code}\n"
+```
+
+#### Endpoints for Reports
 
 - /api/report/cartography
 - /api/report/entities

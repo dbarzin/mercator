@@ -1279,6 +1279,7 @@ Les <span style="color: purple;">*actifs (devices)*</span> sources et destinatio
 | Poste de travail                |   ✅    |      ✅      |
 | Equipement de sécurité logique  |   ✅    |      ✅      |
 | Serveur logique                 |   ✅    |      ✅      |
+| Clusters                        |   ✅    |      ✅      |
 | Sous-réseaux                    |   ✅    |      ✅      |
 
 #### Certificats
@@ -1849,3 +1850,42 @@ L'export du modèle de données référence les MAN et les WAN rattachés à un 
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
 
 
+### Configuration
+
+Dans le menu configuration, on trouve la partie documents.
+
+#### documents
+
+Cette partie permet de voir les documents attachés, mais aussi les icônes personnalisées.
+
+| Table                                     | api          |
+|:------------------------------------------|:-------------|
+| <span style="color: blue;">*documents*</span> | `/api/documents` |
+
+| Champ       | Type         | Description                         |
+|:------------|:-------------|:------------------------------------|
+| id          | int unsigned | auto_increment                      |
+| filename    | varchar(255) | Nom du document avec son extension |
+| mimetype    | varchar(255) | Type du document. Rempli automatiquement |
+| size        | int unsigned | Remplie automatiquement             |
+| hash        | longtext     | Hash du docuemnt. Rempli automatiquement |
+| created_at  | timestamp    | Date de création                    |
+| updated_at  | timestamp    | Date de mise à jour                 |
+| deleted_at  | timestamp    | Date de suppression                 |
+
+- Le document est créé dans le répertoire docs référencé par son id
+- Le document n'est pas inséré dans la base de donnée.
+
+##### Exemple d'information d'un document pour une icône de firewall:
+```json
+    "id": 1,
+    "filename": "fw.png",
+    "mimetype": "image/png",
+    "size": 5295,
+    "hash": "71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0",
+    "deleted_at": null,
+    "created_at": "2026-03-30T08:05:46.000000Z",
+    "updated_at": "2026-03-30T08:05:46.000000Z"
+```
+
+⚠️ A partir de l'interface utilsiateur, si un document d'icône personnalisé est créé, il peut être utilisé par la même un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.
