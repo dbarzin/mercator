@@ -119,6 +119,27 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
+                        <label class="label-maturity-2"
+                               for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}"
+                                name="sensitivity" id="sensitivity">
+                            @if (!$owner_list->contains(old('sensitivity')))
+                                <option> {{ old('sensitivity') }}</option>
+                            @endif
+                            @foreach($sensitivity_list as $t)
+                                <option {{ (old('sensitivity') ? old('sensitivity') : $information->sensitivity) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('sensitivity'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('sensitivity') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.information.fields.sensitivity_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-group">
                         <table cellspacing="5" cellpadding="5" border="0">
                             <tr>
                                 <td width="140">
@@ -205,27 +226,6 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.information.fields.security_need_helper') }}</span>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label class="label-maturity-2"
-                               for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
-                        <select class="form-control select2-free {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}"
-                                name="sensitivity" id="sensitivity">
-                            @if (!$owner_list->contains(old('sensitivity')))
-                                <option> {{ old('sensitivity') }}</option>
-                            @endif
-                            @foreach($sensitivity_list as $t)
-                                <option {{ (old('sensitivity') ? old('sensitivity') : $information->sensitivity) == $t ? 'selected' : '' }}>{{$t}}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('sensitivity'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('sensitivity') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.information.fields.sensitivity_helper') }}</span>
                     </div>
                 </div>
             </div>
