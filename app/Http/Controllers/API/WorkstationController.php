@@ -28,7 +28,9 @@ class WorkstationController extends APIController
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $workstation = Workstation::create($request->all());
+        $workstation = Workstation::query()->create($request->all());
+
+        $workstation->applications()->sync($request->input('applications', []));
 
         return response()->json($workstation, 201);
     }
@@ -36,6 +38,8 @@ class WorkstationController extends APIController
     public function show(Workstation $workstation)
     {
         abort_if(Gate::denies('workstation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $workstation['applications'] = $workstation->applications()->pluck('id');
 
         return new JsonResource($workstation);
     }
@@ -45,6 +49,9 @@ class WorkstationController extends APIController
         abort_if(Gate::denies('workstation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $workstation->update($request->all());
+
+        if($request->has('applications'))
+            $workstation->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
@@ -62,7 +69,7 @@ class WorkstationController extends APIController
     {
         abort_if(Gate::denies('workstation_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Workstation::whereIn('id', $request->input('ids', []))->delete();
+        Workstation::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
