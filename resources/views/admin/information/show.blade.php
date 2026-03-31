@@ -75,6 +75,12 @@
 
                 <tr>
                     <th>
+                        {{ trans('cruds.information.fields.sensitivity') }}
+                    </th>
+                    <td>
+                        {{ $information->sensitivity }}
+                    </td>
+                    <th>
                         {{ trans('cruds.information.fields.security_need') }}
                         @if (config('mercator-config.parameters.security_need_auth'))
                         + {{ trans("global.authenticity_short") }}
@@ -117,12 +123,6 @@
                         @if ($information->security_need_auth==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
                         @if ($information->security_need_auth==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     @endif
-                    </td>
-                    <th>
-                        {{ trans('cruds.information.fields.sensitivity') }}
-                    </th>
-                    <td>
-                        {{ $information->sensitivity }}
                     </td>
                 </tr>
             </tbody>
