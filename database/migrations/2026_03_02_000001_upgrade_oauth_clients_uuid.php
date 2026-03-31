@@ -2,39 +2,94 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    
     public function up(): void
     {
         if (!$this->isUuidColumn()) {
-            // Vider les tables (tokens incompatibles Passport 12 → 13)
             DB::table('oauth_refresh_tokens')->delete();
             DB::table('oauth_access_tokens')->delete();
             DB::table('oauth_auth_codes')->delete();
             DB::table('oauth_personal_access_clients')->delete();
             DB::table('oauth_clients')->delete();
 
-            // Adapter client_id dans les tables liées
-            Schema::table('oauth_access_tokens', function (Blueprint $table) {
-                $table->string('client_id', 100)->change();
-            });
-            Schema::table('oauth_auth_codes', function (Blueprint $table) {
-                $table->string('client_id', 100)->change();
-            });
+            $driver = DB::connection()->getDriverName();
 
-            // Modifier la colonne id d'oauth_clients
-            Schema::table('oauth_clients', function (Blueprint $table) {
-                $table->string('id', 100)->change();
-            });
+            if ($driver === 'sqlite') {
+                $this->migratePassportTablesForSQLite();
+            } else {
+                Schema::table('oauth_access_tokens', function (Blueprint $table) {
+                    $table->string('client_id', 100)->change();
+                });
+                Schema::table('oauth_auth_codes', function (Blueprint $table) {
+                    $table->string('client_id', 100)->change();
+                });
+                Schema::table('oauth_clients', function (Blueprint $table) {
+                    $table->string('id', 100)->change();
+                });
+            }
         }
     }
 
-    public function down(): void
+    private function migratePassportTablesForSQLite(): void
     {
-        // Pas de rollback
+        // SQLite ne supporte pas ALTER COLUMN fiablement — on recrée les tables
+
+        Schema::drop('oauth_personal_access_clients');
+        Schema::drop('oauth_refresh_tokens');
+        Schema::drop('oauth_access_tokens');
+        Schema::drop('oauth_auth_codes');
+        Schema::drop('oauth_clients');
+
+        Schema::create('oauth_clients', function (Blueprint $table) {
+            $table->string('id', 100)->primary();
+            $table->unsignedBigInteger('user_id')->nullable()->index();
+            $table->string('name');
+            $table->string('secret', 100)->nullable();
+            $table->string('provider')->nullable();
+            $table->text('redirect');
+            $table->tinyInteger('personal_access_client');
+            $table->tinyInteger('password_client');
+            $table->tinyInteger('revoked');
+            $table->timestamps();
+        });
+
+        Schema::create('oauth_access_tokens', function (Blueprint $table) {
+            $table->string('id', 100)->primary();
+            $table->unsignedBigInteger('user_id')->nullable()->index();
+            $table->string('client_id', 100);
+            $table->string('name')->nullable();
+            $table->text('scopes')->nullable();
+            $table->tinyInteger('revoked');
+            $table->timestamps();
+            $table->dateTime('expires_at')->nullable();
+        });
+
+        Schema::create('oauth_auth_codes', function (Blueprint $table) {
+            $table->string('id', 100)->primary();
+            $table->unsignedBigInteger('user_id')->index();
+            $table->string('client_id', 100);
+            $table->text('scopes')->nullable();
+            $table->tinyInteger('revoked');
+            $table->dateTime('expires_at')->nullable();
+        });
+
+        Schema::create('oauth_refresh_tokens', function (Blueprint $table) {
+            $table->string('id', 100)->primary();
+            $table->string('access_token_id', 100)->index();
+            $table->tinyInteger('revoked');
+            $table->dateTime('expires_at')->nullable();
+        });
+
+        Schema::create('oauth_personal_access_clients', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('client_id', 100);
+            $table->timestamps();
+        });
     }
 
     private function isUuidColumn(): bool

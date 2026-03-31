@@ -1501,6 +1501,7 @@ Workstations are physical machines that enable a user to access the information 
 | network_port_type | varchar(255) | Network connector type (RJ45, USB, SFP,...)      |
 | site_id           | int unsigned | Reference to site                                |
 | building_id       | int unsigned | Reference to building / room                     |
+| applications      | List int [,] | IDs list of linked applications                  |
 | created_at        | timestamp    | Date of creation                                 |
 | updated_at        | timestamp    | Date of update                                   |
 | deleted_at        | timestamp    | Date of deletion                                 |
