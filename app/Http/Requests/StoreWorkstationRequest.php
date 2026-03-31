@@ -31,6 +31,8 @@ class StoreWorkstationRequest extends BaseFormRequest
                 'nullable',
                 new IPList,
             ],
+            'applications' => ['array', 'nullable'],
+            'applications.*' => ['exists:applications,id'],
         ];
     }
 }
