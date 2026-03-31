@@ -1504,6 +1504,7 @@ Les postes de travail sont des machines physiques permettant à un utilisateur d
 | network_port_type | varchar(255) | Format du connecteur réseau (RJ45, USB, SFP, etc.)              |
 | site_id           | int unsigned | Référence vers le site                                          |
 | building_id       | int unsigned | Référence vers le building / salle                              |
+| applications      | List int [,] | liste des applications liées                                    |
 | created_at        | timestamp    | Date de création                                                |
 | updated_at        | timestamp    | Date de mise à jour                                             |
 | deleted_at        | timestamp    | Date de suppression                                             |
