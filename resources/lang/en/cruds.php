@@ -1412,7 +1412,7 @@ return [
             'direction' => "Direction",
             'deep' => "Depth",
             'up' => 'Up',
-            'downstream' => 'Down',
+            'down' => 'Down',
             'both' => 'Both',
             'loading' => "Loading Data...",
             'helper' => "Select a start object, direction, and depth, then click 'Analyze'.",
