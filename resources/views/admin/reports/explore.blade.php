@@ -92,13 +92,15 @@
 </button>
                                     &nbsp;
                                     &nbsp;
-                                    <select id="depth">
+                                    <div style="display: inline-block;">
+                                    <select class="form-control select2" id="depth" data-allow-clear="false">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3" selected>3</option>
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
+                                    </div>
 <button type="button" class="btn btn-info" onclick="deployAll()">
 <i class="fas fa-star"></i>&nbsp;{{ trans("cruds.report.explorer.deploy") }}
 </button>
