@@ -116,9 +116,18 @@ suivants :
 
 ## Besoins de sécurité
 
-Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et
-traçabilité avec l'échelle suivante :
+Les besoins de sécurité de l'information sont exprimés en termes de `confidentialité`, `intégrité`, `disponibilité` et `traçabilité` avec l'échelle suivante:
 
+### classification de sécurité (CIDT):  
+| Classification  | Type |            Description                  |
+|-----------------|:----:|-----------------------------------------|
+| Confidentialité |  C   | Protège l’information contre tout accès non autorisé.<br>L’objectif est que **seules les personnes autorisées** puissent consulter les données.<br><br>**Exemples:** mots de passe, données personnelles, documents sensibles. |
+| Intégrité       | I    | Garantit que l’information est exacte.<br>L’objectif est que **seules les personnes autorisées** puissent consulter les données.<br><br>**Exemples:** éviter la corruption de données, empêcher des modifications non autorisées. |
+| Disponibilité   | D    | Assure que l’information et les services sont **accessibles quand on en a besoin**.<br>Un système indisponible est un système inutilisable.<br><br>**Exemples:** pannes, attaques DDoS, maintenance non planifiée. |
+| Traçabilité | T | Permet de **savoir qui a fait quoi, quand et comment**.<br>Elle repose sur les journaux, les logs, l’audit et l’identification.<br><br>**Exemples:** logs d’accès, historique des actions, audit de sécurité. |
+
+
+### Niveaux de sécurité
 | Niveau | Description  |                 Couleur                  |
 |:------:|:------------:|:----------------------------------------:|
 |   0    | Insignifiant |                  Blanc                   |
