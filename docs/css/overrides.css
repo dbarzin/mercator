@@ -1,0 +1,29 @@
+/* Limite la largeur du contenu principal 
+/* .wy-nav-content { */
+/*    max-width: 1200px; */  /* Ajuste selon ton besoin */
+/*    mmargin: 0 auto;  */    /* Centre le contenu */
+/* }
+
+/* Change la couleur inline en bleue */
+.md-typeset code {
+    color: #0066cc;
+}
+/*
+.img-600 {
+  width: 600px !important;
+}
+.img-300 {
+  width: 300px !important;
+  max-width: none !important;
+}
+*/
+/*
+body {
+  border: 5px solid red;
+}
+
+.img-test {
+  border: 5px solid green !important;
+}
+*/
+
