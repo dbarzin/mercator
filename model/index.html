@@ -317,67 +317,77 @@ processes, applications, and information used by the information system.</p>
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Processing name</td>
+<td style="text-align: left;">Processing Name</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Processing description</td>
+<td style="text-align: left;">Processing Description</td>
 </tr>
 <tr>
 <td style="text-align: left;">legal_basis</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Legal basis for processing</td>
+<td style="text-align: left;">Legal Basis for Processing</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Responsible person for processing</td>
+<td style="text-align: left;">Data Controller</td>
 </tr>
 <tr>
 <td style="text-align: left;">purpose</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Purposes of processing</td>
+<td style="text-align: left;">Purposes of Processing</td>
 </tr>
 <tr>
 <td style="text-align: left;">lawfulness</td>
 <td style="text-align: left;">text</td>
-<td style="text-align: left;">Legality of processing</td>
+<td style="text-align: left;">Lawfulness of Processing</td>
 </tr>
 <tr>
 <td style="text-align: left;">lawfulness_consent</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Legality based on consent</td>
+<td style="text-align: left;">Lawfulness based on consent</td>
 </tr>
 <tr>
 <td style="text-align: left;">lawfulness_contract</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Contractual legality</td>
+<td style="text-align: left;">Lawfulness based on contract</td>
 </tr>
 <tr>
 <td style="text-align: left;">lawfulness_legal_obligation</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Legality based on legal obligation</td>
+<td style="text-align: left;">Lawfulness based on legal obligation</td>
 </tr>
 <tr>
 <td style="text-align: left;">lawfulness_vital_interest</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Legality based on vital interest</td>
+<td style="text-align: left;">Lawfulness based on vital interest</td>
 </tr>
 <tr>
 <td style="text-align: left;">lawfulness_public_interest</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Legality based on public interest</td>
+<td style="text-align: left;">Lawfulness based on public interest</td>
 </tr>
 <tr>
 <td style="text-align: left;">lawfulness_legitimate_interest</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Legality based on legitimate interest</td>
+<td style="text-align: left;">Lawfulness based on legitimate interest</td>
 </tr>
 <tr>
 <td style="text-align: left;">categories</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Categories of recipients</td>
+</tr>
+<tr>
+<td style="text-align: left;">data_source</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Data source</td>
+</tr>
+<tr>
+<td style="text-align: left;">data_collection_obligation</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Mandatory or optional nature of data collection and consequences of non-provision</td>
 </tr>
 <tr>
 <td style="text-align: left;">recipients</td>
@@ -390,44 +400,59 @@ processes, applications, and information used by the information system.</p>
 <td style="text-align: left;">Data transfers</td>
 </tr>
 <tr>
+<td style="text-align: left;">automated_decision_making</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Automated decision-making</td>
+</tr>
+<tr>
 <td style="text-align: left;">retention</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Retention periods</td>
 </tr>
 <tr>
-<td style="text-align: left;">controls</td>
+<td style="text-align: left;">data_subject_rights</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Security Measures</td>
+<td style="text-align: left;">Rights of data subjects</td>
 </tr>
 <tr>
-<td style="text-align: left;">informations</td>
+<td style="text-align: left;">update_date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Register ipdate date</td>
+</tr>
+<tr>
+<td style="text-align: left;">controls</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Security measures</td>
+</tr>
+<tr>
+<td style="text-align: left;">information</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs list of related informations</td>
+<td style="text-align: left;">List of related information IDs</td>
 </tr>
 <tr>
 <td style="text-align: left;">applications</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs list of related applications</td>
+<td style="text-align: left;">List of linked application IDs</td>
 </tr>
 <tr>
 <td style="text-align: left;">processes</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">IDs list of related processes</td>
+<td style="text-align: left;">List of linked process IDs</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of creation</td>
+<td style="text-align: left;">Creation date</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of update</td>
+<td style="text-align: left;">Update date</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date of deletion</td>
+<td style="text-align: left;">Deleted date</td>
 </tr>
 </tbody>
 </table>
@@ -1558,7 +1583,8 @@ This default configuration can be changed in the menu Configuration &gt; Paramet
 <p>The data model export lists databases and processes linked with information.</p>
 <p>In the app, a database can be linked with an information from the object "database".<br />
 A process can be linked to an information from these two objects.</p>
-<p><em>Note: The link to processes is a view of the result generated through the endpoint <a href="#processes">processes</a> and its field </em><em>informations</em>**</p>
+<p><em>Note: The link to processes is a view of the result generated through the endpoint <a href="#processes">processes</a> and its
+field </em><em>informations</em>**</p>
 <hr />
 <h3 id="applications-view">Applications view</h3>
 <p>The application view is used to describe part of what is classically referred to as the "computer system".</p>
@@ -3332,8 +3358,9 @@ systems (IPS: Intrusion Prevention System) and equipment monitoring systems.</p>
 An application can be linked a to logical security device from these two objects.</p>
 <h4 id="dhcp-servers">DHCP servers</h4>
 <pre><code class="language-markdown">***NOTE***: The DHCP servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+
 - ANSSI is the French cybersecurity regulation authority.
-This object is considered barely usefull and obsolete. It's hidden by default.
+  This object is considered barely usefull and obsolete. It's hidden by default.
 </code></pre>
 <p>DHCP servers are physical or virtual devices that manage a network's IP addresses.</p>
 <table>
@@ -3398,8 +3425,9 @@ This object is considered barely usefull and obsolete. It's hidden by default.
 </table>
 <h4 id="dns-servers">DNS servers</h4>
 <pre><code class="language-markdown">***NOTE***: The DNS servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+
 - ANSSI is the French cybersecurity regulation authority.
-This object is considered barely usefull and obsolete. It's hidden by default.
+  This object is considered barely usefull and obsolete. It's hidden by default.
 </code></pre>
 <p>Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.</p>
 <table>
@@ -4816,7 +4844,8 @@ been gathered in the following table:</p>
 <p>The "vendor", "product" and "version" fields are not used and therefore are absent of the app.</p>
 <h4 id="storage-infrastructures">Storage infrastructures</h4>
 <pre><code class="language-markdown">***NOTE***: The storage infrastructures are kept for compatibility, but this table is not maintained anymore.
- It is possible to replace this asset by:
+It is possible to replace this asset by:
+
 - A logical server.
 - A physical server.
 </code></pre>
@@ -5899,15 +5928,16 @@ A WAN can be linked to a LAN from a WAN object.</p>
 </ul>
 <h5 id="exemple-of-a-document-fields-for-a-specific-image-of-firewall">Exemple of a document fields for a specific image of firewall:</h5>
 <pre><code class="language-json">    &quot;id&quot;: 1,
-    &quot;filename&quot;: &quot;fw.png&quot;,
-    &quot;mimetype&quot;: &quot;image/png&quot;,
-    &quot;size&quot;: 5295,
-    &quot;hash&quot;: &quot;71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0&quot;,
-    &quot;deleted_at&quot;: null,
-    &quot;created_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;
+&quot;filename&quot;: &quot;fw.png&quot;,
+&quot;mimetype&quot;: &quot;image/png&quot;,
+&quot;size&quot;: 5295,
+&quot;hash&quot;: &quot;71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0&quot;,
+&quot;deleted_at&quot;: null,
+&quot;created_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;,
+&quot;updated_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;
 </code></pre>
-<p>⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be used by another asset of the same category as soon as there is, a least, one asset in the category. </p>
+<p>⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be
+used by another asset of the same category as soon as there is, a least, one asset in the category. </p>
               
             </div>
           </div><footer>

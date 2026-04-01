@@ -380,6 +380,16 @@ les processus, applications et informations utilisées par le système d'informa
 <td style="text-align: left;">Catégories de destinataires</td>
 </tr>
 <tr>
+<td style="text-align: left;">data_source</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Source de données</td>
+</tr>
+<tr>
+<td style="text-align: left;">data_collection_obligation</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Caractère obligatoire ou facultatif du recueil des données et conséquences en cas de non-fourniture des données</td>
+</tr>
+<tr>
 <td style="text-align: left;">recipients</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Destinataires des données</td>
@@ -390,9 +400,24 @@ les processus, applications et informations utilisées par le système d'informa
 <td style="text-align: left;">Transferts de données</td>
 </tr>
 <tr>
+<td style="text-align: left;">automated_decision_making</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Prise de décision automatisée</td>
+</tr>
+<tr>
 <td style="text-align: left;">retention</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Durées de rétention</td>
+</tr>
+<tr>
+<td style="text-align: left;">data_subject_rights</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Droits des personnes concernées</td>
+</tr>
+<tr>
+<td style="text-align: left;">update_date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de mise à jour du registre</td>
 </tr>
 <tr>
 <td style="text-align: left;">controls</td>
@@ -1523,7 +1548,8 @@ Il s'active depuis le menu Configuration &gt; Paramètres.</p>
 <p>L'export du modèle de données référence les bases de données et processus rattachés à une information.<br />
 Dans l'application, une base de donnée peut être rattachée à une information depuis l'objet base de données.<br />
 Un processus peut être rattachée à une information depuis ces deux objets.</p>
-<p><em>Note: le lien processes est une représentation du résultat généré par le endpoint <a href="#processus">processes</a> et son champ </em><em>informations</em>**</p>
+<p><em>Note: le lien processes est une représentation du résultat généré par le endpoint <a href="#processus">processes</a> et son
+champ </em><em>informations</em>**</p>
 <hr />
 <h3 id="la-vue-des-applications">La vue des applications</h3>
 <p>La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ».</p>
@@ -2313,7 +2339,8 @@ en termes de flux l’ensemble des règles de filtrage du firewall.</p>
 <p>Dans l'application, une information peut être rattaché à un flux applicatif depuis un objet flux applicatif.</p>
 <hr />
 <h3 id="zone-dadministration">Zone d’administration</h3>
-<p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des utilisateurs du système d’information.</p>
+<p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des
+utilisateurs du système d’information.</p>
 <p><a href="../../images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <p>Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les
 opérateurs d’importance vitale (OIV).</p>
@@ -3334,7 +3361,8 @@ Dans l'application, un équipement de sécurité physique peut être rattaché �
 logique depuis ces deux objets.<br />
 Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.</p>
 <h4 id="serveurs-dhcp">Serveurs DHCP</h4>
-<pre><code class="language-markdown">***NOTE***: Les serveurs dhcp sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
+<pre><code class="language-markdown">***NOTE***: Les serveurs dhcp sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf.
+Références), mais sont considérés comme non utiles et masqués par défaut.
 </code></pre>
 <p>Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.</p>
 <table>
@@ -3398,10 +3426,11 @@ Une application peut être rattachée à un équipement de sécurité logique de
 </tbody>
 </table>
 <h4 id="serveurs-dns">Serveurs DNS</h4>
-<pre><code class="language-markdown">***NOTE***: Les serveurs dns sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf. Références), mais sont considérés comme non utiles et masqués par défaut.
+<pre><code class="language-markdown">***NOTE***: Les serveurs dns sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf.
+Références), mais sont considérés comme non utiles et masqués par défaut.
 </code></pre>
 <p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant
-la conversion d’un nom de domaine en adresse IP.  </p>
+la conversion d’un nom de domaine en adresse IP.</p>
 <table>
 <thead>
 <tr>
@@ -4099,7 +4128,7 @@ applications.</p>
 </li>
 </ul>
 <p>Le champ "last_notification" n'est pas utilisé pour le moment et est donc absent de l'application.<br />
-L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.  </p>
+L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.</p>
 <h4 id="vlans">VLANs</h4>
 <p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements
 en s’affranchissant des contraintes physiques.</p>
@@ -4821,8 +4850,10 @@ dans l'application pour la table <em>workstations</em> ont été regroupés dans
 </tbody>
 </table>
 <h4 id="infrastructures-de-stockage">Infrastructures de stockage</h4>
-<pre><code class="language-markdown">***NOTE***: Les infrastructures de stockage sont conservées pour la rétrocompatibilité, mais cette table n'est pas maintenue.
- On peut remplacer cet asset par:
+<pre><code class="language-markdown">***NOTE***: Les infrastructures de stockage sont conservées pour la rétrocompatibilité, mais cette table n'est pas
+maintenue.
+On peut remplacer cet asset par:
+
 - Un serveur logique
 - Un serveur physique 
 </code></pre>
@@ -5925,15 +5956,16 @@ Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les o
 </ul>
 <h5 id="exemple-dinformation-dun-document-pour-une-icone-de-firewall">Exemple d'information d'un document pour une icône de firewall:</h5>
 <pre><code class="language-json">    &quot;id&quot;: 1,
-    &quot;filename&quot;: &quot;fw.png&quot;,
-    &quot;mimetype&quot;: &quot;image/png&quot;,
-    &quot;size&quot;: 5295,
-    &quot;hash&quot;: &quot;71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0&quot;,
-    &quot;deleted_at&quot;: null,
-    &quot;created_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;
+&quot;filename&quot;: &quot;fw.png&quot;,
+&quot;mimetype&quot;: &quot;image/png&quot;,
+&quot;size&quot;: 5295,
+&quot;hash&quot;: &quot;71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0&quot;,
+&quot;deleted_at&quot;: null,
+&quot;created_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;,
+&quot;updated_at&quot;: &quot;2026-03-30T08:05:46.000000Z&quot;
 </code></pre>
-<p>⚠️ A partir de l'interface utilsiateur, si un document d'icône personnalisé est créé, il peut être utilisé par la même un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.</p>
+<p>⚠️ A partir de l'interface utilsiateur, si un document d'icône personnalisé est créé, il peut être utilisé par la même
+un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.</p>
               
             </div>
           </div><footer>
