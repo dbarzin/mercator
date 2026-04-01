@@ -10,9 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/exploration/">
+        <link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/features/">
       
       
+        <link rel="prev" href="../reports/">
+      
+      
+        <link rel="next" href="../usecases/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +24,7 @@
     
     
       
-        <title>Fonctionnalité Exploration - Mercator</title>
+        <title>Exploration et Dépendances - Mercator</title>
       
     
     
@@ -74,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#fonctionnalite-exploration" class="md-skip">
+        <a href="#exploration-et-dependances" class="md-skip">
           Aller au contenu
         </a>
       
@@ -110,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fonctionnalité Exploration
+              Exploration et Dépendances
             
           </span>
         </div>
@@ -157,7 +161,7 @@
       <ul class="md-select__list">
         
           <li class="md-select__item">
-            <a href="../../exploration/" hreflang="en" class="md-select__link">
+            <a href="../../features/" hreflang="en" class="md-select__link">
               English
             </a>
           </li>
@@ -398,10 +402,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../features/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Exploration et Dépendances
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -410,6 +434,248 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deux-modes-de-visualisation-forcedirected-vs-hierarchique" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 Deux modes de visualisation : Force‑Directed vs Hiérarchique
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loutil-exploration-outils-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      🕸️ L'outil Exploration (Outils ➡️ Exploration)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loutil-dependances-outils-dependances" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⟁ L'Outil Dépendances (Outils ➡️ Dépendances)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-description-detaillee-des-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Description détaillée des interfaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-comprendre-le-champ-filtre" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Comprendre le champ Filtre
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Comprendre le champ Filtre">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-effet-1-restreindre-la-liste-deroulante-objet" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Effet 1 — Restreindre la liste déroulante "Objet"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-effet-2-limiter-la-visibilite-des-assets-dans-le-graphe-piege-frequent" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Effet 2 — Limiter la visibilité des assets dans le graphe (piège fréquent)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-regle-pratique-quel-filtre-choisir" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Règle pratique : quel filtre choisir ?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-semantique-des-boutons-directionnels" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Sémantique des boutons directionnels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-procedure-dutilisation-pas-a-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Procédure d'utilisation pas à pas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exemples-dexploration-ou-danalyse" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Exemples d'Exploration ou d'analyse
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Exemples d'Exploration ou d'analyse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-impact-metier-dune-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Impact métier d'une application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-infrastructure-supportant-une-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Infrastructure supportant une application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-analyse-dimpact-complete-avant-maintenance-incident" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 Analyse d'impact complète (avant maintenance / incident)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-selection-de-la-direction-selon-le-cas-dusage" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 Sélection de la direction selon le cas d'usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-correspondance-bpmn-archimate-mercator" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Correspondance BPMN — ArchiMate — Mercator
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Correspondance BPMN — ArchiMate — Mercator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relations-archimate-dans-mercator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relations ArchiMate dans Mercator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-bonnes-pratiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Bonnes Pratiques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Bonnes Pratiques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-recommandations-pour-ces-outils" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Recommandations pour ces outils
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-recommandations-pour-la-saisie-des-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Recommandations pour la saisie des assets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-cas-dusage-par-profil-utilisateur" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Cas d'usage par profil utilisateur
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      Références
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -589,7 +855,7 @@
                   
 
   
-    <a href="https://github.com/dbarzin/mercator/edit/master/docs/exploration.fr.md" title="Editer cette page" class="md-content__button md-icon">
+    <a href="https://github.com/dbarzin/mercator/edit/master/docs/features.fr.md" title="Editer cette page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -598,86 +864,149 @@
     
       
     
-    <a href="https://github.com/dbarzin/mercator/raw/master/docs/exploration.fr.md" title="Consulter la source de cette page" class="md-content__button md-icon">
+    <a href="https://github.com/dbarzin/mercator/raw/master/docs/features.fr.md" title="Consulter la source de cette page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-<h1 id="fonctionnalite-exploration">Fonctionnalité Exploration<a class="headerlink" href="#fonctionnalite-exploration" title="Permanent link">&para;</a></h1>
-<p>L'outil <strong>Exploration</strong> (<code>Outils → Exploration</code>) permet de naviguer dynamiquement dans le graphe de relations entre les
+<h1 id="exploration-et-dependances">Exploration et Dépendances<a class="headerlink" href="#exploration-et-dependances" title="Permanent link">&para;</a></h1>
+<h2 id="deux-modes-de-visualisation-forcedirected-vs-hierarchique">🌐 Deux modes de visualisation : <em>Force‑Directed</em> vs <em>Hiérarchique</em><a class="headerlink" href="#deux-modes-de-visualisation-forcedirected-vs-hierarchique" title="Permanent link">&para;</a></h2>
+<p>Ces outils, permettent de naviguer dynamiquement dans le graphe de relations entre les
 assets. Il révèle les dépendances entre couches : vers le <strong>haut</strong> (abstrait / métier) ou vers le <strong>bas</strong> (concret /
 physique).</p>
-<h2 id="1-interface">1. Interface<a class="headerlink" href="#1-interface" title="Permanent link">&para;</a></h2>
-<p><a href="../images/explorer.png"><img src="/mercator/fr/images/explorer.png" width="700"></a></p>
+<h2 id="loutil-exploration-outils-exploration">🕸️ L'outil <code>Exploration</code> <em>(Outils ➡️ Exploration)</em><a class="headerlink" href="#loutil-exploration-outils-exploration" title="Permanent link">&para;</a></h2>
+<p>Ce mode affiche un graphe relationnel <strong>sans hiérarchie imposée</strong>.<br />
+Les nœuds se positionnent selon un moteur physique (attraction / répulsion), ce qui permet :</p>
+<ul>
+<li>d’explorer librement les relations  </li>
+<li>d’identifier des clusters  </li>
+<li>de naviguer dans des dépendances complexes  </li>
+<li>de visualiser l’ensemble du graphe autour d’un asset</li>
+</ul>
+<p>Ce mode est idéal pour <strong>l’exploration intuitive</strong>.</p>
+<p>🔍 <em>Présentation de l'interface dans la page <a href="../application/#exploration-de-la-cartographie">applications#Exploration de la cartographie</a></em></p>
+<h2 id="loutil-dependances-outils-dependances">⟁ L'Outil <code>Dépendances</code> <em>(Outils ➡️ Dépendances)</em><a class="headerlink" href="#loutil-dependances-outils-dependances" title="Permanent link">&para;</a></h2>
+<p>Ce mode impose une structure <strong>en couches</strong> (amont → aval).<br />
+Les dépendances sont orientées et organisées par niveaux, ce qui permet :</p>
+<ul>
+<li>de comprendre rapidement les flux  </li>
+<li>d’analyser les dépendances montantes ou descendantes  </li>
+<li>de documenter une architecture  </li>
+<li>de clarifier les relations complexes</li>
+</ul>
+<p>Ce mode est idéal pour <strong>l’analyse structurée</strong>.</p>
+<p>🔍 <em>présentation de l'interface dans la page <a href="../application/#analyse-des-dependances">applications#Analyse des dépendances</a></em></p>
+<hr />
+<h2 id="1-description-detaillee-des-interfaces">1. Description détaillée des interfaces<a class="headerlink" href="#1-description-detaillee-des-interfaces" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Élément UI</th>
 <th>Type</th>
-<th>Rôle</th>
+<th style="text-align: center;">🕸️ Exploration</th>
+<th style="text-align: center;">⟁ Dépendances</th>
+<th> Rôle</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Filtre</strong></td>
-<td>Champ texte</td>
+<td>Liste déroulante</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Filtre sur les vues de la cartographie (ex : <code>Applications</code>)</td>
+</tr>
+<tr>
+<td><strong>Attributs</strong></td>
+<td>Liste déroulante</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td>Filtre sur les attributs des assets (ex : <code>Opensource</code>)</td>
 </tr>
 <tr>
 <td><strong>Objet</strong></td>
 <td>Liste déroulante</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Sélection de l'asset à explorer (ex : <code>RH-Solution</code>)</td>
 </tr>
 <tr>
 <td><strong>Ajouter</strong></td>
-<td>Bouton bleu</td>
+<td>Bouton vert</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Ajoute l'asset sélectionné dans la fenêtre graphique</td>
 </tr>
 <tr>
 <td><strong>Physique</strong></td>
 <td>Toggle vert</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Active/désactive l'affichage des liaisons physiques</td>
 </tr>
 <tr>
 <td><strong>Niveau (1–5)</strong></td>
 <td>Sélecteur</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Nombre de niveaux de relations à déployer</td>
 </tr>
 <tr>
 <td><strong>Déployer</strong></td>
 <td>Bouton vert</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Lance l'exploration selon les paramètres définis</td>
+</tr>
+<tr>
+<td><strong>Analyser</strong></td>
+<td>Bouton vert</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✅</td>
+<td>Lance l'analyse de dépendances selon les paramètres définis</td>
 </tr>
 <tr>
 <td><strong>↑ Haut</strong></td>
 <td>Bouton cyan</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Déploie vers les couches supérieures (abstrait / métier)</td>
 </tr>
 <tr>
 <td><strong>↓ Bas</strong></td>
 <td>Bouton cyan</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Déploie vers les couches inférieures (concret / physique)</td>
 </tr>
 <tr>
 <td><strong>↕ Les deux</strong></td>
 <td>Bouton cyan</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Déploie dans les deux sens simultanément</td>
 </tr>
 <tr>
 <td><strong>Supprimer</strong></td>
 <td>Bouton rouge</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Retire l'asset sélectionné du graphe</td>
 </tr>
 <tr>
 <td><strong>Recommencer</strong></td>
 <td>Bouton jaune</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Réinitialise entièrement le graphe</td>
 </tr>
 <tr>
 <td><strong>Show IP</strong></td>
 <td>Bouton gris</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Affiche les adresses IP sur les assets réseau</td>
 </tr>
 </tbody>
@@ -685,17 +1014,15 @@ physique).</p>
 <hr />
 <h2 id="2-comprendre-le-champ-filtre">2. Comprendre le champ Filtre<a class="headerlink" href="#2-comprendre-le-champ-filtre" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>⚠️ <strong>Point critique</strong> : le champ Filtre a un double effet qu'il est essentiel de comprendre avant d'explorer le
-graphe.</p>
+<p>⚠️ <strong>Point critique</strong> : le champ Filtre a un double effet qu'il est essentiel de comprendre avant d'utilise ces outils.</p>
 </blockquote>
 <h3 id="21-effet-1-restreindre-la-liste-deroulante-objet">2.1 Effet 1 — Restreindre la liste déroulante "Objet"<a class="headerlink" href="#21-effet-1-restreindre-la-liste-deroulante-objet" title="Permanent link">&para;</a></h3>
 <p>C'est l'usage le plus intuitif. En saisissant une vue dans le champ Filtre (ex : <code>Applications</code>), la liste déroulante "
-Objet" n'affiche plus que les assets appartenant à cette vue. Cela évite de chercher un asset dans l'intégralité de la
-CMDB.</p>
+Objet" n'affiche plus que les assets appartenant à cette vue. Cela évite de chercher un asset dans l'intégralité de la CMDB.</p>
 <h3 id="22-effet-2-limiter-la-visibilite-des-assets-dans-le-graphe-piege-frequent">2.2 Effet 2 — Limiter la visibilité des assets dans le graphe (piège fréquent)<a class="headerlink" href="#22-effet-2-limiter-la-visibilite-des-assets-dans-le-graphe-piege-frequent" title="Permanent link">&para;</a></h3>
 <p>C'est l'effet le moins attendu, et la source d'erreurs la plus courante. <strong>Le filtre ne se contente pas de restreindre
 la liste "Objet" : il conditionne également les types d'assets qui s'afficheront dans le graphe lors de l'exploration.</strong></p>
-<p>Concrètement : si vous explorez un <code>logical-server</code> avec uniquement <code>Infrastructure logique</code> dans le filtre, les
+<p>Concrètement : si vous sélectionnez un <code>logical-server</code> avec uniquement <code>Infrastructure logique</code> dans le filtre, les
 applications liées à ce serveur n'apparaîtront <strong>jamais</strong> dans le graphe, même si elles existent dans Mercator et sont
 correctement associées. Elles sont simplement exclues car leur type n'est pas couvert par le filtre actif.</p>
 <p><strong>Exemple illustré :</strong></p>
@@ -725,10 +1052,27 @@ correctement associées. Elles sont simplement exclues car leur type n'est pas c
 </tr>
 </tbody>
 </table>
-<p><a href="images/exploration_filtre_infra.fr.png"><img src="/mercator/fr/images/exploration_filtre_infra.png" width="700"></a>
-<em>Avec filtre "Infrastructure logique" uniquement : RH-Solution n'apparaît pas.</em></p>
-<p><a href="images/exploration_filtre_full.fr.png"><img src="/mercator/fr/images/exploration_filtre_full.png" width="700"></a>
-<em>Avec filtres "Applications" + "Infrastructure logique" : RH-Solution et DB-RH-PROD apparaissent.</em></p>
+<table>
+<thead>
+<tr>
+<th> Filtre</th>
+<th style="text-align: center;">🕸️ Exploration</th>
+<th style="text-align: center;"> ⟁ Dependances</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Infrastructure logique</code> uniquement:<br>RH-Solution n'apparaît pas.</td>
+<td style="text-align: center;"><a href="../images/filter_exploration_infra.png"><img src="/mercator/fr/images/filter_exploration_infra.png" width="550"></a></td>
+<td style="text-align: center;"><a href="../images/filter_dependency_infra.png"><img src="/mercator/fr/images/filter_dependency_infra.png" width="550"></a></td>
+</tr>
+<tr>
+<td><code>Applications</code> + <code>Infrastructure logique</code>:<br> RH-Solution et DB-RH-PROD apparaissent.</td>
+<td style="text-align: center;"><a href="../images/filter_exploration_full.png"><img src="/mercator/fr/images/filter_exploration_full.png" width="550"></a></td>
+<td style="text-align: center;"><a href="../images/filter_dependency_full.png"><img src="/mercator/fr/images/filter_dependency_full.png" width="550"></a></td>
+</tr>
+</tbody>
+</table>
 <h3 id="23-regle-pratique-quel-filtre-choisir">2.3 Règle pratique : quel filtre choisir ?<a class="headerlink" href="#23-regle-pratique-quel-filtre-choisir" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -743,7 +1087,7 @@ correctement associées. Elles sont simplement exclues car leur type n'est pas c
 <td>Saisir uniquement la vue ciblée (ex : <code>Applications</code>)</td>
 </tr>
 <tr>
-<td>Exploration cross-couches (application + infrastructure)</td>
+<td>Exploration ou analyse cross-couches (application + infrastructure)</td>
 <td>Saisir <strong>toutes</strong> les vues concernées, ou laisser vide</td>
 </tr>
 <tr>
@@ -751,14 +1095,16 @@ correctement associées. Elles sont simplement exclues car leur type n'est pas c
 <td><strong>Laisser le filtre vide</strong> pour ne rien exclure</td>
 </tr>
 <tr>
-<td>Exploration limitée à une seule couche (ex : réseau uniquement)</td>
+<td>Exploration  ou analyse limitée à une seule couche (ex : réseau uniquement)</td>
 <td>Saisir uniquement la vue de cette couche</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>💡 <strong>Conseil</strong> : en cas de doute sur ce que l'on cherche, commencez toujours avec le filtre <strong>vide</strong>. Vous pouvez le
-restreindre ensuite si le graphe devient trop dense.</p>
+<p>💡 <strong>Conseils</strong> :<br />
+- en cas de doute sur ce que l'on cherche, commencez toujours avec le filtre <strong>vide</strong>. Vous pouvez le restreindre ensuite si le graphe devient trop dense.<br />
+- Vous pouvez filtrer, sélectionner l'objet, l'ajouter dans la fenêtre, supprimer le filtre et lancer <code>🕸️ Déployer</code> ou <code>⟁ Analyser</code>
+- Pour filtrer, Vous pouvez aussi saisir le début des noms des assets recherchés dans le champs objets  </p>
 </blockquote>
 <hr />
 <h2 id="3-semantique-des-boutons-directionnels">3. Sémantique des boutons directionnels<a class="headerlink" href="#3-semantique-des-boutons-directionnels" title="Permanent link">&para;</a></h2>
@@ -834,7 +1180,7 @@ restreindre ensuite si le graphe devient trop dense.</p>
              Répéter à partir de l&#39;étape 4
 </code></pre></div>
 <hr />
-<h2 id="5-exemples-dexploration">5. Exemples d'Exploration<a class="headerlink" href="#5-exemples-dexploration" title="Permanent link">&para;</a></h2>
+<h2 id="5-exemples-dexploration-ou-danalyse">5. Exemples d'Exploration ou d'analyse<a class="headerlink" href="#5-exemples-dexploration-ou-danalyse" title="Permanent link">&para;</a></h2>
 <h3 id="51-impact-metier-dune-application">5.1 Impact métier d'une application<a class="headerlink" href="#51-impact-metier-dune-application" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p><strong>Contexte :</strong> Quels processus métier et acteurs dépendent de <code>RH-Solution</code> ?</p>
@@ -1099,7 +1445,7 @@ restreindre ensuite si le graphe devient trop dense.</p>
 <thead>
 <tr>
 <th>Relation ArchiMate</th>
-<th>Direction Exploration</th>
+<th>Direction  🕸️  ⟁</th>
 <th>Exemple Mercator</th>
 </tr>
 </thead>
@@ -1133,17 +1479,17 @@ restreindre ensuite si le graphe devient trop dense.</p>
 </table>
 <hr />
 <h2 id="7-bonnes-pratiques">7. Bonnes Pratiques<a class="headerlink" href="#7-bonnes-pratiques" title="Permanent link">&para;</a></h2>
-<h3 id="71-recommandations-pour-lexploration">7.1 Recommandations pour l'exploration<a class="headerlink" href="#71-recommandations-pour-lexploration" title="Permanent link">&para;</a></h3>
-<p><strong>Commencer par le niveau 1 ou 2</strong>
+<h3 id="71-recommandations-pour-ces-outils">7.1 Recommandations pour ces outils<a class="headerlink" href="#71-recommandations-pour-ces-outils" title="Permanent link">&para;</a></h3>
+<p><strong>Commencer par le niveau 1 ou 2</strong><br />
 Pour les assets très connectés (ex : application centrale), démarrer avec 1 ou 2 niveaux évite un graphe illisible.
 Augmenter ensuite progressivement.</p>
-<p><strong>Utiliser le filtre avec discernement</strong>
+<p><strong>Utiliser le filtre avec discernement</strong><br />
 Comme expliqué au chapitre 2, le filtre conditionne non seulement la liste des objets disponibles, mais aussi les assets
-visibles dans le graphe. Pour une exploration cross-couches, pensez à ajouter toutes les vues pertinentes ou à laisser
+visibles dans le graphe. Pour une exploration ou analyse cross-couches, pensez à ajouter toutes les vues pertinentes ou à laisser
 le filtre vide.</p>
-<p><strong>Mode Physique</strong>
+<p><strong>🕸️ Mode Physique</strong><br />
 Activer le toggle Physique uniquement quand vous souhaitez visualiser les liaisons réseau physiques (WAN/LAN/MAN).
-Désactivé, l'exploration reste au niveau logique.</p>
+Désactivé, l'exploration ou l'analyse reste au niveau logique.</p>
 <h3 id="72-recommandations-pour-la-saisie-des-assets">7.2 Recommandations pour la saisie des assets<a class="headerlink" href="#72-recommandations-pour-la-saisie-des-assets" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Respecter la numérotation Mercator : créer les assets de la couche physique (600+) avant de les associer aux couches
@@ -1151,8 +1497,7 @@ Désactivé, l'exploration reste au niveau logique.</p>
 <li>La relation de containment physique doit être saisie dans l'ordre : <strong>Site → Building → Bay → Physical Server</strong>.</li>
 <li>Un <code>logical-server</code> (VM) doit toujours être rattaché à un <code>physical-server</code> pour que la navigation ↓ Bas fonctionne
   correctement.</li>
-<li>Les <code>certificates</code> (570) sont transverses : les associer aux applications ET aux serveurs logiques pour une
-  exploration complète.</li>
+<li>Les <code>certificates</code> (570) sont transverses : les associer aux applications ET aux serveurs logiques pour une exploration ou une analyse complète.</li>
 <li>Les <code>external-connected-entities</code> (540) peuvent être rattachées à la couche métier (partenaires) ou réseau (
   connexions) selon le contexte.</li>
 </ul>

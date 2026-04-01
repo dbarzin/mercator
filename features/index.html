@@ -10,9 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://dbarzin.githubs.io/mercator/exploration/">
+        <link rel="canonical" href="https://dbarzin.githubs.io/mercator/features/">
       
       
+        <link rel="prev" href="../reports/">
+      
+      
+        <link rel="next" href="../usecases/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +24,7 @@
     
     
       
-        <title>Exploration Feature - Mercator</title>
+        <title>Explorer and Dependencies - Mercator</title>
       
     
     
@@ -74,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#exploration-feature" class="md-skip">
+        <a href="#explorer-and-dependencies" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Exploration Feature
+              Explorer and Dependencies
             
           </span>
         </div>
@@ -163,7 +167,7 @@
           </li>
         
           <li class="md-select__item">
-            <a href="../fr/exploration/" hreflang="fr" class="md-select__link">
+            <a href="../fr/features/" hreflang="fr" class="md-select__link">
               Français
             </a>
           </li>
@@ -398,10 +402,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../features/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Explorer and Dependencies
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -410,6 +434,248 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#two-visualization-modes-forcedirected-vs-hierarchical" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 Two Visualization Modes: Force‑Directed vs Hierarchical
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-exploration-tool-tools-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      🕸️ The Exploration Tool (Tools ➡️ Exploration)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-dependencies-tool-tools-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⟁ The Dependencies Tool (Tools ➡️ Dependencies)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-detailed-interface-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Detailed Interface description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-understanding-the-filter-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Understanding the Filter Field
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Understanding the Filter Field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-effect-1-restricting-the-object-dropdown-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Effect 1 — Restricting the "Object" dropdown list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-effect-2-limiting-asset-visibility-in-the-graph-a-common-pitfall" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Effect 2 — Limiting asset visibility in the graph (a common pitfall)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-practical-rule-which-filter-should-i-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Practical rule: which filter should I use?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-semantics-of-directional-buttons" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Semantics of Directional Buttons
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-step-by-step-usage-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Step-by-Step Usage Procedure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exploration-or-dependency-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Exploration or Dependency Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Exploration or Dependency Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-business-impact-of-an-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Business Impact of an Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-infrastructure-supporting-an-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Infrastructure Supporting an Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-full-impact-analysis-before-maintenance-incident" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 Full Impact Analysis (Before Maintenance / Incident)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-direction-selection-by-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 Direction Selection by Use Case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-bpmn-archimate-mercator-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. BPMN — ArchiMate — Mercator Mapping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. BPMN — ArchiMate — Mercator Mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#archimate-relations-in-mercator" class="md-nav__link">
+    <span class="md-ellipsis">
+      ArchiMate Relations in Mercator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-tools-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Tools Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-asset-entry-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Asset Entry Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-use-cases-by-user-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Use Cases by User Profile
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -589,7 +855,7 @@
                   
 
   
-    <a href="https://github.com/dbarzin/mercator/edit/master/docs/exploration.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/dbarzin/mercator/edit/master/docs/features.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -598,85 +864,150 @@
     
       
     
-    <a href="https://github.com/dbarzin/mercator/raw/master/docs/exploration.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/dbarzin/mercator/raw/master/docs/features.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-<h1 id="exploration-feature">Exploration Feature<a class="headerlink" href="#exploration-feature" title="Permanent link">&para;</a></h1>
-<p>The <strong>Exploration</strong> tool (<code>Tools → Exploration</code>) allows you to dynamically navigate through the asset relationship
-graph. It reveals dependencies between layers: upward (abstract / business) or downward (concrete / physical).</p>
-<h2 id="1-interface">1. Interface<a class="headerlink" href="#1-interface" title="Permanent link">&para;</a></h2>
-<p><a href="../images/explorer.png"><img src="/mercator/images/explorer.png" width="700"></a></p>
+<h1 id="explorer-and-dependencies">Explorer and Dependencies<a class="headerlink" href="#explorer-and-dependencies" title="Permanent link">&para;</a></h1>
+<h2 id="two-visualization-modes-forcedirected-vs-hierarchical">🌐 Two Visualization Modes: <em>Force‑Directed</em> vs <em>Hierarchical</em><a class="headerlink" href="#two-visualization-modes-forcedirected-vs-hierarchical" title="Permanent link">&para;</a></h2>
+<p>These tools allow you to navigate dynamically through the relationship graph between assets.<br />
+They reveal dependencies across layers: upward toward the <strong>abstract / business</strong> level, or downward toward the <strong>concrete / physical</strong> level.</p>
+<hr />
+<h2 id="the-exploration-tool-tools-exploration">🕸️ The <code>Exploration</code> Tool <em>(Tools ➡️ Exploration)</em><a class="headerlink" href="#the-exploration-tool-tools-exploration" title="Permanent link">&para;</a></h2>
+<p>This mode displays a relational graph <strong>without any imposed hierarchy</strong>.<br />
+Nodes are positioned using a physics engine (attraction / repulsion), which makes it possible to:</p>
+<ul>
+<li>freely explore relationships  </li>
+<li>identify clusters  </li>
+<li>navigate complex dependency networks  </li>
+<li>visualize the entire graph around a given asset  </li>
+</ul>
+<p>This mode is ideal for <strong>intuitive exploration</strong>.</p>
+<p>🔍 <em>Interface overview available in the page <a href="../application/#mapping-explorer">applications#Mapping Explorer</a></em></p>
+<hr />
+<h2 id="the-dependencies-tool-tools-dependencies">⟁ The <code>Dependencies</code> Tool <em>(Tools ➡️ Dependencies)</em><a class="headerlink" href="#the-dependencies-tool-tools-dependencies" title="Permanent link">&para;</a></h2>
+<p>This mode enforces a <strong>layered structure</strong> (upstream → downstream).<br />
+Dependencies are oriented and organized by levels, which makes it possible to:</p>
+<ul>
+<li>quickly understand data flows  </li>
+<li>analyze upstream or downstream dependencies  </li>
+<li>document an architecture  </li>
+<li>clarify complex relationships  </li>
+</ul>
+<p>This mode is ideal for <strong>structured analysis</strong>.</p>
+<p>🔍 <em>Interface overview available in the page <a href="../application/#dependency-analysis">applications#Dependency analysis</a></em></p>
+<hr />
+<h2 id="1-detailed-interface-description">1. Detailed Interface description<a class="headerlink" href="#1-detailed-interface-description" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>UI Element</th>
 <th>Type</th>
+<th style="text-align: center;">🕸️ Explorer</th>
+<th style="text-align: center;">⟁ Dependency</th>
 <th>Role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Filter</strong></td>
-<td>Text field</td>
+<td>Dropdown list</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Filters the cartography views (e.g., <code>Applications</code>)</td>
+</tr>
+<tr>
+<td><strong>Attributes</strong></td>
+<td>Dropdown list</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td>Filters on the attributes of assets (ex : <code>Opensource</code>)</td>
 </tr>
 <tr>
 <td><strong>Object</strong></td>
 <td>Dropdown list</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Selects the asset to explore (e.g., <code>HR-Solution</code>)</td>
 </tr>
 <tr>
 <td><strong>Add</strong></td>
-<td>Blue button</td>
+<td>Green button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Adds the selected asset to the graph window</td>
 </tr>
 <tr>
 <td><strong>Physical</strong></td>
 <td>Green toggle</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Enables/disables the display of physical links</td>
 </tr>
 <tr>
 <td><strong>Level (1–5)</strong></td>
 <td>Selector</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Number of relationship levels to expand</td>
 </tr>
 <tr>
 <td><strong>Deploy</strong></td>
 <td>Green button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Launches the exploration based on the defined parameters</td>
+</tr>
+<tr>
+<td><strong>Analyze</strong></td>
+<td>Green button</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✅</td>
+<td>Launches the Dependency analysis based on the defined parameters</td>
 </tr>
 <tr>
 <td><strong>↑ Up</strong></td>
 <td>Cyan button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Expands toward upper layers (abstract / business)</td>
 </tr>
 <tr>
 <td><strong>↓ Down</strong></td>
 <td>Cyan button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Expands toward lower layers (concrete / physical)</td>
 </tr>
 <tr>
 <td><strong>↕ Both</strong></td>
 <td>Cyan button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Expands in both directions simultaneously</td>
 </tr>
 <tr>
 <td><strong>Remove</strong></td>
 <td>Red button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Removes the selected asset from the graph</td>
 </tr>
 <tr>
 <td><strong>Reset</strong></td>
 <td>Yellow button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 <td>Completely resets the graph</td>
 </tr>
 <tr>
 <td><strong>Show IP</strong></td>
 <td>Grey button</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"></td>
 <td>Displays IP addresses on network assets</td>
 </tr>
 </tbody>
@@ -722,10 +1053,27 @@ simply excluded because their type is not covered by the active filter.</p>
 </tr>
 </tbody>
 </table>
-<p><a href="images/exploration_filtre_infra.png"><img src="/mercator/images/exploration_filtre_infra.png" width="700"></a>
-<em>With filter "Logical Infrastructure" only: RH-Solution does not appear.</em></p>
-<p><a href="images/exploration_filtre_full.png"><img src="/mercator/images/exploration_filtre_full.png" width="700"></a>
-<em>With filters "Applications" + "Logical Infrastructure": RH-Solution and DB-RH-PROD appear.</em></p>
+<table>
+<thead>
+<tr>
+<th> Filtre</th>
+<th style="text-align: center;">🕸️ Exploration</th>
+<th style="text-align: center;"> ⟁ Dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Logical Infrastructure</code> only:<br>RH-Solution does not appear.</td>
+<td style="text-align: center;"><a href="../images/filter_exploration_infra.png"><img src="/mercator/images/filter_exploration_infra.png" width="550"></a></td>
+<td style="text-align: center;"><a href="../images/filter_dependency_infra.png"><img src="/mercator/images/filter_dependency_infra.png" width="550"></a></td>
+</tr>
+<tr>
+<td><code>Applications</code> + <code>Logical Infrastructure</code>:<br>RH-Solution and DB-RH-PROD appear.</td>
+<td style="text-align: center;"><a href="../images/filter_exploration_full.png"><img src="/mercator/images/filter_exploration_full.png" width="550"></a></td>
+<td style="text-align: center;"><a href="../images/filter_dependency_full.png"><img src="/mercator/images/filter_dependency_full.png" width="550"></a></td>
+</tr>
+</tbody>
+</table>
 <h3 id="23-practical-rule-which-filter-should-i-use">2.3 Practical rule: which filter should I use?<a class="headerlink" href="#23-practical-rule-which-filter-should-i-use" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -740,7 +1088,7 @@ simply excluded because their type is not covered by the active filter.</p>
 <td>Enter only the targeted view (e.g. <code>Applications</code>)</td>
 </tr>
 <tr>
-<td>Cross-layer exploration (application + infrastructure)</td>
+<td>Cross-layer exploration or dependency analysis (application + infrastructure)</td>
 <td>Enter <strong>all</strong> relevant views, or leave empty</td>
 </tr>
 <tr>
@@ -748,14 +1096,16 @@ simply excluded because their type is not covered by the active filter.</p>
 <td><strong>Leave the filter empty</strong> to exclude nothing</td>
 </tr>
 <tr>
-<td>Exploration limited to a single layer (e.g. network only)</td>
+<td>Exploration or dependency analysis limited to a single layer (e.g. network only)</td>
 <td>Enter only that layer's view</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>💡 <strong>Tip</strong>: when in doubt about what you are looking for, always start with an <strong>empty</strong> filter. You can narrow it down
-afterwards if the graph becomes too dense.</p>
+<p>💡 <strong>Tips:</strong><br />
+- When in doubt about what you're looking for, always start with an <strong>empty</strong> filter. You can narrow it down later if the graph becomes too dense.<br />
+- You can apply a filter, select the object, add it to the window, remove the filter, and then run <code>🕸️ Deploy</code> or <code>⟁ Analyze</code>.<br />
+- To filter, you can also type the beginning of the asset names you're searching for in the <em>Object</em> field.</p>
 </blockquote>
 <hr />
 <h2 id="3-semantics-of-directional-buttons">3. Semantics of Directional Buttons<a class="headerlink" href="#3-semantics-of-directional-buttons" title="Permanent link">&para;</a></h2>
@@ -831,7 +1181,7 @@ Step 8 ─ Iterate (optional)
              Repeat from Step 4
 </code></pre></div>
 <hr />
-<h2 id="5-exploration-examples">5. Exploration Examples<a class="headerlink" href="#5-exploration-examples" title="Permanent link">&para;</a></h2>
+<h2 id="5-exploration-or-dependency-examples">5. Exploration or Dependency Examples<a class="headerlink" href="#5-exploration-or-dependency-examples" title="Permanent link">&para;</a></h2>
 <h3 id="51-business-impact-of-an-application">5.1 Business Impact of an Application<a class="headerlink" href="#51-business-impact-of-an-application" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p><strong>Context:</strong> Which business processes and actors depend on <code>HR-Solution</code>?</p>
@@ -1096,7 +1446,7 @@ Step 8 ─ Iterate (optional)
 <thead>
 <tr>
 <th>ArchiMate Relation</th>
-<th>Exploration Direction</th>
+<th>Direction  🕸️  ⟁</th>
 <th>Mercator Example</th>
 </tr>
 </thead>
@@ -1130,13 +1480,13 @@ Step 8 ─ Iterate (optional)
 </table>
 <hr />
 <h2 id="7-best-practices">7. Best Practices<a class="headerlink" href="#7-best-practices" title="Permanent link">&para;</a></h2>
-<h3 id="71-exploration-recommendations">7.1 Exploration Recommendations<a class="headerlink" href="#71-exploration-recommendations" title="Permanent link">&para;</a></h3>
-<p><strong>Start with level 1 or 2</strong>
+<h3 id="71-tools-recommendations">7.1 Tools Recommendations<a class="headerlink" href="#71-tools-recommendations" title="Permanent link">&para;</a></h3>
+<p><strong>Start with level 1 or 2</strong><br />
 For highly connected assets (e.g., a central application), starting with 1 or 2 levels avoids an unreadable graph.
 Increase progressively from there.</p>
-<p><strong>Use the filter to target specific views</strong>
+<p><strong>Use the filter to target specific views</strong><br />
 The Filter field restricts available objects to a specific view, avoiding the need to search through the entire CMDB.</p>
-<p><strong>Physical Mode</strong>
+<p><strong>🕸️ Physical Mode</strong><br />
 Enable the Physical toggle only when you want to visualize physical network links (WAN/LAN/MAN). When disabled, the
 exploration stays at the logical level.</p>
 <h3 id="72-asset-entry-recommendations">7.2 Asset Entry Recommendations<a class="headerlink" href="#72-asset-entry-recommendations" title="Permanent link">&para;</a></h3>
@@ -1145,7 +1495,7 @@ exploration stays at the logical level.</p>
 <li>Physical containment relationships must be entered in order: <strong>Site → Building → Bay → Physical Server</strong>.</li>
 <li>A <code>logical-server</code> (VM) must always be linked to a <code>physical-server</code> for ↓ Down navigation to work correctly.</li>
 <li><code>certificates</code> (570) are cross-cutting: associate them to both applications AND logical servers for complete
-  exploration.</li>
+  exploration or Dependency analysis.</li>
 <li><code>external-connected-entities</code> (540) can be linked to the business layer (partners) or the network layer (connections)
   depending on context.</li>
 </ul>
