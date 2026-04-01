@@ -1406,7 +1406,7 @@ return [
             'filter' => "Filter",
             'filter_helper' => "Filter on Map Views",
             'attributes' => "Attributes",
-            'attributes_helper' => "Filter by Attribute",
+            'attributes_helper' => "Filter by Attributes",
             'object' => 'Object',
             'object_helper' => "Start Object",
             'direction' => "Direction",

@@ -1416,7 +1416,7 @@ return [
             'filter' => "Filtre",
             'filter_helper' => "Filtre sur les vues de la cartographie",
             'attributes' => "Attributs",
-            'attributes_helper' => "Filtrer par attribut",
+            'attributes_helper' => "Filtrer par attributs",
             'object' => 'Objet',
             'object_helper' => "Objet de départ",
             'direction' => "Direction",
