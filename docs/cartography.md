@@ -1,7 +1,5 @@
 # Cartography / Views
 
-🇫🇷 [Lire en français](/mercator/fr/cartography)
-
 The information system cartography is organized into several complementary views, progressing gradually from business to
 technical concerns. Rather than managing siloed inventories, Mercator places all objects into a dependency graph:
 instead of isolated lists, it manages relationships between objects. This makes it possible to identify critical paths,

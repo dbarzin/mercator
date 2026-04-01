@@ -1,7 +1,5 @@
 # Niveaux de maturité
 
-🇬🇧 [Read in English](/mercator/maturity)
-
 Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. C'est un indicateur de l'effort
 restant à fournir pour atteindre une cartographie complète, conformément aux recommandations
 du [guide de cartographie du système d'information de l'ANSSI](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/).

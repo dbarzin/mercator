@@ -1,7 +1,5 @@
 # Mercator administration
 
-🇫🇷 [Lire en français](/mercator/fr/admin)
-
 ### User management
 
 Mercator application users are entered in the application database.

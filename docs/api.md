@@ -1,7 +1,5 @@
 # API
 
-🇫🇷 [Lire en français](/mercator/fr/api)
-
 Cartography can be modified or updated via a REST API.
 
 A REST API ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer))

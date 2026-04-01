@@ -1,7 +1,5 @@
 # Cartographie / Vues
 
-🇬🇧 [Read in English](/mercator/cartography)
-
 La cartographie du système d'information est organisée en plusieurs vues complémentaires, allant progressivement du
 métier vers la technique. Plutôt que de gérer des inventaires cloisonnés, Mercator place l'ensemble des objets dans un
 graphe de dépendances : on ne gère plus des listes isolées, mais des relations entre objets. On peut ainsi identifier

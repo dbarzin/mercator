@@ -1,7 +1,5 @@
 # Reports
 
-🇫🇷 [Lire en français](/mercator/fr/reports)
-
 ### Mapping report
 
 The cartography report contains all the objects making up the cartography and the links between them.

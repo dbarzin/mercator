@@ -1,7 +1,5 @@
 # Application
 
-🇬🇧 [Read in English](/mercator/application)
-
 *📑 Note: Vous pouvez cliquer sur les images pour les agrandir*
 
 [<img src="/mercator/fr/images/homepage.png" width="700">](images/homepage.fr.png)
@@ -120,4 +118,4 @@ Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du 
 
 Un double click sur un objet quitte les dépendances et affiche toutes ses informations.
 
-💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Dependances](./dependency.fr.md)*
+💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Dependances](./features.fr.md)*

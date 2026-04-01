@@ -43,13 +43,6 @@ extra_css:
 
 extra:
   generator: false
-  alternate:
-    - name: English
-      link: /
-      lang: en
-    - name: Français
-      link: /fr/
-      lang: fr
 
 plugins:
   - search

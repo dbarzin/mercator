@@ -1,7 +1,5 @@
 # Maturity Levels
 
-🇫🇷 [Lire en français](/mercator/fr/maturity)
-
 Maturity levels represent the completeness percentage of the cartography. It is an indicator of the remaining effort
 required to achieve a complete mapping, in accordance with the recommendations of the
 [ANSSI Information System Mapping Guide](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/).

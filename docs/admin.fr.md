@@ -1,7 +1,5 @@
 # Administration de Mercator
 
-🇬🇧 [Read in English](/mercator/admin)
-
 ### Gestion des utilisateurs
 
 Les utilisateurs de l'application Mercator sont renseignés dans la base de données de l'application.

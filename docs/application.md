@@ -119,4 +119,4 @@ Mercator allows you to analyze the dependency graph of any object in the informa
   [<img src="/mercator/images/dependency.png" width="700">](images/dependency.png)
 Double‑clicking an object exits the dependencies view and displays all its information.
 
-💡 *To get more information, please rely on the [Dependency Feature page](./dependency.md)*
+💡 *To get more information, please rely on the [Dependency Feature page](./features.md)*

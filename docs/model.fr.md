@@ -1,7 +1,5 @@
 # Modèle de données
 
-🇬🇧 [Read in English](/mercator/model)
-
 [<img src="/mercator/fr/images/model.png" width="700">](images/model.fr.png)
 
 ### Vue du RGPD
