@@ -88,8 +88,7 @@ Double-click on an object to display all its connections.
 
 ### Dependency Analysis
 
-It is possible to view the dependencies of any asset, even if those dependencies belong to another category.  
-This feature is available from the top menu **“Tools”**.
+Mercator allows you to analyze the dependency graph of any object in the information system, upstream or downstream, and across multiple levels. This analysis screen is accessible from the top menu **"tools"**. 
 
 #### Filters
   [<img src="/mercator/images/depfilters.png" width="700">](images/depfilters.png)
@@ -108,10 +107,10 @@ This feature is available from the top menu **“Tools”**.
 
 ---
 
-#### Saving and rendering
+#### Rendering
   [<img src="/mercator/images/depsave.png" width="500">](images/depsave.png)
 
-- You can save the generated image by clicking the button located below the visualization.
+- You can download the generated image by clicking the button located below the visualization.
 - You can change the rendering style using the menu located below the visualization.
 
 ---

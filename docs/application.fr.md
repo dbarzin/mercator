@@ -40,7 +40,7 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
     * ☰ pour réduire le menu latéral gauche
     * Aux [vues](./cartography.fr.md)
     * Aux préférences
-    * Aux outils (exploration, dépendances, rapports...)
+    * Aux outils (exploration, dépendances, rapports...)
     * A l'aide en ligne (documentation, guide...)
 * 📒 Outil de recherche
 
@@ -51,7 +51,7 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
 Il est possible d'explorer la cartographie. 
 Cette fonction est disponible via le menu supérieur **"outils"**.
 
-#### Filtres
+#### Filtres
   [<img src="/mercator/fr/images/expfilters.png" width="700">](images/expfilters.fr.png)
 
 - Le menu déroulant filtre permet de limiter l'exploration à un ou plusieurs domaines.
@@ -77,7 +77,7 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 ---
 
-#### Résultat
+#### Résultat
   [<img src="/mercator/fr/images/explore.png" width="700">](images/explore.fr.png)
 
 Un double click sur un objet permet d'ajouter toutes ses connexions dans la visualisation.
@@ -88,10 +88,9 @@ Un double click sur un objet permet d'ajouter toutes ses connexions dans la visu
 
 ### Analyse des Dépendances
 
-Il est possible de visualiser les dépendances de n'importe quel asset, même si ces dépendances sont dans une autre catégorie. 
-Cette fonction est disponible via le menu supérieur **"outils"**.
+Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du système d'information, en ammont ou en aval et ce sur plusieurs niveaux. Cet écran d'analyse est accessible depuis le menu supérieur **"outils"**.
 
-#### Filtres
+#### Filtres
   [<img src="/mercator/fr/images/depfilters.png" width="700">](images/depfilters.fr.png)
 
 - Les menu déroulants de filtres (Type ou attributs) permettent de restreindre la recherche et l'affichage à un ou plusieurs domaines ou attributs.
@@ -108,15 +107,15 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 ---
 
-#### Sauvegarde et rendu
+#### Rendu
   [<img src="/mercator/fr/images/depsave.png" width="500">](images/depsave.fr.png)
 
-- Vous pouvez sauvegarder l'image générée en cliquant sur le bouton qui se situe sous la visualisation
+- Vous pouvez télécharger l'image générée en cliquant sur le bouton qui se situe sous la visualisation
 - Vous pouvez changer le rendu dans le menu qui se situe sous la visualisation.
 
 ---
 
-#### Résultat
+#### Résultat
   [<img src="/mercator/fr/images/dependency.png" width="700">](images/dependency.fr.png)
 
 Un double click sur un objet quitte les dépendances et affiche toutes ses informations.
