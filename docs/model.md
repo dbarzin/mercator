@@ -19,32 +19,37 @@ The register of processing activities contains the information required by artic
 |:----------------------------------------------------|:------------------------|
 | <span style="color: blue;">*data_processing*</span> | `/api/data-processings` |
 
-| Field                          | Type         | Description                           |
-|:-------------------------------|:-------------|:--------------------------------------|
-| id                             | int unsigned | auto_increment                        |
-| name                           | varchar(255) | Processing name                       |
-| description                    | longtext     | Processing description                |
-| legal_basis                    | varchar(255) | Legal basis for processing            |
-| responsible                    | longtext     | Responsible person for processing     |
-| purpose                        | longtext     | Purposes of processing                |
-| lawfulness                     | text         | Legality of processing                |
-| lawfulness_consent             | tinyint(1)   | Legality based on consent             |
-| lawfulness_contract            | tinyint(1)   | Contractual legality                  |
-| lawfulness_legal_obligation    | tinyint(1)   | Legality based on legal obligation    |
-| lawfulness_vital_interest      | tinyint(1)   | Legality based on vital interest      |
-| lawfulness_public_interest     | tinyint(1)   | Legality based on public interest     |
-| lawfulness_legitimate_interest | tinyint(1)   | Legality based on legitimate interest |
-| categories                     | longtext     | Categories of recipients              |
-| recipients                     | longtext     | Data recipients                       |
-| transfer                       | longtext     | Data transfers                        |
-| retention                      | longtext     | Retention periods                     |
-| controls                       | longtext     | Security Measures                     |
-| informations                   | List int [,] | IDs list of related informations      |
-| applications                   | List int [,] | IDs list of related applications      |
-| processes                      | List int [,] | IDs list of related processes         |
-| created_at                     | timestamp    | Date of creation                      |
-| updated_at                     | timestamp    | Date of update                        |
-| deleted_at                     | timestamp    | Date of deletion                      |
+| Field                          | Type         | Description                                                                       |
+|:-------------------------------|:-------------|:----------------------------------------------------------------------------------|
+| id                             | int unsigned | auto_increment                                                                    |
+| name                           | varchar(255) | Processing Name                                                                   |
+| description                    | longtext     | Processing Description                                                            |
+| legal_basis                    | varchar(255) | Legal Basis for Processing                                                        |
+| responsible                    | longtext     | Data Controller                                                                   |
+| purpose                        | longtext     | Purposes of Processing                                                            |
+| lawfulness                     | text         | Lawfulness of Processing                                                          |
+| lawfulness_consent             | tinyint(1)   | Lawfulness based on consent                                                       |
+| lawfulness_contract            | tinyint(1)   | Lawfulness based on contract                                                      |
+| lawfulness_legal_obligation    | tinyint(1)   | Lawfulness based on legal obligation                                              |
+| lawfulness_vital_interest      | tinyint(1)   | Lawfulness based on vital interest                                                |
+| lawfulness_public_interest     | tinyint(1)   | Lawfulness based on public interest                                               |
+| lawfulness_legitimate_interest | tinyint(1)   | Lawfulness based on legitimate interest                                           |
+| categories                     | longtext     | Categories of recipients                                                          |
+| data_source                    | longtext     | Data source                                                                       |
+| data_collection_obligation     | longtext     | Mandatory or optional nature of data collection and consequences of non-provision |
+| recipients                     | longtext     | Data recipients                                                                   |
+| transfer                       | longtext     | Data transfers                                                                    |
+| automated_decision_making      | longtext     | Automated decision-making                                                         |
+| retention                      | longtext     | Retention periods                                                                 |
+| data_subject_rights            | longtext     | Rights of data subjects                                                           |
+| update_date                    | date         | Register ipdate date                                                              |
+| controls                       | longtext     | Security measures                                                                 |
+| information                    | List int [,] | List of related information IDs                                                   |
+| applications                   | List int [,] | List of linked application IDs                                                    |
+| processes                      | List int [,] | List of linked process IDs                                                        |
+| created_at                     | timestamp    | Creation date                                                                     |
+| updated_at                     | timestamp    | Update date                                                                       |
+| deleted_at                     | timestamp    | Deleted date                                                                      
 
 The field "controls" is not used and therefore is absent in the app.
 
@@ -416,28 +421,28 @@ Information can be linked to multiple information.
 |:------------------------------------------------|:-------------------|
 | <span style="color: blue;">*information*</span> | `/api/information` |
 
-| Field              | Type         | Description                      |
-|:-------------------|:-------------|:---------------------------------|
-| id                 | int unsigned | auto_increment                   |
-| name               | varchar(255) | Name of information              |
-| description        | longtext     | Description of information       |
-| owner              | varchar(255) | Owner of information             |
-| administrator      | varchar(255) | Information administrator        |
-| sensitivity        | varchar(255) | Sensitivity of information       |
-| storage            | varchar(255) | Information storage              |
-| security_need_c    | int          | Confidentiality                  |
-| security_need_i    | int          | Integrity                        |
-| security_need_a    | int          | Availability                     |
-| security_need_t    | int          | Traceability                     |
-| security_need_auth | int          | Authenticity                     |
-| constraints        | longtext     | Legal and regulatory constraints |
-| retention          | varchar(255) | Information retention period     |
-| parents            | List int [,] | IDs list of linked parents information |
-| children           | List int [,] | IDs list of linked children information |
+| Field              | Type         | Description                                    |
+|:-------------------|:-------------|:-----------------------------------------------|
+| id                 | int unsigned | auto_increment                                 |
+| name               | varchar(255) | Name of information                            |
+| description        | longtext     | Description of information                     |
+| owner              | varchar(255) | Owner of information                           |
+| administrator      | varchar(255) | Information administrator                      |
+| sensitivity        | varchar(255) | Sensitivity of information                     |
+| storage            | varchar(255) | Information storage                            |
+| security_need_c    | int          | Confidentiality                                |
+| security_need_i    | int          | Integrity                                      |
+| security_need_a    | int          | Availability                                   |
+| security_need_t    | int          | Traceability                                   |
+| security_need_auth | int          | Authenticity                                   |
+| constraints        | longtext     | Legal and regulatory constraints               |
+| retention          | varchar(255) | Information retention period                   |
+| parents            | List int [,] | IDs list of linked parents information         |
+| children           | List int [,] | IDs list of linked children information        |
 | processes          | List int [,] | IDs list of used processes by this information |
-| created_at         | timestamp    | Date of creation                 |
-| updated_at         | timestamp    | Date of update                   |
-| deleted_at         | timestamp    | Date of deletion                 |
+| created_at         | timestamp    | Date of creation                               |
+| updated_at         | timestamp    | Date of update                                 |
+| deleted_at         | timestamp    | Date of deletion                               |
 
 The field "retention" is not used and therefore is absent in the app.
 
@@ -450,7 +455,8 @@ The data model export lists databases and processes linked with information.
 In the app, a database can be linked with an information from the object "database".  
 A process can be linked to an information from these two objects.
 
-*Note: The link to processes is a view of the result generated through the endpoint [processes](#processes) and its field **informations***
+*Note: The link to processes is a view of the result generated through the endpoint [processes](#processes) and its
+field **informations***
 
 ---
 
@@ -644,15 +650,15 @@ homogeneity.
 |:--------------------------------------------------------|:---------------------------|
 | <span style="color: blue;">*application_modules*</span> | `/api/application-modules` |
 
-| Field                | Type         | Description                                  |
-|:---------------------|:-------------|:---------------------------------------------|
-| id                   | int unsigned | auto_increment                               |
-| name                 | varchar(255) | Name of the application module               |
-| description          | longtext     | Description of the application module        |
+| Field                | Type         | Description                               |
+|:---------------------|:-------------|:------------------------------------------|
+| id                   | int unsigned | auto_increment                            |
+| name                 | varchar(255) | Name of the application module            |
+| description          | longtext     | Description of the application module     |
 | application_services | List int [,] | IDs list of related applications-services |
-| created_at           | timestamp    | Date of creation                             |
-| updated_at           | timestamp    | Date of update                               |
-| deleted_at           | timestamp    | Date of deletion                             |
+| created_at           | timestamp    | Date of creation                          |
+| updated_at           | timestamp    | Date of update                            |
+| deleted_at           | timestamp    | Date of deletion                          |
 
 The export of the data model lists application services linked with an application module.
 
@@ -814,8 +820,8 @@ These objects represent an organized grouping of Active Directory domains or LDA
 Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts,
 objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).
 
-| Table                                            | api                 |
-|:-------------------------------------------------|:--------------------|
+| Table                                           | api                |
+|:------------------------------------------------|:-------------------|
 | <span style="color: blue;">*domaine_ads*</span> | `/api/domaine-ads` |
 
 | Champ                  | Type         | Description                             |
@@ -1069,10 +1075,12 @@ In the app, physical security device can be linked to a logical security device 
 An application can be linked a to logical security device from these two objects.
 
 #### DHCP servers
+
 ```markdown
 ***NOTE***: The DHCP servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+
 - ANSSI is the French cybersecurity regulation authority.
-This object is considered barely usefull and obsolete. It's hidden by default.
+  This object is considered barely usefull and obsolete. It's hidden by default.
 ```
 
 DHCP servers are physical or virtual devices that manage a network's IP addresses.
@@ -1092,10 +1100,12 @@ DHCP servers are physical or virtual devices that manage a network's IP addresse
 | deleted_at  | timestamp    | Date of deletion                |
 
 #### DNS servers
+
 ```markdown
 ***NOTE***: The DNS servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
+
 - ANSSI is the French cybersecurity regulation authority.
-This object is considered barely usefull and obsolete. It's hidden by default.
+  This object is considered barely usefull and obsolete. It's hidden by default.
 ```
 
 Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
@@ -1270,15 +1280,15 @@ Source and destination devices can be:
 
 | *device*                 | Source | Destination |
 |:-------------------------|:------:|:-----------:|
-| Peripherals              |   ✅   |     ✅      |
-| Physical security device |   ✅   |     ✅      |
-| Physical server          |   ✅   |     ✅      |
-| Storage infrastructure   |   ✅   |     ✅      |
-| Workstations             |   ✅   |     ✅      |
-| Logical security device  |   ✅   |     ✅      |
-| Logical server           |   ✅   |     ✅      |
-| clusters                 |   ✅   |     ✅      |
-| Subnetworks              |   ✅   |     ✅      |
+| Peripherals              |   ✅    |      ✅      |
+| Physical security device |   ✅    |      ✅      |
+| Physical server          |   ✅    |      ✅      |
+| Storage infrastructure   |   ✅    |      ✅      |
+| Workstations             |   ✅    |      ✅      |
+| Logical security device  |   ✅    |      ✅      |
+| Logical server           |   ✅    |      ✅      |
+| clusters                 |   ✅    |      ✅      |
+| Subnetworks              |   ✅    |      ✅      |
 
 #### Certificates
 
@@ -1532,9 +1542,11 @@ been gathered in the following table:
 The "vendor", "product" and "version" fields are not used and therefore are absent of the app.
 
 #### Storage infrastructures
+
 ```markdown
 ***NOTE***: The storage infrastructures are kept for compatibility, but this table is not maintained anymore.
- It is possible to replace this asset by:
+It is possible to replace this asset by:
+
 - A logical server.
 - A physical server.
 ```
@@ -1723,21 +1735,21 @@ Physical security device includes temperature sensors, cameras, security doors, 
 |:--------------------------------------------------------------|:---------------------------------|
 | <span style="color: blue;">*physical_security_devices*</span> | `/api/physical-security-devices` |
 
-| Champ       | Type         | Description                     |
-|:------------|:-------------|:--------------------------------|
-| id          | int unsigned | auto_increment                  |
-| name        | varchar(255) | Name of security device         |
-| icon_id     | int unsigned | Reference to a specific icon    |
-| description | longtext     | Description of security device  |
-| type        | varchar(255) | Type / model of security device |
-| site_id     | int unsigned | Reference to site               |
-| building_id | int unsigned | Reference to building / room    |
-| bay_id      | int unsigned | Reference to rack               |
-| security_devices |  List int [,] | IDs list of related security devices (logical) |
-| address_ip  | varchar(255) | IP sddress                      |
-| created_at  | timestamp    | Date of creation                |
-| updated_at  | timestamp    | Date of update                  |
-| deleted_at  | timestamp    | Date of deletion                |
+| Champ            | Type         | Description                                    |
+|:-----------------|:-------------|:-----------------------------------------------|
+| id               | int unsigned | auto_increment                                 |
+| name             | varchar(255) | Name of security device                        |
+| icon_id          | int unsigned | Reference to a specific icon                   |
+| description      | longtext     | Description of security device                 |
+| type             | varchar(255) | Type / model of security device                |
+| site_id          | int unsigned | Reference to site                              |
+| building_id      | int unsigned | Reference to building / room                   |
+| bay_id           | int unsigned | Reference to rack                              |
+| security_devices | List int [,] | IDs list of related security devices (logical) |
+| address_ip       | varchar(255) | IP sddress                                     |
+| created_at       | timestamp    | Date of creation                               |
+| updated_at       | timestamp    | Date of update                                 |
+| deleted_at       | timestamp    | Date of deletion                               |
 
 The data model export lists logical security devices linked to a physical security device.
 
@@ -1857,34 +1869,36 @@ Dans le menu configuration, on trouve la partie documents.
 
 Thsi part allow to see all attached documents, including specific image (icons)
 
-| Table                                     | api          |
-|:------------------------------------------|:-------------|
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
 | <span style="color: blue;">*documents*</span> | `/api/documents` |
 
-| Champ       | Type         | Description                         |
-|:------------|:-------------|:------------------------------------|
-| id          | int unsigned | auto_increment                      |
-| filename    | varchar(255) | file name including extension          |
-| mimetype    | varchar(255) | Type of document. filled automatically |
-| size        | int unsigned | filled automatically                   |
-| hash        | longtext     | Hash du docuemnt. filled automatically |
-| created_at  | timestamp    | Date of creation                    |
-| updated_at  | timestamp    | Date of update                      |
-| deleted_at  | timestamp    | Date of deletion                    |
+| Champ      | Type         | Description                            |
+|:-----------|:-------------|:---------------------------------------|
+| id         | int unsigned | auto_increment                         |
+| filename   | varchar(255) | file name including extension          |
+| mimetype   | varchar(255) | Type of document. filled automatically |
+| size       | int unsigned | filled automatically                   |
+| hash       | longtext     | Hash du docuemnt. filled automatically |
+| created_at | timestamp    | Date of creation                       |
+| updated_at | timestamp    | Date of update                         |
+| deleted_at | timestamp    | Date of deletion                       |
 
 - The document is created in docs directory, referenced by its ID
 - The document is not inserted in the database.
 
 ##### Exemple of a document fields for a specific image of firewall:
+
 ```json
     "id": 1,
-    "filename": "fw.png",
-    "mimetype": "image/png",
-    "size": 5295,
-    "hash": "71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0",
-    "deleted_at": null,
-    "created_at": "2026-03-30T08:05:46.000000Z",
-    "updated_at": "2026-03-30T08:05:46.000000Z"
+"filename": "fw.png",
+"mimetype": "image/png",
+"size": 5295,
+"hash": "71ffcf1b3cfdbf2c0920abbbfcc472ae92d05a355967b0faed88c97e5c4187b0",
+"deleted_at": null,
+"created_at": "2026-03-30T08:05:46.000000Z",
+"updated_at": "2026-03-30T08:05:46.000000Z"
 ```
 
-⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be used by another asset of the same category as soon as there is, a least, one asset in the category. 
+⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be
+used by another asset of the same category as soon as there is, a least, one asset in the category. 
