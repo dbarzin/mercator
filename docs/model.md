@@ -42,7 +42,7 @@ The register of processing activities contains the information required by artic
 | automated_decision_making      | longtext     | Automated decision-making                                                         |
 | retention                      | longtext     | Retention periods                                                                 |
 | data_subject_rights            | longtext     | Rights of data subjects                                                           |
-| update_date                    | date         | Register ipdate date                                                              |
+| update_date                    | date         | Register update date                                                              |
 | controls                       | longtext     | Security measures                                                                 |
 | information                    | List int [,] | List of related information IDs                                                   |
 | applications                   | List int [,] | List of linked application IDs                                                    |
