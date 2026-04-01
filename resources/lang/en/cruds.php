@@ -1389,8 +1389,10 @@ return [
             'title' => 'Mapping explorer',
             'filter' => 'Filter',
             'filter_helper' => 'Filter on mapping views',
+            'attributes' => "Attributes",
+            'attributes_helper' => "Filter by Attributes",
             'object' => 'Object',
-            'object_helper' => 'Select object to add',
+            'object_helper' => 'Select an object to add',
             'delete' => 'Delete',
             'reload' => 'Reload',
             'physics' => 'Physics',
@@ -1399,6 +1401,8 @@ return [
             'up' => 'Up',
             'down' => 'Down',
             'both' => 'Both',
+            'physical' => "Physical",
+            'engine' => "Engine",
         ],
         'dependency' => [
             'title' => "Dependency Analysis",
@@ -1408,7 +1412,7 @@ return [
             'attributes' => "Attributes",
             'attributes_helper' => "Filter by Attributes",
             'object' => 'Object',
-            'object_helper' => "Start Object",
+            'object_helper' => "Select the start object",
             'direction' => "Direction",
             'deep' => "Depth",
             'up' => 'Up',
@@ -1417,7 +1421,8 @@ return [
             'loading' => "Loading Data...",
             'helper' => "Select a start object, direction, and depth, then click 'Analyze'.",
             'none' => "No dependencies found for this node with these parameters.",
-            'error' => "Error loading data."
+            'error' => "Error loading data.",
+            'engine' => "Engine",
             ]
     ],
     'role' => [

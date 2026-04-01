@@ -1398,8 +1398,10 @@ return [
             'title' => 'Exploration de la cartographie',
             'filter' => 'Filtre',
             'filter_helper' => 'Filtre sur les vues de la cartographie',
+            'attributes' => "Attributs",
+            'attributes_helper' => "Filtrer par attributs",
             'object' => 'Objet',
-            'object_helper' => "Choisir l'objet à ajouter",
+            'object_helper' => "Choisir l'objet de départ",
             'delete' => 'Supprimer',
             'reload' => 'Recommencer',
             'physics' => 'Physique',
@@ -1408,7 +1410,9 @@ return [
             'up' => 'Amont',
             'down' => 'Aval',
             'both' => 'Les deux',
-            'loading' => "Chargement des données..."
+            'loading' => "Chargement des données...",
+            'physical' => "Physique",
+            'engine' => "Moteur",
         ],
         'dependency' => [
             'title' => "Analyse des dépendances",
@@ -1428,6 +1432,7 @@ return [
             'helper' => "Sélectionnez un nœud de départ, une direction et une profondeur, puis cliquez sur 'Analyser'.",
             'none' => "Aucune dépendance trouvée pour ce nœud avec ces paramètres.",
             'error' => "Erreur lors du chargement des données.",
+            'engine' => "Moteur",
         ]
     ],
     'role' => [
