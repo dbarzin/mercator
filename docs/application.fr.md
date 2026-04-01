@@ -69,6 +69,13 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 ---
 
+#### Sauvegarde et rendu
+  [<img src="/mercator/fr/images/expsave.png" width="500">](images/expsave.fr.png)
+
+- Vous pouvez sauvegarder l'image générée en cliquant sur le bouton qui se situe sous la visualisation
+- Vous pouvez changer le rendu dans le menu qui se situe sous la visualisation.
+
+---
 
 #### Résultat
   [<img src="/mercator/fr/images/explore.png" width="700">](images/explore.fr.png)
@@ -76,14 +83,6 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 Un double click sur un objet permet d'ajouter toutes ses connexions dans la visualisation.
 
 💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Exploration](./exploration.fr.md)*
-
----
-
-#### Sauvegarde et rendu
-[<img src="/mercator/fr/images/expsave.png" width="500">](images/expsave.fr.png)
-
-- Vous pouvez sauvegarder l'image générée en cliquant sur le bouton qui se situe sous la visualisation
-- Vous pouvez changer le rendu dans le menu qui se situe sous la visualisation.
 
 ---
 
@@ -106,6 +105,13 @@ Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du 
 - Le bouton "Recommencer" permet de réinitialiser la recherche.
 - La profondeur et la direction permettent de peaufiner l'affichage des dépendances souhaitées.
 
+---
+
+#### Rendu
+  [<img src="/mercator/fr/images/depsave.png" width="500">](images/depsave.fr.png)
+
+- Vous pouvez télécharger l'image générée en cliquant sur le bouton qui se situe sous la visualisation
+- Vous pouvez changer le rendu dans le menu qui se situe sous la visualisation.
 
 ---
 
@@ -115,12 +121,3 @@ Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du 
 Un double click sur un objet quitte les dépendances et affiche toutes ses informations.
 
 💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Dependances](./dependency.fr.md)*
-
----
-
-#### Sauvegarde et rendu
-
-[<img src="/mercator/fr/images/depsave.png" width="500">](images/depsave.fr.png)
-
-- Vous pouvez télécharger l'image générée en cliquant sur le bouton qui se situe sous la visualisation
-- Vous pouvez changer le rendu dans le menu qui se situe sous la visualisation.
