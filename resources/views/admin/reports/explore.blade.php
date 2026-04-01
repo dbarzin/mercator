@@ -17,7 +17,7 @@
                     <!-- Loading indicator -->
                     <div id="loading-indicator" class="alert alert-info">
                         <i class="fas fa-spinner fa-spin"></i>
-                        <span id="loading-text">Chargement des données...</span>
+                        <span id="loading-text">{{ trans('cruds.report.explorer.loading') }}</span>
                     </div>
 
                     <!-- Controls (hidden until data loaded) -->
@@ -64,7 +64,7 @@
                                 </td>
                                 <td style="text-align: left; vertical-align: middle;">
 <button type="button" class="btn btn-primary" onclick="addNode(document.getElementById('node').value)">
-<i class="bi bi-plus-square-fill"></i>&nbsp;Ajouter
+<i class="bi bi-plus-square-fill"></i>&nbsp;{{ trans('global.add') }}
 </button>
                                 </td>
                                 <td style="text-align: right; vertical-align: top;">
@@ -123,7 +123,7 @@ Physique :
 </div>
 &nbsp;
 <button id="toggleIP" class="btn btn-outline-secondary" type="button"
-        data-bs-toggle="button" autocomplete="off">
+        data-bs-toggle="button">
     <i class="fa fa-eye"></i> Show IP
 </button>
 

@@ -1400,6 +1400,25 @@ return [
             'down' => 'Down',
             'both' => 'Both',
         ],
+        'dependency' => [
+            'title' => "Dependency Analysis",
+            'object_types' => "Object Types",
+            'filter' => "Filter",
+            'filter_helper' => "Filter on Map Views",
+            'attributes' => "Attributes",
+            'attributes_helper' => "Filter by Attribute",
+            'object' => 'Object',
+            'object_helper' => "Start Object",
+            'direction' => "Direction",
+            'deep' => "Depth",
+            'up' => 'Up',
+            'downstream' => 'Down',
+            'both' => 'Both',
+            'loading' => "Loading Data...",
+            'helper' => "Select a start object, direction, and depth, then click 'Analyze'.",
+            'none' => "No dependencies found for this node with these parameters.",
+            'error' => "Error loading data."
+            ]
     ],
     'role' => [
         'fields' => [

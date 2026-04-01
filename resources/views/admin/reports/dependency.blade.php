@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-Analyse de dépendances
+{{ trans('cruds.report.dependency.title') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@ Analyse de dépendances
 <div class="graph-card-sticky">
     <div class="card mb-3">
         <div class="card-header">
-            <i class="bi bi-diagram-3"></i>&nbsp;Analyse de dépendances
+            <i class="bi bi-diagram-3"></i>&nbsp;{{ trans('cruds.report.dependency.title') }}
         </div>
 
         {{-- Les filtres (vue[], attr[]) sont transmis via l'URL pour être restaurés au rechargement --}}
@@ -22,7 +22,7 @@ Analyse de dépendances
                     <tr>
                         {{-- Filtre types d'objets --}}
                         <td width="400">
-                            <label for="filters">Types d'objets</label>
+                            <label for="filters">{{ trans('cruds.report.dependency.filter') }}</label>
                             <select class="form-control select2" id="filters" name="vue[]" multiple>
                                 <option value="1"  @selected(in_array('1',  request('vue', [])))>{{ trans("cruds.report.cartography.ecosystem") }}</option>
                                 <option value="2"  @selected(in_array('2',  request('vue', [])))>{{ trans("cruds.report.cartography.information_system") }}</option>
@@ -34,18 +34,18 @@ Analyse de dépendances
                                 <option value="7"  @selected(in_array('7',  request('vue', [])))>{{ trans("cruds.report.cartography.network_infrastructure") }}</option>
                                 <option value="8"  @selected(in_array('8',  request('vue', [])))>{{ trans("cruds.physicalLink.title") }}</option>
                             </select>
-                            <span class="help-block">{{ trans("cruds.report.explorer.filter_helper") }}</span>
+                            <span class="help-block">{{ trans("cruds.report.dependency.filter_helper") }}</span>
                         </td>
                         <td width="10"></td>
 
                         {{-- Filtre attributs --}}
                         <td width="400">
                             <div class="form-group">
-                                <label for="attr-filter" >Attributs</label>
+                                <label for="attr-filter" >{{ trans("cruds.report.dependency.attributes") }}</label>
                                 <select class="form-control select2" id="attr-filter" name="attr[]" multiple>
                                     {{-- Options peuplées dynamiquement via AJAX, sélection restaurée en JS --}}
                                 </select>
-                                <span class="help-block">Filtrer par attribut</span>
+                                <span class="help-block">{{ trans("cruds.report.dependency.attributes_helper") }}</span>
                             </div>
                         </td>
                         <td width="10"></td>
@@ -53,12 +53,12 @@ Analyse de dépendances
                         {{-- Nœud de départ --}}
                         <td width="400">
                             <div class="form-group">
-                                <label for="node" >Objet</label>
+                                <label for="node" >{{ trans("cruds.report.dependency.object") }}</label>
                                 <select name="node" id="node" class="form-control select2"
                                         data-placeholder="Chargement…">
                                     <option value=""></option>
                                 </select>
-                                <span class="help-block">Nœud de départ</span>
+                                <span class="help-block">{{ trans("cruds.report.dependency.object_helper") }}</span>
                             </div>
                         </td>
                     </tr>
@@ -67,13 +67,13 @@ Analyse de dépendances
                     <tr>
                         <td width="140" style="vertical-align: bottom;">
                                 <button type="button" id="btn-reset" class="btn btn-warning">
-                                    <i class="bi bi-arrow-counterclockwise"></i>&nbsp;Recommencer
+                                    <i class="bi bi-arrow-counterclockwise"></i>&nbsp;{{ trans('global.restart') }}
                                 </button>
                         </td>
                         <td width="10"></td>
                         {{-- Profondeur --}}
                         <td width="90">
-                            <label for="depth">Profondeur</label>
+                            <label for="depth">{{ trans("cruds.report.dependency.deep") }}</label>
                             <select name="depth" id="depth" class="form-control">
                                 @foreach([1, 2, 3, 4, 5] as $d)
                                     <option value="{{ $d }}" @selected((int) request('depth', 3) === $d)>{{ $d }}</option>
@@ -82,22 +82,22 @@ Analyse de dépendances
                         </td>
                         <td width="10"></td>
                         <td colspan="4">
-                            <label>Direction</label>
+                            <label>{{ trans('cruds.report.dependency.direction') }}</label>
                             <div class="btn-group w-100" role="group" aria-label="Direction">
                                 <input type="radio" class="btn-check" name="direction"
                                        id="dir-up" value="up" autocomplete="off"
                                        @checked(request('direction') === 'up')>
-                                <label class="btn btn-outline-primary" for="dir-up">↑&nbsp;Amont</label>
+                                <label class="btn btn-outline-primary" for="dir-up">↑&nbsp;{{ trans('cruds.report.explorer.up') }}</label>
 
                                 <input type="radio" class="btn-check" name="direction"
                                        id="dir-down" value="down" autocomplete="off"
                                        @checked(request('direction') === 'down')>
-                                <label class="btn btn-outline-primary" for="dir-down">↓&nbsp;Aval</label>
+                                <label class="btn btn-outline-primary" for="dir-down">↓&nbsp;{{ trans('cruds.report.explorer.down') }}</label>
 
                                 <input type="radio" class="btn-check" name="direction"
                                        id="dir-both" value="both" autocomplete="off"
                                        @checked(request('direction', 'both') === 'both')>
-                                <label class="btn btn-outline-primary" for="dir-both">↕&nbsp;Les deux</label>
+                                <label class="btn btn-outline-primary" for="dir-both">↕&nbsp;{{ trans('cruds.report.explorer.both') }}</label>
                             </div>
                         </td>
                         <td width="10"></td>
@@ -107,7 +107,7 @@ Analyse de dépendances
                         {{-- Boutons --}}
                         <td width="220" style="vertical-align: bottom;">
                                 <button type="submit" class="btn btn-success">
-                                    <i class="bi bi-search"></i>&nbsp;Analyser
+                                    <i class="bi bi-search"></i>&nbsp;{{ trans('global.analyse') }}
                                 </button>
                         </td>
                     </tr>
@@ -127,7 +127,7 @@ Analyse de dépendances
              style="display: none; height: 600px;">
             <div class="text-center">
                 <i class="fas fa-spinner fa-spin fa-2x"></i>
-                <p class="mt-2 mb-0" id="loading-text">Chargement des données…</p>
+                <p class="mt-2 mb-0" id="loading-text">{{ trans("cruds.report.dependency.loading") }}</p>
             </div>
         </div>
 
@@ -137,8 +137,7 @@ Analyse de dépendances
             <div class="text-center">
                 <i class="bi bi-diagram-3 fs-1"></i>
                 <p class="mt-2 mb-0">
-                    Sélectionnez un nœud de départ, une direction et une profondeur,
-                    puis cliquez sur <strong>Analyser</strong>.
+                    {{ trans('cruds.report.dependency.helper') }}
                 </p>
             </div>
         </div>
@@ -154,7 +153,7 @@ Analyse de dépendances
         {{-- Message : pas de résultat --}}
         <div id="graph-empty" class="p-4 text-center text-warning" style="display: none;">
             <i class="bi bi-exclamation-triangle fs-2"></i>
-            <p class="mt-2 mb-0">Aucune dépendance trouvée pour ce nœud avec ces paramètres.</p>
+            <p class="mt-2 mb-0">{{ trans("cruds.report.dependency.none") }}</p>
         </div>
 
     </div>
@@ -309,7 +308,7 @@ Analyse de dépendances
             const ph = document.getElementById('graph-placeholder');
             ph.querySelector('.text-center').innerHTML =
                 `<i class="bi bi-exclamation-circle text-danger fs-2"></i>
-                 <p class="mt-2 text-danger">Erreur lors du chargement des données.<br>
+                 <p class="mt-2 text-danger">{{ trans('cruds.report.dependency.error') }}<br>
                  <small>${err.message}</small></p>`;
             showFlex('graph-placeholder');
         } finally {
