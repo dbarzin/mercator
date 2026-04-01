@@ -1405,10 +1405,30 @@ return [
             'physics' => 'Physique',
             'deploy' => 'Déployer',
             'please_select' => 'Veuillez sélectionner un noeud pour déployer.',
-            'up' => 'Haut',
-            'down' => 'Bas',
-            'both' => 'Les deux'
+            'up' => 'Amont',
+            'down' => 'Aval',
+            'both' => 'Les deux',
+            'loading' => "Chargement des données..."
         ],
+        'dependency' => [
+            'title' => "Analyse des dépendances",
+            'object_types' => "Types d'objet",
+            'filter' => "Filtre",
+            'filter_helper' => "Filtre sur les vues de la cartographie",
+            'attributes' => "Attributs",
+            'attributes_helper' => "Filtrer par attribut",
+            'object' => 'Objet',
+            'object_helper' => "Objet de départ",
+            'direction' => "Direction",
+            'deep' => "Profondeur",
+            'up' => 'Amont',
+            'down' => 'Aval',
+            'both' => 'Les deux',
+            'loading' => "Chargement des données...",
+            'helper' => "Sélectionnez un nœud de départ, une direction et une profondeur, puis cliquez sur 'Analyser'.",
+            'none' => "Aucune dépendance trouvée pour ce nœud avec ces paramètres.",
+            'error' => "Erreur lors du chargement des données.",
+        ]
     ],
     'role' => [
         'fields' => [
