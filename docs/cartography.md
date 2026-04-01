@@ -1,6 +1,6 @@
 # Cartography / Views
 
-🇫🇷 [Lire en français](/mercator/cartography_fr)
+🇫🇷 [Lire en français](/mercator/fr/cartography)
 
 The information system cartography is organized into several complementary views, progressing gradually from business to
 technical concerns. Rather than managing siloed inventories, Mercator places all objects into a dependency graph:
@@ -49,7 +49,8 @@ server rooms, buildings, and sites.
 
 ## Exploring Views and Rendering Engines
 
-Mapping objects can be explored organically: double-clicking on an object immediately displays all objects connected to
+The mapping can be [explored](/mercator/application/#mapping-explorer) organically: double-clicking on an object
+immediately displays all objects connected to
 it—physically or logically—and all incoming and outgoing flows.
 
 Hierarchical views are also available. From a macro-process, you can visualize all the processes, activities, and

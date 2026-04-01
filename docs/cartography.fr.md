@@ -50,7 +50,8 @@ baies, salles, bâtiments et sites.
 
 ## Exploration des vues et moteurs de rendu
 
-Les objets de la cartographie peuvent être explorées de façon organique : en double-cliquant sur un objet, on visualise
+La cartographie peut être [explorée](/mercator/fr/application/#exploration-de-la-cartographie)
+explorées de façon organique : en double-cliquant sur un objet, on visualise
 immédiatement tous les objets qui lui sont connectés — physiquement ou logiquement — et l'ensemble des flux entrants et
 sortants.
 
