@@ -3,6 +3,7 @@ docs_dir: docs
 # Project information
 site_name: Mercator
 site_description: Mapping the Information System !
+site_url: https://dbarzin.githubs.io/mercator/
 
 # Repository
 repo_url: https://github.com/dbarzin/mercator
@@ -11,10 +12,44 @@ edit_uri: edit/master/docs
 # Copyright
 copyright: Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.
 
-site_url: https://dbarzin.githubs.io/mercator/
-
 theme:
-  name: readthedocs
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - toc.integrate
+    - content.code.copy
+    - content.action.edit
+    - content.action.view
+    - palette.toggle
+  palette:
+    - scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+extra_css:
+  - css/overrides.css
+
+extra:
+  generator: false
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Français
+      link: /fr/
+      lang: fr
 
 plugins:
   - search
@@ -26,46 +61,23 @@ plugins:
           default: true
           name: English
           build: true
-          # nav_translations:
-          #   Introduction: "Introduction"
-          #   Mapping: "Mapping"
-          #   Maturity: "Maturity"
-          #   Application: "Application"
-          #   BPMN 2.0: "BPMN 2.0"
-          #   Reports: "Reports"
-          #   Use cases: "Use cases"
-          #   Data model: "Data model"
-          #   Exploration: "Exploration"
-          #   Administration: "Administration"
-          #   Configuration: "Configuration"
-          #   Import: "Import"
-          #   API: "API"
-          #   API advanced (filters): "API advanced (filters)"
-          #   References: "References"
         - locale: fr
           name: Français
           build: true
-          # nav_translations:
-          #   Introduction: "Introduction"
-          #   Mapping: "Cartographie"
-          #   Maturity: "Maturité"
-          #   Application: "Application"
-          #   BPMN 2.0: "BPMN 2.0"
-          #   Reports: "Rapports"
-          #   Use cases: "Cas d'usage"
-          #   Data model: "Modèle de données"
-          #   Exploration: "Exploration"
-          #   Administration: "Administration"
-          #   Configuration: "Configuration"
-          #   Import: "Import"
-          #   API: "API"
-          #   API advanced (filters): "API avancée (filtres)"
-          #   References: "Références"
+      reconfigure_material: true
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
 
 nav:
   - index.md
-  - cartography.md
   - application.md
+  - cartography.md
   - maturity.md
   - bpmn.md
   - reports.md
@@ -78,28 +90,4 @@ nav:
   - admin.md
   - config.md
   - references.md
-# nav:
-#   - Introduction: index.md
-#   - Mapping: cartography.md
-#   - Application: application.md
-#   - Maturity: maturity.md
-#   - BPMN 2.0: bpmn.md
-#   - Reports: reports.md
-#   - Use cases: usecases.md
-#   - Data model: model.md
-#   - Exploration: exploration.md
-#   - Administration: admin.md
-#   - Configuration: config.md
-#   - Import: import.md
-#   - API: api.md
-#   - API advanced (filters): apifilters.md
-#   - References: references.md
 
-extra:
-  alternate:
-    - name: English
-      link: /
-      lang: en
-    - name: Français
-      link: /fr/
-      lang: fr
