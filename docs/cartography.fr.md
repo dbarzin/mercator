@@ -50,14 +50,15 @@ baies, salles, bâtiments et sites.
 
 ## Exploration des vues et moteurs de rendu
 
-Les vues de Mercator s'explorent de façon organique : en double-cliquant sur un objet, on visualise immédiatement tous
-les objets qui lui sont connectés — physiquement ou logiquement — et l'ensemble des flux entrants et sortants.
+Les objets de la cartographie peuvent être explorées de façon organique : en double-cliquant sur un objet, on visualise
+immédiatement tous les objets qui lui sont connectés — physiquement ou logiquement — et l'ensemble des flux entrants et
+sortants.
 
-Des vues hiérarchiques sont également disponibles : il est possible de prendre un macroprocessus et de visualiser
-l'ensemble des processus, activités et opérations qui en dépendent, ou de prendre un site et d'afficher toutes les
-salles et les équipements qu'il contient.
+Des vues hiérarchiques sont également disponibles. A partir d'un macro-processus, on visualise l'ensemble des processus,
+activités et opérations qui en dépendent, ou de prendre un site et d'afficher toutes les salles et les équipements qu'il
+contient.
 
-Il est possible de sélectionner le moteur de rendu graphique directement depuis l'interface de l'explorateur.
+Il est possible de sélectionner le moteur de rendu graphique directement depuis chaque vue.
 **Dot, Neato, FDP, Sfdp, Twopi, Circo** — chaque moteur Graphviz produit un rendu différent selon la nature et la
 densité du graphe. Cette flexibilité permet d'optimiser la lisibilité selon le contexte : cartographie réseau dense, vue
 applicative ou analyse d'impact multi-couches. Un paramètre simple, pour un confort visuel très concret.

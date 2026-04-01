@@ -49,13 +49,13 @@ server rooms, buildings, and sites.
 
 ## Exploring Views and Rendering Engines
 
-Mercator's views can be explored organically: double-clicking on an object immediately displays all objects connected to
-it — physically or logically — along with all incoming and outgoing flows.
+Mapping objects can be explored organically: double-clicking on an object immediately displays all objects connected to
+it—physically or logically—and all incoming and outgoing flows.
 
-Hierarchical views are also available: it is possible to take a macro-process and visualize all the processes,
-activities, and operations that depend on it, or to take a site and display all the rooms and equipment it contains.
+Hierarchical views are also available. From a macro-process, you can visualize all the processes, activities, and
+operations that depend on it, or take a site and display all the rooms and equipment it contains.
 
-It is possible to select the graph rendering engine directly from the explorer interface. **Dot, Neato, FDP, Sfdp,
-Twopi, Circo** — each Graphviz engine produces a different layout depending on the nature and density of the graph. This
-flexibility makes it possible to optimize readability depending on the context: dense network cartography, application
-view, or multi-layer impact analysis. A simple parameter, for a very tangible improvement in visual clarity.
+You can select the graphic rendering engine directly from each view. **Dot, Neato, FDP, Sfdp, Twopi, Circo** — each
+Graphviz engine produces a different rendering depending on the nature and density of the graph. This flexibility allows
+you to optimize readability according to the context: dense network mapping, application view, or multi-layered impact
+analysis. A simple setting for very tangible visual comfort.
