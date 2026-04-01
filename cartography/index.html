@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/cartography/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Views /Cartograpgy - Mercator</title>
+    <title>Cartography / Views - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Views /Cartograpgy";
+        var mkdocs_page_name = "Cartography / Views";
         var mkdocs_page_input_path = "cartography.md";
         var mkdocs_page_url = "/mercator/cartography/";
       </script>
@@ -44,21 +44,21 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Views /Cartograpgy</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Cartography / Views</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#gdpr-view">GDPR view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#gdpr-view">GDPR View</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#business-view">Business view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#business-view">Business View</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#application-view">Application view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#application-view">Application View</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#administrative-view">Administrative view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#administration-view">Administration View</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#logical-view">Logical view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#logical-view">Logical View</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#infrastructure-view">Infrastructure view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#infrastructure-view">Infrastructure View</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#security-needs">Security needs</a>
+    <li class="toctree-l2"><a class="reference internal" href="#exploring-views-and-rendering-engines">Exploring Views and Rendering Engines</a>
     </li>
     </ul>
                 </li>
@@ -129,7 +129,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Views /Cartograpgy</li>
+      <li class="breadcrumb-item active">Cartography / Views</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/cartography.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -139,68 +139,46 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="views-cartograpgy">Views /Cartograpgy</h1>
-<p>🇫🇷 <a href="/mercator/fr/cartography">Lire en français</a></p>
-<p>The cartography is made up of three views progressively moving from business to technical, themselves broken down into
-views:</p>
-<h3 id="gdpr-view">GDPR view</h3>
-<p>The GDPR view is used to maintain the register of processing operations and to make the link with the processes,
-information, applications and security measures in place.</p>
-<h3 id="business-view">Business view</h3>
-<p>The ecosystem view presents the various entities or systems with which the IS interacts to fulfill its function.</p>
-<p>The business view of the information system represents the IS through its main processes and information, which are the
-business values as defined by the EBIOS Risk Manager risk assessment method.</p>
-<h3 id="application-view">Application view</h3>
-<p>The application view describes the information system's software components, the services they provide and the data
-flows between them.</p>
-<p>The application flow view describes the information flows between different applications, services, modules and
+                <h1 id="cartography-views">Cartography / Views</h1>
+<p>🇫🇷 <a href="/mercator/cartography_fr">Lire en français</a></p>
+<p>The information system cartography is organized into several complementary views, progressing gradually from business to
+technical concerns. Rather than managing siloed inventories, Mercator places all objects into a dependency graph:
+instead of isolated lists, it manages relationships between objects. This makes it possible to identify critical paths,
+spot strategic suppliers, and understand what depends on what.</p>
+<h3 id="gdpr-view">GDPR View</h3>
+<p>The GDPR view maintains the processing register and establishes links between processes, information assets,
+applications, and the security measures in place.</p>
+<h3 id="business-view">Business View</h3>
+<p>The ecosystem view presents the various entities — suppliers, partners, sub-parts of the organization — with which the
+IS interacts, along with the relationships they maintain: support contracts, partnerships, memberships.</p>
+<p>The business view of the information system represents the IS through its macro-processes, processes, activities,
+operations, actors, and the information they handle. These elements constitute the business values in the sense of the
+EBIOS Risk Manager risk assessment method.</p>
+<h3 id="application-view">Application View</h3>
+<p>The application view describes the software components of the information system: applications grouped into application
+blocks, databases, services and modules, along with their links to the business processes they support.</p>
+<p>The application flow view describes the information exchanges between the various applications, services, modules, and
 databases.</p>
-<h3 id="administrative-view">Administrative view</h3>
-<p>The administration view lists the perimeters and privilege levels of users and administrators.</p>
-<h3 id="logical-view">Logical view</h3>
-<p>The logical infrastructure view illustrates the logical partitioning of networks, notably through the definition of IP
-address ranges, VLANs and filtering and routing functions;</p>
-<h3 id="infrastructure-view">Infrastructure view</h3>
-<p>The physical infrastructure view describes the physical equipment that makes up or is used by the information system.</p>
-<h2 id="security-needs">Security needs</h2>
-<p>Information security needs are expressed in terms of confidentiality, integrity, availability and traceability with the
-following scale:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Level</th>
-<th style="text-align: center;">Description</th>
-<th style="text-align: center;">Color</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">Insignificant</td>
-<td style="text-align: center;">White</td>
-</tr>
-<tr>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">Low</td>
-<td style="text-align: center;"><span style="color:green">Green</span></td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">Medium</td>
-<td style="text-align: center;"><span style="color:yellow;">Yellow</span></td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">Strong</td>
-<td style="text-align: center;"><span style="color:orange">Orange</span></td>
-</tr>
-<tr>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">Very strong</td>
-<td style="text-align: center;"><span style="color:red">Red</span></td>
-</tr>
-</tbody>
-</table>
+<h3 id="administration-view">Administration View</h3>
+<p>The administration view lists the scopes and privilege levels of users and administrators, as well as the directories
+that reference them.</p>
+<h3 id="logical-view">Logical View</h3>
+<p>The logical infrastructure view illustrates the logical segmentation of networks: IP address ranges, VLANs, filtering
+and routing functions. It notably makes it possible to compare what the system is <em>capable</em> of doing with what it was
+<em>authorized</em> to do.</p>
+<h3 id="infrastructure-view">Infrastructure View</h3>
+<p>The physical infrastructure view describes the physical equipment that makes up the information system: servers, racks,
+server rooms, buildings, and sites.</p>
+<hr />
+<h2 id="exploring-views-and-rendering-engines">Exploring Views and Rendering Engines</h2>
+<p>Mapping objects can be explored organically: double-clicking on an object immediately displays all objects connected to
+it—physically or logically—and all incoming and outgoing flows.</p>
+<p>Hierarchical views are also available. From a macro-process, you can visualize all the processes, activities, and
+operations that depend on it, or take a site and display all the rooms and equipment it contains.</p>
+<p>You can select the graphic rendering engine directly from each view. <strong>Dot, Neato, FDP, Sfdp, Twopi, Circo</strong> — each
+Graphviz engine produces a different rendering depending on the nature and density of the graph. This flexibility allows
+you to optimize readability according to the context: dense network mapping, application view, or multi-layered impact
+analysis. A simple setting for very tangible visual comfort.</p>
               
             </div>
           </div><footer>
