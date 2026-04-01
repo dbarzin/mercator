@@ -82,7 +82,7 @@ It is possible to explore the cartography. This function is available via the to
 
 Double-click on an object to display all its connections.
 
-💡 *To get more information, please rely on the [Exploration Feature page](./exploration.md)*
+💡 *To get more information, please rely on the [Explorer and Dependency](./features.md)*
 
 ---
 
@@ -117,6 +117,7 @@ Mercator allows you to analyze the dependency graph of any object in the informa
 
 #### Result
   [<img src="/mercator/images/dependency.png" width="700">](images/dependency.png)
+  
 Double‑clicking an object exits the dependencies view and displays all its information.
 
-💡 *To get more information, please rely on the [Dependency Feature page](./dependency.md)*
+💡 *To get more information, please rely on the [Explorer and Dependency](./features.md)*

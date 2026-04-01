@@ -82,7 +82,7 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 Un double click sur un objet permet d'ajouter toutes ses connexions dans la visualisation.
 
-💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Exploration](./exploration.fr.md)*
+💡 *Pour obtenir plus d'information, veuillez lire la page [Exploration et Dépendances](./features.fr.md)*
 
 ---
 
@@ -120,4 +120,4 @@ Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du 
 
 Un double click sur un objet quitte les dépendances et affiche toutes ses informations.
 
-💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Dependances](./dependency.fr.md)*
+💡 *Pour obtenir plus d'information, veuillez lire la page [Exploration et Dépendances](./features.fr.md)*
