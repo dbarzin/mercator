@@ -63,7 +63,7 @@
                                     </div>
                                 </td>
                                 <td style="text-align: left; vertical-align: middle;">
-<button type="button" class="btn btn-primary" onclick="addNode(document.getElementById('node').value)">
+<button type="button" class="btn btn-success" onclick="addNode(document.getElementById('node').value)">
 <i class="bi bi-plus-square-fill"></i>&nbsp;{{ trans('global.add') }}
 </button>
                                 </td>
