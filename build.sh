@@ -41,8 +41,8 @@ npm install
 npm run build
 
 # Vérifie s'il y a quelque chose à valider
-if ! git diff --quiet -- public/build/assets/*; then
-    git add public/build/assets/*
+if [ -n "$(git status --porcelain public/build/assets/)" ]; then
+    git add public/build/assets
     git commit -m "npm build"
     git push
 else

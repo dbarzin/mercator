@@ -1671,7 +1671,7 @@ Physical routers are physical components that manage connections between differe
 
 | Table                                                | api                     |
 |:-----------------------------------------------------|:------------------------|
-| <span style="color: blue;">*physical_routers*</span> | `/api/physical_routers` |
+| <span style="color: blue;">*physical_routers*</span> | `/api/physical-routers` |
 
 | Champ       | Type         | Description                         |
 |:------------|:-------------|:------------------------------------|
@@ -1682,6 +1682,8 @@ Physical routers are physical components that manage connections between differe
 | site_id     | int unsigned | Reference to site                   |
 | building_id | int unsigned | Reference to building / room        |
 | bay_id      | int unsigned | Reference to rack                   |
+| vlans       | List int [,] | IDs list of linked vlans            |
+| routers     | List int [,] | IDs list of linked logical routers  |
 | vendor      | varchar(255) | Vendor / editor for CPE search      |
 | product     | varchar(255) | Product of an editor for CPE search |
 | version     | varchar(255) | Version of a product for CPE search |

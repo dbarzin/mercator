@@ -992,7 +992,11 @@ class ExplorerController extends Controller
         $this->linkJoinTable('physical_router_router',
             PhysicalRouter::$prefix, Router::$prefix,
             'physical_router_id', 'router_id');
-        
+
+        $this->linkJoinTable('physical_router_vlan',
+            PhysicalRouter::$prefix, Vlan::$prefix,
+            'physical_router_id', 'vlan_id');
+
     }
 
 
