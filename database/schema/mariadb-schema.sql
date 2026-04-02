@@ -201,6 +201,9 @@ CREATE TABLE `application_modules` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` longtext DEFAULT NULL,
+  `vendor` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
+  `version` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -524,9 +527,14 @@ CREATE TABLE `data_processing` (
   `lawfulness_public_interest` tinyint(1) DEFAULT NULL,
   `lawfulness_legitimate_interest` tinyint(1) DEFAULT NULL,
   `categories` longtext DEFAULT NULL,
+  `data_source` text DEFAULT NULL,
+  `data_collection_obligation` text DEFAULT NULL,
   `recipients` longtext DEFAULT NULL,
   `transfert` longtext DEFAULT NULL,
+  `automated_decision_making` text DEFAULT NULL,
   `retention` longtext DEFAULT NULL,
+  `data_subject_rights` text DEFAULT NULL,
+  `update_date` date DEFAULT NULL,
   `controls` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -637,6 +645,7 @@ CREATE TABLE `databases` (
   `description` longtext DEFAULT NULL,
   `responsible` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `security_need_c` int(11) DEFAULT NULL,
   `external` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -649,6 +658,8 @@ CREATE TABLE `databases` (
   `security_need_auth` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `entity_resp_fk_1485569` (`entity_resp_id`),
+  KEY `databases_icon_id_foreign` (`icon_id`),
+  CONSTRAINT `databases_icon_id_foreign` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `entity_resp_fk_1485569` FOREIGN KEY (`entity_resp_id`) REFERENCES `entities` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -862,6 +873,22 @@ CREATE TABLE `external_connected_entity_subnetwork` (
   CONSTRAINT `subnetwork_id_fk_09848239` FOREIGN KEY (`subnetwork_id`) REFERENCES `subnetworks` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `flux_information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `flux_information` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `flux_id` int(10) unsigned NOT NULL,
+  `information_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `flux_information_flux_id_information_id_unique` (`flux_id`,`information_id`),
+  KEY `flux_information_information_id_foreign` (`information_id`),
+  CONSTRAINT `flux_information_flux_id_foreign` FOREIGN KEY (`flux_id`) REFERENCES `fluxes` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `flux_information_information_id_foreign` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fluxes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -973,6 +1000,18 @@ CREATE TABLE `information` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `information_information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `information_information` (
+  `information_id` int(10) unsigned NOT NULL,
+  `child_information_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`information_id`,`child_information_id`),
+  KEY `information_information_child_information_id_foreign` (`child_information_id`),
+  CONSTRAINT `information_information_child_information_id_foreign` FOREIGN KEY (`child_information_id`) REFERENCES `information` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `information_information_information_id_foreign` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `information_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -1052,6 +1091,7 @@ CREATE TABLE `logical_flows` (
   `physical_security_device_source_id` int(10) unsigned DEFAULT NULL,
   `security_device_source_id` bigint(20) unsigned DEFAULT NULL,
   `subnetwork_source_id` int(10) unsigned DEFAULT NULL,
+  `cluster_source_id` int(10) unsigned DEFAULT NULL,
   `logical_server_dest_id` int(10) unsigned DEFAULT NULL,
   `peripheral_dest_id` int(10) unsigned DEFAULT NULL,
   `physical_server_dest_id` int(10) unsigned DEFAULT NULL,
@@ -1060,6 +1100,7 @@ CREATE TABLE `logical_flows` (
   `physical_security_device_dest_id` int(10) unsigned DEFAULT NULL,
   `security_device_dest_id` bigint(20) unsigned DEFAULT NULL,
   `subnetwork_dest_id` int(10) unsigned DEFAULT NULL,
+  `cluster_dest_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `router_id_fk_4382393` (`router_id`),
   KEY `logical_flows_logical_server_source_id_foreign` (`logical_server_source_id`),
@@ -1076,6 +1117,10 @@ CREATE TABLE `logical_flows` (
   KEY `logical_flows_physical_security_device_dest_id_foreign` (`physical_security_device_dest_id`),
   KEY `logical_flows_subnetwork_source_id_index` (`subnetwork_source_id`),
   KEY `logical_flows_subnetwork_dest_id_index` (`subnetwork_dest_id`),
+  KEY `logical_flows_cluster_source_id_foreign` (`cluster_source_id`),
+  KEY `logical_flows_cluster_dest_id_foreign` (`cluster_dest_id`),
+  CONSTRAINT `logical_flows_cluster_dest_id_foreign` FOREIGN KEY (`cluster_dest_id`) REFERENCES `clusters` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `logical_flows_cluster_source_id_foreign` FOREIGN KEY (`cluster_source_id`) REFERENCES `clusters` (`id`) ON DELETE SET NULL,
   CONSTRAINT `logical_flows_logical_server_dest_id_foreign` FOREIGN KEY (`logical_server_dest_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `logical_flows_logical_server_source_id_foreign` FOREIGN KEY (`logical_server_source_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `logical_flows_peripheral_dest_id_foreign` FOREIGN KEY (`peripheral_dest_id`) REFERENCES `peripherals` (`id`) ON DELETE CASCADE,
@@ -1313,10 +1358,14 @@ DROP TABLE IF EXISTS `mans`;
 CREATE TABLE `mans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `description` longtext DEFAULT NULL,
+  `parent_man_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `man_id_fk_4385454` (`parent_man_id`),
+  CONSTRAINT `man_id_fk_4385454` FOREIGN KEY (`parent_man_id`) REFERENCES `mans` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `media`;
@@ -1431,7 +1480,7 @@ DROP TABLE IF EXISTS `oauth_access_tokens`;
 CREATE TABLE `oauth_access_tokens` (
   `id` varchar(100) NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
-  `client_id` bigint(20) unsigned NOT NULL,
+  `client_id` varchar(100) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `scopes` text DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
@@ -1448,7 +1497,7 @@ DROP TABLE IF EXISTS `oauth_auth_codes`;
 CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
-  `client_id` bigint(20) unsigned NOT NULL,
+  `client_id` varchar(100) NOT NULL,
   `scopes` text DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL,
@@ -1460,7 +1509,7 @@ DROP TABLE IF EXISTS `oauth_clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_clients` (
-  `id` varchar(36) NOT NULL,
+  `id` varchar(100) NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `secret` varchar(100) DEFAULT NULL,
@@ -1473,6 +1522,25 @@ CREATE TABLE `oauth_clients` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `oauth_clients_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `oauth_device_codes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `oauth_device_codes` (
+  `id` char(80) NOT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `client_id` uuid NOT NULL,
+  `user_code` char(8) NOT NULL,
+  `scopes` text NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `user_approved_at` datetime DEFAULT NULL,
+  `last_polled_at` datetime DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `oauth_device_codes_user_code_unique` (`user_code`),
+  KEY `oauth_device_codes_user_id_index` (`user_id`),
+  KEY `oauth_device_codes_client_id_index` (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oauth_personal_access_clients`;
@@ -1627,6 +1695,8 @@ DROP TABLE IF EXISTS `physical_links`;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_links` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) DEFAULT NULL,
+  `color` varchar(255) DEFAULT NULL,
   `src_port` varchar(255) DEFAULT NULL,
   `dest_port` varchar(255) DEFAULT NULL,
   `peripheral_src_id` int(10) unsigned DEFAULT NULL,
@@ -1853,6 +1923,7 @@ CREATE TABLE `physical_switches` (
   `product` varchar(255) DEFAULT NULL,
   `version` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1863,8 +1934,10 @@ CREATE TABLE `physical_switches` (
   KEY `site_fk_1485488` (`site_id`),
   KEY `building_fk_1485489` (`building_id`),
   KEY `bay_fk_1485493` (`bay_id`),
+  KEY `physical_switches_icon_id_foreign` (`icon_id`),
   CONSTRAINT `bay_fk_1485493` FOREIGN KEY (`bay_id`) REFERENCES `bays` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `building_fk_1485489` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `physical_switches_icon_id_foreign` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `site_fk_1485488` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2521,3 +2594,18 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (234,'2025_11_24_15
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (235,'2025_11_30_123016_add_module_to_permissions_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (236,'2025_12_03_105527_add_ip_to_security_devices',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (237,'2025_12_03_111641_add_security_device_to_logical_flows',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (238,'2025_12_04_135457_add_manage_module_role',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (239,'2026_01_16_114842_add_icon_to_databases',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (240,'2026_01_24_091900_add_information_flow_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (241,'2024_06_01_000001_create_oauth_device_codes_table',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (242,'2026_02_13_134714_add_cpe_to_application_modules',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (243,'2026_02_18_085500_add_type_color_to_physical_links',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (244,'2026_03_02_000001_upgrade_oauth_clients_uuid',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (245,'2026_03_03_184523_add_parent_man',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (246,'2026_03_05_114042_add_icon_to_physical_switches',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (247,'2026_03_11_134833_add_cluster_to_logical_flows',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (248,'2026_03_11_175208_add_information_information',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (249,'2026_03_22_121031_add_data_processing_fields',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (250,'2026_03_30_095429_add_document_permissions',3);
+
+
