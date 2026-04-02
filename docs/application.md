@@ -1,10 +1,10 @@
 # Application
 
-🇫🇷 [Lire en français](/mercator/fr/application)
-
-*📑 Note: You can click on any image to increase its size*
+Mercator offers an intuitive interface to visualize, explore and analyze all the objects in your information system map.
 
    [<img src="/mercator/images/homepage.png" width="700">](images/homepage.png)
+
+*📑 Note: You can click on any image to increase its size*
 
 ---
 

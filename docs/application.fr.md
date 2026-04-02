@@ -1,8 +1,10 @@
 # Application
 
-*📑 Note: Vous pouvez cliquer sur les images pour les agrandir*
+Mercator offre une interface intuitive permettant de visualiser, explorer et analyser l'ensemble des objets de votre cartographie du système d'information.
 
 [<img src="/mercator/fr/images/homepage.png" width="700">](images/homepage.fr.png)
+
+*📑 Note: Vous pouvez cliquer sur les images pour les agrandir*
 
 ---
 
