@@ -57,18 +57,18 @@
         <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/config/"/>
     </url>
     <url>
-        <loc>https://dbarzin.githubs.io/mercator/dependency/</loc>
-        <lastmod>2026-04-01</lastmod>
-        <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/dependency/"/>
-        <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/dependency/"/>
-    </url>
-    <url>
         <loc>https://dbarzin.githubs.io/mercator/exploration/</loc>
         <lastmod>2026-04-01</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/exploration/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/exploration/"/>
+    </url>
+    <url>
+        <loc>https://dbarzin.githubs.io/mercator/features/</loc>
+        <lastmod>2026-04-01</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/features/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/features/"/>
     </url>
     <url>
         <loc>https://dbarzin.githubs.io/mercator/import/</loc>
@@ -183,18 +183,18 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/config/"/>
     </url>
     <url>
-        <loc>https://dbarzin.githubs.io/mercator/fr/dependency/</loc>
-        <lastmod>2026-04-01</lastmod>
-        <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/dependency/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/dependency/"/>
-    </url>
-    <url>
         <loc>https://dbarzin.githubs.io/mercator/fr/exploration/</loc>
         <lastmod>2026-04-01</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/exploration/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/exploration/"/>
+    </url>
+    <url>
+        <loc>https://dbarzin.githubs.io/mercator/fr/features/</loc>
+        <lastmod>2026-04-01</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://dbarzin.githubs.io/mercator/fr/features/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dbarzin.githubs.io/mercator/features/"/>
     </url>
     <url>
         <loc>https://dbarzin.githubs.io/mercator/fr/import/</loc>

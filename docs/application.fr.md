@@ -6,7 +6,7 @@
 
 ---
 
-### Page principale
+## Page principale
 
 La page principale est divisée en trois parties :
 
@@ -26,7 +26,7 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
 
 ---
 
-### Les menus
+## Les menus
   [<img src="/mercator/fr/images/menu.png" width="500">](images/menu.fr.png)
 
 * 📕 Le menu latéral gauche permet d’accéder:
@@ -44,12 +44,13 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
 
 ---
 
-### Exploration de la cartographie
+## Exploration de la cartographie
 
 Il est possible d'explorer la cartographie. 
 Cette fonction est disponible via le menu supérieur **"outils"**.
 
-#### Filtres
+### Filtres
+
   [<img src="/mercator/fr/images/expfilters.png" width="700">](images/expfilters.fr.png)
 
 - Le menu déroulant filtre permet de limiter l'exploration à un ou plusieurs domaines.
@@ -57,7 +58,8 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 ---
 
-#### Affinage
+### Affinage
+
   [<img src="/mercator/fr/images/expdepth.png" width="700">](images/expdepth.fr.png)  
 
 - Le bouton "Recommencer" permet de réinitialiser la recherche.
@@ -67,7 +69,8 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 ---
 
-#### Sauvegarde et rendu
+### Sauvegarde et rendu
+
   [<img src="/mercator/fr/images/expsave.png" width="500">](images/expsave.fr.png)
 
 - Vous pouvez sauvegarder l'image générée en cliquant sur le bouton qui se situe sous la visualisation
@@ -75,7 +78,8 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 ---
 
-#### Résultat
+### Résultat
+
   [<img src="/mercator/fr/images/explore.png" width="700">](images/explore.fr.png)
 
 Un double click sur un objet permet d'ajouter toutes ses connexions dans la visualisation.
@@ -84,11 +88,12 @@ Un double click sur un objet permet d'ajouter toutes ses connexions dans la visu
 
 ---
 
-### Analyse des Dépendances
+## Analyse des Dépendances
 
 Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du système d'information, en ammont ou en aval et ce sur plusieurs niveaux. Cet écran d'analyse est accessible depuis le menu supérieur **"outils"**.
 
-#### Filtres
+### Filtres
+
   [<img src="/mercator/fr/images/depfilters.png" width="700">](images/depfilters.fr.png)
 
 - Les menu déroulants de filtres (Type ou attributs) permettent de restreindre la recherche et l'affichage à un ou plusieurs domaines ou attributs.
@@ -97,7 +102,8 @@ Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du 
 
 ---
 
-#### Affinage
+### Affinage
+
   [<img src="/mercator/fr/images/depdepth.png" width="700">](images/depdepth.fr.png)
 
 - Le bouton "Recommencer" permet de réinitialiser la recherche.
@@ -105,7 +111,8 @@ Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du 
 
 ---
 
-#### Rendu
+### Rendu
+
   [<img src="/mercator/fr/images/depsave.png" width="500">](images/depsave.fr.png)
 
 - Vous pouvez télécharger l'image générée en cliquant sur le bouton qui se situe sous la visualisation
@@ -113,7 +120,8 @@ Mercator permet d'analyser le graphe de dépendances de n'importe quel objet du 
 
 ---
 
-#### Résultat
+### Résultat
+
   [<img src="/mercator/fr/images/dependency.png" width="700">](images/dependency.fr.png)
 
 Un double click sur un objet quitte les dépendances et affiche toutes ses informations.
