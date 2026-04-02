@@ -8,16 +8,14 @@
             <th width="10%">
                 {{ trans('cruds.physicalRouter.fields.name') }}
             </th>
-            <td>
+            <td colspan="3">
             @if($withLink)
             <a href="{{ route('admin.physical-routers.show', $physicalRouter->id) }}">{{ $physicalRouter->name }}</a>
             @else
             {{ $physicalRouter->name }}
             @endif
             </td>
-        </tr>
-        <tr>
-            <th>
+            <th width="10%">
                 {{ trans('cruds.physicalRouter.fields.type') }}
             </th>
             <td>
@@ -28,36 +26,32 @@
             <th>
                 {{ trans('cruds.physicalRouter.fields.description') }}
             </th>
-            <td>
+            <td colspan="5">
                 {!! $physicalRouter->description !!}
             </td>
         </tr>
         <tr>
-            <th>
+            <th width="10%">
                 {{ trans('cruds.physicalRouter.fields.site') }}
             </th>
-            <td>
+            <td width="20%">
                 @if ($physicalRouter->site!=null)
                     <a href="{{ route('admin.sites.show', $physicalRouter->site->id) }}">
                     {{ $physicalRouter->site->name ?? '' }}
                     </a>
                 @endif
             </td>
-        </tr>
-        <tr>
-            <th>
+            <th width="10%">
                 {{ trans('cruds.physicalRouter.fields.building') }}
             </th>
-            <td>
+            <td width="20%">
                 @if ($physicalRouter->building!=null)
                     <a href="{{ route('admin.buildings.show', $physicalRouter->building->id) }}">
                     {{ $physicalRouter->building->name ?? '' }}
                     </a>
                 @endif
             </td>
-        </tr>
-        <tr>
-            <th>
+            <th width="10%">
                 {{ trans('cruds.physicalRouter.fields.bay') }}
             </th>
             <td>
@@ -72,7 +66,7 @@
             <th>
                 {{ trans('cruds.physicalRouter.fields.routers') }}
             </th>
-            <td>
+            <td colspan="5">
                 @foreach($physicalRouter->routers as $router)
                     <a href="{{ route('admin.routers.show', $router->id) }}">
                     {{ $router->name }}
@@ -87,7 +81,7 @@
             <th>
                 {{ trans('cruds.physicalRouter.fields.vlan') }}
             </th>
-            <td>
+            <td colspan="5">
                 @foreach($physicalRouter->vlans as $vlan)
                     <a href="{{ route('admin.vlans.show', $vlan->id) }}">
                     {{ $vlan->name }}
