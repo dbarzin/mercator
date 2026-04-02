@@ -1678,7 +1678,7 @@ Les routeurs physiques sont des composants physiques gérant les connexions entr
 
 | Table                                                | api                     |
 |:-----------------------------------------------------|:------------------------|
-| <span style="color: blue;">*physical_routers*</span> | `/api/physical_routers` |
+| <span style="color: blue;">*physical_routers*</span> | `/api/physical-routers` |
 
 | Champ       | Type         | Description                             |
 |:------------|:-------------|:----------------------------------------|
@@ -1723,6 +1723,8 @@ Les bornes WiFi sont des équipements matériel permettant l’accès au réseau
 | address_ip  | varchar(255) | Adresse IP de la borne wifi             |
 | site_id     | int unsigned | Référence vers le site                  |
 | building_id | int unsigned | Référence vers le building / salle      |
+| vlans       | List int [,] | Liste des id de(s) vlans associés       |
+| routers     | List int [,] | Liste des id de(s) logical routeurs associés |
 | created_at  | timestamp    | Date de création                        |
 | updated_at  | timestamp    | Date de mise à jour                     |
 | deleted_at  | timestamp    | Date de suppression                     |
