@@ -87,7 +87,7 @@ It is possible to explore the cartography. This function is available via the to
 
 Double-click on an object to display all its connections.
 
-💡 *To get more information, please rely on the [Exploration Feature page](./exploration.md)*
+💡 *To get more information, please rely on the [Exploration Feature page](./features.md)*
 
 ---
 

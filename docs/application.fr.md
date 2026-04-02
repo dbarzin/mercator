@@ -86,7 +86,7 @@ Cette fonction est disponible via le menu supérieur **"outils"**.
 
 Un double click sur un objet permet d'ajouter toutes ses connexions dans la visualisation.
 
-💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Exploration](./exploration.fr.md)*
+💡 *Pour obtenir plus d'information, veuillez lire la page [Fonctionnalité Exploration](./features.fr.md)*
 
 ---
 
