@@ -1828,6 +1828,7 @@ interconnect LANs.
 |:-----------|:-------------|:-----------------|
 | id         | int unsigned | auto_increment   |
 | name       | varchar(255) | Name of MAN      |
+| parent_man_id | int unsigned | ID of the parent of this MAN |
 | created_at | timestamp    | Date of creation |
 | updated_at | timestamp    | Date of update   |
 | deleted_at | timestamp    | Date of deletion |
