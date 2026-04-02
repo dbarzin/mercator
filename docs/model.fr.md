@@ -1835,6 +1835,7 @@ importantes. Ils interconnectent généralement des LAN entre eux.
 |:-----------|:-------------|:--------------------|
 | id         | int unsigned | auto_increment      |
 | name       | varchar(255) | Nom du MAN          |
+| parent_man_id | int unsigned | ID du MAN parent de celui ci  |
 | created_at | timestamp    | Date de création    |
 | updated_at | timestamp    | Date de mise à jour |
 | deleted_at | timestamp    | Date de suppression |
