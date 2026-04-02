@@ -1,7 +1,5 @@
 # Références
 
-🇬🇧 [Read in English](/mercator/references)
-
 Les références utilisées dans cette documentation sont :
 
 - [Cartographie du Système d'information](https://messervices.cyber.gouv.fr/guides/cartographie-du-systeme-dinformation)

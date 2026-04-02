@@ -1,7 +1,5 @@
 # Use cases
 
-🇫🇷 [Lire en français](/mercator/fr/usecases)
-
 Mercator can help you implement many of the security measures recommended by ISO 27002. By following the use cases
 described below, you can put in place a robust and effective information systems mapping process that can assist you in
 managing the information security risks facing your organization.

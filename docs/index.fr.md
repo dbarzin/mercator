@@ -1,7 +1,5 @@
 # Introduction
 
-🇬🇧 [Read in English](/mercator)
-
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme
 décrit dans
 le [Guide pour la cartographie du Système d’information](https://messervices.cyber.gouv.fr/guides/cartographie-du-systeme-dinformation)

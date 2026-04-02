@@ -1,7 +1,5 @@
 # API Advanced (filters)
 
-🇫🇷 [Lire en français](/mercator/fr/apifilters)
-
 This part is an addition of the API chapter [API](./api.md).
 
 ### Filtering, Sorting and Including Relations

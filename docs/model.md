@@ -1,7 +1,5 @@
 # Data model
 
-🇫🇷 [Lire en français](/mercator/fr/model)
-
 [<img src="/mercator/images/model.png" width="700">](images/model.png)
 
 ### GDPR view

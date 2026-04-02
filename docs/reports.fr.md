@@ -1,7 +1,5 @@
 # Rapports
 
-🇬🇧 [Read in English](/mercator/reports)
-
 ### Rapport de cartographie
 
 Le rapport de cartographie contient l’ensemble des objets composant la cartographie et les liens entre eux.

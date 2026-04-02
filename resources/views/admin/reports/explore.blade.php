@@ -45,10 +45,10 @@
                                 </td>
                                 <td width="400">
                                     <div class="form-group">
-                                        <label for="attr-filter">Attributs</label>
+                                        <label for="attr-filter">{{ trans("cruds.report.explorer.attributes") }}</label>
                                         <select class="form-control select2" id="attr-filter" multiple>
                                         </select>
-                                        <span class="help-block">Filtrer par attribut</span>
+                                        <span class="help-block">{{ trans('cruds.report.explorer.attributes_helper') }}</span>
                                     </div>
                                 </td>
                                 <td width="10">
@@ -63,7 +63,7 @@
                                     </div>
                                 </td>
                                 <td style="text-align: left; vertical-align: middle;">
-<button type="button" class="btn btn-primary" onclick="addNode(document.getElementById('node').value)">
+<button type="button" class="btn btn-success" onclick="addNode(document.getElementById('node').value)">
 <i class="bi bi-plus-square-fill"></i>&nbsp;{{ trans('global.add') }}
 </button>
                                 </td>
@@ -86,19 +86,21 @@
 <i class="bi bi-arrow-repeat"></i>&nbsp;{{ trans("cruds.report.explorer.reload") }}
 </button>
 &nbsp;&nbsp;
-Physique :
+{{ trans("cruds.report.explorer.physical") }} :
 <button id="physicsToggle" class="btn btn-success physics-active" type="button">
     <i class="bi bi-play-fill"></i>
 </button>
                                     &nbsp;
                                     &nbsp;
-                                    <select id="depth">
+                                    <div style="display: inline-block;">
+                                    <select class="form-control select2" id="depth" data-allow-clear="false">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3" selected>3</option>
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
+                                    </div>
 <button type="button" class="btn btn-info" onclick="deployAll()">
 <i class="fas fa-star"></i>&nbsp;{{ trans("cruds.report.explorer.deploy") }}
 </button>
@@ -153,7 +155,7 @@ Physique :
                     <div class="card-footer">
                         <div class="d-flex align-items-center gap-3">
                             <label class="d-inline-flex align-items-center mb-0">
-                                Moteur :
+                                {{ trans("cruds.report.explorer.engine") }} :
                             </label>
                             @foreach(['barnesHut' => 'Barnes-Hut', 'forceAtlas2Based' => 'Force Atlas 2', 'repulsion' => 'Repulsion', 'hierarchicalRepulsion' => 'Hiérarchique'] as $solver => $label)
                                 <label class="d-inline-flex align-items-center mb-0">
@@ -163,6 +165,7 @@ Physique :
                                             value="{{ $solver }}"
                                             @checked($solver === 'barnesHut')
                                     >
+                                    &nbsp;
                                     <span>{{ $label }}</span>
                                 </label>
                             @endforeach
