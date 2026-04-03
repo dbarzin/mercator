@@ -1231,6 +1231,9 @@ on internal or external (cloud) logical servers.
 | description | longtext     | Container description                           |
 | type        | varchar(255) | Type of the container (docker, kubernetes, ...) |
 | icon_id     | int unsigned | Reference to a specific icon                    |
+| applications   | List int [,] | IDs list of related applications             |
+| databases      | List int [,] | IDs list of related database(s)              |
+| logical_server | List int [,] | IDs list of related logical servers         |
 | created_at  | timestamp    | Date of creation                                |
 | updated_at  | timestamp    | Date of update                                  |
 | deleted_at  | timestamp    | Date of deletion                                |
