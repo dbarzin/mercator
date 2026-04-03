@@ -46,6 +46,9 @@ class LanController extends APIController
     {
         abort_if(Gate::denies('lan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $lan['mans'] = $lan->mans()->pluck('id');
+        $lan['wans'] = $lan->wans()->pluck('id');
+        
         return new JsonResource($lan);
     }
 
@@ -79,7 +82,7 @@ class LanController extends APIController
     {
         abort_if(Gate::denies('lan_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Lan::whereIn('id', $request->input('ids', []))->delete();
+        Lan::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
