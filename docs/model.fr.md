@@ -1820,6 +1820,8 @@ interconnectent généralement des MAN ou LAN entre eux.
 |:-----------|:-------------|:--------------------|
 | id         | int unsigned | auto_increment      |
 | name       | varchar(255) | Nom du WAN          |
+| lans       | List int [,] | Liste des id de(s) LANs associés |
+| mans       | List int [,] | Liste des id de(s) MANs associés |
 | created_at | timestamp    | Date de création    |
 | updated_at | timestamp    | Date de mise à jour |
 | deleted_at | timestamp    | Date de suppression |
@@ -1862,6 +1864,8 @@ Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipe
 | id          | int unsigned | auto_increment      |
 | name        | varchar(255) | Nom du LAN          |
 | description | varchar(255) | Description du LAN  |
+| mans        | List int [,] | Liste des id de(s) MANs associés |
+| wans        | List int [,] | Liste des id de(s) WANs associés |
 | created_at  | timestamp    | Date de création    |
 | updated_at  | timestamp    | Date de mise à jour |
 | deleted_at  | timestamp    | Date de suppression |
