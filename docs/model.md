@@ -1811,6 +1811,8 @@ or LANs.
 |:-----------|:-------------|:-----------------|
 | id         | int unsigned | auto_increment   |
 | name       | varchar(255) | Name of WAN      |
+| lans        | List int [,] | IDs List of related LANs |
+| mans        | List int [,] | IDs List of related MANs |
 | created_at | timestamp    | Date of creation |
 | updated_at | timestamp    | Date of update   |
 | deleted_at | timestamp    | Date of deletion |
@@ -1856,6 +1858,8 @@ LANs (Local Area Networks) are computer networks linking equipment over a small 
 | id          | int unsigned | auto_increment     |
 | name        | varchar(255) | Name of LAN        |
 | description | longtext     | Description of LAN |
+| mans        | List int [,] | IDs List of related MANs |
+| wans        | List int [,] | IDs List of related WANs |
 | created_at  | timestamp    | Date of creation   |
 | updated_at  | timestamp    | Date of update     |
 | deleted_at  | timestamp    | Date of deletion   |
