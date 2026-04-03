@@ -4729,7 +4729,7 @@ est découpé en un seul serveur logique.</p>
 <tr>
 <td style="text-align: left;">databases</td>
 <td style="text-align: left;">List int [,]</td>
-<td style="text-align: left;">Liste d'id de(s) database(s) liée(s)</td>
+<td style="text-align: left;">Liste d'id de(s)  base(s) de données liée(s)</td>
 </tr>
 <tr>
 <td style="text-align: left;">cluster_id</td>
@@ -4838,6 +4838,21 @@ sur des serveurs logiques internes ou externes (cloud).</p>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Référence vers une image spécifique</td>
+</tr>
+<tr>
+<td style="text-align: left;">applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) application(s) liée(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">databases</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) base(s) de données liée(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">logical_servers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste d'id de(s) serveur(s) logique(s) associés</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -6308,7 +6323,7 @@ depuis ces deux types d'objets.</p>
 <tbody>
 <tr>
 <td style="text-align: left;"><span style="color: blue;"><em>physical_routers</em></span></td>
-<td style="text-align: left;"><code>/api/physical_routers</code></td>
+<td style="text-align: left;"><code>/api/physical-routers</code></td>
 </tr>
 </tbody>
 </table>
@@ -6468,6 +6483,16 @@ Un VLAN peut être rattaché à un routeur physique depuis un objet routeur phys
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td style="text-align: left;">vlans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste des id de(s) vlans associés</td>
+</tr>
+<tr>
+<td style="text-align: left;">routers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">Liste des id de(s) logical routeurs associés</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>

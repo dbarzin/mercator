@@ -4837,6 +4837,21 @@ on internal or external (cloud) logical servers.</p>
 <td style="text-align: left;">Reference to a specific icon</td>
 </tr>
 <tr>
+<td style="text-align: left;">applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related applications</td>
+</tr>
+<tr>
+<td style="text-align: left;">databases</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related database(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">logical_server</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related logical servers</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -6282,7 +6297,7 @@ with a network switch (either physical or logical) through a physical link objec
 <tbody>
 <tr>
 <td style="text-align: left;"><span style="color: blue;"><em>physical_routers</em></span></td>
-<td style="text-align: left;"><code>/api/physical_routers</code></td>
+<td style="text-align: left;"><code>/api/physical-routers</code></td>
 </tr>
 </tbody>
 </table>
@@ -6329,6 +6344,16 @@ with a network switch (either physical or logical) through a physical link objec
 <td style="text-align: left;">bay_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Reference to rack</td>
+</tr>
+<tr>
+<td style="text-align: left;">vlans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of linked vlans</td>
+</tr>
+<tr>
+<td style="text-align: left;">routers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of linked logical routers</td>
 </tr>
 <tr>
 <td style="text-align: left;">vendor</td>
