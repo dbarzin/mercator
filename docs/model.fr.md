@@ -1187,7 +1187,7 @@ est découpé en un seul serveur logique.
 | disk               | int          | Espace disque alloué                              |
 | disk_used          | int          | Espace disque utilisé                             |
 | configuration      | longtext     | Configuration du serveur                          |
-| databases          | List int [,] | Liste d'id de(s) database(s) liée(s)              |
+| databases          | List int [,] | Liste d'id de(s)  base(s) de données liée(s)      |
 | cluster_id         | List int [,] | Liste d'id de(s) lien(s) cluster(s)               |
 | physical_servers   | List int [,] | Liste d'id de(s) serveur(s) physiques(s) associés |
 | applications       | List int [,] | Liste d'id de(s) application(s) hebergée(s)       |
@@ -1235,6 +1235,9 @@ sur des serveurs logiques internes ou externes (cloud).
 | description | longtext     | Description du conteneur                     |
 | type        | varchar(255) | Type du conteneur (docker, kubernetes, etc.) |
 | icon_id     | int unsigned | Référence vers une image spécifique          |
+| applications | List int [,] | Liste d'id de(s) application(s) liée(s) |
+| databases   | List int [,] | Liste d'id de(s) base(s) de données liée(s)         |
+| logical_servers | List int [,] | Liste d'id de(s) serveur(s) logique(s) associés |
 | created_at  | timestamp    | Date de création                             |
 | updated_at  | timestamp    | Date de mise à jour                          |
 | deleted_at  | timestamp    | Date de suppression                          |
