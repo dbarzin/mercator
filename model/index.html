@@ -4847,7 +4847,7 @@ on internal or external (cloud) logical servers.</p>
 <td style="text-align: left;">IDs list of related database(s)</td>
 </tr>
 <tr>
-<td style="text-align: left;">logical_server</td>
+<td style="text-align: left;">logical_servers</td>
 <td style="text-align: left;">List int [,]</td>
 <td style="text-align: left;">IDs list of related logical servers</td>
 </tr>
@@ -6765,6 +6765,16 @@ or LANs.</p>
 <td style="text-align: left;">Name of WAN</td>
 </tr>
 <tr>
+<td style="text-align: left;">lans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related LANs</td>
+</tr>
+<tr>
+<td style="text-align: left;">mans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related MANs</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -6884,6 +6894,16 @@ A LAN can be linked to a MAN from a MAN object.</p>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description of LAN</td>
+</tr>
+<tr>
+<td style="text-align: left;">mans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related MANs</td>
+</tr>
+<tr>
+<td style="text-align: left;">wans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related WANs</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
