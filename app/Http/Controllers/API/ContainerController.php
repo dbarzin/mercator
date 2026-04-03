@@ -31,6 +31,7 @@ class ContainerController extends APIController
 
         $container->logicalServers()->sync($request->input('logical_servers', []));
         $container->applications()->sync($request->input('applications', []));
+        $container->databases()->sync($request->input('databases', []));
 
         Log::Debug('ContainerController:store Done');
 
@@ -41,6 +42,10 @@ class ContainerController extends APIController
     {
         abort_if(Gate::denies('container_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $container['logical_servers'] = $container->logicalServers()->pluck('id');
+        $container['applications'] = $container->applications()->pluck('id');
+        $container['databases'] = $container->databases()->pluck('id');
+        
         return new JsonResource($container);
     }
 
@@ -54,6 +59,8 @@ class ContainerController extends APIController
             $container->logicalServers()->sync($request->input('logical_servers', []));
         if ($request->has('applications'))
             $container->applications()->sync($request->input('applications', []));
+        if ($request->has('databases'))
+            $container->databases()->sync($request->input('databases', []));
 
         return response()->json();
     }
