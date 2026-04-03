@@ -1761,16 +1761,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v13.7.1",
+            "version": "v13.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "ca14d978801d328dc5b425af37781db9fcbace8c"
+                "reference": "0c016c9e27db700d1a51b73c7582e5235f9c43d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/ca14d978801d328dc5b425af37781db9fcbace8c",
-                "reference": "ca14d978801d328dc5b425af37781db9fcbace8c",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/0c016c9e27db700d1a51b73c7582e5235f9c43d2",
+                "reference": "0c016c9e27db700d1a51b73c7582e5235f9c43d2",
                 "shasum": ""
             },
             "require": {
@@ -1832,7 +1832,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2026-04-01T15:03:18+00:00"
+            "time": "2026-04-02T17:11:22+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -5660,16 +5660,16 @@
         },
         {
             "name": "sourcentis/mercator-core",
-            "version": "1.68.0",
+            "version": "1.69.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dbarzin/mercator-core.git",
-                "reference": "a947d41963cd0ca579abd6959e6c3a7caed2e2d8"
+                "reference": "2128f932b061882b18e59d86c57a50c7feef734d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/a947d41963cd0ca579abd6959e6c3a7caed2e2d8",
-                "reference": "a947d41963cd0ca579abd6959e6c3a7caed2e2d8",
+                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/2128f932b061882b18e59d86c57a50c7feef734d",
+                "reference": "2128f932b061882b18e59d86c57a50c7feef734d",
                 "shasum": ""
             },
             "require": {
@@ -5701,9 +5701,9 @@
             "description": "Mercator core services (modules, licensing, menus, domain models).",
             "support": {
                 "issues": "https://github.com/dbarzin/mercator-core/issues",
-                "source": "https://github.com/dbarzin/mercator-core/tree/v1.68.0"
+                "source": "https://github.com/dbarzin/mercator-core/tree/v1.69.0"
             },
-            "time": "2026-03-30T08:13:55+00:00"
+            "time": "2026-04-03T10:10:44+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
