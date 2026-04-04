@@ -986,8 +986,8 @@ Les entités extérieures connectées représentent les entités externes connec
 | contacts    | varchar(255) | Contacts de l'entité                                  |
 | src         | varchar(255) | Adresse(s) IP de connexion de l'entité                |
 | src_desc    | varchar(255) | Description de la source de la connexion de l'entité  |
-| dst         | varchar(255) | Adresse(s) IP ou plage de destination de la connexion |
-| dst_desc    | varchar(255) | Description de la connexion de l'entité               |
+| dest        | varchar(255) | Adresse(s) IP ou plage de destination de la connexion |
+| dest_desc   | varchar(255) | Description de la connexion de l'entité               |
 | security    | text         | Exigences de sécurité du système                      |
 | created_at  | timestamp    | Date de création                                      |
 | updated_at  | timestamp    | Date de mise à jour                                   |
