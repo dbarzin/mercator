@@ -986,8 +986,8 @@ Les entités extérieures connectées représentent les entités externes connec
 | contacts    | varchar(255) | Contacts de l'entité                                  |
 | src         | varchar(255) | Adresse(s) IP de connexion de l'entité                |
 | src_desc    | varchar(255) | Description de la source de la connexion de l'entité  |
-| dst         | varchar(255) | Adresse(s) IP ou plage de destination de la connexion |
-| dst_desc    | varchar(255) | Description de la connexion de l'entité               |
+| dest        | varchar(255) | Adresse(s) IP ou plage de destination de la connexion |
+| dest_desc   | varchar(255) | Description de la connexion de l'entité               |
 | security    | text         | Exigences de sécurité du système                      |
 | created_at  | timestamp    | Date de création                                      |
 | updated_at  | timestamp    | Date de mise à jour                                   |
@@ -1187,7 +1187,7 @@ est découpé en un seul serveur logique.
 | disk               | int          | Espace disque alloué                              |
 | disk_used          | int          | Espace disque utilisé                             |
 | configuration      | longtext     | Configuration du serveur                          |
-| databases          | List int [,] | Liste d'id de(s) database(s) liée(s)              |
+| databases          | List int [,] | Liste d'id de(s)  base(s) de données liée(s)      |
 | cluster_id         | List int [,] | Liste d'id de(s) lien(s) cluster(s)               |
 | physical_servers   | List int [,] | Liste d'id de(s) serveur(s) physiques(s) associés |
 | applications       | List int [,] | Liste d'id de(s) application(s) hebergée(s)       |
@@ -1235,6 +1235,9 @@ sur des serveurs logiques internes ou externes (cloud).
 | description | longtext     | Description du conteneur                     |
 | type        | varchar(255) | Type du conteneur (docker, kubernetes, etc.) |
 | icon_id     | int unsigned | Référence vers une image spécifique          |
+| applications | List int [,] | Liste d'id de(s) application(s) liée(s) |
+| databases   | List int [,] | Liste d'id de(s) base(s) de données liée(s)         |
+| logical_servers | List int [,] | Liste d'id de(s) serveur(s) logique(s) associés |
 | created_at  | timestamp    | Date de création                             |
 | updated_at  | timestamp    | Date de mise à jour                          |
 | deleted_at  | timestamp    | Date de suppression                          |
@@ -1817,6 +1820,8 @@ interconnectent généralement des MAN ou LAN entre eux.
 |:-----------|:-------------|:--------------------|
 | id         | int unsigned | auto_increment      |
 | name       | varchar(255) | Nom du WAN          |
+| lans       | List int [,] | Liste des id de(s) LANs associés |
+| mans       | List int [,] | Liste des id de(s) MANs associés |
 | created_at | timestamp    | Date de création    |
 | updated_at | timestamp    | Date de mise à jour |
 | deleted_at | timestamp    | Date de suppression |
@@ -1859,6 +1864,8 @@ Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipe
 | id          | int unsigned | auto_increment      |
 | name        | varchar(255) | Nom du LAN          |
 | description | varchar(255) | Description du LAN  |
+| mans        | List int [,] | Liste des id de(s) MANs associés |
+| wans        | List int [,] | Liste des id de(s) WANs associés |
 | created_at  | timestamp    | Date de création    |
 | updated_at  | timestamp    | Date de mise à jour |
 | deleted_at  | timestamp    | Date de suppression |

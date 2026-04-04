@@ -978,8 +978,8 @@ Connected external entities represent external entities connected to the network
 | contacts    | varchar(255) | Contacts within the external entity/company                       |
 | src         | varchar(255) | Source IP address(es) or source range of the connection           |
 | src_desc    | varchar(255) | Description of the source's connection                            |
-| dst         | varchar(255) | Destination IP address(es) or destination range of the connection |
-| dst_desc    | varchar(255) | Description of the destination's connection                       |
+| dest        | varchar(255) | Destination IP address(es) or destination range of the connection |
+| dest_desc   | varchar(255) | Description of the destination's connection                       |
 | security    | text         | Security requirements of the system                               |
 | created_at  | timestamp    | Date of creation                                                  |
 | updated_at  | timestamp    | Date of update                                                    |
@@ -1231,6 +1231,9 @@ on internal or external (cloud) logical servers.
 | description | longtext     | Container description                           |
 | type        | varchar(255) | Type of the container (docker, kubernetes, ...) |
 | icon_id     | int unsigned | Reference to a specific icon                    |
+| applications   | List int [,] | IDs list of related applications             |
+| databases      | List int [,] | IDs list of related database(s)              |
+| logical_servers | List int [,] | IDs list of related logical servers         |
 | created_at  | timestamp    | Date of creation                                |
 | updated_at  | timestamp    | Date of update                                  |
 | deleted_at  | timestamp    | Date of deletion                                |
@@ -1808,6 +1811,8 @@ or LANs.
 |:-----------|:-------------|:-----------------|
 | id         | int unsigned | auto_increment   |
 | name       | varchar(255) | Name of WAN      |
+| lans        | List int [,] | IDs List of related LANs |
+| mans        | List int [,] | IDs List of related MANs |
 | created_at | timestamp    | Date of creation |
 | updated_at | timestamp    | Date of update   |
 | deleted_at | timestamp    | Date of deletion |
@@ -1853,6 +1858,8 @@ LANs (Local Area Networks) are computer networks linking equipment over a small 
 | id          | int unsigned | auto_increment     |
 | name        | varchar(255) | Name of LAN        |
 | description | longtext     | Description of LAN |
+| mans        | List int [,] | IDs List of related MANs |
+| wans        | List int [,] | IDs List of related WANs |
 | created_at  | timestamp    | Date of creation   |
 | updated_at  | timestamp    | Date of update     |
 | deleted_at  | timestamp    | Date of deletion   |

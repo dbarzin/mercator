@@ -28,7 +28,10 @@ class WanController extends APIController
     {
         abort_if(Gate::denies('wan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wan = Wan::create($request->all());
+        $wan = Wan::query()->create($request->all());
+
+        $wan->mans()->sync($request->input('mans', []));
+        $wan->lans()->sync($request->input('lans', []));
 
         return response()->json($wan, 201);
     }
@@ -36,6 +39,9 @@ class WanController extends APIController
     public function show(Wan $wan)
     {
         abort_if(Gate::denies('wan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $wan['mans'] = $wan->mans()->pluck('id');
+        $wan['lans'] = $wan->lans()->pluck('id');
 
         return new JsonResource($wan);
     }
@@ -45,6 +51,13 @@ class WanController extends APIController
         abort_if(Gate::denies('wan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wan->update($request->all());
+
+        if ($request->has('mans')) {
+            $wan->mans()->sync($request->input('mans', []));
+        }
+        if ($request->has('lans')) {
+            $wan->lans()->sync($request->input('lans', []));
+        }
 
         return response()->json();
     }
@@ -62,7 +75,7 @@ class WanController extends APIController
     {
         abort_if(Gate::denies('wan_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Wan::whereIn('id', $request->input('ids', []))->delete();
+        Wan::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
