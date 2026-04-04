@@ -784,7 +784,7 @@ class ExplorerController extends Controller
     private function buildExternalConnectedEntities(): void
     {
         $entities = DB::table('external_connected_entities')
-            ->select('id', 'name')
+            ->select('id', 'name', 'network_id', 'entity_id')
             ->whereNull('deleted_at')
             ->get();
 
@@ -796,6 +796,16 @@ class ExplorerController extends Controller
                 '/images/entity.png',
                 'external-connected-entities', 540,
             );
+
+            if ($entity->network_id!==null)
+                $this->addLinkEdge(
+                    $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
+                    $this->formatId(Network::$prefix, $entity->network_id));
+
+            if ($entity->entity_id!==null)
+                $this->addLinkEdge(
+                    $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
+                    $this->formatId(Entity::$prefix, $entity->entity_id));
         }
 
         $this->linkJoinTable('external_connected_entity_subnetwork',
