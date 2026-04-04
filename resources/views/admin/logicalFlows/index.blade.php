@@ -237,18 +237,18 @@
 @endsection
 
 @section('scripts')
-    @parent
-    <script>
-        @include('partials.datatable', array(
-            'id' => '#dataTable',
-            'title' => trans("cruds.logicalFlow.title_singular"),
-            'URL' => route('admin.logical-flows.massDestroy'),
-            'canDelete' => auth()->user()->can('logical_flow_delete') ? true : false
-        ));
-        document.addEventListener("DOMContentLoaded", function () {
-            if (!table.state.loaded()) {
-                table.column('[data-column="description"]').visible(false);
-            }
-        });
-    </script>
+@parent
+<script>
+@include('partials.datatable', array(
+    'id' => '#dataTable',
+    'title' => trans("cruds.logicalFlow.title_singular"),
+    'URL' => route('admin.logical-flows.massDestroy'),
+    'canDelete' => auth()->user()->can('logical_flow_delete') ? true : false
+));
+document.addEventListener("DOMContentLoaded", function () {
+    if (typeof table !== 'undefined' && !table.state.loaded()) {
+        table.column('[data-column="description"]').visible(false);
+        }
+    });
+</script>
 @endsection
