@@ -30,6 +30,9 @@
                         <th>
                             {{ trans('cruds.logicalFlow.fields.name') }}
                         </th>
+                        <th data-column="description">
+                            {{ trans('cruds.logicalFlow.fields.description') }}
+                        </th>
                         <th>
                             {{ trans('cruds.logicalFlow.fields.chain') }}
                         </th>
@@ -75,6 +78,9 @@
                                 <a href="{{ route('admin.logical-flows.show', $logicalFlow->id) }}">
                                     {{ $logicalFlow->name ?? "NONAME" }}
                                 </a>
+                            </td>
+                            <td>
+                                {!! $logicalFlow->description !!}
                             </td>
                             <td>
                                 {{ $logicalFlow->chain }}
@@ -239,5 +245,10 @@
             'URL' => route('admin.logical-flows.massDestroy'),
             'canDelete' => auth()->user()->can('logical_flow_delete') ? true : false
         ));
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!table.state.loaded()) {
+                table.column('[data-column="description"]').visible(false);
+            }
+        });
     </script>
 @endsection
