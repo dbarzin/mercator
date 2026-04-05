@@ -788,31 +788,30 @@ class ExplorerController extends Controller
             ->whereNull('deleted_at')
             ->get();
 
+        // Charge tous les pivots en une seule requête, groupés par entity ID → élimine le N+1
+        $subnetworksByEntity = DB::table('external_connected_entity_subnetwork')
+            ->select('external_connected_entity_id', 'subnetwork_id')
+            ->get()
+            ->groupBy('external_connected_entity_id');
+
         foreach ($entities as $entity) {
-            $this->addNode(
-                5,
-                $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
-                $entity->name,
-                '/images/entity.png',
-                'external-connected-entities', 540,
-            );
+            $nodeId = $this->formatId(ExternalConnectedEntity::$prefix, $entity->id);
 
-            if ($entity->network_id!==null)
-                $this->addLinkEdge(
-                    $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
-                    $this->formatId(Network::$prefix, $entity->network_id));
+            $this->addNode(5, $nodeId, $entity->name, '/images/entity.png', 'external-connected-entities', 540);
 
-            if ($entity->entity_id!==null)
-                $this->addLinkEdge(
-                    $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
-                    $this->formatId(Entity::$prefix, $entity->entity_id));
+            if ($entity->network_id !== null) {
+                $this->addLinkEdge($nodeId, $this->formatId(Network::$prefix, $entity->network_id));
+            } else {
+                foreach ($subnetworksByEntity->get($entity->id, collect()) as $pivot) {
+                    $this->addLinkEdge($nodeId, $this->formatId(Subnetwork::$prefix, $pivot->subnetwork_id));
+                }
+            }
+
+            if ($entity->entity_id !== null) {
+                $this->addLinkEdge($nodeId, $this->formatId(Entity::$prefix, $entity->entity_id));
+            }
         }
-
-        $this->linkJoinTable('external_connected_entity_subnetwork',
-            ExternalConnectedEntity::$prefix, Subnetwork::$prefix,
-            'external_connected_entity_id', 'subnetwork_id');
     }
-
     private function buildContainers(): void
     {
         $containers = DB::table('containers')
