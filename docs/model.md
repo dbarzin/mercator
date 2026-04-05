@@ -975,6 +975,7 @@ Connected external entities represent external entities connected to the network
 | description | longtext     | Description of the entity/company and connection reason           |
 | entity_id   | int unsigned | Reference to the entity (ecosystem view)                          |
 | network_id  | int unsigned | Reference to the internal network(s) connected to the entity      |
+| subnetworks | List int [,] | IDs List of linked subnetworks                                    |
 | contacts    | varchar(255) | Contacts within the external entity/company                       |
 | src         | varchar(255) | Source IP address(es) or source range of the connection           |
 | src_desc    | varchar(255) | Description of the source's connection                            |

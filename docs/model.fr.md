@@ -983,6 +983,7 @@ Les entités extérieures connectées représentent les entités externes connec
 | description | longtext     | Raison de la connexion de l'entité                    |
 | entity_id   | int unsigned | Référence vers l'entité extérieure connectée          |
 | network_id  | int unsigned | Référence vers le réseau interne connecté à l'entité  |
+| subnetworks | List int [,] | Liste d'id de(s) sous-réseaux connectés               |
 | contacts    | varchar(255) | Contacts de l'entité                                  |
 | src         | varchar(255) | Adresse(s) IP de connexion de l'entité                |
 | src_desc    | varchar(255) | Description de la source de la connexion de l'entité  |
