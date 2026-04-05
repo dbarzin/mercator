@@ -130,6 +130,45 @@
                 </tbody>
             </table>
         </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            {{ trans("cruds.backup.title") }}
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-body">
+            @if ($logicalServer->backups->count()>0)
+            <div class="row">
+                <div class="col-4">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Storage Device</th>
+                                <th>Frequency</th>
+                                <th>Cycle</th>
+                                <th>Retention</th>
+                            </tr>
+                            @foreach($logicalServer->backups as $backup)
+                            <tr>
+                                <td>
+                                @if ($backup->storage_device_id!==null)
+                                    <a href="{{ route('admin.domaine-ads.show', $backup->storage_device_id) }}">
+                                        {{ $backup->storageevice->name }}
+                                    </a>
+                                @endif
+                                </td>
+                                <td>{{ $backup->backup_frequency }}</td>
+                                <td>{{ $backup->backup_cycle }}</td>
+                                <td>{{ $backup->backup_retention }}</td>
+                             </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @else
+            Aucune
+            @endif
+        </div>
         <div class="card-footer">
             {{ trans('global.created_at') }} {{ $logicalServer->created_at ? $logicalServer->created_at->format(trans('global.timestamp')) : '' }}
             |

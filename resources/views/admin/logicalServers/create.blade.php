@@ -176,30 +176,29 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.logicalServer.fields.clusters_helper') }}</span>
                             </div>
-
-
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="environment">{{ trans('cruds.logicalServer.fields.environment') }}</label>
-                                <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}"
-                                        name="environment" id="environment">
-                                    @if (!$environment_list->contains(old('environment')))
-                                        <option> {{ old('environment') }}</option>
-                                    @endif
-                                    @foreach($environment_list as $t)
-                                        <option {{ old('environment') == $t ? 'selected' : '' }}>{{$t}}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('environment'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('environment') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.logicalServer.fields.environment_helper') }}</span>
-                            </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="environment">{{ trans('cruds.logicalServer.fields.environment') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}"
+                                    name="environment" id="environment">
+                                @if (!$environment_list->contains(old('environment')))
+                                    <option> {{ old('environment') }}</option>
+                                @endif
+                                @foreach($environment_list as $t)
+                                    <option {{ old('environment') == $t ? 'selected' : '' }}>{{$t}}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('environment'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('environment') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.logicalServer.fields.environment_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -233,7 +232,6 @@
 
                         </div>
                     </div>
-                </div>
                 </div>
                 <!---------------------------------------------------------------------------------------------------->
                 <div class="card-header">
@@ -417,6 +415,51 @@
                         </div>
                     </div>
                 </div>
+                <!---------------------------------------------------------------------------------------------------->
+                <div class="card-header">
+                    {{ trans("cruds.backup.title") }}
+                </div>
+                <!---------------------------------------------------------------------------------------------------->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <table class="table" id="dynamicAddRemove">
+                                <tr>
+                                    <th width="40%">Storage Device</th>
+                                    <th width="20%">Frequency</th>
+                                    <th width="20%">Cycle</th>
+                                    <th width="20%">Retention</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col">
+                                            <select class="form-control select2 {{ $errors->has('domains') ? 'is-invalid' : '' }}"
+                                                    name="domain_id" id="domain_id">
+                                                <option></option>
+                                                @foreach($domains as $id => $name)
+                                                    <option value="{{ $id }}" {{ $id==old('domain_id', '') ? 'selected' : '' }}>{{ $name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="inputValueField"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="inputValueField"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="inputValueField"/>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="dynamic-ar" class="btn btn-outline-primary">Add</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <!---------------------------------------------------------------------------------------------------->
             </div>
             <div class="form-group">
                 <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.logical-servers.index') }}">
@@ -427,4 +470,30 @@
                 </button>
             </div>
     </form>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $("#dynamic-ar").click(function () {
+                if (($("#inputDateField").val() != '') && ($("#inputValueField").val() != '')) {
+                    input = $("#dynamicAddRemove")
+                        .append(
+                            '<tr>\
+                            <td><div class="col"><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></div></td>\
+                        <td><input type="text" name="values[]" value="' + $("#inputValueField").val() + '" class="form-control" /></td>\
+                        <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
+                        </tr>');
+                    $("#inputDateField").val('');
+                    $("#inputValueField").val('');
+                }
+            });
+
+            $(document).on('click', '.remove-input-field', function () {
+                $(this).parents('tr').remove();
+            });
+
+        });
+    </script>
+
 @endsection

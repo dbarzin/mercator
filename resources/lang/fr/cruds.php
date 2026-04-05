@@ -312,6 +312,11 @@ return [
         'title' => 'Bâtiments / Salles',
         'title_singular' => 'Bâtiment / Salle',
     ],
+    'backup' => [
+        'title' => 'Sauvegardes',
+        'title_short' => 'Sauvegardes',
+        'title_singular' => 'Sauvegarde',
+    ],
     'certificate' => [
         'description' => "Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges.",
         'fields' => [
@@ -382,9 +387,13 @@ return [
             'one_notification' => 'Envoyer une notification par certificat expiré',
             'multiple_notifications' => 'Répéter les notifications de certificats expirés',
         ],
+        'cpe' => [
+           "title" => "Common Platform Enumeration (CPE)",
+           "title_short" => "Plateformes",
+        ],
         'cve' => [
             'title' => 'Configuration de la recherche de vulnérabilités',
-            'title_short' => 'CVE',
+            'title_short' => 'Vulnérabilités',
             'help' => "Cet écran permet de configurer l'envoi de notification par mail lors de la détection de vulnérabilités.",
             'message_subject' => 'Sujet du message',
             'sent_from' => 'Envoyé depuis',
@@ -405,7 +414,7 @@ return [
             'status' => 'Etat',
         ],
         'parameters' => [
-            'title' => 'Gestion des paramètres',
+            'title' => 'Gestion des paramètres de customisation',
             'title_short' => 'Paramètres',
             'help' => 'Cet écran permet de configurer des paramètres optionnels de Mercator',
             'security_need_auth_helper' => 'Ajoute le critère de sécurité "Authenticité" aux critères Confidentialité, Intégrité, Disponibilité et Traçabilité déjà existants (exigence DORA).',
@@ -875,7 +884,7 @@ return [
             'servers' => 'Serveurs physiques',
             'servers_helper' => 'Serveurs physiques de support',
             'clusters' => 'Clusters',
-            'cluster_helper' => 'Cluster lesquels est installé le serveur logique',
+            'clusters_helper' => 'Cluster lesquels est installé le serveur logique',
             'operating_system' => 'Système d\'exploitation',
             'operating_system_helper' => "Nom et version de l'OS",
             'install_date' => "Date d'installation",

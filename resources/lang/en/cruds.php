@@ -308,6 +308,11 @@ return [
         'title' => 'Buildings / Rooms',
         'title_singular' => 'Building / Room',
     ],
+    'backup' => [
+        'title' => 'Backups',
+        'title_short' => 'Backups',
+        'title_singular' => 'Backup',
+    ],
     'certificate' => [
         'description' => 'An electronic certificate (also called a digital certificate or public key certificate) can be thought of as a digital identity card. It is mainly used to identify and authenticate a natural or legal person, but also to encrypt exchanges.',
         'fields' => [
@@ -377,9 +382,13 @@ return [
             'one_notification' => 'Send one notification for each expired certificate',
             'multiple_notifications' => 'Repeat expired certificate notifications',
         ],
+        'cpe' => [
+            'title' => 'CPE configuration',
+            'title_short' => 'Platforms',
+        ],
         'cve' => [
             'title' => 'Vulnerability-lookup configuration',
-            'title_short' => 'CVE',
+            'title_short' => 'Vulnerabilities',
             'help' => 'This screen allows you to configure the sending of notification by email when vulnerabilities are detected.',
             'message_subject' => 'Message sujet',
             'sent_from' => 'Sent from',
@@ -400,7 +409,7 @@ return [
             'status' => 'Status',
         ],
         'parameters' => [
-            'title' => 'Paraleters',
+            'title' => 'Mercator parameters',
             'title_short' => 'Parameters',
             'help' => 'This screen is used to configure optional Mercator parameters',
             'security_need_auth' => 'Authenticity',

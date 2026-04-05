@@ -313,7 +313,13 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $adminRoleId, 'permission_id' => 311],
                 ['role_id' => $adminRoleId, 'permission_id' => 312],
                 ['role_id' => $adminRoleId, 'permission_id' => 313],
-                ['role_id' => $adminRoleId, 'permission_id' => 314]
+                ['role_id' => $adminRoleId, 'permission_id' => 314],
+                // Backup
+                ['role_id' => $adminRoleId, 'permission_id' => 315],
+                ['role_id' => $adminRoleId, 'permission_id' => 316],
+                ['role_id' => $adminRoleId, 'permission_id' => 317],
+                ['role_id' => $adminRoleId, 'permission_id' => 318],
+                ['role_id' => $adminRoleId, 'permission_id' => 319],
                 ]
             );
 
@@ -603,7 +609,13 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $userRoleId, 'permission_id' => 311],
                 ['role_id' => $userRoleId, 'permission_id' => 312],
                 ['role_id' => $userRoleId, 'permission_id' => 313],
-                ['role_id' => $userRoleId, 'permission_id' => 314]
+                ['role_id' => $userRoleId, 'permission_id' => 314],
+                // Backup
+                ['role_id' => $userRoleId, 'permission_id' => 315],
+                ['role_id' => $userRoleId, 'permission_id' => 316],
+                ['role_id' => $userRoleId, 'permission_id' => 317],
+                ['role_id' => $userRoleId, 'permission_id' => 318],
+                ['role_id' => $userRoleId, 'permission_id' => 319],
                 ]
             );
             
@@ -731,7 +743,10 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $auditorRoleId, 'permission_id' => 308],
                 // Documents
                 ['role_id' => $auditorRoleId, 'permission_id' => 312],
-                ['role_id' => $auditorRoleId, 'permission_id' => 314]
+                ['role_id' => $auditorRoleId, 'permission_id' => 314],
+                // Backup
+                ['role_id' => $auditorRoleId, 'permission_id' => 317],
+                ['role_id' => $auditorRoleId, 'permission_id' => 319]
             ]);
 
             $cartographerId = DB::table('roles')
@@ -774,7 +789,10 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $cartographerId, 'permission_id' => 262],
                 // Documents
                 ['role_id' => $cartographerId, 'permission_id' => 312],
-                ['role_id' => $cartographerId, 'permission_id' => 314]
+                ['role_id' => $cartographerId, 'permission_id' => 314],
+                // Backup
+                ['role_id' => $cartographerId, 'permission_id' => 317],
+                ['role_id' => $cartographerId, 'permission_id' => 319]
             ]);
         }
     }
