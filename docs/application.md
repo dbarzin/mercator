@@ -48,6 +48,20 @@ Each item is selectable and gives access to the list of selected map objects.
 
 ---
 
+Object Windows
+When you click on an object in the left sidebar menu, a window appears listing all the objects in that category.
+This window contains several options:
+
+   [<img src="/mercator/images/asset.png" width="700">](images/asset.png)
+
+📒 Selection checkboxes `🔲` allow you to choose objects for the available actions.
+📗 The `Column Visibility` button lets you select which columns to display.
+📕 The `Search` button allows you to search for an object.
+📘 The `Copy` button copies all rows by default, or only the selected ones, to the clipboard.
+📓 The `CSV`, `Excel`, `PDF`, and `Print` buttons allow you to export the entire list or your selection.
+
+---
+
 ## Mapping Explorer
 
 It is possible to explore the cartography. This function is available via the top menu in **Tools** tab.
