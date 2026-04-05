@@ -46,6 +46,20 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
 
 ---
 
+## Les fenêtres des objets
+Lorsque vous cliquez sur un objet dans le menu latéral gauche, une fenêtre s’affiche et liste tous les objets de cette catégorie.
+
+Cette fenêtre contient un certain nombre d'options:
+  [<img src="/mercator/fr/images/asset.png" width="700">](images/asset.fr.png)
+
+* 📒 Les cases de sélection `🔲`permettent de choisir les objets pour les actions proposées.
+* 📗 Le bouton `Column Visibility` permet de choisir les colonnes à afficher.
+* 📕 Le bouton `Search` permet de chercher un objet.
+* 📘 Le bouton `Copy` permet de copier dans le presse-papiers toutes les lignes par défaut, ou uniquement celles que vous avez sélectionnées."
+* 📓 Les boutons `Csv`, `Excel`, `PDF` et `Print` Permettent d'exporter l'ensemble de la liste ou la sélection.
+
+---
+
 ## Exploration de la cartographie
 
 Il est possible d'explorer la cartographie. 
