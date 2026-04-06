@@ -319,6 +319,7 @@ return [
         'frequency' => 'Fréquence',
         'cycle' => 'Cycle',
         'retention' => 'Rétention (jours)',
+        'retention_unit' => 'jours',
         'frequencies' => [
             1 => 'Horaire',
             2 => 'Quotidienne',
@@ -1383,6 +1384,8 @@ return [
         'lists' => [
             'applications' => 'Applications par groupe applicatif',
             'applications_helper' => 'Liste des applications par groupe applicatif',
+            'backup' => 'Sauvegardes',
+            'backup_helper' => 'Liste des sauvegardes des serveurs logiques',
             'directory' => 'Annuaire de crise',
             'directory_helper' => 'Document centralisant les applications critiques ainsi que leurs fournisseurs et relations afin de faciliter la gestion et la continuité en situation de crise.',
             'entities' => 'Entités et applications supportées',

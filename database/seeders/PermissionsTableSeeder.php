@@ -328,7 +328,7 @@ class PermissionsTableSeeder extends Seeder
                 ['id' => 312, 'title' => 'document_show'],
                 ['id' => 313, 'title' => 'document_delete'],
                 ['id' => 314, 'title' => 'document_access'],
-                // Backup
+                // BackupList
                 ['id' => 315, 'title' => 'backup_create'],
                 ['id' => 316, 'title' => 'backup_edit'],
                 ['id' => 317, 'title' => 'backup_show'],

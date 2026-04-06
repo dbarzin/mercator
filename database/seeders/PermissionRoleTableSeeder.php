@@ -314,7 +314,7 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $adminRoleId, 'permission_id' => 312],
                 ['role_id' => $adminRoleId, 'permission_id' => 313],
                 ['role_id' => $adminRoleId, 'permission_id' => 314],
-                // Backup
+                // BackupList
                 ['role_id' => $adminRoleId, 'permission_id' => 315],
                 ['role_id' => $adminRoleId, 'permission_id' => 316],
                 ['role_id' => $adminRoleId, 'permission_id' => 317],
@@ -610,7 +610,7 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $userRoleId, 'permission_id' => 312],
                 ['role_id' => $userRoleId, 'permission_id' => 313],
                 ['role_id' => $userRoleId, 'permission_id' => 314],
-                // Backup
+                // BackupList
                 ['role_id' => $userRoleId, 'permission_id' => 315],
                 ['role_id' => $userRoleId, 'permission_id' => 316],
                 ['role_id' => $userRoleId, 'permission_id' => 317],
@@ -744,7 +744,7 @@ class PermissionRoleTableSeeder extends Seeder
                 // Documents
                 ['role_id' => $auditorRoleId, 'permission_id' => 312],
                 ['role_id' => $auditorRoleId, 'permission_id' => 314],
-                // Backup
+                // BackupList
                 ['role_id' => $auditorRoleId, 'permission_id' => 317],
                 ['role_id' => $auditorRoleId, 'permission_id' => 319]
             ]);
@@ -790,7 +790,7 @@ class PermissionRoleTableSeeder extends Seeder
                 // Documents
                 ['role_id' => $cartographerId, 'permission_id' => 312],
                 ['role_id' => $cartographerId, 'permission_id' => 314],
-                // Backup
+                // BackupList
                 ['role_id' => $cartographerId, 'permission_id' => 317],
                 ['role_id' => $cartographerId, 'permission_id' => 319]
             ]);

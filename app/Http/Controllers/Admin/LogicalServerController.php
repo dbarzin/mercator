@@ -8,6 +8,7 @@ use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
 use App\Services\IconUploadService;
 use Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\Backup;
 use Mercator\Core\Models\Cluster;
@@ -223,20 +224,22 @@ class LogicalServerController extends Controller
         $logicalServer->clusters()->sync($request->input('clusters', []));
 
         // Backups
-        $storageDeviceId = $request['storage_device_id'];
-        $backupFrequency = $request['backup_frequency'];
-        $backupCycle = $request['backup_cycle'];
-        $backupRetention = $request['backup_retention'];
+        if (Auth::user()->can('backup_create')) {
+            $storageDeviceId = $request['storage_device_id'];
+            $backupFrequency = $request['backup_frequency'];
+            $backupCycle = $request['backup_cycle'];
+            $backupRetention = $request['backup_retention'];
 
-        if ($storageDeviceId !== null) {
-            for ($i = 0; $i < count($storageDeviceId); $i++) {
-                $backup = new Backup;
-                $backup->logical_server_id = $logicalServer->id;
-                $backup->storage_device_id = $storageDeviceId[$i];
-                $backup->backup_frequency = intval($backupFrequency[$i]);
-                $backup->backup_cycle = intval($backupCycle[$i]);
-                $backup->backup_retention = intval($backupRetention[$i]);
-                $backup->save();
+            if ($storageDeviceId !== null) {
+                for ($i = 0; $i < count($storageDeviceId); $i++) {
+                    $backup = new Backup;
+                    $backup->logical_server_id = $logicalServer->id;
+                    $backup->storage_device_id = $storageDeviceId[$i];
+                    $backup->backup_frequency = (int)$backupFrequency[$i];
+                    $backup->backup_cycle = (int)$backupCycle[$i];
+                    $backup->backup_retention = (int)$backupRetention[$i];
+                    $backup->save();
+                }
             }
         }
 
@@ -284,6 +287,8 @@ class LogicalServerController extends Controller
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)
     {
+        abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $request['active'] = $request->has('active');
 
@@ -298,6 +303,29 @@ class LogicalServerController extends Controller
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
         $logicalServer->clusters()->sync($request->input('clusters', []));
+
+        if (Auth::user()->can('backup_edit')) {
+            // Delete previous Backups
+            Backup::query()->where('logical_server_id', $logicalServer->id)->delete();
+
+            // Save Backups
+            $storageDeviceId = $request['storage_device_id'];
+            $backupFrequency = $request['backup_frequency'];
+            $backupCycle = $request['backup_cycle'];
+            $backupRetention = $request['backup_retention'];
+
+            if ($storageDeviceId !== null) {
+                for ($i = 0; $i < count($storageDeviceId); $i++) {
+                    $backup = new Backup;
+                    $backup->logical_server_id = $logicalServer->id;
+                    $backup->storage_device_id = $storageDeviceId[$i];
+                    $backup->backup_frequency = (int)$backupFrequency[$i];
+                    $backup->backup_cycle = (int)$backupCycle[$i];
+                    $backup->backup_retention = (int)$backupRetention[$i];
+                    $backup->save();
+                }
+            }
+        }
 
         return redirect()->route('admin.logical-servers.index');
     }

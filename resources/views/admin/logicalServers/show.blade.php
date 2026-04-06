@@ -143,10 +143,10 @@
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
-                                <th width="30%">Storage Device</th>
-                                <th width="20%">Frequency</th>
-                                <th width="30%">Cycle</th>
-                                <th width="20%">Retention</th>
+                                <th width="30%">{{ trans('cruds.storageDevice.title_singular') }}</th>
+                                <th width="20%">{{ trans('cruds.backup.frequency') }}</th>
+                                <th width="30%">{{ trans('cruds.backup.cycle') }}</th>
+                                <th width="20%">{{ trans('cruds.backup.retention') }}</th>
                             </tr>
                             @foreach($logicalServer->backups as $backup)
                             <tr>
@@ -157,20 +157,18 @@
                                     </a>
                                 @endif
                                 </td>
-                                <td>{{ $backup->backup_frequency }}</td>
-                                <td>{{ $backup->backup_cycle }}</td>
-                                <td>{{ $backup->backup_retention }}</td>
+                                <td>{{ $backup->backup_frequency ? trans("cruds.backup.frequencies.{$backup->backup_frequency}") : '' }}</td>
+                                <td>{{ $backup->backup_cycle ? trans("cruds.backup.cycles.{$backup->backup_cycle}") : '' }}</td>
+                                <td>{{ $backup->backup_retention ? $backup->backup_retention . ' ' . trans("cruds.backup.retention_unit") : '' }}</td>
                              </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
-            @else
-            Aucune
             @endif
         </div>
-        @endif
+        @endcan
         <div class="card-footer">
             {{ trans('global.created_at') }} {{ $logicalServer->created_at ? $logicalServer->created_at->format(trans('global.timestamp')) : '' }}
             |

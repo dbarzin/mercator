@@ -133,7 +133,7 @@ class RelationController extends Controller
         session()->forget('documents');
 
         // Delete previous date-values
-        RelationValue::where('relation_id', $relation->id)->delete();
+        RelationValue::query()->where('relation_id', $relation->id)->delete();
 
         // Save date - values
         $dates = $request['dates'];

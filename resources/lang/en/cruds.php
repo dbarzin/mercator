@@ -311,10 +311,11 @@ return [
     'backup' => [
         'title' => 'Backups',
         'title_short' => 'Backups',
-        'title_singular' => 'Backup',
+        'title_singular' => 'BackupList',
         'frequency' => 'Frequency',
         'cycle' => 'Cycle',
         'retention' => 'Retention (days)',
+        'retention_unit' => 'days',
         'frequencies' => [
             1 => 'Hourly',
             2 => 'Daily',
@@ -1374,6 +1375,8 @@ return [
         'lists' => [
             'applications' => 'Applications by application group',
             'applications_helper' => 'List of applications by application group',
+            'backup' => 'Backups',
+            'backup_helper' => 'List of backups for logical servers',
             'directory' => 'Crisis Directory',
             'directory_helper' => 'Document centralizing critical applications, their suppliers, and relationships to facilitate management and continuity in crisis situations.',
             'entities' => 'Supported entities and applications',
