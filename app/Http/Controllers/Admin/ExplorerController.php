@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
@@ -940,9 +941,10 @@ class ExplorerController extends Controller
             'logical_server_id', 'physical_server_id');
 
         // Backups
-        $this->linkJoinTable('backups',
-            LogicalServer::$prefix, StorageDevice::$prefix,
-            'logical_server_id', 'storage_device_id');
+        if (Auth::user()->can('backup_access'))
+            $this->linkJoinTable('backups',
+                LogicalServer::$prefix, StorageDevice::$prefix,
+                'logical_server_id', 'storage_device_id');
 
     }
 
