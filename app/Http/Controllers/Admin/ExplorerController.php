@@ -939,6 +939,11 @@ class ExplorerController extends Controller
             LogicalServer::$prefix, PhysicalServer::$prefix,
             'logical_server_id', 'physical_server_id');
 
+        // Backups
+        $this->linkJoinTable('backups',
+            LogicalServer::$prefix, StorageDevice::$prefix,
+            'logical_server_id', 'storage_device_id');
+
     }
 
     private function buildLogicalSecurityDevices(): void
