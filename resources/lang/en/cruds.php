@@ -312,6 +312,23 @@ return [
         'title' => 'Backups',
         'title_short' => 'Backups',
         'title_singular' => 'Backup',
+        'frequency' => 'Frequency',
+        'cycle' => 'Cycle',
+        'retention' => 'Retention (days)',
+        'frequencies' => [
+            1 => 'Hourly',
+            2 => 'Daily',
+            3 => 'Weekly',
+            4 => 'Monthly',
+        ],
+        'cycles' => [
+            1 => 'Full',
+            2 => 'Incremental',
+            3 => 'Differential',
+            4 => 'Full + Incremental',
+            5 => 'Full + Differential',
+            6 => 'Mirror',
+        ],
     ],
     'certificate' => [
         'description' => 'An electronic certificate (also called a digital certificate or public key certificate) can be thought of as a digital identity card. It is mainly used to identify and authenticate a natural or legal person, but also to encrypt exchanges.',

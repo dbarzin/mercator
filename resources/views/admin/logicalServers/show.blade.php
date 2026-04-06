@@ -130,6 +130,7 @@
                 </tbody>
             </table>
         </div>
+        @can('backup_show')
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-header">
             {{ trans("cruds.backup.title") }}
@@ -138,21 +139,21 @@
         <div class="card-body">
             @if ($logicalServer->backups->count()>0)
             <div class="row">
-                <div class="col-4">
+                <div class="col-8">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
-                                <th>Storage Device</th>
-                                <th>Frequency</th>
-                                <th>Cycle</th>
-                                <th>Retention</th>
+                                <th width="30%">Storage Device</th>
+                                <th width="20%">Frequency</th>
+                                <th width="30%">Cycle</th>
+                                <th width="20%">Retention</th>
                             </tr>
                             @foreach($logicalServer->backups as $backup)
                             <tr>
                                 <td>
                                 @if ($backup->storage_device_id!==null)
-                                    <a href="{{ route('admin.domaine-ads.show', $backup->storage_device_id) }}">
-                                        {{ $backup->storageevice->name }}
+                                    <a href="{{ route('admin.storage-devices.show', $backup->storage_device_id) }}">
+                                        {{ $backup->storageDevice->name }}
                                     </a>
                                 @endif
                                 </td>
@@ -169,6 +170,7 @@
             Aucune
             @endif
         </div>
+        @endif
         <div class="card-footer">
             {{ trans('global.created_at') }} {{ $logicalServer->created_at ? $logicalServer->created_at->format(trans('global.timestamp')) : '' }}
             |

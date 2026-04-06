@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateLogicalServerRequest;
 use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\Backup;
 use Mercator\Core\Models\Cluster;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\DomaineAd;
@@ -220,6 +221,24 @@ class LogicalServerController extends Controller
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
         $logicalServer->clusters()->sync($request->input('clusters', []));
+
+        // Backups
+        $storageDeviceId = $request['storage_device_id'];
+        $backupFrequency = $request['backup_frequency'];
+        $backupCycle = $request['backup_cycle'];
+        $backupRetention = $request['backup_retention'];
+
+        if ($storageDeviceId !== null) {
+            for ($i = 0; $i < count($storageDeviceId); $i++) {
+                $backup = new Backup;
+                $backup->logical_server_id = $logicalServer->id;
+                $backup->storage_device_id = $storageDeviceId[$i];
+                $backup->backup_frequency = intval($backupFrequency[$i]);
+                $backup->backup_cycle = intval($backupCycle[$i]);
+                $backup->backup_retention = intval($backupRetention[$i]);
+                $backup->save();
+            }
+        }
 
         return redirect()->route('admin.logical-servers.index');
     }

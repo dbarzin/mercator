@@ -316,6 +316,23 @@ return [
         'title' => 'Sauvegardes',
         'title_short' => 'Sauvegardes',
         'title_singular' => 'Sauvegarde',
+        'frequency' => 'Fréquence',
+        'cycle' => 'Cycle',
+        'retention' => 'Rétention (jours)',
+        'frequencies' => [
+            1 => 'Horaire',
+            2 => 'Quotidienne',
+            3 => 'Hebdomadaire',
+            4 => 'Mensuelle',
+        ],
+        'cycles' => [
+            1 => 'Complète',
+            2 => 'Incrémentale',
+            3 => 'Différentielle',
+            4 => 'Complète + Incrémentale',
+            5 => 'Complète + Différentielle',
+            6 => 'Miroir',
+        ],
     ],
     'certificate' => [
         'description' => "Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges.",
