@@ -475,7 +475,7 @@
                                         <input class="form-control" type="number" name="backup_retention" id="backup_retention" min="1" max="36500"/>
                                     </td>
                                     <td>
-                                        <button type="button" id="dynamic-ar" class="btn btn-outline-primary">Add</button>
+                                        <button type="button" id="dynamic-ar" class="btn btn-outline-primary">{{ trans("global.add") }}</button>
                                     </td>
                                 </tr>
 

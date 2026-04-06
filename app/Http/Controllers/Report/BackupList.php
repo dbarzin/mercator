@@ -16,8 +16,14 @@ class BackupList extends ReportController
     {
         abort_if(Gate::denies('reports_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $backups = Backup::query()->get();
-
+        $backups = Backup::query()
+            ->with('logicalServer', 'storageDevice')
+            ->get()
+            ->sortBy([
+                fn ($a, $b) => strcmp($a->logicalServer?->name ?? '', $b->logicalServer?->name ?? ''),
+                fn ($a, $b) => strcmp($a->storageDevice?->name ?? '', $b->storageDevice?->name ?? ''),
+            ]);
+        
         $header = [
             trans('cruds.logicalServer.title_short'),
             trans('cruds.storageDevice.title_short'),

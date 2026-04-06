@@ -264,7 +264,12 @@ class LogicalServerController extends Controller
         $environment_list = LogicalServer::query()->select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
         $attributes_list = $this->getAttributes();
 
-        $logicalServer->load('physicalServers', 'applications');
+        $logicalServer->load('physicalServers', 'applications', 'backups');
+
+        $logicalServer->setRelation(
+            'backups',
+            $logicalServer->backups->sortBy('storageDevice.name')
+        );
 
         return view(
             'admin.logicalServers.edit',
@@ -334,7 +339,12 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServer->load('physicalServers', 'applications', 'backups');
+        $logicalServer->load('physicalServers', 'applications', 'backups.storageDevice');
+
+        $logicalServer->setRelation(
+            'backups',
+            $logicalServer->backups->sortBy('storageDevice.name')
+        );
 
         return view('admin.logicalServers.show', compact('logicalServer'));
     }
