@@ -38,6 +38,14 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 DataTable.Buttons.jszip(jszip);
 DataTable.Buttons.pdfMake(pdfmake);
 
+// Translations
+DataTable.defaults.language = DataTable.defaults.language ?? {};
+DataTable.defaults.language.buttons = {
+    colvis: window._lang?.colvis ?? 'Column visibility',
+    copy: window._lang?.copy ?? 'Copy',
+    print: window._lang?.print ?? 'Print',
+};
+
 // Save fonts
 pdfmake.vfs = pdfFonts.vfs ?? pdfFonts.default?.vfs;
 
