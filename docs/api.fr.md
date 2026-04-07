@@ -1,7 +1,5 @@
 # API
 
-🇬🇧 [Read in English](/mercator/api)
-
 La cartographie peut être modifiée ou mise à jour via une REST API.
 
 Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer))
@@ -75,7 +73,7 @@ La liste des API se trouve dans le fichier /route/api.php
 - [/api/dnsservers *(usage non recommandé)*](./model.fr.md#serveurs-dns)
 - [/api/clusters](./model.fr.md#clusters)
 - [/api/logical-servers](./model.fr.md#serveurs-logiques)
-- [/api/backups](./model.fr.md#plans-de-sauvegarde) (lié à logical-servers et storage-devices)
+- [/api/backups](./model.fr.md#plans-de-sauvegarde) ==> lié à logical-servers et storage-devices
 - [/api/logical-flows](./model.fr.md#flux-logiques)
 - [/api/containers](./model.fr.md#conteneurs)
 - [/api/certificates](./model.fr.md#certificats)

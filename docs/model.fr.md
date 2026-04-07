@@ -1224,8 +1224,7 @@ Le champ "documents" ne semble pas utilisé dans le modèle de données d'un ser
 #### Plans de sauvegarde
 
 Les **plans de sauvegarde** permettent d’associer à chaque **serveur logique** les **stratégies de sauvegarde réellement implémentées**.  
-Ces stratégies décrivent :
-
+Ces stratégies décrivent :  
 - **l’infrastructure de stockage** utilisée pour recevoir les sauvegardes,  
 - **la fréquence** des sauvegardes (quotidienne, hebdomadaire, mensuelle…),  
 - **le type** de sauvegarde (complète, incrémentale…),  
