@@ -903,6 +903,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#plans-de-sauvegarde" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plans de sauvegarde
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#conteneurs" class="md-nav__link">
     <span class="md-ellipsis">
       Conteneurs
@@ -4793,6 +4802,147 @@ Un serveur physique peut être rattaché à un serveur logique depuis ces deux o
 Un certificat peut être rattaché à un serveur logique depuis un objet certificat.<br />
 Un conteneur peut être rattaché à un serveur logique depuis un objet conteneur.</p>
 <p>Le champ "documents" ne semble pas utilisé dans le modèle de données d'un serveur logique.</p>
+<h4 id="plans-de-sauvegarde">Plans de sauvegarde<a class="headerlink" href="#plans-de-sauvegarde" title="Permanent link">&para;</a></h4>
+<p>Les <strong>plans de sauvegarde</strong> permettent d’associer à chaque <strong>serveur logique</strong> les <strong>stratégies de sauvegarde réellement implémentées</strong>.<br />
+Ces stratégies décrivent :</p>
+<ul>
+<li><strong>l’infrastructure de stockage</strong> utilisée pour recevoir les sauvegardes,  </li>
+<li><strong>la fréquence</strong> des sauvegardes (quotidienne, hebdomadaire, mensuelle…),  </li>
+<li><strong>le type</strong> de sauvegarde (complète, incrémentale…),  </li>
+<li><strong>la durée de rétention</strong>, exprimée en jours.</li>
+</ul>
+<p>Cette table constitue la base de référence permettant d’auditer la conformité des sauvegardes, d’identifier les serveurs non protégés, et de vérifier l’adéquation des stratégies avec les exigences de disponibilité et de restauration.</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="color: blue;"><em>backups</em></span></td>
+<td><code>/api/backups</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>int unsigned</td>
+<td>Identifiant unique du plan de sauvegarde (auto‑increment).</td>
+</tr>
+<tr>
+<td><strong>logical_server_id</strong></td>
+<td>int unsigned</td>
+<td>Identifiant du <strong>serveur logique</strong> concerné par la stratégie de sauvegarde.</td>
+</tr>
+<tr>
+<td><strong>storage_device_id</strong></td>
+<td>int unsigned</td>
+<td>Identifiant de l’<strong>infrastructure de stockage</strong> utilisée pour recevoir la sauvegarde.</td>
+</tr>
+<tr>
+<td><strong>backup_frequency</strong></td>
+<td>tinyint unsigned</td>
+<td>Fréquence de sauvegarde. Valeur codée (ex. : horaire, quotidienne, hebdomadaire, mensuelle).</td>
+</tr>
+<tr>
+<td><strong>backup_cycle</strong></td>
+<td>tinyint unsigned</td>
+<td>Type de sauvegarde. Valeur codée (ex. : incrémentale, complète).</td>
+</tr>
+<tr>
+<td><strong>backup_retention</strong></td>
+<td>smallint unsigned</td>
+<td>Durée de rétention des sauvegardes, exprimée en <strong>jours</strong>.</td>
+</tr>
+<tr>
+<td><strong>created_at</strong></td>
+<td>timestamp</td>
+<td>Date et heure de création de l’enregistrement.</td>
+</tr>
+<tr>
+<td><strong>updated_at</strong></td>
+<td>timestamp</td>
+<td>Date et heure de la dernière mise à jour.</td>
+</tr>
+<tr>
+<td><strong>deleted_at</strong></td>
+<td>timestamp</td>
+<td>Date de suppression logique (soft delete).</td>
+</tr>
+</tbody>
+</table>
+<p><em>Détail des identifiants proposés:</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">id backup_frequency</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Horaire</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Quotidienne</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Hebdomadaire</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Mensuelle</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">id backup_cycle</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Complète</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Incrémentale</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Différentielle</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Complète + Incrémentale</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>Complète + Différentielle</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td> Miroir</td>
+</tr>
+</tbody>
+</table>
 <h4 id="conteneurs">Conteneurs<a class="headerlink" href="#conteneurs" title="Permanent link">&para;</a></h4>
 <p>Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément,
 sur des serveurs logiques internes ou externes (cloud).</p>
