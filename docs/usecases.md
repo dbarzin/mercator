@@ -117,3 +117,22 @@ You can identify that the impact of a change has been correctly identified by me
 In addition, when changes have been made, you can check that the mapping elements involved in the change have been
 documented using the [change tracking report](reports.md).
 
+## Backups and Data Protection Strategies
+
+ISO 27002‑8.13 recommends that the organization define, implement, and maintain **backup procedures** to ensure the availability, integrity, and restorability of information and information systems.
+
+A backup strategy must guarantee that critical data can be restored within acceptable timeframes, that retention cycles meet business and regulatory requirements, and that responsibilities are clearly established.
+
+With Mercator, it is now possible to **document, for each logical server**, the **implemented backup strategies**, including:
+- the storage infrastructure used,
+- the backup frequency (daily, weekly, monthly…),
+- the type of backup (full, incremental…),
+- the associated retention cycle.
+
+This feature provides a centralized and standardized view of the backup mechanisms applied across the information system. It also helps identify critical servers that lack an adequate backup strategy or present inconsistencies between environments.
+
+You can verify, by reviewing logical servers and their associated strategies, that:
+- each critical server has a documented backup strategy,
+- backup frequencies and retention cycles comply with organizational requirements,
+- the storage infrastructures used are consistent with availability and restoration needs,
+- no server is missing a backup strategy or using an outdated one.

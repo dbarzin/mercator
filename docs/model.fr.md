@@ -1220,6 +1220,56 @@ Un conteneur peut être rattaché à un serveur logique depuis un objet conteneu
 
 Le champ "documents" ne semble pas utilisé dans le modèle de données d'un serveur logique.
 
+
+#### Plans de sauvegarde
+
+Les **plans de sauvegarde** permettent d’associer à chaque **serveur logique** les **stratégies de sauvegarde réellement implémentées**.  
+Ces stratégies décrivent :
+
+- **l’infrastructure de stockage** utilisée pour recevoir les sauvegardes,  
+- **la fréquence** des sauvegardes (quotidienne, hebdomadaire, mensuelle…),  
+- **le type** de sauvegarde (complète, incrémentale…),  
+- **la durée de rétention**, exprimée en jours.
+
+Cette table constitue la base de référence permettant d’auditer la conformité des sauvegardes, d’identifier les serveurs non protégés, et de vérifier l’adéquation des stratégies avec les exigences de disponibilité et de restauration.
+
+| Table | api |
+|-------|------|
+| <span style="color: blue;">*backups*</span> | `/api/backups` |
+
+
+| Champ             | Type              | Description |
+|-------------------|-------------------|-------------|
+| **id**            | int unsigned      | Identifiant unique du plan de sauvegarde (auto‑increment). |
+| **logical_server_id** | int unsigned | Identifiant du **serveur logique** concerné par la stratégie de sauvegarde. |
+| **storage_device_id** | int unsigned | Identifiant de l’**infrastructure de stockage** utilisée pour recevoir la sauvegarde. |
+| **backup_frequency**  | tinyint unsigned  | Fréquence de sauvegarde. Valeur codée (ex. : horaire, quotidienne, hebdomadaire, mensuelle). |
+| **backup_cycle**      | tinyint unsigned  | Type de sauvegarde. Valeur codée (ex. : incrémentale, complète). |
+| **backup_retention**  | smallint unsigned | Durée de rétention des sauvegardes, exprimée en **jours**. |
+| **created_at**        | timestamp         | Date et heure de création de l’enregistrement. |
+| **updated_at**        | timestamp         | Date et heure de la dernière mise à jour. |
+| **deleted_at**        | timestamp         | Date de suppression logique (soft delete). |
+
+
+*Détail des identifiants proposés:*
+
+| id backup_frequency | Description  |
+|:--:|--------------|
+| 1  | Horaire      |
+| 2  | Quotidienne  |
+| 3  | Hebdomadaire |
+| 4  | Mensuelle    |
+
+| id backup_cycle | Description  |
+|:--:|---------------------------|
+| 1  | Complète                  |
+| 2  | Incrémentale              |
+| 3  | Différentielle            |
+| 4  | Complète + Incrémentale   |
+| 5  | Complète + Différentielle |
+| 6  | Miroir                    | 
+
+
 #### Conteneurs
 
 Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément,
