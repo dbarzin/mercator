@@ -903,6 +903,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#backup-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup Plans
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#containers" class="md-nav__link">
     <span class="md-ellipsis">
       Containers
@@ -4790,6 +4799,147 @@ A physical server can be linked with a logical server from these two objects.</p
 <p>A certificate can be linked with a logical server from a certificate object.<br />
 A container can be linked with a logical server from a container object.</p>
 <p>The "documents" field doesn't appear to be used in a logical server's data model.</p>
+<h4 id="backup-plans">Backup Plans<a class="headerlink" href="#backup-plans" title="Permanent link">&para;</a></h4>
+<p>Backup plans allow you to associate the <strong>implemented backup strategies</strong> with each <strong>logical server</strong>.<br />
+These strategies describe:</p>
+<ul>
+<li>the <strong>storage infrastructure</strong> used to receive the backup,  </li>
+<li>the <strong>backup frequency</strong> (daily, weekly, monthly…),  </li>
+<li>the <strong>backup type</strong> (full, incremental…),  </li>
+<li>the <strong>retention period</strong>, expressed in days.</li>
+</ul>
+<p>This table serves as the reference for auditing backup compliance, identifying unprotected servers, and verifying that backup strategies match availability and restoration requirements.</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>backups</strong></td>
+<td><code>/api/backups</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>int unsigned</td>
+<td>Unique identifier of the backup plan (auto‑increment).</td>
+</tr>
+<tr>
+<td><strong>logical_server_id</strong></td>
+<td>int unsigned</td>
+<td>Identifier of the <strong>logical server</strong> covered by the backup strategy.</td>
+</tr>
+<tr>
+<td><strong>storage_device_id</strong></td>
+<td>int unsigned</td>
+<td>Identifier of the <strong>storage device</strong> used to store the backup.</td>
+</tr>
+<tr>
+<td><strong>backup_frequency</strong></td>
+<td>tinyint unsigned</td>
+<td>Backup frequency. Encoded value (e.g., hourly, daily, weekly, monthly).</td>
+</tr>
+<tr>
+<td><strong>backup_cycle</strong></td>
+<td>tinyint unsigned</td>
+<td>Backup type. Encoded value (e.g., incremental, full).</td>
+</tr>
+<tr>
+<td><strong>backup_retention</strong></td>
+<td>smallint unsigned</td>
+<td>Retention period of the backup, expressed in <strong>days</strong>.</td>
+</tr>
+<tr>
+<td><strong>created_at</strong></td>
+<td>timestamp</td>
+<td>Date and time when the record was created.</td>
+</tr>
+<tr>
+<td><strong>updated_at</strong></td>
+<td>timestamp</td>
+<td>Date and time of the last update.</td>
+</tr>
+<tr>
+<td><strong>deleted_at</strong></td>
+<td>timestamp</td>
+<td>Logical deletion date (soft delete).</td>
+</tr>
+</tbody>
+</table>
+<p><em>Detail of proposed ids:</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">id backup_frequency</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Weekly</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Monthly</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">id backup_cycle</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Full</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Incremental</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Differential</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Full + Incremental</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>Full + Differential</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td> Mirror</td>
+</tr>
+</tbody>
+</table>
 <h4 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h4>
 <p>Containers are part of virtualization systems. They can operate in clusters or in isolation.
 on internal or external (cloud) logical servers.</p>
