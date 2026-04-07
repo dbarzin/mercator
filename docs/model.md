@@ -1220,8 +1220,7 @@ The "documents" field doesn't appear to be used in a logical server's data model
 #### Backup Plans
 
 Backup plans allow you to associate the **implemented backup strategies** with each **logical server**.  
-These strategies describe:
-
+These strategies describe:  
 - the **storage infrastructure** used to receive the backup,  
 - the **backup frequency** (daily, weekly, monthly…),  
 - the **backup type** (full, incremental…),  
