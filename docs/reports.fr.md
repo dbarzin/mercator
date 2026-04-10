@@ -4,10 +4,12 @@
 
 Le rapport de cartographie contient l’ensemble des objets composant la cartographie et les liens entre eux.
 
-[<img src="/mercator/images/report.png" width="600">](images/report.png)
+[<img src="/mercator/fr/images/report.png" width="600">](images/report.fr.png)
 
 C'est un document au format Word qui contient les informations de tous les objets des vues sélectionnées au niveau de
 granularité souhaité.
+
+---
 
 ### Listes
 
@@ -28,11 +30,8 @@ Cette liste permet d’avoir une vue de toutes les applications du système d’
 Cette liste peut être utilisée pour mener une veille technologique sur les vulnérabilités des applications du système
 d’information.
 
-#### Serveurs logiques
-
-Liste des serveurs logiques par application et leurs responsables.
-
-Cette liste permet d'identifier les responsables des serveurs logiques et les applications qu’ils servent.
+#### Annuaires de crise
+Document centralisant les applications critiques ainsi que leurs fournisseurs et relations afin de faciliter la gestion et la continuité en situation de crise.
 
 #### Analyse des besoins de sécurité
 
@@ -41,6 +40,27 @@ Liste des besoins de sécurité entre macro-processus, processus, applications, 
 Cette liste permet d’analyser la cohérence du plan de classification de l’information en termes de confidentialité,
 intégrité, disponibilité et traçabilité entre les processus, les applications, les bases de données et les informations
 qu’elles contiennent.
+
+#### Liste des VLANS
+Liste des VLANs, sous-réseaux et équipements qui s'y trouvent
+
+
+#### Configuration des Serveurs logiques
+
+iste de la configuration des serveurs logiques.
+
+Cette liste permet d’analyser la configuration des serveurs logiques.
+
+Cette liste peut être utilisée pour effectuer l’analyse de la capacité nécessaire pour faire fonctionner le système
+d’information et permet d’effectuer des projections d’une année sur l’autre.
+
+
+#### Sauvegardes
+Liste des plans de sauvegarde des serveurs logiques
+
+#### Connexions externes
+Entités externes connectées au système d'information
+
 
 #### Configuration des serveurs logiques
 
@@ -59,6 +79,38 @@ Cette liste permet de faire une revue de l’inventaire physique des équipement
 
 Annuellement, il est recommandé d’imprimer cette liste et de vérifier si le matériel présent dans l’inventaire
 correspond à ce qui est réellement présent dans les locaux, sites et baies correspondants.
+
+#### Inventaire des postes de travail
+Liste des postes de travail par site/local avec leur configuration
+
+---
+
+### Bilan d'Impact sur l'Activité (BIA)
+
+#### Besoins de sécurité
+Liste des activités et applications avec leurs beoins de sécurité en termes de RTO et RPO
+
+#### Impacts sur la continuité d'activité
+Mesure des conséquences d’une interruption de service
+
+---
+
+### Common Vulnerabilities and Exposures
+
+### Trouver les CVE correspondantes
+Recherche de CVE en fonction du CPE des applications
+
+---
+
+### RGPD
+
+### Registres des traitements
+Registres des traitements
+
+### Liste des traitements
+Liste des traitements, applications, bases de données et informations liées.
+
+---
 
 ### Audit
 

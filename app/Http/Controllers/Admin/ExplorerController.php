@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
@@ -784,25 +785,34 @@ class ExplorerController extends Controller
     private function buildExternalConnectedEntities(): void
     {
         $entities = DB::table('external_connected_entities')
-            ->select('id', 'name')
+            ->select('id', 'name', 'network_id', 'entity_id')
             ->whereNull('deleted_at')
             ->get();
 
+        // Charge tous les pivots en une seule requête, groupés par entity ID → élimine le N+1
+        $subnetworksByEntity = DB::table('external_connected_entity_subnetwork')
+            ->select('external_connected_entity_id', 'subnetwork_id')
+            ->get()
+            ->groupBy('external_connected_entity_id');
+
         foreach ($entities as $entity) {
-            $this->addNode(
-                5,
-                $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
-                $entity->name,
-                '/images/entity.png',
-                'external-connected-entities', 540,
-            );
+            $nodeId = $this->formatId(ExternalConnectedEntity::$prefix, $entity->id);
+
+            $this->addNode(5, $nodeId, $entity->name, '/images/entity.png', 'external-connected-entities', 540);
+
+            if ($entity->network_id !== null) {
+                $this->addLinkEdge($nodeId, $this->formatId(Network::$prefix, $entity->network_id));
+            } else {
+                foreach ($subnetworksByEntity->get($entity->id, collect()) as $pivot) {
+                    $this->addLinkEdge($nodeId, $this->formatId(Subnetwork::$prefix, $pivot->subnetwork_id));
+                }
+            }
+
+            if ($entity->entity_id !== null) {
+                $this->addLinkEdge($nodeId, $this->formatId(Entity::$prefix, $entity->entity_id));
+            }
         }
-
-        $this->linkJoinTable('external_connected_entity_subnetwork',
-            ExternalConnectedEntity::$prefix, Subnetwork::$prefix,
-            'external_connected_entity_id', 'subnetwork_id');
     }
-
     private function buildContainers(): void
     {
         $containers = DB::table('containers')
@@ -929,6 +939,12 @@ class ExplorerController extends Controller
         $this->linkJoinTable('logical_server_physical_server',
             LogicalServer::$prefix, PhysicalServer::$prefix,
             'logical_server_id', 'physical_server_id');
+
+        // Backups
+        if (Auth::user()->can('backup_access'))
+            $this->linkJoinTable('backups',
+                LogicalServer::$prefix, StorageDevice::$prefix,
+                'logical_server_id', 'storage_device_id');
 
     }
 

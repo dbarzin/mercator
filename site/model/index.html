@@ -903,6 +903,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#backup-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup Plans
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#containers" class="md-nav__link">
     <span class="md-ellipsis">
       Containers
@@ -4091,6 +4100,11 @@ This default configuration can be changed in the menu Configuration &gt; Paramet
 <td style="text-align: left;">Reference to the internal network(s) connected to the entity</td>
 </tr>
 <tr>
+<td style="text-align: left;">subnetworks</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of linked subnetworks</td>
+</tr>
+<tr>
 <td style="text-align: left;">contacts</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Contacts within the external entity/company</td>
@@ -4785,6 +4799,145 @@ A physical server can be linked with a logical server from these two objects.</p
 <p>A certificate can be linked with a logical server from a certificate object.<br />
 A container can be linked with a logical server from a container object.</p>
 <p>The "documents" field doesn't appear to be used in a logical server's data model.</p>
+<h4 id="backup-plans">Backup Plans<a class="headerlink" href="#backup-plans" title="Permanent link">&para;</a></h4>
+<p>Backup plans allow you to associate the <strong>implemented backup strategies</strong> with each <strong>logical server</strong>.<br />
+These strategies describe:<br />
+- the <strong>storage infrastructure</strong> used to receive the backup,<br />
+- the <strong>backup frequency</strong> (daily, weekly, monthly…),<br />
+- the <strong>backup type</strong> (full, incremental…),<br />
+- the <strong>retention period</strong>, expressed in days.</p>
+<p>This table serves as the reference for auditing backup compliance, identifying unprotected servers, and verifying that backup strategies match availability and restoration requirements.</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>backups</strong></td>
+<td><code>/api/backups</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>int unsigned</td>
+<td>Unique identifier of the backup plan (auto‑increment).</td>
+</tr>
+<tr>
+<td><strong>logical_server_id</strong></td>
+<td>int unsigned</td>
+<td>Identifier of the <strong>logical server</strong> covered by the backup strategy.</td>
+</tr>
+<tr>
+<td><strong>storage_device_id</strong></td>
+<td>int unsigned</td>
+<td>Identifier of the <strong>storage device</strong> used to store the backup.</td>
+</tr>
+<tr>
+<td><strong>backup_frequency</strong></td>
+<td>tinyint unsigned</td>
+<td>Backup frequency. Encoded value (e.g., hourly, daily, weekly, monthly).</td>
+</tr>
+<tr>
+<td><strong>backup_cycle</strong></td>
+<td>tinyint unsigned</td>
+<td>Backup type. Encoded value (e.g., incremental, full).</td>
+</tr>
+<tr>
+<td><strong>backup_retention</strong></td>
+<td>smallint unsigned</td>
+<td>Retention period of the backup, expressed in <strong>days</strong>.</td>
+</tr>
+<tr>
+<td><strong>created_at</strong></td>
+<td>timestamp</td>
+<td>Date and time when the record was created.</td>
+</tr>
+<tr>
+<td><strong>updated_at</strong></td>
+<td>timestamp</td>
+<td>Date and time of the last update.</td>
+</tr>
+<tr>
+<td><strong>deleted_at</strong></td>
+<td>timestamp</td>
+<td>Logical deletion date (soft delete).</td>
+</tr>
+</tbody>
+</table>
+<p><em>Detail of proposed ids:</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">id backup_frequency</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Weekly</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Monthly</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">id backup_cycle</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Full</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Incremental</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Differential</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Full + Incremental</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>Full + Differential</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td> Mirror</td>
+</tr>
+</tbody>
+</table>
 <h4 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h4>
 <p>Containers are part of virtualization systems. They can operate in clusters or in isolation.
 on internal or external (cloud) logical servers.</p>
@@ -4835,6 +4988,21 @@ on internal or external (cloud) logical servers.</p>
 <td style="text-align: left;">icon_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Reference to a specific icon</td>
+</tr>
+<tr>
+<td style="text-align: left;">applications</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related applications</td>
+</tr>
+<tr>
+<td style="text-align: left;">databases</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related database(s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">logical_servers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of related logical servers</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -6282,7 +6450,7 @@ with a network switch (either physical or logical) through a physical link objec
 <tbody>
 <tr>
 <td style="text-align: left;"><span style="color: blue;"><em>physical_routers</em></span></td>
-<td style="text-align: left;"><code>/api/physical_routers</code></td>
+<td style="text-align: left;"><code>/api/physical-routers</code></td>
 </tr>
 </tbody>
 </table>
@@ -6329,6 +6497,16 @@ with a network switch (either physical or logical) through a physical link objec
 <td style="text-align: left;">bay_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Reference to rack</td>
+</tr>
+<tr>
+<td style="text-align: left;">vlans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of linked vlans</td>
+</tr>
+<tr>
+<td style="text-align: left;">routers</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs list of linked logical routers</td>
 </tr>
 <tr>
 <td style="text-align: left;">vendor</td>
@@ -6740,6 +6918,16 @@ or LANs.</p>
 <td style="text-align: left;">Name of WAN</td>
 </tr>
 <tr>
+<td style="text-align: left;">lans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related LANs</td>
+</tr>
+<tr>
+<td style="text-align: left;">mans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related MANs</td>
+</tr>
+<tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
 <td style="text-align: left;">Date of creation</td>
@@ -6859,6 +7047,16 @@ A LAN can be linked to a MAN from a MAN object.</p>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description of LAN</td>
+</tr>
+<tr>
+<td style="text-align: left;">mans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related MANs</td>
+</tr>
+<tr>
+<td style="text-align: left;">wans</td>
+<td style="text-align: left;">List int [,]</td>
+<td style="text-align: left;">IDs List of related WANs</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>

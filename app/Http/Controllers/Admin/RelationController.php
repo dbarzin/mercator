@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
-use Mercator\Core\Models\Relation;
-use Mercator\Core\Models\RelationValue;
 use Gate;
 use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\Entity;
+use Mercator\Core\Models\Relation;
+use Mercator\Core\Models\RelationValue;
 use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends Controller
@@ -27,14 +28,18 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sources = DB::table('entities')->select(['id', 'name'])->whereNull('deleted_at')->orderBy('name')->get();
+        $sources = Entity::query()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get();
+
         $destinations = $sources;
 
         // lists
-        $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Relation::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $attributes_list = $this->getAttributes();
 
-        $responsibles_list = Relation::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $responsibles_list = Relation::query()->select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $res = [];
         foreach ($responsibles_list as $i) {
             foreach (explode(',', $i) as $j) {
@@ -59,7 +64,7 @@ class RelationController extends Controller
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $request['active'] = $request->has('active');
 
-        $relation = Relation::create($request->all());
+        $relation = Relation::query()->create($request->all());
         $relation->documents()->sync(session()->get('documents'));
 
         session()->forget('documents');
@@ -128,7 +133,7 @@ class RelationController extends Controller
         session()->forget('documents');
 
         // Delete previous date-values
-        RelationValue::where('relation_id', $relation->id)->delete();
+        RelationValue::query()->where('relation_id', $relation->id)->delete();
 
         // Save date - values
         $dates = $request['dates'];

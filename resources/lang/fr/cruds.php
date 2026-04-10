@@ -312,6 +312,29 @@ return [
         'title' => 'Bâtiments / Salles',
         'title_singular' => 'Bâtiment / Salle',
     ],
+    'backup' => [
+        'title' => 'Sauvegardes',
+        'title_short' => 'Sauvegardes',
+        'title_singular' => 'Sauvegarde',
+        'frequency' => 'Fréquence',
+        'cycle' => 'Cycle',
+        'retention' => 'Rétention (jours)',
+        'retention_unit' => 'jours',
+        'frequencies' => [
+            1 => 'Horaire',
+            2 => 'Quotidienne',
+            3 => 'Hebdomadaire',
+            4 => 'Mensuelle',
+        ],
+        'cycles' => [
+            1 => 'Complète',
+            2 => 'Incrémentale',
+            3 => 'Différentielle',
+            4 => 'Complète + Incrémentale',
+            5 => 'Complète + Différentielle',
+            6 => 'Miroir',
+        ],
+    ],
     'certificate' => [
         'description' => "Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges.",
         'fields' => [
@@ -382,9 +405,13 @@ return [
             'one_notification' => 'Envoyer une notification par certificat expiré',
             'multiple_notifications' => 'Répéter les notifications de certificats expirés',
         ],
+        'cpe' => [
+           "title" => "Common Platform Enumeration (CPE)",
+           "title_short" => "Plateformes",
+        ],
         'cve' => [
             'title' => 'Configuration de la recherche de vulnérabilités',
-            'title_short' => 'CVE',
+            'title_short' => 'Vulnérabilités',
             'help' => "Cet écran permet de configurer l'envoi de notification par mail lors de la détection de vulnérabilités.",
             'message_subject' => 'Sujet du message',
             'sent_from' => 'Envoyé depuis',
@@ -405,7 +432,7 @@ return [
             'status' => 'Etat',
         ],
         'parameters' => [
-            'title' => 'Gestion des paramètres',
+            'title' => 'Gestion des paramètres de customisation',
             'title_short' => 'Paramètres',
             'help' => 'Cet écran permet de configurer des paramètres optionnels de Mercator',
             'security_need_auth_helper' => 'Ajoute le critère de sécurité "Authenticité" aux critères Confidentialité, Intégrité, Disponibilité et Traçabilité déjà existants (exigence DORA).',
@@ -875,7 +902,7 @@ return [
             'servers' => 'Serveurs physiques',
             'servers_helper' => 'Serveurs physiques de support',
             'clusters' => 'Clusters',
-            'cluster_helper' => 'Cluster lesquels est installé le serveur logique',
+            'clusters_helper' => 'Cluster lesquels est installé le serveur logique',
             'operating_system' => 'Système d\'exploitation',
             'operating_system_helper' => "Nom et version de l'OS",
             'install_date' => "Date d'installation",
@@ -1357,6 +1384,8 @@ return [
         'lists' => [
             'applications' => 'Applications par groupe applicatif',
             'applications_helper' => 'Liste des applications par groupe applicatif',
+            'backup' => 'Sauvegardes',
+            'backup_helper' => 'Liste des sauvegardes des serveurs logiques',
             'directory' => 'Annuaire de crise',
             'directory_helper' => 'Document centralisant les applications critiques ainsi que leurs fournisseurs et relations afin de faciliter la gestion et la continuité en situation de crise.',
             'entities' => 'Entités et applications supportées',

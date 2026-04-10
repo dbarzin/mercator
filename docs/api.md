@@ -71,6 +71,7 @@ The list of APIs can be found in /route/api.php
 - [/api/dnsservers *(usage not recommended)*](./model.md#dns-servers)
 - [/api/clusters](./model.md#clusters)
 - [/api/logical-servers](./model.md#logical-servers)
+- [/api/backups](./model.md#backup-plans) ==> linked to logical-servers and storage-devices
 - [/api/containers](./model.md#containers)
 - [/api/logical-flows](./model.md#logical-flows)
 - [/api/certificates](./model.md#certificates)
@@ -83,7 +84,7 @@ The list of APIs can be found in /route/api.php
 - [/api/bays](./model.md#racks)
 - [/api/physical-servers](./model.md#physical-servers)
 - [/api/workstations](./model.md#workstations)
-- [/api/storage-devices *(usage not recommended)*](./model.md#storage-infrastructures)
+- [/api/storage-devices](./model.md#storage-infrastructures) (recommended for backups)
 - [/api/peripherals](./model.md#peripherals)
 - [/api/phones](./model.md#phones)
 - [/api/physical-switches](./model.md#physical-switches)

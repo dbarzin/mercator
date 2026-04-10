@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', trans('panel.page.untitled')) | {{ trans('panel.site_title') }}</title>
+    <script>
+        window._lang = {
+            colvis:  "{{ trans('global.datatables.colvis') }}",
+            copy:    "{{ trans('global.datatables.copy') }}",
+            print:   "{{ trans('global.datatables.print') }}",
+            delete:  "{{ trans('global.datatables.delete') }}"
+        };
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
     <script>

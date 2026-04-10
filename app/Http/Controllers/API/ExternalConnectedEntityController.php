@@ -29,8 +29,9 @@ class ExternalConnectedEntityController extends APIController
         abort_if(Gate::denies('external_connected_entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /** @var ExternalConnectedEntity $externalConnectedEntity */
-        $externalConnectedEntity = ExternalConnectedEntity::create($request->all());
-        // $externalConnectedEntity->roles()->sync($request->input('roles', []));
+        $externalConnectedEntity = ExternalConnectedEntity::query()->create($request->all());
+
+        $externalConnectedEntity->subnetworks()->sync($request->input('subnetworks', []));
 
         return response()->json($externalConnectedEntity, Response::HTTP_CREATED);
     }
@@ -38,6 +39,8 @@ class ExternalConnectedEntityController extends APIController
     public function show(ExternalConnectedEntity $externalConnectedEntity)
     {
         abort_if(Gate::denies('external_connected_entity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $externalConnectedEntity['subnetworks'] = $externalConnectedEntity->subnetworks()->pluck('id');
 
         return new JsonResource($externalConnectedEntity);
     }
@@ -47,7 +50,10 @@ class ExternalConnectedEntityController extends APIController
         abort_if(Gate::denies('external_connected_entity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $externalConnectedEntity->update($request->all());
-        // $externalConnectedEntity->roles()->sync($request->input('roles', []));
+
+        if ($request->has('subnetworks')) {
+            $externalConnectedEntity->subnetworks()->sync($request->input('subnetworks', []));
+        }
 
         return response()->json();
     }

@@ -38,6 +38,45 @@
             'withLink' => false,
         ])
     </div>
+        @can('backup_show')
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            {{ trans("cruds.backup.title") }}
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-body">
+            @if ($storageDevice->backups->count()>0)
+            <div class="row">
+                <div class="col-8">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th width="30%">{{ trans('cruds.storageDevice.title_singular') }}</th>
+                                <th width="20%">{{ trans('cruds.backup.frequency') }}</th>
+                                <th width="30%">{{ trans('cruds.backup.cycle') }}</th>
+                                <th width="20%">{{ trans('cruds.backup.retention') }}</th>
+                            </tr>
+                            @foreach($storageDevice->backups as $backup)
+                            <tr>
+                                <td>
+                                @if ($backup->logical_server_id!==null)
+                                    <a href="{{ route('admin.logical-servers.show', $backup->logical_server_id) }}">
+                                        {{ $backup->logicalServer->name }}
+                                    </a>
+                                @endif
+                                </td>
+                                <td>{{ $backup->backup_frequency ? trans("cruds.backup.frequencies.{$backup->backup_frequency}") : '' }}</td>
+                                <td>{{ $backup->backup_cycle ? trans("cruds.backup.cycles.{$backup->backup_cycle}") : '' }}</td>
+                                <td>{{ $backup->backup_retention ? $backup->backup_retention . ' ' . trans("cruds.backup.retention_unit") : '' }}</td>
+                             </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @endif
+        </div>
+        @endcan
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $storageDevice->created_at ? $storageDevice->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $storageDevice->updated_at ? $storageDevice->updated_at->format(trans('global.timestamp')) : '' }}

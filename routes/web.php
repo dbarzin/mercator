@@ -368,6 +368,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     Route::get('report/applicationsByBlocks', [Report\ApplicationList::class, 'generateExcel'])->name('report.applicationsByBlocks');
     Route::get('report/directory', [Report\Directory::class, 'generateDocx'])->name('report.directory');
     Route::get('report/logicalServers', [Report\LogicalServers::class, 'generateExcel'])->name('report.logicalServers');
+    Route::get('report/backups', [Report\BackupList::class, 'generateExcel'])->name('report.backups');
     Route::get('report/securityNeeds', [Report\SecurityNeeds::class, 'generateExcel'])->name('report.securityNeeds');
     Route::get('report/logicalServerConfigs', [Report\LogicalServerConfigs::class, 'generateExcel'])->name('report.logicalServerConfigs');
     Route::get('report/externalAccess', [Report\ExternalAccess::class, 'generateExcel'])->name('report.externalAccess');

@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
+use App\Services\IconUploadService;
+use Gate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\Backup;
 use Mercator\Core\Models\Cluster;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\DomaineAd;
 use Mercator\Core\Models\LogicalServer;
 use Mercator\Core\Models\MApplication;
 use Mercator\Core\Models\PhysicalServer;
-use App\Services\IconUploadService;
-use Gate;
-use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\StorageDevice;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\DataTables;
@@ -25,7 +28,9 @@ class LogicalServerController extends Controller
 
     public function getData(Request $request)
     {
-        $logicalServers = LogicalServer::select('id', 'name', 'type', 'attributes', 'description')->get();
+        $logicalServers = LogicalServer::query()
+            ->select('id', 'name', 'type', 'attributes', 'description')
+            ->get();
 
         return DataTables::of($logicalServers)->make(true);
     }
@@ -169,11 +174,12 @@ class LogicalServerController extends Controller
         $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
         $domains = DomaineAd::query()->orderBy('name')->pluck('name', 'id');
         $icons = LogicalServer::query()->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $storageDevices = StorageDevice::query()->orderBy('name')->pluck('name', 'id');
 
         // Lists
-        $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
-        $operating_system_list = LogicalServer::select('operating_system')->whereNotNull('operating_system')->distinct()->orderBy('operating_system')->pluck('operating_system');
-        $environment_list = LogicalServer::select('environment')->whereNotNull('environment')->distinct()->orderBy('environment')->pluck('environment');
+        $type_list = LogicalServer::query()->select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $operating_system_list = LogicalServer::query()->select('operating_system')->whereNotNull('operating_system')->distinct()->orderBy('operating_system')->pluck('operating_system');
+        $environment_list = LogicalServer::query()->select('environment')->whereNotNull('environment')->distinct()->orderBy('environment')->pluck('environment');
         $attributes_list = $this->getAttributes();
 
         // default active
@@ -186,6 +192,7 @@ class LogicalServerController extends Controller
                 'clusters',
                 'icons',
                 'physicalServers',
+                'storageDevices',
                 'applications',
                 'databases',
                 'type_list',
@@ -216,6 +223,26 @@ class LogicalServerController extends Controller
         $logicalServer->databases()->sync($request->input('databases', []));
         $logicalServer->clusters()->sync($request->input('clusters', []));
 
+        // Backups
+        if (Auth::user()->can('backup_create')) {
+            $storageDeviceId = $request['storage_device_id'];
+            $backupFrequency = $request['backup_frequency'];
+            $backupCycle = $request['backup_cycle'];
+            $backupRetention = $request['backup_retention'];
+
+            if ($storageDeviceId !== null) {
+                for ($i = 0; $i < count($storageDeviceId); $i++) {
+                    $backup = new Backup;
+                    $backup->logical_server_id = $logicalServer->id;
+                    $backup->storage_device_id = $storageDeviceId[$i];
+                    $backup->backup_frequency = (int)$backupFrequency[$i];
+                    $backup->backup_cycle = (int)$backupCycle[$i];
+                    $backup->backup_retention = (int)$backupRetention[$i];
+                    $backup->save();
+                }
+            }
+        }
+
         return redirect()->route('admin.logical-servers.index');
     }
 
@@ -229,14 +256,20 @@ class LogicalServerController extends Controller
         $clusters = Cluster::query()->orderBy('name')->pluck('name', 'id');
         $domains = DomaineAd::query()->orderBy('name')->pluck('name', 'id');
         $icons = LogicalServer::query()->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $storageDevices = StorageDevice::query()->orderBy('name')->pluck('name', 'id');
 
         // Lists
-        $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
-        $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
-        $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
+        $type_list = LogicalServer::query()->select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $operating_system_list = LogicalServer::query()->select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
+        $environment_list = LogicalServer::query()->select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
         $attributes_list = $this->getAttributes();
 
-        $logicalServer->load('physicalServers', 'applications');
+        $logicalServer->load('physicalServers', 'applications', 'backups');
+
+        $logicalServer->setRelation(
+            'backups',
+            $logicalServer->backups->sortBy('storageDevice.name')
+        );
 
         return view(
             'admin.logicalServers.edit',
@@ -245,6 +278,7 @@ class LogicalServerController extends Controller
                 'icons',
                 'clusters',
                 'physicalServers',
+                'storageDevices',
                 'applications',
                 'databases',
                 'type_list',
@@ -258,6 +292,8 @@ class LogicalServerController extends Controller
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)
     {
+        abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $request['active'] = $request->has('active');
 
@@ -273,6 +309,29 @@ class LogicalServerController extends Controller
         $logicalServer->databases()->sync($request->input('databases', []));
         $logicalServer->clusters()->sync($request->input('clusters', []));
 
+        if (Auth::user()->can('backup_edit')) {
+            // Delete previous Backups
+            Backup::query()->where('logical_server_id', $logicalServer->id)->delete();
+
+            // Save Backups
+            $storageDeviceId = $request['storage_device_id'];
+            $backupFrequency = $request['backup_frequency'];
+            $backupCycle = $request['backup_cycle'];
+            $backupRetention = $request['backup_retention'];
+
+            if ($storageDeviceId !== null) {
+                for ($i = 0; $i < count($storageDeviceId); $i++) {
+                    $backup = new Backup;
+                    $backup->logical_server_id = $logicalServer->id;
+                    $backup->storage_device_id = $storageDeviceId[$i];
+                    $backup->backup_frequency = (int)$backupFrequency[$i];
+                    $backup->backup_cycle = (int)$backupCycle[$i];
+                    $backup->backup_retention = (int)$backupRetention[$i];
+                    $backup->save();
+                }
+            }
+        }
+
         return redirect()->route('admin.logical-servers.index');
     }
 
@@ -280,7 +339,12 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServer->load('physicalServers', 'applications');
+        $logicalServer->load('physicalServers', 'applications', 'backups.storageDevice');
+
+        $logicalServer->setRelation(
+            'backups',
+            $logicalServer->backups->sortBy('storageDevice.name')
+        );
 
         return view('admin.logicalServers.show', compact('logicalServer'));
     }
@@ -296,7 +360,7 @@ class LogicalServerController extends Controller
 
     public function massDestroy(MassDestroyLogicalServerRequest $request)
     {
-        LogicalServer::whereIn('id', request('ids'))->delete();
+        LogicalServer::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

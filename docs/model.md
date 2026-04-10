@@ -975,6 +975,7 @@ Connected external entities represent external entities connected to the network
 | description | longtext     | Description of the entity/company and connection reason           |
 | entity_id   | int unsigned | Reference to the entity (ecosystem view)                          |
 | network_id  | int unsigned | Reference to the internal network(s) connected to the entity      |
+| subnetworks | List int [,] | IDs List of linked subnetworks                                    |
 | contacts    | varchar(255) | Contacts within the external entity/company                       |
 | src         | varchar(255) | Source IP address(es) or source range of the connection           |
 | src_desc    | varchar(255) | Description of the source's connection                            |
@@ -1214,6 +1215,54 @@ A certificate can be linked with a logical server from a certificate object.
 A container can be linked with a logical server from a container object.
 
 The "documents" field doesn't appear to be used in a logical server's data model.
+
+
+#### Backup Plans
+
+Backup plans allow you to associate the **implemented backup strategies** with each **logical server**.  
+These strategies describe:  
+- the **storage infrastructure** used to receive the backup,  
+- the **backup frequency** (daily, weekly, monthly…),  
+- the **backup type** (full, incremental…),  
+- the **retention period**, expressed in days.
+
+This table serves as the reference for auditing backup compliance, identifying unprotected servers, and verifying that backup strategies match availability and restoration requirements.
+
+
+| Table | Api |
+|-------|------|
+| **backups** | `/api/backups` |
+
+| Field              | Type               | Description |
+|--------------------|--------------------|-------------|
+| **id**             | int unsigned       | Unique identifier of the backup plan (auto‑increment). |
+| **logical_server_id** | int unsigned   | Identifier of the **logical server** covered by the backup strategy. |
+| **storage_device_id** | int unsigned   | Identifier of the **storage device** used to store the backup. |
+| **backup_frequency**  | tinyint unsigned | Backup frequency. Encoded value (e.g., hourly, daily, weekly, monthly). |
+| **backup_cycle**      | tinyint unsigned | Backup type. Encoded value (e.g., incremental, full). |
+| **backup_retention**  | smallint unsigned | Retention period of the backup, expressed in **days**. |
+| **created_at**        | timestamp        | Date and time when the record was created. |
+| **updated_at**        | timestamp        | Date and time of the last update. |
+| **deleted_at**        | timestamp        | Logical deletion date (soft delete). |
+
+*Detail of proposed ids:*
+
+| id backup_frequency | Description  |
+|:--:|--------------|
+| 1  | Hourly       |
+| 2  | Daily        |
+| 3  | Weekly       |
+| 4  | Monthly      |
+
+| id backup_cycle | Description  |
+|:--:|---------------------------|
+| 1  | Full                      |
+| 2  | Incremental               |
+| 3  | Differential              |
+| 4  | Full + Incremental        |
+| 5  | Full + Differential       |
+| 6  | Mirror                    | 
+
 
 #### Containers
 
