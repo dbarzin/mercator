@@ -20,8 +20,8 @@ class BackupList extends ReportController
             ->with('logicalServer', 'storageDevice')
             ->get()
             ->sortBy([
-                fn ($a, $b) => strcmp($a->logicalServer?->name ?? '', $b->logicalServer?->name ?? ''),
-                fn ($a, $b) => strcmp($a->storageDevice?->name ?? '', $b->storageDevice?->name ?? ''),
+                fn ($a, $b) => strcmp($a->logicalServer->name ?? '', $b->logicalServer->name ?? ''),
+                fn ($a, $b) => strcmp($a->storageDevice->name ?? '', $b->storageDevice->name ?? ''),
             ]);
         
         $header = [
