@@ -40,7 +40,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-9SLFYsak.js",
+    "file": "assets/app-D6no-R8f.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -87,12 +87,6 @@
     "imports": [
       "_chart-Cn24fMai.js"
     ]
-  },
-  "resources/js/cpe.js": {
-    "file": "assets/cpe-CAVBehj2.js",
-    "name": "cpe",
-    "src": "resources/js/cpe.js",
-    "isEntry": true
   },
   "resources/js/d3-viz.js": {
     "file": "assets/d3-viz-CxnYRx9P.js",

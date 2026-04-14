@@ -40,9 +40,11 @@ class ConfigurationController extends Controller
             'cve_mail_subject'         => $cfg['cve']['mail-subject']                   ?? '',
             'cve_check_frequency'      => $cfg['cve']['check-frequency']                ?? '0',
             'cve_provider'             => $cfg['cve']['provider']                       ?? '',
+            'cve_guesser'              => $cfg['cve']['guesser']                        ?? '',
             // Documents
-            'count' => Document::count(),
-            'sum'        => Document::sum('size'),
+            'count' => Document::query()->count(),
+            'sum'        => Document::query()->sum('size'),
+            // Set the active tab
             'active_tab' => $request->query('tab', 'general'),
         ]);
     }
@@ -116,13 +118,14 @@ class ConfigurationController extends Controller
             $cfg['cve']['mail-subject']    = $request->input('mail_subject');
             $cfg['cve']['check-frequency'] = $request->input('check_frequency');
             $cfg['cve']['provider']        = $request->input('provider');
+            $cfg['cve']['guesser']         = $request->input('guesser');
             $this->writeConfigFile($cfg);
 
             return [trans('global.saved'), true];
         }
 
         if ($action === 'test_provider') {
-            return $this->testProvider($request->input('provider'));
+            return $this->testProviders($request->input('provider'));
         }
 
         return $this->sendTestMail(
@@ -210,7 +213,7 @@ class ConfigurationController extends Controller
     }
 
     /** @return array{0: string, 1: bool} */
-    private function testProvider(string $provider): array
+    private function testProviders(string $provider): array
     {
         $client = curl_init($provider . '/api/dbInfo');
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
