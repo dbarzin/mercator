@@ -29,7 +29,8 @@
     "sourcentis/mercator-core": "^1.55",
     "spatie/laravel-query-builder": "^6.3",
     "yajra/laravel-datatables-oracle": "^11.1",
-    "ext-ldap": "*"
+    "ext-ldap": "*",
+    "ext-curl": "*"
   },
   "require-dev": {
     "fakerphp/faker": "^1.23",

@@ -1,4 +1,4 @@
-import 'bootstrap';
+import * as bootstrap from 'bootstrap';
 /*==================================*/
 import $ from 'jquery';
 import select2 from 'select2';
@@ -57,6 +57,7 @@ window.$ = window.jQuery = $;
 
 // Permet d'utiliser DynamicSelect dans la Blade
 window.DynamicSelect = DynamicSelect;
+window.bootstrap = bootstrap;
 window.Swal = Swal;
 window.moment = moment;
 window.DataTable = DataTable;

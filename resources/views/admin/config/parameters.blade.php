@@ -20,44 +20,42 @@
     </div>
 @endif
 
+@php $tab = $active_tab ?? 'general'; @endphp
+
 {{-- ─── Tab navigation ──────────────────────────────────────────────────── --}}
 <ul class="nav nav-tabs" id="configTabs" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active fw-bold" id="tab-general-btn"
-                data-bs-toggle="tab" data-bs-target="#tab-general"
-                type="button" role="tab" aria-controls="tab-general" aria-selected="true">
+        <button class="nav-link fw-bold {{ $tab === 'general' ? 'active' : '' }}"
+                id="tab-general-btn" data-bs-toggle="tab" data-bs-target="#tab-general"
+                type="button" role="tab"
+                aria-controls="tab-general" aria-selected="{{ $tab === 'general' ? 'true' : 'false' }}">
             <i class="fas fa-cog me-1"></i>
             {{ trans('cruds.configuration.parameters.title_short') }}
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link fw-bold" id="tab-cert-btn"
-                data-bs-toggle="tab" data-bs-target="#tab-cert"
-                type="button" role="tab" aria-controls="tab-cert">
+        <button class="nav-link fw-bold {{ $tab === 'cert' ? 'active' : '' }}"
+                id="tab-cert-btn" data-bs-toggle="tab" data-bs-target="#tab-cert"
+                type="button" role="tab"
+                aria-controls="tab-cert" aria-selected="{{ $tab === 'cert' ? 'true' : 'false' }}">
             <i class="fas fa-shield-alt me-1"></i>
             {{ trans('cruds.configuration.certificate.title_short') }}
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link fw-bold" id="tab-cve-btn"
-                data-bs-toggle="tab" data-bs-target="#tab-cve"
-                type="button" role="tab" aria-controls="tab-cve">
-            <i class="fas fa-bug me-1"></i>
-            {{ trans('cruds.configuration.cpe.title_short') }}
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link fw-bold" id="tab-cve-btn"
-                data-bs-toggle="tab" data-bs-target="#tab-cve"
-                type="button" role="tab" aria-controls="tab-cve">
+        <button class="nav-link fw-bold {{ $tab === 'cve' ? 'active' : '' }}"
+                id="tab-cve-btn" data-bs-toggle="tab" data-bs-target="#tab-cve"
+                type="button" role="tab"
+                aria-controls="tab-cve" aria-selected="{{ $tab === 'cve' ? 'true' : 'false' }}">
             <i class="fas fa-bug me-1"></i>
             {{ trans('cruds.configuration.cve.title_short') }}
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link fw-bold" id="tab-documents-btn"
-                data-bs-toggle="tab" data-bs-target="#tab-documents"
-                type="button" role="tab" aria-controls="tab-documents">
+        <button class="nav-link fw-bold {{ $tab === 'documents' ? 'active' : '' }}"
+                id="tab-documents-btn" data-bs-toggle="tab" data-bs-target="#tab-documents"
+                type="button" role="tab"
+                aria-controls="tab-documents" aria-selected="{{ $tab === 'documents' ? 'true' : 'false' }}">
             <i class="fas fa-file-alt me-1"></i>
             {{ trans('cruds.configuration.documents.title') }}
         </button>
@@ -70,9 +68,10 @@
     {{-- ================================================================== --}}
     {{-- TAB 1 : Paramètres généraux                                         --}}
     {{-- ================================================================== --}}
-    <div class="tab-pane fade show active" id="tab-general" role="tabpanel" aria-labelledby="tab-general-btn">
+    <div class="tab-pane fade {{ $tab === 'general' ? 'show active' : '' }}"
+         id="tab-general" role="tabpanel" aria-labelledby="tab-general-btn">
 
-        <form method="POST" action="{{ route('admin.config.parameters.save') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.config.parameters') }}">
             @method('PUT')
             @csrf
             <input type="hidden" name="active_tab" value="general">
@@ -83,7 +82,6 @@
                         <label>{{ trans('cruds.configuration.parameters.help') }}</label>
                     </div>
                 </div>
-
                 <div class="card-body border-top">
                     <h6 class="fw-bold mb-3">{{ trans('cruds.menu.logical_infrastructure.title_short') }}</h6>
                     <div class="form-group mb-3">
@@ -117,9 +115,10 @@
     {{-- ================================================================== --}}
     {{-- TAB 2 : Certificats                                                 --}}
     {{-- ================================================================== --}}
-    <div class="tab-pane fade" id="tab-cert" role="tabpanel" aria-labelledby="tab-cert-btn">
+    <div class="tab-pane fade {{ $tab === 'cert' ? 'show active' : '' }}"
+         id="tab-cert" role="tabpanel" aria-labelledby="tab-cert-btn">
 
-        <form method="POST" action="{{ route('admin.config.cert.save') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.config.parameters') }}">
             @method('PUT')
             @csrf
             <input type="hidden" name="active_tab" value="cert">
@@ -137,7 +136,7 @@
                         </label>
                         <input class="form-control" type="text"
                                name="mail_subject" id="cert_mail_subject"
-                               value="{{ $cert_mail_subject ?? $mail_subject ?? '' }}" required/>
+                               value="{{ $cert_mail_subject }}" required/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -146,7 +145,7 @@
                         </label>
                         <input class="form-control" type="text"
                                name="mail_from" id="cert_mail_from"
-                               value="{{ $cert_mail_from ?? $mail_from ?? '' }}" required/>
+                               value="{{ $cert_mail_from }}" required/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -155,7 +154,7 @@
                         </label>
                         <input class="form-control" type="text"
                                name="mail_to" id="cert_mail_to"
-                               value="{{ $cert_mail_to ?? $mail_to ?? '' }}" required/>
+                               value="{{ $cert_mail_to }}" required/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -164,15 +163,14 @@
                         </label>
                         <select class="form-control select2" name="expire_delay" id="cert_expire_delay">
                             @foreach ([
-                                '1'  => '1 ' . trans('global.day'),
-                                '7'  => '7 ' . trans('global.days'),
+                                '1'  => '1 '  . trans('global.day'),
+                                '7'  => '7 '  . trans('global.days'),
                                 '15' => '15 ' . trans('global.days'),
-                                '30' => '1 ' . trans('global.month'),
-                                '60' => '2 ' . trans('global.months'),
-                                '90' => '3 ' . trans('global.months'),
+                                '30' => '1 '  . trans('global.month'),
+                                '60' => '2 '  . trans('global.months'),
+                                '90' => '3 '  . trans('global.months'),
                             ] as $val => $label)
-                                <option value="{{ $val }}"
-                                    {{ ($cert_expire_delay ?? $expire_delay ?? '') == $val ? 'selected' : '' }}>
+                                <option value="{{ $val }}" {{ $cert_expire_delay == $val ? 'selected' : '' }}>
                                     {{ $label }}
                                 </option>
                             @endforeach
@@ -184,10 +182,10 @@
                             {{ trans('cruds.configuration.certificate.recurrence') }}
                         </label>
                         <select class="form-control select2" name="check_frequency" id="cert_check_frequency">
-                            <option value="0"  {{ ($cert_check_frequency ?? $check_frequency ?? '') == '0'  ? 'selected' : '' }}>{{ trans('global.never') }}</option>
-                            <option value="1"  {{ ($cert_check_frequency ?? $check_frequency ?? '') == '1'  ? 'selected' : '' }}>{{ trans('global.day') }}</option>
-                            <option value="7"  {{ ($cert_check_frequency ?? $check_frequency ?? '') == '7'  ? 'selected' : '' }}>{{ trans('global.week') }}</option>
-                            <option value="30" {{ ($cert_check_frequency ?? $check_frequency ?? '') == '30' ? 'selected' : '' }}>{{ trans('global.month') }}</option>
+                            <option value="0"  {{ $cert_check_frequency == '0'  ? 'selected' : '' }}>{{ trans('global.never') }}</option>
+                            <option value="1"  {{ $cert_check_frequency == '1'  ? 'selected' : '' }}>{{ trans('global.day') }}</option>
+                            <option value="7"  {{ $cert_check_frequency == '7'  ? 'selected' : '' }}>{{ trans('global.week') }}</option>
+                            <option value="30" {{ $cert_check_frequency == '30' ? 'selected' : '' }}>{{ trans('global.month') }}</option>
                         </select>
                     </div>
 
@@ -199,7 +197,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="group"
                                    id="certRadios1" value="0"
-                                   {{ ($cert_group ?? $group ?? '0') === '0' ? 'checked' : '' }}>
+                                   {{ $cert_group === '0' ? 'checked' : '' }}>
                             <label class="form-check-label" for="certRadios1">
                                 {{ trans('cruds.configuration.certificate.one_mail') }}
                             </label>
@@ -207,7 +205,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="group"
                                    id="certRadios2" value="1"
-                                   {{ ($cert_group ?? $group ?? '0') === '1' ? 'checked' : '' }}>
+                                   {{ $cert_group === '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="certRadios2">
                                 {{ trans('cruds.configuration.certificate.multiple_mails') }}
                             </label>
@@ -222,7 +220,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="repeat-notification"
                                    id="certRadios3" value="0"
-                                   {{ ($cert_repeat_notification ?? $repeat_notification ?? '0') === '0' ? 'checked' : '' }}>
+                                   {{ $cert_repeat_notification === '0' ? 'checked' : '' }}>
                             <label class="form-check-label" for="certRadios3">
                                 {{ trans('cruds.configuration.certificate.one_notification') }}
                             </label>
@@ -230,7 +228,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="repeat-notification"
                                    id="certRadios4" value="1"
-                                   {{ ($cert_repeat_notification ?? $repeat_notification ?? '0') === '1' ? 'checked' : '' }}>
+                                   {{ $cert_repeat_notification === '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="certRadios4">
                                 {{ trans('cruds.configuration.certificate.multiple_notifications') }}
                             </label>
@@ -241,7 +239,7 @@
             </div>
 
             <div class="form-group mt-3">
-                <button id="btn-cert-save" class="btn btn-success" type="submit" name="action" value="save">
+                <button class="btn btn-success" type="submit" name="action" value="save">
                     <i class="fas fa-save me-1"></i>{{ trans('global.save') }}
                 </button>
                 <button class="btn btn-secondary" type="submit" name="action" value="test">
@@ -256,9 +254,10 @@
     {{-- ================================================================== --}}
     {{-- TAB 3 : CVE                                                         --}}
     {{-- ================================================================== --}}
-    <div class="tab-pane fade" id="tab-cve" role="tabpanel" aria-labelledby="tab-cve-btn">
+    <div class="tab-pane fade {{ $tab === 'cve' ? 'show active' : '' }}"
+         id="tab-cve" role="tabpanel" aria-labelledby="tab-cve-btn">
 
-        <form method="POST" action="{{ route('admin.config.cve.save') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.config.parameters') }}">
             @method('PUT')
             @csrf
             <input type="hidden" name="active_tab" value="cve">
@@ -276,7 +275,7 @@
                         </label>
                         <input class="form-control" type="text"
                                name="mail_subject" id="cve_mail_subject"
-                               value="{{ $cve_mail_subject ?? '' }}" required/>
+                               value="{{ $cve_mail_subject }}" required/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -285,7 +284,7 @@
                         </label>
                         <input class="form-control" type="text"
                                name="mail_from" id="cve_mail_from"
-                               value="{{ $cve_mail_from ?? '' }}" required/>
+                               value="{{ $cve_mail_from }}" required/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -294,7 +293,7 @@
                         </label>
                         <input class="form-control" type="text"
                                name="mail_to" id="cve_mail_to"
-                               value="{{ $cve_mail_to ?? '' }}" required/>
+                               value="{{ $cve_mail_to }}" required/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -302,10 +301,10 @@
                             {{ trans('cruds.configuration.cve.recurrence') }}
                         </label>
                         <select class="form-control select2" name="check_frequency" id="cve_check_frequency">
-                            <option value="0"  {{ ($cve_check_frequency ?? '') == '0'  ? 'selected' : '' }}>{{ trans('global.never') }}</option>
-                            <option value="1"  {{ ($cve_check_frequency ?? '') == '1'  ? 'selected' : '' }}>{{ trans('global.day') }}</option>
-                            <option value="7"  {{ ($cve_check_frequency ?? '') == '7'  ? 'selected' : '' }}>{{ trans('global.week') }}</option>
-                            <option value="30" {{ ($cve_check_frequency ?? '') == '30' ? 'selected' : '' }}>{{ trans('global.month') }}</option>
+                            <option value="0"  {{ $cve_check_frequency == '0'  ? 'selected' : '' }}>{{ trans('global.never') }}</option>
+                            <option value="1"  {{ $cve_check_frequency == '1'  ? 'selected' : '' }}>{{ trans('global.day') }}</option>
+                            <option value="7"  {{ $cve_check_frequency == '7'  ? 'selected' : '' }}>{{ trans('global.week') }}</option>
+                            <option value="30" {{ $cve_check_frequency == '30' ? 'selected' : '' }}>{{ trans('global.month') }}</option>
                         </select>
                     </div>
 
@@ -315,7 +314,7 @@
                         </label>
                         <input class="form-control" type="text"
                                name="provider" id="cve_provider"
-                               value="{{ $cve_provider ?? $provider ?? '' }}" required/>
+                               value="{{ $cve_provider }}" required/>
                         <span class="help-block text-muted small">
                             {{ trans('cruds.configuration.cve.provider_helper') }}
                         </span>
@@ -343,7 +342,8 @@
     {{-- ================================================================== --}}
     {{-- TAB 4 : Documents                                                   --}}
     {{-- ================================================================== --}}
-    <div class="tab-pane fade" id="tab-documents" role="tabpanel" aria-labelledby="tab-documents-btn">
+    <div class="tab-pane fade {{ $tab === 'documents' ? 'show active' : '' }}"
+         id="tab-documents" role="tabpanel" aria-labelledby="tab-documents-btn">
 
         <div class="card">
             <div class="card-body">
@@ -353,13 +353,13 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 <span>{{ trans('cruds.configuration.documents.count') }}</span>
-                                <span class="badge bg-primary rounded-pill">{{ $count ?? 0 }}</span>
+                                <span class="badge bg-primary rounded-pill">{{ $count }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 <span>{{ trans('cruds.configuration.documents.total_size') }}</span>
                                 <span class="badge bg-secondary rounded-pill">
                                     @php
-                                        $bytes = $sum ?? 0;
+                                        $bytes = $sum;
                                         $units = ['B','KB','MB','GB','TB'];
                                         $i = 0;
                                         while ($bytes >= 1024 && $i < 4) { $bytes /= 1024; $i++; }
@@ -377,7 +377,6 @@
                     </button>
                 </form>
 
-                {{-- Integrity check results (populated by check.blade logic, if passed as $documents) --}}
                 @if (isset($documents) && $documents->isNotEmpty())
                 <div class="mt-4">
                     <h6 class="text-muted mb-2">
@@ -407,14 +406,13 @@
                                 <td>{{ $doc->humanSize() }}</td>
                                 <td><code class="small">{{ $doc->hash }}</code></td>
                                 <td>
-                                    @if (file_exists(storage_path('docs/') . $doc->id))
-                                        @if ($doc->hash == hash_file('sha256', storage_path('docs/') . $doc->id))
-                                            <span class="badge bg-success">OK</span>
-                                        @else
-                                            <span class="badge bg-danger">HASH FAILS</span>
-                                        @endif
-                                    @else
+                                    @php $path = storage_path('docs/') . $doc->id @endphp
+                                    @if (!file_exists($path))
                                         <span class="badge bg-warning text-dark">MISSING</span>
+                                    @elseif ($doc->hash === hash_file('sha256', $path))
+                                        <span class="badge bg-success">OK</span>
+                                    @else
+                                        <span class="badge bg-danger">HASH FAILS</span>
                                     @endif
                                 </td>
                             </tr>
@@ -423,52 +421,20 @@
                     </table>
                 </div>
                 @endif
-
             </div>
         </div>
-
     </div>{{-- /tab-documents --}}
-
 </div>{{-- /tab-content --}}
 
-{{-- ─── Active tab management ──────────────────────────────────────────── --}}
+{{-- ─── Persistance de l'onglet lors de la navigation manuelle ─────────── --}}
 @push('scripts')
 <script>
 (function () {
     'use strict';
-
-    // Map route names / POST active_tab values to tab IDs
-    const TAB_MAP = {
-        'general'   : 'tab-general',
-        'cert'      : 'tab-cert',
-        'cve'       : 'tab-cve',
-        'documents' : 'tab-documents',
-    };
-
-    // 1. Priority: active_tab passed back from controller after form submit
-    const serverTab = @json(session('active_tab') ?? '');
-
-    // 2. Fallback: hash in URL (e.g. #tab-cert)
-    const hashTab = window.location.hash ? window.location.hash.slice(1) : '';
-
-    // 3. Fallback: last visited tab stored in sessionStorage
-    const storedTab = sessionStorage.getItem('mercator_config_tab');
-
-    const targetId = TAB_MAP[serverTab] || hashTab || storedTab || 'tab-general';
-
-    // Activate the right tab on load
-    const triggerBtn = document.querySelector(`[data-bs-target="#${targetId}"]`);
-    if (triggerBtn) {
-        bootstrap.Tab.getOrCreateInstance(triggerBtn).show();
-    }
-
-    // Persist tab choice in sessionStorage + URL hash on tab change
-    document.querySelectorAll('[data-bs-toggle="tab"]').forEach(function (btn) {
-        btn.addEventListener('shown.bs.tab', function (e) {
-            const tabId = e.target.getAttribute('data-bs-target').slice(1);
-            sessionStorage.setItem('mercator_config_tab', tabId);
-            history.replaceState(null, '', '#' + tabId);
-        });
+    document.addEventListener('shown.bs.tab', function (e) {
+        var id = e.target.getAttribute('data-bs-target').slice(1);
+        sessionStorage.setItem('mercator_config_tab', id);
+        history.replaceState(null, '', '#' + id);
     });
 })();
 </script>

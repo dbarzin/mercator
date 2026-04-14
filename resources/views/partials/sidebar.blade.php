@@ -554,6 +554,6 @@
         Open Source
     @endif
         <br>
-        Version {{ $appVersion }}
+        Version {{ app('mercator.version') }}
     </div>
 </nav>

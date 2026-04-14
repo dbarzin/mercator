@@ -23,6 +23,8 @@ services:
     restart: unless-stopped
     container_name: mercator-app
     volumes:
+      - ./mercator.env:/var/www/mercator/.env
+      - ./config/mercator.php:/var/www/mercator/config/mercator.php
       - ./docs:/var/www/mercator/storage/docs
       - ./app:/var/www/mercator/storage/app
     expose:
