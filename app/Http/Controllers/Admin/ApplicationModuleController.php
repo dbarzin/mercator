@@ -18,7 +18,10 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationModules = ApplicationModule::all()->sortBy('name');
+        $applicationModules = ApplicationModule::query()
+            ->orderBy('name')
+            ->get()
+            ->load('entities', 'applicationServices');
 
         return view('admin.applicationModules.index', compact('applicationModules'));
     }
