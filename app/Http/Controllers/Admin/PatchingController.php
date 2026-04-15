@@ -136,7 +136,7 @@ class PatchingController extends Controller
 
         // Update frequency
         if ($request->get('global_periodicity') !== null) {
-            $lservers = LogicalServer::where('attributes', '=', $logicalServer->attributes)->get();
+            $lservers = LogicalServer::query()->where('attributes', '=', $logicalServer->attributes)->get();
             foreach ($lservers as $s) {
                 $s->patching_frequency = $logicalServer->patching_frequency;
                 if ($s->update_date !== null) {

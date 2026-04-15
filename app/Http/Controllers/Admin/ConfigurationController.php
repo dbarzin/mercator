@@ -40,7 +40,7 @@ class ConfigurationController extends Controller
             'cve_mail_subject'         => $cfg['cve']['mail-subject']                   ?? '',
             'cve_check_frequency'      => $cfg['cve']['check-frequency']                ?? '0',
             'cve_provider'             => $cfg['cve']['provider']                       ?? '',
-            'cve_guesser'              => $cfg['cve']['guesser']                        ?? '',
+            'cpe_guesser'              => $cfg['cpe']['guesser']                        ?? '',
             // Documents
             'count' => Document::query()->count(),
             'sum'        => Document::query()->sum('size'),
@@ -83,7 +83,7 @@ class ConfigurationController extends Controller
         $cfg['parameters']['security_need_auth'] = $request->boolean('security_need_auth');
         $this->writeConfigFile($cfg);
 
-        return [trans('global.saved'), true];
+        return [trans('cruds.configuration.saved'), true];
     }
 
     private function handleCert(string $action, Request $request): array
@@ -99,7 +99,7 @@ class ConfigurationController extends Controller
             $cfg['cert']['repeat-notification'] = $request->input('repeat-notification');
             $this->writeConfigFile($cfg);
 
-            return [trans('global.saved'), true];
+            return [trans('cruds.configuration.saved'), true];
         }
 
         return $this->sendTestMail(
@@ -118,14 +118,19 @@ class ConfigurationController extends Controller
             $cfg['cve']['mail-subject']    = $request->input('mail_subject');
             $cfg['cve']['check-frequency'] = $request->input('check_frequency');
             $cfg['cve']['provider']        = $request->input('provider');
-            $cfg['cve']['guesser']         = $request->input('guesser');
+            $cfg['cpe']['guesser']         = $request->input('cpe_guesser');
             $this->writeConfigFile($cfg);
 
-            return [trans('global.saved'), true];
+            return [trans('cruds.configuration.saved'), true];
         }
 
         if ($action === 'test_provider') {
-            return $this->testProviders($request->input('provider'));
+            return $this->testProvider($request->input('provider'));
+        }
+
+        if ($action === 'test_guesser') {
+            $cfg = $this->readConfigFile();
+            return $this->testGuesser($cfg['cpe']['guesser'] ?? '');
         }
 
         return $this->sendTestMail(
@@ -134,7 +139,6 @@ class ConfigurationController extends Controller
             $request->input('mail_subject'),
         );
     }
-
     // ─────────────────────────────────────────────────────────────────────────
     // Lecture / écriture du fichier de config
     // ─────────────────────────────────────────────────────────────────────────
@@ -213,7 +217,7 @@ class ConfigurationController extends Controller
     }
 
     /** @return array{0: string, 1: bool} */
-    private function testProviders(string $provider): array
+    private function testProvider(string $provider): array
     {
         $client = curl_init($provider . '/api/dbInfo');
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
@@ -232,6 +236,44 @@ class ConfigurationController extends Controller
         return [
             'Last NVD update: ' . $json->last_updates->nvd
             . ' — Total db size = ' . $json->db_sizes->total,
+            true,
+        ];
+    }
+
+    /** @return array{0: string, 1: bool} */
+    private function testGuesser(string $guesser): array
+    {
+        if (empty($guesser)) {
+            return ['CPE guesser URL is not configured', false];
+        }
+
+        $url     = rtrim($guesser, '/') . '/search';
+        $payload = json_encode(['query' => ['test']]);
+
+        $client = curl_init($url);
+        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($client, CURLOPT_TIMEOUT, 10);
+        curl_setopt($client, CURLOPT_POST, true);
+        curl_setopt($client, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($client, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($payload),
+        ]);
+        $response = curl_exec($client);
+        $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+        curl_close($client);
+
+        if ($response === false) {
+            return ['Could not connect to CPE guesser', false];
+        }
+
+        $json = json_decode($response, true);
+        if ($json === null) {
+            return ['CPE guesser returned invalid JSON', false];
+        }
+
+        return [
+            'CPE guesser OK (HTTP ' . $httpCode . ') — ' . count($json) . ' result(s) for "test"',
             true,
         ];
     }

@@ -390,6 +390,7 @@ return [
     ],
     'configuration' => [
         'title' => 'Configuration',
+        'saved' => 'La configuration a été sauvée',
         'certificate' => [
             'title' => "Configuration des alertes d'expiration des certificats",
             'title_short' => 'Certificats',
@@ -398,7 +399,6 @@ return [
             'message_subject' => 'Sujet du message',
             'recurrence' => 'tous les',
             'sent_from' => 'Envoyé depuis',
-            'title' => 'Expiration des certificats',
             'to' => 'à',
             'one_mail' => 'Envoyer un mail par certificat expiré',
             'multiple_mails' => 'Envoyer un mail avec tous les certificats expirés',
@@ -406,8 +406,10 @@ return [
             'multiple_notifications' => 'Répéter les notifications de certificats expirés',
         ],
         'cpe' => [
-           "title" => "Common Platform Enumeration (CPE)",
-           "title_short" => "Plateformes",
+            "title" => "Common Platform Enumeration (CPE)",
+            "title_short" => "Plateformes",
+            "guesser" => "CPE Guesser",
+            "guesser_helper" => "URL of the CPE Guesser (ex: https://cpe-guesser.cve-search.org or empty to disable)",
         ],
         'cve' => [
             'title' => 'Configuration de la recherche de vulnérabilités',

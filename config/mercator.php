@@ -16,9 +16,14 @@
     'mail-subject' => '[Mercator] Vulnerability detected',
     'check-frequency' => '1',
     'provider' => 'https://vulnerability.circl.lu',
+    'guesser' => 'https://cpe-guesser.cve-search.org',
   ),
   'parameters' => 
   array (
     'security_need_auth' => true,
+  ),
+  'cpe' => 
+  array (
+    'guesser' => 'https://cpe-guesser.cve-search.org',
   ),
 );

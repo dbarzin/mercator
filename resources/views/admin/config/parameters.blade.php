@@ -101,12 +101,12 @@
             </div>
 
             <div class="form-group mt-3">
+                <button class="btn btn-success" type="submit" name="action" value="save">
+                    <i class="fas fa-save me-1"></i>{{ trans('global.save') }}
+                </button>
                 <a class="btn btn-default" href="{{ route('admin.home') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
-                <button class="btn btn-danger" type="submit" name="action" value="save">
-                    <i class="fas fa-save me-1"></i>{{ trans('global.save') }}
-                </button>
             </div>
         </form>
 
@@ -309,12 +309,25 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label class="label-required" for="cve_provider">
+                        <label for="cve_provider">
+                            {{ trans('cruds.configuration.cpe.guesser') }}
+                        </label>
+                        <input class="form-control" type="text"
+                               name="cpe_guesser" id="cpe_guesser"
+                               value="{{ $cpe_guesser }}"/>
+                        <span class="help-block text-muted small">
+                            {{ trans('cruds.configuration.cpe.guesser_helper') }}
+                        </span>
+                    </div>
+
+
+                    <div class="form-group mb-3">
+                        <label for="cve_provider">
                             {{ trans('cruds.configuration.cve.provider') }}
                         </label>
                         <input class="form-control" type="text"
                                name="provider" id="cve_provider"
-                               value="{{ $cve_provider }}" required/>
+                               value="{{ $cve_provider }}"/>
                         <span class="help-block text-muted small">
                             {{ trans('cruds.configuration.cve.provider_helper') }}
                         </span>
@@ -332,6 +345,9 @@
                 </button>
                 <button class="btn btn-secondary" type="submit" name="action" value="test_provider">
                     <i class="fas fa-plug me-1"></i>{{ trans('global.test') }} Provider
+                </button>
+                <button class="btn btn-secondary" type="submit" name="action" value="test_guesser">
+                    <i class="fas fa-plug me-1"></i>{{ trans('global.test') }} Guesser
                 </button>
             </div>
 
