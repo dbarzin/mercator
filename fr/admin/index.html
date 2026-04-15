@@ -24,7 +24,7 @@
     
     
       
-        <title>Administration de Mercator - Mercator</title>
+        <title>Administration - Mercator</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#administration-de-mercator" class="md-skip">
+        <a href="#administration" class="md-skip">
           Aller au contenu
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Administration de Mercator
+              Administration
             
           </span>
         </div>
@@ -538,7 +538,7 @@
           
   
   <span class="md-ellipsis">
-    Administration de Mercator
+    Administration
   </span>
   
 
@@ -549,7 +549,7 @@
         
   
   <span class="md-ellipsis">
-    Administration de Mercator
+    Administration
   </span>
   
 
@@ -571,36 +571,75 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gestion-des-utilisateurs" class="md-nav__link">
+  <a href="#general" class="md-nav__link">
     <span class="md-ellipsis">
-      Gestion des utilisateurs
+      Général
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Général">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-logique" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure logique
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#certificats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Certificats
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#gestion-des-roles" class="md-nav__link">
+  <a href="#cve" class="md-nav__link">
     <span class="md-ellipsis">
-      Gestion des rôles
+      CVE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CVE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#services-externes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services externes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documents
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#gestion-des-certificats" class="md-nav__link">
+  <a href="#tableau-recapitulatif" class="md-nav__link">
     <span class="md-ellipsis">
-      Gestion des certificats
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gestion-des-vulnerabilites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Gestion des vulnérabilités
+      Tableau récapitulatif
     </span>
   </a>
   
@@ -625,7 +664,7 @@
         
   
   <span class="md-ellipsis">
-    Guide de Configuration de Mercator
+    Configuration
   </span>
   
 
@@ -685,112 +724,284 @@
   
 
 
-<h1 id="administration-de-mercator">Administration de Mercator<a class="headerlink" href="#administration-de-mercator" title="Permanent link">&para;</a></h1>
-<h3 id="gestion-des-utilisateurs">Gestion des utilisateurs<a class="headerlink" href="#gestion-des-utilisateurs" title="Permanent link">&para;</a></h3>
-<p>Les utilisateurs de l'application Mercator sont renseignés dans la base de données de l'application.</p>
-<p>Table <em>users</em> :</p>
+<h1 id="administration">Administration<a class="headerlink" href="#administration" title="Permanent link">&para;</a></h1>
+<p>Les paramètres de configuration sont accessibles dans Mercator via :</p>
+<blockquote>
+<p><strong>Admin → Configuration → Paramètres</strong> (<code>/admin/config/parameters</code>)</p>
+</blockquote>
+<p>Contrairement aux variables d'environnement, ces paramètres sont stockés dans le fichier <strong>config/mercator.php</strong> et peuvent être modifiés à chaud par un administrateur, sans redémarrer l'application ni modifier le fichier <code>.env</code>.</p>
+<p>La page des paramètres est organisée en quatre onglets.</p>
+<hr />
+<h2 id="general">Général<a class="headerlink" href="#general" title="Permanent link">&para;</a></h2>
+<p>Cet onglet regroupe les options de comportement générales de l'application.</p>
+<h3 id="infrastructure-logique">Infrastructure logique<a class="headerlink" href="#infrastructure-logique" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Champ</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Description</th>
+<th>Paramètre</th>
+<th>Description</th>
+<th>Défaut</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">auto_increment</td>
-</tr>
-<tr>
-<td style="text-align: left;">name</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de l'utilisateur</td>
-</tr>
-<tr>
-<td style="text-align: left;">email</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresse mail de l'utilisateur</td>
-</tr>
-<tr>
-<td style="text-align: left;">email_verified_at</td>
-<td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date de vérification de l'adresse email</td>
-</tr>
-<tr>
-<td style="text-align: left;">password</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Mot de passe de l'utilisateur</td>
-</tr>
-<tr>
-<td style="text-align: left;">remember_token</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Token de session</td>
-</tr>
-<tr>
-<td style="text-align: left;">granularity</td>
-<td style="text-align: left;">int</td>
-<td style="text-align: left;">Niveau de granularité utilisé</td>
-</tr>
-<tr>
-<td style="text-align: left;">language</td>
-<td style="text-align: left;">varchar(2)</td>
-<td style="text-align: left;">Langue de l'utilisateur</td>
-</tr>
-<tr>
-<td style="text-align: left;">created_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
-</tr>
-<tr>
-<td style="text-align: left;">updated_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
-</tr>
-<tr>
-<td style="text-align: left;">deleted_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td><strong>Authentification des besoins de sécurité</strong></td>
+<td>Lorsque cette option est activée, les champs de besoin de sécurité sur les serveurs logiques nécessitent une authentification préalable avant d'être affichés.</td>
+<td><code>false</code></td>
 </tr>
 </tbody>
 </table>
-<p>Les mots de passe sont hashés par la fonction fournie en standard dans Laravel.</p>
-<p>Il est possible de connecter Mercator à un annuaire LDAP (voir LoginController.php).</p>
-<h3 id="gestion-des-roles">Gestion des rôles<a class="headerlink" href="#gestion-des-roles" title="Permanent link">&para;</a></h3>
-<p>Pour chaque objet de la cartographie, il existe un droit en :</p>
+<hr />
+<h2 id="certificats">Certificats<a class="headerlink" href="#certificats" title="Permanent link">&para;</a></h2>
+<p>Gère la surveillance automatisée et les notifications d'expiration des certificats TLS/SSL.</p>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Description</th>
+<th>Valeurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sujet du message</strong></td>
+<td>Objet de l'e-mail d'alerte d'expiration.</td>
+<td>Texte libre</td>
+</tr>
+<tr>
+<td><strong>Expéditeur</strong></td>
+<td>Adresse d'envoi des e-mails d'alerte de certificat.</td>
+<td>Adresse e-mail</td>
+</tr>
+<tr>
+<td><strong>Destinataires</strong></td>
+<td>Adresse(s) de destination des e-mails d'alerte de certificat.</td>
+<td>Adresse(s) e-mail</td>
+</tr>
+<tr>
+<td><strong>Délai d'alerte</strong></td>
+<td>Nombre de jours avant expiration à partir duquel la notification est envoyée.</td>
+<td>1, 7, 15, 30, 60 ou 90 jours</td>
+</tr>
+<tr>
+<td><strong>Fréquence de vérification</strong></td>
+<td>Intervalle auquel Mercator recherche les certificats arrivant à expiration.</td>
+<td>Jamais / Quotidien / Hebdomadaire / Mensuel</td>
+</tr>
+<tr>
+<td><strong>Regroupement</strong></td>
+<td>Envoyer un e-mail consolidé pour tous les certificats expirants, ou un e-mail par certificat.</td>
+<td>Un seul e-mail / Un par certificat</td>
+</tr>
+<tr>
+<td><strong>Répétition des notifications</strong></td>
+<td>Envoyer une seule notification par événement d'expiration, ou répéter jusqu'au renouvellement ou à la suppression du certificat.</td>
+<td>Unique / Répétée</td>
+</tr>
+</tbody>
+</table>
+<p>Un bouton <strong>Test</strong> permet d'envoyer un e-mail de test avec la configuration en cours sans sauvegarder.</p>
+<hr />
+<h2 id="cve">CVE<a class="headerlink" href="#cve" title="Permanent link">&para;</a></h2>
+<p>Gère la recherche automatisée des vulnérabilités connues (CVE) affectant les éléments de l'inventaire.</p>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Description</th>
+<th>Valeurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sujet du message</strong></td>
+<td>Objet de l'e-mail d'alerte CVE.</td>
+<td>Texte libre</td>
+</tr>
+<tr>
+<td><strong>Expéditeur</strong></td>
+<td>Adresse d'envoi des e-mails d'alerte CVE.</td>
+<td>Adresse e-mail</td>
+</tr>
+<tr>
+<td><strong>Destinataires</strong></td>
+<td>Adresse(s) de destination des e-mails d'alerte CVE.</td>
+<td>Adresse(s) e-mail</td>
+</tr>
+<tr>
+<td><strong>Fréquence de vérification</strong></td>
+<td>Intervalle auquel Mercator recherche les nouvelles CVE affectant l'inventaire.</td>
+<td>Jamais / Quotidien / Hebdomadaire / Mensuel</td>
+</tr>
+<tr>
+<td><strong>URL du CPE Guesser</strong></td>
+<td>URL du service CPE Guesser utilisé pour inférer les identifiants CPE à partir des noms de logiciels.</td>
+<td>URL</td>
+</tr>
+<tr>
+<td><strong>URL du fournisseur CVE</strong></td>
+<td>URL du fournisseur de données CVE.</td>
+<td>URL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="services-externes">Services externes<a class="headerlink" href="#services-externes" title="Permanent link">&para;</a></h3>
+<p><strong>Fournisseur CVE</strong> — Mercator interroge une instance <a href="https://github.com/vulnerability-lookup/vulnerability-lookup">vulnerability-lookup</a> pour récupérer les CVE affectant les éléments de l'inventaire. Une instance publique est disponible à l'adresse <code>https://vulnerability.circl.lu</code>. Le service peut également être auto-hébergé.</p>
+<p><strong>CPE Guesser</strong> — Mercator utilise <a href="https://github.com/vulnerability-lookup/cpe-guesser">cpe-guesser</a> pour inférer automatiquement les identifiants CPE à partir des noms de logiciels. Une instance publique est disponible à l'adresse <code>https://cpe-guesser.cve-search.org</code>. Le service peut également être auto-hébergé.</p>
+<p>Trois boutons <strong>Test</strong> sont disponibles :</p>
 <ul>
-<li>accès</li>
-<li>création</li>
-<li>édition</li>
-<li>affichage</li>
-<li>suppression</li>
+<li><strong>Test Mail</strong> — envoie un e-mail de test avec la configuration en cours.</li>
+<li><strong>Test Provider</strong> — vérifie la connectivité avec le fournisseur CVE configuré.</li>
+<li><strong>Test Guesser</strong> — vérifie la connectivité avec le service CPE Guesser configuré.</li>
 </ul>
-<p>Trois rôles sont encodés par défaut :</p>
-<ul>
-<li>Utilisateur : les utilisateurs ont tous les droits sur tous les objets à l'exception des utilisateurs et de la
-  configuation.</li>
-<li>Auditeur : l'auditeur a le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la
-  configutation.</li>
-<li>Administrateur : l'administrateur a tous les droits sans exception.</li>
-</ul>
-<p>Il est possible de créer de nouveaux rôles selon les besoins.</p>
-<h3 id="gestion-des-certificats">Gestion des certificats<a class="headerlink" href="#gestion-des-certificats" title="Permanent link">&para;</a></h3>
-<p>Des notifications d'expiration des certificats peuvent être envoyés à des périodes définies.</p>
-<p>L'écran de configuration est accessible via le menu "Configuration" -&gt; "Certificats".</p>
-<p><a href="../images/certificates.png"><img src="/mercator/images/certificates.png" width="600"></a></p>
-<p>Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification spécifiée.</p>
-<h3 id="gestion-des-vulnerabilites">Gestion des vulnérabilités<a class="headerlink" href="#gestion-des-vulnerabilites" title="Permanent link">&para;</a></h3>
-<p>Des notifications de détection de CVE sur base du nom des applications et des CPE peuvent être envoyées à des périodes
-définies.</p>
-<p>Les CVE sont récupérées avec
-leprojet <a href="https://github.com/vulnerability-lookup/vulnerability-lookup">Vulnerability Lookup</a>.
-La recherche est faite localement.</p>
-<p>L'écran de configuration est accessible via le menu "Configuration" -&gt; "CVE"</p>
-<p><a href="../images/cve.png"><img src="/mercator/images/cve.png" width="600"></a></p>
-<p>Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au
-provider de CVE.</p>
-<p>Le bouton "Test Provider" permet de tester l'accès au provider du projet CVE-Search.</p>
+<hr />
+<h2 id="documents">Documents<a class="headerlink" href="#documents" title="Permanent link">&para;</a></h2>
+<p>Cet onglet est <strong>en lecture seule</strong> et fournit une vue d'ensemble des documents stockés dans Mercator.</p>
+<table>
+<thead>
+<tr>
+<th>Information</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nombre de documents</strong></td>
+<td>Nombre total de documents enregistrés en base de données.</td>
+</tr>
+<tr>
+<td><strong>Taille totale</strong></td>
+<td>Taille cumulée de tous les documents stockés (affichée en unités lisibles).</td>
+</tr>
+</tbody>
+</table>
+<p>Un bouton <strong>Vérifier</strong> déclenche une vérification d'intégrité de tous les documents : Mercator compare le hachage SHA-256 enregistré pour chaque document avec le fichier présent sur le disque et affiche l'un des trois statuts suivants :</p>
+<table>
+<thead>
+<tr>
+<th>Statut</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OK</code></td>
+<td>Le fichier est présent et son hachage correspond à l'enregistrement en base.</td>
+</tr>
+<tr>
+<td><code>MISSING</code></td>
+<td>Le fichier est référencé en base mais introuvable sur le disque.</td>
+</tr>
+<tr>
+<td><code>HASH FAILS</code></td>
+<td>Le fichier est présent mais son hachage ne correspond pas — le fichier est peut-être corrompu ou altéré.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tableau-recapitulatif">Tableau récapitulatif<a class="headerlink" href="#tableau-recapitulatif" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Onglet</th>
+<th>Paramètre</th>
+<th>Description</th>
+<th>Défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Général</td>
+<td>Authentification des besoins de sécurité</td>
+<td>Requiert une authentification pour afficher les champs de besoin de sécurité</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>Sujet du message</td>
+<td>Objet des e-mails d'alerte d'expiration</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>Expéditeur</td>
+<td>Adresse d'envoi des alertes de certificat</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>Destinataires</td>
+<td>Adresse(s) de destination des alertes de certificat</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>Délai d'alerte</td>
+<td>Jours avant expiration pour déclencher la notification</td>
+<td>30 jours</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>Fréquence de vérification</td>
+<td>Intervalle de recherche des certificats expirants</td>
+<td>Jamais</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>Regroupement</td>
+<td>Un e-mail consolidé ou un par certificat</td>
+<td>Un seul e-mail</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>Répétition des notifications</td>
+<td>Notification unique ou répétée jusqu'à résolution</td>
+<td>Unique</td>
+</tr>
+<tr>
+<td>CVE</td>
+<td>Sujet du message</td>
+<td>Objet des e-mails d'alerte CVE</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CVE</td>
+<td>Expéditeur</td>
+<td>Adresse d'envoi des alertes CVE</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CVE</td>
+<td>Destinataires</td>
+<td>Adresse(s) de destination des alertes CVE</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CVE</td>
+<td>Fréquence de vérification</td>
+<td>Intervalle de recherche des nouvelles CVE</td>
+<td>Jamais</td>
+</tr>
+<tr>
+<td>CPE</td>
+<td>URL du CPE Guesser</td>
+<td>Point d'accès du service <a href="https://github.com/vulnerability-lookup/cpe-guesser">cpe-guesser</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>CVE</td>
+<td>URL du fournisseur CVE</td>
+<td>Point d'accès du fournisseur <a href="https://github.com/vulnerability-lookup/vulnerability-lookup">vulnerability-lookup</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Documents</td>
+<td>—</td>
+<td>Lecture seule : nombre de documents, taille totale, vérification d'intégrité</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
 
 
 
