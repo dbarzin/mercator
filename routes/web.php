@@ -313,8 +313,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     // Configuration
     Route::get('config/parameters', [Admin\ConfigurationController::class, 'getParameters'])
         ->name('config.parameters');
-    Route::put('config/parameters', [Admin\ConfigurationController::class, 'saveConfig'])
-        ->name('config.parameters');
+    Route::put('config/parameters', [Admin\ConfigurationController::class, 'saveConfig']);
 
     // Views
     Route::get('report/gdpr', [Report\GDPRView::class, 'generate'])->name('report.gdpr');
