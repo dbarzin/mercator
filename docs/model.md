@@ -653,6 +653,7 @@ homogeneity.
 | id                   | int unsigned | auto_increment                            |
 | name                 | varchar(255) | Name of the application module            |
 | description          | longtext     | Description of the application module     |
+| entities             | List int [,] | IDs list of related entities              |
 | application_services | List int [,] | IDs list of related applications-services |
 | created_at           | timestamp    | Date of creation                          |
 | updated_at           | timestamp    | Date of update                            |
