@@ -10,8 +10,11 @@
 ### Introduction
 
 As information systems grow in complexity, organizations struggle to maintain a clear, accurate picture of what they own, how it connects, and what depends on what. Without this visibility, managing risk, ensuring compliance, and responding to incidents becomes guesswork.
+
 Mercator is an open source web application that solves this problem by enabling structured, dynamic mapping of your information system. It gives security teams, architects, and IT managers a shared, living representation of their digital environment — from business processes down to physical infrastructure.
+
 Mercator helps you visualize dependencies, identify critical assets, track compliance, and support audit and risk management — all from a single, connected platform. It aligns with major frameworks and standards, including [ANSSI's cartography guidelines](https://cyber.gouv.fr/en/publications/mapping-information-system), NIS2, and ISO 27001.
+
 Recognized for its practical relevance and adopted by organizations across healthcare, public sector, and critical infrastructure, Mercator is the reference open source tool for information system governance.
 
 📚 [Explore the Documentation](https://dbarzin.github.io/mercator/) |
