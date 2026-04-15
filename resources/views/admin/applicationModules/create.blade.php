@@ -38,7 +38,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="buildings">{{ trans('cruds.applicationModule.fields.services') }}</label>
+                    <label for="entities">{{ trans('cruds.applicationModule.fields.entities') }}</label>
+                    <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}"
+                            name="entities[]" id="entities" multiple>
+                        @foreach($entities as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('entities', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('entities'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('entities') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.applicationModule.fields.entities_helper') }}</span>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="services">{{ trans('cruds.applicationModule.fields.services') }}</label>
                     <select class="form-control select2 {{ $errors->has('services') ? 'is-invalid' : '' }}"
                             name="services[]" id="services" multiple>
                         @foreach($services as $id => $name)

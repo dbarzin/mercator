@@ -31,6 +31,7 @@ class ApplicationModuleController extends APIController
         $applicationModule = ApplicationModule::query()->create($request->all());
 
         $applicationModule->applicationServices()->sync($request->input('application_services', []));
+        $applicationModule->entities()->sync($request->input('entities', []));
 
         return response()->json($applicationModule, Response::HTTP_CREATED);
     }
@@ -40,6 +41,7 @@ class ApplicationModuleController extends APIController
         abort_if(Gate::denies('application_module_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationModule['application_services'] = $applicationModule->applicationServices()->pluck('id');
+        $applicationModule['entities'] = $applicationModule->entities()->pluck('id');
 
         return new JsonResource($applicationModule);
     }
@@ -52,6 +54,8 @@ class ApplicationModuleController extends APIController
 
         if ($request->has('application_services'))
             $applicationModule->applicationServices()->sync($request->input('application_services', []));
+        if ($request->has('entities'))
+            $applicationModule->entities()->sync($request->input('entities', []));
 
         return response()->json();
     }

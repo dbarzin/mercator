@@ -203,6 +203,8 @@ return [
         'fields' => [
             'description' => 'Description',
             'description_helper' => '',
+            'entities' => 'Entities',
+            'entities_helper' => 'Entities using the module',
             'flux' => 'Flows',
             'flux_helper' => 'Flows associated with the module',
             'name' => 'Name',
