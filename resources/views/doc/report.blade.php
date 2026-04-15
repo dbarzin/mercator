@@ -119,7 +119,7 @@
                             {{ trans("cruds.report.lists.directory_helper") }}
                             <br><br>
                         </li>
-                        @can('logical_servers_access')
+                        @can('logical_server_access')
                         <li>
                             <a href="{{ route('admin.report.logicalServers') }}"
                                target="_new">{{ trans("cruds.report.lists.logical_servers") }}</a><br>
