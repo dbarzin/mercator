@@ -569,60 +569,14 @@
                 </div>
             </div>
             <!------------------------------------------------------------------------------------------------------------->
-            <div class="card-header">
-                Common Platform Enumeration (CPE)
-            </div>
+            {{-- Common Platform Enumeration --}}
             <!------------------------------------------------------------------------------------------------------------->
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
-                            <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
-                                <option>{{ old('vendor', $application->vendor) }}</option>
-                            </select>
-                            <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="name">{{ trans('cruds.application.fields.product') }}</label>
-                            <select id="product-selector" class="form-control product-selector" name="product">
-                                <option>{{ old('product', $application->product) }}</option>
-                            </select>
-                            @if($errors->has('product'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('product') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="version">{{ trans('cruds.application.fields.version') }}</label>
-                            <select id="version-selector" class="form-control version-selector" name="version">
-                                <option>{{ old('version', $application->version) }}</option>
-                            </select>
-                            @if($errors->has('version'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('version') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <br>
-                            <button type="button" class="btn btn-info" id="guess"
-                                    alt="Guess vendor and product base on application name">Guess
-                            </button>
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('partials.cpe-selector', [
+                'part'    => 'a',
+                'vendor'  => $application->vendor,
+                'product' => $application->product,
+                'version' => $application->version,
+            ])
             <!------------------------------------------------------------------------------------------------------------->
             <div class="card-header">
                 {{ trans("cruds.menu.metier.title_short") }}
@@ -741,21 +695,56 @@
             </button>
         </div>
     </form>
+
+
+{{-- Modal Événements --}}
+<div class="modal fade" id="eventsModal" tabindex="-1" aria-labelledby="eventsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventsModalLabel">Évènements</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body" id="eventsModalBody">
+                <p>Chargement…</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Toast container --}}
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="appToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="appToastBody"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fermer"></button>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
-    @vite(['resources/js/cpe.js'])
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
-            /*****************************************/
-            /* CPE Search
-            */
-            window.cpePart = 'a';
+            /**
+             * Affiche un toast Bootstrap (success ou danger)
+             */
+            function showToast(message, type = 'success') {
+                const toastEl = document.getElementById('appToast');
+                const toastBody = document.getElementById('appToastBody');
+                toastEl.classList.remove('bg-success', 'bg-danger');
+                toastEl.classList.add('bg-' + type);
+                toastBody.textContent = message;
+                bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 3000 }).show();
+            }
 
             /**
-             * Contruction de la liste des évènements
-             * @returns {string}
+             * Construction de la liste des événements
              */
             async function fetchAndRenderEvents(applicationId) {
                 try {
@@ -763,105 +752,105 @@
                     if (!response.ok) throw new Error('Erreur API');
                     const events = await response.json();
 
-                    let ret = '<ul>';
+                    let ret = '<ul class="list-unstyled">';
                     events.forEach(function (event) {
                         ret += `
-                        <li data-id="${event.id}" style="text-align: left; margin-bottom: 20px; position: relative">
-                            <a class="delete_event" style="cursor: pointer; position: absolute; right: 0; top: 5px;" href="#">
-                                <i class="bi bi-trash-fill"></i>
-                            </a>
-                            ${event.message}<br>
-                            <span style="font-size: 12px;">Date : ${moment(event.created_at).format('DD-MM-YYYY')} | Utilisateur : ${event.user.name}</span>
-                        </li>
-                    `;
+                            <li data-id="${event.id}" class="mb-3 position-relative border-bottom pb-2">
+                                <button class="delete_event btn btn-sm btn-outline-danger position-absolute end-0 top-0" type="button">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                                <div class="pe-5">${event.message}</div>
+                                <small class="text-muted">Date : ${moment(event.created_at).format('DD-MM-YYYY')} | Utilisateur : ${event.user.name}</small>
+                            </li>`;
                     });
                     ret += '</ul>';
                     return ret;
 
                 } catch (error) {
                     console.error('Erreur lors de la récupération des événements :', error);
-                    return '<p>Erreur lors du chargement des événements.</p>';
+                    return '<p class="text-danger">Erreur lors du chargement des événements.</p>';
                 }
             }
 
+            /**
+             * Bouton "liste des événements"
+             */
             $('.events_list_button').click(async function (e) {
                 e.preventDefault();
 
-                const htmlContent = await fetchAndRenderEvents({{ $application->id }});
+                const modalBody = document.getElementById('eventsModalBody');
+                modalBody.innerHTML = '<p>Chargement…</p>';
 
-                Swal.fire({
-                    title: 'Évènements',
-                    html: htmlContent,
-                    didOpen: () => {
-                        document.querySelectorAll('.delete_event').forEach(link => {
-                            link.addEventListener('click', function (ev) {
-                                ev.preventDefault();
+                const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('eventsModal'));
+                modal.show();
 
-                                const li = this.closest('li');
-                                const eventId = li.getAttribute('data-id');
+                modalBody.innerHTML = await fetchAndRenderEvents({{ $application->id }});
 
-                                if (eventId) {
-                                    fetch(`/admin/application-events/${eventId}`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                                        },
-                                        body: JSON.stringify({m_application_id: {{ $application->id }}})
-                                    }).then(resp => {
-                                        if (!resp.ok) throw new Error();
-                                        return resp.json();
-                                    }).then(data => {
-                                        li.remove();
-                                        Swal.fire('Évènement supprimé !', '', 'success');
-                                    }).catch(error => {
-                                        console.error('Erreur suppression événement :', error);
-                                        Swal.fire('Une erreur est survenue', error.message, 'error');
-                                    });
-                                }
+                modalBody.querySelectorAll('.delete_event').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const li = this.closest('li');
+                        const eventId = li.getAttribute('data-id');
+
+                        if (eventId) {
+                            fetch(`/admin/application-events/${eventId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({ m_application_id: {{ $application->id }} })
+                            })
+                            .then(resp => {
+                                if (!resp.ok) throw new Error();
+                                return resp.json();
+                            })
+                            .then(() => {
+                                li.remove();
+                                showToast('Évènement supprimé !', 'success');
+                            })
+                            .catch(error => {
+                                console.error('Erreur suppression événement :', error);
+                                showToast('Une erreur est survenue', 'danger');
                             });
-                        });
-                    }
+                        }
+                    });
                 });
             });
 
-            // Send AJAX for adding an event
+            /**
+             * Ajout d'un événement
+             */
             $('#addEventBtn').on('click', function (e) {
                 e.preventDefault();
-                let app_id = {{ $application->id }};
-                let user_id = {{ auth()->id() }};
-                let message = $('#eventMessage').val();
+                const app_id  = {{ $application->id }};
+                const user_id = {{ auth()->id() }};
+                const message = $('#eventMessage').val();
+
                 if (message !== '' && user_id && app_id) {
-                    $.post("{{ route("admin.application-events.store") }}", {
+                    $.post("{{ route('admin.application-events.store') }}", {
                         m_application_id: app_id,
                         user_id: user_id,
                         message: message,
                         _token: "{{ csrf_token() }}"
                     }, "json")
-                        .done((data) => {
-                            // Mise à jour des évènements pour la popup
-                            swalHtml = data.events;
-                            Swal.fire('Evènement ajouté !', '', 'success');
-                            $('#eventMessage').val('');
-                        })
-                        .fail(() => {
-                            Swal.fire('Une erreur est survenue', '', 'error');
-                        })
+                    .done(() => {
+                        showToast('Évènement ajouté !', 'success');
+                        $('#eventMessage').val('');
+                    })
+                    .fail(() => {
+                        showToast('Une erreur est survenue', 'danger');
+                    });
                 }
             });
 
-
-            // submit the correct button when "enter" key pressed
+            // Soumission sur touche Entrée
             $("form input").keypress(function (e) {
                 if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
                     $('input[type=submit].default').click();
                     return false;
-                } else {
-                    return true;
                 }
+                return true;
             });
-
-
         });
     </script>
 @endsection

@@ -310,13 +310,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     // Route::put('cve', [Admin\CVEController::class, 'show'])->name('cve.show');
     Route::post('cve/search/{cpe}', [Admin\CVEController::class, 'search'])->name('cve.search');
 
-    // CVE Configuration page
-    Route::get('config/cve', [Admin\ConfigurationController::class, 'getCVEConfig'])->name('config.cve');
-    Route::put('config/cve/save', [Admin\ConfigurationController::class, 'saveCVEConfig'])->name('config.cve.save');
-
-    // Parameters
-    Route::get('config/parameters', [Admin\ConfigurationController::class, 'getParameters'])->name('config.parameters');
-    Route::put('config/parameters/save', [Admin\ConfigurationController::class, 'saveParameters'])->name('config.parameters.save');
+    // Configuration
+    Route::get('config/parameters', [Admin\ConfigurationController::class, 'getParameters'])
+        ->name('config.parameters');
+    Route::put('config/parameters', [Admin\ConfigurationController::class, 'saveConfig'])
+        ->name('config.parameters');
 
     // Views
     Route::get('report/gdpr', [Report\GDPRView::class, 'generate'])->name('report.gdpr');

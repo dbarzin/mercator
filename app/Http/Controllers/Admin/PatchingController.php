@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\MApplication;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mercator\Core\Models\LogicalServer;
+use Mercator\Core\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class PatchingController extends Controller
@@ -136,11 +136,13 @@ class PatchingController extends Controller
 
         // Update frequency
         if ($request->get('global_periodicity') !== null) {
-            $lservers = LogicalServer::where('attributes', '=', $logicalServer->attributes)->get();
+            $lservers = LogicalServer::query()->where('attributes', '=', $logicalServer->attributes)->get();
             foreach ($lservers as $s) {
                 $s->patching_frequency = $logicalServer->patching_frequency;
                 if ($s->update_date !== null) {
-                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'), $s->update_date)->addMonths($logicalServer->patching_frequency)->format(config('panel.date_format'));
+                    $s->next_update = Carbon::parse($s->update_date)
+                        ->addMonths($logicalServer->patching_frequency)
+                        ->format(config('panel.date_format'));
                 }
                 $s->save();
             }

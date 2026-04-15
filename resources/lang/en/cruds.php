@@ -386,6 +386,7 @@ return [
     ],
     'configuration' => [
         'title' => 'Configuration',
+        'saved' => 'Configuration has been saved',
         'certificate' => [
             'title' => "Configuration des alertes d'expiration des certificats",
             'title_short' => 'Certificats',

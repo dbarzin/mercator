@@ -6,295 +6,275 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Mercator\Core\Models\Document;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class ConfigurationController extends Controller
 {
-    /*
-    * Return the Certificate configuration
-    */
-    public function getCertConfig()
+    /**
+     * Page de configuration unifiée — charge tous les onglets.
+     * Lit directement depuis le fichier pour garantir les valeurs à jour
+     * après un redirect (le runtime config est chargé une seule fois au boot).
+     */
+    public function getParameters(Request $request)
     {
         abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Get configuration
-        $mail_from = config('mercator-config.cert.mail-from');
-        $mail_to = config('mercator-config.cert.mail-to');
-        $mail_subject = config('mercator-config.cert.mail-subject');
-        $check_frequency = config('mercator-config.cert.check-frequency');
-        $expire_delay = config('mercator-config.cert.expire-delay');
-        $group = config('mercator-config.cert.group');
-        $repeat_notification = config('mercator-config.cert.repeat-notification');
+        $cfg = $this->readConfigFile();
 
-        // Return
-        return view(
-            'admin.config.cert',
-            compact(
-                'mail_from',
-                'mail_to',
-                'mail_subject',
-                'check_frequency',
-                'expire_delay',
-                'group',
-                'repeat_notification'
-            )
-        );
+        return view('admin.config.parameters', [
+            // Général
+            'security_need_auth'       => $cfg['parameters']['security_need_auth'] ?? false,
+            // Certificats
+            'cert_mail_from'           => $cfg['cert']['mail-from']                     ?? '',
+            'cert_mail_to'             => $cfg['cert']['mail-to']                       ?? '',
+            'cert_mail_subject'        => $cfg['cert']['mail-subject']                  ?? '',
+            'cert_check_frequency'     => $cfg['cert']['check-frequency']               ?? '0',
+            'cert_expire_delay'        => $cfg['cert']['expire-delay']                  ?? '30',
+            'cert_group'               => (string) ($cfg['cert']['group']               ?? '0'),
+            'cert_repeat_notification' => (string) ($cfg['cert']['repeat-notification'] ?? '0'),
+            // CVE
+            'cve_mail_from'            => $cfg['cve']['mail-from']                      ?? '',
+            'cve_mail_to'              => $cfg['cve']['mail-to']                        ?? '',
+            'cve_mail_subject'         => $cfg['cve']['mail-subject']                   ?? '',
+            'cve_check_frequency'      => $cfg['cve']['check-frequency']                ?? '0',
+            'cve_provider'             => $cfg['cve']['provider']                       ?? '',
+            'cpe_guesser'              => $cfg['cpe']['guesser']                        ?? '',
+            // Documents
+            'count' => Document::query()->count(),
+            'sum'        => Document::query()->sum('size'),
+            // Set the active tab
+            'active_tab' => $request->query('tab', 'general'),
+        ]);
     }
 
-    /*
-    * Save the Mail Certificate configuration
-    */
-    public function saveCertConfig(Request $request)
+    /**
+     * Point d'entrée unique pour toutes les sauvegardes.
+     * L'onglet actif est transmis via le champ caché `active_tab`.
+     * Le redirect utilise un fragment d'URL (#tab-xxx) pour restaurer l'onglet
+     * côté JS — plus fiable que le flash session.
+     */
+    public function saveConfig(Request $request)
     {
         abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // read request
-        $mail_from = request('mail_from');
-        $mail_to = request('mail_to');
-        $mail_subject = request('mail_subject');
-        $check_frequency = request('check_frequency');
-        $expire_delay = request('expire_delay');
-        $group = request('group');
-        $repeat_notification = request('repeat-notification');
+        $tab    = $request->input('active_tab', 'general');
+        $action = $request->input('action', 'save');
 
-        switch ($request->input('action')) {
-            case 'save':
-                // put in config file
-                config(['mercator-config.cert.mail-from' => $mail_from]);
-                config(['mercator-config.cert.mail-to' => $mail_to]);
-                config(['mercator-config.cert.mail-subject' => $mail_subject]);
-                config(['mercator-config.cert.check-frequency' => $check_frequency]);
-                config(['mercator-config.cert.expire-delay' => $expire_delay]);
-                config(['mercator-config.cert.group' => $group]);
-                config(['mercator-config.cert.repeat-notification' => $repeat_notification]);
+        [$msg, $ok] = match ($tab) {
+            'cert' => $this->handleCert($action, $request),
+            'cve'  => $this->handleCve($action, $request),
+            default=> $this->handleGeneral($request),
+        };
 
-                // Save configuration
-                $text = '<?php return '.var_export(config('mercator-config'), true).';';
-                file_put_contents(config_path('mercator-config.php'), $text);
+        // Fragment #tab-xxx : repris par location.hash dans le JS de la blade.
+        return redirect(route('admin.config.parameters') . '?tab=' . $tab)
+            ->with($ok ? 'success' : 'error', $msg);
+    }
 
-                // Return
-                $msg = 'Configuration saved !';
-                break;
-            case 'test':
-                // Create a new PHPMailer instance
-                $mail = new PHPMailer(true);
+    // ─────────────────────────────────────────────────────────────────────────
+    // Handlers par onglet
+    // ─────────────────────────────────────────────────────────────────────────
 
-                try {
-                    // Server settings
-                    $mail->isSMTP();
-                    $mail->Host = config('mail.mailers.smtp.host'); // env('MAIL_HOST');
-                    $mail->SMTPAuth = config('mail.mailers.smtp.username') !== null;
-                    $mail->Username = config('mail.mailers.smtp.username'); // env('MAIL_USERNAME');
-                    $mail->Password = config('mail.mailers.smtp.password'); // env('MAIL_PASSWORD');
-                    $mail->SMTPSecure = config('mail.mailers.smtp.encryption'); // env('MAIL_SMTP_SECURE', false) ?: false; // 'tls' | 'ssl' | false
-                    $mail->SMTPAutoTLS = config('mail.mailers.smtp.auto_tls'); // filter_var(env('MAIL_SMTP_AUTO_TLS', false), FILTER_VALIDATE_BOOLEAN);
-                    $mail->Port = (int) config('mail.mailers.smtp.port'); // (int) env('MAIL_PORT', 587);
+    private function handleGeneral(Request $request): array
+    {
+        $cfg = $this->readConfigFile();
+        $cfg['parameters']['security_need_auth'] = $request->boolean('security_need_auth');
+        $this->writeConfigFile($cfg);
 
-                    // Recipients
-                    $mail->setFrom($mail_from);
-                    foreach (explode(',', $mail_to) as $email) {
-                        $mail->addAddress(trim($email));
-                    }
+        return [trans('cruds.configuration.saved'), true];
+    }
 
-                    // Content
-                    $mail->isHTML(true);                            // Set email format to HTML
-                    $mail->Subject = $mail_subject;
-                    $mail->Body = '<html><body><br>This is a test message !<br><br></body></html>';
+    private function handleCert(string $action, Request $request): array
+    {
+        if ($action === 'save') {
+            $cfg = $this->readConfigFile();
+            $cfg['cert']['mail-from']           = $request->input('mail_from');
+            $cfg['cert']['mail-to']             = $request->input('mail_to');
+            $cfg['cert']['mail-subject']        = $request->input('mail_subject');
+            $cfg['cert']['check-frequency']     = $request->input('check_frequency');
+            $cfg['cert']['expire-delay']        = $request->input('expire_delay');
+            $cfg['cert']['group']               = $request->input('group');
+            $cfg['cert']['repeat-notification'] = $request->input('repeat-notification');
+            $this->writeConfigFile($cfg);
 
-                    // DKIM (optionnel)
-                    $mail->DKIM_domain = config('mail.dkim.domain'); // env('MAIL_DKIM_DOMAIN');
-                    $mail->DKIM_private = config('mail.dkim.private'); //  env('MAIL_DKIM_PRIVATE');
-                    $mail->DKIM_selector = config('mail.dkim.selector'); // env('MAIL_DKIM_SELECTOR');
-                    $mail->DKIM_passphrase = config('mail.dkim.passphrase'); // env('MAIL_DKIM_PASSPHRASE');
-                    $mail->DKIM_identity = $mail->From;
-
-                    // Send email
-                    $mail->send();
-
-                    $msg = 'Message has been sent';
-                } catch (Exception $e) {
-                    $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                }
-                break;
-            default:
-                $msg = 'no actions made.';
+            return [trans('cruds.configuration.saved'), true];
         }
 
-        return view(
-            'admin.config.cert',
-            compact(
-                'mail_from',
-                'mail_to',
-                'mail_subject',
-                'check_frequency',
-                'expire_delay',
-                'group',
-                'repeat_notification'
-            )
-        )
-            ->withErrors($msg);
-    }
-
-    /*
-    * Return the CVE configuration
-    */
-    public function getCVEConfig()
-    {
-        abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // Get configuration
-        $mail_from = config('mercator-config.cve.mail-from');
-        $mail_to = config('mercator-config.cve.mail-to');
-        $mail_subject = config('mercator-config.cve.mail-subject');
-        $check_frequency = config('mercator-config.cve.check-frequency');
-        $provider = config('mercator-config.cve.provider');
-
-        // Return
-        return view(
-            'admin.config.cve',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'provider')
+        return $this->sendTestMail(
+            $request->input('mail_from'),
+            $request->input('mail_to'),
+            $request->input('mail_subject'),
         );
     }
 
-    /*
-    * Save the CVE configuration
-    */
-    public function saveCVEConfig(Request $request)
+    private function handleCve(string $action, Request $request): array
     {
-        abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($action === 'save') {
+            $cfg = $this->readConfigFile();
+            $cfg['cve']['mail-from']       = $request->input('mail_from');
+            $cfg['cve']['mail-to']         = $request->input('mail_to');
+            $cfg['cve']['mail-subject']    = $request->input('mail_subject');
+            $cfg['cve']['check-frequency'] = $request->input('check_frequency');
+            $cfg['cve']['provider']        = $request->input('provider');
+            $cfg['cpe']['guesser']         = $request->input('cpe_guesser');
+            $this->writeConfigFile($cfg);
 
-        // read request
-        $mail_from = request('mail_from');
-        $mail_to = request('mail_to');
-        $mail_subject = request('mail_subject');
-        $check_frequency = request('check_frequency');
-        $provider = request('provider');
-
-        switch ($request->input('action')) {
-            case 'save':
-                // put in config file
-                config(['mercator-config.cve.mail-from' => $mail_from]);
-                config(['mercator-config.cve.mail-to' => $mail_to]);
-                config(['mercator-config.cve.mail-subject' => $mail_subject]);
-                config(['mercator-config.cve.check-frequency' => $check_frequency]);
-                config(['mercator-config.cve.provider' => $provider]);
-
-                // Save configuration
-                $text = '<?php return '.var_export(config('mercator-config'), true).';';
-                file_put_contents(config_path('mercator-config.php'), $text);
-
-                // Return
-                $msg = 'Configuration saved !';
-                break;
-            case 'test':
-                // Create a new PHPMailer instance
-                $mail = new PHPMailer(true);
-                try {
-                    // Server settings
-                    $mail->isSMTP();
-                    $mail->Host = config('mail.mailers.smtp.host'); // env('MAIL_HOST');
-                    $mail->SMTPAuth = config('mail.mailers.smtp.username') !== null;
-                    $mail->Username = config('mail.mailers.smtp.username'); // env('MAIL_USERNAME');
-                    $mail->Password = config('mail.mailers.smtp.password'); // env('MAIL_PASSWORD');
-                    $mail->SMTPSecure = config('mail.mailers.smtp.encryption'); // env('MAIL_SMTP_SECURE', false) ?: false; // 'tls' | 'ssl' | false
-                    $mail->SMTPAutoTLS = config('mail.mailers.smtp.auto_tls'); // filter_var(env('MAIL_SMTP_AUTO_TLS', false), FILTER_VALIDATE_BOOLEAN);
-                    $mail->Port = (int) config('mail.mailers.smtp.port'); // (int) env('MAIL_PORT', 587);
-
-                    // Recipients
-                    $mail->setFrom($mail_from);
-                    foreach (explode(',', $mail_to) as $email) {
-                        $mail->addAddress($email);
-                    }
-
-                    // Content
-                    $mail->isHTML(true);                            // Set email format to HTML
-                    $mail->Subject = $mail_subject;
-                    $mail->Body = '<html><body><br>This is a test message !<br><br></body></html>';
-
-                    // DKIM (optionnel)
-                    $mail->DKIM_domain = config('mail.dkim.domain'); // env('MAIL_DKIM_DOMAIN');
-                    $mail->DKIM_private = config('mail.dkim.private'); //  env('MAIL_DKIM_PRIVATE');
-                    $mail->DKIM_selector = config('mail.dkim.selector'); // env('MAIL_DKIM_SELECTOR');
-                    $mail->DKIM_passphrase = config('mail.dkim.passphrase'); // env('MAIL_DKIM_PASSPHRASE');
-                    $mail->DKIM_identity = $mail->From;
-
-                    // Send email
-                    $mail->send();
-
-                    $msg = 'Message has been sent';
-                } catch (Exception $e) {
-                    $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                }
-
-                break;
-            case 'test_provider':
-                $client = curl_init($provider.'/api/dbInfo');
-                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                $response = curl_exec($client);
-                if ($response === false) {
-                    $msg = 'Could not connect to provider';
-                } else {
-                    $json = json_decode($response);
-                    if ($json === null) {
-                        $msg = 'Could not connect to provider';
-                    } else {
-                        // dd($json);
-                        $msg = 'Last NVD update :'.$json->last_updates->nvd.' Total db size = '.$json->db_sizes->total;
-                    }
-                }
-                break;
-
-            default:
-                $msg = 'no actions made.';
+            return [trans('cruds.configuration.saved'), true];
         }
 
-        return view(
-            'admin.config.cve',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'provider')
-        )
-            ->withErrors($msg);
-    }
+        if ($action === 'test_provider') {
+            return $this->testProvider($request->input('provider'));
+        }
 
-    /*
-    * Return the parameters
-    */
-    public function getParameters()
-    {
-        abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($action === 'test_guesser') {
+            $cfg = $this->readConfigFile();
+            return $this->testGuesser($cfg['cpe']['guesser'] ?? '');
+        }
 
-        // Get configuration
-        $security_need_auth = config('mercator-config.parameters.security_need_auth');
-
-        // Return
-        return view(
-            'admin.config.parameters',
-            compact('security_need_auth')
+        return $this->sendTestMail(
+            $request->input('mail_from'),
+            $request->input('mail_to'),
+            $request->input('mail_subject'),
         );
     }
+    // ─────────────────────────────────────────────────────────────────────────
+    // Lecture / écriture du fichier de config
+    // ─────────────────────────────────────────────────────────────────────────
 
-    /*
-    * Save the parameters
-    */
-    public function saveParameters(Request $request)
+    /**
+     * Lit le fichier config/mercator.php en court-circuitant OPcache.
+     */
+    private function readConfigFile(): array
     {
-        abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $path = config_path('mercator.php');
 
-        // read request
-        $security_need_auth = request('security_need_auth');
+        if (!file_exists($path)) {
+            return [];
+        }
 
-        // Save parameters
-        config(['mercator-config.parameters.security_need_auth' => $security_need_auth]);
+        // Invalide OPcache avant require pour être sûr de lire la version sur disque.
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($path, true);
+        }
 
-        // Save configuration
-        $text = '<?php return '.var_export(config('mercator-config'), true).';';
-        file_put_contents(config_path('mercator-config.php'), $text);
+        return require $path;
+    }
 
-        // Return
-        return view(
-            'admin.config.parameters',
-            compact('security_need_auth')
-        )
-            ->withErrors('Configuration saved !');
+    /**
+     * Écrit le tableau de config dans config/mercator.php.
+     */
+    private function writeConfigFile(array $cfg): void
+    {
+        $path = config_path('mercator.php');
+
+        file_put_contents($path, '<?php return ' . var_export($cfg, true) . ';');
+
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($path, true);
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Utilitaires mail / provider
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /** @return array{0: string, 1: bool} */
+    private function sendTestMail(string $from, string $to, string $subject): array
+    {
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host        = config('mail.mailers.smtp.host');
+            $mail->SMTPAuth    = config('mail.mailers.smtp.username') !== null;
+            $mail->Username    = config('mail.mailers.smtp.username');
+            $mail->Password    = config('mail.mailers.smtp.password');
+            $mail->SMTPSecure  = config('mail.mailers.smtp.encryption');
+            $mail->SMTPAutoTLS = config('mail.mailers.smtp.auto_tls');
+            $mail->Port        = (int) config('mail.mailers.smtp.port');
+
+            $mail->setFrom($from);
+            foreach (explode(',', $to) as $email) {
+                $mail->addAddress(trim($email));
+            }
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body    = '<html><body><br>This is a test message !<br><br></body></html>';
+
+            $mail->DKIM_domain     = config('mail.dkim.domain');
+            $mail->DKIM_private    = config('mail.dkim.private');
+            $mail->DKIM_selector   = config('mail.dkim.selector');
+            $mail->DKIM_passphrase = config('mail.dkim.passphrase');
+            $mail->DKIM_identity   = $mail->From;
+
+            $mail->send();
+
+            return ['Message has been sent', true];
+        } catch (Exception) {
+            return ["Message could not be sent. Mailer Error: {$mail->ErrorInfo}", false];
+        }
+    }
+
+    /** @return array{0: string, 1: bool} */
+    private function testProvider(string $provider): array
+    {
+        $client = curl_init($provider . '/api/dbInfo');
+        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($client, CURLOPT_TIMEOUT, 10);
+        $response = curl_exec($client);
+        curl_close($client);
+
+        if ($response === false) {
+            return ['Could not connect to provider', false];
+        }
+        $json = json_decode($response);
+        if ($json === null) {
+            return ['Could not connect to provider (invalid JSON)', false];
+        }
+
+        return [
+            'Last NVD update: ' . $json->last_updates->nvd
+            . ' — Total db size = ' . $json->db_sizes->total,
+            true,
+        ];
+    }
+
+    /** @return array{0: string, 1: bool} */
+    private function testGuesser(string $guesser): array
+    {
+        if (empty($guesser)) {
+            return ['CPE guesser URL is not configured', false];
+        }
+
+        $url     = rtrim($guesser, '/') . '/search';
+        $payload = json_encode(['query' => ['test']]);
+
+        $client = curl_init($url);
+        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($client, CURLOPT_TIMEOUT, 10);
+        curl_setopt($client, CURLOPT_POST, true);
+        curl_setopt($client, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($client, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($payload),
+        ]);
+        $response = curl_exec($client);
+        $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+        curl_close($client);
+
+        if ($response === false) {
+            return ['Could not connect to CPE guesser', false];
+        }
+
+        $json = json_decode($response, true);
+        if ($json === null) {
+            return ['CPE guesser returned invalid JSON', false];
+        }
+
+        return [
+            'CPE guesser OK (HTTP ' . $httpCode . ') — ' . count($json) . ' result(s) for "test"',
+            true,
+        ];
     }
 }
