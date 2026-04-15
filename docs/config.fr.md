@@ -1,46 +1,37 @@
-# Guide de Configuration de Mercator
+# Configuration
 
-Ce document décrit l’ensemble des options de configuration disponibles dans Mercator, notamment l’intégration LDAP, la prise en charge des groupes imbriqués pour Active Directory, la configuration du mail, le cache et les fonctionnalités
-optionnelles.
+Ce document décrit toutes les options de configuration disponibles dans Mercator, notamment l'intégration LDAP, la prise en charge des groupes imbriqués Active Directory, la configuration de la messagerie, la mise en cache et les fonctionnalités optionnelles.
 
----
-
-## Variables d’Environnement
-
-Mercator utilise des variables d’environnement (`.env`) pour configurer les fonctionnalités essentielles :
-authentification, LDAP, auto-provisionnement, mail, sécurité, etc.
-
-Vous trouverez ci-dessous la liste complète des paramètres pris en charge.
+Mercator s'appuie sur des variables d'environnement (`.env`) pour configurer les fonctionnalités principales telles que l'authentification, LDAP, l'auto-provisionnement, la messagerie et la sécurité.
 
 ---
 
-## 1. Configuration LDAP
+## Configuration LDAP
 
-Mercator supporte l’authentification **locale** et l’authentification **LDAP**.  
-Les comptes locaux restent toujours disponibles en fallback si vous les activez.
+Mercator prend en charge à la fois l'**authentification locale** et l'**authentification LDAP**.
+Les comptes locaux restent toujours disponibles comme solution de repli si cela est configuré.
 
-### **Activer / désactiver l’authentification LDAP**
+### Activer / Désactiver l'authentification LDAP
 
 ```
 LDAP_ENABLED=true
 ```
 
-### **Autoriser la connexion locale si l’authentification LDAP échoue**
+### Autoriser la connexion locale en cas d'échec de l'authentification LDAP
 
 ```
 LDAP_FALLBACK_LOCAL=true
 ```
 
-### **Créer automatiquement un utilisateur Mercator à partir du LDAP**
+### Créer automatiquement les utilisateurs Mercator depuis LDAP
 
-Si un utilisateur LDAP existe mais n’a pas de compte Mercator associé,
-Mercator peut créer automatiquement le compte local correspondant.
+Si l'utilisateur LDAP existe mais qu'aucun utilisateur Mercator correspondant n'est trouvé, Mercator peut créer automatiquement le compte local correspondant.
 
 ```
 LDAP_AUTO_PROVISION=true
 ```
 
-L'utilisateur sera créé avec le rôle suivant :
+Le compte local sera créé avec le rôle suivant :
 
 ```
 LDAP_AUTO_PROVISION_ROLE=user
@@ -48,7 +39,7 @@ LDAP_AUTO_PROVISION_ROLE=user
 
 ---
 
-### 1.1 Paramètres de Connexion LDAP
+### Paramètres de connexion LDAP
 
 ```
 LDAP_HOST=ldap.example.com
@@ -59,54 +50,53 @@ LDAP_SSL=false
 LDAP_TLS=false
 ```
 
-Ces valeurs sont transmises à la couche LDAPRecord de Laravel.
+Ces valeurs sont transmises directement à la couche de connexion LDAPRecord de Laravel.
 
 ---
 
-### 1.2 Base de Recherche des Utilisateurs
+### Base de recherche des utilisateurs LDAP
 
-Définit où les utilisateurs doivent être recherchés :
+Définit l'emplacement où les utilisateurs doivent être recherchés :
 
 ```
 LDAP_USERS_BASE_DN="OU=Users,DC=example,DC=com"
 ```
 
-Si vide, Mercator recherchera dans tout l’annuaire.
+Si vide, Mercator recherche dans l'ensemble de l'annuaire.
 
 ---
 
-### 1.3 Attributs LDAP Utilisés pour le Login
+### Attributs de connexion LDAP
 
-Définit les attributs LDAP pouvant servir d’identifiant :
+Définit les attributs LDAP pouvant être utilisés comme identifiant de connexion :
 
 ```
 LDAP_LOGIN_ATTRIBUTES=sAMAccountName,uid,mail
 ```
 
-Mercator testera ces attributs avec un filtre OR.
+Mercator essaiera ces attributs avec un filtre OR.
 
 ---
 
-### 1.4 Restriction par Groupe LDAP
+### Restriction par groupe LDAP
 
-Vous pouvez limiter l’accès à Mercator aux membres d’un groupe LDAP spécifique :
+Il est possible de restreindre l'accès à Mercator aux membres d'un groupe LDAP spécifique.
 
 ```
 LDAP_GROUP="CN=Mercator-Users,OU=Groups,DC=example,DC=com"
 ```
 
-Si vide, tous les utilisateurs authentifiés via LDAP pourront se connecter.
+Si vide, tous les utilisateurs authentifiés par LDAP peuvent se connecter.
 
 ---
 
-## 2. Support des Groupes Imbriqués (Active Directory uniquement)
+## Prise en charge des groupes imbriqués (Active Directory uniquement)
 
-Mercator peut vérifier l’appartenance **récursive** (groupes imbriqués) lors de l’utilisation de **Microsoft Active
-Directory**.
+Mercator peut vérifier l'appartenance récursive (groupes imbriqués) lors de l'utilisation de **Microsoft Active Directory**.
 
-Ce support est désactivé par défaut.
+Cette fonctionnalité est désactivée par défaut.
 
-### Activer les groupes imbriqués :
+### Activer la recherche de groupes imbriqués
 
 ```
 LDAP_NESTED_GROUPS=true
@@ -114,7 +104,7 @@ LDAP_NESTED_GROUPS=true
 
 ### Fonctionnement
 
-Lorsque cette option est activée, Mercator utilise la règle de correspondance AD :
+Lorsque cette option est activée, Mercator utilise la règle de correspondance spécifique à AD :
 
 ```
 1.2.840.113556.1.4.1941   (LDAP_MATCHING_RULE_IN_CHAIN)
@@ -128,25 +118,21 @@ Exemple de filtre LDAP généré :
 
 Cela permet de reconnaître :
 
-* L’appartenance directe
-* L’appartenance indirecte
-* Les groupes imbriqués multi-niveaux
+* Les membres directs
+* Les membres indirects
+* Les groupes profondément imbriqués (multi-niveaux)
 
 ### Limitations importantes
 
-* Fonctionne **uniquement** avec **Microsoft Active Directory**
-* Ne fonctionne **pas** avec OpenLDAP ou d’autres annuaires
-* Si activé sur un annuaire non AD, l’authentification LDAP échouera
+* **Pris en charge uniquement sur Microsoft Active Directory**
+* Ne fonctionnera **pas** sur OpenLDAP ou d'autres serveurs LDAP
+* Si activé sur des systèmes non-AD, l'authentification LDAP échouera
 
 ---
 
-## 3. Configuration Email
+## Configuration de la messagerie
 
-Mercator utilise le système d’e-mails de Laravel pour envoyer :
-
-* les notifications
-* les réinitialisations de mot de passe (comptes locaux)
-* les alertes système
+Mercator envoie des notifications, des réinitialisations de mot de passe (pour les comptes locaux) et des e-mails système.
 
 ```
 MAIL_MAILER=smtp
@@ -161,106 +147,102 @@ MAIL_FROM_NAME="Mercator"
 
 ---
 
-## 4. Paramètres Applicatifs
+## Paramètres applicatifs
 
-### Nom de l’application
-Ce nom s'affiche en haut a gauche de chaque page de l'application.
+### Nom de l'application
+
+Ce nom est affiché dans le coin supérieur gauche de chaque page de l'application.
+
 ```
 APP_NAME=Mercator
 ```
-### Environnement de l'instance mercator
-permet de définir le type de l'instance mercator:  
-- Production, Développement, Intégration, Préproduction, Maquette...
 
+### Environnement de l'instance Mercator
+
+Permet de préciser le type de l'instance Mercator : Production, Développement, Intégration, Pré-production, Prototype, Maquette…
 
 ```
 APP_ENV=Production
 ```
-- 📢 *Note: APP_ENV=Production est obligatoire pour que https fonctionne*
 
-### Paramètre liés à l'utilisation de l'API
-Limite les requêtes API afin de protéger les ressources du serveur.  
-Format : API_RATE_LIMIT requêtes par API_RATE_LIMIT_DECAY minute(s)
+📢 *Remarque : `APP_ENV=Production` est obligatoire pour que le HTTPS fonctionne.*
 
-Exemples :
+### Limite du taux d'appels API
+
+Limite les requêtes API pour protéger les ressources du serveur.
+Format : `API_RATE_LIMIT` requêtes par `API_RATE_LIMIT_DECAY` minute(s).
+
 ```
-    60,1 = 60 requêtes/min (par défaut – usage normal)
-    120,1 = 120 requêtes/min (développement/tests)
-    1000,60 = 1000 requêtes/heure (API publique)
-    10000,1440 = 10000 requêtes/jour (intégrations tierces)
+    60,1       = 60 req/min    (défaut - usage normal)
+    120,1      = 120 req/min   (développement/tests)
+    1000,60    = 1000 req/h    (API publique)
+    10000,1440 = 10000 req/j   (intégrations tierces)
 ```
-Retourne HTTP 429 (Trop de requêtes) lorsque la limite est dépassée
+
+Retourne HTTP 429 (Too Many Requests) en cas de dépassement.
 
 ```
 API_RATE_LIMIT=60
 API_RATE_LIMIT_DECAY=1
 ```
 
-### URL de l’application
+### URL de l'application
 
 ```
 APP_URL=https://mercator.example.com
 ```
 
-Utilisé dans les liens, notifications, exports, etc.
+Utilisée dans les liens, les notifications, les URL d'export, etc.
 
-### Mode Debug
+### Mode débogage
 
 ```
 APP_DEBUG=false
 ```
 
-En mode debug, les erreurs sont affichées.
-**Ne jamais activer en production.**
+Lorsqu'il est activé, les erreurs sont affichées à l'écran. **Ne pas activer en production.**
 
-### Durée de Session
+### Durée de session
 
 ```
 SESSION_LIFETIME=120
 ```
 
-En minutes.
-
 ---
 
-## 5. Logs
+## Journalisation
 
-Mercator s’appuie sur le système de logs de Laravel.
-
-### Activer les logs LDAPRecord :
+Mercator utilise le système de journalisation de Laravel. Pour activer la journalisation LDAPRecord :
 
 ```
 LDAP_LOGGING=true
 ```
 
-Les logs apparaissent dans :
+Les journaux apparaîtront dans :
 
 ```
 storage/logs/ldap.log
 ```
 
-Si le fichier n’est pas généré, vérifiez les permissions du dossier.
+Si aucun fichier n'apparaît, vérifiez les permissions du répertoire.
 
 ---
 
-## 6. Export / Import de Fichiers
+## Export / Import de fichiers
 
-Mercator prend en charge l’export Excel, CSV, Word et PDF via :
+Mercator prend en charge l'export Excel et PDF via :
 
 * `maatwebsite/excel`
 * `phpoffice/phpword`
 
-Veillez à ce que `storage/` et `bootstrap/cache/` soient accessibles en écriture.
+Assurez-vous que `storage/` et `bootstrap/cache/` sont accessibles en écriture.
 
 ---
 
-## 7. Configuration Docker
+## Configuration Docker
 
-Si vous utilisez Docker :
+### Surcharger les variables d'environnement dans `docker-compose.yml`
 
-### Surcharger les variables dans `docker-compose.yml`
-
-#### LDAP
 ```yaml
 environment:
   - LDAP_ENABLED=true
@@ -269,7 +251,8 @@ environment:
   - LDAP_NESTED_GROUPS=true
 ```
 
-#### Volumes recommandés :
+### Volumes requis
+
 ```yaml
 volumes:
   - ./storage:/var/www/mercator/storage
@@ -278,50 +261,48 @@ volumes:
 
 ---
 
-## 8. Recommandations pour la Production
-
-### Recommandé :
+## Conseils pour le déploiement en production
 
 * Désactiver `APP_DEBUG`
-* Toujours utiliser HTTPS
-* Mettre un reverse proxy (Traefik, Nginx)
-* Sauvegarder régulièrement la base de données
-* Protéger `.env` et `storage/` par des permissions strictes
-* N’activer les groupes imbriqués que si vous utilisez **Active Directory**
+* Activer HTTPS
+* Utiliser un reverse proxy (Traefik, Nginx)
+* Configurer des sauvegardes automatiques de la base de données
+* Protéger `.env` et `storage/` avec les permissions appropriées
+* N'utiliser les groupes imbriqués LDAP que sur **Active Directory**
 
 ---
 
-## 9. Tableau Récapitulatif
+## Tableau récapitulatif
 
-| Fonction            | Variable                   | Défaut           | Notes                                           |
-|---------------------|----------------------------|------------------|-------------------------------------------------|
-| Activer LDAP        | `LDAP_ENABLED`             | false            | Active la connexion LDAP                        |
-| Fallback local      | `LDAP_FALLBACK_LOCAL`      | false            | Permet le login local si LDAP échoue            |
-| Auto-provision      | `LDAP_AUTO_PROVISION`      | false            | Crée automatiquement l’utilisateur              |
-| Auto-provision role | `LDAP_AUTO_PROVISION_ROLE` | null             | Role assigné aux utilisateur nouvellement créés |
-| Serveur LDAP| `LDAP_HOST` | ldap.example.com | pour la connexion au LDAP | 
-| Utilisateur LDAP | `LDAP_USERNAME` | "CN=ldap-reader,OU=Service Accounts,DC=example,DC=com" | pour la connexion au LDAP | 
-| Mot de passe LDAP | `LDAP_PASSWORD` | "secret" | pour la connexion au LDAP | 
-| Port Ip du LDAP serveur | `LDAP_PORT` | 389 | pour la connexion au LDAP |
-| Encryption SSL | `LDAP_SSL` | false | pour la connexion au LDAP | 
-| Encryption TLS | `LDAP_TLS` | false | pour la connexion au LDAP |
-| Groupes imbriqués   | `LDAP_NESTED_GROUPS`       | false            | AD uniquement                                   |
-| Groupe requis       | `LDAP_GROUP`               | “”               | Restreint l’accès                               |
-| Base LDAP           | `LDAP_USERS_BASE_DN`       | “”               | DN de recherche                                 |
-| Attributs login     | `LDAP_LOGIN_ATTRIBUTES`    | `sAMAccountName` | Liste CSV                                       |
-| Logs LDAP           | `LDAP_LOGGING`             | false            | Fichier `ldap.log`                              |
-| Limite du nombre d'appels API | `API_RATE_LIMIT` | 60 | Défini le nombre de requête API possible dans l'intervale `API_RATE_LIMIT_DECAY` |
-| Délai permettant le nombre d'appels API | `API_RATE_LIMIT_DECAY` | 1 | Durée en minutes pour le nombre d'appel API |
-| Durée de sessions | `SESSION_LIFETIME` | 120 | Durée de session en minutes |
-| Mode debug | `APP_DEBUG` | false | Active ou désactive le mode debug |
-| Url de l'application | `APP_URL` | https://mercator.example.com | permet de changer url de l'application |
-| Environnement d'instance | `APP_ENV` | Production | Défini l'environnement de cette instance mercator |
-| Nom de l'application | `APP_NAME` | Mercator | permet de définir le nom de l’application si besoin de différencier |
-| Type de courriel | `MAIL_MAILER` | smtp | Pour la configuration de la connexion au serveur de courriel |
-| Serveur du courriel| `MAIL_HOST` | smtp.example.com |Pour la configuration de la connexion au serveur de courriel | 
-| Port ip de courriel | `MAIL_PORT` | 587 | Pour la configuration de la connexion au serveur de courriel | 
-| Adresse courriel | `MAIL_USERNAME` | mailer@example.com | Pour la configuration de la connexion au serveur de courriel |
-| Mot de passe de l'adresse de courriel| `MAIL_PASSWORD` | secret | Pour la configuration de la connexion au serveur de courriel |
-| Type d'encryption | `MAIL_ENCRYPTION` | tls | Pour la configuration de la connexion au serveur de courriel |
-| Utilisateur émetteur | `MAIL_FROM_ADDRESS` | noreply@example.com | Pour la configuration de la connexion au serveur de courriel |
-| Appli émettrice | `MAIL_FROM_NAME` | Mercator| Pour la configuration de la connexion au serveur de courriel |
+| Fonctionnalité | Variable | Défaut | Notes |
+|----------------|----------|--------|-------|
+| Activer LDAP | `LDAP_ENABLED` | false | Active la connexion LDAP |
+| Repli local | `LDAP_FALLBACK_LOCAL` | false | Autorise la connexion locale en cas d'échec LDAP |
+| Auto-provisionnement | `LDAP_AUTO_PROVISION` | false | Crée l'utilisateur en base lors de la première connexion LDAP |
+| Rôle auto-provisionnement | `LDAP_AUTO_PROVISION_ROLE` | null | Rôle attribué aux utilisateurs nouvellement créés |
+| Serveur LDAP | `LDAP_HOST` | ldap.example.com | Pour la connexion au serveur LDAP |
+| Utilisateur LDAP | `LDAP_USERNAME` | CN=ldap-reader,… | Pour la connexion au serveur LDAP |
+| Mot de passe LDAP | `LDAP_PASSWORD` | secret | Pour la connexion au serveur LDAP |
+| Port du serveur LDAP | `LDAP_PORT` | 389 | Pour la connexion au serveur LDAP |
+| Chiffrement SSL | `LDAP_SSL` | false | Pour la connexion au serveur LDAP |
+| Chiffrement TLS | `LDAP_TLS` | false | Pour la connexion au serveur LDAP |
+| Groupes imbriqués | `LDAP_NESTED_GROUPS` | false | AD uniquement |
+| Groupe requis | `LDAP_GROUP` | "" | Restreint la connexion |
+| Base de recherche LDAP | `LDAP_USERS_BASE_DN` | "" | Base de recherche |
+| Attributs de connexion | `LDAP_LOGIN_ATTRIBUTES` | `sAMAccountName` | Liste séparée par des virgules |
+| Journalisation LDAP | `LDAP_LOGGING` | false | Écrit dans `ldap.log` |
+| Limite d'appels API | `API_RATE_LIMIT` | 60 | Nombre de requêtes API autorisées dans la fenêtre de temps |
+| Intervalle de limite API | `API_RATE_LIMIT_DECAY` | 1 | Durée en minutes de la fenêtre de limite de taux |
+| Durée de session | `SESSION_LIFETIME` | 120 | Durée de session en minutes |
+| Mode débogage | `APP_DEBUG` | false | Active ou désactive le mode débogage |
+| URL de l'application | `APP_URL` | https://mercator.example.com | URL de base utilisée dans les liens et les exports |
+| Environnement de l'instance | `APP_ENV` | Production | Définit l'environnement de cette instance Mercator |
+| Nom de l'application | `APP_NAME` | Mercator | Nom affiché, utile pour différencier les instances |
+| Type de messagerie | `MAIL_MAILER` | smtp | Connexion au serveur de messagerie |
+| Serveur de messagerie | `MAIL_HOST` | smtp.example.com | Connexion au serveur de messagerie |
+| Port du serveur de messagerie | `MAIL_PORT` | 587 | Connexion au serveur de messagerie |
+| Adresse de messagerie | `MAIL_USERNAME` | mailer@example.com | Connexion au serveur de messagerie |
+| Mot de passe de messagerie | `MAIL_PASSWORD` | secret | Connexion au serveur de messagerie |
+| Type de chiffrement | `MAIL_ENCRYPTION` | tls | Connexion au serveur de messagerie |
+| Adresse d'expéditeur | `MAIL_FROM_ADDRESS` | noreply@example.com | Connexion au serveur de messagerie |
+| Nom de l'expéditeur | `MAIL_FROM_NAME` | Mercator | Connexion au serveur de messagerie |
