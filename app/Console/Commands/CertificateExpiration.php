@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Mercator\Core\Models\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Mercator\Core\Models\Certificate;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -36,19 +36,19 @@ class CertificateExpiration extends Command
 
             $certificates = Certificate::where('status', 0)
                 ->where('end_validity', '<=', Carbon::now()
-                    ->addDays(intval(config('mercator-config.cert.expire-delay')))->toDateString())
+                    ->addDays(intval(config('mercator.cert.expire-delay')))->toDateString())
                 ->orderBy('end_validity')
                 ->get();
 
             Log::debug(
                 $certificates->count().
                 ' certificate(s) will expire within '.
-                config('mercator-config.cert.expire-delay').
+                config('mercator.cert.expire-delay').
                 ' days.'
             );
 
             // check
-            $repeat_notification = config('mercator-config.cert.repeat-notification');
+            $repeat_notification = config('mercator.cert.repeat-notification');
             if (intval($repeat_notification) === 0) {
                 Log::debug('CertificateExpiration - remove cert aleady notified');
                 foreach ($certificates as $key => $cert) {
@@ -60,7 +60,7 @@ class CertificateExpiration extends Command
                     } elseif (
                         Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $cert->last_notification)
                             ->greaterThan(
-                                now()->addDays(-intval(config('mercator-config.cert.expire-delay')))
+                                now()->addDays(-intval(config('mercator.cert.expire-delay')))
                             )
                     ) {
                         Log::debug('CertificateExpiration - '.$cert->name.' already notified on '.$cert->last_notification);
@@ -82,10 +82,10 @@ class CertificateExpiration extends Command
 
             if ($certificates->count() > 0) {
                 // send email alert
-                $mail_from = config('mercator-config.cert.mail-from');
-                $to_email = config('mercator-config.cert.mail-to');
-                $subject = config('mercator-config.cert.mail-subject');
-                $group = config('mercator-config.cert.group');
+                $mail_from = config('mercator.cert.mail-from');
+                $to_email = config('mercator.cert.mail-to');
+                $subject = config('mercator.cert.mail-subject');
+                $group = config('mercator.cert.group');
 
                 $mail = new PHPMailer(true);
 
@@ -163,7 +163,7 @@ class CertificateExpiration extends Command
      */
     private function needCheck(): bool
     {
-        $check_frequency = config('mercator-config.cert.check-frequency');
+        $check_frequency = config('mercator.cert.check-frequency');
 
         return // Daily
             ($check_frequency === '1') ||

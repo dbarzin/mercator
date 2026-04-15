@@ -38,8 +38,8 @@ class CVESearch extends Command
         Log::info('CVESearch - Start', ['day' => Carbon::now()->day]);
 
         // Charger & normaliser la config une seule fois
-        $this->provider = $this->normalizeProvider(config('mercator-config.cve.provider'));
-        $this->checkFrequency = (int) config('mercator-config.cve.check-frequency', 1);
+        $this->provider = $this->normalizeProvider(config('mercator.cve.provider'));
+        $this->checkFrequency = (int) config('mercator.cve.check-frequency', 1);
         $this->appVersion = trim(file_get_contents(base_path('version.txt')));
 
         // Respecter le provider
@@ -300,18 +300,18 @@ class CVESearch extends Command
             $mail->SMTPAutoTLS = config('mail.mailers.smtp.auto_tls'); //
             $mail->Port = (int) config('mail.mailers.smtp.port'); // (int) env('MAIL_PORT', 587);
 
-            $from = config('mercator-config.cve.mail-from');
+            $from = config('mercator.cve.mail-from');
             if ($from) {
                 $mail->setFrom($from);
             }
 
-            $to = config('mercator-config.cve.mail-to', '');
+            $to = config('mercator.cve.mail-to', '');
             foreach (array_filter(array_map('trim', explode(',', $to))) as $email) {
                 $mail->addAddress($email);
             }
 
             $mail->isHTML(true);
-            $mail->Subject = config('mercator-config.cve.mail-subject', 'Mercator - CVE matches');
+            $mail->Subject = config('mercator.cve.mail-subject', 'Mercator - CVE matches');
             $mail->Body = $html;
 
             // DKIM (optionnel)
