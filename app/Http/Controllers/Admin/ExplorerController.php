@@ -1247,6 +1247,11 @@ class ExplorerController extends Controller
                 'application-modules', 330
             );
         }
+
+        $this->linkJoinTable('application_module_entity',
+            ApplicationModule::$prefix, Entity::$prefix,
+            'application_module_id', 'entity_id');
+
     }
 
     private function buildDatabases(): void
@@ -1600,8 +1605,12 @@ class ExplorerController extends Controller
             }
         }
 
-        $this->linkJoinTable('entity_process', Entity::$prefix, Process::$prefix, 'entity_id', 'process_id');
-        $this->linkJoinTable('entity_m_application', Entity::$prefix, MApplication::$prefix, 'entity_id', 'm_application_id');
+        $this->linkJoinTable('entity_process',
+            Entity::$prefix, Process::$prefix,
+            'entity_id', 'process_id');
+        $this->linkJoinTable('entity_m_application',
+            Entity::$prefix, MApplication::$prefix,
+            'entity_id', 'm_application_id');
     }
 
     private function buildRelations(): void

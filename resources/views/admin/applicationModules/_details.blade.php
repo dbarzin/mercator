@@ -18,6 +18,21 @@
         </tr>
         <tr>
             <th>
+                {{ trans('cruds.applicationModule.fields.entities') }}
+            </th>
+            <td>
+                @foreach($applicationModule->entities as $entity)
+                    <a href="{{ route('admin.entities.show', $entity->id) }}">
+                    {{ $entity->name }}
+                    </a>
+                    @if (!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+        <tr>
+            <th>
                 {{ trans('cruds.applicationModule.fields.services') }}
             </th>
             <td>

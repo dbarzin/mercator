@@ -207,6 +207,8 @@ return [
         'fields' => [
             'description' => 'Description',
             'description_helper' => '',
+            'entities' => 'Entités',
+            'entities_helper' => 'Entités utilisatrices du module',
             'flux' => 'Flux',
             'flux_helper' => 'Flux associés au module',
             'name' => 'Nom',
