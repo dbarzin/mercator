@@ -46,6 +46,7 @@ class CVEController extends Controller
 
         $applications = DB::table('m_applications')
             ->select('name', 'vendor', 'product', 'version')
+            ->whereNull('deleted_at')
             ->orderBy('name')
             ->get();
 

@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#vendor-selector').select2({
         placeholder: 'Start typing to search',
         tags: true,
+        allowClear: true,
         ajax: {
             url: '/admin/cpe/search/vendors',
             dataType: 'json',
@@ -117,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#product-selector').select2({
         placeholder: 'Start typing to search',
         tags: true,
+        allowClear: true,
         ajax: {
             url: '/admin/cpe/search/products',
             dataType: 'json',
@@ -142,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#version-selector').select2({
         placeholder: 'Start typing to search',
         tags: true,
+        allowClear: true,
         ajax: {
             url: '/admin/cpe/search/versions',
             dataType: 'json',
