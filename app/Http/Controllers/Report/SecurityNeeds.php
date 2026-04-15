@@ -28,7 +28,7 @@ class SecurityNeeds extends ReportController
             trans('global.availability_short'),
             trans('global.tracability_short')
         );
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $header[] = trans('global.authenticity_short');
         }
         array_push(
@@ -39,7 +39,7 @@ class SecurityNeeds extends ReportController
             trans('global.availability_short'),
             trans('global.tracability_short')
         );
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $header[] = trans('global.authenticity_short');
         }
         array_push(
@@ -50,7 +50,7 @@ class SecurityNeeds extends ReportController
             trans('global.availability_short'),
             trans('global.tracability_short')
         );
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $header[] = trans('global.authenticity_short');
         }
         array_push(
@@ -61,7 +61,7 @@ class SecurityNeeds extends ReportController
             trans('global.availability_short'),
             trans('global.tracability_short')
         );
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $header[] = trans('global.authenticity_short');
         }
         array_push(
@@ -72,7 +72,7 @@ class SecurityNeeds extends ReportController
             trans('global.availability_short'),
             trans('global.tracability_short')
         );
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $header[] = trans('global.authenticity_short');
         }
 
@@ -87,7 +87,7 @@ class SecurityNeeds extends ReportController
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
@@ -95,7 +95,7 @@ class SecurityNeeds extends ReportController
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
@@ -103,7 +103,7 @@ class SecurityNeeds extends ReportController
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
@@ -111,7 +111,7 @@ class SecurityNeeds extends ReportController
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
@@ -119,7 +119,7 @@ class SecurityNeeds extends ReportController
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         }
 
@@ -129,7 +129,7 @@ class SecurityNeeds extends ReportController
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
         $i++;
@@ -137,7 +137,7 @@ class SecurityNeeds extends ReportController
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
         $i++;
@@ -145,7 +145,7 @@ class SecurityNeeds extends ReportController
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
         $i++;
@@ -153,7 +153,7 @@ class SecurityNeeds extends ReportController
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
         $i++;
@@ -161,7 +161,7 @@ class SecurityNeeds extends ReportController
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
 
@@ -241,7 +241,7 @@ class SecurityNeeds extends ReportController
         $sheet->setCellValue(self::col($i).$row, $macroprocess->security_need_t >= 0 ? $macroprocess->security_need_t : '');
         self::addSecurityNeedColor($sheet, self::col($i++).$row, $macroprocess->security_need_t);
 
-        if (config('mercator-config.parameters.security_need_auth')) {
+        if (config('mercator.parameters.security_need_auth')) {
             $sheet->setCellValue(self::col($i).$row, $macroprocess->security_need_auth >= 0 ? $macroprocess->security_need_auth : '');
             self::addSecurityNeedColor($sheet, self::col($i++).$row, $macroprocess->security_need_auth);
         }
@@ -262,7 +262,7 @@ class SecurityNeeds extends ReportController
             $sheet->setCellValue(self::col($i).$row, $process->security_need_t >= 0 ? $process->security_need_t : '');
             self::addSecurityNeedColor($sheet, self::col($i++).$row, $process->security_need_t);
 
-            if (config('mercator-config.parameters.security_need_auth')) {
+            if (config('mercator.parameters.security_need_auth')) {
                 $sheet->setCellValue(self::col($i).$row, $process->security_need_auth >= 0 ? $process->security_need_auth : '');
                 self::addSecurityNeedColor($sheet, self::col($i++).$row, $process->security_need_auth);
             }
@@ -283,7 +283,7 @@ class SecurityNeeds extends ReportController
                 $sheet->setCellValue(self::col($i).$row, $application->security_need_t >= 0 ? $application->security_need_t : '');
                 self::addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_t);
 
-                if (config('mercator-config.parameters.security_need_auth')) {
+                if (config('mercator.parameters.security_need_auth')) {
                     $sheet->setCellValue(self::col($i).$row, $application->security_need_auth >= 0 ? $application->security_need_auth : '');
                     self::addSecurityNeedColor($sheet, self::col($i++).$row, $application->security_need_auth);
                 }
@@ -304,7 +304,7 @@ class SecurityNeeds extends ReportController
                     $sheet->setCellValue(self::col($i).$row, $database->security_need_t >= 0 ? $database->security_need_t : '');
                     self::addSecurityNeedColor($sheet, self::col($i++).$row, $database->security_need_t);
 
-                    if (config('mercator-config.parameters.security_need_auth')) {
+                    if (config('mercator.parameters.security_need_auth')) {
                         $sheet->setCellValue(self::col($i).$row, $database->security_need_auth >= 0 ? $database->security_need_auth : '');
                         self::addSecurityNeedColor($sheet, self::col($i++).$row, $database->security_need_auth);
                     }
@@ -325,7 +325,7 @@ class SecurityNeeds extends ReportController
                         $sheet->setCellValue(self::col($i).$row, $information->security_need_t >= 0 ? $information->security_need_t : '');
                         self::addSecurityNeedColor($sheet, self::col($i++).$row, $information->security_need_t);
 
-                        if (config('mercator-config.parameters.security_need_auth')) {
+                        if (config('mercator.parameters.security_need_auth')) {
                             $sheet->setCellValue(self::col($i).$row, $information->security_need_auth >= 0 ? $information->security_need_auth : '');
                             self::addSecurityNeedColor($sheet, self::col($i++).$row, $information->security_need_auth);
                         }

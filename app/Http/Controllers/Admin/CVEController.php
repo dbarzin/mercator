@@ -39,7 +39,7 @@ class CVEController extends Controller
 
         Log::debug('CVEReport - Start');
 
-        $provider = config('mercator-config.cve.provider');
+        $provider = config('mercator.cve.provider');
         if (empty($provider)) {
             return back()->withErrors('CVE provider is not set.');
         }

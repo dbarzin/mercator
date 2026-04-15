@@ -1,8 +1,8 @@
 <?php
 
-use Mercator\Core\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
+use Mercator\Core\Models\User;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 const ZIP_SIGNATURE = 'PK';
@@ -55,7 +55,7 @@ it('forbids report endpoints without permission', function (string $endpoint) {
  */
 it('returns a file download for report endpoints when permitted', function (string $endpoint, string $ext) {
     // Récupère (ou crée) un user "admin" et bypass toutes les autorisations
-    $user = User::find(1) ?? User::factory()->create(['id' => 1]);
+    $user = User::query()->find(1) ?? User::factory()->create(['id' => 1]);
     Passport::actingAs($user);
 
     // Bypass complet des Gates/Policies pendant ce test
