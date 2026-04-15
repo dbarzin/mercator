@@ -309,7 +309,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="cve_provider">
+                        <label for="cpe_guesser">
                             {{ trans('cruds.configuration.cpe.guesser') }}
                         </label>
                         <input class="form-control" type="text"
