@@ -51,7 +51,7 @@
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
-                                <th width="30%">{{ trans('cruds.storageDevice.title_singular') }}</th>
+                                <th width="30%">{{ trans('cruds.logicalServer.title') }}</th>
                                 <th width="20%">{{ trans('cruds.backup.frequency') }}</th>
                                 <th width="30%">{{ trans('cruds.backup.cycle') }}</th>
                                 <th width="20%">{{ trans('cruds.backup.retention') }}</th>
