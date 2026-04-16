@@ -73,7 +73,7 @@
     "vis-network": "^9.1.9",
     "webpack": "^5.105.0",
     "webpack-cli": "^4.10.0",
-    "dompurify": "^3.3.2"
+    "dompurify": "^3.4.0"
   },
   "devDependencies": {
     "laravel-vite-plugin": "^1.0.6",
