@@ -238,7 +238,7 @@
 @endsection
 
 @section('scripts')
-@vite(['resources/js/d3-viz.js'])
+@vite(['resources/js/graphviz.js'])
 <script>
 const dotSrc = `digraph  {
 @can('application_block_access')
@@ -289,30 +289,35 @@ const dotSrc = `digraph  {
 @endcan
 }`;
 
-document.addEventListener('DOMContentLoaded', () => {
-    d3.select("#graph").graphviz({ useWorker: false })
-        .addImage("/images/applicationblock.png", "64px", "64px")
-        .addImage("/images/application.png", "64px", "64px")
-        .addImage("/images/applicationservice.png", "64px", "64px")
-        .addImage("/images/applicationmodule.png", "64px", "64px")
-        .addImage("/images/database.png", "64px", "64px")
-        .addImage("/images/applicationblock.png", "64px", "64px")
-        @can('application_access')
-        @foreach($applications as $application)
-        @if ($application->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $application->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        @endcan
-        @can('database_access')
-        @foreach($databases as $database)
-        @if ($database->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $database->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        @endcan
-        .engine("{{ $engine }}")
-        .renderDot(dotSrc);
+document.addEventListener('graphvizReady', () => {
+    document.getElementById("graph").innerHTML = window.graphviz.layout(
+        dotSrc,
+        "svg",
+        "{{ $engine }}",
+        {
+            images: [
+                { path: "/images/applicationblock.png",   width: "64px", height: "64px" },
+                { path: "/images/application.png",        width: "64px", height: "64px" },
+                { path: "/images/applicationservice.png", width: "64px", height: "64px" },
+                { path: "/images/applicationmodule.png",  width: "64px", height: "64px" },
+                { path: "/images/database.png",           width: "64px", height: "64px" },
+                @can('application_access')
+                @foreach($applications as $application)
+                @if ($application->icon_id !== null)
+                { path: "{{ route('admin.documents.show', $application->icon_id) }}", width: "64px", height: "64px" },
+                @endif
+                @endforeach
+                @endcan
+                @can('database_access')
+                @foreach($databases as $database)
+                @if ($database->icon_id !== null)
+                { path: "{{ route('admin.documents.show', $database->icon_id) }}", width: "64px", height: "64px" },
+                @endif
+                @endforeach
+                @endcan
+            ]
+        }
+    );
 });
 </script>
 @endsection

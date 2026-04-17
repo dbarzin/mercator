@@ -159,7 +159,7 @@ Requests and URIs for each api are shown in the table below.
 | DELETE    | /api/objects/mass-destroy | deletes multiple objects at once             |
 
 
-The fields to be supplied are those described in the [data model](/mercator/model/).
+The fields to be supplied are those described in the [data model](model.md).
 
 To get access to advanced filters, feel free to check the related page: [API Advanced (filters)](./apifilters.md)
 

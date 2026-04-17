@@ -93,7 +93,7 @@ Uses Laravel Gate. Every controller action starts with `abort_if(Gate::denies('p
 Vite builds from `vite.config.mjs`. Key entry points:
 - `resources/js/app.js` — Bootstrap + global JS
 - `resources/js/map.show.ts` / `map.edit.ts` — MaxGraph-based cartography viewer/editor (TypeScript)
-- `resources/js/d3-viz.js` — D3/Graphviz network diagrams
+- `resources/js/graphviz.js` — D3/Graphviz network diagrams
 - `resources/js/vis-network.js` — Vis.js dependency graphs
 - Chart files for dashboard widgets
 

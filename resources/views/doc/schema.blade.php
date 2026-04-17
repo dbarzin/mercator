@@ -16,59 +16,11 @@
 @endsection
 
 @section('scripts')
-@vite(['resources/js/d3-viz.js'])
+@vite(['resources/js/graphviz.js'])
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    d3.select("#graph").graphviz()
-
-    .addImage("/images/register.png", "64px", "64px")
-    .addImage("/images/dataprocessing.png", "64px", "64px")
-    .addImage("/images/security-control.png", "64px", "64px")
-
-    .addImage("/images/entity.png", "64px", "64px")
-    .addImage("/images/relation.png", "64px", "64px")
-
-    .addImage("/images/macroprocess.png", "64px", "64px")
-    .addImage("/images/process.png", "64px", "64px")
-    .addImage("/images/activity.png", "64px", "64px")
-    .addImage("/images/operation.png", "64px", "64px")
-    .addImage("/images/task.png", "64px", "64px")
-    .addImage("/images/actor.png", "64px", "64px")
-    .addImage("/images/information.png", "64px", "64px")
-
-    .addImage("/images/applicationblock.png", "64px", "64px")
-    .addImage("/images/application.png", "64px", "64px")
-    .addImage("/images/applicationservice.png", "64px", "64px")
-    .addImage("/images/applicationmodule.png", "64px", "64px")
-    .addImage("/images/database.png", "64px", "64px")
-
-    .addImage("/images/cloud.png", "64px", "64px")
-    .addImage("/images/network.png", "64px", "64px")
-    .addImage("/images/router.png", "64px", "64px")
-
-    .addImage("/images/site.png", "64px", "64px")
-    .addImage("/images/building.png", "64px", "64px")
-    .addImage("/images/bay.png", "64px", "64px")
-    .addImage("/images/server.png", "64px", "64px")
-    .addImage("/images/workstation.png", "64px", "64px")
-    .addImage("/images/storage.png", "64px", "64px")
-    .addImage("/images/peripheral.png", "64px", "64px")
-    .addImage("/images/phone.png", "64px", "64px")
-    .addImage("/images/switch.png", "64px", "64px")
-    .addImage("/images/router.png", "64px", "64px")
-    .addImage("/images/wifi.png", "64px", "64px")
-    .addImage("/images/certificate.png", "64px", "64px")
-    .addImage("/images/security.png", "64px", "64px")
-    .addImage("/images/securitydevice.png", "64px", "64px")
-    .addImage("/images/lserver.png", "64px", "64px")
-
-    .addImage("/images/vlan.png", "64px", "64px")
-
-
-    .width(window.innerWidth - 250)
-    .height(window.innerHeight)
-    .renderDot(`
-        digraph {
+document.addEventListener('graphvizReady', () => {
+    document.getElementById("graph").innerHTML = window.graphviz.layout(
+        `digraph {
         pencolor="#7c123e"
         penwidth=2
         subgraph clusterRGPR {
@@ -101,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
           TASK [label="{{ trans('cruds.task.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png" href="/admin/tasks"]
           ACTOR [label="{{ trans('cruds.actor.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/actor.png" href="/admin/actors"]
           INFORMATION [label="{{ trans('cruds.information.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/information.png" href="/admin/information"]
-
           }
         subgraph clusterC {
           label="{{ trans('cruds.report.cartography.applications') }}"
@@ -113,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
           APPLICSERV [label="{{ trans('cruds.applicationService.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationservice.png" href="/admin/application-services"]
           APPLICMODULE [label="{{ trans('cruds.applicationModule.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationmodule.png" href="/admin/application-modules"]
           DATABASE [label="{{ trans('cruds.database.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/database.png" href="/admin/databases"]
-
           }
         subgraph clusterD {
           label="{{ trans('cruds.report.cartography.logical_infrastructure') }}"
@@ -128,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
           LOGICALROUTER [label="{{ trans('cruds.router.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="/admin/routers"]
           NETWORKSWITCHES [label="{{ trans('cruds.networkSwitch.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="/admin/network-switches"]
           CERTIFICATE [label="{{ trans('cruds.certificate.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="/admin/certificates"]
-
           }
         subgraph clusterE {
           label="{{ trans('cruds.report.cartography.physical_infrastructure') }}"
@@ -165,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
           APPLICSERV-> APPLICMODULE  [label="  0-n"]
           INFORMATION -> DATABASE [label="  n-m"]
           APPLICATION -> DATABASE   [label="  n-m"]
-          /* ENTITY -> DATABASE [label="  0-n"] */
 
           EXTERNAL -> NETWORK [label="  0-n"]
           NETWORK -> SUBNETWORK [label="  0-n"]
@@ -191,8 +139,56 @@ document.addEventListener('DOMContentLoaded', () => {
           BAY -> ROUTER [label="  0-n"]
           BAY -> SECURITY [label="  0-n"]
           BUILDING -> WIFI [label="  0-n"]
-}`)
-        .fit(true);
+}`,
+        "svg",
+        "dot",
+        {
+            images: [
+                { path: "/images/register.png",          width: "64px", height: "64px" },
+                { path: "/images/dataprocessing.png",    width: "64px", height: "64px" },
+                { path: "/images/security-control.png",  width: "64px", height: "64px" },
+                { path: "/images/entity.png",            width: "64px", height: "64px" },
+                { path: "/images/relation.png",          width: "64px", height: "64px" },
+                { path: "/images/macroprocess.png",      width: "64px", height: "64px" },
+                { path: "/images/process.png",           width: "64px", height: "64px" },
+                { path: "/images/activity.png",          width: "64px", height: "64px" },
+                { path: "/images/operation.png",         width: "64px", height: "64px" },
+                { path: "/images/task.png",              width: "64px", height: "64px" },
+                { path: "/images/actor.png",             width: "64px", height: "64px" },
+                { path: "/images/information.png",       width: "64px", height: "64px" },
+                { path: "/images/applicationblock.png",  width: "64px", height: "64px" },
+                { path: "/images/application.png",       width: "64px", height: "64px" },
+                { path: "/images/applicationservice.png",width: "64px", height: "64px" },
+                { path: "/images/applicationmodule.png", width: "64px", height: "64px" },
+                { path: "/images/database.png",          width: "64px", height: "64px" },
+                { path: "/images/cloud.png",             width: "64px", height: "64px" },
+                { path: "/images/network.png",           width: "64px", height: "64px" },
+                { path: "/images/router.png",            width: "64px", height: "64px" },
+                { path: "/images/site.png",              width: "64px", height: "64px" },
+                { path: "/images/building.png",          width: "64px", height: "64px" },
+                { path: "/images/bay.png",               width: "64px", height: "64px" },
+                { path: "/images/server.png",            width: "64px", height: "64px" },
+                { path: "/images/workstation.png",       width: "64px", height: "64px" },
+                { path: "/images/storage.png",           width: "64px", height: "64px" },
+                { path: "/images/peripheral.png",        width: "64px", height: "64px" },
+                { path: "/images/phone.png",             width: "64px", height: "64px" },
+                { path: "/images/switch.png",            width: "64px", height: "64px" },
+                { path: "/images/wifi.png",              width: "64px", height: "64px" },
+                { path: "/images/certificate.png",       width: "64px", height: "64px" },
+                { path: "/images/security.png",          width: "64px", height: "64px" },
+                { path: "/images/securitydevice.png",    width: "64px", height: "64px" },
+                { path: "/images/lserver.png",           width: "64px", height: "64px" },
+                { path: "/images/vlan.png",              width: "64px", height: "64px" },
+            ]
+        }
+    );
+
+    // Remplace .width().height().fit(true) : le SVG occupe tout le conteneur
+    const svg = document.querySelector('#graph svg');
+    if (svg) {
+        svg.style.width  = '100%';
+        svg.style.height = '100%';
+    }
 });
 </script>
 @parent

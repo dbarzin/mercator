@@ -495,10 +495,9 @@
 @endsection
 
 @section('scripts')
-    @vite(['resources/js/d3-viz.js'])
+    @vite(['resources/js/graphviz.js'])
     <script>
             <?php
-            // Lighter colors
             $tableau20 = array(
                 "#99cbed", "#dfe9f6", "#ffcc9f", "#ffe4c9",
                 "#9fe59f", "#d6f2d0", "#efa8a8", "#ffd6d5",
@@ -519,11 +518,9 @@ digraph  {
         bgcolor = "{{ $tableau20[$idColor++ % 20] }}"
 
         <?php
-            // Tous les buildings de ce site
             $siteBuildings = $buildings->where('site_id', $site->id);
         ?>
 
-        {{-- Buildings racine : pas de building parent --}}
         @foreach($siteBuildings->whereNull('building_id') as $building)
         @include('admin.reports.network_infrastructure_building', [
             'building'  => $building,
@@ -536,7 +533,6 @@ digraph  {
 
 @foreach($physicalLinks as $link)
         <?php
-        // Déterminer la source
         $srcNode = null;
         if($link->peripheral_src_id && $peripherals->contains("id", $link->peripheral_src_id)) {
             $srcNode = "PER{$link->peripheral_src_id}";
@@ -558,7 +554,6 @@ digraph  {
             $srcNode = "WORK{$link->workstation_src_id}";
         }
 
-        // Déterminer la destination
         $destNode = null;
         if($link->peripheral_dest_id && $peripherals->contains("id", $link->peripheral_dest_id)) {
             $destNode = "PER{$link->peripheral_dest_id}";
@@ -580,7 +575,6 @@ digraph  {
             $destNode = "WORK{$link->workstation_dest_id}";
         }
 
-        // Vérifier qu'on a bien une source ET une destination, et pas de liens virtuels
         $isPhysicalLink =
             $link->router_src_id === null &&
             $link->router_dest_id === null &&
@@ -602,61 +596,70 @@ digraph  {
 @endforeach
 }`;
 
-document.addEventListener("DOMContentLoaded", function () {
-    $('#site').on('change', function () {
-        const buildings = this.form.querySelector('#buildings');
-        if (buildings) {
-            Array.from(buildings.options).forEach((opt) => { opt.selected = false; });
-        }
-        this.form.submit();
-    });
+        // ─── Listeners formulaire (DOM uniquement, pas besoin du WASM) ────────
+        document.addEventListener("DOMContentLoaded", function () {
+            $('#site').on('change', function () {
+                const buildings = this.form.querySelector('#buildings');
+                if (buildings) {
+                    Array.from(buildings.options).forEach((opt) => { opt.selected = false; });
+                }
+                this.form.submit();
+            });
 
-    $('#buildings').on('change', function () {
-        this.form.submit();
-    });
+            $('#buildings').on('change', function () {
+                this.form.submit();
+            });
+        });
 
-d3.select("#graph").graphviz({ useWorker: false })
-    .addImage("/images/site.png", "64px", "64px")
-    .addImage("/images/building.png", "64px", "64px")
-    .addImage("/images/bay.png", "64px", "64px")
-    .addImage("/images/server.png", "64px", "64px")
-    @foreach($physicalServers as $server)
-    @if ($server->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $server->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/workstation.png", "64px", "64px")
-    @foreach($workstations as $workstation)
-    @if ($workstation->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/storage.png", "64px", "64px")
-    .addImage("/images/peripheral.png", "64px", "64px")
-    @foreach($peripherals as $peripheral)
-    @if ($peripheral->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/phone.png", "64px", "64px")
-    .addImage("/images/switch.png", "64px", "64px")
-    @foreach($physicalSwitches as $switch)
-    @if ($switch->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $switch->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .addImage("/images/router.png", "64px", "64px")
-    .addImage("/images/wifi.png", "64px", "64px")
-    .addImage("/images/security.png", "64px", "64px")
-    @foreach($physicalSecurityDevices as $device)
-    @if ($device->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $device->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .engine("{{ $engine }}")
-    .renderDot(dotSrc);
-});
-
-</script>
+        // ─── Rendu graphviz (attend que le WASM soit prêt) ───────────────────
+        document.addEventListener('graphvizReady', () => {
+            document.getElementById("graph").innerHTML = window.graphviz.layout(
+                dotSrc,
+                "svg",
+                "{{ $engine }}",
+                {
+                    images: [
+                        { path: "/images/site.png",       width: "64px", height: "64px" },
+                        { path: "/images/building.png",   width: "64px", height: "64px" },
+                        { path: "/images/bay.png",        width: "64px", height: "64px" },
+                        { path: "/images/server.png",     width: "64px", height: "64px" },
+                        @foreach($physicalServers as $server)
+                        @if ($server->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $server->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        { path: "/images/workstation.png", width: "64px", height: "64px" },
+                        @foreach($workstations as $workstation)
+                        @if ($workstation->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $workstation->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        { path: "/images/storage.png",    width: "64px", height: "64px" },
+                        { path: "/images/peripheral.png", width: "64px", height: "64px" },
+                        @foreach($peripherals as $peripheral)
+                        @if ($peripheral->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $peripheral->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        { path: "/images/phone.png",      width: "64px", height: "64px" },
+                        { path: "/images/switch.png",     width: "64px", height: "64px" },
+                        @foreach($physicalSwitches as $switch)
+                        @if ($switch->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $switch->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        { path: "/images/router.png",     width: "64px", height: "64px" },
+                        { path: "/images/wifi.png",       width: "64px", height: "64px" },
+                        { path: "/images/security.png",   width: "64px", height: "64px" },
+                        @foreach($physicalSecurityDevices as $device)
+                        @if ($device->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $device->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                    ]
+                }
+            );
+        });
+    </script>
 @parent
 @endsection

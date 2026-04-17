@@ -616,7 +616,7 @@
 @endsection
 
 @section('scripts')
-    @vite(['resources/js/d3-viz.js'])
+    @vite(['resources/js/graphviz.js'])
     <script>
         let dotSrc = `
 digraph  {
@@ -653,7 +653,7 @@ digraph  {
         A{{ $flow->application_source_id }}
         @endif
         ->
-@if ($flow->database_dest_id!=null)
+        @if ($flow->database_dest_id!=null)
         DB{{ $flow->database_dest_id }}
         @elseif ($flow->module_dest_id!=null)
         M{{ $flow->module_dest_id }}
@@ -665,26 +665,32 @@ digraph  {
         [ label="{{ $flow->nature }}"
         @if ($flow->bidirectional)
         dir="both"
-@endif
+        @endif
         href="#FLOW{{$flow->id}}"]
         @endif
         @endforEach
         @endcan
         }`;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            d3.select("#graph").graphviz({ useWorker: false })
-                .addImage("/images/application.png", "64px", "64px")
-                @foreach($applications as $application)
-                @if ($application->icon_id!==null)
-                .addImage("{{ route('admin.documents.show', $application->icon_id) }}", "64px", "64px")
-                @endif
-                @endforeach
-                .addImage("/images/applicationservice.png", "64px", "64px")
-                .addImage("/images/applicationmodule.png", "64px", "64px")
-                .addImage("/images/database.png", "64px", "64px")
-                .engine("{{ $engine }}")
-                .renderDot(dotSrc);
+        document.addEventListener('graphvizReady', () => {
+            document.getElementById("graph").innerHTML = window.graphviz.layout(
+                dotSrc,
+                "svg",
+                "{{ $engine }}",
+                {
+                    images: [
+                        { path: "/images/application.png",      width: "64px", height: "64px" },
+                        @foreach($applications as $application)
+                        @if ($application->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $application->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        { path: "/images/applicationservice.png", width: "64px", height: "64px" },
+                        { path: "/images/applicationmodule.png",  width: "64px", height: "64px" },
+                        { path: "/images/database.png",           width: "64px", height: "64px" },
+                    ]
+                }
+            );
         });
     </script>
     @parent
