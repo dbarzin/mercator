@@ -28,7 +28,8 @@ export default defineConfig({
                 // Mapping TypeScript and styles
                 'resources/css/mapping.css',
                 // D3 Viz
-                'resources/js/d3-viz.js',
+                // 'resources/js/graphviz.js',
+                'resources/js/graphviz.js',
                 'resources/js/vis-network.js',
                 // Maps
                 'resources/js/map.show.ts',

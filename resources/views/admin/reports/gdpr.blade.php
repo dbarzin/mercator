@@ -108,7 +108,7 @@
 @endsection
 
 @section('scripts')
-    @vite(['resources/js/d3-viz.js'])
+    @vite(['resources/js/graphviz.js'])
     <script>
         let dotSrc = `
 digraph  {
@@ -134,16 +134,21 @@ digraph  {
     @endforeach
         }`;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            d3.select("#graph").graphviz({ useWorker: false })
-                .addImage("/images/macroprocess.png", "64px", "64px")
-                .addImage("/images/process.png", "64px", "64px")
-                .addImage("/images/dataprocessing.png", "64px", "64px")
-                .addImage("/images/application.png", "64px", "64px")
-                .engine("{{ $engine }}")
-                .renderDot(dotSrc);
+        document.addEventListener('graphvizReady', () => {
+            document.getElementById("graph").innerHTML = window.graphviz.layout(
+                dotSrc,
+                "svg",
+                "{{ $engine }}",
+                {
+                    images: [
+                        { path: "/images/macroprocess.png",   width: "64px", height: "64px" },
+                        { path: "/images/process.png",        width: "64px", height: "64px" },
+                        { path: "/images/dataprocessing.png", width: "64px", height: "64px" },
+                        { path: "/images/application.png",    width: "64px", height: "64px" },
+                    ]
+                }
+            );
         });
-
     </script>
     @parent
 @endsection

@@ -146,7 +146,7 @@
 @endsection
 
 @section('scripts')
-@vite(['resources/js/d3-viz.js'])
+@vite(['resources/js/graphviz.js'])
 <script id="dot-input">
 let dotSrc = `
 digraph  {
@@ -165,16 +165,25 @@ digraph  {
     @endforEach
 @endcan
 }`;
-document.addEventListener('DOMContentLoaded', () => {
-d3.select("#graph").graphviz({ useWorker: false })
-    .addImage("/images/entity.png", "64px", "64px")
-    @foreach($entities as $entity)
-    @if ($entity->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $entity->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .engine("{{ $engine }}")
-    .renderDot(dotSrc);
+
+document.addEventListener('graphvizReady', () => {
+    const images = [
+        { path: "/images/entity.png", width: "64px", height: "64px" },
+        @foreach($entities as $entity)
+        @if ($entity->icon_id !== null)
+        { path: "{{ route('admin.documents.show', $entity->icon_id) }}", width: "64px", height: "64px" },
+        @endif
+        @endforeach
+    ];
+
+    document.getElementById("graph").innerHTML = window.graphviz.layout(
+        dotSrc,
+        "svg",
+        "{{ $engine }}",
+        { images: images }
+    );
 });
+
+
 </script>
 @endsection
