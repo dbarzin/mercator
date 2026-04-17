@@ -980,8 +980,8 @@ Connected external entities represent external entities connected to the network
 | contacts    | varchar(255) | Contacts within the external entity/company                       |
 | src         | varchar(255) | Source IP address(es) or source range of the connection           |
 | src_desc    | varchar(255) | Description of the source's connection                            |
-| dst         | varchar(255) | Destination IP address(es) or destination range of the connection |
-| dst_desc    | varchar(255) | Description of the destination's connection                       |
+| dest        | varchar(255) | Destination IP address(es) or destination range of the connection |
+| dest_desc   | varchar(255) | Description of the destination's connection                       |
 | security    | text         | Security requirements of the system                               |
 | created_at  | timestamp    | Date of creation                                                  |
 | updated_at  | timestamp    | Date of update                                                    |
