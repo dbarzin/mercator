@@ -6,6 +6,15 @@
  */
 export default class DynamicSelect {
 
+    _escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     constructor(element, options = {}) {
         let defaults = {
             placeholder: 'Select an option',
@@ -50,24 +59,24 @@ export default class DynamicSelect {
             let optionWidth = 100 / this.columns;
             let optionContent = '';
             if (this.data[i].html) {
-                optionContent = this.data[i].html;
+                optionContent = this._escapeHtml(this.data[i].html);
             } else {
                 optionContent = `
-                    ${this.data[i].img ? `<img src="${this.data[i].img}" alt="${this.data[i].text}" class="${this.data[i].imgWidth && this.data[i].imgHeight ? 'dynamic-size' : ''}" style="${this.data[i].imgWidth ? 'width:' + this.data[i].imgWidth + ';' : ''}${this.data[i].imgHeight ? 'height:' + this.data[i].imgHeight + ';' : ''}">` : ''}
-                    ${this.data[i].text ? '<span class="dynamic-select-option-text">' + this.data[i].text + '</span>' : ''}
+                    ${this.data[i].img ? `<img src="${this._escapeHtml(this.data[i].img)}" alt="${this._escapeHtml(this.data[i].text)}" class="${this.data[i].imgWidth && this.data[i].imgHeight ? 'dynamic-size' : ''}" style="${this.data[i].imgWidth ? 'width:' + this._escapeHtml(this.data[i].imgWidth) + ';' : ''}${this.data[i].imgHeight ? 'height:' + this._escapeHtml(this.data[i].imgHeight) + ';' : ''}">` : ''}
+                    ${this.data[i].text ? '<span class="dynamic-select-option-text">' + this._escapeHtml(this.data[i].text) + '</span>' : ''}
                 `;
             }
             optionsHTML += `
-                <div class="dynamic-select-option${this.data[i].value == this.selectedValue ? ' dynamic-select-selected' : ''}${this.data[i].text || this.data[i].html ? '' : ' dynamic-select-no-text'}" data-value="${this.data[i].value}" style="width:${optionWidth}%;${this.height ? 'height:' + this.height + ';' : ''}">
+                <div class="dynamic-select-option${this.data[i].value == this.selectedValue ? ' dynamic-select-selected' : ''}${this.data[i].text || this.data[i].html ? '' : ' dynamic-select-no-text'}" data-value="${this._escapeHtml(this.data[i].value)}" style="width:${optionWidth}%;${this.height ? 'height:' + this._escapeHtml(this.height) + ';' : ''}">
                     ${optionContent}
                 </div>
             `;
         }
         let template = `
-            <div class="dynamic-select ${this.name}"${this.selectElement.id ? ' id="' + this.selectElement.id + '"' : ''} style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}">
-                <input type="hidden" name="${this.name}" value="${this.selectedValue}">
-                <div class="dynamic-select-header" style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}"><span class="dynamic-select-header-placeholder">${this.placeholder}</span></div>
-                <div class="dynamic-select-options" style="${this.options.dropdownWidth ? 'width:' + this.options.dropdownWidth + ';' : ''}${this.options.dropdownHeight ? 'height:' + this.options.dropdownHeight + ';' : ''}">${optionsHTML}</div>
+            <div class="dynamic-select ${this._escapeHtml(this.name)}"${this.selectElement.id ? ' id="' + this._escapeHtml(this.selectElement.id) + '"' : ''} style="${this.width ? 'width:' + this._escapeHtml(this.width) + ';' : ''}${this.height ? 'height:' + this._escapeHtml(this.height) + ';' : ''}">
+                <input type="hidden" name="${this._escapeHtml(this.name)}" value="${this._escapeHtml(this.selectedValue)}">
+                <div class="dynamic-select-header" style="${this.width ? 'width:' + this._escapeHtml(this.width) + ';' : ''}${this.height ? 'height:' + this._escapeHtml(this.height) + ';' : ''}"><span class="dynamic-select-header-placeholder">${this._escapeHtml(this.placeholder)}</span></div>
+                <div class="dynamic-select-options" style="${this.options.dropdownWidth ? 'width:' + this._escapeHtml(this.options.dropdownWidth) + ';' : ''}${this.options.dropdownHeight ? 'height:' + this._escapeHtml(this.options.dropdownHeight) + ';' : ''}">${optionsHTML}</div>
             </div>
         `;
         let element = document.createElement('div');
@@ -80,12 +89,13 @@ export default class DynamicSelect {
             option.onclick = () => {
                 this.element.querySelectorAll('.dynamic-select-selected').forEach(selected => selected.classList.remove('dynamic-select-selected'));
                 option.classList.add('dynamic-select-selected');
-                this.element.querySelector('.dynamic-select-header').innerHTML = option.innerHTML;
+                const header = this.element.querySelector('.dynamic-select-header');
+                header.replaceChildren(...Array.from(option.childNodes).map(node => node.cloneNode(true)));
                 this.element.querySelector('input').value = option.getAttribute('data-value');
                 this.data.forEach(data => data.selected = false);
                 this.data.filter(data => data.value == option.getAttribute('data-value'))[0].selected = true;
                 this.element.querySelector('.dynamic-select-header').classList.remove('dynamic-select-header-active');
-                this.options.onChange(option.getAttribute('data-value'), option.querySelector('.dynamic-select-option-text') ? option.querySelector('.dynamic-select-option-text').innerHTML : '', option);
+                this.options.onChange(option.getAttribute('data-value'), option.querySelector('.dynamic-select-option-text') ? option.querySelector('.dynamic-select-option-text').textContent : '', option);
             };
         });
         this.element.querySelector('.dynamic-select-header').onclick = () => {
