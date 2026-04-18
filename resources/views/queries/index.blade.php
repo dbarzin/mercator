@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', __('Requêtes sauvegardées'))
+@section('title', __('cruds.queries.title'))
 
 @section('content')
 <div style="margin-bottom: 10px;" class="row">
@@ -10,7 +10,6 @@
         </a>
     </div>
 </div>
-
 
 <div class="card">
     <div class="card-header">
@@ -60,9 +59,9 @@
                         <td class="small">{{ $q->user?->name ?? '—' }}</td>
                         <td class="text-center">
                             @if ($q->is_public)
-                                <i class="fas fa-check text-success" title="@lang('Partagée')"></i>
+                                @lang('Partagée')
                             @else
-                                <i class="fas fa-lock text-muted" title="@lang('Privée')"></i>
+                                @lang('Privée')
                             @endif
                         </td>
                         <td class="text-end text-nowrap">

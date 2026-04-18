@@ -322,7 +322,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         datatableInstance = new DataTable(table, {
             data:     rows,
-            columns:  columns.map(c => ({ data: c, defaultContent: '' })),
+            columns:  columns.map(c => ({
+                title:          c,
+                defaultContent: '',
+                data:           null,
+                render:         (row) => row[c] ?? '',
+            })),
             language: window.datatables_lang ?? {},
             dom:      'Bfrtip',
             buttons:  ['copy', 'csv', 'excel'],

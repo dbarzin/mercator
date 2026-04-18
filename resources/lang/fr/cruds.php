@@ -1367,6 +1367,10 @@ return [
     'tools' => [
         'patching' => 'Correctifs',
         'explore' => 'Exploration',
+        'query' => [
+            'title' => 'Moteur de requêtes',
+            'title_short' => 'Requêtes',
+        ],
     ],
     'report' => [
         'cartography' => [

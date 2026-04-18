@@ -63,7 +63,7 @@ class QueryController extends Controller
         $data            = $request->validated();
         $data['user_id'] = auth()->id();
 
-        $savedQuery = SavedQuery::create($data);
+        $savedQuery = SavedQuery::query()->create($data);
 
         return redirect()
             ->route('admin.queries.show', $savedQuery)
@@ -135,18 +135,20 @@ class QueryController extends Controller
     public function execute(Request $request): JsonResponse
     {
         $dsl = $request->validate([
-            'from'                     => 'required|string|alpha_dash',
-            'select'                   => 'nullable|array',
-            'select.*'                 => 'string|alpha_dash',
-            'filters'                  => 'nullable|array',
-            'filters.*.field'          => 'required|string|alpha_dash',
-            'filters.*.operator'       => 'required|string',
-            'filters.*.value'          => 'required',
-            'traverse'                 => 'nullable|array',
-            'traverse.*'               => 'string|alpha_dash',
-            'depth'                    => 'nullable|integer|min:1|max:5',
-            'output'                   => 'nullable|string|in:graph,list',
-            'limit'                    => 'nullable|integer|min:1|max:1000',
+            'from'               => 'required|string|alpha_dash',
+            'select'             => 'nullable|array',
+            'select.*'           => ['string', 'regex:/^[a-zA-Z0-9_]+$/'],
+            'fields'             => 'nullable|array',
+            'fields.*'           => ['string', 'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
+            'filters'            => 'nullable|array',
+            'filters.*.field'    => ['required', 'string', 'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
+            'filters.*.operator' => 'required|string|in:=,!=,<,>,<=,>=,like,in,not in',
+            'filters.*.value'    => 'required',
+            'traverse'           => 'nullable|array',
+            'traverse.*'         => ['string', 'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
+            'depth'              => 'nullable|integer|min:1|max:5',
+            'output'             => 'nullable|string|in:graph,list',
+            'limit'              => 'nullable|integer|min:1|max:1000',
         ]);
 
         $result = $this->resolver->execute($dsl);
