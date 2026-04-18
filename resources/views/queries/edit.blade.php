@@ -81,7 +81,6 @@
                                   placeholder="FROM LogicalServer
 WHERE environment = &quot;production&quot;
 WITH applications
-DEPTH 2
 OUTPUT list
 LIMIT 100"></textarea>
                         @error('query')
@@ -89,7 +88,7 @@ LIMIT 100"></textarea>
                         @enderror
                     </div>
                     <div class="card-footer text-muted small">
-                        <code>FROM LogicalServer WHERE environment = "production" WITH applications DEPTH 2 OUTPUT graph</code>
+                        <code>FROM LogicalServer WHERE environment = "production" WITH applications OUTPUT graph</code>
                     </div>
                 </div>
             </div>

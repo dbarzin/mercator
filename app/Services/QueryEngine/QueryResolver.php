@@ -40,7 +40,7 @@ class QueryResolver
         $items = $builder->limit($dsl['limit'] ?? 100)->get();
 
         return match ($dsl['output'] ?? 'list') {
-            'graph' => $this->buildGraph($items, $dsl['from'], $traverse, $dsl['depth'] ?? 2),
+            'graph' => $this->buildGraph($items, $dsl['from'], $traverse),
             default => $this->buildList($items, $dsl),
         };
     }
@@ -312,14 +312,13 @@ class QueryResolver
         Collection $items,
         string     $modelName,
         array      $traverse,
-        int        $maxDepth
     ): GraphResult {
         $this->visitedNodes = [];
         $this->nodes        = [];
         $this->edges        = [];
 
         foreach ($items as $item) {
-            $this->traverseNode($item, $modelName, $traverse, $maxDepth, null);
+            $this->traverseNode($item, $modelName, $traverse, null);
         }
 
         return new GraphResult(
@@ -334,7 +333,6 @@ class QueryResolver
         Model   $item,
         string  $modelName,
         array   $traverse,
-        int     $remainingDepth,
         ?string $parentNodeId
     ): void {
         $nodeId = $modelName . '_' . $item->getKey();
@@ -350,12 +348,12 @@ class QueryResolver
         $this->visitedNodes[$nodeId] = true;
         $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
 
-        if ($remainingDepth <= 0 || empty($traverse)) {
+        // Arrêt : plus de chemins à suivre — la profondeur est portée par WITH
+        if (empty($traverse)) {
             return;
         }
 
         foreach ($traverse as $traversePath) {
-            // "logicalServers.applications" → relation=logicalServers, reste=[applications]
             $parts    = explode('.', $traversePath, 2);
             $relation = $parts[0];
             $subPath  = $parts[1] ?? null;
@@ -373,18 +371,11 @@ class QueryResolver
 
                 $relatedModelName = class_basename(get_class($related->first()));
 
-                // Si chemin imbriqué, continuer sur le sous-chemin uniquement
-                // Sinon, réutiliser tout le traverse pour la profondeur suivante
-                $subTraverse = $subPath ? [$subPath] : $traverse;
+                // Continuer uniquement si le chemin a un segment suivant
+                $subTraverse = $subPath ? [$subPath] : [];
 
                 foreach ($related as $relatedItem) {
-                    $this->traverseNode(
-                        $relatedItem,
-                        $relatedModelName,
-                        $subTraverse,
-                        $remainingDepth - 1,
-                        $nodeId,
-                    );
+                    $this->traverseNode($relatedItem, $relatedModelName, $subTraverse, $nodeId);
                 }
             } catch (\Throwable) {
                 continue;

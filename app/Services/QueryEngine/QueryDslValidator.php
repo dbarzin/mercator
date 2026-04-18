@@ -51,7 +51,7 @@ class QueryDslValidator
             'filters'    => ['nullable', 'array'],
             'traverse'   => ['nullable', 'array'],
             'traverse.*' => ['string',   'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
-            'depth'      => ['nullable', 'integer', 'min:1', 'max:5'],
+            'depth'      => ['prohibited'],
             'output'     => ['nullable', 'string',  'in:graph,list'],
             'limit'      => ['nullable', 'integer', 'min:1', 'max:1000'],
         ], [

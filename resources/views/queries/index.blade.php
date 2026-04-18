@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', __('cruds.queries.title'))
+@section('title', __('cruds.tools.query.title'))
 
 @section('content')
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-12">
         <a id="btn-new" class="btn btn-success" href="{{ route('admin.queries.create') }}">
-            {{ trans('global.add') }} @lang('query')
+            {{ trans('global.add') }} @lang('cruds.tools.query.title_short')
         </a>
     </div>
 </div>

@@ -31,18 +31,6 @@
                         </label>
                     </div>
 
-                    {{-- Profondeur --}}
-                    <div id="depth-control" class="d-none d-flex align-items-center gap-1">
-                        <small class="text-muted">@lang('Profondeur')</small>
-                        <select id="depth-select" class="form-select form-select-sm" style="width:60px;">
-                            <option value="1">1</option>
-                            <option value="2" selected>2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-
                     <div class="flex-grow-1"></div>
 
                     {{-- Toggle éditeur --}}
@@ -184,8 +172,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnSave      = document.getElementById('btn-save');
     const btnToggle    = document.getElementById('btn-toggle-editor');
     const btnExportSvg = document.getElementById('btn-export-svg');
-    const depthControl = document.getElementById('depth-control');
-    const depthSelect  = document.getElementById('depth-select');
     const statusMsg    = document.getElementById('status-msg');
     const statusCount  = document.getElementById('status-count');
 
@@ -227,14 +213,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function parseDsl() {
         const sql = editor.value.trim();
         if (!sql) throw new Error('Requête vide.');
-
         const dsl = parseSql(sql);
-
-        // Synchroniser output et depth depuis les contrôles
         const radio = document.querySelector('input[name="output"]:checked');
         if (radio) dsl.output = radio.value;
-        dsl.depth = parseInt(depthSelect.value) || 2;
-
         return dsl;
     }
 
@@ -254,11 +235,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ── Mode sortie ─────────────────────────────────────────────
     document.querySelectorAll('input[name="output"]').forEach(radio => {
-        radio.addEventListener('change', () => {
-            depthControl.classList.toggle('d-none', radio.value !== 'graph');
-        });
+        radio.addEventListener('change', () => runQuery());
     });
-    depthSelect.addEventListener('change', () => {});
 
     // ── Toggle éditeur ──────────────────────────────────────────
     btnToggle?.addEventListener('click', () => {
@@ -457,17 +435,9 @@ document.addEventListener('DOMContentLoaded', function () {
     (function () {
         const dsl    = @json($query->query);
         const output = dsl.output ?? 'list';
-
-        // Afficher en SQL-like
         editor.value = dslToSql(dsl);
-
-        // Synchroniser les contrôles
         const radio = document.getElementById('out-' + output);
         if (radio) radio.checked = true;
-        depthControl.classList.toggle('d-none', output !== 'graph');
-        depthSelect.value = dsl.depth ?? 2;
-
-        // Exécuter immédiatement
         runQuery();
     })();
     @endisset

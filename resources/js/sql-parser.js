@@ -21,7 +21,7 @@
 
     const KEYWORDS = new Set([
         'FROM', 'WHERE', 'AND', 'OR', 'NOT', 'WITH', 'TRAVERSE',
-        'DEPTH', 'OUTPUT', 'LIMIT', 'LIKE', 'IN', 'IS',
+        'OUTPUT', 'LIMIT', 'LIKE', 'IN', 'IS',
         'FIELDS', 'SELECT', 'NULL', 'TRUE', 'FALSE',
     ]);
 
@@ -155,7 +155,6 @@
                 if (this.match('WHERE')) dsl.filters = this.parseWhereClause();
                 else if (this.match('WITH', 'TRAVERSE')) dsl.traverse = this.parseIdentList();
                 else if (this.match('FIELDS', 'SELECT')) dsl.fields = this.parseIdentList();
-                else if (this.match('DEPTH')) dsl.depth = this.expect('NUMBER').value;
                 else if (this.match('OUTPUT')) dsl.output = this.expect('IDENT').value.toLowerCase();
                 else if (this.match('LIMIT')) dsl.limit = this.expect('NUMBER').value;
                 else throw new Error(`Clause inconnue : "${this.peek().value ?? this.peek().type}"`);
@@ -292,7 +291,6 @@
         if (dsl.fields?.length) lines.push(`FIELDS ${dsl.fields.join(', ')}`);
         if (dsl.filters?.length) lines.push(`WHERE ${filtersToSql(dsl.filters, '')}`);
         if (dsl.traverse?.length) lines.push(`WITH ${dsl.traverse.join(', ')}`);
-        if (dsl.depth != null) lines.push(`DEPTH ${dsl.depth}`);
         if (dsl.output != null) lines.push(`OUTPUT ${dsl.output}`);
         if (dsl.limit != null) lines.push(`LIMIT ${dsl.limit}`);
 
