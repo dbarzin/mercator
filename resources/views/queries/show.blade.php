@@ -56,19 +56,6 @@
                         Format
                     </button>
 
-                    {{-- Sauvegarder --}}
-                    @isset($query)
-                        @if (auth()->id() === $query->user_id)
-                            <button class="btn btn-sm btn-outline-primary" id="btn-save">
-                                <i class="fas fa-save"></i> @lang('global.save')
-                            </button>
-                        @endif
-                    @else
-                        <button class="btn btn-sm btn-outline-primary" id="btn-save">
-                            <i class="fas fa-bookmark"></i> @lang('global.save')
-                        </button>
-                    @endisset
-
                     {{-- Exécuter --}}
                     <button class="btn btn-sm btn-primary" id="btn-run">
                         <i class="fas fa-play"></i> @lang('Exécuter')
@@ -76,7 +63,7 @@
                 </div>
 
                 {{-- ── Éditeur JSON ─────────────────────────────────── --}}
-                <div id="editor-panel" class="border-bottom">
+                <div id="editor-panel" class="border-bottom d-none">
                     <textarea id="query-editor"
                               class="form-control font-monospace border-0 rounded-0"
                               rows="6"
@@ -133,6 +120,24 @@
             </div>
         </div>
     </div>
+</div>
+
+{{-- ── Boutons d'action ──────────────────────────────────────────── --}}
+<div class="form-group">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.queries.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
+    @isset($query)
+        @if (auth()->id() === $query->user_id)
+            <button class="btn  btn-success" id="btn-save">
+                <i class="fas fa-save"></i> @lang('global.save')
+            </button>
+        @endif
+    @else
+        <button class="btn  btn-success" id="btn-save">
+            <i class="fas fa-bookmark"></i> @lang('global.save')
+        </button>
+    @endisset
 </div>
 
 {{-- Formulaire PUT caché pour la sauvegarde de la requête courante --}}
