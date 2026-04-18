@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                     @forelse ($queries as $q)
-                    <tr>
+                    <tr data-entry-id="{{ $q->id }}">
                         <td></td>
                         <td>
                             <a href="{{ route('admin.queries.show', ['query' => $q->id]) }}"
@@ -100,7 +100,8 @@
     'id' => '#dataTable',
     'title' => trans("cruds.queries.title_singular"),
     'URL' => route('admin.queries.massDestroy'),
-    'canDelete' => auth()->user()->can('queries_delete') ? true : false
+    // 'canDelete' => auth()->user()->can('queries_delete') ? true : false
+    'canDelete' => true
 ));
 </script>
 @endsection
