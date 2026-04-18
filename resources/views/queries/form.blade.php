@@ -1,57 +1,35 @@
 @extends('layouts.admin')
 
-@section('title', $query->exists ? __('Modifier la requête') : __('Nouvelle requête'))
-
 @section('content')
-<div class="container-fluid">
 
-    <div class="row mb-3">
-        <div class="col">
-            <h1 class="h3">
-                @if ($query->exists)
-                    <i class="fas fa-pencil-alt"></i> @lang('Modifier') : {{ $query->name }}
-                @else
-                    <i class="fas fa-plus"></i> @lang('Nouvelle requête sauvegardée')
-                @endif
-            </h1>
-        </div>
-        <div class="col-auto">
-            <a href="{{ route('admin.queries.index') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> @lang('Retour')
-            </a>
-        </div>
-    </div>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+<form action="{{ $query->exists
+                    ? route('admin.queries.update', $query)
+                    : route('admin.queries.store') }}"
+      method="POST" id="saved-query-form">
+    @csrf
+    @if ($query->exists)
+        @method('PUT')
     @endif
 
-    <form action="{{ $query->exists
-                        ? route('admin.queries.update', $query)
-                        : route('admin.queries.store') }}"
-          method="POST" id="saved-query-form">
-        @csrf
-        @if ($query->exists)
-            @method('PUT')
-        @endif
+    {{-- Champ caché qui recevra le JSON DSL avant envoi --}}
+    <input type="hidden" name="query_json" id="query-json-hidden">
 
+<div class="card">
+    <div class="card-body">
         <div class="row">
 
-            {{-- ── Colonne gauche : méta-données ────────────────────── --}}
+            {{-- ── Colonne gauche : méta-données ─────────────────── --}}
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-header">@lang('Informations')</div>
                     <div class="card-body">
 
                         <div class="mb-3">
-                            <label for="name" class="form-label fw-bold">@lang('Nom') <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                            <label for="name" class="form-label fw-bold">
+                                @lang('Nom') <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   class="form-control @error('name') is-invalid @enderror"
                                    id="name" name="name"
                                    value="{{ old('name', $query->name) }}"
                                    required autofocus>
@@ -83,100 +61,118 @@
                 </div>
             </div>
 
-            {{-- ── Colonne droite : DSL JSON ─────────────────────────── --}}
+            {{-- ── Colonne droite : éditeur SQL-like ──────────────── --}}
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>@lang('DSL de la requête (JSON)')</span>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn-format-json">
+                        <span>@lang('Requête')</span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn-format">
                             <i class="fas fa-indent"></i> @lang('Formater')
                         </button>
                     </div>
                     <div class="card-body p-0">
+                        {{-- Textarea SQL-like — converti en JSON avant envoi --}}
                         <textarea class="form-control font-monospace border-0 rounded-0
                                          @error('query') is-invalid @enderror"
-                                  id="query-json" name="query"
+                                  id="query-editor"
                                   rows="22"
                                   style="resize: vertical; font-size: 0.85rem;"
-                                  spellcheck="false">{{ old('query',
-                                      json_encode($query->query ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
-                                  ) }}</textarea>
+                                  spellcheck="false"
+                                  placeholder="FROM LogicalServer
+WHERE environment = &quot;production&quot;
+WITH applications
+DEPTH 2
+OUTPUT list
+LIMIT 100"></textarea>
                         @error('query')
                             <div class="invalid-feedback d-block px-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="card-footer text-muted small">
-                        @lang('Exemple de structure :')
-                        <code>{"from":"LogicalServer","filters":[],"traverse":["applications"],"depth":2,"output":"graph"}</code>
+                        <code>FROM LogicalServer WHERE environment = "production" WITH applications DEPTH 2 OUTPUT graph</code>
                     </div>
                 </div>
             </div>
-        </div>
 
-        {{-- ── Actions ──────────────────────────────────────────────── --}}
-        <div class="row">
-            <div class="col text-end">
-                <a href="{{ route('admin.queries.index') }}" class="btn btn-secondary me-2">
-                    @lang('Annuler')
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    {{ $query->exists ? __('Enregistrer les modifications') : __('Sauvegarder la requête') }}
-                </button>
-            </div>
         </div>
-
-    </form>
+    </div>
 </div>
+
+<div class="form-group">
+    <a class="btn btn-default" href="{{ route('admin.queries.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
+    <button class="btn btn-success" type="submit">
+        {{ trans('global.save') }}
+    </button>
+</div>
+
+</form>
 @endsection
 
-@push('scripts')
+@section('scripts')
+@vite(['resources/js/sql-parser.js'])
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    const textarea = document.getElementById('query-json');
-    const form     = document.getElementById('saved-query-form');
+    const editor = document.getElementById('query-editor');
+    const hidden = document.getElementById('query-json-hidden');
+    const form   = document.getElementById('saved-query-form');
 
-    // ── Formater le JSON ────────────────────────────────────────
-    document.getElementById('btn-format-json').addEventListener('click', function () {
+    // ── Chargement initial — DSL JSON → SQL-like ─────────────────
+    @php
+        // Priorité : old('query') après une erreur de validation, sinon $query->query
+        $queryOld = old('query');
+        $dsl = is_array($queryOld) ? $queryOld : ($query->query ?? null);
+    @endphp
+
+    @if (!empty($dsl))
+    try {
+        editor.value = window.MercatorQuery.dslToSql(@json($dsl));
+    } catch (e) {
+        // Fallback JSON brut si conversion impossible
+        editor.value = JSON.stringify(@json($dsl), null, 2);
+    }
+    @endif
+
+    // ── Formater ─────────────────────────────────────────────────
+    document.getElementById('btn-format').addEventListener('click', function () {
         try {
-            const parsed   = JSON.parse(textarea.value);
-            textarea.value = JSON.stringify(parsed, null, 2);
-            textarea.classList.remove('is-invalid');
+            const dsl  = window.MercatorQuery.parse(editor.value);
+            editor.value = window.MercatorQuery.dslToSql(dsl);
+            editor.classList.remove('is-invalid');
         } catch (e) {
-            textarea.classList.add('is-invalid');
-            alert('@lang("JSON invalide :") ' + e.message);
+            editor.classList.add('is-invalid');
+            alert('Erreur de syntaxe : ' + e.message);
         }
     });
 
-    // ── Validation côté client avant submit ─────────────────────
+    // ── Submit : SQL-like → JSON DSL → champ caché ───────────────
     form.addEventListener('submit', function (e) {
         try {
-            const parsed = JSON.parse(textarea.value);
+            const dsl = window.MercatorQuery.parse(editor.value);
 
-            if (!parsed.from) {
-                throw new Error('@lang("Le champ « from » est obligatoire.")');
-            }
-            if (parsed.output && !['graph', 'list'].includes(parsed.output)) {
-                throw new Error('@lang("« output » doit être « graph » ou « list ».")');
+            if (!dsl.from) {
+                throw new Error('Le champ FROM est obligatoire.');
             }
 
-            // Reformater proprement avant envoi
-            textarea.value = JSON.stringify(parsed);
-            textarea.classList.remove('is-invalid');
+            hidden.value = JSON.stringify(dsl);
+            editor.classList.remove('is-invalid');
 
         } catch (e) {
             e.preventDefault();
-            textarea.classList.add('is-invalid');
-            textarea.focus();
-            alert('@lang("Erreur dans le JSON :") ' + e.message);
+            editor.classList.add('is-invalid');
+            editor.focus();
+            alert('Erreur dans la requête : ' + e.message);
         }
     });
 
-    // ── Retrait de la marque d'erreur à la frappe ───────────────
-    textarea.addEventListener('input', function () {
-        textarea.classList.remove('is-invalid');
+    // ── Retrait de la marque d'erreur à la frappe ─────────────────
+    editor.addEventListener('input', function () {
+        editor.classList.remove('is-invalid');
     });
+
 });
 </script>
-@endpush
+@parent
+@endsection

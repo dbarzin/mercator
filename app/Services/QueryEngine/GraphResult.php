@@ -4,11 +4,11 @@ namespace App\Services\QueryEngine;
 
 use Illuminate\Support\Collection;
 
-class GraphResult
+readonly class GraphResult
 {
     public function __construct(
-        public readonly Collection $nodes,
-        public readonly Collection $edges,
+        public Collection $nodes,
+        public Collection $edges,
     ) {}
 
     public function toArray(): array

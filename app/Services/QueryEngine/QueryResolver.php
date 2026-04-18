@@ -77,8 +77,31 @@ class QueryResolver
 
     protected function applyFilter(Builder $builder, array $filter): void
     {
+        // ── Groupe : { boolean, group: [...] } ───────────────────
+        if (array_key_exists('group', $filter)) {
+            $boolean = strtolower($filter['boolean'] ?? 'and');
+
+            if ($boolean === 'not') {
+                $builder->whereNot(function (Builder $q) use ($filter) {
+                    foreach ($filter['group'] as $sub) {
+                        $this->applyFilter($q, $sub);
+                    }
+                });
+                return;
+            }
+
+            $method = $boolean === 'or' ? 'orWhere' : 'where';
+            $builder->$method(function (Builder $q) use ($filter) {
+                foreach ($filter['group'] as $sub) {
+                    $this->applyFilter($q, $sub);
+                }
+            });
+            return;
+        }
+
+        // ── Condition simple ─────────────────────────────────────
         $operator = $filter['operator'] ?? '=';
-        $value    = $filter['value'];
+        $value    = $filter['value'] ?? null;
 
         abort_if(
             ! in_array($operator, self::ALLOWED_OPERATORS, true),
@@ -86,19 +109,25 @@ class QueryResolver
             "Opérateur interdit : [{$operator}]"
         );
 
+        // boolean du filtre (and par défaut, or pour les OR dans les groupes plats)
+        $boolean = strtolower($filter['boolean'] ?? 'and');
+        $isOr    = $boolean === 'or';
+
         $parts = array_map(
             fn ($p) => preg_replace('/[^a-zA-Z0-9_]/', '', $p),
             explode('.', $filter['field'])
         );
 
         if (count($parts) === 1) {
-            $this->applyWhereOnBuilder($builder, $parts[0], $operator, $value);
+            $this->applyWhereOnBuilder($builder, $parts[0], $operator, $value, $isOr);
             return;
         }
 
-        // Dernier segment = colonne, reste = relations imbriquées
         $field     = array_pop($parts);
-        $this->applyNestedWhereHas($builder, $parts, $field, $operator, $value);
+        $relations = $parts;
+        $method    = $isOr ? 'orWhereHas' : 'whereHas';
+
+        $this->applyNestedWhereHas($builder, $relations, $field, $operator, $value, $method);
     }
 
     protected function applyNestedWhereHas(
@@ -106,11 +135,12 @@ class QueryResolver
         array   $relations,
         string  $field,
         string  $operator,
-        mixed   $value
+        mixed   $value,
+        string  $method = 'whereHas'
     ): void {
         $relation = array_shift($relations);
 
-        $builder->whereHas($relation, function (Builder $q) use ($relations, $field, $operator, $value) {
+        $builder->$method($relation, function (Builder $q) use ($relations, $field, $operator, $value) {
             if (empty($relations)) {
                 $this->applyWhereOnBuilder($q, $field, $operator, $value);
             } else {
@@ -119,8 +149,13 @@ class QueryResolver
         });
     }
 
-    protected function applyWhereOnBuilder(Builder $builder, string $field, string $operator, mixed $value): void
-    {
+    protected function applyWhereOnBuilder(
+        Builder $builder,
+        string  $field,
+        string  $operator,
+        mixed   $value,
+        bool    $isOr = false
+    ): void {
         $table = $builder->getModel()->getTable();
         abort_if(
             ! Schema::hasColumn($table, $field),
@@ -128,11 +163,19 @@ class QueryResolver
             "Colonne inconnue : [{$field}] dans [{$table}]"
         );
 
-        match ($operator) {
-            'in'     => $builder->whereIn($field, (array) $value),
-            'not in' => $builder->whereNotIn($field, (array) $value),
-            default  => $builder->where($field, $operator, $value),
-        };
+        if ($isOr) {
+            match ($operator) {
+                'in'     => $builder->orWhereIn($field, (array) $value),
+                'not in' => $builder->orWhereNotIn($field, (array) $value),
+                default  => $builder->orWhere($field, $operator, $value),
+            };
+        } else {
+            match ($operator) {
+                'in'     => $builder->whereIn($field, (array) $value),
+                'not in' => $builder->whereNotIn($field, (array) $value),
+                default  => $builder->where($field, $operator, $value),
+            };
+        }
     }
 
     // ─────────────────────────────────────────────────────────────

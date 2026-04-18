@@ -34,6 +34,8 @@ export default defineConfig({
                 // Maps
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',
+                // Parser
+                'resources/js/sql-parser.js',
             ],
             refresh: true,
         }),

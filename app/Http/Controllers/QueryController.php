@@ -7,6 +7,7 @@ use App\Http\Requests\StoreSavedQueryRequest;
 use App\Http\Requests\UpdateSavedQueryRequest;
 use App\Models\SavedQuery;
 use App\Services\QueryEngine\GraphResult;
+use App\Services\QueryEngine\QueryDslValidator;
 use App\Services\QueryEngine\QueryEngineIntrospector;
 use App\Services\QueryEngine\QueryResolver;
 use Gate;
@@ -77,7 +78,7 @@ class QueryController extends Controller
     {
         $this->authorizeOwner($query);
 
-        return view('queries.edit', compact('query'));
+        return view('queries.form', compact('query'));
     }
 
     /**
@@ -134,22 +135,7 @@ class QueryController extends Controller
      */
     public function execute(Request $request): JsonResponse
     {
-        $dsl = $request->validate([
-            'from'               => 'required|string|alpha_dash',
-            'select'             => 'nullable|array',
-            'select.*'           => ['string', 'regex:/^[a-zA-Z0-9_]+$/'],
-            'fields'             => 'nullable|array',
-            'fields.*'           => ['string', 'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
-            'filters'            => 'nullable|array',
-            'filters.*.field'    => ['required', 'string', 'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
-            'filters.*.operator' => 'required|string|in:=,!=,<,>,<=,>=,like,in,not in',
-            'filters.*.value'    => 'required',
-            'traverse'           => 'nullable|array',
-            'traverse.*'         => ['string', 'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
-            'depth'              => 'nullable|integer|min:1|max:5',
-            'output'             => 'nullable|string|in:graph,list',
-            'limit'              => 'nullable|integer|min:1|max:1000',
-        ]);
+        $dsl = QueryDslValidator::validate($request->all());
 
         $result = $this->resolver->execute($dsl);
 

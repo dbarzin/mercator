@@ -6,7 +6,10 @@
 
 <div class="card">
     <div class="card-header">
-        @lang('Query Engine') — {{ $query->name }}
+        @lang('Query Engine')
+        @isset($query)
+            — {{ $query->name }}
+        @endisset
     </div>
     <div class="card-body">
 
@@ -44,16 +47,14 @@
 
                     {{-- Toggle éditeur --}}
                     <button class="btn btn-sm btn-outline-secondary" id="btn-toggle-editor"
-                            title="@lang('Afficher/masquer l\'éditeur JSON')">
-                        <i class="fas fa-code"></i>
-                        Editeur
+                            title="@lang('Afficher/masquer l\'éditeur')">
+                        <i class="fas fa-code"></i> @lang('Éditeur')
                     </button>
 
                     {{-- Formater --}}
                     <button class="btn btn-sm btn-outline-secondary" id="btn-format"
-                            title="@lang('Formater le JSON')">
-                        <i class="fas fa-indent"></i>
-                        Format
+                            title="@lang('Formater la requête')">
+                        <i class="fas fa-indent"></i> @lang('Format')
                     </button>
 
                     {{-- Exécuter --}}
@@ -62,28 +63,36 @@
                     </button>
                 </div>
 
-                {{-- ── Éditeur JSON ─────────────────────────────────── --}}
+                {{-- ── Éditeur SQL-like ─────────────────────────────── --}}
                 <div id="editor-panel" class="border-bottom d-none">
                     <textarea id="query-editor"
                               class="form-control font-monospace border-0 rounded-0"
-                              rows="6"
-                              style="font-size: 0.82rem; resize: vertical;"
+                              rows="8"
+                              style="font-size: 0.85rem; resize: vertical;"
                               spellcheck="false"
-                              placeholder='{"from": "LogicalServer", "filters": [], "traverse": ["applications"], "depth": 2, "output": "list"}'
-                    >@isset($query){{ json_encode($query->query, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}@endisset</textarea>
+                              placeholder="FROM LogicalServer
+WHERE environment = &quot;production&quot;
+AND (os LIKE &quot;%Linux%&quot; OR os LIKE &quot;%Windows%&quot;)
+WITH applications
+DEPTH 2
+OUTPUT graph
+LIMIT 100"
+                    ></textarea>
+                    {{-- Erreur de parsing --}}
+                    <div id="parse-error" class="d-none px-3 py-1 bg-danger text-white small"></div>
                 </div>
 
                 {{-- ── Zone de résultat ────────────────────────────── --}}
                 <div class="flex-grow-1 position-relative overflow-hidden">
 
-                    <div id="result-placeholder" class="d-flex align-items-center justify-content-center h-100 text-muted">
+                    <div id="result-placeholder" class="d-flex align-items-center justify-content-center h-100 text-muted" style="min-height:200px;">
                         <div class="text-center">
                             <i class="fas fa-search fa-3x mb-3 opacity-25"></i>
-                            <p>@lang('Écrivez un DSL et cliquez sur Exécuter.')</p>
+                            <p>@lang('Écrivez une requête et cliquez sur Exécuter.')</p>
                         </div>
                     </div>
 
-                    <div id="result-spinner" class="d-none d-flex align-items-center justify-content-center h-100">
+                    <div id="result-spinner" class="d-none d-flex align-items-center justify-content-center" style="min-height:200px;">
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">@lang('Chargement...')</span>
                         </div>
@@ -93,14 +102,14 @@
                         <div class="alert alert-danger mb-0" id="result-error-msg"></div>
                     </div>
 
-                    <div id="result-list" class="d-none h-100 overflow-auto p-2">
+                    <div id="result-list" class="d-none overflow-auto p-2">
                         <table id="result-datatable" class="table table-sm table-hover table-striped w-100">
                             <thead></thead>
                             <tbody></tbody>
                         </table>
                     </div>
 
-                    <div id="result-graph" class="d-none h-100 overflow-auto text-center p-2">
+                    <div id="result-graph" class="d-none overflow-auto text-center p-2">
                         <div id="graph-svg-container"></div>
                     </div>
 
@@ -122,25 +131,25 @@
     </div>
 </div>
 
-{{-- ── Boutons d'action ──────────────────────────────────────────── --}}
-<div class="form-group">
-    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.queries.index') }}">
+{{-- ── Boutons d'action ─────────────────────────────────────────── --}}
+<div class="form-group mt-2">
+    <a class="btn btn-default" href="{{ route('admin.queries.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
     @isset($query)
         @if (auth()->id() === $query->user_id)
-            <button class="btn  btn-success" id="btn-save">
-                <i class="fas fa-save"></i> @lang('global.save')
+            <button class="btn btn-success" id="btn-save">
+                <i class="fas fa-save"></i> {{ trans('global.save') }}
             </button>
         @endif
     @else
-        <button class="btn  btn-success" id="btn-save">
-            <i class="fas fa-bookmark"></i> @lang('global.save')
+        <button class="btn btn-success" id="btn-save">
+            <i class="fas fa-bookmark"></i> {{ trans('global.save') }}
         </button>
     @endisset
 </div>
 
-{{-- Formulaire PUT caché pour la sauvegarde de la requête courante --}}
+{{-- Formulaire PUT caché --}}
 @isset($query)
     @if (auth()->id() === $query->user_id)
         <form id="form-save-update"
@@ -155,16 +164,21 @@
         </form>
     @endif
 @endisset
+
 @endsection
 
 @section('scripts')
-@vite(['resources/js/graphviz.js'])
+@vite(['resources/js/graphviz.js', 'resources/js/sql-parser.js'])
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 (function () {
     'use strict';
 
+    const parseSql  = (sql) => window.MercatorQuery.parse(sql);
+    const dslToSql  = (dsl) => window.MercatorQuery.dslToSql(dsl);
+
     const editor       = document.getElementById('query-editor');
+    const parseError   = document.getElementById('parse-error');
     const btnRun       = document.getElementById('btn-run');
     const btnFormat    = document.getElementById('btn-format');
     const btnSave      = document.getElementById('btn-save');
@@ -199,9 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'Site':               '/images/site.png',
         'Building':           '/images/building.png',
         'Bay':                '/images/bay.png',
-        'PhysicalSwitch':     '/images/switch.png',
-        'PhysicalRouter':     '/images/router.png',
-        'PhysicalFirewall':   '/images/firewall.png',
         'StorageDevice':      '/images/storage.png',
         'Workstation':        '/images/workstation.png',
         'Entity':             '/images/entity.png',
@@ -211,24 +222,43 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     function nodeImage(group) { return IMAGE_MAP[group] ?? '/images/object.png'; }
 
+    // ── Parsing et validation ────────────────────────────────────
+
+    function parseDsl() {
+        const sql = editor.value.trim();
+        if (!sql) throw new Error('Requête vide.');
+
+        const dsl = parseSql(sql);
+
+        // Synchroniser output et depth depuis les contrôles
+        const radio = document.querySelector('input[name="output"]:checked');
+        if (radio) dsl.output = radio.value;
+        dsl.depth = parseInt(depthSelect.value) || 2;
+
+        return dsl;
+    }
+
+    function showParseError(msg) {
+        parseError.textContent = msg;
+        parseError.classList.remove('d-none');
+        // Afficher l'éditeur si caché
+        document.getElementById('editor-panel').classList.remove('d-none');
+    }
+
+    function clearParseError() {
+        parseError.classList.add('d-none');
+        parseError.textContent = '';
+    }
+
+    editor.addEventListener('input', clearParseError);
+
     // ── Mode sortie ─────────────────────────────────────────────
     document.querySelectorAll('input[name="output"]').forEach(radio => {
         radio.addEventListener('change', () => {
             depthControl.classList.toggle('d-none', radio.value !== 'graph');
-            syncOutputToEditor();
-            runQuery();
         });
     });
-
-    function syncOutputToEditor() {
-        try {
-            const dsl  = parseDsl();
-            dsl.output = document.querySelector('input[name="output"]:checked')?.value ?? 'list';
-            dsl.depth  = parseInt(depthSelect.value);
-            editor.value = JSON.stringify(dsl, null, 2);
-        } catch (_) {}
-    }
-    depthSelect.addEventListener('change', syncOutputToEditor);
+    depthSelect.addEventListener('change', () => {});
 
     // ── Toggle éditeur ──────────────────────────────────────────
     btnToggle?.addEventListener('click', () => {
@@ -237,8 +267,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ── Formater ────────────────────────────────────────────────
     btnFormat?.addEventListener('click', () => {
-        try { editor.value = JSON.stringify(JSON.parse(editor.value), null, 2); }
-        catch (e) { alert('JSON invalide : ' + e.message); }
+        try {
+            const dsl       = parseSql(editor.value);
+            editor.value    = dslToSql(dsl);
+            clearParseError();
+        } catch (e) {
+            showParseError('Erreur : ' + e.message);
+        }
     });
 
     // ── Sauvegarder ─────────────────────────────────────────────
@@ -248,17 +283,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             @isset($query)
                 @if (auth()->id() === $query->user_id)
-                // Requête existante dont on est propriétaire : PUT silencieux
                 document.getElementById('save-update-query-json').value = JSON.stringify(dsl);
                 document.getElementById('form-save-update').submit();
                 @endif
             @else
-                // Pas de requête chargée : redirection vers le formulaire de création
                 const params = new URLSearchParams({ dsl: JSON.stringify(dsl) });
                 window.location.href = '{!! route('admin.queries.create') !!}?' + params.toString();
             @endisset
 
-        } catch (e) { alert('JSON invalide : ' + e.message); }
+        } catch (e) {
+            showParseError('Erreur : ' + e.message);
+        }
     });
 
     // ── Export SVG ──────────────────────────────────────────────
@@ -266,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         if (!lastSvgContent) return;
         const a = Object.assign(document.createElement('a'), {
-            href: URL.createObjectURL(new Blob([lastSvgContent], { type: 'image/svg+xml' })),
+            href:     URL.createObjectURL(new Blob([lastSvgContent], { type: 'image/svg+xml' })),
             download: 'mercator-query.svg',
         });
         a.click();
@@ -277,8 +312,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function runQuery() {
         let dsl;
-        try { dsl = parseDsl(); }
-        catch (e) { showError('JSON invalide : ' + e.message); return; }
+        try {
+            dsl = parseDsl();
+            clearParseError();
+        } catch (e) {
+            showParseError('Erreur de syntaxe : ' + e.message);
+            return;
+        }
 
         showSpinner();
         setStatus('Exécution en cours…');
@@ -304,7 +344,10 @@ document.addEventListener('DOMContentLoaded', function () {
             setStatus('Terminé');
             setCount(data.meta?.count ?? 0, dsl.output);
 
-        } catch (e) { showError(e.message); setStatus('Erreur'); }
+        } catch (e) {
+            showError(e.message);
+            setStatus('Erreur');
+        }
     }
 
     // ── Rendu liste ─────────────────────────────────────────────
@@ -320,19 +363,30 @@ document.addEventListener('DOMContentLoaded', function () {
             '<tr>' + columns.map(c => `<th>${c}</th>`).join('') + '</tr>';
         table.querySelector('tbody').innerHTML = '';
 
-        datatableInstance = new DataTable(table, {
-            data:     rows,
-            columns:  columns.map(c => ({
+        datatableInstance = $('#result-datatable').DataTable({
+            data:      rows,
+            columns:   columns.map(c => ({
                 title:          c,
                 defaultContent: '',
                 data:           null,
-                render:         (row) => row[c] ?? '',
+                render:         (data, type, row) => row[c] ?? '',
             })),
-            language: window.datatables_lang ?? {},
-            dom:      'Bfrtip',
-            buttons:  ['copy', 'csv', 'excel'],
-            scrollX:  true,
+            order:     [[0, 'asc']],
+            pageLength: 100,
+            buttons: [
+                { extend: 'colvis', className: 'btn-default' },
+                { extend: 'copy',   className: 'btn-default' },
+                { extend: 'csv',    className: 'btn-default' },
+                { extend: 'excel',  className: 'btn-default' },
+            ],
+            layout:  { paging: true },
+            scrollX: true,
         });
+
+        datatableInstance
+            .buttons(0, null)
+            .container()
+            .prependTo(datatableInstance.table().container());
     }
 
     // ── Rendu graphe ─────────────────────────────────────────────
@@ -342,13 +396,17 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         try {
-            const svgStr = window.graphviz.layout(buildDot(nodes, edges), 'svg', 'dot', { images: buildImagesArray(nodes) });
+            const svgStr = window.graphviz.layout(
+                buildDot(nodes, edges), 'svg', 'dot', { images: buildImagesArray(nodes) }
+            );
             lastSvgContent = svgStr;
             hideAll();
             document.getElementById('graph-svg-container').innerHTML = svgStr;
             document.getElementById('result-graph').classList.remove('d-none');
             btnExportSvg.classList.remove('d-none');
-        } catch (e) { showError('Erreur Graphviz : ' + e.message); }
+        } catch (e) {
+            showError('Erreur Graphviz : ' + e.message);
+        }
     }
 
     // ── DOT ──────────────────────────────────────────────────────
@@ -360,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function () {
             '  edge  [color="#666666" arrowsize=0.7]', '',
         ];
         for (const n of nodes)
-            lines.push(`  "${n.id}" [label="${escapeDot(n.label??n.id)}" image="${nodeImage(n.group)}" tooltip="${escapeDot(n.label??n.id)}" URL="${n.data?.url??''}"]`);
+            lines.push(`  "${n.id}" [label="${esc(n.label??n.id)}" image="${nodeImage(n.group)}" tooltip="${esc(n.label??n.id)}" URL="${n.data?.url??''}"]`);
         lines.push('');
         for (const e of edges) lines.push(`  "${e.from}" -> "${e.to}"`);
         lines.push('}');
@@ -377,14 +435,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ── Helpers ──────────────────────────────────────────────────
-    function parseDsl() {
-        const dsl = JSON.parse(editor.value);
-        const r   = document.querySelector('input[name="output"]:checked');
-        if (r) dsl.output = r.value;
-        dsl.depth = parseInt(depthSelect.value) || 2;
-        return dsl;
-    }
-    function escapeDot(s) { return String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,' '); }
+    function esc(s) { return String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,' '); }
+
     function showSpinner() { hideAll(); document.getElementById('result-spinner').classList.remove('d-none'); }
     function showError(msg) {
         hideAll();
@@ -400,14 +452,22 @@ document.addEventListener('DOMContentLoaded', function () {
         statusCount.textContent = `${n} ${output === 'graph' ? 'nœud(s)' : 'ligne(s)'}`;
     }
 
-    // ── Pré-sélection au chargement ─────────────────────────────
+    // ── Chargement initial ───────────────────────────────────────
     @isset($query)
     (function () {
-        const output = @json($query->query['output'] ?? 'list');
-        const radio  = document.getElementById('out-' + output);
+        const dsl    = @json($query->query);
+        const output = dsl.output ?? 'list';
+
+        // Afficher en SQL-like
+        editor.value = dslToSql(dsl);
+
+        // Synchroniser les contrôles
+        const radio = document.getElementById('out-' + output);
         if (radio) radio.checked = true;
         depthControl.classList.toggle('d-none', output !== 'graph');
-        depthSelect.value = {!! (int)($query->query['depth'] ?? 2) !!};
+        depthSelect.value = dsl.depth ?? 2;
+
+        // Exécuter immédiatement
         runQuery();
     })();
     @endisset

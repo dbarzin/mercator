@@ -99,8 +99,7 @@
     'id' => '#dataTable',
     'title' => trans("cruds.queries.title_singular"),
     'URL' => route('admin.queries.massDestroy'),
-    // 'canDelete' => auth()->user()->can('queries_delete') ? true : false
-    'canDelete' => true
+    'canDelete' => auth()->user()->can('query_delete')
 ));
 </script>
 @endsection
