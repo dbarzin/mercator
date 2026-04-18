@@ -3,6 +3,7 @@
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\ModuleController;
+use App\Http\Controllers\QueryController;
 use App\Http\Controllers\Report;
 use App\Http\Controllers\Report\AuditController;
 
@@ -443,6 +444,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
         return null;
         // return view('config');
     });
+
+    // ── Queries ───────────────────────────────────────────
+
+    Route::post('/queries/{query}/duplicate', [QueryController::class, 'duplicate'])
+        ->name('queries.duplicate');
+
+    Route::post('/queries/execute', [QueryController::class, 'execute'])
+        ->name('queries.execute');
+
+    Route::get('/queries/schema',   [QueryController::class, 'schema'])
+        ->name('queries.schema');
+
+    Route::get('/queries/schema/{model}', [QueryController::class, 'schemaModel'])
+        ->name('queries.schema.model');
+
+    Route::resource('/queries', QueryController::class);
+
+    Route::delete('queries-modules-destroy', [QueryController::class, 'massDestroy'])->name('queries.massDestroy');
 
     // Modules
     Route::prefix('modules')
