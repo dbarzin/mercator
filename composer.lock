@@ -5660,16 +5660,16 @@
         },
         {
             "name": "sourcentis/mercator-core",
-            "version": "1.74.0",
+            "version": "1.77.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dbarzin/mercator-core.git",
-                "reference": "3988d0a93ba16840bf52d3b0c984be36a9a41255"
+                "reference": "e4215f4e7e5bec141024bc27fd0ac5b60d9de4d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/3988d0a93ba16840bf52d3b0c984be36a9a41255",
-                "reference": "3988d0a93ba16840bf52d3b0c984be36a9a41255",
+                "url": "https://api.github.com/repos/dbarzin/mercator-core/zipball/e4215f4e7e5bec141024bc27fd0ac5b60d9de4d5",
+                "reference": "e4215f4e7e5bec141024bc27fd0ac5b60d9de4d5",
                 "shasum": ""
             },
             "require": {
@@ -5701,9 +5701,9 @@
             "description": "Mercator core services (modules, licensing, menus, domain models).",
             "support": {
                 "issues": "https://github.com/dbarzin/mercator-core/issues",
-                "source": "https://github.com/dbarzin/mercator-core/tree/v1.74.0"
+                "source": "https://github.com/dbarzin/mercator-core/tree/v1.77.0"
             },
-            "time": "2026-04-15T08:07:03+00:00"
+            "time": "2026-04-19T17:36:33+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -11212,11 +11212,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.49",
+            "version": "2.1.50",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d0082955396e7f5ba19cf298224b85e1099f0ed8",
-                "reference": "d0082955396e7f5ba19cf298224b85e1099f0ed8",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d452086fb4cf648c6b2d8cf3b639351f79e4f3e2",
+                "reference": "d452086fb4cf648c6b2d8cf3b639351f79e4f3e2",
                 "shasum": ""
             },
             "require": {
@@ -11261,7 +11261,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-16T21:10:58+00:00"
+            "time": "2026-04-17T13:10:32+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

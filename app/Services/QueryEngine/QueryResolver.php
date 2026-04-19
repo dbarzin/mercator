@@ -389,6 +389,7 @@ class QueryResolver
             'id'    => $nodeId,
             'label' => $item->name ?? $item->getAttribute('label') ?? (string) $item->getKey(),
             'group' => $modelName,
+            'icon'  => $item->getIcon(),
             'data'  => [
                 'id'    => $item->getKey(),
                 'name'  => $item->name ?? '',

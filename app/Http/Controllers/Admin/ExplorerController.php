@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
+use Mercator\Core\Models\AdminUser;
 use Mercator\Core\Models\Annuaire;
 use Mercator\Core\Models\ApplicationBlock;
 use Mercator\Core\Models\ApplicationModule;
@@ -1291,6 +1292,7 @@ class ExplorerController extends Controller
         $this->buildAnnuaires();
         $this->buildForests();
         $this->buildDomains();
+        $this->buildAdminUsers();
     }
 
     private function buildZoneAdmins(): void
@@ -1382,6 +1384,36 @@ class ExplorerController extends Controller
         $this->linkJoinTable('domaine_ad_forest_ad',
             DomaineAd::$prefix, ForestAd::$prefix,
             'domaine_ad_id', 'forest_ad_id');
+    }
+
+    private function buildAdminUsers(): void
+    {
+        $adminUsers = DB::table('admin_users')
+            ->select('id', 'user_id', 'icon_id', 'domain_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($adminUsers as $adminUser) {
+            $this->addNode(
+                4,
+                $this->formatId(AdminUser::$prefix, $adminUser->id),
+                $adminUser->user_id,
+                $this->getIcon($adminUser->icon_id, AdminUser::$icon),
+                'admin-users', 465
+            );
+            if ($adminUser->domain_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(AdminUser::$prefix, $adminUser->id),
+                    $this->formatId(DomaineAd::$prefix, $adminUser->domain_id)
+                );
+            }
+
+
+        }
+
+        $this->linkJoinTable('admin_user_m_application',
+            AdminUser::$prefix, MApplication::$prefix,
+            'admin_user_id', 'm_application_id');
     }
 
     /**
@@ -1490,7 +1522,7 @@ class ExplorerController extends Controller
                 2,
                 $this->formatId(Activity::$prefix, $activity->id),
                 $activity->name,
-                '/images/activity.png',
+                Activity::$icon,
                 'activities', 220
             );
         }
@@ -1560,7 +1592,7 @@ class ExplorerController extends Controller
                 2,
                 $this->formatId(Actor::$prefix, $actor->id),
                 $actor->name,
-                '/images/actor.png',
+                Actor::$icon,
                 'actors', 250
             );
         }

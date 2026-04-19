@@ -181,33 +181,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('graphvizReady', () => { graphvizReady = true; });
 
-    // ── Images par type d'objet ──────────────────────────────────
-    const IMAGE_MAP = {
-        'Application':        '/images/application.png',
-        'ApplicationModule':  '/images/application.png',
-        'ApplicationService': '/images/service.png',
-        'Database':           '/images/database.png',
-        'Flux':               '/images/flux.png',
-        'LogicalServer':      '/images/server.png',
-        'Certificate':        '/images/certificate.png',
-        'Vlan':               '/images/vlan.png',
-        'Network':            '/images/network.png',
-        'NetworkSwitch':      '/images/switch.png',
-        'Router':             '/images/router.png',
-        'Firewall':           '/images/firewall.png',
-        'PhysicalServer':     '/images/physical_server.png',
-        'Site':               '/images/site.png',
-        'Building':           '/images/building.png',
-        'Bay':                '/images/bay.png',
-        'StorageDevice':      '/images/storage.png',
-        'Workstation':        '/images/workstation.png',
-        'Entity':             '/images/entity.png',
-        'Process':            '/images/process.png',
-        'Activity':           '/images/activity.png',
-        'Actor':              '/images/actor.png',
-    };
-    function nodeImage(group) { return IMAGE_MAP[group] ?? '/images/object.png'; }
-
     // ── Parsing et validation ────────────────────────────────────
 
     function parseDsl() {
@@ -391,12 +364,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function buildDot(nodes, edges) {
         const lines = [
             'digraph G {',
-            '  graph [rankdir=LR bgcolor="transparent" fontname="Helvetica"]',
+            '  graph [bgcolor="transparent" fontname="Helvetica"]',
             '  node  [shape=none fontname="Helvetica" fontsize=11 labelloc=b width=1 height=1.1]',
             '  edge  [color="#666666" arrowsize=0.7]', '',
         ];
         for (const n of nodes)
-            lines.push(`  "${n.id}" [label="${esc(n.label??n.id)}" image="${nodeImage(n.group)}" tooltip="${esc(n.label??n.id)}" URL="${n.data?.url??''}"]`);
+            lines.push(`  "${n.id}" [label="${esc(n.label??n.id)}" image="${n.icon}" tooltip="${esc(n.label??n.id)}" URL="${n.data?.url??''}"]`);
         lines.push('');
         for (const e of edges) lines.push(`  "${e.from}" -> "${e.to}"`);
         lines.push('}');
@@ -406,8 +379,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function buildImagesArray(nodes) {
         const seen = new Set(), images = [];
         for (const n of nodes) {
-            const p = nodeImage(n.group);
-            if (!seen.has(p)) { seen.add(p); images.push({ path: p, width: '64px', height: '64px' }); }
+            const icon = n.icon;
+            if (!seen.has(icon)) { seen.add(icon); images.push({ path: icon, width: '64px', height: '64px' }); }
         }
         return images;
     }
