@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGraphRequest;
-use Mercator\Core\Models\Graph;
 use Gate;
 use Illuminate\Http\Request;
+use Mercator\Core\Models\Graph;
 use Symfony\Component\HttpFoundation\Response;
 
 class GraphController extends Controller
@@ -15,11 +15,11 @@ class GraphController extends Controller
     {
         abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $graphs = Graph::orderBy('name')
-            ->where('class','=', 1)
-            ->get();
+        $graphs = Graph::orderBy('name')->where('class', '=', 1)->get();
 
-        return view('admin.graphs.index', compact('graphs'));
+        [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
+
+        return view('admin.graphs.index', compact('graphs', 'nodes'));
     }
 
     public function create()

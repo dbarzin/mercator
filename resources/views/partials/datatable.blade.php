@@ -1,3 +1,12 @@
+@props([
+    'id',
+    'order',
+    'title',
+    'maxPageLength',
+    'canDelete',
+    'hasButtons' => true,
+])
+
 document.addEventListener("DOMContentLoaded", function () {
 
 table = $('{{ $id }}').DataTable({
@@ -46,6 +55,7 @@ table = $('{{ $id }}').DataTable({
             [10, 25, 50, 100, {{ $maxPageLength }}],
         ],
         @endif
+        @if ($hasButtons)
         buttons: [
             {
               extend: 'colvis',
@@ -118,6 +128,7 @@ table = $('{{ $id }}').DataTable({
                 }
             @endif
             ],
+          @endif
         }
     );
     table
