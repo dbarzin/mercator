@@ -22,8 +22,7 @@
             <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th width="10">
-                        </th>
+                        <th width="10"></th>
                         <th>@lang('Nom')</th>
                         <th>@lang('Description')</th>
                         <th>@lang('Entité')</th>
@@ -34,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($queries as $q)
+                    @foreach ($queries as $q)
                     <tr data-entry-id="{{ $q->id }}">
                         <td></td>
                         <td>
@@ -77,14 +76,7 @@
                             </form>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="8" class="text-center text-muted py-4">
-                            @lang('Aucune requête sauvegardée.')
-                            <a href="{{ route('admin.queries.create') }}">@lang('Créer la première ?')</a>
-                        </td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
