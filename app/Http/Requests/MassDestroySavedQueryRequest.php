@@ -6,11 +6,11 @@ use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class MassDestroyApplicationModuleRequest extends FormRequest
+class MassDestroySavedQueryRequest extends FormRequest
 {
     public function authorize() : bool
     {
-        abort_if(Gate::denies('application_module_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('query_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -19,7 +19,7 @@ class MassDestroyApplicationModuleRequest extends FormRequest
     {
         return [
             'ids' => 'required|array',
-            'ids.*' => 'exists:application_modules,id',
+            'ids.*' => 'exists:saved_queries,id',
         ];
     }
 }

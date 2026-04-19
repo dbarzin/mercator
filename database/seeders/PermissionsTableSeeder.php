@@ -333,7 +333,13 @@ class PermissionsTableSeeder extends Seeder
                 ['id' => 316, 'title' => 'backup_edit'],
                 ['id' => 317, 'title' => 'backup_show'],
                 ['id' => 318, 'title' => 'backup_delete'],
-                ['id' => 319, 'title' => 'backup_access']
+                ['id' => 319, 'title' => 'backup_access'],
+                // Queries
+                ['id' => '320', 'title' => 'query_create'],
+                ['id' => '321', 'title' => 'query_edit'],
+                ['id' => '322', 'title' => 'query_show'],
+                ['id' => '323', 'title' => 'query_delete'],
+                ['id' => '324', 'title' => 'query_access']
             ]);
         }
     }
