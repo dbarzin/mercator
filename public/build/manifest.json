@@ -40,7 +40,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DbX3_Ea2.js",
+    "file": "assets/app-Cf5iB4Eb.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -111,6 +111,12 @@
     "imports": [
       "_ModelXmlSerializer-B1iToIRA.js"
     ]
+  },
+  "resources/js/sql-parser.js": {
+    "file": "assets/sql-parser-swLBFhPL.js",
+    "name": "sql-parser",
+    "src": "resources/js/sql-parser.js",
+    "isEntry": true
   },
   "resources/js/vis-network.js": {
     "file": "assets/vis-network-DLTjHDOc.js",
