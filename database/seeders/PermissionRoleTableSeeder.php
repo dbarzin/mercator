@@ -320,6 +320,12 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $adminRoleId, 'permission_id' => 317],
                 ['role_id' => $adminRoleId, 'permission_id' => 318],
                 ['role_id' => $adminRoleId, 'permission_id' => 319],
+                // Queries
+                ['role_id' => $adminRoleId, 'permission_id' => 320],
+                ['role_id' => $adminRoleId, 'permission_id' => 321],
+                ['role_id' => $adminRoleId, 'permission_id' => 322],
+                ['role_id' => $adminRoleId, 'permission_id' => 323],
+                ['role_id' => $adminRoleId, 'permission_id' => 324],
                 ]
             );
 
@@ -616,8 +622,14 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $userRoleId, 'permission_id' => 317],
                 ['role_id' => $userRoleId, 'permission_id' => 318],
                 ['role_id' => $userRoleId, 'permission_id' => 319],
-                ]
-            );
+                // Queries
+                ['role_id' => $userRoleId, 'permission_id' => 320],
+                ['role_id' => $userRoleId, 'permission_id' => 321],
+                ['role_id' => $userRoleId, 'permission_id' => 322],
+                ['role_id' => $userRoleId, 'permission_id' => 323],
+                ['role_id' => $userRoleId, 'permission_id' => 324],
+            ]
+        );
             
             $auditorRoleId = DB::table('roles')
                 ->where('title', 'Auditor')
@@ -746,7 +758,10 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $auditorRoleId, 'permission_id' => 314],
                 // BackupList
                 ['role_id' => $auditorRoleId, 'permission_id' => 317],
-                ['role_id' => $auditorRoleId, 'permission_id' => 319]
+                ['role_id' => $auditorRoleId, 'permission_id' => 319],
+                // Queries
+                ['role_id' => $auditorRoleId, 'permission_id' => 322],
+                ['role_id' => $auditorRoleId, 'permission_id' => 324]
             ]);
 
             $cartographerId = DB::table('roles')
@@ -792,7 +807,10 @@ class PermissionRoleTableSeeder extends Seeder
                 ['role_id' => $cartographerId, 'permission_id' => 314],
                 // BackupList
                 ['role_id' => $cartographerId, 'permission_id' => 317],
-                ['role_id' => $cartographerId, 'permission_id' => 319]
+                ['role_id' => $cartographerId, 'permission_id' => 319],
+                // Queries
+                ['role_id' => $cartographerId, 'permission_id' => 322],
+                ['role_id' => $cartographerId, 'permission_id' => 324]
             ]);
         }
     }
