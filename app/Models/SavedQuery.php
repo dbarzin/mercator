@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SavedQuery extends Model
+final class SavedQuery extends Model
 {
     use HasFactory;
 
@@ -52,7 +52,7 @@ class SavedQuery extends Model
      */
     public function duplicate(): static
     {
-        return new static([
+        return new static()->fill([
             'name'        => $this->name . ' (copie)',
             'description' => $this->description,
             'query'       => $this->query,

@@ -35,9 +35,9 @@ class QueryDslValidator
      */
     public static function validate(array $data): array
     {
-        $instance = new static();
-        return $instance->doValidate($data);
+        return new self()->doValidate($data);
     }
+
 
     protected function doValidate(array $data): array
     {
