@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Factories\MApplicationFactory;
 use App\Traits\Auditable;
+use App\Traits\HasIcon;
+use App\Traits\HasUniqueIdentifier;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasIcon;
-use App\Traits\HasUniqueIdentifier;
 
 class MApplication extends Model
 {
@@ -211,4 +211,13 @@ class MApplication extends Model
     {
         return $this->belongsToMany(SecurityControl::class, 'security_control_m_application')->orderBy('name');
     }
+
+    /** @return BelongsToMany<Certificate, $this> */
+    public function certificates(): BelongsToMany
+    {
+        return $this->belongsToMany(Certificate::class)->orderBy('name');
+    }
+
 }
+
+
