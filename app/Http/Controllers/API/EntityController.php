@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateEntityRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Entity;
+use App\Models\Entity;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityController extends APIController

@@ -8,12 +8,12 @@ use App\Http\Requests\StoreStorageDeviceRequest;
 use App\Http\Requests\UpdateStorageDeviceRequest;
 use Gate;
 use Illuminate\Support\Facades\Auth;
-use Mercator\Core\Models\Backup;
-use Mercator\Core\Models\Bay;
-use Mercator\Core\Models\Building;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\Site;
-use Mercator\Core\Models\StorageDevice;
+use App\Models\Backup;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\LogicalServer;
+use App\Models\Site;
+use App\Models\StorageDevice;
 use Symfony\Component\HttpFoundation\Response;
 
 class StorageDeviceController extends Controller

@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateWifiTerminalRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\WifiTerminal;
+use App\Models\WifiTerminal;
 use Symfony\Component\HttpFoundation\Response;
 
 class WifiTerminalController extends APIController

@@ -9,13 +9,13 @@ use App\Http\Requests\UpdatePhysicalServerRequest;
 use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
-use Mercator\Core\Models\Bay;
-use Mercator\Core\Models\Building;
-use Mercator\Core\Models\Cluster;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\MApplication;
-use Mercator\Core\Models\PhysicalServer;
-use Mercator\Core\Models\Site;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\Cluster;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
+use App\Models\PhysicalServer;
+use App\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 // Laravel

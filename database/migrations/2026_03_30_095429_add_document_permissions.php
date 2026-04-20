@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\Permission;
-use Mercator\Core\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
 
 return new class extends Migration
 {

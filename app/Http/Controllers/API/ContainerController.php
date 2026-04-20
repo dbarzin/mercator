@@ -9,7 +9,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
-use Mercator\Core\Models\Container;
+use App\Models\Container;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContainerController extends APIController

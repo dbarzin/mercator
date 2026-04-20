@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
-use Mercator\Core\Menus\MenuRegistry;
+use App\Menus\MenuRegistry;
 
 class MenuServiceProvider extends ServiceProvider
 {

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ExcelExportHelper;
 use Carbon\Carbon;
 use Gate;
-use Mercator\Core\Models\Entity;
+use App\Models\Entity;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\HttpFoundation\Response;
 

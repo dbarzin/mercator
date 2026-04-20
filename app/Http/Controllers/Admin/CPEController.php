@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Log;
-use Mercator\Core\Models\CPEProduct;
-use Mercator\Core\Models\CPEVendor;
-use Mercator\Core\Models\CPEVersion;
+use App\Models\CPEProduct;
+use App\Models\CPEVendor;
+use App\Models\CPEVersion;
 
 class CPEController extends Controller
 {

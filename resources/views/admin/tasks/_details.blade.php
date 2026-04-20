@@ -40,7 +40,6 @@
                 @endforeach
             </td>
         </tr>
-        @hasModule('bpmn')
         @if($task->graphs()->count()>0)
         <tr>
             <th>
@@ -71,6 +70,5 @@
             </td>
         </tr>
         @endif
-        @endhasModule
     </tbody>
 </table>

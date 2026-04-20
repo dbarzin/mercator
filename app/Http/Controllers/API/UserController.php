@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\User;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends APIController

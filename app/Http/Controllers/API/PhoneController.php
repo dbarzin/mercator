@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePhoneRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Phone;
+use App\Models\Phone;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends APIController

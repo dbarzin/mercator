@@ -9,17 +9,17 @@ use App\Http\Requests\UpdateLogicalFlowRequest;
 use App\Rules\Cidr;
 use Gate;
 use Illuminate\Support\Collection;
-use Mercator\Core\Models\Cluster;
-use Mercator\Core\Models\LogicalFlow;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\Peripheral;
-use Mercator\Core\Models\PhysicalSecurityDevice;
-use Mercator\Core\Models\PhysicalServer;
-use Mercator\Core\Models\Router;
-use Mercator\Core\Models\SecurityDevice;
-use Mercator\Core\Models\StorageDevice;
-use Mercator\Core\Models\Subnetwork;
-use Mercator\Core\Models\Workstation;
+use App\Models\Cluster;
+use App\Models\LogicalFlow;
+use App\Models\LogicalServer;
+use App\Models\Peripheral;
+use App\Models\PhysicalSecurityDevice;
+use App\Models\PhysicalServer;
+use App\Models\Router;
+use App\Models\SecurityDevice;
+use App\Models\StorageDevice;
+use App\Models\Subnetwork;
+use App\Models\Workstation;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalFlowController extends Controller

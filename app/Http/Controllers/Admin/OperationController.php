@@ -7,11 +7,11 @@ use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
 use Gate;
-use Mercator\Core\Models\Activity;
-use Mercator\Core\Models\Actor;
-use Mercator\Core\Models\Operation;
-use Mercator\Core\Models\Process;
-use Mercator\Core\Models\Task;
+use App\Models\Activity;
+use App\Models\Actor;
+use App\Models\Operation;
+use App\Models\Process;
+use App\Models\Task;
 use Symfony\Component\HttpFoundation\Response;
 
 class OperationController extends Controller

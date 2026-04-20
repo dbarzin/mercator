@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateSiteRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Site;
+use App\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends APIController

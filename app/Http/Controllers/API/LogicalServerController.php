@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateLogicalServerRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\LogicalServer;
+use App\Models\LogicalServer;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerController extends APIController

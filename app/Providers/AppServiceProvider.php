@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use LdapRecord\Container;
-use Mercator\Core\Menus\MenuRegistry;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -70,7 +69,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->instance('mercator.version', $version);
             
             // Get the menu
-            $view->with('menu', app(MenuRegistry::class));
+            // $view->with('menu', app(MenuRegistry::class));
         });
 
         // Rate limiter

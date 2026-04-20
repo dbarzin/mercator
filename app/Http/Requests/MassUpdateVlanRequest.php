@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Mercator\Core\Models\Vlan;
+use App\Models\Vlan;
 
 class MassUpdateVlanRequest extends FormRequest
 {

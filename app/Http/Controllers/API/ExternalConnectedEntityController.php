@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateExternalConnectedEntityRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\ExternalConnectedEntity;
+use App\Models\ExternalConnectedEntity;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExternalConnectedEntityController extends APIController

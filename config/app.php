@@ -232,7 +232,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /* Modules Service Providers */
-        Mercator\Core\Providers\MercatorServiceProvider::class,
+        // Mercator\Core\Providers\MercatorServiceProvider::class,
 
     ],
 

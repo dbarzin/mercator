@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateStorageDeviceRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\StorageDevice;
+use App\Models\StorageDevice;
 use Symfony\Component\HttpFoundation\Response;
 
 class StorageDeviceController extends APIController

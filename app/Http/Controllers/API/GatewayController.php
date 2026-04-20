@@ -10,8 +10,8 @@ use App\Http\Requests\UpdateGatewayRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Gateway;
-use Mercator\Core\Models\Subnetwork;
+use App\Models\Gateway;
+use App\Models\Subnetwork;
 use Symfony\Component\HttpFoundation\Response;
 
 class GatewayController extends APIController

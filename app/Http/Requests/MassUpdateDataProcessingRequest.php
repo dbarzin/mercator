@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Mercator\Core\Models\DataProcessing;
+use App\Models\DataProcessing;
 
 class MassUpdateDataProcessingRequest extends FormRequest
 {

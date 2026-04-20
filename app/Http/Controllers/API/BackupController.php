@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateBackupRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Backup;
+use App\Models\Backup;
 use Symfony\Component\HttpFoundation\Response;
 
 class BackupController extends APIController

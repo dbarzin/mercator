@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateDnsserverRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Dnsserver;
+use App\Models\Dnsserver;
 use Symfony\Component\HttpFoundation\Response;
 
 class DnsserverController extends APIController

@@ -10,8 +10,8 @@ use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Mercator\Core\Models\Building;
-use Mercator\Core\Models\Site;
+use App\Models\Building;
+use App\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller

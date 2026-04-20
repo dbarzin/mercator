@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePhysicalServerRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\PhysicalServer;
+use App\Models\PhysicalServer;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalServerController extends APIController

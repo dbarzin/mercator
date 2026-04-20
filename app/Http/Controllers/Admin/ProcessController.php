@@ -8,12 +8,12 @@ use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
 use App\Services\IconUploadService;
 use Gate;
-use Mercator\Core\Models\Activity;
-use Mercator\Core\Models\Entity;
-use Mercator\Core\Models\Information;
-use Mercator\Core\Models\MacroProcessus;
-use Mercator\Core\Models\MApplication;
-use Mercator\Core\Models\Process;
+use App\Models\Activity;
+use App\Models\Entity;
+use App\Models\Information;
+use App\Models\MacroProcessus;
+use App\Models\MApplication;
+use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Mercator\Core\Models\Lan;
+use App\Models\Lan;
 
 class MassUpdateLanRequest extends FormRequest
 {

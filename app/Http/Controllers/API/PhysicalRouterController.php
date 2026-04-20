@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePhysicalRouterRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\PhysicalRouter;
+use App\Models\PhysicalRouter;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalRouterController extends APIController

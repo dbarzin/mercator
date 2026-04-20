@@ -13,10 +13,10 @@ use Database\Seeders\RolesTableSeeder;
 use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mercator\Core\Models\Application;
-use Mercator\Core\Models\Database as MercatorDatabase;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\MApplication;
+use App\Models\Application;
+use App\Models\Database as MercatorDatabase;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
 

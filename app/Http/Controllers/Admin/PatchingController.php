@@ -7,8 +7,8 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\MApplication;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class PatchingController extends Controller

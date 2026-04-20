@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateSecurityControlRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\SecurityControl;
+use App\Models\SecurityControl;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControlController extends APIController

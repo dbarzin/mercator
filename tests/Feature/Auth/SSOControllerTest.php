@@ -4,8 +4,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Laravel\Socialite\Facades\Socialite;
-use Mercator\Core\Models\Role;
-use Mercator\Core\Models\User;
+use App\Models\Role;
+use App\Models\User;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
 

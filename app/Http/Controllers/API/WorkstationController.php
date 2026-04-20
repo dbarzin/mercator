@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateWorkstationRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Workstation;
+use App\Models\Workstation;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends APIController

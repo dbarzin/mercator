@@ -8,7 +8,7 @@ use ReflectionMethod;
 
 class QueryEngineIntrospector
 {
-    protected const MODEL_NAMESPACE = 'Mercator\\Core\\Models\\';
+    protected const MODEL_NAMESPACE = 'App\\Models\\';
 
     /**
      * Résout la classe d'un modèle à partir de son nom court.
@@ -117,7 +117,7 @@ class QueryEngineIntrospector
     }
     public static function listModels(): array
     {
-        $path   = base_path('vendor/sourcentis/mercator-core/src/Models');
+        $path   = base_path('app/Models');
         $models = [];
 
         foreach (glob("{$path}/*.php") as $file) {

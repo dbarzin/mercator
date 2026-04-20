@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateDatabaseRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Database;
+use App\Models\Database;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends APIController

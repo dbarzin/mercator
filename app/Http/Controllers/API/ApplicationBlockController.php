@@ -10,8 +10,8 @@ use App\Http\Requests\UpdateApplicationBlockRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\ApplicationBlock;
-use Mercator\Core\Models\MApplication;
+use App\Models\ApplicationBlock;
+use App\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationBlockController extends APIController

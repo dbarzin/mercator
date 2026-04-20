@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Mercator\Core\Models\WifiTerminal;
+use App\Models\WifiTerminal;
 
 class MassUpdateWifiTerminalRequest extends FormRequest
 {

@@ -232,7 +232,7 @@ class ImportController extends Controller
 
     private function resolveModelClass($modelName)
     {
-        $modelClass = 'Mercator\\Core\\Models\\'.$modelName;
+        $modelClass = 'App\\Models\\'.$modelName;
 
         \Log::info("Import - {$modelClass}");
 

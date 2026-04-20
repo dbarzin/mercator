@@ -8,7 +8,7 @@ use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\Entity;
+use App\Models\Entity;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
 

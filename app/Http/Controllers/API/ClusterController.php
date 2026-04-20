@@ -11,7 +11,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
-use Mercator\Core\Models\Cluster;
+use App\Models\Cluster;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClusterController extends APIController

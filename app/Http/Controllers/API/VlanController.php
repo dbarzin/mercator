@@ -11,7 +11,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\Vlan;
+use App\Models\Vlan;
 use Symfony\Component\HttpFoundation\Response;
 
 class VlanController extends APIController

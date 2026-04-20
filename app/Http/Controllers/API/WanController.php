@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateWanRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Wan;
+use App\Models\Wan;
 use Symfony\Component\HttpFoundation\Response;
 
 class WanController extends APIController

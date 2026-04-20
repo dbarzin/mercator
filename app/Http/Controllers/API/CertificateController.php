@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateCertificateRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Certificate;
+use App\Models\Certificate;
 use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends APIController

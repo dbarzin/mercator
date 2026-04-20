@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePermissionRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Permission;
+use App\Models\Permission;
 use Symfony\Component\HttpFoundation\Response;
 
 class PermissionController extends APIController

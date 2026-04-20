@@ -3,6 +3,7 @@
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\ModuleController;
+use App\Http\Controllers\BPMNController;
 use App\Http\Controllers\QueryController;
 use App\Http\Controllers\Report;
 use App\Http\Controllers\Report\AuditController;
@@ -445,40 +446,34 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
         // return view('config');
     });
 
-    // ── Queries ───────────────────────────────────────────
+    // BPMN routes
+    Route::get('bpmn', [BPMNController::class, 'index'])->name('bpmn.index');
+    Route::get('bpmn/create', [BPMNController::class, 'create'])->name('bpmn.create');
+    Route::get('bpmn/raw/{id}', [BPMNController::class, 'raw'])->name('bpmn.raw');
+    Route::get('bpmn/edit/{id}', [BPMNController::class, 'edit'])->name('bpmn.edit');
 
-    Route::post('/queries/{query}/duplicate', [QueryController::class, 'duplicate'])
-        ->name('queries.duplicate');
+    // API
+    Route::get('bpmn/objects',[BPMNController::class, 'objects'])->name('bpmn.objects');
+    Route::get('bpmn/information',[BPMNController::class, 'information'])->name('bpmn.information');
+    Route::get('bpmn/actors',[BPMNController::class, 'actors'])->name('bpmn.actors');
+    Route::get('bpmn/process',[BPMNController::class, 'process'])->name('bpmn.process');
 
-    Route::post('/queries/execute', [QueryController::class, 'execute'])
-        ->name('queries.execute');
+    // Show and update a graph
+    Route::put('bpmn/{id}', [BPMNController::class, 'update'])->name('bpmn.update');
+    Route::get('bpmn/{id}', [BPMNController::class, 'show'])->name('bpmn.show');
+    Route::delete('bpmn/destroy/{id}', [BPMNController::class, 'destroy'])->name('bpmn.destroy');
 
-    Route::get('/queries/schema',   [QueryController::class, 'schema'])
-        ->name('queries.schema');
+    // Clone a graph
+    Route::get('bpmn/clone/{id}', [BPMNController::class, 'clone'])->name('bpmn.clone');
 
-    Route::get('/queries/schema/{model}', [QueryController::class, 'schemaModel'])
-        ->name('queries.schema.model');
-
+    // Queries
+    Route::post('/queries/{query}/duplicate', [QueryController::class, 'duplicate'])->name('queries.duplicate');
+    Route::post('/queries/execute', [QueryController::class, 'execute'])->name('queries.execute');
+    Route::get('/queries/schema',   [QueryController::class, 'schema'])->name('queries.schema');
+    Route::get('/queries/schema/{model}', [QueryController::class, 'schemaModel'])->name('queries.schema.model');
     Route::resource('/queries', QueryController::class);
-
     Route::delete('queries-modules-destroy', [QueryController::class, 'massDestroy'])->name('queries.massDestroy');
-
-    // Modules
-    Route::prefix('modules')
-        ->name('modules.')
-        ->middleware('can:module_manage')
-        ->group(function () {
-            Route::get('/', [ModuleController::class, 'index'])->name('index');
-
-            Route::get('/check', [ModuleController::class, 'check'])->name('check');
-
-            Route::post('{name}/install', [ModuleController::class, 'install'])->name('install');
-            Route::post('{name}/enable', [ModuleController::class, 'enable'])->name('enable');
-            Route::post('{name}/disable', [ModuleController::class, 'disable'])->name('disable');
-            Route::delete('{name}/uninstall', [ModuleController::class, 'uninstall'])->name('uninstall');
-        });
-
-
+    
 });
 
 // Profile
