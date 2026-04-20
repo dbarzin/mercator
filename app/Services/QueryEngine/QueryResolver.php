@@ -354,22 +354,41 @@ class QueryResolver
             $this->edges[$parentNodeId . '||' . $nodeId] = ['from' => $parentNodeId, 'to' => $nodeId];
         }
 
-        if (isset($this->visitedNodes[$nodeId])) {
-            return;
+        // Enregistrer le nœud seulement la première fois
+        $alreadyVisited = isset($this->visitedNodes[$nodeId]);
+        if (! $alreadyVisited) {
+            $this->visitedNodes[$nodeId] = true;
+            $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
         }
-        $this->visitedNodes[$nodeId] = true;
-        $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
+
+        // Ne pas return ici même si déjà visité :
+        // un même nœud peut être atteint via un chemin différent qui a encore des enfants à traverser.
 
         if (empty($traverse)) {
             return;
         }
 
+        // Regrouper les chemins traverse par relation de premier niveau
+        // Ex: ['logicalServers', 'logicalServers.applications', 'logicalServers.networks']
+        //  → ['logicalServers' => ['applications', 'networks']]
+        $relationMap = [];
         foreach ($traverse as $traversePath) {
             $parts    = explode('.', $traversePath, 2);
             $relation = $parts[0];
             $subPath  = $parts[1] ?? null;
 
-            if (! method_exists($item, $relation)) continue;
+            if (! isset($relationMap[$relation])) {
+                $relationMap[$relation] = [];
+            }
+            if ($subPath !== null) {
+                $relationMap[$relation][] = $subPath;
+            }
+        }
+
+        foreach ($relationMap as $relation => $subPaths) {
+            if (! method_exists($item, $relation)) {
+                continue;
+            }
 
             try {
                 $related = $item->$relation;
@@ -379,17 +398,18 @@ class QueryResolver
                 if ($related->isEmpty()) continue;
 
                 $relatedModelName = class_basename(get_class($related->first()));
-                $subTraverse      = $subPath ? [$subPath] : [];
 
+                // subPaths contient tous les chemins à continuer pour cette relation
+                // Ex: pour logicalServers → ['applications', 'networks']
                 foreach ($related as $relatedItem) {
-                    $this->traverseNode($relatedItem, $relatedModelName, $subTraverse, $nodeId);
+                    $this->traverseNode($relatedItem, $relatedModelName, $subPaths, $nodeId);
                 }
             } catch (\Throwable) {
                 continue;
             }
         }
     }
-    
+
     protected function buildNode(Model $item, string $nodeId, string $modelName): array
     {
         return [
