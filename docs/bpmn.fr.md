@@ -1,9 +1,8 @@
-# Module BPMN 2.0
+# BPMN 2.0
 
 ## Introduction
 
-Le module BPMN (Business Process Model and Notation) disponible dans la version Enterprise de Mercator
-permet de créer, éditer et visualiser des diagrammes de processus métier selon la norme BPMN 2.0.
+Le module BPMN (Business Process Model and Notation) permet de créer, éditer et visualiser des diagrammes de processus métier selon la norme BPMN 2.0.
 
 Ce module offre une intégration complète avec la cartographie du système d'information, permettant de relier
 les éléments graphiques BPMN aux entités de Mercator.
