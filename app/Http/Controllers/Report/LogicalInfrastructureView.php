@@ -80,14 +80,16 @@ class LogicalInfrastructureView extends Controller
 
             $networks = Network::query()->orderBy('name')->where('id', '=', $network)->get();
 
-            $externalConnectedEntities = ExternalConnectedEntity::where('network_id', '=', $network)
-                ->orderBy('name')->get();
+            $externalConnectedEntities = ExternalConnectedEntity::query()
+                ->where('network_id', '=', $network)
+                ->orderBy('name')
+                ->get();
 
             if ($subnetwork === null) {
                 $subnetworks = Subnetwork::query()->orderBy('name')
                     ->where('network_id', '=', $network)->get();
             } else {
-                $root = Subnetwork::find($subnetwork);
+                $root = Subnetwork::query()->find($subnetwork);
                 if ($root !== null) {
                     $subnetworks = collect();
 

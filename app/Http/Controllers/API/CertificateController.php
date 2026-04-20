@@ -39,6 +39,9 @@ class CertificateController extends APIController
     {
         abort_if(Gate::denies('certificate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $certificate['logical_servers'] = $certificate->logical_servers()->pluck('id');
+        $certificate['applications'] = $certificate->applications()->pluck('id');
+
         return new JsonResource($certificate);
     }
 
@@ -47,8 +50,11 @@ class CertificateController extends APIController
         abort_if(Gate::denies('certificate_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $certificate->update($request->all());
-        $certificate->logical_servers()->sync($request->input('logical_servers', []));
-        $certificate->applications()->sync($request->input('applications', []));
+
+        if ($request->has('logical_servers'))
+            $certificate->logical_servers()->sync($request->input('logical_servers', []));
+        if ($request->has('applications'))
+            $certificate->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
@@ -66,7 +72,7 @@ class CertificateController extends APIController
     {
         abort_if(Gate::denies('certificate_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Certificate::whereIn('id', $request->input('ids', []))->delete();
+        Certificate::query()->whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

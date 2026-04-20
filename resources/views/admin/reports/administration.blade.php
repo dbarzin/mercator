@@ -177,7 +177,7 @@
 @endsection
 
 @section('scripts')
-@vite(['resources/js/d3-viz.js'])
+@vite(['resources/js/graphviz.js'])
 
 <script>
 let dotSrc = `
@@ -213,15 +213,21 @@ D{{$user->domain_id}} -> U{{$user->id}}
 @endcan
 }`;
 
-document.addEventListener('DOMContentLoaded', () => {
-    d3.select("#graph").graphviz()
-        .addImage("/images/zoneadmin.png", "64px", "64px")
-        .addImage("/images/annuaire.png", "64px", "64px")
-        .addImage("/images/ldap.png", "64px", "64px")
-        .addImage("/images/domain.png", "64px", "64px")
-        .addImage("/images/user.png", "64px", "64px")
-        .engine("{{ $engine }}")
-        .renderDot(dotSrc);
+document.addEventListener('graphvizReady', () => {
+    document.getElementById("graph").innerHTML = window.graphviz.layout(
+        dotSrc,
+        "svg",
+        "{{ $engine }}",
+        {
+            images: [
+                { path: "/images/zoneadmin.png", width: "64px", height: "64px" },
+                { path: "/images/annuaire.png",  width: "64px", height: "64px" },
+                { path: "/images/ldap.png",      width: "64px", height: "64px" },
+                { path: "/images/domain.png",    width: "64px", height: "64px" },
+                { path: "/images/user.png",      width: "64px", height: "64px" },
+            ]
+        }
+    );
 });
 </script>
 @parent

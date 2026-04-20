@@ -1,7 +1,5 @@
 # Maturity Levels
 
-🇫🇷 [Lire en français](/mercator/fr/maturity)
-
 Maturity levels represent the completeness percentage of the cartography. It is an indicator of the remaining effort
 required to achieve a complete mapping, in accordance with the recommendations of the
 [ANSSI Information System Mapping Guide](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/).
@@ -113,3 +111,24 @@ The calculation of conformity levels for each mapping object is based on the pre
 | Physical security devices   | 1     | Description, type, site, building                                                              |
 | LANs                        | 1     | Description                                                                                    |
 
+## Security needs
+
+Information security needs are expressed in terms of <span style="color: blue;">confidentiality</span>, <span style="color: blue;">integrity</span>, <span style="color: blue;">availability</span> and <span style="color: blue;">traceability</span>  with the following scale:
+
+### Security Classification (CIDT)
+
+| Classification  | Type | Description |
+|-----------------|:----:|-------------|
+| **Confidentiality** | C | Protects information from **unauthorized access or disclosure**.<br>The goal is to ensure that **only authorized individuals** can view the data.<br><br>**Examples:** passwords, personal data, sensitive documents. |
+| **Integrity** | I | Ensures that information is **accurate, complete, and unaltered**.<br>The goal is to prevent **unauthorized or accidental modification** of data.<br><br>**Examples:** preventing data corruption, blocking unauthorized changes. |
+| **Availability** | D | Ensures that information and services are **accessible whenever needed**.<br>If a system is unavailable, it becomes unusable.<br><br>**Examples:** outages, DDoS attacks, unplanned maintenance. |
+| **Traceability** | T | Ensures the ability to **track who did what, when, and how**.<br>Relies on logging, auditing, and user identification.<br><br>**Examples:** access logs, action history, security audits. |
+
+### Security levels
+| Level |  Description  |                   Color                   |
+|:-----:|:-------------:|:-----------------------------------------:|
+|   0   | Insignificant |                   White                   |
+|   1   |      Low      |  <span style="color:green">Green</span>   |
+|   2   |    Medium     | <span style="color:yellow;">Yellow</span> |
+|   3   |    Strong     | <span style="color:orange">Orange</span>  |
+|   4   |  Very strong  |    <span style="color:red">Red</span>     |

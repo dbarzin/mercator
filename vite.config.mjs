@@ -25,16 +25,17 @@ export default defineConfig({
                 'resources/js/chart-relation.js',
                 'resources/js/chart-patching.js',
                 'resources/js/chart-relation.js',
-                // CPE
-                'resources/js/cpe.js',
                 // Mapping TypeScript and styles
                 'resources/css/mapping.css',
                 // D3 Viz
-                'resources/js/d3-viz.js',
+                // 'resources/js/graphviz.js',
+                'resources/js/graphviz.js',
                 'resources/js/vis-network.js',
                 // Maps
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',
+                // Parser
+                'resources/js/sql-parser.js',
             ],
             refresh: true,
         }),

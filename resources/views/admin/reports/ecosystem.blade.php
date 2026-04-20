@@ -146,13 +146,14 @@
 @endsection
 
 @section('scripts')
-@vite(['resources/js/d3-viz.js'])
+@vite(['resources/js/graphviz.js'])
 <script id="dot-input">
 let dotSrc = `
 digraph  {
+node [shape=none labelloc="b"  width=1 height=1.1]
 @can('entity_show')
     @foreach($entities as $entity)
-    E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $entity->icon_id === null ? '/images/entity.png' : route('admin.documents.show', $entity->icon_id) }}" href="#{{ $entity->getUID() }}"]
+    E{{ $entity->id }} [label="{{ $entity->name }}"  image="{{ $entity->icon_id === null ? '/images/entity.png' : route('admin.documents.show', $entity->icon_id) }}" href="#{{ $entity->getUID() }}"]
     @if (($entity->parentEntity!=null)&&($entities->contains("id",$entity->parentEntity->id)))
     E{{ $entity->parentEntity->id }} -> E{{ $entity->id }}
     @endif
@@ -165,16 +166,25 @@ digraph  {
     @endforEach
 @endcan
 }`;
-document.addEventListener('DOMContentLoaded', () => {
-d3.select("#graph").graphviz()
-    .addImage("/images/entity.png", "64px", "64px")
-    @foreach($entities as $entity)
-    @if ($entity->icon_id!==null)
-    .addImage("{{ route('admin.documents.show', $entity->icon_id) }}", "64px", "64px")
-    @endif
-    @endforeach
-    .engine("{{ $engine }}")
-    .renderDot(dotSrc);
+
+document.addEventListener('graphvizReady', () => {
+    const images = [
+        { path: "/images/entity.png", width: "64px", height: "64px" },
+        @foreach($entities as $entity)
+        @if ($entity->icon_id !== null)
+        { path: "{{ route('admin.documents.show', $entity->icon_id) }}", width: "64px", height: "64px" },
+        @endif
+        @endforeach
+    ];
+
+    document.getElementById("graph").innerHTML = window.graphviz.layout(
+        dotSrc,
+        "svg",
+        "{{ $engine }}",
+        { images: images }
+    );
 });
+
+
 </script>
 @endsection

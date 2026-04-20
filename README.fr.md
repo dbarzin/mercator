@@ -9,11 +9,13 @@
 
 ### Introduction
 
-Dans un paysage numérique de plus en plus complexe et réglementé, les organisations doivent disposer d’une vision claire et actualisée de leur système d'information pour en assurer le pilotage, la conformité et la résilience. **Mercator** est une application web open source puissante, conçue pour répondre à cet objectif en permettant une cartographie structurée et dynamique des systèmes d'information, conformément aux principes énoncés dans le [guide de cartographie du système d'information de l'ANSSI](https://cyber.gouv.fr/publications/cartographie-du-systeme-dinformation).
+À mesure que les systèmes d'information gagnent en complexité, les organisations peinent à maintenir une vision claire et à jour de ce qu'elles possèdent, de la façon dont les composants s'interconnectent et de leurs dépendances mutuelles. Sans cette visibilité, la gestion des risques, la conformité et la réponse aux incidents relèvent davantage de l'intuition que de la maîtrise.
 
-Que vous soyez une entité essentielle ou impliqué dans une démarche plus large de gouvernance IT, Mercator propose une solution évolutive et pragmatique pour visualiser les dépendances, identifier les actifs critiques et appuyer la gestion des risques. Son interface intuitive, son modèle extensible et sa communauté active en font un outil de référence pour construire une compréhension partagée de votre environnement numérique.
+Mercator est une application web Open Source qui répond à ce problème en permettant la cartographie structurée et dynamique de votre système d'information. Il offre aux équipes sécurité, aux architectes et aux responsables informatiques une représentation commune et vivante de leur environnement numérique — des processus métier jusqu'à l'infrastructure physique.
 
-Reconnu pour sa qualité et sa pertinence opérationnelle, Mercator s’impose aujourd’hui comme le meilleur outil open source de cartographie et de gouvernance du système d'information.
+Mercator permet de visualiser les dépendances, d'identifier les actifs critiques, de suivre la conformité et d'alimenter les démarches d'audit et de gestion des risques — depuis une plateforme unique et cohérente. Il s'aligne sur les principaux référentiels et standards, dont le [Guide de cartographie de l'ANSSI](https://cyber.gouv.fr/publications/cartographie-du-systeme-dinformation), NIS2 et l'ISO 27001.
+
+Reconnu pour sa pertinence opérationnelle et adopté par des organisations dans les secteurs de la santé, du secteur public et des infrastructures critiques, Mercator est l'outil Open Source de référence pour la gouvernance des systèmes d'information.
 
 
 📚 [Explorer la Documentation](https://dbarzin.github.io/mercator/) | 🔍 [Voir les Sources de l'Application](https://github.com/dbarzin/mercator/tree/master/app)

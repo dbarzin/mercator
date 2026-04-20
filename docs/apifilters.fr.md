@@ -1,7 +1,5 @@
 # API avancées (filtres)
 
-🇬🇧 [Read in English](/mercator/apifilters)
-
 Ce chapitre vient en complément du chapitre [API](./api.fr.md).
 
 

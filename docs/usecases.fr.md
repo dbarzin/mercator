@@ -1,7 +1,5 @@
 # Cas d'usage
 
-🇬🇧 [Read in English](/mercator/usecases)
-
 Mercator permet d'aider à la mise en place d'un grand nombre de mesures de sécurité recommandées par la norme ISO 27002.
 En suivant les cas d'utilisation décrits ci-dessous, vous pouvez mettre en place un processus de cartographie des
 systèmes d'information solide et efficace qui pourra vous assister dans la gestion des risques de sécurité de l'
@@ -130,3 +128,23 @@ Vous pouvez identifier que l'impact d'un changement a correctement été identif
 
 De plus, vous pouvez vérifier lorsque des changements ont eu lieu, que les éléments de la cartographie impliqués dans ce
 changement ont été documenté au moyen du rapport de [suivi des changements](reports.md).
+
+## Sauvegardes et stratégies de protection des données
+
+La norme **ISO 27002‑8.13** recommande que l’organisation définisse, mette en œuvre et maintienne des **procédures de sauvegarde** afin d’assurer la disponibilité, l’intégrité et la capacité de restauration des informations et des systèmes d’information.
+
+Une stratégie de sauvegarde doit permettre de garantir que les données critiques peuvent être restaurées dans des délais acceptables, que les cycles de rétention sont adaptés aux exigences métier et réglementaires, et que les responsabilités sont clairement établies.
+
+Avec Mercator, il est désormais possible de **documenter pour chaque serveur logique** les **stratégies de sauvegarde implémentées**, incluant :
+- l’infrastructure de stockage utilisée,
+- la fréquence des sauvegardes (quotidienne, hebdomadaire, mensuelle…),
+- le type de sauvegarde (complète, incrémentale…),
+- le cycle de rétention associé.
+
+Cette fonctionnalité permet de disposer d’une vision centralisée et normalisée des mécanismes de sauvegarde appliqués dans le système d’information. Elle facilite également l’identification des serveurs critiques ne disposant pas d’une stratégie de sauvegarde adéquate ou présentant des incohérences entre les environnements.
+
+Vous pouvez vérifier, en parcourant les serveurs logiques et leurs stratégies associées, que :
+- chaque serveur critique dispose d’une stratégie de sauvegarde documentée,
+- les fréquences et cycles de rétention sont conformes aux exigences de l’organisation,
+- les infrastructures de stockage utilisées sont cohérentes avec les besoins de disponibilité et de restauration,
+- il n’existe pas de serveur sans stratégie de sauvegarde ou avec une stratégie obsolète.

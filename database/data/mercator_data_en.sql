@@ -232,7 +232,7 @@ UNLOCK TABLES;
 LOCK TABLES `bays` WRITE;
 /*!40000 ALTER TABLE `bays` DISABLE KEYS */;
 INSERT INTO `bays` (`id`, `name`, `description`, `room_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01','<p>Main rack</p>',12,'2025-06-10 08:46:55','2025-06-10 08:46:55',NULL),
-(2,'R02','<p>Rack Database / Backup</p>',12,'2025-06-11 10:24:04','2025-06-11 10:24:04',NULL),
+(2,'R02','<p>Rack Database / BackupList</p>',12,'2025-06-11 10:24:04','2025-06-11 10:24:04',NULL),
 (3,'R03','<p>Mainframe</p>',12,'2025-06-12 17:57:32','2025-06-12 17:57:32',NULL);
 /*!40000 ALTER TABLE `bays` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1422,7 +1422,7 @@ LOCK TABLES `physical_servers` WRITE;
 INSERT INTO `physical_servers` (`id`, `name`, `type`, `icon_id`, `description`, `vendor`, `product`, `version`, `responsible`, `configuration`, `site_id`, `building_id`, `bay_id`, `physical_switch_id`, `address_ip`, `cpu`, `memory`, `disk`, `disk_used`, `operating_system`, `install_date`, `update_date`, `patching_group`, `paching_frequency`, `next_update`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Mainframe01',NULL,NULL,'<p>Super Server 01</p>',NULL,NULL,NULL,'John','<p>MAC: 123.456.789.065</p>',1,12,3,NULL,'10.10.1.1','12','4','1024','532','AS/300',NULL,NULL,NULL,NULL,NULL,'2025-06-11 10:25:20','2025-06-12 17:57:42',NULL),
 (2,'BigCluster01','HAL',NULL,'<p>Big Cluster Master</p>',NULL,NULL,NULL,'Nestor',NULL,1,12,1,NULL,'10.30.4.5','48','512','1024','304','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,'2025-06-11 12:57:47','2025-06-18 08:33:37',NULL),
 (3,'DataStore','DB',NULL,'<p>The database server</p>',NULL,NULL,NULL,'Paul',NULL,1,12,2,NULL,'10.50.3.1','4','64','3045','2025','DB23',NULL,NULL,NULL,NULL,NULL,'2025-06-11 12:58:58','2025-06-11 12:58:58',NULL),
-(4,'Backup','Storage',NULL,'<p>The backup server</p>',NULL,NULL,NULL,'John',NULL,1,12,2,NULL,'10.10.34.3','4','64','5673','2132','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,'2025-06-11 13:00:19','2025-06-14 18:27:34',NULL),
+(4,'BackupList','Storage',NULL,'<p>The backup server</p>',NULL,NULL,NULL,'John',NULL,1,12,2,NULL,'10.10.34.3','4','64','5673','2132','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,'2025-06-11 13:00:19','2025-06-14 18:27:34',NULL),
 (5,'BigCluster02','HAL',NULL,'<p>Big Cluster Slave</p>',NULL,NULL,NULL,NULL,NULL,1,12,1,NULL,NULL,'48','512','1024','394','OS34','2025-01-01 00:00:00',NULL,NULL,NULL,NULL,'2025-06-12 17:54:40','2025-06-18 08:33:37',NULL);
 /*!40000 ALTER TABLE `physical_servers` ENABLE KEYS */;
 UNLOCK TABLES;

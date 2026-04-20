@@ -232,7 +232,7 @@ UNLOCK TABLES;
 LOCK TABLES `bays` WRITE;
 /*!40000 ALTER TABLE `bays` DISABLE KEYS */;
 INSERT INTO `bays` (`id`, `name`, `description`, `room_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'R01','<p>Rack principal</p>',12,'2025-06-10 08:46:55','2025-06-10 08:46:55',NULL),
-(2,'R02','<p>Rack Database / Backup</p>',12,'2025-06-11 10:24:04','2025-06-11 10:24:04',NULL),
+(2,'R02','<p>Rack Database / BackupList</p>',12,'2025-06-11 10:24:04','2025-06-11 10:24:04',NULL),
 (3,'R03','<p>Mainframe</p>',12,'2025-06-12 17:57:32','2025-06-12 17:57:32',NULL);
 /*!40000 ALTER TABLE `bays` ENABLE KEYS */;
 UNLOCK TABLES;

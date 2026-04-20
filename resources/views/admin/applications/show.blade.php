@@ -627,41 +627,53 @@
             {{ trans('global.back_to_list') }}
         </a>
     </div>
+
+{{-- Modal Événements --}}
+<div class="modal fade" id="eventsModal" tabindex="-1" aria-labelledby="eventsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventsModalLabel">{{ trans('cruds.application.fields.events') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body" id="eventsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
     </div>
+</div>
+
 @endsection
+
 @section('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Variable contenant la liste des évènements affichés sur la popup
-            var swalHtml = @json($application->events);
+            const events = @json($application->events);
 
-            /**
-             * Contruction de la liste des évènements
-             * @returns {string}
-             */
-            function makeHtmlForSwalEvents() {
-                let events = swalHtml;
-                let ret = '<ul>';
+            function renderEvents() {
+                if (!events.length) {
+                    return '<p class="text-muted">{{ trans('cruds.application.fields.events_placeholder') }}</p>';
+                }
+                let ret = '<ul class="list-unstyled">';
                 events.forEach(function (event) {
-                    ret += '<li data-id="' + event.id + '" style="text-align: left; margin-bottom: 20px;">' + event.message + '</br>';
-                    ret += '<span style="font-size: 12px;">Date : ' + moment(event.created_at).format('DD-MM-YYYY') + ' | Utilisateur : ' + event.user.name + '</span>';
+                    ret += `
+                        <li class="mb-3 border-bottom pb-2">
+                            <div>${event.message}</div>
+                            <small class="text-muted">
+                                Date : ${moment(event.created_at).format('DD-MM-YYYY')}
+                                | Utilisateur : ${event.user.name}
+                            </small>
+                        </li>`;
                 });
                 ret += '</ul>';
                 return ret;
             }
 
-            /**
-             * Fire the popup
-             */
-            var titleText = @json(trans('cruds.application.fields.events'));
-            $('.events_list_button').click(function (e) {
-                e.preventDefault()
-                Swal.fire({
-                    title: titleText,
-                    icon: 'info',
-                    html: makeHtmlForSwalEvents(),
-                    showCloseButton: true
-                });
+            $('.events_list_button').on('click', function (e) {
+                e.preventDefault();
+                document.getElementById('eventsModalBody').innerHTML = renderEvents();
+                bootstrap.Modal.getOrCreateInstance(document.getElementById('eventsModal')).show();
             });
         });
     </script>

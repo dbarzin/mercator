@@ -32,6 +32,7 @@ class PhysicalRouterController extends APIController
         $physicalRouter = PhysicalRouter::query()->create($request->all());
 
         $physicalRouter->vlans()->sync($request->input('vlans', []));
+        $physicalRouter->routers()->sync($request->input('routers', []));
 
         return response()->json($physicalRouter, 201);
     }
@@ -39,6 +40,9 @@ class PhysicalRouterController extends APIController
     public function show(PhysicalRouter $physicalRouter)
     {
         abort_if(Gate::denies('physical_router_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $physicalRouter['vlans'] = $physicalRouter->vlans()->pluck('id');
+        $physicalRouter['routers'] = $physicalRouter->routers()->pluck('id');
 
         return new JsonResource($physicalRouter);
     }
@@ -51,6 +55,9 @@ class PhysicalRouterController extends APIController
 
         if ($request->has('vlans')) {
             $physicalRouter->vlans()->sync($request->input('vlans', []));
+        }
+        if ($request->has('routers')) {
+            $physicalRouter->routers()->sync($request->input('routers', []));
         }
 
         return response()->json();

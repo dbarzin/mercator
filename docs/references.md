@@ -1,7 +1,5 @@
 # References
 
-🇫🇷 [Lire en français](/mercator/fr/references)
-
 The references used in this documentation are :
 
 - [Information System Mapping](https://messervices.cyber.gouv.fr/guides/en-mapping-information-system)

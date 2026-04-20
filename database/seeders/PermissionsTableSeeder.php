@@ -322,7 +322,24 @@ class PermissionsTableSeeder extends Seeder
                 ['id' => 306, 'title' => 'tools_access'],
                 ['id' => 307, 'title' => 'explore_access'],
                 ['id' => 308, 'title' => 'reports_access'],
-                ['id' => 309, 'title' => 'module_manage']
+                ['id' => 309, 'title' => 'module_manage'],
+                ['id' => 310, 'title' => 'document_create'],
+                ['id' => 311, 'title' => 'document_edit'],
+                ['id' => 312, 'title' => 'document_show'],
+                ['id' => 313, 'title' => 'document_delete'],
+                ['id' => 314, 'title' => 'document_access'],
+                // BackupList
+                ['id' => 315, 'title' => 'backup_create'],
+                ['id' => 316, 'title' => 'backup_edit'],
+                ['id' => 317, 'title' => 'backup_show'],
+                ['id' => 318, 'title' => 'backup_delete'],
+                ['id' => 319, 'title' => 'backup_access'],
+                // Queries
+                ['id' => '320', 'title' => 'query_create'],
+                ['id' => '321', 'title' => 'query_edit'],
+                ['id' => '322', 'title' => 'query_show'],
+                ['id' => '323', 'title' => 'query_delete'],
+                ['id' => '324', 'title' => 'query_access']
             ]);
         }
     }

@@ -496,9 +496,7 @@
             <div id="submenu9" class="collapse {{ (
             request()->is('admin/users*')||
             request()->is('admin/roles*')||
-            request()->is('admin/cve*')||
             request()->is('admin/config*')||
-            request()->is('admin/documents*')||
             request()->is('admin/audit-logs*')||
             request()->is('admin/history*')
             ) ? 'show' : '' }}">
@@ -517,19 +515,9 @@
                 @endcan
                 @can('configure')
                     <a href="{{ route("admin.config.parameters") }}"
-                       class="ps-4 {{ request()->is('admin/config/parameters*') ? 'active' : '' }}">
+                       class="ps-4 {{ request()->is('admin/config/parameters') ? 'active' : '' }}">
                         <i class="bi bi-wrench-adjustable"></i><span
                                 class="menu-text">{{ trans('cruds.configuration.parameters.title_short') }}</span>
-                    </a>
-                    <a href="{{ route("admin.config.cert") }}"
-                       class="ps-4 {{ request()->is('admin/config/cert*') ? 'active' : '' }}">
-                        <i class="bi bi-shield-lock-fill"></i><span
-                                class="menu-text">{{ trans('cruds.configuration.certificate.title_short') }}</span>
-                    </a>
-                    <a href="{{ route("admin.config.cve") }}"
-                       class="ps-4 {{ request()->is('admin/config/cve*') ? 'active' : '' }}">
-                        <i class="bi bi-bug-fill"></i><span
-                                class="menu-text">{{ trans('cruds.configuration.cve.title_short') }}</span>
                     </a>
                     <a href="{{ route("admin.config.import") }}"
                        class="ps-4 {{ request()->is('admin/config/import') ? 'active' : '' }}">
@@ -537,11 +525,6 @@
                                 class="menu-text">{{ trans("cruds.configuration.import.title_short") }}</span>
                     </a>
                 @endcan
-                <a href="{{ route("admin.config.documents") }}"
-                   class="ps-4 {{ request()->is('admin/config/documents*') ? 'active' : '' }}">
-                    <i class="bi bi-file-earmark-text-fill"></i><span
-                            class="menu-text">{{ trans('cruds.configuration.documents.title_short') }}</span>
-                </a>
                 @can('audit_log_access')
                     <a href="{{ route("admin.audit-logs.index") }}"
                        class="ps-4 {{ request()->is('admin/audit-logs*') ? 'active' : '' }}">
@@ -571,6 +554,6 @@
         Open Source
     @endif
         <br>
-        Version {{ $appVersion }}
+        Version {{ app('mercator.version') }}
     </div>
 </nav>

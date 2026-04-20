@@ -26,17 +26,17 @@ class UpdateWanRequest extends FormRequest
                     ->ignore($this->route('wan')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],
-            'mans.*' => [
-                'integer',
-            ],
             'mans' => [
                 'array',
             ],
-            'lans.*' => [
-                'integer',
+            'mans.*' => [
+                'integer', 'exists:mans,id'
             ],
             'lans' => [
                 'array',
+            ],
+            'lans.*' => [
+                'integer', 'exists:lans,id'
             ],
         ];
     }

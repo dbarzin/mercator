@@ -579,7 +579,7 @@
 @endsection
 
 @section('scripts')
-    @vite(['resources/js/d3-viz.js'])
+    @vite(['resources/js/graphviz.js'])
     <script>
         let dotSrc = `
 digraph  {
@@ -860,58 +860,64 @@ digraph  {
 @endcan
 }`;
 
-document.addEventListener('DOMContentLoaded', () => {
-    d3.select("#graph").graphviz()
-        .addImage("/images/cloud.png", "64px", "64px")
-        .addImage("/images/network.png", "64px", "64px")
-        .addImage("/images/gateway.png", "64px", "64px")
-        .addImage("/images/entity.png", "64px", "64px")
-        .addImage("/images/lserver.png", "64px", "64px")
-        .addImage("/images/router.png", "64px", "64px")
-        .addImage("/images/switch.png", "64px", "64px")
-        .addImage("/images/cluster.png", "64px", "64px")
-        .addImage("/images/container.png", "64px", "64px")
-        .addImage("/images/certificate.png", "64px", "64px")
-        .addImage("/images/workstation.png", "64px", "64px")
-        .addImage("/images/phone.png", "64px", "64px")
-        .addImage("/images/securitydevice.png", "64px", "64px")
-        .addImage("/images/storagedev.png", "64px", "64px")
-        .addImage("/images/peripheral.png", "64px", "64px")
-        .addImage("/images/wifi.png", "64px", "64px")
-        .addImage("/images/vlan.png", "64px", "64px")
-        @foreach($containers as $container)
-        @if ($container->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $container->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        @foreach($logicalServers as $logicalServer)
-        @if ($logicalServer->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $logicalServer->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        @foreach($securityDevices as $securityDevice)
-        @if ($securityDevice->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $securityDevice->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        @foreach($physicalSecurityDevices as $physicalSecurityDevice)
-        @if ($physicalSecurityDevice->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $physicalSecurityDevice->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        @foreach($peripherals as $peripheral)
-        @if ($peripheral->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        @foreach($workstations as $workstation)
-        @if ($workstation->icon_id!==null)
-        .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
-        @endif
-        @endforeach
-        .engine("{{ $engine }}")
-        .renderDot(dotSrc);
-    });
-</script>
+        document.addEventListener('graphvizReady', () => {
+            document.getElementById("graph").innerHTML = window.graphviz.layout(
+                dotSrc,
+                "svg",
+                "{{ $engine }}",
+                {
+                    images: [
+                        { path: "/images/cloud.png",         width: "64px", height: "64px" },
+                        { path: "/images/network.png",       width: "64px", height: "64px" },
+                        { path: "/images/gateway.png",       width: "64px", height: "64px" },
+                        { path: "/images/entity.png",        width: "64px", height: "64px" },
+                        { path: "/images/lserver.png",       width: "64px", height: "64px" },
+                        { path: "/images/router.png",        width: "64px", height: "64px" },
+                        { path: "/images/switch.png",        width: "64px", height: "64px" },
+                        { path: "/images/cluster.png",       width: "64px", height: "64px" },
+                        { path: "/images/container.png",     width: "64px", height: "64px" },
+                        { path: "/images/certificate.png",   width: "64px", height: "64px" },
+                        { path: "/images/workstation.png",   width: "64px", height: "64px" },
+                        { path: "/images/phone.png",         width: "64px", height: "64px" },
+                        { path: "/images/securitydevice.png",width: "64px", height: "64px" },
+                        { path: "/images/storagedev.png",    width: "64px", height: "64px" },
+                        { path: "/images/peripheral.png",    width: "64px", height: "64px" },
+                        { path: "/images/wifi.png",          width: "64px", height: "64px" },
+                        { path: "/images/vlan.png",          width: "64px", height: "64px" },
+                        @foreach($containers as $container)
+                        @if ($container->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $container->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        @foreach($logicalServers as $logicalServer)
+                        @if ($logicalServer->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $logicalServer->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        @foreach($securityDevices as $securityDevice)
+                        @if ($securityDevice->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $securityDevice->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+                        @if ($physicalSecurityDevice->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $physicalSecurityDevice->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        @foreach($peripherals as $peripheral)
+                        @if ($peripheral->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $peripheral->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                        @foreach($workstations as $workstation)
+                        @if ($workstation->icon_id !== null)
+                        { path: "{{ route('admin.documents.show', $workstation->icon_id) }}", width: "64px", height: "64px" },
+                        @endif
+                        @endforeach
+                    ]
+                }
+            );
+        });
+    </script>
 @parent
 @endsection

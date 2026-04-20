@@ -122,7 +122,8 @@
     'id' => '#dataTable',
     'title' => trans("cruds.entity.title_singular"),
     'URL' => route('admin.entities.massDestroy'),
-    'canDelete' => auth()->user()->can('entity_delete') ? true : false
-));
+    'canDelete' => auth()->user()->can('entity_delete')
+    )
+);
 </script>
 @endsection

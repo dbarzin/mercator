@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mercator\Core\Models\Activity;
 use Mercator\Core\Models\Actor;
+use Mercator\Core\Models\AdminUser;
 use Mercator\Core\Models\Annuaire;
 use Mercator\Core\Models\ApplicationBlock;
 use Mercator\Core\Models\ApplicationModule;
@@ -784,25 +786,34 @@ class ExplorerController extends Controller
     private function buildExternalConnectedEntities(): void
     {
         $entities = DB::table('external_connected_entities')
-            ->select('id', 'name')
+            ->select('id', 'name', 'network_id', 'entity_id')
             ->whereNull('deleted_at')
             ->get();
 
+        // Charge tous les pivots en une seule requête, groupés par entity ID → élimine le N+1
+        $subnetworksByEntity = DB::table('external_connected_entity_subnetwork')
+            ->select('external_connected_entity_id', 'subnetwork_id')
+            ->get()
+            ->groupBy('external_connected_entity_id');
+
         foreach ($entities as $entity) {
-            $this->addNode(
-                5,
-                $this->formatId(ExternalConnectedEntity::$prefix, $entity->id),
-                $entity->name,
-                '/images/entity.png',
-                'external-connected-entities', 540,
-            );
+            $nodeId = $this->formatId(ExternalConnectedEntity::$prefix, $entity->id);
+
+            $this->addNode(5, $nodeId, $entity->name, '/images/entity.png', 'external-connected-entities', 540);
+
+            if ($entity->network_id !== null) {
+                $this->addLinkEdge($nodeId, $this->formatId(Network::$prefix, $entity->network_id));
+            } else {
+                foreach ($subnetworksByEntity->get($entity->id, collect()) as $pivot) {
+                    $this->addLinkEdge($nodeId, $this->formatId(Subnetwork::$prefix, $pivot->subnetwork_id));
+                }
+            }
+
+            if ($entity->entity_id !== null) {
+                $this->addLinkEdge($nodeId, $this->formatId(Entity::$prefix, $entity->entity_id));
+            }
         }
-
-        $this->linkJoinTable('external_connected_entity_subnetwork',
-            ExternalConnectedEntity::$prefix, Subnetwork::$prefix,
-            'external_connected_entity_id', 'subnetwork_id');
     }
-
     private function buildContainers(): void
     {
         $containers = DB::table('containers')
@@ -930,6 +941,12 @@ class ExplorerController extends Controller
             LogicalServer::$prefix, PhysicalServer::$prefix,
             'logical_server_id', 'physical_server_id');
 
+        // Backups
+        if (Auth::user()->can('backup_access'))
+            $this->linkJoinTable('backups',
+                LogicalServer::$prefix, StorageDevice::$prefix,
+                'logical_server_id', 'storage_device_id');
+
     }
 
     private function buildLogicalSecurityDevices(): void
@@ -992,7 +1009,11 @@ class ExplorerController extends Controller
         $this->linkJoinTable('physical_router_router',
             PhysicalRouter::$prefix, Router::$prefix,
             'physical_router_id', 'router_id');
-        
+
+        $this->linkJoinTable('physical_router_vlan',
+            PhysicalRouter::$prefix, Vlan::$prefix,
+            'physical_router_id', 'vlan_id');
+
     }
 
 
@@ -1227,6 +1248,11 @@ class ExplorerController extends Controller
                 'application-modules', 330
             );
         }
+
+        $this->linkJoinTable('application_module_entity',
+            ApplicationModule::$prefix, Entity::$prefix,
+            'application_module_id', 'entity_id');
+
     }
 
     private function buildDatabases(): void
@@ -1266,6 +1292,7 @@ class ExplorerController extends Controller
         $this->buildAnnuaires();
         $this->buildForests();
         $this->buildDomains();
+        $this->buildAdminUsers();
     }
 
     private function buildZoneAdmins(): void
@@ -1357,6 +1384,36 @@ class ExplorerController extends Controller
         $this->linkJoinTable('domaine_ad_forest_ad',
             DomaineAd::$prefix, ForestAd::$prefix,
             'domaine_ad_id', 'forest_ad_id');
+    }
+
+    private function buildAdminUsers(): void
+    {
+        $adminUsers = DB::table('admin_users')
+            ->select('id', 'user_id', 'icon_id', 'domain_id')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($adminUsers as $adminUser) {
+            $this->addNode(
+                4,
+                $this->formatId(AdminUser::$prefix, $adminUser->id),
+                $adminUser->user_id,
+                $this->getIcon($adminUser->icon_id, AdminUser::$icon),
+                'admin-users', 465
+            );
+            if ($adminUser->domain_id !== null) {
+                $this->addLinkEdge(
+                    $this->formatId(AdminUser::$prefix, $adminUser->id),
+                    $this->formatId(DomaineAd::$prefix, $adminUser->domain_id)
+                );
+            }
+
+
+        }
+
+        $this->linkJoinTable('admin_user_m_application',
+            AdminUser::$prefix, MApplication::$prefix,
+            'admin_user_id', 'm_application_id');
     }
 
     /**
@@ -1465,7 +1522,7 @@ class ExplorerController extends Controller
                 2,
                 $this->formatId(Activity::$prefix, $activity->id),
                 $activity->name,
-                '/images/activity.png',
+                Activity::$icon,
                 'activities', 220
             );
         }
@@ -1535,7 +1592,7 @@ class ExplorerController extends Controller
                 2,
                 $this->formatId(Actor::$prefix, $actor->id),
                 $actor->name,
-                '/images/actor.png',
+                Actor::$icon,
                 'actors', 250
             );
         }
@@ -1580,8 +1637,12 @@ class ExplorerController extends Controller
             }
         }
 
-        $this->linkJoinTable('entity_process', Entity::$prefix, Process::$prefix, 'entity_id', 'process_id');
-        $this->linkJoinTable('entity_m_application', Entity::$prefix, MApplication::$prefix, 'entity_id', 'm_application_id');
+        $this->linkJoinTable('entity_process',
+            Entity::$prefix, Process::$prefix,
+            'entity_id', 'process_id');
+        $this->linkJoinTable('entity_m_application',
+            Entity::$prefix, MApplication::$prefix,
+            'entity_id', 'm_application_id');
     }
 
     private function buildRelations(): void

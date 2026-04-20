@@ -22,8 +22,8 @@ Changements prévus en 2026 et plus :
 
 ## Evolutions mineurs
 
-- [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
-- [ ] Améliorer (et revue) la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
+- [x] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
+- [x] Améliorer (et revoir) la documentation de l'API
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 - [ ] Restaurer les objets supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 - [ ] Intégration des données de la cartographie dans syslog

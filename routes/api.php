@@ -220,6 +220,12 @@ Route::middleware(['api.protected'])->group(function () {
     Route::delete('logical-servers/mass-destroy', [API\LogicalServerController::class, 'massDestroy'])->name('logical-servers.mass-destroy');
     Route::resource('logical-servers', API\LogicalServerController::class);
 
+    // Backups
+    Route::post('backups/mass-store', [API\BackupController::class, 'massStore'])->name('backups.mass-store');
+    Route::put('backups/mass-update', [API\BackupController::class, 'massUpdate'])->name('backups.mass-update');
+    Route::delete('backups/mass-destroy', [API\BackupController::class, 'massDestroy'])->name('backups.mass-destroy');
+    Route::resource('backups', API\BackupController::class);
+
     // Logical Flows
     Route::post('logical-flows/mass-store', [API\LogicalFlowController::class, 'massStore'])->name('logical-flows.mass-store');
     Route::put('logical-flows/mass-update', [API\LogicalFlowController::class, 'massUpdate'])->name('logical-flows.mass-update');
@@ -368,5 +374,12 @@ Route::middleware(['api.protected'])->group(function () {
 
     Route::get('report/impacts', [Report\ImpactList::class, 'generateExcel'])->name('report.view.impacts');
     Route::get('report/rto', [Report\RTO::class, 'generateExcel'])->name('report.view.rto');
+
+    // Documents
+    Route::get('documents/{document}/download', [API\DocumentController::class, 'download'])->name('documents.download');
+    Route::post('documents/mass-store', [API\DocumentController::class, 'massStore'])->name('documents.mass-store');
+    Route::put('documents/mass-update', [API\DocumentController::class, 'massUpdate'])->name('documents.mass-update');
+    Route::delete('documents/mass-destroy', [API\DocumentController::class, 'massDestroy'])->name('documents.mass-destroy');
+    Route::resource('documents', API\DocumentController::class);
 
 });

@@ -1,4 +1,4 @@
-import 'bootstrap';
+import * as bootstrap from 'bootstrap';
 /*==================================*/
 import $ from 'jquery';
 import select2 from 'select2';
@@ -27,7 +27,6 @@ import "datatables.net-bs5/css/dataTables.bootstrap5.css"
 //==========================================
 import DynamicSelect from "./DynamicSelect"
 import moment from "moment";
-import Swal from "sweetalert2"
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // DropZone
 import Dropzone from 'dropzone';
@@ -37,6 +36,14 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 DataTable.Buttons.jszip(jszip);
 DataTable.Buttons.pdfMake(pdfmake);
+
+// Translations
+DataTable.defaults.language = DataTable.defaults.language ?? {};
+DataTable.defaults.language.buttons = {
+    colvis: window._lang?.colvis ?? 'Column visibility',
+    copy: window._lang?.copy ?? 'Copy',
+    print: window._lang?.print ?? 'Print',
+};
 
 // Save fonts
 pdfmake.vfs = pdfFonts.vfs ?? pdfFonts.default?.vfs;
@@ -49,7 +56,8 @@ window.$ = window.jQuery = $;
 
 // Permet d'utiliser DynamicSelect dans la Blade
 window.DynamicSelect = DynamicSelect;
-window.Swal = Swal;
+window.bootstrap = bootstrap;
+window.moment = moment;
 window.moment = moment;
 window.DataTable = DataTable;
 window.select2 = select2;

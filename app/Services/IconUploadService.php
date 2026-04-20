@@ -10,7 +10,7 @@ use Mercator\Core\Models\Document;
 class IconUploadService
 {
     /**
-     * @param  Model&HasIcon  $model
+     * @param  Model  $model
      */
     public function handle(FormRequest $request, Model $model): void
     {
@@ -24,11 +24,11 @@ class IconUploadService
             $document->save();
 
             $file->move(storage_path('docs'), strval($document->id));
-            $model->setIconId($document->id);
+            $model->icon_id = $document->id;
         } elseif (preg_match('/^\d+$/', $request->input('iconSelect', ''))) {
-            $model->setIconId((int) $request->input('iconSelect'));
+            $model->icon_id = ((int) $request->input('iconSelect'));
         } else {
-            $model->setIconId(null);
+            $model->icon_id = null;
         }
     }
 }

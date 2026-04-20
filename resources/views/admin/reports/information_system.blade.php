@@ -258,7 +258,7 @@
 @endsection
 
 @section('scripts')
-    @vite(['resources/js/d3-viz.js'])
+    @vite(['resources/js/graphviz.js'])
     <script>
         let dotSrc = `
 digraph  {
@@ -312,17 +312,23 @@ digraph  {
 @endforeach
 }`;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            d3.select("#graph").graphviz()
-                .addImage("/images/macroprocess.png", "64px", "64px")
-                .addImage("/images/process.png", "64px", "64px")
-                .addImage("/images/activity.png", "64px", "64px")
-                .addImage("/images/operation.png", "64px", "64px")
-                .addImage("/images/task.png", "64px", "64px")
-                .addImage("/images/actor.png", "64px", "64px")
-                .addImage("/images/information.png", "64px", "64px")
-                .engine("{{ $engine }}")
-                .renderDot(dotSrc);
+        document.addEventListener('graphvizReady', () => {
+            document.getElementById("graph").innerHTML = window.graphviz.layout(
+                dotSrc,
+                "svg",
+                "{{ $engine }}",
+                {
+                    images: [
+                        { path: "/images/macroprocess.png", width: "64px", height: "64px" },
+                        { path: "/images/process.png",      width: "64px", height: "64px" },
+                        { path: "/images/activity.png",     width: "64px", height: "64px" },
+                        { path: "/images/operation.png",    width: "64px", height: "64px" },
+                        { path: "/images/task.png",         width: "64px", height: "64px" },
+                        { path: "/images/actor.png",        width: "64px", height: "64px" },
+                        { path: "/images/information.png",  width: "64px", height: "64px" },
+                    ]
+                }
+            );
         });
     </script>
     @parent

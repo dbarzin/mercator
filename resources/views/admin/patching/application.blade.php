@@ -125,64 +125,15 @@
             </div>
         </div>
 
-
-    <!------------------------------------------------------------------------------------------------------------->
-    <div class="card-header">
-        Common Platform Enumeration (CPE)
-    </div>
-    <!------------------------------------------------------------------------------------------------------------->
-    <div class="card-body">
-        <div class="row">
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
-                        <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
-                            <option>{{ old('vendor', $application->vendor) }}</option>
-                        </select>
-                        <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
-                    </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="name">{{ trans('cruds.application.fields.product') }}</label>
-                    <select id="product-selector" class="form-control product-selector" name="product">
-                        <option>{{ old('name', $application->product) }}</option>
-                    </select>
-                    @if($errors->has('product'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('product') }}
-                    </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="version">{{ trans('cruds.application.fields.version') }}</label>
-                    <select id="version-selector" class="form-control version-selector" name="version">
-                        <option>{{ old('version', $application->version) }}</option>
-                    </select>
-                    @if($errors->has('version'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('version') }}
-                    </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
-                </div>
-            </div>
-            <div class="col-1">
-                <div class="form-group">
-                    <br>
-                    <button type="button"
-                            class="btn btn-info"
-                            onclick="searchCVE()">
-                        {{ trans('global.search') }}
-                    </button>
-                    <span class="help-block"></span>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!------------------------------------------------------------------------------------------------------------->
+        {{-- Common Platform Enumeration --}}
+        <!------------------------------------------------------------------------------------------------------------->
+        @include('partials.cpe-selector', [
+            'part'    => 'a',
+            'vendor'  => $application->vendor,
+            'product' => $application->product,
+            'version' => $application->version,
+        ])
 
 </div>
 <div class="form-group">
@@ -194,317 +145,196 @@
     </button>
 </div>
 </form>
+
+{{-- Modal Événements --}}
+<div class="modal fade" id="eventsModal" tabindex="-1" aria-labelledby="eventsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventsModalLabel">Évènements</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body" id="eventsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Toast container --}}
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="appToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="appToastBody"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fermer"></button>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    /**
-     * Contruction de la liste des évènements
-     * @returns {string}
-     */
-    function generateEventsList() {
-        let ret = '<ul>';
-        @json($application->events).forEach (function(event) {
-            ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
-            ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
-            ret += '<i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
-            ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY')
-            ret += ' | Utilisateur : '+event.user.name+'</span>';
+    // ----------------------------------------------------------------
+    // Toast Bootstrap
+    // ----------------------------------------------------------------
+    function showToast(message, type = 'success') {
+        const toastEl = document.getElementById('appToast');
+        toastEl.classList.remove('bg-success', 'bg-danger');
+        toastEl.classList.add('bg-' + type);
+        document.getElementById('appToastBody').textContent = message;
+        bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 3000 }).show();
+    }
+
+    // ----------------------------------------------------------------
+    // Événements — construction HTML
+    // ----------------------------------------------------------------
+    let currentEvents = @json($application->events);
+
+    function generateEventsList(events) {
+        if (!events.length) {
+            return '<p class="text-muted">Aucun évènement.</p>';
+        }
+        let ret = '<ul class="list-unstyled">';
+        events.forEach(function (event) {
+            ret += `
+                <li data-id="${event.id}" class="mb-3 border-bottom pb-2 position-relative">
+                    <button class="delete_event btn btn-sm btn-outline-danger position-absolute end-0 top-0" type="button">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                    <div class="pe-5">${event.message}</div>
+                    <small class="text-muted">
+                        Date : ${moment(event.created_at).format('DD-MM-YYYY')}
+                        | Utilisateur : ${event.user.name}
+                    </small>
+                </li>`;
         });
         ret += '</ul>';
         return ret;
     }
 
-    /**
-     * Fire the popup
-     */
-        $('.events_list_button').click(function(e) {
-            e.preventDefault()
-            Swal.fire({
-                title: 'Évènements',
-                // icon: 'info',
-                html: generateEventsList(),
-                didOpen(popup) {
-                    $('.delete_event').on('click', function(e) {
-                        e.preventDefault();
-                        let event_id = $(this).parent().data('id');
-                        var that = $(this);
-                        if (event_id) {
-                            $.ajax({
-                                url: '/admin/application-events/' + event_id,
-                                type: "DELETE",
-                                data: {
-                                    m_application_id: {{ $application->id }},
-                                    _token: "{{ csrf_token() }}"
-                                },
-                                success: (data) => {
-                                    that.parent().remove();
-                                    // Mise à jour des évènements pour la popup
-                                    swalHtml = data.events;
-                                    Swal.fire('Evènement supprimé !', '', 'success');
-                                },
-                                error: () => {
-                                    Swal.fire('Une erreur est survenue', '', 'error');
-                                }
-                            })
-                        }
-                    });
-                }
-            })
+    function bindDeleteEvents() {
+        document.querySelectorAll('#eventsModalBody .delete_event').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const li = this.closest('li');
+                const eventId = li.getAttribute('data-id');
+                if (!eventId) return;
+
+                $.ajax({
+                    url: '/admin/application-events/' + eventId,
+                    type: 'DELETE',
+                    data: {
+                        m_application_id: {{ $application->id }},
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: (data) => {
+                        currentEvents = data.events;
+                        li.remove();
+                        showToast('Évènement supprimé !', 'success');
+                    },
+                    error: () => {
+                        showToast('Une erreur est survenue', 'danger');
+                    }
+                });
+            });
         });
-
-    /**
-     * Send AJAX for adding an event
-     */
-        $('#addEventBtn').on('click', function(e) {
-            e.preventDefault();
-            let app_id = {{ $application->id }};
-            let user_id = {{ auth()->id() }};
-            let message = $('#eventMessage').val();
-            if(message !== '' && user_id && app_id) {
-                $.post("{{ route("admin.application-events.store") }}", {
-                    m_application_id: app_id,
-                    user_id: user_id,
-                    message: message,
-                    _token: "{{ csrf_token() }}"
-                }, "json")
-                .done((data) => {
-                    // Mise à jour des évènements pour la popup
-                    swalHtml = data.events;
-                    Swal.fire('Evènement ajouté !', '', 'success');
-                    $('#eventMessage').val('');
-                })
-                .fail(() => {
-                    Swal.fire('Une erreur est survenue', '', 'error');
-                })
-            }
-        });
-
-
-    // ------------------------------------------------
-    // CPE
-    // ------------------------------------------------
-    $('#vendor-selector').select2({
-      placeholder: 'Start typing to search',
-      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
-      ajax: {
-        url: '/admin/cpe/search/vendors',
-        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
-        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
-        data: function(params) {
-          return {
-            part: "a",
-            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
-          };
-        },
-        processResults: function(data) {
-          return {
-            results: data.map(function(vendor) {
-              return {
-                id: vendor.name,
-                text: vendor.name
-              };
-            })
-          };
-        },
-        cache: true // Active le cache pour optimiser les requêtes
-      },
-      minimumInputLength: 1 // Empêche la requête tant qu'un caractère n'est pas tapé
-    });
-
-    // ------------------------------------------------
-    $('#product-selector').select2({
-      placeholder: 'Start typing to search',
-      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
-      ajax: {
-        url: '/admin/cpe/search/products',
-        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
-        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
-        data: function(params) {
-          return {
-            part: "a",
-            vendor: $("#vendor-selector").val(),
-            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
-          };
-        },
-        processResults: function(data) {
-          return {
-            results: data.map(function(product) {
-              return {
-                id: product.name,
-                text: product.name
-              };
-            })
-          };
-        },
-        cache: true // Active le cache pour optimiser les requêtes
-      },
-      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
-    });
-
-    // ------------------------------------------------
-    $('#version-selector').select2({
-      placeholder: 'Start typing to search',
-      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
-      ajax: {
-        url: '/admin/cpe/search/versions',
-        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
-        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
-        data: function(params) {
-          return {
-            part: "a",
-            vendor: $("#vendor-selector").val(),
-            product: $("#product-selector").val(),
-            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
-          };
-        },
-        processResults: function(data) {
-          return {
-            results: data.map(function(version) {
-              return {
-                id: version.name,
-                text: version.name
-              };
-            })
-          };
-        },
-        cache: true // Active le cache pour optimiser les requêtes
-      },
-      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
-    });
-
-    // ===========
-    // CPE Guesser
-    // ===========
-    function generateCPEList(data) {
-        let ret = '<div style="max-height: 300px; overflow-y: scroll;">';
-        ret += '<table class="table compact">'
-        ret += '<thead><tr><th>Vendor</th><th>Product</th><th></th></tr></thead>';
-        data.forEach (function(element) {
-            ret += '<tr>';
-            ret += '<td>' + element.vendor_name + '</td>';
-            ret += '<td>' + element.product_name +'</td>';
-            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="bi bi-window-plus" style="color:green"></i></a>'
-            ret += '</td>';
-            ret += '</tr>';
-        });
-        ret += '</table></div>';
-        return ret;
     }
 
-    // CPE Guesser window
-    $('#guess').click(function (event) {
-        let name = $("#name").val();
-        console.log(name);
-        $.get("/admin/cpe/search/guess?search="+encodeURIComponent(name))
-        .then((result)=>
-            Swal.fire({
-                title: "Matching",
-                html: generateCPEList(result),
-                didOpen(popup) {
-                    $('.select_cpe').on('click', function(e) {
-                        e.preventDefault();
-                        let vendor = $(this).data('vendor');
-                        $("#vendor-selector").append('<option>'+vendor+'</option>');
-                        $("#vendor-selector").val(vendor);
-                        let product = $(this).data('product');
-                        $("#product-selector").append('<option>'+product+'</option>');
-                        $("#product-selector").val(product);
-                        $("#version-selector").append('<option></option>');
-                        $("#version-selector").val(null);
-                        Swal.close();
-                    })
-                },
-                showConfirmButton: false,
-                showCancelButton: true,
-                customClass: {
-                    container:   {
-                        'max-height': "6em",
-                        'overflow-y': 'scroll',
-                        'width': '100%',
-                    }
-                }
-            }));
-        });
+    $('.events_list_button').on('click', function (e) {
+        e.preventDefault();
+        const modalBody = document.getElementById('eventsModalBody');
+        modalBody.innerHTML = generateEventsList(currentEvents);
+        bindDeleteEvents();
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('eventsModal')).show();
+    });
 
-    // submit the correct button when "enter" key pressed
-        $("form input").keypress(function (e) {
-        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-            $('input[type=submit].default').click();
-            return false;
-        }
-        else {
-            return true;
+    // ----------------------------------------------------------------
+    // Événements — ajout
+    // ----------------------------------------------------------------
+    $('#addEventBtn').on('click', function (e) {
+        e.preventDefault();
+        const app_id  = {{ $application->id }};
+        const user_id = {{ auth()->id() }};
+        const message = $('#eventMessage').val();
+
+        if (message !== '' && user_id && app_id) {
+            $.post("{{ route('admin.application-events.store') }}", {
+                m_application_id: app_id,
+                user_id: user_id,
+                message: message,
+                _token: "{{ csrf_token() }}"
+            }, 'json')
+            .done((data) => {
+                currentEvents = data.events;
+                showToast('Évènement ajouté !', 'success');
+                $('#eventMessage').val('');
+            })
+            .fail(() => {
+                showToast('Une erreur est survenue', 'danger');
+            });
         }
     });
 
-//=============================================================================
-
-    const update_date = document.getElementById('update_date');
+    // ----------------------------------------------------------------
+    // Calcul next_update
+    // ----------------------------------------------------------------
+    const update_date        = document.getElementById('update_date');
     const patching_frequency = document.getElementById('patching_frequency');
-    const next_update = document.getElementById('next_update');
+    const next_update        = document.getElementById('next_update');
 
-    update_date.addEventListener('change', function() {
-       if (patching_frequency.value=="") {
-           next_update.value="";
-       }
-       else {
-        var startDate = moment(update_date.value, 'YYYY-MM-DD');
-        var newDate = startDate.add(patching_frequency.value, 'months');
-        next_update.value = newDate.format('YYYY-MM-DD');
+    update_date.addEventListener('change', function () {
+        if (!patching_frequency.value) {
+            next_update.value = '';
+        } else {
+            next_update.value = moment(update_date.value, 'YYYY-MM-DD')
+                .add(patching_frequency.value, 'months')
+                .format('YYYY-MM-DD');
         }
     });
 
-    $('#clock').click(function (e) {
-        if (patching_frequency.value!="") {
-            var today = moment();
-            update_date.value = today.format('YYYY-MM-DD')
-            var newDate = today.add(patching_frequency.value, 'months');
-            next_update.value = newDate.format('YYYY-MM-DD');
-            }
-        return false;
-        });
-
-    $('#patching_frequency').on('select2:select', function (e) {
-        console.log("patching_frequency changed");
-        if ($('#patching_frequency').val()=="") {
-            $('#next_update').val("");
-        }
-       else {
-        var startDate = moment(update_date.value, 'YYYY-MM-DD');
-        var newDate = startDate.add(patching_frequency.value, 'months');
-        next_update.value = newDate.format('YYYY-MM-DD');
+    $('#clock').on('click', function (e) {
+        e.preventDefault();
+        if (patching_frequency.value) {
+            const today = moment();
+            update_date.value = today.format('YYYY-MM-DD');
+            next_update.value = today.add(patching_frequency.value, 'months').format('YYYY-MM-DD');
         }
     });
 
-
+    $('#patching_frequency').on('select2:select', function () {
+        if (!$('#patching_frequency').val()) {
+            $('#next_update').val('');
+        } else {
+            next_update.value = moment(update_date.value, 'YYYY-MM-DD')
+                .add(patching_frequency.value, 'months')
+                .format('YYYY-MM-DD');
+        }
+    });
 });
 
-    function searchCVE(cpe) {
-        vendor = document.getElementById('vendor-selector').value;
-        product = document.getElementById('product-selector').value;
-        version = document.getElementById('version-selector').value;
-        cpe = 'cpe:2.3:a:' + vendor + ':' + product + ':' + version;
-        console.log(cpe);
+// ----------------------------------------------------------------
+// Recherche CVE
+// ----------------------------------------------------------------
+function searchCVE() {
+    const vendor  = document.getElementById('vendor-selector').value;
+    const product = document.getElementById('product-selector').value;
+    const version = document.getElementById('version-selector').value;
+    const cpe     = 'cpe:2.3:a:' + vendor + ':' + product + ':' + version;
 
-        // Construit dynamiquement un formulaire POST caché
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = "{{ route('admin.cve.search', '') }}/" + encodeURIComponent(cpe);
+    const form  = document.createElement('form');
+    form.method = 'POST';
+    form.action = "{{ route('admin.cve.search', '') }}/" + encodeURIComponent(cpe);
 
-        // CSRF token
-        const token = document.createElement('input');
-        token.type = 'hidden';
-        token.name = '_token';
-        token.value = "{{ csrf_token() }}";
-        form.appendChild(token);
+    const token   = document.createElement('input');
+    token.type    = 'hidden';
+    token.name    = '_token';
+    token.value   = "{{ csrf_token() }}";
+    form.appendChild(token);
 
-        document.body.appendChild(form);
-        form.submit();
-    }
-
+    document.body.appendChild(form);
+    form.submit();
+}
 </script>
 @endsection

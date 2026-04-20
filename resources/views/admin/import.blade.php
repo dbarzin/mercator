@@ -141,6 +141,7 @@
                 ['id' => 'LogicalFlow',             'label' => trans('cruds.logicalFlow.title')],
                 ['id' => 'Vlan',                    'label' => trans('cruds.vlan.title')],
                 ['id' => 'Certificate',             'label' => trans('cruds.certificate.title')],
+                ['id' => 'BackupList',                  'label' => trans('cruds.backup.title')],
             ],
             6 => [ // Infrastructure physique
                 ['id' => 'Site',                   'label' => trans('cruds.site.title')],

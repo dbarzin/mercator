@@ -21,7 +21,7 @@ config/flare.php
 config/ide-helper.php
 config/ignition.php
 config/insights.php
-config/mercator-config.php
+config/mercator.php
 config/passport.php
 config/tinker.php
 config/trustedproxy.php

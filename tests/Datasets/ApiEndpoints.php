@@ -14,6 +14,7 @@ use Mercator\Core\Models\Cluster;
 use Mercator\Core\Models\Container;
 use Mercator\Core\Models\Database;
 use Mercator\Core\Models\DataProcessing;
+use Mercator\Core\Models\Document;
 use Mercator\Core\Models\DomaineAd;
 use Mercator\Core\Models\Entity;
 use Mercator\Core\Models\ExternalConnectedEntity;
@@ -357,6 +358,12 @@ dataset('api_endpoints', [
         [
             'route' => 'physical-links',
             'model' => PhysicalLink::class,
+        ]
+    ],
+    'documents' => [
+        [
+            'route' => 'documents',
+            'model' => Document::class,
         ]
     ],
 ]);

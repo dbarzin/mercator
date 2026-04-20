@@ -60,20 +60,26 @@
                         {{ $information->owner }}
                     </td>
                     <th width="10%">
-                        {{ trans('cruds.information.fields.storage') }}
-                    </th>
-                    <td width="25%">
-                        {{ $information->storage }}
-                    </td>
-                    <th width="10%">
                         {{ trans('cruds.information.fields.administrator') }}
                     </th>
                     <td width="25%">
                         {{ $information->administrator }}
                     </td>
+                    <th width="10%">
+                        {{ trans('cruds.information.fields.storage') }}
+                    </th>
+                    <td width="25%">
+                        {{ $information->storage }}
+                    </td>
                 </tr>
 
                 <tr>
+                    <th>
+                        {{ trans('cruds.information.fields.sensitivity') }}
+                    </th>
+                    <td>
+                        {{ $information->sensitivity }}
+                    </td>
                     <th>
                         {{ trans('cruds.information.fields.security_need') }}
                         @if (config('mercator-config.parameters.security_need_auth'))
@@ -117,12 +123,6 @@
                         @if ($information->security_need_auth==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
                         @if ($information->security_need_auth==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     @endif
-                    </td>
-                    <th>
-                        {{ trans('cruds.information.fields.sensitivity') }}
-                    </th>
-                    <td>
-                        {{ $information->sensitivity }}
                     </td>
                 </tr>
             </tbody>

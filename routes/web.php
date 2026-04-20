@@ -3,6 +3,7 @@
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\ModuleController;
+use App\Http\Controllers\QueryController;
 use App\Http\Controllers\Report;
 use App\Http\Controllers\Report\AuditController;
 
@@ -310,13 +311,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     // Route::put('cve', [Admin\CVEController::class, 'show'])->name('cve.show');
     Route::post('cve/search/{cpe}', [Admin\CVEController::class, 'search'])->name('cve.search');
 
-    // CVE Configuration page
-    Route::get('config/cve', [Admin\ConfigurationController::class, 'getCVEConfig'])->name('config.cve');
-    Route::put('config/cve/save', [Admin\ConfigurationController::class, 'saveCVEConfig'])->name('config.cve.save');
-
-    // Parameters
-    Route::get('config/parameters', [Admin\ConfigurationController::class, 'getParameters'])->name('config.parameters');
-    Route::put('config/parameters/save', [Admin\ConfigurationController::class, 'saveParameters'])->name('config.parameters.save');
+    // Configuration
+    Route::get('config/parameters', [Admin\ConfigurationController::class, 'getParameters'])
+        ->name('config.parameters');
+    Route::put('config/parameters', [Admin\ConfigurationController::class, 'saveConfig']);
 
     // Views
     Route::get('report/gdpr', [Report\GDPRView::class, 'generate'])->name('report.gdpr');
@@ -368,6 +366,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     Route::get('report/applicationsByBlocks', [Report\ApplicationList::class, 'generateExcel'])->name('report.applicationsByBlocks');
     Route::get('report/directory', [Report\Directory::class, 'generateDocx'])->name('report.directory');
     Route::get('report/logicalServers', [Report\LogicalServers::class, 'generateExcel'])->name('report.logicalServers');
+    Route::get('report/backups', [Report\BackupList::class, 'generateExcel'])->name('report.backups');
     Route::get('report/securityNeeds', [Report\SecurityNeeds::class, 'generateExcel'])->name('report.securityNeeds');
     Route::get('report/logicalServerConfigs', [Report\LogicalServerConfigs::class, 'generateExcel'])->name('report.logicalServerConfigs');
     Route::get('report/externalAccess', [Report\ExternalAccess::class, 'generateExcel'])->name('report.externalAccess');
@@ -445,6 +444,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
         return null;
         // return view('config');
     });
+
+    // ── Queries ───────────────────────────────────────────
+
+    Route::post('/queries/{query}/duplicate', [QueryController::class, 'duplicate'])
+        ->name('queries.duplicate');
+
+    Route::post('/queries/execute', [QueryController::class, 'execute'])
+        ->name('queries.execute');
+
+    Route::get('/queries/schema',   [QueryController::class, 'schema'])
+        ->name('queries.schema');
+
+    Route::get('/queries/schema/{model}', [QueryController::class, 'schemaModel'])
+        ->name('queries.schema.model');
+
+    Route::resource('/queries', QueryController::class);
+
+    Route::delete('queries-modules-destroy', [QueryController::class, 'massDestroy'])->name('queries.massDestroy');
 
     // Modules
     Route::prefix('modules')

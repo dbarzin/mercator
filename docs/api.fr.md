@@ -1,7 +1,5 @@
 # API
 
-🇬🇧 [Read in English](/mercator/api)
-
 La cartographie peut être modifiée ou mise à jour via une REST API.
 
 Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer))
@@ -25,17 +23,17 @@ La liste des API se trouve dans le fichier /route/api.php
 
 *Note:* Pour visualiser le datamodel d'une API, cliquer sur son nom.
 
-__Vue du RGPD__
+#### Les points de terminaison du RGPD
 
 - [/api/data-processings](./model.fr.md#registre)
 - [/api/security-controls](./model.fr.md#mesures-de-securite)
 
-__Vues de l'écosystème__
+#### Les points de terminaison de l'écosystème
 
 - [/api/entities](./model.fr.md#entites)
 - [/api/relations](./model.fr.md#relations)
 
-__Vue métier du système d'information__
+#### Les points de terminaison du métier du système d'information
 
 - [/api/macro-processuses](./model.fr.md#macro-processus)
 - [/api/processes](./model.fr.md#processus)
@@ -45,7 +43,7 @@ __Vue métier du système d'information__
 - [/api/actors](./model.fr.md#acteurs)
 - [/api/information](./model.fr.md#information)
 
-__Vue des applications__
+#### Les points de terminaison des applications
 
 - [/api/application-blocks](./model.fr.md#blocs-applicatif)
 - [/api/applications](./model.fr.md#applications)
@@ -54,7 +52,7 @@ __Vue des applications__
 - [/api/databases](./model.fr.md#bases-de-donnees)
 - [/api/fluxes](./model.fr.md#flux)
 
-__Vue de l'administration__
+#### Les points de terminaison de l'administration
 
 - [/api/zone-admins](./model.fr.md#zones-dadministration)
 - [/api/annuaires](./model.fr.md#services-dannuaire-dadministration)
@@ -62,7 +60,7 @@ __Vue de l'administration__
 - [/api/domaine-ads](./model.fr.md#domaines-active-directory-ldap)
 - [/api/admin-users](./model.fr.md#utilisateurs)
 
-__Vue de l'infrastructure logique__
+#### Les points de terminaison de l'infrastructure logique
 
 - [/api/networks](./model.fr.md#reseaux)
 - [/api/subnetworks](./model.fr.md#sous-reseaux)
@@ -75,19 +73,20 @@ __Vue de l'infrastructure logique__
 - [/api/dnsservers *(usage non recommandé)*](./model.fr.md#serveurs-dns)
 - [/api/clusters](./model.fr.md#clusters)
 - [/api/logical-servers](./model.fr.md#serveurs-logiques)
+- [/api/backups](./model.fr.md#plans-de-sauvegarde) ==> lié à logical-servers et storage-devices
 - [/api/logical-flows](./model.fr.md#flux-logiques)
 - [/api/containers](./model.fr.md#conteneurs)
 - [/api/certificates](./model.fr.md#certificats)
 - [/api/vlans](./model.fr.md#vlans)
 
-__Vue de l'infrastructure physique__
+#### Les points de terminaison de l'infrastructure physique
 
 - [/api/sites](./model.fr.md#sites)
 - [/api/buildings](./model.fr.md#batiments-salles)
 - [/api/bays](./model.fr.md#baies)
 - [/api/physical-servers](./model.fr.md#serveurs-physiques)
 - [/api/workstations](./model.fr.md#postes-de-travail)
-- [/api/storage-devices *(usage non recommandé)*](./model.fr.md#infrastructures-de-stockage)
+- [/api/storage-devices](./model.fr.md#infrastructures-de-stockage) (recommandé pour backups)
 - [/api/peripherals](./model.fr.md#peripheriques)
 - [/api/phones](./model.fr.md#telephones)
 - [/api/physical-switches](./model.fr.md#commutateurs-physiques)
@@ -99,8 +98,37 @@ __Vue de l'infrastructure physique__
 - [/api/mans](./model.fr.md#mans)
 - [/api/lans](./model.fr.md#lans)
 
-__Rapport__
+#### Les points de terminaison de la Configuration
 
+- [/api/documents](./model.md#documents)
+
+La particularité de ce point de terminaison est qu'il permet d'ajouter ou de télécharger un document.
+La syntaxe est la suivante:
+##### Exemple d'ajout d'un document dans mercator:
+```bash
+RESPONSE=$(http_call -X POST "$API/api/documents" \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Accept: application/json" \
+    -F "file=@./rapport.pdf")
+
+# Affichage JSON propre (jq décode, mais n'est plus dans $() )
+echo "$RESPONSE" | jq .
+
+DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
+```
+
+##### Exemple de téléchargement d'un document de mercator:
+```bash
+ OUTFILE="./downloaded_${DOC_ID}.pdf"
+    curl -s -X GET "$API/api/documents/$DOC_ID/download" \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Accept: application/octet-stream" \
+        -o "$OUTFILE" \
+        -w "HTTP %{http_code}\n"
+```
+
+
+#### Les rapports
 - /api/report/cartography
 - /api/report/entities
 - /api/report/applicationsByBlocks

@@ -1,7 +1,5 @@
 # Fonctionnalité Exploration
 
-🇬🇧 [Read in English](/mercator/exploration)
-
 L'outil **Exploration** (`Outils → Exploration`) permet de naviguer dynamiquement dans le graphe de relations entre les
 assets. Il révèle les dépendances entre couches : vers le **haut** (abstrait / métier) ou vers le **bas** (concret /
 physique).
