@@ -93,7 +93,7 @@
                                 @endforeach
                             @else
                                 <li><a class="dropdown-item disabled">
-                                    <i class="bi bi-diagram-2"></i>BPMN</a>
+                                    <i class="bi bi-briefcase-fill"></i>BPMN</a>
                                 </li>
                             @endif
 
@@ -110,11 +110,9 @@
                                     <i class="bi bi-diagram-2"></i>{{ trans('panel.menu.dependency') }}</a>
                                 </li>
                             @endcan
-
-
-                            @can('patching_access')
-                                <li><a class="dropdown-item" href="/admin/patching/index">
-                                        <i class="bi bi-tools"></i>{{ trans('panel.menu.patching') }}</a>
+                            @can('query_access')
+                                <li><a class="dropdown-item" href="/admin/queries">
+                                    <i class="bi bi-binoculars-fill"></i>{{ trans('cruds.tools.query.title_short') }}</a>
                                 </li>
                             @endcan
                             @can('reports_access')

@@ -22,13 +22,10 @@
         <th width="10%">
             {{ trans('cruds.logicalServer.fields.attributes') }}
         </th>
-        <td>
+        <td colspan="2">
             @foreach(explode(" ",$logicalServer->attributes) as $attribute)
                 <span class="badge badge-info">{{ $attribute }}</span>
             @endforeach
-        </td>
-        <td width=10%>
-            {{ $logicalServer->active ? "Active" : "" }}
         </td>
     </tr>
     <tr>

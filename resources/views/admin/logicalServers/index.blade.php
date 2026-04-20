@@ -57,9 +57,7 @@
                     <tbody>
                     @foreach($logicalServers as $key => $logicalServer)
                         <tr data-entry-id="{{ $logicalServer->id }}"
-                            @if ($logicalServer->active!=1)
-                                class="table-secondary"
-                            @elseif (
+                            @if (
                             ($logicalServer->description==null)||
                             ($logicalServer->operating_system==null)||
                             ($logicalServer->environment==null)||

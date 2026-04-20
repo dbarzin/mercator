@@ -51,7 +51,7 @@
                             <span class="help-block">{{ trans('cruds.logicalServer.fields.type_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <label for="attributes">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
                             <select class="form-control select2-free-tags {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
@@ -68,16 +68,6 @@
                             <span class="help-block">{{ trans('cruds.logicalServer.fields.attributes_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-sm-1">
-                        <div class="form-check">
-                            <label for="crypted">{{ trans('cruds.logicalServer.fields.active') }}</label>
-                            <div class="form-switch">
-                                <input class="form-check-input" type="checkbox" id="active"
-                                       name="active" {{ $logicalServer->active ? "checked" : "" }}>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <!----------------------------------------------------------------------->
                 <div class="row">
