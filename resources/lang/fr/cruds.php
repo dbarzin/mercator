@@ -785,6 +785,7 @@ return [
         'title_singular' => 'Passerelle d’entrée depuis l’extérieur',
     ],
     'graph' => [
+        'index' => 'Liste des cartes',
         'description' => 'Dessin de la cartographie du système d\'information',
         'fields' => [
             'name' => 'Nom',

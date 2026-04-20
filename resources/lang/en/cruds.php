@@ -771,6 +771,7 @@ return [
         'title_singular' => 'Entrance gateway from the outside',
     ],
     'graph' => [
+        'index' => 'List of cards',
         'description' => 'Dessin de la cartographie du système d\'information',
         'fields' => [
             'name' => 'Name',

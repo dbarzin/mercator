@@ -3,7 +3,6 @@
 namespace App\Services\QueryEngine;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\Schema;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -36,7 +35,7 @@ class QueryEngineIntrospector
 
     /**
      * Décrit un modèle : colonnes + relations.
-     * Utilisé par le endpoint /queries/schema/{model}.
+     * Utilisé par le endpoint /query-engine/schema/{model}.
      */
     public static function describe(string $modelName): array
     {
@@ -46,7 +45,7 @@ class QueryEngineIntrospector
         return [
             'model'     => $modelName,
             'table'     => $instance->getTable(),
-            'columns'   => Schema::getColumnListing($instance->getTable()),
+            'fields'    => self::getFillable($class),
             'relations' => self::getRelations($class),
         ];
     }
@@ -88,9 +87,34 @@ class QueryEngineIntrospector
     }
 
     /**
-     * Liste tous les modèles concrets disponibles dans mercator-core.
-     * Utilisé par /queries/schema pour alimenter le sélecteur d'entités.
+     * Retourne les champs autorisés d'un modèle :
+     * fillable + id + clés étrangères déclarées dans la table.
      */
+    public static function getFillable(string $class): array
+    {
+        $instance = new $class;
+        $fillable = $instance->getFillable();
+
+        // Toujours autoriser id et les clés primaires
+        return array_unique(array_merge(['id'], $fillable));
+    }
+
+    /**
+     * Vérifie qu'un champ existe dans le fillable du modèle.
+     * Lance une HttpException 422 si invalide.
+     */
+    public static function validateField(string $class, string $field): void
+    {
+        $instance = new $class;
+        $table    = $instance->getTable();
+        $allowed  = self::getFillable($class);
+
+        abort_if(
+            ! in_array($field, $allowed, true),
+            422,
+            "Le champ [{$field}] n'existe pas dans la table [{$table}]."
+        );
+    }
     public static function listModels(): array
     {
         $path   = base_path('vendor/sourcentis/mercator-core/src/Models');

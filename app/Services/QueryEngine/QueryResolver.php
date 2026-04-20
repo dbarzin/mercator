@@ -5,13 +5,11 @@ namespace App\Services\QueryEngine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Schema;
 
 class QueryResolver
 {
-    protected const ALLOWED_OPERATORS = ['=', '!=', '<', '>', '<=', '>=', 'like', 'in', 'not in'];
+    protected const ALLOWED_OPERATORS = ['=', '!=', '<', '>', '<=', '>=', 'like', 'not like', 'in', 'not in'];
 
-    // État de la traversée graphe
     protected array $visitedNodes = [];
     protected array $nodes        = [];
     protected array $edges        = [];
@@ -46,16 +44,9 @@ class QueryResolver
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Résolution des eager loads
+    // Eager loads
     // ─────────────────────────────────────────────────────────────
 
-    /**
-     * Combine traverse et fields pour produire les with() Eloquent.
-     *
-     * traverse: ["logicalServers.applications"]
-     * fields:   ["name", "logicalServers.name", "logicalServers.applications.name"]
-     * → with:   ["logicalServers.applications"]
-     */
     protected function resolveEagerLoads(array $traverse, array $fields): array
     {
         $paths = collect($traverse);
@@ -72,12 +63,12 @@ class QueryResolver
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Filtres — supporte a, a.b, a.b.c
+    // Filtres — supporte a, a.b, a.b.c et groupes
     // ─────────────────────────────────────────────────────────────
 
     protected function applyFilter(Builder $builder, array $filter): void
     {
-        // ── Groupe : { boolean, group: [...] } ───────────────────
+        // Groupe : { boolean, group: [...] }
         if (array_key_exists('group', $filter)) {
             $boolean = strtolower($filter['boolean'] ?? 'and');
 
@@ -99,19 +90,17 @@ class QueryResolver
             return;
         }
 
-        // ── Condition simple ─────────────────────────────────────
+        // Condition simple
         $operator = $filter['operator'] ?? '=';
         $value    = $filter['value'] ?? null;
+        $boolean  = strtolower($filter['boolean'] ?? 'and');
+        $isOr     = $boolean === 'or';
 
         abort_if(
             ! in_array($operator, self::ALLOWED_OPERATORS, true),
             422,
             "Opérateur interdit : [{$operator}]"
         );
-
-        // boolean du filtre (and par défaut, or pour les OR dans les groupes plats)
-        $boolean = strtolower($filter['boolean'] ?? 'and');
-        $isOr    = $boolean === 'or';
 
         $parts = array_map(
             fn ($p) => preg_replace('/[^a-zA-Z0-9_]/', '', $p),
@@ -124,10 +113,8 @@ class QueryResolver
         }
 
         $field     = array_pop($parts);
-        $relations = $parts;
         $method    = $isOr ? 'orWhereHas' : 'whereHas';
-
-        $this->applyNestedWhereHas($builder, $relations, $field, $operator, $value, $method);
+        $this->applyNestedWhereHas($builder, $parts, $field, $operator, $value, $method);
     }
 
     protected function applyNestedWhereHas(
@@ -156,12 +143,8 @@ class QueryResolver
         mixed   $value,
         bool    $isOr = false
     ): void {
-        $table = $builder->getModel()->getTable();
-        abort_if(
-            ! Schema::hasColumn($table, $field),
-            422,
-            "Colonne inconnue : [{$field}] dans [{$table}]"
-        );
+        $modelClass = get_class($builder->getModel());
+        QueryEngineIntrospector::validateField($modelClass, $field);
 
         if ($isOr) {
             match ($operator) {
@@ -179,7 +162,45 @@ class QueryResolver
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Liste — Option A : une ligne par combinaison (produit cartésien)
+    // Normalisation des valeurs
+    // ─────────────────────────────────────────────────────────────
+
+    /**
+     * Normalise une valeur pour la sérialisation JSON.
+     * Les dates Carbon sont converties en chaîne "YYYY-MM-DD".
+     * Les datetimes sont converties en "YYYY-MM-DD HH:MM:SS".
+     */
+    protected function normalizeValue(mixed $value): mixed
+    {
+        // Objet Carbon / CarbonInterface
+        if ($value instanceof \Carbon\CarbonInterface) {
+            return $value->toDateString();
+        }
+        // Tout objet DateTimeInterface
+        if ($value instanceof \DateTimeInterface) {
+            return $value->format('Y-m-d');
+        }
+        // Carbon sérialisé en tableau : ['date' => '2024-01-15 00:00:00.000000', 'timezone' => '...']
+        if (is_array($value) && isset($value['date'])) {
+            return substr($value['date'], 0, 10);
+        }
+        return $value;
+    }
+
+    /**
+     * Retourne tous les attributs d'un modèle normalisés.
+     * Passe par getAttribute() pour déclencher les casts Eloquent,
+     * puis normalise les objets Carbon résultants.
+     */
+    protected function getAttributes(Model $item): array
+    {
+        return collect(array_keys($item->getAttributes()))
+            ->mapWithKeys(fn ($key) => [$key => $this->normalizeValue($item->getAttribute($key))])
+            ->toArray();
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Liste — Option A : une ligne par combinaison
     // ─────────────────────────────────────────────────────────────
 
     protected function buildList(Collection $items, array $dsl): ListResult
@@ -187,8 +208,7 @@ class QueryResolver
         $fields   = $dsl['fields']   ?? [];
         $traverse = $dsl['traverse'] ?? [];
         $select   = $dsl['select']   ?? [];
-
-        $rows = [];
+        $rows     = [];
 
         foreach ($items as $item) {
             if (! empty($fields)) {
@@ -196,12 +216,17 @@ class QueryResolver
                     $rows[] = $row;
                 }
             } else {
-                // Mode legacy : colonnes plates + relations concaténées
-                $row = $select
-                    ? collect($item->toArray())->only($select)->toArray()
-                    : collect($item->toArray())
-                        ->except(['created_at', 'updated_at', 'deleted_at'])
-                        ->toArray();
+                $modelClass = get_class($item);
+                $attrs      = $this->getAttributes($item);
+
+                if ($select) {
+                    foreach ($select as $f) {
+                        QueryEngineIntrospector::validateField($modelClass, $f);
+                    }
+                    $row = collect($attrs)->only($select)->toArray();
+                } else {
+                    $row = collect($attrs)->except(['created_at', 'updated_at', 'deleted_at'])->toArray();
+                }
 
                 foreach ($traverse as $rel) {
                     $firstSegment = explode('.', $rel)[0];
@@ -219,26 +244,16 @@ class QueryResolver
             }
         }
 
-        $columns = array_keys($rows[0] ?? []);
-
-        return new ListResult(rows: collect($rows), columns: $columns);
+        return new ListResult(rows: collect($rows), columns: array_keys($rows[0] ?? []));
     }
 
     /**
-     * Expanse récursivement un objet en N lignes selon la liste de champs.
-     *
-     * fields = ["name", "logicalServers.name", "logicalServers.applications.name"]
-     *
-     * PhysicalServer(srv1)
-     *  → ls1 → app1  ⟹  {name:srv1, logicalServers.name:ls1, logicalServers.applications.name:app1}
-     *  → ls1 → app2  ⟹  {name:srv1, logicalServers.name:ls1, logicalServers.applications.name:app2}
-     *  → ls2 → app3  ⟹  {name:srv1, logicalServers.name:ls2, logicalServers.applications.name:app3}
+     * Expansion récursive d'un objet en N lignes (produit cartésien).
      */
     protected function expandRow(Model $item, array $fields): array
     {
-        // Séparer champs racine et champs de relation
         $rootFields     = [];
-        $relationFields = []; // ['logicalServers' => ['name', 'applications.name']]
+        $relationFields = [];
 
         foreach ($fields as $field) {
             $parts = explode('.', $field, 2);
@@ -249,17 +264,18 @@ class QueryResolver
             }
         }
 
-        // Valeurs des champs racine
-        $rootRow = [];
+        // Champs racine — via getAttribute pour les casts (dates, etc.)
+        $rootRow      = [];
+        $modelClass   = get_class($item);
         foreach ($rootFields as $f) {
-            $rootRow[$f] = $item->getAttribute($f);
+            QueryEngineIntrospector::validateField($modelClass, $f);
+            $rootRow[$f] = $this->normalizeValue($item->getAttribute($f));
         }
 
         if (empty($relationFields)) {
             return [$rootRow];
         }
 
-        // Produit cartésien des relations
         $result = [$rootRow];
 
         foreach ($relationFields as $relation => $subFields) {
@@ -274,7 +290,6 @@ class QueryResolver
                 : collect();
 
             if ($related->isEmpty()) {
-                // Relation vide : garder les lignes avec null
                 foreach ($result as &$row) {
                     foreach ($subFields as $sf) {
                         $row[$relation . '.' . $sf] = null;
@@ -284,11 +299,9 @@ class QueryResolver
                 continue;
             }
 
-            // Expansion : lignes existantes × objets liés
             $newResult = [];
             foreach ($result as $row) {
                 foreach ($related as $relatedItem) {
-                    // Récursion pour les sous-champs (ex: "applications.name")
                     foreach ($this->expandRow($relatedItem, $subFields) as $subRow) {
                         $newRow = $row;
                         foreach ($subRow as $k => $v) {
@@ -305,7 +318,7 @@ class QueryResolver
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Graphe — supporte traverse imbriqué (a.b, a.b.c)
+    // Graphe
     // ─────────────────────────────────────────────────────────────
 
     protected function buildGraph(
@@ -338,8 +351,7 @@ class QueryResolver
         $nodeId = $modelName . '_' . $item->getKey();
 
         if ($parentNodeId !== null && $parentNodeId !== $nodeId) {
-            $edgeKey               = $parentNodeId . '||' . $nodeId;
-            $this->edges[$edgeKey] = ['from' => $parentNodeId, 'to' => $nodeId];
+            $this->edges[$parentNodeId . '||' . $nodeId] = ['from' => $parentNodeId, 'to' => $nodeId];
         }
 
         if (isset($this->visitedNodes[$nodeId])) {
@@ -348,7 +360,6 @@ class QueryResolver
         $this->visitedNodes[$nodeId] = true;
         $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
 
-        // Arrêt : plus de chemins à suivre — la profondeur est portée par WITH
         if (empty($traverse)) {
             return;
         }
@@ -358,9 +369,7 @@ class QueryResolver
             $relation = $parts[0];
             $subPath  = $parts[1] ?? null;
 
-            if (! method_exists($item, $relation)) {
-                continue;
-            }
+            if (! method_exists($item, $relation)) continue;
 
             try {
                 $related = $item->$relation;
@@ -370,9 +379,7 @@ class QueryResolver
                 if ($related->isEmpty()) continue;
 
                 $relatedModelName = class_basename(get_class($related->first()));
-
-                // Continuer uniquement si le chemin a un segment suivant
-                $subTraverse = $subPath ? [$subPath] : [];
+                $subTraverse      = $subPath ? [$subPath] : [];
 
                 foreach ($related as $relatedItem) {
                     $this->traverseNode($relatedItem, $relatedModelName, $subTraverse, $nodeId);
@@ -382,7 +389,7 @@ class QueryResolver
             }
         }
     }
-
+    
     protected function buildNode(Model $item, string $nodeId, string $modelName): array
     {
         return [
