@@ -30,8 +30,7 @@ else
 fi
 
 ### --- 2b. composer update
-composer config --global --unset repositories.mercator-core
-composer config --global --unset repositories.mercator-dummy
+
 composer update
 echo "[✔] composer updated"
 
