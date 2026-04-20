@@ -73,8 +73,9 @@ nav:
   - cartography.md
   - maturity.md
   - bpmn.md
-  - reports.md
+  - queries.md
   - features.md
+  - reports.md
   - usecases.md
   - model.md
   - import.md
