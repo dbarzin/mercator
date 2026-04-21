@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use Gate;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 use App\Models\Certificate;
 use App\Models\Cluster;
 use App\Models\Container;
@@ -27,6 +23,10 @@ use App\Models\Subnetwork;
 use App\Models\Vlan;
 use App\Models\WifiTerminal;
 use App\Models\Workstation;
+use Gate;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalInfrastructureView extends Controller
@@ -306,7 +306,7 @@ class LogicalInfrastructureView extends Controller
                 });
 
             // Get Certificates
-            $certificates = Certificate::query()->with('logical_servers')->orderBy('name')->get()
+            $certificates = Certificate::query()->with('logicalServers')->orderBy('name')->get()
                 ->filter(function ($item) use ($logicalServers) {
                     foreach ($logicalServers as $logical_server) {
                         foreach ($logical_server->certificates as $cert) {

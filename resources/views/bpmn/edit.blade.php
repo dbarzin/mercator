@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-5"  style="border-left:3px solid #ddd; padding-left:68px;">
                         <div class="form-group">
-                            <label class="label-required" for="name">{{ trans('bpmn::content.fields.name') }}</label>
+                            <label class="label-required" for="name">{{ trans('cruds.bpmn.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                                    name="name" id="name" value="{{ old('name', $name) }}" required
                                    maxlength="64"/>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-3 ps-0">
                         <div class="form-group">
-                            <label for="type">{{ trans('bpmn::content.fields.type') }}</label>
+                            <label for="type">{{ trans('cruds.bpmn.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
                                 @if (!$type_list->contains(old('type')))
@@ -183,7 +183,7 @@
 
 @font-face {
     font-family: "bpmn";
-    src: url("/vendor/mercator-bpmn/fonts/bpmn.ttf") format("truetype");
+    src: url("/build/fonts/bpmn.ttf") format("truetype");
     font-display: block;
 }
 
@@ -432,8 +432,7 @@ input[type="file"] {
 @endsection
 
 @section('scripts')
-
-<script type="module" src="{{ asset('vendor/mercator-bpmn/js/bpmn.js') }}"></script>
+@vite('resources/ts/bpmn.ts')
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

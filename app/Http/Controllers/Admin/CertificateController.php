@@ -18,7 +18,7 @@ class CertificateController extends Controller
     {
         abort_if(Gate::denies('certificate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $certificates = Certificate::with('applications', 'logical_servers')->orderBy('name')->get();
+        $certificates = Certificate::with('applications', 'logicalServers')->orderBy('name')->get();
 
         return view('admin.certificates.index', compact('certificates'));
     }
@@ -42,7 +42,7 @@ class CertificateController extends Controller
     public function store(StoreCertificateRequest $request)
     {
         $certificate = Certificate::create($request->all());
-        $certificate->logical_servers()->sync($request->input('logical_servers', []));
+        $certificate->logicalServers()->sync($request->input('logical_servers', []));
         $certificate->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.certificates.index');
@@ -67,7 +67,7 @@ class CertificateController extends Controller
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
     {
         $certificate->update($request->all());
-        $certificate->logical_servers()->sync($request->input('logical_servers', []));
+        $certificate->logicalServers()->sync($request->input('logical_servers', []));
         $certificate->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.certificates.index');

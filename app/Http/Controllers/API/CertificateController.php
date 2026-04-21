@@ -7,10 +7,10 @@ use App\Http\Requests\MassStoreCertificateRequest;
 use App\Http\Requests\MassUpdateCertificateRequest;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
+use App\Models\Certificate;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Certificate;
 use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends APIController
@@ -29,7 +29,7 @@ class CertificateController extends APIController
         abort_if(Gate::denies('certificate_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $certificate = Certificate::create($request->all());
-        $certificate->logical_servers()->sync($request->input('logical_servers', []));
+        $certificate->logicalServers()->sync($request->input('logical_servers', []));
         $certificate->applications()->sync($request->input('applications', []));
 
         return response()->json($certificate, 201);
@@ -39,7 +39,7 @@ class CertificateController extends APIController
     {
         abort_if(Gate::denies('certificate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $certificate['logical_servers'] = $certificate->logical_servers()->pluck('id');
+        $certificate['logical_servers'] = $certificate->logicalServers()->pluck('id');
         $certificate['applications'] = $certificate->applications()->pluck('id');
 
         return new JsonResource($certificate);
@@ -52,7 +52,7 @@ class CertificateController extends APIController
         $certificate->update($request->all());
 
         if ($request->has('logical_servers'))
-            $certificate->logical_servers()->sync($request->input('logical_servers', []));
+            $certificate->logicalServers()->sync($request->input('logical_servers', []));
         if ($request->has('applications'))
             $certificate->applications()->sync($request->input('applications', []));
 
@@ -101,7 +101,7 @@ class CertificateController extends APIController
 
             // Relations uniquement si la clé était présente dans le JSON d’origine
             if (array_key_exists('logical_servers', $item)) {
-                $certificate->logical_servers()->sync($logicalServers ?? []);
+                $certificate->logicalServers()->sync($logicalServers ?? []);
             }
 
             if (array_key_exists('applications', $item)) {
@@ -145,7 +145,7 @@ class CertificateController extends APIController
 
             // Si la clé est présente dans l’item, on sync (même [] -> on vide)
             if (array_key_exists('logical_servers', $rawItem)) {
-                $certificate->logical_servers()->sync($logicalServers ?? []);
+                $certificate->logicalServers()->sync($logicalServers ?? []);
             }
 
             if (array_key_exists('applications', $rawItem)) {

@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Factories\CertificateFactory;
 use App\Traits\Auditable;
+use App\Traits\HasIcon;
+use App\Traits\HasUniqueIdentifier;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasIcon;
-use App\Traits\HasUniqueIdentifier;
 
 class Certificate extends Model
 {
@@ -51,9 +51,8 @@ class Certificate extends Model
         return CertificateFactory::new();
     }
 
-    /* TODO rename to logicalServers */
     /** @return BelongsToMany<LogicalServer, $this> */
-    public function logical_servers(): BelongsToMany
+    public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }

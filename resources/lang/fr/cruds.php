@@ -277,7 +277,7 @@ return [
         'title' => 'Racks',
         'title_singular' => 'Rack',
     ],
-    'bpmns' => [
+    'bpmn' => [
         'description' => 'Business Process Management Notation',
         'fields' => [
             'name' => 'Nom',

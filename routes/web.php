@@ -451,6 +451,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     Route::get('bpmn/create', [BPMNController::class, 'create'])->name('bpmn.create');
     Route::get('bpmn/raw/{id}', [BPMNController::class, 'raw'])->name('bpmn.raw');
     Route::get('bpmn/edit/{id}', [BPMNController::class, 'edit'])->name('bpmn.edit');
+    Route::get('bpmn/{id}/data', [BPMNController::class, 'data'])->name('bpmn.data');
 
     // API
     Route::get('bpmn/objects',[BPMNController::class, 'objects'])->name('bpmn.objects');
@@ -473,7 +474,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     Route::get('/queries/schema/{model}', [QueryController::class, 'schemaModel'])->name('queries.schema.model');
     Route::resource('/queries', QueryController::class);
     Route::delete('queries-modules-destroy', [QueryController::class, 'massDestroy'])->name('queries.massDestroy');
-    
+
 });
 
 // Profile

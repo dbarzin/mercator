@@ -224,21 +224,20 @@
 <style>
 @font-face {
     font-family: "bpmn";
-    src: url("/vendor/mercator-bpmn/fonts/bpmn.ttf") format("truetype");
+    src: url("/build/fonts/bpmn.ttf") format("truetype");
     font-display: block;
 }
 </style>
 @endsection
 
 @section('scripts')
-<script type="module" src="{{ asset('vendor/mercator-bpmn/js/bpmn-show.js') }}"></script>
+@vite('resources/ts/bpmn-show.ts')
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 @if (!empty($graph->content))
     $graph = `{!! $graph->content !!}`;
     loadGraph($graph);
-
 @endif
 });
 </script>

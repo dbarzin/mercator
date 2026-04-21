@@ -273,7 +273,7 @@ return [
         'title' => 'Bays',
         'title_singular' => 'Bay',
     ],
-    'bpmns' => [
+    'bpmn' => [
         'description' => 'Business Process Management Notation',
         'fields' => [
             'name' => 'Name',
