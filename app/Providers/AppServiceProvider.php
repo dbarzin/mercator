@@ -6,7 +6,6 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Get version from file
+        $versionFile = base_path('version.txt');
+        $version = file_exists($versionFile) ? trim(file_get_contents($versionFile)) : '0.0.0';
+        $this->app->instance('mercator.version', $version);
+
         // start Paginator
         Paginator::useBootstrap();
 
@@ -45,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         if (config('app.db_trace')) {
+            \Log::info('DB Trace Enabled');
             // Log SQL Queries
             \DB::listen(function ($query): void {
                 \Log::info($query->time.':'.$query->sql);
@@ -58,20 +63,6 @@ class AppServiceProvider extends ServiceProvider
             );
         }
 
-        view()->composer('*', function ($view): void {
-            // Get the current version of the application
-            $versionFile = base_path('version.txt');
-            $version = file_exists($versionFile) && is_readable($versionFile)
-                ? trim(file_get_contents($versionFile))
-                : '0.0.0';
-
-            // Accessible via app('mercator.version')
-            $this->app->instance('mercator.version', $version);
-            
-            // Get the menu
-            // $view->with('menu', app(MenuRegistry::class));
-        });
-
         // Rate limiter
         RateLimiter::for('api', function (Request $request) {
             // Pas de limite pour les admins
@@ -84,11 +75,6 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinutes($decay, $limit)
                 ->by($request->user()?->id ?: $request->ip());
-        });
-
-        // CSP : helper Blade pour accéder au nonce
-        Blade::directive('cspNonce', function () {
-            return "<?php echo app('csp-nonce'); ?>";
         });
     }
 }

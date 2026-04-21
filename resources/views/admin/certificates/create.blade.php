@@ -93,15 +93,15 @@
             </div>
 
             <div class="form-group">
-                <label class="label-maturity-2" for="logical_servers">{{ trans('cruds.certificate.fields.logical_servers') }}</label>
-                <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
-                    @foreach($logical_servers as $id => $name)
-                        <option value="{{ $id }}" {{ in_array($id, old('logical_servers', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                <label class="label-maturity-2" for="logicalServers">{{ trans('cruds.certificate.fields.logical_servers') }}</label>
+                <select class="form-control select2 {{ $errors->has('logicalServers') ? 'is-invalid' : '' }}" name="logicalServers[]" id="logicalServers" multiple>
+                    @foreach($logicalServers as $id => $name)
+                        <option value="{{ $id }}" {{ in_array($id, old('logicalServers', [])) ? 'selected' : '' }}>{{ $name }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('logical_servers'))
+                @if($errors->has('logicalServers'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('logical_servers') }}
+                        {{ $errors->first('logicalServers') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.certificate.fields.logical_servers_helper') }}</span>
