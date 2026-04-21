@@ -6,6 +6,8 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -18,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Ignore default migration from here
-        // Sanctum::ignoreMigrations();
+        //
     }
 
     /**
@@ -32,39 +33,34 @@ class AppServiceProvider extends ServiceProvider
         $version = file_exists($versionFile) ? trim(file_get_contents($versionFile)) : '0.0.0';
         $this->app->instance('mercator.version', $version);
 
+        // Startup log
+        $this->logStartupInfo($version);
+
         // start Paginator
         Paginator::useBootstrap();
 
         // Enregistrer les vues avec un namespace
-        // Pour pouvoir les réutiliser dans les autres packages
         $this->loadViewsFrom(resource_path('views'), 'mercator');
 
-        // Force HTTPS:
-        // null  => default: force HTTPS only in production
-        // true  => always force HTTPS (all environments)
-        // false => never force HTTPS
+        // Force HTTPS
         $forceHttps = config('app.force_https');
         if ($forceHttps === true || ($forceHttps === null && App::environment('production'))) {
             URL::forceScheme('https');
         }
 
         if (config('app.db_trace')) {
-            // Log SQL Queries
-            \DB::listen(function ($query): void {
-                \Log::info($query->time.':'.$query->sql);
+            DB::listen(function ($query): void {
+                Log::info($query->time.':'.$query->sql);
             });
         }
 
-        // Si le logging LDAP est activé, on force l’utilisation du channel "ldap"
         if (config('ldap.logging.enabled')) {
             Container::setLogger(
-                \Log::channel(config('ldap.logging.channel'))
+                Log::channel(config('ldap.logging.channel'))
             );
         }
 
-        // Rate limiter
         RateLimiter::for('api', function (Request $request) {
-            // Pas de limite pour les admins
             if ($request->user()?->isAdmin()) {
                 return Limit::none();
             }
@@ -75,5 +71,114 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinutes($decay, $limit)
                 ->by($request->user()?->id ?: $request->ip());
         });
+    }
+
+    private function logStartupInfo(string $version): void
+    {
+        if (! $this->app->runningInConsole() && ! config('app.startup_log', false)) {
+            return;
+        }
+
+        $dbDriver   = config('database.default');
+        $dbVersion  = $this->getDatabaseVersion();
+        $env        = App::environment();
+        $debug      = config('app.debug');
+
+        $forceHttps = config('app.force_https');
+        $httpsMode  = match (true) {
+            $forceHttps === true  => 'always',
+            $forceHttps === false => 'never',
+            default               => 'production-only',
+        };
+
+        // ---------------------------------------------------------------
+        //  Banner
+        // ---------------------------------------------------------------
+        Log::info('');
+        Log::info('  ███╗   ███╗███████╗██████╗  ██████╗ █████╗ ████████╗ ██████╗ ██████╗ ');
+        Log::info('  ████╗ ████║██╔════╝██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗');
+        Log::info('  ██╔████╔██║█████╗  ██████╔╝██║     ███████║   ██║   ██║   ██║██████╔╝');
+        Log::info('  ██║╚██╔╝██║██╔══╝  ██╔══██╗██║     ██╔══██║   ██║   ██║   ██║██╔══██╗');
+        Log::info('  ██║ ╚═╝ ██║███████╗██║  ██║╚██████╗██║  ██║   ██║   ╚██████╔╝██║  ██║');
+        Log::info('  ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝');
+        Log::info('');
+        Log::info("  Version {$version}  |  Laravel ".app()->version()."  |  PHP ".PHP_VERSION);
+        Log::info('');
+
+        // ---------------------------------------------------------------
+        //  Section: Environment
+        // ---------------------------------------------------------------
+        Log::info('  ┌─ Environment ──────────────────────────────────────────────────┐');
+        Log::info("  │  ENV   : {$env}");
+        Log::info("  │  URL   : ".config('app.url'));
+        Log::info("  │  DEBUG : ".($debug ? '⚠️  ENABLED — do not use in production' : 'disabled'));
+        Log::info("  │  HTTPS : {$httpsMode}");
+        Log::info('  └────────────────────────────────────────────────────────────────┘');
+
+        // ---------------------------------------------------------------
+        //  Section: Database
+        // ---------------------------------------------------------------
+        Log::info('  ┌─ Database ─────────────────────────────────────────────────────┐');
+        Log::info("  │  DRIVER  : {$dbDriver}");
+        Log::info("  │  VERSION : {$dbVersion}");
+        Log::info("  │  TRACE   : ".(config('app.db_trace') ? 'enabled' : 'disabled'));
+        Log::info('  └────────────────────────────────────────────────────────────────┘');
+
+        // ---------------------------------------------------------------
+        //  Section: Auth
+        // ---------------------------------------------------------------
+        Log::info('  ┌─ Auth ─────────────────────────────────────────────────────────┐');
+        Log::info("  │  LDAP         : ".(config('ldap.connections') ? 'enabled' : 'disabled'));
+        Log::info("  │  LDAP LOGGING : ".(config('ldap.logging.enabled') ? 'enabled' : 'disabled'));
+        Log::info('  └────────────────────────────────────────────────────────────────┘');
+
+        // ---------------------------------------------------------------
+        //  Section: API
+        // ---------------------------------------------------------------
+        Log::info('  ┌─ API ───────────────────────────────────────────────────────────┐');
+        Log::info("  │  RATE LIMIT : ".config('api.rate_limit', 60).'/'.config('api.rate_limit_decay', 1).' min');
+        Log::info('  └─────────────────────────────────────────────────────────────────┘');
+
+        Log::info('');
+        Log::info('  🚀 Mercator is ready.');
+        Log::info('');
+
+        // ---------------------------------------------------------------
+        //  Structured JSON (pour ingestion ELK / Loki / Datadog)
+        // ---------------------------------------------------------------
+        Log::info('Mercator startup', [
+            'mercator_version' => $version,
+            'environment'      => $env,
+            'debug'            => $debug ? 'enabled' : 'disabled',
+            'url'              => config('app.url'),
+            'php_version'      => PHP_VERSION,
+            'laravel_version'  => app()->version(),
+            'db_driver'        => $dbDriver,
+            'db_version'       => $dbVersion,
+            'db_trace'         => config('app.db_trace') ? 'enabled' : 'disabled',
+            'https_mode'       => $httpsMode,
+            'ldap_enabled'     => config('ldap.connections') ? 'yes' : 'no',
+            'ldap_logging'     => config('ldap.logging.enabled') ? 'enabled' : 'disabled',
+            'api_rate_limit'   => config('api.rate_limit', 60).'/'.config('api.rate_limit_decay', 1).'min',
+        ]);
+    }
+    
+    /**
+     * Retrieve the database server version, gracefully.
+     */
+    private function getDatabaseVersion(): string
+    {
+        try {
+            $pdo = DB::connection()->getPdo();
+
+            return match (config('database.default')) {
+                'mysql', 'mariadb' => $pdo->query('SELECT VERSION()')->fetchColumn(),
+                'pgsql'            => $pdo->query('SHOW server_version')->fetchColumn(),
+                'sqlite'           => 'SQLite '.$pdo->query('SELECT sqlite_version()')->fetchColumn(),
+                default            => 'unknown',
+            };
+        } catch (\Throwable) {
+            return 'unavailable';
+        }
     }
 }
