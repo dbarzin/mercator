@@ -187,8 +187,10 @@
                     </ul>
                 </div>
             </div>
+        </div>
+
+        <div class="col-lg-6">
             @can('activity_show')
-                <br>
                 <div class="card">
                     <div class="card-header">
                         {{ trans('cruds.report.lists.bia') }}
@@ -210,10 +212,8 @@
                             </li>
                     </div>
                 </div>
+                <br>
             @endcan
-        </div>
-
-        <div class="col-lg-6">
 
             <div class="card">
                 <div class="card-header">
