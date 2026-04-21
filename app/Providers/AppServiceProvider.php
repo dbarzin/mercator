@@ -49,7 +49,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         if (config('app.db_trace')) {
-            \Log::info('DB Trace Enabled');
             // Log SQL Queries
             \DB::listen(function ($query): void {
                 \Log::info($query->time.':'.$query->sql);
