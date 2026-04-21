@@ -3,23 +3,13 @@
 namespace App\Services\QueryEngine;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
 
 class QueryEngineIntrospector
 {
     protected const MODEL_NAMESPACE = 'App\\Models\\';
-
-    /**
-     * Résout la classe d'un modèle à partir de son nom court.
-     * Même logique que ImportController::resolveModelClass().
-     */
-    public static function resolveModelClass(string $modelName): string
-    {
-        $class = self::MODEL_NAMESPACE . $modelName;
-        abort_if(! class_exists($class), 404, "Modèle [{$modelName}] introuvable.");
-        return $class;
-    }
 
     /**
      * Résout la classe depuis un nom court OU une FQCN — utile
@@ -115,10 +105,56 @@ class QueryEngineIntrospector
             "Le champ [{$field}] n'existe pas dans la table [{$table}]."
         );
     }
-    public static function listModels(): array
+
+    /**
+     * Convertit un nom de classe modèle en nom d'API (slug pluriel).
+     * Miroir de la logique d'ImportController::export().
+     */
+    public static function modelToApiName(string $modelName): string
     {
-        $path   = base_path('app/Models');
-        $models = [];
+        return $modelName === 'MApplication'
+            ? 'applications'
+            : Str::plural(Str::snake($modelName, '-'));
+    }
+
+    /**
+     * Résout le nom de classe court depuis un nom d'API (slug).
+     * Inverse de modelToApiName().
+     */
+    public static function apiNameToModelName(string $apiName): string
+    {
+        foreach (self::listModelClasses() as $modelName) {
+            if (self::modelToApiName($modelName) === $apiName) {
+                return $modelName;
+            }
+        }
+
+        abort(404, "Modèle API [{$apiName}] introuvable.");
+    }
+
+    /**
+     * Résout la classe depuis un nom court OU un slug d'API.
+     */
+    public static function resolveModelClass(string $modelName): string
+    {
+        // FQCN ou nom court direct
+        $direct = str_contains($modelName, '\\') ? $modelName : self::MODEL_NAMESPACE . $modelName;
+        if (class_exists($direct)) {
+            return $direct;
+        }
+
+        // Slug API → nom de classe → FQCN
+        $short = self::apiNameToModelName($modelName);   // abort 404 si inconnu
+        return self::MODEL_NAMESPACE . $short;
+    }
+
+    /**
+     * Liste interne des noms de classes (usage : apiNameToModelName, listModels).
+     */
+    protected static function listModelClasses(): array
+    {
+        $path    = base_path('app/Models');
+        $classes = [];
 
         foreach (glob("{$path}/*.php") as $file) {
             $modelName = basename($file, '.php');
@@ -127,14 +163,26 @@ class QueryEngineIntrospector
             if (! class_exists($class)) {
                 continue;
             }
-
-            $ref = new ReflectionClass($class);
-            if ($ref->isAbstract()) {
+            if ((new ReflectionClass($class))->isAbstract()) {
                 continue;
             }
 
-            $models[] = $modelName;
+            $classes[] = $modelName;
         }
+
+        return $classes;
+    }
+
+    /**
+     * Retourne les noms d'API (slugs) pour tous les modèles concrets.
+     * Ex : MApplication → applications, LogicalServer → logical-servers
+     */
+    public static function listModels(): array
+    {
+        $models = array_map(
+            fn (string $modelName) => self::modelToApiName($modelName),
+            self::listModelClasses()
+        );
 
         sort($models);
 
