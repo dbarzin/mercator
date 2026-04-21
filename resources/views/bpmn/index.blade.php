@@ -10,15 +10,23 @@
         </div>
     @endcan
 
-    <div class="row g-3" style="height:calc(100vh - 180px); flex-wrap:nowrap;">
+    {{--
+        row g-3 avec col-5/col-7 Bootstrap.
+        Les deux overrides critiques sur chaque colonne :
+          • min-width:0  — sans cela, un flex-item peut dépasser sa largeur allouée
+          • overflow:hidden — coupe visuellement tout débordement de contenu
+        Le fix JS (graphContainer en pixels avant loadGraph) bloque la propagation
+        du min-width SVG injecté par MaxGraph.
+    --}}
+    <div class="row g-3" style="height:calc(100vh - 180px);">
 
-        {{-- ── Colonne gauche : liste ─────────────────────────────────── --}}
-        <div class="d-flex flex-column" style="flex: 0 0 600px; width:600px; min-width:0; height:100%;">
-            <div class="card flex-grow-1" style="overflow:hidden; display:flex; flex-direction:column;">
+        {{-- ── Colonne gauche : liste ──────────────────────────────────── --}}
+        <div class="col-5 d-flex flex-column" style="min-width:0; overflow:hidden; height:100%;">
+            <div class="card flex-grow-1" style="min-width:0; overflow:hidden; display:flex; flex-direction:column;">
                 <div class="card-header py-2 px-3">
                     {{ trans('cruds.bpmn.title') }} {{ trans('global.list') }}
                 </div>
-                <div class="card-body p-2" style="overflow-y:auto; flex:1;">
+                <div class="card-body p-2" style="overflow-y:auto; flex:1; min-height:0;">
                     <table id="dataTable" class="table table-bordered table-striped table-hover datatable w-100">
                         <thead>
                         <tr>
@@ -46,9 +54,11 @@
                                 </td>
                                 <td>{{ $graph->type ?? '' }}</td>
                                 <td class="text-end text-nowrap">
+                                {{--
                                     <a class="btn btn-xs btn-secondary" href="{{ route('admin.bpmn.raw', $graph->id) }}">
                                         RAW
                                     </a>
+                                --}}
                                     @can('graph_edit')
                                         <a class="btn btn-xs btn-info" href="{{ route('admin.bpmn.edit', $graph->id) }}">
                                             {{ trans('global.edit') }}
@@ -73,12 +83,12 @@
             </div>
         </div>
 
-        {{-- ── Colonne droite : aperçu BPMN ───────────────────────────── --}}
-        <div class="d-flex flex-column" style="flex: 1 1 0; min-width:0; height:100%;">
-            <div class="card flex-grow-1 d-flex flex-column" style="overflow:hidden;">
+        {{-- ── Colonne droite : aperçu BPMN ────────────────────────────── --}}
+        <div class="col-7 d-flex flex-column" style="min-width:0; overflow:hidden; height:100%;">
+            <div class="card flex-grow-1 d-flex flex-column" style="min-width:0; overflow:hidden;">
 
                 {{-- En-tête avec titre + actions --}}
-                <div class="card-header d-flex justify-content-between align-items-center py-2">
+                <div class="card-header d-flex justify-content-between align-items-center py-2" style="flex-shrink:0;">
                     <span id="panel-title" class="text-muted small fst-italic">
                         {{ trans('cruds.bpmn.title_singular') }}
                     </span>
@@ -107,10 +117,13 @@
                     </div>
                 </div>
 
-                {{-- Conteneur du graphe --}}
-                <div id="graph-container"
-                     style="display:none; flex:1 1 0; min-height:0; position:relative;
-                            overflow:auto; width:100%; cursor:default; touch-action:none;">
+                {{-- Wrapper scrollable — dimensions fixées en JS avant loadGraph --}}
+                <div id="graph-scroll-wrapper"
+                     style="flex:1 1 0; height:0; min-height:0; min-width:0; overflow:auto; position:relative;">
+                    <div id="graph-container"
+                         style="display:none; position:relative; width:100%; min-height:100%;
+                                cursor:default; touch-action:none;">
+                    </div>
                 </div>
 
             </div>
@@ -215,14 +228,44 @@
                         return;
                     }
 
-                    // Rendre le conteneur visible AVANT loadGraph :
-                    // MaxGraph (déjà initialisé sur ce nœud) lira clientHeight > 0.
+                    // Rendre le conteneur visible AVANT loadGraph
                     graphContainer.style.display = 'block';
 
-                    // Double rAF : s'assurer que le browser a recalculé le layout
-                    // (le display:block doit être peint avant que MaxGraph lise les dimensions).
                     requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
+                            const wrapper = document.getElementById('graph-scroll-wrapper');
+                            const allocW  = wrapper.offsetWidth;
+                            const allocH  = wrapper.offsetHeight;
+
+                            graphContainer.style.width  = allocW + 'px';
+                            graphContainer.style.height = allocH + 'px';
+
+                            // bpmn-show.ts pose min-width/min-height sur le SVG dans un rAF
+                            // ultérieur, ce qui dilate #content-home (flex-grow:1) et toute
+                            // la page. Le MutationObserver intercepte cette mutation dès
+                            // qu'elle se produit, efface les min-* et réimpose les dimensions
+                            // allouées — le SVG overflowe alors dans le wrapper scrollable.
+                            const observer = new MutationObserver((mutations) => {
+                                for (const m of mutations) {
+                                    if (m.type === 'attributes' && m.attributeName === 'style') {
+                                        const svg = m.target;
+                                        if (svg.style.minWidth || svg.style.minHeight) {
+                                            svg.style.minWidth  = '';
+                                            svg.style.minHeight = '';
+                                            graphContainer.style.width  = allocW + 'px';
+                                            graphContainer.style.height = allocH + 'px';
+                                            observer.disconnect();
+                                        }
+                                    }
+                                }
+                            });
+
+                            observer.observe(graphContainer, {
+                                subtree:         true,
+                                attributes:      true,
+                                attributeFilter: ['style'],
+                            });
+
                             loadGraph(data.content);
                         });
                     });
