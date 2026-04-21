@@ -43,7 +43,7 @@ class QueryDslValidator
     {
         // ── Validation des champs de premier niveau ───────────────
         $validator = Validator::make($data, [
-            'from'       => ['required', 'string', 'regex:/^[a-zA-Z][a-zA-Z0-9_]*$/'],
+            'from'       => ['required', 'string', 'regex:/^[a-zA-Z][a-zA-Z0-9-]*$/'],
             'select'     => ['nullable', 'array'],
             'select.*'   => ['string',   'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
             'fields'     => ['nullable', 'array'],
@@ -56,7 +56,7 @@ class QueryDslValidator
             'limit'      => ['nullable', 'integer', 'min:1', 'max:1000'],
         ], [
             'from.required' => 'Le champ "from" est obligatoire.',
-            'from.regex'    => 'Le modèle "from" ne doit contenir que des lettres, chiffres et underscores.',
+            'from.regex'    => 'Le modèle "from" ne doit contenir que des lettres, chiffres et tirets.',
             'output.in'     => 'Le champ "output" doit être "graph" ou "list".',
             'depth.min'     => 'La profondeur doit être entre 1 et 5.',
             'depth.max'     => 'La profondeur doit être entre 1 et 5.',

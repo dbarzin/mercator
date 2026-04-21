@@ -137,17 +137,17 @@ class QueryEngineIntrospector
      */
     public static function resolveModelClass(string $modelName): string
     {
-        // FQCN ou nom court direct
-        $direct = str_contains($modelName, '\\') ? $modelName : self::MODEL_NAMESPACE . $modelName;
-        if (class_exists($direct)) {
-            return $direct;
+        // FQCN interne uniquement (traversée récursive)
+        if (str_contains($modelName, '\\')) {
+            abort_if(! class_exists($modelName), 404, "Classe [{$modelName}] introuvable.");
+            return $modelName;
         }
 
-        // Slug API → nom de classe → FQCN
-        $short = self::apiNameToModelName($modelName);   // abort 404 si inconnu
+        // Slug API uniquement — le nom de classe court est interdit
+        $short = self::apiNameToModelName($modelName); // abort 404 si inconnu
         return self::MODEL_NAMESPACE . $short;
     }
-
+    
     /**
      * Liste interne des noms de classes (usage : apiNameToModelName, listModels).
      */

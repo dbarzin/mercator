@@ -2,6 +2,10 @@
 
 // tests/Feature/QueryEngine/QueryEngineTest.php
 
+use App\Models\Application;
+use App\Models\Database as MercatorDatabase;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 use App\Models\User;
 use App\Services\QueryEngine\GraphResult;
 use App\Services\QueryEngine\ListResult;
@@ -13,10 +17,6 @@ use Database\Seeders\RolesTableSeeder;
 use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\Application;
-use App\Models\Database as MercatorDatabase;
-use App\Models\LogicalServer;
-use App\Models\MApplication;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
 
@@ -126,8 +126,8 @@ describe('QueryEngineIntrospector', function () {
         $models = QueryEngineIntrospector::listModels();
 
         expect($models)
-            ->toContain('LogicalServer')
-            ->toContain('MApplication');
+            ->toContain('logical-servers')
+            ->toContain('applications');
     });
 });
 

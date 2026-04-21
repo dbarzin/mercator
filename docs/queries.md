@@ -32,18 +32,18 @@ LIMIT   <n>
 
 Models correspond to Mercator API entities. Names are in **PascalCase** and identical to the resource names exposed by the REST API.
 
-| Model | Description |
-|-------|-------------|
-| `LogicalServer` | Logical servers |
-| `PhysicalServer` | Physical servers |
-| `Application` | Applications |
-| `Database` | Databases |
-| `Certificate` | SSL/TLS certificates |
-| `Network` | Networks / subnets |
-| `StorageDevice` | Storage devices |
-| `Site` | Physical sites |
-| `Bay` | Hosting bays |
-| … | _All API models_ |
+| Model              | Description |
+|--------------------|-------------|
+| `logical-servers`  | Logical servers |
+| `physical-servers` | Physical servers |
+| `applications`     | Applications |
+| `databases`        | Databases |
+| `certificates`     | SSL/TLS certificates |
+| `networks`         | Networks / subnets |
+| `storage-devices`  | Storage devices |
+| `sites`            | Physical sites |
+| `bays`             | Hosting bays |
+| …                  | _All API models_ |
 
 !!! info "Available fields"
 The fields usable in `FIELDS` and `WHERE` are exactly those exposed by the Mercator API. Refer to the [API reference](api.md) for the full list of attributes for each model.
@@ -144,7 +144,7 @@ It is possible to **save queries** in the interface to retrieve and re-run them 
 ### Linux production servers with their applications
 
 ```sql
-FROM LogicalServer
+FROM logical-servers
 FIELDS name, operating_system, environment, cpu, memory, applications.name
 WHERE (environment = "production") AND (operating_system LIKE "%Linux%")
 WITH applications
@@ -157,7 +157,7 @@ Returns the list of logical servers running Linux in the production environment,
 ### All applications and their databases
 
 ```sql
-FROM MApplication
+FROM application
 FIELDS name, description, databases.name, logicalServers.name
 WITH databases, logicalServers
 OUTPUT graph
@@ -170,7 +170,7 @@ Generates a graph linking applications to their databases and logical servers.
 ### Physical server inventory
 
 ```sql
-FROM PhysicalServer
+FROM physical-servers
 FIELDS name, type, cpu, memory, site.name, bay.name
 WITH site, bay
 ```
@@ -182,7 +182,7 @@ Full list of physical servers with their location (site and bay).
 ### Networks, subnetworks and VLANs
 
 ```sql
-FROM Network
+FROM networks
 Fields name, subnetworks.name, subnetworks.vlan.id, subnetworks.vlan.name
 WITH subnetworks, subnetworks.vlan
 ```
@@ -194,7 +194,7 @@ Visualizes networks, subnetworks dans they VLANs.
 ### Multiple filters with `IN`
 
 ```sql
-FROM LogicalServer
+FROM logical-server
 FIELDS applications.name, certificates.name
 WHERE (environment IN ("production", "staging")) AND (operating_system LIKE "%Windows%")
 WITH applications, certificates
@@ -207,7 +207,7 @@ Lists the applications and certificates installed on Windows servers in producti
 ### SSL certificates with expiry date and deployment scope
 
 ```sql
-FROM Certificate
+FROM certificates
 FIELDS name, type, end_date, domains, logical_servers.name, applications.name
 WITH logical_servers, applications
 ```
@@ -219,7 +219,7 @@ Inventory of SSL/TLS certificates with their expiry date and the servers/applica
 ### Critical applications with their servers and databases
 
 ```sql
-FROM MApplication
+FROM applications
 FIELDS name, security_level, description, responsible, logicalServers.name, databases.name
 WHERE (security_need_c IN ("3", "4"))
 WITH logicalServers, databases

@@ -33,18 +33,18 @@ LIMIT   <n>
 
 Les modèles correspondent aux entités de l'API Mercator. Les noms sont en **PascalCase** et identiques aux noms de ressources exposés par l'API REST.
 
-| Modèle | Description |
-|--------|-------------|
-| `LogicalServer` | Serveurs logiques |
-| `PhysicalServer` | Serveurs physiques |
-| `Application` | Applications |
-| `Database` | Bases de données |
-| `Certificate` | Certificats SSL/TLS |
-| `Network` | Réseaux / sous-réseaux |
-| `StorageDevice` | Dispositifs de stockage |
-| `Site` | Sites physiques |
-| `Bay` | Baies d'hébergement |
-| … | _Tous les modèles de l'API_ |
+| Modèle             | Description |
+|--------------------|-------------|
+| `logical-servers`  | Serveurs logiques |
+| `physical-servers` | Serveurs physiques |
+| `applications`     | Applications |
+| `databases`        | Bases de données |
+| `certificates`     | Certificats SSL/TLS |
+| `networks`         | Réseaux / sous-réseaux |
+| `storage-devices`  | Dispositifs de stockage |
+| `sites`            | Sites physiques |
+| `bays`             | Baies d'hébergement |
+| …                  | _Tous les modèles de l'API_ |
 
 !!! info "Champs disponibles"
     Les champs utilisables dans `FIELDS` et `WHERE` sont exactement ceux exposés par l'API Mercator. Consultez la [référence de l'API](api.fr.md) pour connaître l'ensemble des attributs de chaque modèle.
@@ -145,7 +145,7 @@ Il est possible de **sauvegarder des requêtes** dans l'interface pour les retro
 ### Serveurs Linux en production avec leurs applications
 
 ```sql
-FROM LogicalServer
+FROM logical-servers
 FIELDS name, operating_system, environment, cpu, memory, applications.name
 WHERE (environment = "production") AND (operating_system LIKE "%Linux%")
 WITH applications
@@ -158,9 +158,9 @@ Retourne la liste des serveurs logiques sous Linux en environnement de productio
 ### Toutes les applications et leurs bases de données
 
 ```sql
-FROM MApplication
+FROM applications
 FIELDS name, description, databases.name, logicalServers.name
-WITH databases, logicalServers
+WITH databases, logical-servers
 OUTPUT graph
 ```
 
@@ -171,7 +171,7 @@ Génère un graphe reliant les applications à leurs bases de données et serveu
 ### Inventaire des serveurs physiques
 
 ```sql
-FROM PhysicalServer
+FROM physical-servers
 FIELDS name, type, cpu, memory, site.name, bay.name
 WITH site, bay
 ```
@@ -183,7 +183,7 @@ Liste complète des serveurs physiques avec leur localisation (site et baie).
 ### Réseaux, sous-réseaux et VLANs
 
 ```sql
-FROM Network
+FROM networks
 Fields name, subnetworks.name, subnetworks.vlan.id, subnetworks.vlan.name
 WITH subnetworks, subnetworks.vlan
 ```
@@ -195,7 +195,7 @@ Visualizes les réseaux, sous-réseaux et leurs VLANs.
 ### Filtres multiples avec `IN`
 
 ```sql
-FROM LogicalServer
+FROM logical-servers
 FIELDS applications.name, certificates.name
 WHERE (environment IN ("production", "staging")) AND (operating_system LIKE "%Windows%")
 WITH applications, certificates
@@ -208,7 +208,7 @@ Liste les applications et certificats installés sur les serveurs Windows en pro
 ### Certificats SSL avec date d'expiration et périmètre d'installation
 
 ```sql
-FROM Certificate
+FROM certificates
 FIELDS name, type, end_date, domains, logical_servers.name, applications.name
 WITH logical_servers, applications
 ```
@@ -220,7 +220,7 @@ Inventaire des certificats SSL/TLS avec leur date d'expiration et les serveurs/a
 ### Applications critiques avec leurs serveurs et bases de données
 
 ```sql
-FROM MApplication
+FROM applications
 FIELDS name, security_level, description, responsible, logicalServers.name, databases.name
 WHERE (security_need_c IN ("3", "4"))
 WITH logicalServers, databases

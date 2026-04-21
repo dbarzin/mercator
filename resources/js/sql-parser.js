@@ -96,7 +96,18 @@
             // Identifiants et mots-clés
             if (/[a-zA-Z_]/.test(input[i])) {
                 let id = '';
-                while (i < input.length && /[a-zA-Z0-9_.]/.test(input[i])) id += input[i++];
+                while (i < input.length) {
+                    // Tiret kebab : accepté seulement si suivi d'un alphanumérique (pas '--')
+                    if (input[i] === '-') {
+                        if (i + 1 < input.length && /[a-zA-Z0-9]/.test(input[i + 1])) {
+                            id += input[i++];
+                            continue;
+                        }
+                        break;
+                    }
+                    if (!/[a-zA-Z0-9_.]/.test(input[i])) break;
+                    id += input[i++];
+                }
                 const up = id.toUpperCase();
                 if (KEYWORDS.has(up)) tokens.push({type: up});
                 else if (up === 'TRUE') tokens.push({type: 'BOOLEAN', value: true});
@@ -104,7 +115,7 @@
                 else tokens.push({type: 'IDENT', value: id});
                 continue;
             }
-
+            
             i++;
         }
 
