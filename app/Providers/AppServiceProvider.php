@@ -128,7 +128,7 @@ class AppServiceProvider extends ServiceProvider
         //  Section: Auth
         // ---------------------------------------------------------------
         Log::info('  ┌─ Auth ─────────────────────────────────────────────────────────┐');
-        Log::info("  │  LDAP         : ".(config('ldap.connections') ? 'enabled' : 'disabled'));
+        Log::info("  │  LDAP         : ".(config('ldap.enabled') ? 'enabled' : 'disabled'));
         Log::info("  │  LDAP LOGGING : ".(config('ldap.logging.enabled') ? 'enabled' : 'disabled'));
         Log::info('  └────────────────────────────────────────────────────────────────┘');
 
@@ -162,7 +162,7 @@ class AppServiceProvider extends ServiceProvider
             'api_rate_limit'   => config('api.rate_limit', 60).'/'.config('api.rate_limit_decay', 1).'min',
         ]);
     }
-    
+
     /**
      * Retrieve the database server version, gracefully.
      */
