@@ -29,7 +29,7 @@ class QueryResolver
 
         $traverse  = $dsl['traverse'] ?? [];
         $fields    = $dsl['fields']   ?? [];
-        $eagerLoad = $this->resolveEagerLoads($traverse, $fields);
+        $eagerLoad = $this->resolveEagerLoads($modelClass, $traverse, $fields);
 
         if (! empty($eagerLoad)) {
             $builder->with($eagerLoad);
@@ -47,7 +47,7 @@ class QueryResolver
     // Eager loads
     // ─────────────────────────────────────────────────────────────
 
-    protected function resolveEagerLoads(array $traverse, array $fields): array
+    protected function resolveEagerLoads(string $modelClass, array $traverse, array $fields): array
     {
         $paths = collect($traverse);
 
@@ -59,7 +59,39 @@ class QueryResolver
             }
         }
 
-        return $paths->unique()->sort()->values()->toArray();
+        // Convertir chaque path snake_case en noms de méthodes Eloquent réels
+        // Ex : logical_servers.applications → logicalServers.applications
+        return $paths->unique()
+            ->map(fn ($path) => $this->resolveRelationPath($modelClass, $path))
+            ->sort()
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Résout un chemin de relation pointé en noms de méthodes Eloquent.
+     * Ex : logical_servers.applications → logicalServers.applications
+     * Chaque segment est résolu sur la classe liée du segment précédent.
+     */
+    protected function resolveRelationPath(string $modelClass, string $path): string
+    {
+        $parts    = explode('.', $path);
+        $resolved = [];
+        $class    = $modelClass;
+
+        foreach ($parts as $segment) {
+            $method     = QueryEngineIntrospector::resolveRelationMethod($class, $segment);
+            $resolved[] = $method;
+
+            // Avancer vers la classe liée pour le segment suivant
+            $relDef = collect(QueryEngineIntrospector::getRelations($class))
+                ->firstWhere('method', $method);
+            if ($relDef) {
+                $class = QueryEngineIntrospector::resolveModelClassFromAny($relDef['related']);
+            }
+        }
+
+        return implode('.', $resolved);
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -125,9 +157,11 @@ class QueryResolver
         mixed   $value,
         string  $method = 'whereHas'
     ): void {
-        $relation = array_shift($relations);
+        $relation   = array_shift($relations);
+        $modelClass = get_class($builder->getModel());
+        $relMethod  = QueryEngineIntrospector::resolveRelationMethod($modelClass, $relation);
 
-        $builder->$method($relation, function (Builder $q) use ($relations, $field, $operator, $value) {
+        $builder->$method($relMethod, function (Builder $q) use ($relations, $field, $operator, $value) {
             if (empty($relations)) {
                 $this->applyWhereOnBuilder($q, $field, $operator, $value);
             } else {
@@ -231,7 +265,8 @@ class QueryResolver
                 foreach ($traverse as $rel) {
                     $firstSegment = explode('.', $rel)[0];
                     try {
-                        $related = $item->$firstSegment;
+                        $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $firstSegment);
+                        $related   = $item->$relMethod;
                         if (! $related) { $row[$firstSegment] = ''; continue; }
                         $related = $related instanceof Model ? collect([$related]) : $related;
                         $row[$firstSegment] = $related->pluck('name')->filter()->join(', ');
@@ -280,7 +315,8 @@ class QueryResolver
 
         foreach ($relationFields as $relation => $subFields) {
             try {
-                $related = $item->$relation;
+                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $relation);
+                $related   = $item->$relMethod;
             } catch (\Throwable) {
                 continue;
             }
@@ -386,12 +422,9 @@ class QueryResolver
         }
 
         foreach ($relationMap as $relation => $subPaths) {
-            if (! method_exists($item, $relation)) {
-                continue;
-            }
-
             try {
-                $related = $item->$relation;
+                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $relation);
+                $related   = $item->$relMethod;
                 if (! $related) continue;
 
                 $related = $related instanceof Model ? collect([$related]) : $related;
@@ -399,8 +432,6 @@ class QueryResolver
 
                 $relatedModelName = class_basename(get_class($related->first()));
 
-                // subPaths contient tous les chemins à continuer pour cette relation
-                // Ex: pour logicalServers → ['applications', 'networks']
                 foreach ($related as $relatedItem) {
                     $this->traverseNode($relatedItem, $relatedModelName, $subPaths, $nodeId);
                 }
@@ -428,7 +459,7 @@ class QueryResolver
 
     protected function resolveUrl(string $modelName, int|string $id): string
     {
-        $slug = \Illuminate\Support\Str::kebab($modelName) . 's';
+        $slug = QueryEngineIntrospector::modelToApiName($modelName);
         return "/admin/{$slug}/{$id}";
     }
 }

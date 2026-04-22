@@ -17,9 +17,18 @@ class QueryEngineIntrospector
      */
     public static function resolveModelClassFromAny(string $classOrShortName): string
     {
+        // FQCN direct (ex: App\Models\LogicalServer)
         if (class_exists($classOrShortName)) {
             return $classOrShortName;
         }
+
+        // Nom court PascalCase — usage interne depuis getRelations() (class_basename)
+        $fqcn = self::MODEL_NAMESPACE . $classOrShortName;
+        if (class_exists($fqcn)) {
+            return $fqcn;
+        }
+
+        // Slug API en dernier recours
         return self::resolveModelClass($classOrShortName);
     }
 
@@ -42,7 +51,7 @@ class QueryEngineIntrospector
 
     /**
      * Découverte des relations Eloquent par Reflection.
-     * Inspiré de ImportController::export() — étendu à tous les types.
+     * Le nom exposé est en snake_case (ex: logicalServers → logical_servers).
      */
     public static function getRelations(string $class): array
     {
@@ -50,7 +59,6 @@ class QueryEngineIntrospector
         $relations = [];
 
         foreach ((new ReflectionClass($instance))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            // Même filtre que ImportController
             if ($method->class !== $class) {
                 continue;
             }
@@ -63,7 +71,8 @@ class QueryEngineIntrospector
 
                 if ($result instanceof Relation) {
                     $relations[] = [
-                        'name'    => $method->getName(),
+                        'name'    => Str::snake($method->getName()),   // logical_servers
+                        'method'  => $method->getName(),               // logicalServers (usage interne)
                         'type'    => class_basename($result),
                         'related' => class_basename($result->getRelated()),
                     ];
@@ -74,6 +83,24 @@ class QueryEngineIntrospector
         }
 
         return $relations;
+    }
+
+    /**
+     * Résout le nom de méthode Eloquent depuis un nom snake_case ou camelCase.
+     * Ex : logical_servers → logicalServers
+     * Lance une HttpException 422 si la relation est introuvable.
+     */
+    public static function resolveRelationMethod(string $class, string $relationName): string
+    {
+        $snake = Str::snake($relationName); // normalise l'entrée dans tous les cas
+
+        foreach (self::getRelations($class) as $relation) {
+            if ($relation['name'] === $snake) {
+                return $relation['method'];
+            }
+        }
+
+        abort(422, "Relation [{$relationName}] introuvable sur [" . class_basename($class) . "].");
     }
 
     /**
@@ -147,7 +174,7 @@ class QueryEngineIntrospector
         $short = self::apiNameToModelName($modelName); // abort 404 si inconnu
         return self::MODEL_NAMESPACE . $short;
     }
-    
+
     /**
      * Liste interne des noms de classes (usage : apiNameToModelName, listModels).
      */

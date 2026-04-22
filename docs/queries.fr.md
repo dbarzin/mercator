@@ -55,7 +55,7 @@ Les modèles correspondent aux entités de l'API Mercator. Les noms sont en **Pa
 
 La clause `FIELDS` liste les attributs à afficher dans le résultat. Elle accepte :
 
-- Les **champs directs** du modèle : `name`, `cpu`, `environment`, `end_date`, …
+- Les **champs directs** du modèle : `name`, `cpu`, `environment`, `end_validity`, …
 - Les **champs de relations** au format `relation.champ` : `applications.name`, `site.name`, `databases.name`, …
 
 ```sql
@@ -209,7 +209,7 @@ Liste les applications et certificats installés sur les serveurs Windows en pro
 
 ```sql
 FROM certificates
-FIELDS name, type, end_date, domains, logical_servers.name, applications.name
+FIELDS name, type, end_validity, domains, logical_servers.name, applications.name
 WITH logical_servers, applications
 ```
 
@@ -221,9 +221,9 @@ Inventaire des certificats SSL/TLS avec leur date d'expiration et les serveurs/a
 
 ```sql
 FROM applications
-FIELDS name, security_level, description, responsible, logicalServers.name, databases.name
+FIELDS name, security_level, description, responsible, logical_servers.name, databases.name
 WHERE (security_need_c IN ("3", "4"))
-WITH logicalServers, databases
+WITH logical_servers, databases
 OUTPUT graph
 ```
 
