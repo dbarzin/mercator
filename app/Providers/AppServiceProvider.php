@@ -92,6 +92,25 @@ class AppServiceProvider extends ServiceProvider
         };
 
         // ---------------------------------------------------------------
+        //  Structured JSON (pour ingestion ELK / Loki / Datadog)
+        // ---------------------------------------------------------------
+        Log::info('Mercator startup', [
+            'mercator_version' => $version,
+            'environment'      => $env,
+            'debug'            => $debug ? 'enabled' : 'disabled',
+            'url'              => config('app.url'),
+            'php_version'      => PHP_VERSION,
+            'laravel_version'  => app()->version(),
+            'db_driver'        => $dbDriver,
+            'db_version'       => $dbVersion,
+            'db_trace'         => config('app.db_trace') ? 'enabled' : 'disabled',
+            'https_mode'       => $httpsMode,
+            'ldap_enabled'     => config('ldap.connections') ? 'yes' : 'no',
+            'ldap_logging'     => config('ldap.logging.enabled') ? 'enabled' : 'disabled',
+            'api_rate_limit'   => config('api.rate_limit', 60).'/'.config('api.rate_limit_decay', 1).'min',
+        ]);
+
+        // ---------------------------------------------------------------
         //  Banner
         // ---------------------------------------------------------------
         Log::info('');
@@ -143,24 +162,6 @@ class AppServiceProvider extends ServiceProvider
         Log::info('  🚀 Mercator is ready.');
         Log::info('');
 
-        // ---------------------------------------------------------------
-        //  Structured JSON (pour ingestion ELK / Loki / Datadog)
-        // ---------------------------------------------------------------
-        Log::info('Mercator startup', [
-            'mercator_version' => $version,
-            'environment'      => $env,
-            'debug'            => $debug ? 'enabled' : 'disabled',
-            'url'              => config('app.url'),
-            'php_version'      => PHP_VERSION,
-            'laravel_version'  => app()->version(),
-            'db_driver'        => $dbDriver,
-            'db_version'       => $dbVersion,
-            'db_trace'         => config('app.db_trace') ? 'enabled' : 'disabled',
-            'https_mode'       => $httpsMode,
-            'ldap_enabled'     => config('ldap.connections') ? 'yes' : 'no',
-            'ldap_logging'     => config('ldap.logging.enabled') ? 'enabled' : 'disabled',
-            'api_rate_limit'   => config('api.rate_limit', 60).'/'.config('api.rate_limit_decay', 1).'min',
-        ]);
     }
 
     /**

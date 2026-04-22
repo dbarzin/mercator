@@ -2,7 +2,6 @@
 
 // tests/Feature/QueryEngine/QueryEngineTest.php
 
-use App\Models\Application;
 use App\Models\Database as MercatorDatabase;
 use App\Models\LogicalServer;
 use App\Models\MApplication;
@@ -44,10 +43,10 @@ beforeEach(function () {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Crée un LogicalServer avec des valeurs par défaut surchargeables.
+ * Crée un logical-servers avec des valeurs par défaut surchargeables.
  * cpu est utilisé pour les tests d'opérateurs numériques.
  */
-function makeServer(array $attrs = []): LogicalServer
+function makeServer(array $attrs = []): logicalServer
 {
     return LogicalServer::factory()->create(array_merge([
         'name'             => 'srv-' . uniqid(),
@@ -58,7 +57,7 @@ function makeServer(array $attrs = []): LogicalServer
 }
 
 /**
- * Crée une Application et l'associe au LogicalServer via la relation pivot.
+ * Crée une Application et l'associe au logical-servers via la relation pivot.
  */
 function makeApp(LogicalServer $server, array $appAttrs = []): MApplication
 {
@@ -92,13 +91,13 @@ function makeDb(MApplication $app, array $attrs = []): MercatorDatabase
 describe('QueryEngineIntrospector', function () {
 
     it('résout la classe Eloquent d\'un modèle Mercator valide', function () {
-        $class = QueryEngineIntrospector::resolveModelClass('LogicalServer');
+        $class = QueryEngineIntrospector::resolveModelClass('logical-servers');
 
         expect($class)->toBe(LogicalServer::class);
     });
 
     it('résout MApplication', function () {
-        $class = QueryEngineIntrospector::resolveModelClass('MApplication');
+        $class = QueryEngineIntrospector::resolveModelClass('applications');
 
         expect($class)->toBe(MApplication::class);
     });
@@ -122,7 +121,7 @@ describe('QueryEngineIntrospector', function () {
         expect($models)->toBe(collect($models)->sort()->values()->all());
     });
 
-    it('listModels inclut LogicalServer et MApplication', function () {
+    it('listModels inclut logical-servers et MApplication', function () {
         $models = QueryEngineIntrospector::listModels();
 
         expect($models)
@@ -145,7 +144,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('= renvoie uniquement les enregistrements correspondants', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'environment', 'operator' => '=', 'value' => 'production']],
             'output'  => 'list',
         ]);
@@ -157,7 +156,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('!= exclut les enregistrements correspondants', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'environment', 'operator' => '!=', 'value' => 'production']],
             'output'  => 'list',
         ]);
@@ -168,7 +167,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('> filtre strictement au-dessus du seuil', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'cpu', 'operator' => '>', 'value' => 4]],
             'output'  => 'list',
         ]);
@@ -179,7 +178,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('>= inclut la valeur seuil (supérieur ou égal)', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'cpu', 'operator' => '>=', 'value' => 4]],
             'output'  => 'list',
         ]);
@@ -189,7 +188,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('< filtre strictement en dessous du seuil', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'cpu', 'operator' => '<', 'value' => 4]],
             'output'  => 'list',
         ]);
@@ -200,7 +199,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('<= inclut la valeur seuil (inférieur ou égal)', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'cpu', 'operator' => '<=', 'value' => 4]],
             'output'  => 'list',
         ]);
@@ -210,7 +209,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('like filtre avec un pattern %', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'name', 'operator' => 'like', 'value' => 'web%']],
             'output'  => 'list',
         ]);
@@ -221,7 +220,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('in filtre par liste de valeurs', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'cpu', 'operator' => 'in', 'value' => [2, 8]]],
             'output'  => 'list',
         ]);
@@ -231,7 +230,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('not in exclut les valeurs listées', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'cpu', 'operator' => 'not in', 'value' => [2, 8]]],
             'output'  => 'list',
         ]);
@@ -242,7 +241,7 @@ describe('applyFilter – opérateurs autorisés', function () {
 
     it('plusieurs filtres sont combinés en AND implicite', function () {
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [
                 ['field' => 'environment', 'operator' => '=',  'value' => 'production'],
                 ['field' => 'cpu',         'operator' => '>=', 'value' => 8],
@@ -263,7 +262,7 @@ describe('applyFilter – sécurité', function () {
 
     it('un opérateur hors whitelist déclenche une exception HTTP 422', function () {
         $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'name', 'operator' => 'DROP TABLE', 'value' => 'x']],
             'output'  => 'list',
         ]);
@@ -271,7 +270,7 @@ describe('applyFilter – sécurité', function () {
 
     it('une tentative d\'injection SQL dans l\'opérateur est rejetée', function () {
         $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'name', 'operator' => "= '1'; DROP TABLE logical_servers; --", 'value' => 'x']],
             'output'  => 'list',
         ]);
@@ -282,7 +281,7 @@ describe('applyFilter – sécurité', function () {
 
         // "na;me" → sanitisé en "name" → filtre valide sans exception
         $result = $this->resolver->execute([
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'na;me', 'operator' => '=', 'value' => 'cible']],
             'output'  => 'list',
         ]);
@@ -297,7 +296,7 @@ describe('applyFilter – sécurité', function () {
         // sans fragmenter le mot : 'na;me' → 'name', etc.
         foreach (['na;me', 'na,me', 'na!me'] as $dirty) {
             $result = $this->resolver->execute([
-                'from'    => 'LogicalServer',
+                'from'    => 'logical-servers',
                 'filters' => [['field' => $dirty, 'operator' => '=', 'value' => 'cible']],
                 'output'  => 'list',
             ]);
@@ -316,7 +315,7 @@ describe('execute – output list', function () {
     it('retourne un ListResult', function () {
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'list']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'list']);
 
         expect($result)->toBeInstanceOf(ListResult::class);
     });
@@ -326,7 +325,7 @@ describe('execute – output list', function () {
         makeServer();
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'list']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'list']);
 
         expect($result->rows)->toHaveCount(3);
     });
@@ -336,7 +335,7 @@ describe('execute – output list', function () {
             makeServer();
         }
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'list']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'list']);
 
         expect($result->rows)->toHaveCount(100);
     });
@@ -347,7 +346,7 @@ describe('execute – output list', function () {
         }
 
         $result = $this->resolver->execute([
-            'from'   => 'LogicalServer',
+            'from'   => 'logical-servers',
             'output' => 'list',
             'limit'  => 5,
         ]);
@@ -356,7 +355,7 @@ describe('execute – output list', function () {
     });
 
     it('retourne une collection vide si aucun enregistrement', function () {
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'list']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'list']);
 
         expect($result->rows)->toHaveCount(0);
     });
@@ -364,7 +363,7 @@ describe('execute – output list', function () {
     it('list est le mode par défaut quand output est absent', function () {
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer']);
+        $result = $this->resolver->execute(['from' => 'logical-servers']);
 
         expect($result)->toBeInstanceOf(ListResult::class);
     });
@@ -379,7 +378,7 @@ describe('execute – output graph (sans traversée)', function () {
     it('retourne un GraphResult', function () {
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'graph']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'graph']);
 
         expect($result)->toBeInstanceOf(GraphResult::class);
     });
@@ -388,31 +387,31 @@ describe('execute – output graph (sans traversée)', function () {
         makeServer();
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'graph']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'graph']);
 
         expect($result->nodes)->toHaveCount(2);
     });
 
-    it('les identifiants de nœuds ont le format LogicalServer_<id>', function () {
+    it('les identifiants de nœuds ont le format logical-servers_<id>', function () {
         $server = makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'graph']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'graph']);
 
         expect($result->nodes->pluck('id')->all())
-            ->toContain("LogicalServer_{$server->id}");
+            ->toContain("logical-servers_{$server->id}");
     });
 
     it('aucun edge sans traverse', function () {
         makeServer();
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'graph']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'graph']);
 
         expect($result->edges)->toHaveCount(0);
     });
 
     it('graphe vide si aucun enregistrement', function () {
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'graph']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'graph']);
 
         expect($result->nodes)->toHaveCount(0);
         expect($result->edges)->toHaveCount(0);
@@ -431,7 +430,7 @@ describe('execute – traversée de relations', function () {
         makeApp($server);
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ]);
@@ -446,7 +445,7 @@ describe('execute – traversée de relations', function () {
         makeApp($server);
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ]);
@@ -459,13 +458,13 @@ describe('execute – traversée de relations', function () {
         $app    = makeApp($server);
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ]);
 
         $edge = $result->edges->first();
-        expect($edge['from'])->toBe("LogicalServer_{$server->id}");
+        expect($edge['from'])->toBe("logical-servers_{$server->id}");
         expect($edge['to'])->toBe("MApplication_{$app->id}");
     });
 
@@ -476,7 +475,7 @@ describe('execute – traversée de relations', function () {
         makeDb($app);
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications.databases'],
             'output'   => 'graph',
         ]);
@@ -493,7 +492,7 @@ describe('execute – traversée de relations', function () {
         makeApp($server);
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ]);
@@ -506,7 +505,7 @@ describe('execute – traversée de relations', function () {
         makeServer();
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['relationInexistante'],
             'output'   => 'graph',
         ]);
@@ -533,7 +532,7 @@ describe('Détection des cycles', function () {
 
         $start  = microtime(true);
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ]);
@@ -552,7 +551,7 @@ describe('Détection des cycles', function () {
         $server2->applications()->syncWithoutDetaching([$app->id]);
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ]);
@@ -576,7 +575,7 @@ describe('Structure de GraphResult', function () {
     it('expose les propriétés nodes et edges', function () {
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'graph']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'graph']);
 
         expect($result)->toHaveProperties(['nodes', 'edges']);
     });
@@ -584,7 +583,7 @@ describe('Structure de GraphResult', function () {
     it('chaque nœud possède au minimum id et label', function () {
         makeServer(['name' => 'srv-label-test']);
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'graph']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'graph']);
 
         $node = $result->nodes->first();
         expect($node)
@@ -598,7 +597,7 @@ describe('Structure de GraphResult', function () {
         makeApp($server);
 
         $result = $this->resolver->execute([
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ]);
@@ -614,7 +613,7 @@ describe('Structure de ListResult', function () {
     it('expose les propriétés rows et columns', function () {
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'list']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'list']);
 
         expect($result)->toHaveProperties(['rows', 'columns']);
     });
@@ -622,7 +621,7 @@ describe('Structure de ListResult', function () {
     it('rows est une collection Eloquent', function () {
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'list']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'list']);
 
         expect($result->rows)->toBeInstanceOf(\Illuminate\Support\Collection::class);
     });
@@ -630,7 +629,7 @@ describe('Structure de ListResult', function () {
     it('columns contient au minimum id et name', function () {
         makeServer();
 
-        $result = $this->resolver->execute(['from' => 'LogicalServer', 'output' => 'list']);
+        $result = $this->resolver->execute(['from' => 'logical-servers', 'output' => 'list']);
 
         expect($result->columns)
             ->toBeArray()
@@ -649,7 +648,7 @@ describe('QueryEngineController – POST /admin/queries/execute', function () {
         makeServer();
 
         $this->postJson('/admin/queries/execute', [
-            'from'   => 'LogicalServer',
+            'from'   => 'logical-servers',
             'output' => 'list',
         ])->assertOk()
             ->assertJsonStructure(['rows', 'columns']);
@@ -659,7 +658,7 @@ describe('QueryEngineController – POST /admin/queries/execute', function () {
         makeServer();
 
         $this->postJson('/admin/queries/execute', [
-            'from'   => 'LogicalServer',
+            'from'   => 'logical-servers',
             'output' => 'graph',
         ])->assertOk()
             ->assertJsonStructure(['nodes', 'edges']);
@@ -680,7 +679,7 @@ describe('QueryEngineController – POST /admin/queries/execute', function () {
 
     it('retourne 422 pour un opérateur non whitelisté', function () {
         $this->postJson('/admin/queries/execute', [
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'name', 'operator' => 'DROP', 'value' => 'x']],
             'output'  => 'list',
         ])->assertUnprocessable();
@@ -688,7 +687,7 @@ describe('QueryEngineController – POST /admin/queries/execute', function () {
 
     it('retourne 422 si operator est absent d\'un filtre', function () {
         $this->postJson('/admin/queries/execute', [
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'name', 'value' => 'x']],
             'output'  => 'list',
         ])->assertUnprocessable();
@@ -698,7 +697,7 @@ describe('QueryEngineController – POST /admin/queries/execute', function () {
         auth()->logout();
 
         $this->postJson('/admin/queries/execute', [
-            'from'   => 'LogicalServer',
+            'from'   => 'logical-servers',
             'output' => 'list',
         ])->assertUnauthorized();
     });
@@ -708,7 +707,7 @@ describe('QueryEngineController – POST /admin/queries/execute', function () {
         makeServer(['name' => 'web-staging', 'environment' => 'staging']);
 
         $response = $this->postJson('/admin/queries/execute', [
-            'from'    => 'LogicalServer',
+            'from'    => 'logical-servers',
             'filters' => [['field' => 'environment', 'operator' => '=', 'value' => 'production']],
             'output'  => 'list',
         ])->assertOk();
@@ -722,7 +721,7 @@ describe('QueryEngineController – POST /admin/queries/execute', function () {
         makeApp($server);
 
         $response = $this->postJson('/admin/queries/execute', [
-            'from'     => 'LogicalServer',
+            'from'     => 'logical-servers',
             'traverse' => ['applications'],
             'output'   => 'graph',
         ])->assertOk();
