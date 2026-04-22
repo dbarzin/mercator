@@ -161,9 +161,9 @@ Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 | PUT/PATCH | /api/objets/mass-update  | met à jour plusieurs objets à la fois |
 | DELETE    | /api/objets/mass-destroy | supprime plusieurs objets à la fois   |
 
-Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
+Les champs à fournir sont ceux décrits dans le [modèle de données](model.fr.md).
 
-Pour voir les fonctions avancées de filtres : voir la page [API avancée (filtres)](./apifilters.fr.md)
+Pour voir les fonctions avancées de filtres : voir la page [API avancée (filtres)](apifilters.fr.md)
 
 ### Droits d'accès
 
