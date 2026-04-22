@@ -105,7 +105,7 @@ WITH applications, databases, certificates
 Relation names correspond to the relation method names of the Eloquent models, typically in **camelCase**:
 
 ```sql
-WITH logicalServers, databases, site, bay
+WITH logical-servers, databases, sites, bays
 ```
 
 ---
@@ -212,7 +212,7 @@ FIELDS name, type, end_date, domains, logical_servers.name, applications.name
 WITH logical_servers, applications
 ```
 
-Inventory of SSL/TLS certificates with their expiry date and the servers/applications on which they are deployed. Useful for anticipating renewals.
+Inventory of SSL/TLS certificates with their expiry date and the servers/applications on which they are deployed. Useful for expecting renewals.
 
 ---
 
@@ -220,9 +220,9 @@ Inventory of SSL/TLS certificates with their expiry date and the servers/applica
 
 ```sql
 FROM applications
-FIELDS name, security_level, description, responsible, logicalServers.name, databases.name
+FIELDS name, security_level, description, responsible, logical-servers.name, databases.name
 WHERE (security_need_c IN ("3", "4"))
-WITH logicalServers, databases
+WITH logical-servers, databases
 OUTPUT graph
 ```
 

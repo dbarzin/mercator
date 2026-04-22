@@ -106,7 +106,7 @@ WITH applications, databases, certificates
 Les noms de relations correspondent aux noms des méthodes de relation des modèles Eloquent, généralement en **camelCase** :
 
 ```sql
-WITH logicalServers, databases, site, bay
+WITH logical-servers, databases, sites, bays
 ```
 
 ---
@@ -159,7 +159,7 @@ Retourne la liste des serveurs logiques sous Linux en environnement de productio
 
 ```sql
 FROM applications
-FIELDS name, description, databases.name, logicalServers.name
+FIELDS name, description, databases.name, logical-servers.name
 WITH databases, logical-servers
 OUTPUT graph
 ```
