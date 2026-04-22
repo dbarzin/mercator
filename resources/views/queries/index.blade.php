@@ -137,7 +137,7 @@
         </div>
     </div>
 </div>
-x
+
 @endsection
 
 @section('styles')

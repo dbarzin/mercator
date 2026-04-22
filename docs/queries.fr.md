@@ -221,7 +221,7 @@ Inventaire des certificats SSL/TLS avec leur date d'expiration et les serveurs/a
 
 ```sql
 FROM applications
-FIELDS name, security_level, description, responsible, logical_servers.name, databases.name
+FIELDS name, security_need_c, description, responsible, logical_servers.name, databases.name
 WHERE (security_need_c IN ("3", "4"))
 WITH logical_servers, databases
 OUTPUT graph

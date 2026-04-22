@@ -182,7 +182,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 { extend: 'excel',  className: 'btn-default' },
             ],
             layout:  { paging: true },
-            scrollX: true,
         });
 
         datatableInstance.buttons(0, null).container()

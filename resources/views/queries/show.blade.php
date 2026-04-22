@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="card d-flex flex-column" style="min-height:70vh;">
+<div class="card d-flex flex-column" style="min-height:calc(100vh - 180px);">
     <div class="card-header">
         @lang('Query Engine')
         @isset($query) — {{ $query->name }} @endisset

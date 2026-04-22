@@ -57,11 +57,12 @@ LIMIT 100"></textarea>
 </div>
 
 {{-- ── Zone de résultat ────────────────────────────────────────────── --}}
-<div class="flex-grow-1 position-relative overflow-hidden">
+{{-- position:relative seul — pas de overflow:hidden qui bloque le scroll interne --}}
+<div class="flex-grow-1 position-relative" style="min-height:0;">
 
     <div id="result-placeholder"
-         class="d-flex align-items-center justify-content-center h-100 text-muted"
-         style="min-height:200px;">
+         class="d-flex align-items-center justify-content-center text-muted"
+         style="position:absolute; inset:0;">
         <div class="text-center">
             <i class="fas fa-search fa-3x mb-3 opacity-25"></i>
             <p>@lang('Écrivez une requête et cliquez sur Exécuter.')</p>
@@ -69,30 +70,35 @@ LIMIT 100"></textarea>
     </div>
 
     <div id="result-spinner"
-         class="d-none d-flex align-items-center justify-content-center"
-         style="min-height:200px;">
+         class="d-none align-items-center justify-content-center"
+         style="position:absolute; inset:0; display:none;">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">@lang('Chargement...')</span>
         </div>
     </div>
 
-    <div id="result-error" class="d-none p-3">
+    <div id="result-error"
+         class="d-none p-3"
+         style="position:absolute; inset:0; overflow:auto;">
         <div class="alert alert-danger mb-0" id="result-error-msg"></div>
     </div>
 
-    <div id="result-list" class="d-none overflow-auto p-2">
-        <table id="result-datatable" class="table table-sm table-hover table-striped w-100">
+    <div id="result-list"
+         class="d-none p-2"
+         style="position:absolute; inset:0; overflow:auto;">
+        <table id="result-datatable" class="table table-sm table-hover table-striped">
             <thead></thead>
             <tbody></tbody>
         </table>
     </div>
 
-    <div id="result-graph" class="d-none overflow-auto text-center p-2">
+    <div id="result-graph"
+         class="d-none p-2 text-center"
+         style="position:absolute; inset:0; overflow:auto;">
         <div id="graph-svg-container"></div>
     </div>
 
 </div>
-
 {{-- ── Barre de statut ─────────────────────────────────────────────── --}}
 <div class="card-footer py-1 px-3 d-flex justify-content-between align-items-center">
     <small class="text-muted" id="status-msg">—</small>

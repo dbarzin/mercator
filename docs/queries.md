@@ -157,9 +157,9 @@ Returns the list of logical servers running Linux in the production environment,
 ### All applications and their databases
 
 ```sql
-FROM application
-FIELDS name, description, databases.name, logicalServers.name
-WITH databases, logicalServers
+FROM applications
+FIELDS name, description, databases.name, logical_servers.name
+WITH databases, logical_servers
 OUTPUT graph
 ```
 
