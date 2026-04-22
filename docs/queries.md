@@ -66,7 +66,7 @@ If you reference a relation field in `FIELDS` (e.g. `applications.name`), the co
 
 ---
 
-## WHERE Clause
+## WHERE Clause {#conditions}
 
 The `WHERE` clause filters records based on conditions on the main model's fields.
 

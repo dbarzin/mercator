@@ -47,7 +47,7 @@ server rooms, buildings, and sites.
 
 ## Exploring Views and Rendering Engines
 
-The mapping can be [explored](application.md#mapping-explorer) organically: double-clicking on an object
+The mapping can be [explored](application.md#exploration) organically: double-clicking on an object
 immediately displays all objects connected to
 it—physically or logically—and all incoming and outgoing flows.
 
