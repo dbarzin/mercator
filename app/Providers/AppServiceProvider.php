@@ -105,7 +105,7 @@ class AppServiceProvider extends ServiceProvider
             'db_version'       => $dbVersion,
             'db_trace'         => config('app.db_trace') ? 'enabled' : 'disabled',
             'https_mode'       => $httpsMode,
-            'ldap_enabled'     => config('ldap.connections') ? 'yes' : 'no',
+            'ldap_enabled'     => config('ldap.enabled') ? 'yes' : 'no',
             'ldap_logging'     => config('ldap.logging.enabled') ? 'enabled' : 'disabled',
             'api_rate_limit'   => config('api.rate_limit', 60).'/'.config('api.rate_limit_decay', 1).'min',
         ]);
