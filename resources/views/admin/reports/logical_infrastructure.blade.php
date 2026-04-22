@@ -702,7 +702,7 @@ digraph  {
 
 @can('certificate_access')
     @foreach($certificates as $certificate)
-    @if ($certificate->logical_servers->count()>0)
+    @if ($certificate->logicalServers->count()>0)
     CERT{{ $certificate->id }} [label="{{ $certificate->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="#{{$certificate->getUID()}}"]
     @endif
     @endforeach

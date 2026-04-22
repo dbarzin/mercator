@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,9 +16,6 @@ use Illuminate\Support\Str;
 use LdapRecord\Auth\BindException;
 use LdapRecord\Container;
 use LdapRecord\Models\Entry as LdapEntry;
-use App\Models\AuditLog;
-use App\Models\Role;
-use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -167,7 +167,7 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request): bool
     {
-        $useLdap = (bool) config('app.ldap_enabled');
+        $useLdap = (bool) config('ldap.enabled');
         $fallbackLocal = (bool) config('app.ldap_fallback_local');
         $autoProvision = (bool) config('app.ldap_auto_provision');
 
