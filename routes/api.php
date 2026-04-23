@@ -352,6 +352,9 @@ Route::middleware(['api.protected'])->group(function () {
     // Roles
     Route::resource('roles', API\RoleController::class);
 
+    // Queries
+    Route::resource('queries', API\QueryController::class);
+
     // =======================================
     // Reports
     // =======================================
