@@ -78,7 +78,7 @@
                                   rows="22"
                                   style="resize: vertical; font-size: 0.85rem;"
                                   spellcheck="false"
-                                  placeholder="FROM LogicalServer
+                                  placeholder="FROM logical-servers
 WHERE environment = &quot;production&quot;
 WITH applications
 OUTPUT list

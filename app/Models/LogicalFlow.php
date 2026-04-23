@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Factories\LogicalFlowFactory;
 use App\Traits\Auditable;
+use App\Traits\HasUniqueIdentifier;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasUniqueIdentifier;
 
 /**
  * App\LogicalFlow
@@ -19,6 +19,8 @@ class LogicalFlow extends Model
     use Auditable, HasUniqueIdentifier, HasFactory, SoftDeletes;
 
     public $table = 'logical_flows';
+
+    public static string $prefix = 'LFLOW_';
 
     public static array $searchable = [
         'name',

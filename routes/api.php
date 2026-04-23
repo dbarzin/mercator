@@ -347,10 +347,13 @@ Route::middleware(['api.protected'])->group(function () {
     Route::resource('users', API\UserController::class);
 
     // Permissions
-    Route::resource('permission', API\PermissionController::class);
+    Route::resource('permissions', API\PermissionController::class);
 
     // Roles
-    Route::resource('role', API\RoleController::class);
+    Route::resource('roles', API\RoleController::class);
+
+    // Queries
+    Route::resource('queries', API\QueryController::class);
 
     // =======================================
     // Reports
