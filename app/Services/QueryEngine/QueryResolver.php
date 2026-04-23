@@ -2,6 +2,7 @@
 
 namespace App\Services\QueryEngine;
 
+use App\Contracts\HasIconContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -447,7 +448,7 @@ class QueryResolver
             'id'    => $nodeId,
             'label' => $item->name ?? $item->getAttribute('label') ?? (string) $item->getKey(),
             'group' => $modelName,
-            'icon'  => $item->getIcon(),
+            'icon'  => $item instanceof HasIconContract ? $item->getIcon() : '/images/default.png',
             'data'  => [
                 'id'    => $item->getKey(),
                 'name'  => $item->name ?? '',
@@ -456,7 +457,6 @@ class QueryResolver
             ],
         ];
     }
-
     protected function resolveUrl(string $modelName, int|string $id): string
     {
         $slug = QueryEngineIntrospector::modelToApiName($modelName);

@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Factories\FluxFactory;
 use App\Traits\Auditable;
+use App\Traits\HasUniqueIdentifier;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasUniqueIdentifier;
 
 /**
  * Flux Applicatif
@@ -95,38 +95,7 @@ class Flux extends Model
     {
         return $this->getEntityUID(self::DEST_RELATIONS);
     }
-
-    /**
-     * Récupère l'UID d'une entité sans charger la relation complète
-     * Utilise la propriété statique $prefix de chaque modèle
-     *
-     * @param array<string, string> $relations Mapping field => relationName
-     * @return string|null L'UID construit (PREFIX_ID) ou null si aucune relation n'est définie
-     */
-    private function getEntityUID(array $relations): ?string
-    {
-        foreach ($relations as $field => $relationName) {
-            if ($this->$field !== null) {
-                // Récupère la classe du modèle via la relation
-                $relation = $this->$relationName();
-                $modelClass = get_class($relation->getRelated());
-
-                // Utilise le préfixe statique de la classe cible
-                // Ex: MApplication::$prefix = "APP_"
-                if (property_exists($modelClass, 'prefix')) {
-                    return $modelClass::$prefix . $this->$field;
-                }
-
-                // Fallback si le modèle n'a pas de préfixe
-                throw new \LogicException(
-                    sprintf('Model %s must have a static $prefix property', $modelClass)
-                );
-            }
-        }
-
-        return null;
-    }
-
+    
     /** @return BelongsToMany<Information, $this> */
     public function informations(): BelongsToMany
     {
