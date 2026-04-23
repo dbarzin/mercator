@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use App\Factories\UserFactory;
+use App\Traits\HasIcon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
-use App\Factories\UserFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Traits\HasIcon;
 
 class User extends Authenticatable
 {
@@ -119,11 +119,5 @@ class User extends Authenticatable
         return $this->roles()
             ->where(fn ($q) => $q->where('slug', $role)->orWhere('title', $role))
             ->exists();
-    }
-
-    /** @return BelongsToMany<MApplication, $this> */
-    public function m_applications(): BelongsToMany
-    {
-        return $this->belongsToMany(MApplication::class, 'cartographer_m_application');
     }
 }

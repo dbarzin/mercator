@@ -7,10 +7,10 @@ use App\Http\Requests\MassStoreUserRequest;
 use App\Http\Requests\MassUpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends APIController
@@ -30,6 +30,7 @@ class UserController extends APIController
 
         /** @var User $user */
         $user = User::query()->create($request->all());
+
         $user->roles()->sync($request->input('roles', []));
 
         return response()->json($user, Response::HTTP_CREATED);
@@ -38,6 +39,8 @@ class UserController extends APIController
     public function show(User $user)
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $user['roles'] = $user->roles()->pluck('id');
 
         return new JsonResource($user);
     }
@@ -75,7 +78,6 @@ class UserController extends APIController
 
     public function massStore(MassStoreUserRequest $request)
     {
-        // L’authorize() du FormRequest gère déjà la permission `user_create`
         $data = $request->validated();
 
         $createdIds = [];
@@ -110,7 +112,6 @@ class UserController extends APIController
 
     public function massUpdate(MassUpdateUserRequest $request)
     {
-        // L’authorize() du FormRequest gère déjà la permission `user_edit`
         $data      = $request->validated();
         $userModel = new User();
         $fillable  = $userModel->getFillable();
