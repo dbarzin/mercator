@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Factories\DocumentFactory;
 use App\Traits\Auditable;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,8 +15,6 @@ class Document extends Model
     use Auditable, HasFactory, SoftDeletes;
 
     public $table = 'documents';
-
-    public static string $prefix = 'DOC_';
 
     public static array $searchable = [
     ];

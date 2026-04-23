@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\HasIconContract;
+use App\Contracts\HasPrefix;
 use App\Factories\SiteFactory;
 use App\Traits\Auditable;
 use App\Traits\HasIcon;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Site
  */
-class Site extends Model implements HasIconContract
+class Site extends Model implements HasIconContract, HasPrefix
 {
     use Auditable, HasIcon, HasUniqueIdentifier, HasFactory, SoftDeletes;
 

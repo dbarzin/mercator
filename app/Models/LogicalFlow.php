@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasPrefix;
 use App\Factories\LogicalFlowFactory;
 use App\Traits\Auditable;
 use App\Traits\HasUniqueIdentifier;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\LogicalFlow
  */
-class LogicalFlow extends Model
+class LogicalFlow extends Model implements HasPrefix
 {
     use Auditable, HasUniqueIdentifier, HasFactory, SoftDeletes;
 

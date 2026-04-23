@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasPrefix;
 use App\Factories\FluxFactory;
 use App\Traits\Auditable;
 use App\Traits\HasUniqueIdentifier;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Flux Applicatif
  */
-class Flux extends Model
+class Flux extends Model implements HasPrefix
 {
     use Auditable, HasFactory, HasUniqueIdentifier, SoftDeletes;
 

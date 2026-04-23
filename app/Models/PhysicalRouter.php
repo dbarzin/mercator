@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Contracts\HasPrefix;
 use App\Factories\PhysicalRouterFactory;
 use App\Traits\Auditable;
+use App\Traits\HasUniqueIdentifier;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasUniqueIdentifier;
 
 /**
  * App\PhysicalRouter
  */
-class PhysicalRouter extends Model
+class PhysicalRouter extends Model implements HasPrefix
 {
     use Auditable, HasFactory, HasUniqueIdentifier, SoftDeletes;
 

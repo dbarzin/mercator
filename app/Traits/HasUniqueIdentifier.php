@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait HasUniqueIdentifier
 {
-    public function getPrefix(): string
+    public static function getPrefix(): string
     {
         return self::$prefix;
     }

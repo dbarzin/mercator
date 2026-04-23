@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\HasIconContract;
+use App\Contracts\HasPrefix;
 use App\Factories\PeripheralFactory;
 use App\Traits\Auditable;
 use App\Traits\HasIcon;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Peripheral
  */
-class Peripheral extends Model implements HasIconContract
+class Peripheral extends Model implements HasIconContract, HasPrefix
 {
     use Auditable, HasFactory, HasUniqueIdentifier, HasIcon, SoftDeletes;
 

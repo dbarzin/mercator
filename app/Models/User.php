@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIconContract;
 use App\Factories\UserFactory;
 use App\Traits\HasIcon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable implements OAuthenticatable
+class User extends Authenticatable implements OAuthenticatable, HasIconContract
 {
     use HasApiTokens, HasIcon, HasFactory, Notifiable, SoftDeletes;
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\HasIconContract;
+use App\Contracts\HasPrefix;
 use App\Factories\SecurityDeviceFactory;
 use App\Traits\Auditable;
 use App\Traits\HasIcon;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\SecurityDevice
  */
-class SecurityDevice extends Model implements HasIconContract
+class SecurityDevice extends Model implements HasIconContract, HasPrefix
 {
     use Auditable, HasIcon, HasUniqueIdentifier, HasFactory, SoftDeletes;
 

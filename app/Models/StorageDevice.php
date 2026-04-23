@@ -2,22 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Contracts\HasIconContract;
+use App\Contracts\HasPrefix;
 use App\Factories\StorageDeviceFactory;
 use App\Traits\Auditable;
+use App\Traits\HasIcon;
+use App\Traits\HasUniqueIdentifier;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasIcon;
-use App\Traits\HasUniqueIdentifier;
 
 /**
  * App\StorageDevice
  */
-class StorageDevice extends Model
+class StorageDevice extends Model implements HasIconContract, HasPrefix
 {
     use Auditable, HasIcon, HasUniqueIdentifier, HasFactory, SoftDeletes;
 
