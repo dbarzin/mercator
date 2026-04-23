@@ -12,7 +12,7 @@
     "cartographie",
     "urbanisation"
   ],
-  "version": "2026.04.15",
+  "version": "2026.04.23",
   "license": "GPL-3.0",
   "author": "Didier Barzin",
   "repository": "https://www.github.com/dbarzin/mercator",
@@ -71,7 +71,7 @@
     "select2": "^4.1.0-rc.0",
     "sweetalert2": "^11.22.4",
     "terser": "^5.16.9",
-    "uuid": "^14.0.0",
+    "uuid": "^11.1.0",
     "vis-data": "^7.1.9",
     "vis-network": "^9.1.9",
     "webpack": "^5.105.0",
