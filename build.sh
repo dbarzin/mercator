@@ -6,8 +6,8 @@ set -e
 # ---------------------------------------------------------------------------
 DOCKER_REGISTRY="ghcr.io/dbarzin"
 DOCKER_IMAGE="mercator"
-CHART_DIR="docs/_helm_chart"
-CHART_INDEX_DIR="${CHART_DIR}/index"
+CHART_DIR="docs/_helm_chart/chart"
+CHART_INDEX_DIR="docs/_helm_chart/index"
 CHART_REPO_URL="https://github.com/dbarzin/mercator/releases/download"
 
 # ---------------------------------------------------------------------------
@@ -45,8 +45,6 @@ fi
 # ---------------------------------------------------------------------------
 # 2b. Composer update (|| true pour éviter l'échec si la clé est absente)
 # ---------------------------------------------------------------------------
-composer config --global --unset repositories.mercator-core || true
-composer config --global --unset repositories.mercator-dummy || true
 composer update
 echo "[✔] composer updated"
 
@@ -54,7 +52,6 @@ echo "[✔] composer updated"
 # 3. Build frontend
 # ---------------------------------------------------------------------------
 export APP_VERSION=$VERSION
-npm install
 npm run build
 
 if [ -n "$(git status --porcelain public/build/assets/)" ]; then
@@ -82,10 +79,7 @@ CURRENT_CHART_VERSION=$(grep '^version:' "$CHART_YAML" | awk '{print $2}')
 echo "[✔] Current chart version: $CURRENT_CHART_VERSION"
 
 # Incrément du patch (ex: 2.0.5 → 2.0.6)
-CHART_MAJOR=$(echo "$CURRENT_CHART_VERSION" | cut -d. -f1)
-CHART_MINOR=$(echo "$CURRENT_CHART_VERSION" | cut -d. -f2)
-CHART_PATCH=$(echo "$CURRENT_CHART_VERSION" | cut -d. -f3)
-NEW_CHART_VERSION="${CHART_MAJOR}.${CHART_MINOR}.$((CHART_PATCH + 1))"
+NEW_CHART_VERSION="$VERSION"
 echo "[✔] New chart version: $NEW_CHART_VERSION"
 
 # Mettre à jour Chart.yaml
@@ -94,10 +88,10 @@ sed -i "s/^appVersion:.*/appVersion: $VERSION/" "$CHART_YAML"
 echo "[✔] Chart.yaml updated (version: $NEW_CHART_VERSION, appVersion: $VERSION)"
 
 # Packager le chart
+helm dependency update "$CHART_DIR"
 helm package "$CHART_DIR" --destination "$CHART_INDEX_DIR"
 CHART_TGZ="${CHART_INDEX_DIR}/${DOCKER_IMAGE}-${NEW_CHART_VERSION}.tgz"
 echo "[✔] Helm chart packaged: $CHART_TGZ"
-
 # Régénérer l'index en fusionnant avec l'existant
 helm repo index "$CHART_INDEX_DIR" \
   --url "${CHART_REPO_URL}/mercator-${NEW_CHART_VERSION}" \
