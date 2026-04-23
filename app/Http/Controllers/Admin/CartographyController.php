@@ -1371,10 +1371,10 @@ class CartographyController extends Controller
                 }
 
                 foreach ($certificates as $certificate) {
-                    if ($certificate->logical_servers->count() > 0) {
+                    if ($certificate->logicalServers->count() > 0) {
                         $graph .= ' CERT'.$certificate->id.$this->dotImage('/images/certificate.png', $certificate->name);
                     }
-                    foreach ($certificate->logical_servers as $logical_server) {
+                    foreach ($certificate->logicalServers as $logical_server) {
                         $graph .= ' LOGICAL_SERVER'.$logical_server->id.'->CERT'.$certificate->id;
                     }
                 }

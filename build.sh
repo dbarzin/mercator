@@ -103,6 +103,8 @@ git add "${CHART_INDEX_DIR}/index.yaml" "$CHART_YAML"
 git commit -m "helm: chart $NEW_CHART_VERSION (app $VERSION)"
 git push
 
+exit
+
 # ---------------------------------------------------------------------------
 # 5. Git tag & GitHub release
 # ---------------------------------------------------------------------------

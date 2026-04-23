@@ -44,7 +44,7 @@ class AuditLog extends Model
 
     public function subjectURL(): string
     {
-        return AuditLog::url($this->subject_type, $this->subject_id);
+        return AuditLog::url($this->subject_type, (string)$this->subject_id);
     }
 
     public static function URL(string $subject_type, string $subject_id): string {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasPrefix;
 use App\Factories\LogicalFlowFactory;
 use App\Traits\Auditable;
 use App\Traits\HasUniqueIdentifier;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\LogicalFlow
  */
-class LogicalFlow extends Model
+class LogicalFlow extends Model implements HasPrefix
 {
     use Auditable, HasUniqueIdentifier, HasFactory, SoftDeletes;
 
@@ -262,38 +263,7 @@ class LogicalFlow extends Model
     {
         return $this->getEntityUID(self::DEST_RELATIONS);
     }
-
-    /**
-     * Récupère l'UID d'une entité sans charger la relation complète
-     * Utilise la propriété statique $prefix de chaque modèle
-     *
-     * @param array<string, string> $relations Mapping field => relationName
-     * @return string|null L'UID construit (PREFIX_ID) ou null si aucune relation n'est définie
-     */
-    private function getEntityUID(array $relations): ?string
-    {
-        foreach ($relations as $field => $relationName) {
-            if ($this->$field !== null) {
-                // Récupère la classe du modèle via la relation
-                $relation = $this->$relationName();
-                $modelClass = get_class($relation->getRelated());
-
-                // Utilise le préfixe statique de la classe cible
-                // Ex: LogicalServer::$prefix = "LSERVER_"
-                if (property_exists($modelClass, 'prefix')) {
-                    return $modelClass::$prefix . $this->$field;
-                }
-
-                // Fallback si le modèle n'a pas de préfixe (ne devrait pas arriver)
-                throw new \LogicException(
-                    sprintf('Model %s must have a static $prefix property', $modelClass)
-                );
-            }
-        }
-
-        return null;
-    }
-
+    
     /* '*~-.,¸¸.-~·*'¨¯'*~-.,¸¸.-~·*'¨¯ Private ¯¨'*·~-.¸¸,.-~*''*~-.,¸¸.-~·*'¨¯ */
 
     /**

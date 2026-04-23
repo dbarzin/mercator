@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+/**
+ * @property int|null $icon_id
+ */
 trait HasIcon
 {
     public function setIconId(?int $id): void

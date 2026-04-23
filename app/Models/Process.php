@@ -2,23 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Contracts\HasIconContract;
+use App\Contracts\HasPrefix;
 use App\Factories\ProcessFactory;
 use App\Traits\Auditable;
+use App\Traits\HasIcon;
+use App\Traits\HasUniqueIdentifier;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasIcon;
-use App\Traits\HasUniqueIdentifier;
+use Illuminate\Support\Collection;
 
 /**
  * App\Process
  */
-class Process extends Model
+class Process extends Model implements HasIconContract, HasPrefix
 {
     use Auditable, HasFactory, HasUniqueIdentifier, HasIcon, SoftDeletes;
 
