@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Mercator\Core\Models\MApplication;
+use App\Models\MApplication;
 
 class MassUpdateMApplicationRequest extends FormRequest
 {

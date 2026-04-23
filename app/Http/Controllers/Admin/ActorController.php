@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyActorRequest;
 use App\Http\Requests\StoreActorRequest;
 use App\Http\Requests\UpdateActorRequest;
 use Gate;
-use Mercator\Core\Models\Actor;
+use App\Models\Actor;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends Controller

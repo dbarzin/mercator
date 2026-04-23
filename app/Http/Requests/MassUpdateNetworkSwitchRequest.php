@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Mercator\Core\Models\NetworkSwitch;
+use App\Models\NetworkSwitch;
 
 class MassUpdateNetworkSwitchRequest extends FormRequest
 {

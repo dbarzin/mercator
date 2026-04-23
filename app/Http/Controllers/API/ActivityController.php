@@ -11,7 +11,7 @@ use Gate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Activity;
+use App\Models\Activity;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends APIController

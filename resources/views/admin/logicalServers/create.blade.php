@@ -68,16 +68,6 @@
                         </div>
                     </div>
 
-<div class="col-auto">
-    <div class="form-group d-flex flex-column align-items-center">
-        <label for="active" class="mb-1">{{ trans('cruds.logicalServer.fields.active') }}</label>
-        <div class="form-switch">
-            <input class="form-check-input" type="checkbox" id="active"
-                   name="active" {{ old('active', $active) ? "checked" : "" }}/>
-        </div>
-    </div>
-</div>
-
                 </div>
                 <div class="row">
                     <div class="col-9">

@@ -9,11 +9,11 @@ use App\Http\Requests\UpdatePhysicalSwitchRequest;
 use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
-use Mercator\Core\Models\Bay;
-use Mercator\Core\Models\Building;
-use Mercator\Core\Models\NetworkSwitch;
-use Mercator\Core\Models\PhysicalSwitch;
-use Mercator\Core\Models\Site;
+use App\Models\Bay;
+use App\Models\Building;
+use App\Models\NetworkSwitch;
+use App\Models\PhysicalSwitch;
+use App\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSwitchController extends Controller

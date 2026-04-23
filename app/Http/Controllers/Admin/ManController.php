@@ -7,9 +7,9 @@ use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\StoreManRequest;
 use App\Http\Requests\UpdateManRequest;
 use Gate;
-use Mercator\Core\Models\Lan;
-use Mercator\Core\Models\Man;
-use Mercator\Core\Models\Wan;
+use App\Models\Lan;
+use App\Models\Man;
+use App\Models\Wan;
 use Symfony\Component\HttpFoundation\Response;
 
 class ManController extends Controller

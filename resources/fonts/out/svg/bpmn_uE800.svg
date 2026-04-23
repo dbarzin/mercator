@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+<path d="M 650 100 L 350 100 L 100 500 L 350 900 L 650 900 L 900 500 Z M 600 200 L 400 200 L 200 500 L 400 800 L 600 800 L 800 500 Z" fill-rule="evenodd"/>
+</svg>

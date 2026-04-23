@@ -1,4 +1,3 @@
-@php use Mercator\Core\Services\LicenseService; @endphp
 <nav id="sidebar" class="sidebar">
     <div class="search-box">
         <form id="search-form" action="/admin/global-search" method="GET">
@@ -532,15 +531,6 @@
                                 class="menu-text">{{ trans('cruds.auditLog.title') }}</span>
                     </a>
                 @endcan
-                @can('module_manage')
-                    @if (app(LicenseService::class)->hasValidLicense())
-                        <a href="{{ route("admin.modules.index") }}"
-                           class="ps-4 {{ request()->is('admin/modules*') ? 'active' : '' }}">
-                            <i class="bi bi-plugin"></i><span
-                                    class="menu-text">{{ trans('cruds.module.title_short') }}</span>
-                        </a>
-                    @endif
-                @endcan
             </div>
         @endcan
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
@@ -548,12 +538,7 @@
         </a>
     </div>
     <div class="sidebar-footer">
-    @if (app(LicenseService::class)->hasValidLicense())
-        Enterprise
-    @else
-        Open Source
-    @endif
-        <br>
+        Open Source<br>
         Version {{ app('mercator.version') }}
     </div>
 </nav>

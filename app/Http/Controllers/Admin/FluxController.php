@@ -8,12 +8,12 @@ use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
 use Gate;
 use Illuminate\Support\Collection;
-use Mercator\Core\Models\ApplicationModule;
-use Mercator\Core\Models\ApplicationService;
-use Mercator\Core\Models\Database;
-use Mercator\Core\Models\Flux;
-use Mercator\Core\Models\Information;
-use Mercator\Core\Models\MApplication;
+use App\Models\ApplicationModule;
+use App\Models\ApplicationService;
+use App\Models\Database;
+use App\Models\Flux;
+use App\Models\Information;
+use App\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends Controller

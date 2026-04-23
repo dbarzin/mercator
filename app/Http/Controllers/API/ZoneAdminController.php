@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateZoneAdminRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\ZoneAdmin;
+use App\Models\ZoneAdmin;
 use Symfony\Component\HttpFoundation\Response;
 
 class ZoneAdminController extends APIController

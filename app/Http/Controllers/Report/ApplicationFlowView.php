@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\ApplicationBlock;
-use Mercator\Core\Models\ApplicationModule;
-use Mercator\Core\Models\ApplicationService;
-use Mercator\Core\Models\Database;
-use Mercator\Core\Models\Flux;
-use Mercator\Core\Models\MApplication;
+use App\Models\ApplicationBlock;
+use App\Models\ApplicationModule;
+use App\Models\ApplicationService;
+use App\Models\Database;
+use App\Models\Flux;
+use App\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationFlowView extends Controller

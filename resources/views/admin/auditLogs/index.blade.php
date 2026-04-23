@@ -80,7 +80,7 @@
                             <td>{{ $log->description }}</td>
                             <td>{{ Str::afterLast($log->subject_type, '\\') }}</td>
                             <td>
-                                <a href="{{ \Mercator\Core\Models\AuditLog::URL($log->subject_type, $log->subject_id) }}">
+                                <a href="{{ \App\Models\AuditLog::URL($log->subject_type, $log->subject_id) }}">
                                     {{ $log->subject_id }}
                                 </a>
                             </td>

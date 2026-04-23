@@ -10,8 +10,8 @@ use App\Http\Requests\UpdateProcessRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Operation;
-use Mercator\Core\Models\Process;
+use App\Models\Operation;
+use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends APIController

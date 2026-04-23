@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Mercator\Core\Models\Actor;
+use App\Models\Actor;
 
 class MassUpdateActorRequest extends FormRequest
 {

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
-use Mercator\Core\Models\Entity;
-use Mercator\Core\Models\Relation;
+use App\Models\Entity;
+use App\Models\Relation;
 use Symfony\Component\HttpFoundation\Response;
 
 class EcosystemView extends Controller

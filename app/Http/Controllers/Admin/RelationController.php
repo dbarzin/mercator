@@ -8,9 +8,9 @@ use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
 use Gate;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\Entity;
-use Mercator\Core\Models\Relation;
-use Mercator\Core\Models\RelationValue;
+use App\Models\Entity;
+use App\Models\Relation;
+use App\Models\RelationValue;
 use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends Controller

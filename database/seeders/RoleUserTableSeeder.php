@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Mercator\Core\Models\User;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Mercator\Core\Models\AdminUser;
-use Mercator\Core\Models\Annuaire;
-use Mercator\Core\Models\DomaineAd;
-use Mercator\Core\Models\ForestAd;
-use Mercator\Core\Models\ZoneAdmin;
+use App\Models\AdminUser;
+use App\Models\Annuaire;
+use App\Models\DomaineAd;
+use App\Models\ForestAd;
+use App\Models\ZoneAdmin;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdministrationView extends Controller

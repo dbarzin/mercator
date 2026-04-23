@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateLanRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Lan;
+use App\Models\Lan;
 use Symfony\Component\HttpFoundation\Response;
 
 class LanController extends APIController

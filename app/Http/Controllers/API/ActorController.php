@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateActorRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Actor;
+use App\Models\Actor;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends APIController

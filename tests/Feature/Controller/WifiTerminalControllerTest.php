@@ -1,8 +1,8 @@
 
 <?php
 
-use Mercator\Core\Models\User;
-use Mercator\Core\Models\WifiTerminal;
+use App\Models\User;
+use App\Models\WifiTerminal;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;

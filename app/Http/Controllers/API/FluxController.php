@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateFluxRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Flux;
+use App\Models\Flux;
 use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends APIController

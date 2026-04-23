@@ -4,8 +4,8 @@ namespace App\Services;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
-use Mercator\Core\Contracts\HasIcon;
-use Mercator\Core\Models\Document;
+use App\Contracts\HasIcon;
+use App\Models\Document;
 
 class IconUploadService
 {

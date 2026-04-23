@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateAnnuaireRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Annuaire;
+use App\Models\Annuaire;
 use Symfony\Component\HttpFoundation\Response;
 
 class AnnuaireController extends APIController

@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateApplicationServiceRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\ApplicationService;
+use App\Models\ApplicationService;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationServiceController extends APIController

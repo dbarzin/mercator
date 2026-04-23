@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Mercator\Core\Models\Document;
+use App\Models\Document;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 

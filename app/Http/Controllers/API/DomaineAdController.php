@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateDomaineAdRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\DomaineAd;
+use App\Models\DomaineAd;
 use Symfony\Component\HttpFoundation\Response;
 
 class DomaineAdController extends APIController

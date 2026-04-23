@@ -707,7 +707,7 @@ In the app, an application can be linked with a database from these two objects.
 In the app, a logical server can be linked with a database from these two objects.  
 In the app, a container can be linked with a database from these two objects.
 
-#### Application Flows
+#### Application Flows {#flows}
 
 An application flow is an exchange of information between a sender and a receiver (application, application service,
 application module, or database).
@@ -1039,7 +1039,7 @@ The data model export lists physical routers linked to a logical router.
 
 In the app, a physical router can be linked to a logical router from these two objects.
 
-#### Security devices
+#### Security devices {#security-devices}
 
 Security devices are components used for network supervision, incident detection, equipment protection, and information
 system security.
@@ -1777,7 +1777,7 @@ WiFi hotspots are hardware devices that enable access to the WiFi wireless netwo
 | updated_at  | timestamp    | Date of update                      |
 | deleted_at  | timestamp    | Date of deletion                    |
 
-#### Physical security device
+#### Physical security device {#physical-security-devices}
 
 Physical security device includes components for network supervision, incident detection, equipment protection, and
 information system security.

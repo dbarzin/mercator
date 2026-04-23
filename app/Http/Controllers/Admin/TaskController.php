@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Gate;
-use Mercator\Core\Models\Task;
+use App\Models\Task;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller

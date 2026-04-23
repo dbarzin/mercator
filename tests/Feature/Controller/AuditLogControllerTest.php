@@ -1,17 +1,17 @@
 
 <?php
 
+use App\Models\Activity;
+use App\Models\AuditLog;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
+use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;
 use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mercator\Core\Models\Activity;
-use Mercator\Core\Models\AuditLog;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\MApplication;
-use Mercator\Core\Models\User;
 
 uses(RefreshDatabase::class);
 
@@ -37,8 +37,8 @@ describe('index', function () {
         // create some objets
         Activity::factory()->count(3)->create();
         MApplication::factory()->count(3)->create();
-        \Mercator\Core\Models\Process::factory()->count(3)->create();
-        \Mercator\Core\Models\PhysicalRouter::factory()->count(3)->create();
+        \App\Models\Process::factory()->count(3)->create();
+        \App\Models\PhysicalRouter::factory()->count(3)->create();
 
         // Test audit log page
         $response = $this->get(route('admin.audit-logs.index'));
@@ -89,7 +89,7 @@ describe('history', function () {
 
         // Test audit log page
         $response = $this->get(route('admin.audit-logs.history', [
-                'type'=> 'Mercator\\Core\\Models\\Activity',
+                'type'=> 'App\\Models\\Activity',
                 'id' => $activity->id
                 ]
         ));

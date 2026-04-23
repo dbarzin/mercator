@@ -24,7 +24,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build --config vite.config.mjs"
+    "build": "vite build --config vite.config.mjs",
+    "watch": "node watch-and-sync.mjs"
   },
   "require": {
     "laravel/framework": "^12.0",
@@ -78,6 +79,7 @@
   },
   "devDependencies": {
     "laravel-vite-plugin": "^1.0.6",
-    "vite": "^6.4.2"
+    "vite": "^6.4.2",
+    "vite-plugin-static-copy": "^3.4.0"
   }
 }

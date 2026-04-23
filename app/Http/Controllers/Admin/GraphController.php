@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGraphRequest;
 use Gate;
 use Illuminate\Http\Request;
-use Mercator\Core\Models\Graph;
+use App\Models\Graph;
 use Symfony\Component\HttpFoundation\Response;
 
 class GraphController extends Controller

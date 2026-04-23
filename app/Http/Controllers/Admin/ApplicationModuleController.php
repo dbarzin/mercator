@@ -7,9 +7,9 @@ use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
 use Gate;
-use Mercator\Core\Models\ApplicationModule;
-use Mercator\Core\Models\ApplicationService;
-use Mercator\Core\Models\Entity;
+use App\Models\ApplicationModule;
+use App\Models\ApplicationService;
+use App\Models\Entity;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationModuleController extends Controller

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDnsserverRequest;
 use App\Http\Requests\StoreDnsserverRequest;
 use App\Http\Requests\UpdateDnsserverRequest;
-use Mercator\Core\Models\Dnsserver;
+use App\Models\Dnsserver;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

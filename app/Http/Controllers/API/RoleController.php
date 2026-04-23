@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateRoleRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Role;
+use App\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends APIController

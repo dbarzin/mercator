@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePeripheralRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Peripheral;
+use App\Models\Peripheral;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends APIController

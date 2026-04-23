@@ -68,7 +68,6 @@
                 @endforeach
             </td>
         </tr>
-        @hasModule('bpmn')
         @if($activity->graphs()->count()>0)
         <tr>
             <th>
@@ -97,6 +96,5 @@
             </td>
         </tr>
         @endif
-        @endhasModule
     </tbody>
 </table>
