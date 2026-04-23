@@ -32,9 +32,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let datatableInstance = null;
     let lastSvgContent    = '';
+    let lastGraphData     = null;   // cache pour re-rendu lors du changement d'engine
     let graphvizReady     = false;
 
     document.addEventListener('graphvizReady', () => { graphvizReady = true; });
+
+    // ── Changement de moteur Graphviz → re-rendu ─────────────────
+    document.querySelectorAll('input[name="graph-engine"]').forEach(r => {
+        r.addEventListener('change', () => {
+            if (lastGraphData) renderGraph(lastGraphData);
+        });
+    });
 
     // ── Parsing / validation ─────────────────────────────────────
     function parseDsl() {
@@ -99,15 +107,62 @@ document.addEventListener('DOMContentLoaded', function () {
     @endif
 
     // ── Export SVG ───────────────────────────────────────────────
-    btnExportSvg?.addEventListener('click', e => {
+    btnExportSvg?.addEventListener('click', async e => {
         e.preventDefault();
         if (!lastSvgContent) return;
-        const a = Object.assign(document.createElement('a'), {
-            href:     URL.createObjectURL(new Blob([lastSvgContent], { type: 'image/svg+xml' })),
-            download: 'mercator-query.svg',
-        });
-        a.click();
+
+        btnExportSvg.classList.add('disabled');
+        try {
+            const svgWithImages = await embedSvgImages(lastSvgContent);
+            const a = Object.assign(document.createElement('a'), {
+                href:     URL.createObjectURL(new Blob([svgWithImages], { type: 'image/svg+xml' })),
+                download: 'mercator-query.svg',
+            });
+            a.click();
+        } catch (err) {
+            console.error('SVG export error:', err);
+        } finally {
+            btnExportSvg.classList.remove('disabled');
+        }
     });
+
+    /**
+     * Parcourt les éléments <image> du SVG et remplace chaque href
+     * par un data-URI base64 afin d'obtenir un SVG autonome.
+     */
+    async function embedSvgImages(svgStr) {
+        const parser = new DOMParser();
+        const doc    = parser.parseFromString(svgStr, 'image/svg+xml');
+
+        const imageEls = [...doc.querySelectorAll('image')];
+        if (!imageEls.length) return svgStr;
+
+        // Fetch + encode en parallèle
+        await Promise.all(imageEls.map(async img => {
+            const href = img.getAttribute('href')
+                      || img.getAttributeNS('http://www.w3.org/1999/xlink', 'href');
+            if (!href || href.startsWith('data:')) return;
+
+            try {
+                const resp = await fetch(href);
+                if (!resp.ok) return;
+                const blob    = await resp.blob();
+                const dataUrl = await new Promise((res, rej) => {
+                    const reader   = new FileReader();
+                    reader.onload  = () => res(reader.result);
+                    reader.onerror = rej;
+                    reader.readAsDataURL(blob);
+                });
+                img.setAttribute('href', dataUrl);
+                // Nettoie l'attribut xlink:href obsolète si présent
+                img.removeAttributeNS('http://www.w3.org/1999/xlink', 'href');
+            } catch (err) {
+                console.warn('embedSvgImages: impossible de charger', href, err);
+            }
+        }));
+
+        return new XMLSerializer().serializeToString(doc.documentElement);
+    }
 
     // ── Exécuter ─────────────────────────────────────────────────
     btnRun.addEventListener('click', runQuery);
@@ -156,6 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function renderList({ columns, rows }) {
         hideAll();
         document.getElementById('result-list').classList.remove('d-none');
+        document.getElementById('engine-panel').classList.add('d-none');
         btnExportSvg.classList.add('d-none');
 
         if (datatableInstance) { datatableInstance.destroy(); datatableInstance = null; }
@@ -194,14 +250,17 @@ document.addEventListener('DOMContentLoaded', function () {
             document.addEventListener('graphvizReady', () => renderGraph({ nodes, edges }), { once: true });
             return;
         }
+        lastGraphData = { nodes, edges };   // cache pour re-rendu
+        const engine = document.querySelector('input[name="graph-engine"]:checked')?.value ?? 'dot';
         try {
             const svgStr = window.graphviz.layout(
-                buildDot(nodes, edges), 'svg', 'dot', { images: buildImagesArray(nodes) }
+                buildDot(nodes, edges), 'svg', engine, { images: buildImagesArray(nodes) }
             );
             lastSvgContent = svgStr;
             hideAll();
             document.getElementById('graph-svg-container').innerHTML = svgStr;
             document.getElementById('result-graph').classList.remove('d-none');
+            document.getElementById('engine-panel').classList.remove('d-none');
             btnExportSvg.classList.remove('d-none');
         } catch (e) {
             showError('Erreur Graphviz : ' + e.message);

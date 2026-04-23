@@ -99,13 +99,35 @@ LIMIT 100"></textarea>
     </div>
 
 </div>
+
 {{-- ── Barre de statut ─────────────────────────────────────────────── --}}
-<div class="card-footer py-1 px-3 d-flex justify-content-between align-items-center">
-    <small class="text-muted" id="status-msg">—</small>
-    <div class="d-flex gap-2 align-items-center">
-        <small class="text-muted" id="status-count"></small>
-        <a href="#" id="btn-export-svg" class="d-none small text-decoration-none">
-            <i class="fas fa-download"></i> SVG
+<div class="card-footer py-1 px-3 d-flex justify-content-between align-items-center flex-wrap gap-1">
+
+    {{-- Gauche : téléchargement + sélection engine --}}
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+        <a href="#" id="btn-export-svg" class="d-none small text-decoration-none"
+           title="@lang('Télécharger le graphe en SVG')">
+            <i class="bi bi-download"></i>
         </a>
+
+        {{-- Sélection du moteur Graphviz — visible uniquement en mode graphe --}}
+        <div id="engine-panel" class="d-none d-flex align-items-center gap-2 small">
+            <span class="text-muted">@lang('Rendu') :</span>
+            @foreach(['dot', 'fdp', 'osage', 'circo'] as $eng)
+                <label class="d-flex align-items-center gap-1 mb-0 user-select-none">
+                    <input type="radio" name="graph-engine"
+                           value="{{ $eng }}" id="engine-{{ $eng }}"
+                           @if($eng === 'dot') checked @endif>
+                    <span>{{ $eng }}</span>
+                </label>
+            @endforeach
+        </div>
     </div>
+
+    {{-- Droite : statut + compteur --}}
+    <div class="d-flex align-items-center gap-2">
+        <small class="text-muted" id="status-msg">—</small>
+        <small class="text-muted" id="status-count"></small>
+    </div>
+
 </div>
