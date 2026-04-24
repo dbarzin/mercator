@@ -31,7 +31,7 @@ LIMIT   <n>
 
 ## Modèles disponibles
 
-Les modèles correspondent aux entités de l'API Mercator. Les noms sont en **PascalCase** et identiques aux noms de ressources exposés par l'API REST.
+Les modèles correspondent aux entités de l'[API](api.fr.md) Mercator et sont en **snake_case**.
 
 | Modèle             | Description |
 |--------------------|-------------|
@@ -47,7 +47,7 @@ Les modèles correspondent aux entités de l'API Mercator. Les noms sont en **Pa
 | …                  | _Tous les modèles de l'API_ |
 
 !!! info "Champs disponibles"
-    Les champs utilisables dans `FIELDS` et `WHERE` sont exactement ceux exposés par l'API Mercator. Consultez la [référence de l'API](api.fr.md) pour connaître l'ensemble des attributs de chaque modèle.
+    Les champs utilisables dans `FIELDS` et `WHERE` sont ceux exposés par l'API Mercator. Consultez la [modèle de données](model.fr.md) pour connaître l'ensemble des attributs de chaque modèle.
 
 ---
 

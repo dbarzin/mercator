@@ -30,7 +30,7 @@ LIMIT   <n>
 
 ## Available Models
 
-Models correspond to Mercator API entities. Names are in **PascalCase** and identical to the resource names exposed by the REST API.
+Models correspond to Mercator API entities. Names are in **snake_case** and identical to the resource names exposed by the REST API.
 
 | Model              | Description |
 |--------------------|-------------|
@@ -46,7 +46,7 @@ Models correspond to Mercator API entities. Names are in **PascalCase** and iden
 | …                  | _All API models_ |
 
 !!! info "Available fields"
-The fields usable in `FIELDS` and `WHERE` are exactly those exposed by the Mercator API. Refer to the [API reference](api.md) for the full list of attributes for each model.
+    The fields usable in `FIELDS` and `WHERE` are exactly those exposed by the Mercator API. Refer to the [Data Model](model.md) for the full list of attributes for each model.
 
 ---
 
@@ -62,7 +62,7 @@ FIELDS name, operating_system, cpu, memory, applications.name
 ```
 
 !!! warning "Consistency with WITH"
-If you reference a relation field in `FIELDS` (e.g. `applications.name`), the corresponding relation must be declared in `WITH` (e.g. `WITH applications`), otherwise the data will not be loaded.
+    If you reference a relation field in `FIELDS` (e.g. `applications.name`), the corresponding relation must be declared in `WITH` (e.g. `WITH applications`), otherwise the data will not be loaded.
 
 ---
 
@@ -129,7 +129,7 @@ OUTPUT graph
 ```
 
 !!! tip "When to use `graph`?"
-Prefer `OUTPUT graph` whenever your query loads relations with `WITH` and you want to visualize the links between entities (applications ↔ servers, networks ↔ servers, etc.).
+    Prefer `OUTPUT graph` whenever your query loads relations with `WITH` and you want to visualize the links between entities (applications ↔ servers, networks ↔ servers, etc.).
 
 ---
 
