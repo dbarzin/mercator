@@ -1923,6 +1923,8 @@ Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipe
 L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.  
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
 
+---
+
 ### Configuration
 
 Dans le menu configuration, on trouve la partie documents.
@@ -1962,5 +1964,62 @@ Cette partie permet de voir les documents attachés, mais aussi les icônes pers
 "updated_at": "2026-03-30T08:05:46.000000Z"
 ```
 
-⚠️ A partir de l'interface utilsiateur, si un document d'icône personnalisé est créé, il peut être utilisé par la même
-un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.
+⚠️ A partir de l'interface utilisateur, si un document d'icône personnalisé est créé, il peut être utilisé par un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.
+
+#### utilisateurs
+
+Cette partie permet de voir la liste des utilisateurs de mercator avec le lien sur leur rôle associé.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*users*</span> | `/api/users` |
+
+
+| Champ             | Type             | Description               |
+|-------------------|------------------|---------------------------|
+| id                | int(10) unsigned | auto_increment            |
+| login             | varchar(255)     | Identifiant de connection |
+| name              | varchar(255)     | Nom de l'utilisateur      |
+| email             | varchar(255)     | Courriel de l'utilisateur |
+| email_verified_at | datetime         | Date de vérification du courriel |
+| password          | varchar(255)     | Mot de passe de l'utilisateur    |
+| remember_token    | varchar(255)     | Durée de session                 |
+| granularity       | int(11)          | Niveau d'affichage par défaut des résultats (1, 2,3) |
+| roles             | List int [,]     | Liste des id des rôles associés |
+| language          | varchar(2)       | Langage de l'utilisateur ( anglais, français ou allemand) |
+| created_at        | timestamp        | Date de création                         |
+| updated_at        | timestamp        | Date de mise à jour                      |
+| deleted_at        | timestamp        | Date de suppression                      |
+
+#### Roles
+
+Cette partie permet de voir la liste des roles des users dans mercator.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*roles*</span> | `/api/roles` |
+
+| Champ      | Type             | Description          |
+|------------|------------------|----------------------|
+| id         | int(10) unsigned | auto_increment       |
+| title      | varchar(255)     | Titre du role        |
+| created_at | timestamp        | Date de création     |
+| updated_at | timestamp        | Date de mise à jour  |
+| deleted_at | timestamp        | Date de suppression  |
+
+#### Permissions
+
+Cette partie permet de voir la liste des permissions qui peuvent être affectées aux roles.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*permissions*</span> | `/api/permissions` |
+
+| Champ      | Type             | Description          |
+|------------|------------------|----------------------|
+| id         | int(10) unsigned | auto_increment       |
+| title      | varchar(255)     | Titre du role        |
+| module     | varchar(255)     |                      |
+| created_at | timestamp        | Date de création     |
+| updated_at | timestamp        | Date de mise à jour  |
+| deleted_at | timestamp        | Date de suppression  |
