@@ -97,9 +97,13 @@ The list of APIs can be found in /route/api.php
 - [/api/physical-links](./model.md#physical-links)
 
 #### Endpoints for Configuration
+
+- [/api/users](./model.md#users)
+- [/api/roles](./model.md#roles)
+- [/api/permissions](./model.md#permissions) *access not allowed yet*
 - [/api/documents](./model.md#documents)
 
-The unique feature of this endpoint is that it allows you to either upload or download a document.
+The unique feature of the endpoint **documents** is that it allows you to either upload or download a document.
 The syntax is as follows:
 ##### Example of adding a document in Mercator:
 ```bash
@@ -123,6 +127,10 @@ DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
         -o "$OUTFILE" \
         -w "HTTP %{http_code}\n"
 ```
+
+#### Endpoint for queries
+
+- /api/queries
 
 #### Endpoints for Reports
 
