@@ -683,6 +683,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../vulnerabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../usecases/" class="md-nav__link">
         
   
@@ -922,7 +942,7 @@
 </table>
 <hr />
 <h2 id="available-models">Available Models<a class="headerlink" href="#available-models" title="Permanent link">&para;</a></h2>
-<p>Models correspond to Mercator API entities. Names are in <strong>PascalCase</strong> and identical to the resource names exposed by the REST API.</p>
+<p>Models correspond to Mercator API entities. Names are in <strong>snake_case</strong> and identical to the resource names exposed by the REST API.</p>
 <table>
 <thead>
 <tr>
@@ -975,8 +995,8 @@
 </table>
 <div class="admonition info">
 <p class="admonition-title">Available fields</p>
+<p>The fields usable in <code>FIELDS</code> and <code>WHERE</code> are exactly those exposed by the Mercator API. Refer to the <a href="../model/">Data Model</a> for the full list of attributes for each model.</p>
 </div>
-<p>The fields usable in <code>FIELDS</code> and <code>WHERE</code> are exactly those exposed by the Mercator API. Refer to the <a href="../api/">API reference</a> for the full list of attributes for each model.</p>
 <hr />
 <h2 id="fields-clause">FIELDS Clause<a class="headerlink" href="#fields-clause" title="Permanent link">&para;</a></h2>
 <p>The <code>FIELDS</code> clause lists the attributes to display in the result. It accepts:</p>
@@ -988,8 +1008,8 @@
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Consistency with WITH</p>
-</div>
 <p>If you reference a relation field in <code>FIELDS</code> (e.g. <code>applications.name</code>), the corresponding relation must be declared in <code>WITH</code> (e.g. <code>WITH applications</code>), otherwise the data will not be loaded.</p>
+</div>
 <hr />
 <h2 id="conditions">WHERE Clause<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h2>
 <p>The <code>WHERE</code> clause filters records based on conditions on the main model's fields.</p>
@@ -1056,8 +1076,8 @@
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">When to use <code>graph</code>?</p>
-</div>
 <p>Prefer <code>OUTPUT graph</code> whenever your query loads relations with <code>WITH</code> and you want to visualize the links between entities (applications ↔ servers, networks ↔ servers, etc.).</p>
+</div>
 <hr />
 <h2 id="saving-queries">Saving Queries<a class="headerlink" href="#saving-queries" title="Permanent link">&para;</a></h2>
 <p>It is possible to <strong>save queries</strong> in the interface to retrieve and re-run them without retyping them. Saved queries can be made public (visible to all users) or private (visible only to their author).</p>

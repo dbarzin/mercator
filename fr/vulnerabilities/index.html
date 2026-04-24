@@ -1,0 +1,1626 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mapping the Information System !">
+      
+      
+      
+        <link rel="canonical" href="https://dbarzin.githubs.io/mercator/fr/vulnerabilities/">
+      
+      
+        <link rel="prev" href="../reports/">
+      
+      
+        <link rel="next" href="../usecases/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Vulnérabilités - Mercator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/overrides.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vulnerabilites" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../" title="Mercator" class="md-header__button md-logo" aria-label="Mercator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mercator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Vulnérabilités
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7 1.62-4.33L19.12 17h-3.24Z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../vulnerabilities/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dbarzin/mercator" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="Mercator" class="md-nav__button md-logo" aria-label="Mercator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mercator
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dbarzin/mercator" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../application/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Application
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cartography/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cartographie / Vues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maturity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Niveaux de maturité
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bpmn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BPMN 2.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Requêtes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exploration et Dépendances
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rapports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Vulnérabilités
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Vulnérabilités
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#actifs-supportant-les-champs-cpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Actifs supportant les champs CPE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saisie-des-champs-vendor-product-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Saisie des champs vendor / product / version
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Saisie des champs vendor / product / version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conventions-de-nommage-cpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conventions de nommage CPE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saisie-dans-linterface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Saisie dans l'interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-via-lapi-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Import via l'API (JSON)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recherche" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recherche
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpe-guesser" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPE-Guesser
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparatif
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rapports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rapports
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rapports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#score-cvss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Score CVSS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sauvegarde-des-donnees-cpe-cve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sauvegarde des données CPE / CVE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cle-api-nvd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clé API NVD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variables-denvironnement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variables d'environnement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploiement-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Déploiement Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initialisation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initialisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chargement-initial-de-la-base-cpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chargement initial de la base CPE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reprise-en-cas-dinterruption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reprise en cas d'interruption
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mise-a-jour-automatique" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mise à jour automatique
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mise à jour automatique">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scheduler-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduler Laravel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-du-cron-vm-classique" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration du cron (VM classique)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-sous-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vérification sous Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vérification de la base CPE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vérification de la base CPE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#via-mysql-mariadb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via MySQL / MariaDB
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#via-les-journaux-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via les journaux Laravel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#points-ouverts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Points ouverts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Points ouverts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reprise-sur-interruption-de-cpe-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reprise sur interruption de cpe-sync
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#affichage-de-la-date-de-synchronisation-cpe-dans-linterface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Affichage de la date de synchronisation CPE dans l'interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#champs-cpe-non-affiches-pour-certains-actifs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Champs CPE non affichés pour certains actifs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#colonne-version-absente-de-la-liste-des-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Colonne "version" absente de la liste des Applications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distinction-search-guess-peu-visible-dans-lui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distinction Search / Guess peu visible dans l'UI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annexe-a-reference-rapide-des-commandes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Annexe A — Référence rapide des commandes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annexe-b-exemple-de-fichier-env-minimal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Annexe B — Exemple de fichier .env minimal
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usecases/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cas d'usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modèle de données
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Interface Import / Export de Données
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apifilters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API avancées (filtres)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../admin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Administration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Références
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dbarzin/mercator/edit/master/docs/vulnerabilities.fr.md" title="Editer cette page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/dbarzin/mercator/raw/master/docs/vulnerabilities.fr.md" title="Consulter la source de cette page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="vulnerabilites">Vulnérabilités<a class="headerlink" href="#vulnerabilites" title="Permanent link">&para;</a></h1>
+<p>Mercator intègre un moteur de détection de vulnérabilités basé sur <a href="https://vulnerability.circl.lu/">Vulnerability-Lookup</a> et le référentiel <a href="https://nvd.nist.gov/">NVD</a> (National Vulnerability Database). Dès lors que les champs <code>vendor</code> et <code>product</code> sont renseignés sur un actif, Mercator peut identifier les CVE connues associées à ce composant et les présenter avec leur score de criticité CVSS.</p>
+<p>Ce document décrit l'architecture de la fonctionnalité, sa configuration, son initialisation et son utilisation au quotidien.</p>
+<h2 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">&para;</a></h2>
+<p>Trois standards forment la base du système de détection :</p>
+<table>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Signification</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CPE</strong></td>
+<td><em>Common Platform Enumeration</em> — dictionnaire standardisé des logiciels, OS et matériels connus</td>
+<td><code>cpe:2.3:a:apache:log4j:2.14.1:*:*:*:*:*:*:*</code></td>
+</tr>
+<tr>
+<td><strong>CVE</strong></td>
+<td><em>Common Vulnerabilities and Exposures</em> — liste publique des failles de sécurité connues</td>
+<td><code>CVE-2021-44228</code> (Log4Shell)</td>
+</tr>
+<tr>
+<td><strong>NVD</strong></td>
+<td><em>National Vulnerability Database</em> — base américaine qui relie CPE ↔ CVE</td>
+<td>Source de données interrogée par Mercator</td>
+</tr>
+</tbody>
+</table>
+<p>Le flux de fonctionnement est le suivant :</p>
+<div class="highlight"><pre><span></span><code>Inventaire Mercator
+  └─&gt; vendor + product + version renseignés sur un actif
+        └─&gt; Mercator recherche le CPE correspondant dans sa base locale
+              └─&gt; Mercator interroge le NVD pour les CVE associées à ce CPE
+</code></pre></div>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<p>Mercator stocke les données CPE dans trois tables dédiées :</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Contenu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cpe_vendors</code></td>
+<td>Éditeurs et fabricants (ex : <code>apache</code>, <code>microsoft</code>, <code>cisco</code>)</td>
+</tr>
+<tr>
+<td><code>cpe_products</code></td>
+<td>Produits par éditeur (ex : <code>log4j</code>, <code>windows_10</code>)</td>
+</tr>
+<tr>
+<td><code>cpe_versions</code></td>
+<td>Versions de chaque produit</td>
+</tr>
+</tbody>
+</table>
+<p>Ces tables sont alimentées par la commande <code>mercator:cpe-sync</code>.</p>
+<h3 id="actifs-supportant-les-champs-cpe">Actifs supportant les champs CPE<a class="headerlink" href="#actifs-supportant-les-champs-cpe" title="Permanent link">&para;</a></h3>
+<p>Les champs <code>vendor</code>, <code>product</code> et <code>version</code> sont disponibles sur les types d'actifs suivants :</p>
+<table>
+<thead>
+<tr>
+<th>Vue</th>
+<th>Objet</th>
+<th>Disponible dans l'UI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Applications</td>
+<td>Application</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Applications</td>
+<td>Module applicatif</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Infrastructure logique</td>
+<td>Équipement de sécurité (logique)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Périphérique</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Serveur physique</td>
+<td>⚠️ présent en base, non affiché</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Poste de travail</td>
+<td>⚠️ présent en base, non affiché</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Commutateur physique</td>
+<td>⚠️ présent en base, non affiché</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Routeur physique</td>
+<td>⚠️ présent en base, non affiché</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Borne WiFi</td>
+<td>⚠️ présent en base, non affiché</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Téléphone</td>
+<td>⚠️ présent en base, non affiché</td>
+</tr>
+<tr>
+<td>Infrastructure physique</td>
+<td>Infra de stockage</td>
+<td>⚠️ présent en base, non affiché</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Pour les actifs dont les champs ne sont pas encore visibles dans l'interface, ils restent accessibles via l'API REST ou par import JSON.</p>
+</blockquote>
+<h2 id="saisie-des-champs-vendor-product-version">Saisie des champs vendor / product / version<a class="headerlink" href="#saisie-des-champs-vendor-product-version" title="Permanent link">&para;</a></h2>
+<p>La détection de vulnérabilités repose entièrement sur la qualité des données saisies. Sans les trois champs <code>vendor</code>, <code>product</code> et <code>version</code> correctement renseignés, aucune recherche CVE ne peut aboutir.</p>
+<h3 id="conventions-de-nommage-cpe">Conventions de nommage CPE<a class="headerlink" href="#conventions-de-nommage-cpe" title="Permanent link">&para;</a></h3>
+<p>Les valeurs doivent correspondre exactement aux identifiants utilisés dans le NVD : <strong>minuscules</strong>, <strong>underscores</strong> à la place des espaces.</p>
+<table>
+<thead>
+<tr>
+<th>Logiciel</th>
+<th><code>vendor</code></th>
+<th><code>product</code></th>
+<th><code>version</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apache Log4j 2.14</td>
+<td><code>apache</code></td>
+<td><code>log4j</code></td>
+<td><code>2.14.1</code></td>
+</tr>
+<tr>
+<td>Microsoft Windows 11</td>
+<td><code>microsoft</code></td>
+<td><code>windows_11</code></td>
+<td><code>21h2</code></td>
+</tr>
+<tr>
+<td>Cisco IOS 15.4</td>
+<td><code>cisco</code></td>
+<td><code>ios</code></td>
+<td><code>15.4</code></td>
+</tr>
+<tr>
+<td>SAP S/4HANA 2022</td>
+<td><code>sap</code></td>
+<td><code>s\/4hana</code></td>
+<td><code>2022</code></td>
+</tr>
+<tr>
+<td>Ubuntu 22.04</td>
+<td><code>canonical</code></td>
+<td><code>ubuntu_linux</code></td>
+<td><code>22.04</code></td>
+</tr>
+<tr>
+<td>Docker 24.0.5</td>
+<td><code>docker</code></td>
+<td><code>docker</code></td>
+<td><code>24.0.5</code></td>
+</tr>
+</tbody>
+</table>
+<p>En cas de doute sur les identifiants exacts, utiliser la fonction <strong>Guess</strong> (voir section suivante).</p>
+<h3 id="saisie-dans-linterface">Saisie dans l'interface<a class="headerlink" href="#saisie-dans-linterface" title="Permanent link">&para;</a></h3>
+<p><strong>Pour une Application :</strong><br />
+<code>Applications</code> → <code>Applications</code> → ouvrir ou créer la fiche → renseigner <code>Vendor</code>, <code>Product</code>, <code>Version</code>.</p>
+<p><strong>Pour un Module applicatif :</strong><br />
+<code>Applications</code> → <code>Modules applicatifs</code> → même procédure.</p>
+<h3 id="import-via-lapi-json">Import via l'API (JSON)<a class="headerlink" href="#import-via-lapi-json" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Apache Guacamole&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;technology&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;apache&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;vendor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;apache&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;product&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;guacamole&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.5.4&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="recherche">Recherche<a class="headerlink" href="#recherche" title="Permanent link">&para;</a></h3>
+<p>La recherche de vulnérabilités s'appuie sur <a href="https://vulnerability.circl.lu/">Vulnerability-Lookup</a>,  le service open source développé par <a href="https://www.circl.lu/">CIRCL</a> (Computer Incident Response Center Luxembourg) et disponible sur
+<a href="https://github.com/vulnerability-lookup/vulnerability-lookup">GitHub</a>. </p>
+<p>Contrairement à une recherche limitée au NVD/NIST, Vulnerability-Lookup agrège de multiples sources : GitHub Advisory Database, PySec, les flux CSAF de Red Hat, CISA, Cisco, Siemens et d'autres CERT, offrant ainsi une couverture bien plus large des vulnérabilités connues.</p>
+<p><strong>Search</strong> effectue une correspondance exacte : Mercator recherche dans sa base locale le CPE qui correspond précisément aux valeurs <code>vendor</code> et <code>product</code> saisies, puis interroge le NVD pour récupérer les CVE associées.</p>
+<p><strong>Prérequis :</strong> le deux champs doivent être renseignés et présents dans la base CPE locale.</p>
+<p><strong>Utilisation :</strong></p>
+<ol>
+<li>Ouvrir la fiche d'une application ou d'un asset ayant des champs <code>vendor</code>, <code>product</code> et <code>version</code></li>
+<li>Cliquer sur <code>Recherche CVE</code></li>
+<li>Les CVE s'affichent avec leur score CVSS et leur description</li>
+</ol>
+<blockquote>
+<p>Si aucun résultat ne s'affiche, vérifier que la base CPE est chargée et que les valeurs <code>vendor</code> et <code>product</code> correspondent exactement aux identifiants NVD.</p>
+</blockquote>
+<h3 id="cpe-guesser">CPE-Guesser<a class="headerlink" href="#cpe-guesser" title="Permanent link">&para;</a></h3>
+<p><a href="https://vulnerability-lookup.github.io/cpe-guesser">CPE-Guesser</a>  est un outil open source développé par <a href="https://www.circl.lu">CIRCL (Computer Incident Response Center Luxembourg)</a>. Il identifie les CPE les plus probables à partir d'un ou plusieurs mots-clés, en s'appuyant sur un index inverse construit à partir du dictionnaire NVD et pondéré par la fréquence d'apparition de chaque CPE dans les CVE connues. Mercator interroge CPE-Guesser pour proposer une liste de correspondances classées par pertinence, sans exiger que les champs vendor / product / version soient déjà alignés sur le référentiel NVD.</p>
+<p><strong>Quand utiliser Guess :</strong></p>
+<ul>
+<li>Pour identifier le bon CPE à reporter ensuite dans la fiche de l'actif</li>
+<li>Les identifiants NVD exacts ne sont pas connus</li>
+<li>CVE Search ne retourne aucun résultat</li>
+</ul>
+<p><strong>Utilisation :</strong></p>
+<ol>
+<li>Accéder à la fiche de l'application ou au menu CVE</li>
+<li>Utiliser la fonction <code>Guess</code></li>
+<li>Sélectionner le CPE correspondant dans la liste proposée</li>
+<li>Reporter les valeurs <code>vendor</code> / <code>product</code> / <code>version</code> dans la fiche pour que Search fonctionne à l'avenir</li>
+</ol>
+<h3 id="comparatif">Comparatif<a class="headerlink" href="#comparatif" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Search</th>
+<th>Guess</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prérequis</strong></td>
+<td>Champs CPE renseignés et présents en base</td>
+<td>Aucun</td>
+</tr>
+<tr>
+<td><strong>Vitesse</strong></td>
+<td>Instantané (base locale)</td>
+<td>Plus lent (calcul d'approximation)</td>
+</tr>
+<tr>
+<td><strong>Précision</strong></td>
+<td>Très précis si les champs sont corrects</td>
+<td>Peut proposer des faux positifs</td>
+</tr>
+<tr>
+<td><strong>Usage typique</strong></td>
+<td>Actifs bien documentés</td>
+<td>Découverte du bon CPE, actifs peu documentés</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rapports">Rapports<a class="headerlink" href="#rapports" title="Permanent link">&para;</a></h2>
+<h3 id="score-cvss">Score CVSS<a class="headerlink" href="#score-cvss" title="Permanent link">&para;</a></h3>
+<p>Chaque CVE est présentée avec son score <strong>CVSS</strong> (Common Vulnerability Scoring System) :</p>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Niveau</th>
+<th>Priorité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0</td>
+<td>Aucun</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0.1 – 3.9</td>
+<td>Faible</td>
+<td>Basse</td>
+</tr>
+<tr>
+<td>4.0 – 6.9</td>
+<td>Moyen</td>
+<td>Normale</td>
+</tr>
+<tr>
+<td>7.0 – 8.9</td>
+<td>Élevé</td>
+<td>Haute</td>
+</tr>
+<tr>
+<td>9.0 – 10.0</td>
+<td>Critique</td>
+<td>Immédiate</td>
+</tr>
+</tbody>
+</table>
+<p>Les CVE détectées sont disponibles dans les rapports de sécurité, accessibles via le menu <strong>Rapports</strong>.</p>
+<h2 id="sauvegarde-des-donnees-cpe-cve">Sauvegarde des données CPE / CVE<a class="headerlink" href="#sauvegarde-des-donnees-cpe-cve" title="Permanent link">&para;</a></h2>
+<p>Les données CPE sont stockées <strong>uniquement en base de données</strong> (tables <code>cpe_vendors</code>, <code>cpe_products</code>, <code>cpe_versions</code>). Il n'y a pas de fichiers spécifiques à sauvegarder sur le système de fichiers.</p>
+<p>Trois stratégies sont envisageables selon le contexte :</p>
+<p><strong>Option A — Ne pas sauvegarder les tables CPE</strong><br />
+Les tables peuvent être régénérées à tout moment depuis le NVD. C'est la stratégie la plus légère, au prix d'un temps de resynchronisation après restauration.</p>
+<p><strong>Option B — Sauvegarde complète de la base (recommandé)</strong></p>
+<div class="highlight"><pre><span></span><code>mysqldump<span class="w"> </span>-u<span class="w"> </span>mercator_user<span class="w"> </span>-p<span class="w"> </span>mercator<span class="w"> </span>&gt;<span class="w"> </span>mercator_backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.sql
+
+<span class="c1"># Sous Docker</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>mercator-db<span class="w"> </span>mysqldump<span class="w"> </span>-u<span class="w"> </span>mercator_user<span class="w"> </span>-p<span class="w"> </span>mercator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>&gt;<span class="w"> </span>mercator_backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.sql
+</code></pre></div>
+<p><strong>Option C — Sauvegarde allégée sans les tables CPE</strong></p>
+<div class="highlight"><pre><span></span><code>mysqldump<span class="w"> </span>-u<span class="w"> </span>mercator_user<span class="w"> </span>-p<span class="w"> </span>mercator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ignore-table<span class="o">=</span>mercator.cpe_vendors<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ignore-table<span class="o">=</span>mercator.cpe_products<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ignore-table<span class="o">=</span>mercator.cpe_versions<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>&gt;<span class="w"> </span>mercator_backup_sans_cpe_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.sql
+</code></pre></div>
+<p>Après restauration, relancer <code>mercator:cpe-sync --now</code> pour repeupler les tables.</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<h3 id="cle-api-nvd">Clé API NVD<a class="headerlink" href="#cle-api-nvd" title="Permanent link">&para;</a></h3>
+<p>Le NVD impose des limites de débit selon que vous utilisez une clé API ou non :</p>
+<table>
+<thead>
+<tr>
+<th>Sans clé</th>
+<th>Avec clé</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 requêtes / 30 s</td>
+<td>50 requêtes / 30 s</td>
+</tr>
+<tr>
+<td>Chargement initial : 8–24 h</td>
+<td>Chargement initial : 30 min – 2 h</td>
+</tr>
+</tbody>
+</table>
+<p>La clé est <strong>gratuite</strong>. Pour l'obtenir :</p>
+<ol>
+<li>Se rendre sur <a href="https://nvd.nist.gov/developers/request-an-api-key">https://nvd.nist.gov/developers/request-an-api-key</a></li>
+<li>Saisir une adresse e-mail</li>
+<li>Recevoir la clé par e-mail (quelques minutes)</li>
+</ol>
+<h3 id="variables-denvironnement">Variables d'environnement<a class="headerlink" href="#variables-denvironnement" title="Permanent link">&para;</a></h3>
+<p>Ajouter les lignes suivantes au fichier <code>.env</code> :</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># URL de l&#39;API NVD (ne pas modifier)</span>
+<span class="na">CPE_API_URL</span><span class="o">=</span><span class="s">https://services.nvd.nist.gov/rest/json/cpes/2.0</span>
+
+<span class="c1"># Clé API NVD — fortement recommandée</span>
+<span class="na">NVD_API_KEY</span><span class="o">=</span><span class="s">votre-clé-ici</span>
+</code></pre></div>
+<h3 id="deploiement-docker">Déploiement Docker<a class="headerlink" href="#deploiement-docker" title="Permanent link">&para;</a></h3>
+<p>Dans <code>docker-compose.yml</code>, ajouter ces variables dans la section <code>environment</code> du service <code>app</code> :</p>
+<div class="highlight"><pre><span></span><code><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CPE_API_URL=https://services.nvd.nist.gov/rest/json/cpes/2.0</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVD_API_KEY=votre-clé-ici</span>
+</code></pre></div>
+<p>Puis recharger la configuration :</p>
+<div class="highlight"><pre><span></span><code>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>config:clear
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>config:cache
+</code></pre></div>
+<h2 id="initialisation">Initialisation<a class="headerlink" href="#initialisation" title="Permanent link">&para;</a></h2>
+<h3 id="chargement-initial-de-la-base-cpe">Chargement initial de la base CPE<a class="headerlink" href="#chargement-initial-de-la-base-cpe" title="Permanent link">&para;</a></h3>
+<p>La base CPE doit être synchronisée une première fois avant de pouvoir effectuer des recherches CVE. Le NVD contient plusieurs centaines de milliers d'entrées ; la durée dépend directement de la disponibilité d'une clé API (voir section précédente).</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Installation classique (VM)</span>
+php<span class="w"> </span>artisan<span class="w"> </span>mercator:cpe-sync<span class="w"> </span>--now
+
+<span class="c1"># Déploiement Docker</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>mercator:cpe-sync<span class="w"> </span>--now
+</code></pre></div>
+<h3 id="reprise-en-cas-dinterruption">Reprise en cas d'interruption<a class="headerlink" href="#reprise-en-cas-dinterruption" title="Permanent link">&para;</a></h3>
+<p>Si la commande est interrompue (coupure réseau, timeout, redémarrage du container), il n'existe pas encore de mécanisme de reprise : la synchronisation repart de zéro.</p>
+<p>Pour éviter ce problème, lancer la commande dans une session <code>screen</code> ou <code>tmux</code> afin de la protéger contre les déconnexions SSH :</p>
+<div class="highlight"><pre><span></span><code>screen<span class="w"> </span>-S<span class="w"> </span>cpe-sync
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>mercator:cpe-sync<span class="w"> </span>--now
+<span class="c1"># Ctrl+A puis D pour détacher la session</span>
+</code></pre></div>
+<p>Il est également utile de surveiller les journaux Laravel en parallèle :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>storage/logs/laravel.log
+</code></pre></div>
+<blockquote>
+<p><strong>Point ouvert :</strong> La possibilité de synchroniser par segments ou en se limitant aux applications déjà présentes dans la CMDB est à l'étude. Voir la <a href="#points-ouverts">section Points ouverts</a>.</p>
+</blockquote>
+<h2 id="mise-a-jour-automatique">Mise à jour automatique<a class="headerlink" href="#mise-a-jour-automatique" title="Permanent link">&para;</a></h2>
+<h3 id="scheduler-laravel">Scheduler Laravel<a class="headerlink" href="#scheduler-laravel" title="Permanent link">&para;</a></h3>
+<p>Mercator utilise le planificateur de tâches de Laravel pour maintenir la base CPE à jour. La synchronisation est programmée <strong>chaque jour à 03h30</strong>, à condition que le cron système soit actif.</p>
+<h3 id="configuration-du-cron-vm-classique">Configuration du cron (VM classique)<a class="headerlink" href="#configuration-du-cron-vm-classique" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>crontab<span class="w"> </span>-e
+</code></pre></div>
+<p>Ajouter la ligne suivante :</p>
+<div class="highlight"><pre><span></span><code>* * * * * cd /var/www/mercator &amp;&amp; php artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1
+</code></pre></div>
+<p>Cette entrée unique suffit : Laravel détermine lui-même l'heure d'exécution de chaque tâche planifiée.</p>
+<h3 id="verification-sous-docker">Vérification sous Docker<a class="headerlink" href="#verification-sous-docker" title="Permanent link">&para;</a></h3>
+<p>Pour afficher la liste des tâches planifiées et s'assurer que <code>cpe-sync</code> est bien enregistré :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>schedule:list
+</code></pre></div>
+<p>Pour déclencher manuellement le scheduler :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>schedule:run
+</code></pre></div>
+<h2 id="check">Vérification de la base CPE<a class="headerlink" href="#check" title="Permanent link">&para;</a></h2>
+<p>Après l'initialisation ou en cas de doute sur l'état de la synchronisation, deux méthodes permettent de contrôler le contenu de la base.</p>
+<h3 id="via-mysql-mariadb">Via MySQL / MariaDB<a class="headerlink" href="#via-mysql-mariadb" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Nombre d&#39;entrées par table</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;vendors&#39;</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">cpe_vendors</span>
+<span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;products&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">cpe_products</span>
+<span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;versions&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">cpe_versions</span><span class="p">;</span>
+
+<span class="c1">-- Date de la dernière synchronisation (approximation via updated_at)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">updated_at</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">derniere_maj</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">cpe_versions</span><span class="p">;</span>
+</code></pre></div>
+<p>Sous Docker :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-db<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>mercator_user<span class="w"> </span>-p<span class="w"> </span>mercator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;SELECT &#39;vendors&#39; AS type, COUNT(*) AS nb FROM cpe_vendors</span>
+<span class="s2">      UNION ALL SELECT &#39;products&#39;, COUNT(*) FROM cpe_products</span>
+<span class="s2">      UNION ALL SELECT &#39;versions&#39;, COUNT(*) FROM cpe_versions</span>
+<span class="s2">      UNION ALL SELECT &#39;last_sync&#39;, MAX(updated_at) FROM cpe_versions;&quot;</span>
+</code></pre></div>
+<h3 id="via-les-journaux-laravel">Via les journaux Laravel<a class="headerlink" href="#via-les-journaux-laravel" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># VM classique</span>
+tail<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>/var/www/mercator/storage/logs/laravel.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>cpe
+
+<span class="c1"># Docker</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>storage/logs/laravel.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>cpe
+</code></pre></div>
+<blockquote>
+<p><strong>Point ouvert :</strong> La date de dernière synchronisation CPE n'est pas encore affichée dans l'interface ni dans les rapports. Voir la <a href="#points-ouverts">section Points ouverts</a>.</p>
+</blockquote>
+<hr />
+<h2 id="points-ouverts">Points ouverts<a class="headerlink" href="#points-ouverts" title="Permanent link">&para;</a></h2>
+<p>Les points suivants ont été identifiés lors de l'utilisation. Ils seront mis à jour au fil des évolutions du projet.</p>
+<hr />
+<h3 id="reprise-sur-interruption-de-cpe-sync">Reprise sur interruption de <code>cpe-sync</code><a class="headerlink" href="#reprise-sur-interruption-de-cpe-sync" title="Permanent link">&para;</a></h3>
+<p><strong>Question :</strong> Si <code>cpe-sync --now</code> est interrompu, est-il possible de reprendre là où la synchronisation s'est arrêtée ?</p>
+<p><strong>Statut :</strong> ⏳ En attente. Piste envisagée : synchronisation par segments ou limitée aux applications déjà présentes dans la CMDB.</p>
+<h3 id="affichage-de-la-date-de-synchronisation-cpe-dans-linterface">Affichage de la date de synchronisation CPE dans l'interface<a class="headerlink" href="#affichage-de-la-date-de-synchronisation-cpe-dans-linterface" title="Permanent link">&para;</a></h3>
+<p><strong>Constat :</strong> Il n'est pas possible de savoir depuis l'interface si la base CPE est chargée ni quelle est sa date de mise à jour. Le contournement actuel passe par une requête SQL directe (voir section <a href="#check">Vérification</a>).</p>
+<p><strong>Statut :</strong> ⏳ En attente.<br />
+<strong>Proposition :</strong> Afficher la date de dernière synchronisation CPE dans l'écran de recherche CVE et dans les rapports de sécurité.</p>
+<h3 id="champs-cpe-non-affiches-pour-certains-actifs">Champs CPE non affichés pour certains actifs<a class="headerlink" href="#champs-cpe-non-affiches-pour-certains-actifs" title="Permanent link">&para;</a></h3>
+<p><strong>Constat :</strong> Les champs <code>vendor</code>, <code>product</code>, <code>version</code> existent en base pour plusieurs types d'actifs (serveurs physiques, postes de travail, commutateurs…) mais ne sont pas accessibles depuis l'interface graphique.</p>
+<p><strong>Statut :</strong> ⏳ Clarification demandée.<br />
+<strong>Proposition :</strong> Rendre ces champs visibles dans l'UI pour tous les actifs supportant CPE, afin d'éviter de passer par l'API ou l'import JSON.</p>
+<h3 id="colonne-version-absente-de-la-liste-des-applications">Colonne "version" absente de la liste des Applications<a class="headerlink" href="#colonne-version-absente-de-la-liste-des-applications" title="Permanent link">&para;</a></h3>
+<p><strong>Constat :</strong> La vue liste des Applications n'affiche pas le champ <code>version</code>, pourtant utilisé par le moteur CPE.</p>
+<p><strong>Statut :</strong> ⏳ Suggestion transmise.<br />
+<strong>Proposition :</strong> Ajouter une colonne <code>version</code> dans cette vue pour améliorer la visibilité de l'état de documentation des actifs.</p>
+<h3 id="distinction-search-guess-peu-visible-dans-lui">Distinction Search / Guess peu visible dans l'UI<a class="headerlink" href="#distinction-search-guess-peu-visible-dans-lui" title="Permanent link">&para;</a></h3>
+<p><strong>Constat :</strong> L'interface n'indique pas clairement que Search requiert les trois champs CPE renseignés, ni la différence de comportement avec Guess.</p>
+<p><strong>Statut :</strong> ⏳ Suggestion transmise.<br />
+<strong>Proposition :</strong> Ajouter des infobulles ou un texte explicatif au niveau de ces deux fonctions.</p>
+<h2 id="annexe-a-reference-rapide-des-commandes">Annexe A — Référence rapide des commandes<a class="headerlink" href="#annexe-a-reference-rapide-des-commandes" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Chargement initial de la base CPE</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>mercator:cpe-sync<span class="w"> </span>--now
+
+<span class="c1"># Lister les tâches planifiées</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>schedule:list
+
+<span class="c1"># Exécuter manuellement le scheduler</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>schedule:run
+
+<span class="c1"># Vider le cache de configuration (après modification .env)</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>config:clear
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-app<span class="w"> </span>php<span class="w"> </span>artisan<span class="w"> </span>config:cache
+
+<span class="c1"># Vérifier l&#39;état de la base CPE</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mercator-db<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>mercator_user<span class="w"> </span>-p<span class="w"> </span>mercator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;SELECT &#39;vendors&#39; AS type, COUNT(*) AS nb FROM cpe_vendors</span>
+<span class="s2">      UNION ALL SELECT &#39;products&#39;, COUNT(*) FROM cpe_products</span>
+<span class="s2">      UNION ALL SELECT &#39;versions&#39;, COUNT(*) FROM cpe_versions</span>
+<span class="s2">      UNION ALL SELECT &#39;last_sync&#39;, MAX(updated_at) FROM cpe_versions;&quot;</span>
+</code></pre></div>
+<h2 id="annexe-b-exemple-de-fichier-env-minimal">Annexe B — Exemple de fichier <code>.env</code> minimal<a class="headerlink" href="#annexe-b-exemple-de-fichier-env-minimal" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="na">APP_NAME</span><span class="o">=</span><span class="s">Mercator</span>
+<span class="na">APP_ENV</span><span class="o">=</span><span class="s">Production</span>
+<span class="na">APP_KEY</span><span class="o">=</span><span class="s">base64:votre_clé_générée_par_artisan_key_generate</span>
+<span class="na">APP_DEBUG</span><span class="o">=</span><span class="s">false</span>
+<span class="na">APP_URL</span><span class="o">=</span><span class="s">https://mercator.mondomaine.com</span>
+
+<span class="na">DB_CONNECTION</span><span class="o">=</span><span class="s">mysql</span>
+<span class="na">DB_HOST</span><span class="o">=</span><span class="s">db</span>
+<span class="na">DB_PORT</span><span class="o">=</span><span class="s">3306</span>
+<span class="na">DB_DATABASE</span><span class="o">=</span><span class="s">mercator</span>
+<span class="na">DB_USERNAME</span><span class="o">=</span><span class="s">mercator_user</span>
+<span class="na">DB_PASSWORD</span><span class="o">=</span><span class="s">motdepasse_sécurisé</span>
+
+<span class="c1"># Mail — voir la page Configuration pour les options complètes</span>
+<span class="na">MAIL_MAILER</span><span class="o">=</span><span class="s">smtp</span>
+<span class="na">MAIL_HOST</span><span class="o">=</span><span class="s">smtp.mondomaine.com</span>
+<span class="na">MAIL_PORT</span><span class="o">=</span><span class="s">587</span>
+<span class="na">MAIL_USERNAME</span><span class="o">=</span><span class="s">noreply@mondomaine.com</span>
+<span class="na">MAIL_PASSWORD</span><span class="o">=</span><span class="s">motdepasse_smtp</span>
+<span class="na">MAIL_ENCRYPTION</span><span class="o">=</span><span class="s">tls</span>
+<span class="na">MAIL_FROM_ADDRESS</span><span class="o">=</span><span class="s">noreply@mondomaine.com</span>
+<span class="na">MAIL_FROM_NAME</span><span class="o">=</span><span class="s">&quot;Mercator&quot;</span>
+
+<span class="c1"># API</span>
+<span class="na">API_RATE_LIMIT</span><span class="o">=</span><span class="s">60</span>
+<span class="na">API_RATE_LIMIT_DECAY</span><span class="o">=</span><span class="s">1</span>
+
+<span class="c1"># CPE / CVE</span>
+<span class="na">CPE_API_URL</span><span class="o">=</span><span class="s">https://services.nvd.nist.gov/rest/json/cpes/2.0</span>
+<span class="na">NVD_API_KEY</span><span class="o">=</span><span class="s">votre_clé_nvd_gratuite</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "toc.integrate", "content.code.copy", "content.action.edit", "content.action.view", "palette.toggle"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
