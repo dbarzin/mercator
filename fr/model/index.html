@@ -6641,8 +6641,208 @@ Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les o
 <span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-30T08:05:46.000000Z&quot;</span><span class="p">,</span>
 <span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-30T08:05:46.000000Z&quot;</span>
 </code></pre></div>
-<p>⚠️ A partir de l'interface utilsiateur, si un document d'icône personnalisé est créé, il peut être utilisé par la même
-un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.</p>
+<p>⚠️ A partir de l'interface utilisateur, si un document d'icône personnalisé est créé, il peut être utilisé par un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.</p>
+<h4 id="utilisateurs_1">utilisateurs<a class="headerlink" href="#utilisateurs_1" title="Permanent link">&para;</a></h4>
+<p>Cette partie permet de voir la liste des utilisateurs de mercator avec le lien sur leur rôle associé.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>users</em></span></td>
+<td style="text-align: left;"><code>/api/users</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int(10) unsigned</td>
+<td>auto_increment</td>
+</tr>
+<tr>
+<td>login</td>
+<td>varchar(255)</td>
+<td>Identifiant de connection</td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(255)</td>
+<td>Nom de l'utilisateur</td>
+</tr>
+<tr>
+<td>email</td>
+<td>varchar(255)</td>
+<td>Courriel de l'utilisateur</td>
+</tr>
+<tr>
+<td>email_verified_at</td>
+<td>datetime</td>
+<td>Date de vérification du courriel</td>
+</tr>
+<tr>
+<td>password</td>
+<td>varchar(255)</td>
+<td>Mot de passe de l'utilisateur</td>
+</tr>
+<tr>
+<td>remember_token</td>
+<td>varchar(255)</td>
+<td>Durée de session</td>
+</tr>
+<tr>
+<td>granularity</td>
+<td>int(11)</td>
+<td>Niveau d'affichage par défaut des résultats (1, 2,3)</td>
+</tr>
+<tr>
+<td>roles</td>
+<td>List int [,]</td>
+<td>Liste des id des rôles associés</td>
+</tr>
+<tr>
+<td>language</td>
+<td>varchar(2)</td>
+<td>Langage de l'utilisateur ( anglais, français ou allemand)</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Date de création</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>timestamp</td>
+<td>Date de mise à jour</td>
+</tr>
+<tr>
+<td>deleted_at</td>
+<td>timestamp</td>
+<td>Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h4>
+<p>Cette partie permet de voir la liste des roles des users dans mercator.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>roles</em></span></td>
+<td style="text-align: left;"><code>/api/roles</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int(10) unsigned</td>
+<td>auto_increment</td>
+</tr>
+<tr>
+<td>title</td>
+<td>varchar(255)</td>
+<td>Titre du role</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Date de création</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>timestamp</td>
+<td>Date de mise à jour</td>
+</tr>
+<tr>
+<td>deleted_at</td>
+<td>timestamp</td>
+<td>Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h4>
+<p>Cette partie permet de voir la liste des permissions qui peuvent être affectées aux roles.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>permissions</em></span></td>
+<td style="text-align: left;"><code>/api/permissions</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int(10) unsigned</td>
+<td>auto_increment</td>
+</tr>
+<tr>
+<td>title</td>
+<td>varchar(255)</td>
+<td>Titre du role</td>
+</tr>
+<tr>
+<td>module</td>
+<td>varchar(255)</td>
+<td></td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Date de création</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>timestamp</td>
+<td>Date de mise à jour</td>
+</tr>
+<tr>
+<td>deleted_at</td>
+<td>timestamp</td>
+<td>Date de suppression</td>
+</tr>
+</tbody>
+</table>
 
 
 

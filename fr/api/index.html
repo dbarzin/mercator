@@ -1025,9 +1025,12 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 </ul>
 <h2 id="les-points-de-terminaison-de-la-configuration">Les points de terminaison de la Configuration<a class="headerlink" href="#les-points-de-terminaison-de-la-configuration" title="Permanent link">&para;</a></h2>
 <ul>
+<li><a href="../model/#utilisateurs">/api/users</a></li>
+<li><a href="../model/#roles">/api/roles</a></li>
+<li><a href="../model/#permissions">/api/permissions</a> <em>access impossible pour le moment</em></li>
 <li><a href="../model/#documents">/api/documents</a></li>
 </ul>
-<p>La particularité de ce point de terminaison est qu'il permet d'ajouter ou de télécharger un document.
+<p>La particularité du point de terminaison <strong>documents</strong> est qu'il permet d'ajouter ou de télécharger un document.
 La syntaxe est la suivante:</p>
 <h2 id="exemple-dajout-dun-document-dans-mercator">Exemple d'ajout d'un document dans mercator:<a class="headerlink" href="#exemple-dajout-dun-document-dans-mercator" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="nv">RESPONSE</span><span class="o">=</span><span class="k">$(</span>http_call<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$API</span><span class="s2">/api/documents&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -1048,6 +1051,10 @@ La syntaxe est la suivante:</p>
 <span class="w">        </span>-o<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTFILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">        </span>-w<span class="w"> </span><span class="s2">&quot;HTTP %{http_code}\n&quot;</span>
 </code></pre></div>
+<h4 id="les-requetes">Les requêtes<a class="headerlink" href="#les-requetes" title="Permanent link">&para;</a></h4>
+<ul>
+<li>/api/queries</li>
+</ul>
 <h2 id="les-rapports">Les rapports<a class="headerlink" href="#les-rapports" title="Permanent link">&para;</a></h2>
 <ul>
 <li>/api/report/cartography</li>

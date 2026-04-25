@@ -7113,8 +7113,203 @@ A WAN can be linked to a LAN from a WAN object.</p>
 <span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-30T08:05:46.000000Z&quot;</span><span class="p">,</span>
 <span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-30T08:05:46.000000Z&quot;</span>
 </code></pre></div>
-<p>⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be
-used by another asset of the same category as soon as there is, a least, one asset in the category. </p>
+<p>⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be used by another asset of the same category as soon as there is, a least, one asset in the category. </p>
+<h4 id="users_1">users<a class="headerlink" href="#users_1" title="Permanent link">&para;</a></h4>
+<p>This part allows to see the mercator users list and their associated link to roles.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>users</em></span></td>
+<td style="text-align: left;"><code>/api/users</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int(10) unsigned</td>
+<td>auto_increment</td>
+</tr>
+<tr>
+<td>login</td>
+<td>varchar(255)</td>
+<td>Login User Id</td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(255)</td>
+<td>Username</td>
+</tr>
+<tr>
+<td>email</td>
+<td>varchar(255)</td>
+<td>User email</td>
+</tr>
+<tr>
+<td>email_verified_at</td>
+<td>datetime</td>
+<td>Email verification date</td>
+</tr>
+<tr>
+<td>password</td>
+<td>varchar(255)</td>
+<td>User password</td>
+</tr>
+<tr>
+<td>remember_token</td>
+<td>varchar(255)</td>
+<td>Session duration</td>
+</tr>
+<tr>
+<td>granularity</td>
+<td>int(11)</td>
+<td>Display level by default for results (1, 2, 3)</td>
+</tr>
+<tr>
+<td>roles</td>
+<td>List int [,]</td>
+<td>IDs list of associated roles</td>
+</tr>
+<tr>
+<td>language</td>
+<td>varchar(2)</td>
+<td>User Language ( english, french, german,)</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Date of creation</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>timestamp</td>
+<td>Date of update</td>
+</tr>
+<tr>
+<td>deleted_at</td>
+<td>timestamp</td>
+<td>Date of deletion</td>
+</tr>
+</tbody>
+</table>
+<h4 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h4>
+<p>This part allows to see mercator roles list.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>roles</em></span></td>
+<td style="text-align: left;"><code>/api/roles</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int(10) unsigned</td>
+<td>auto_increment</td>
+</tr>
+<tr>
+<td>title</td>
+<td>varchar(255)</td>
+<td>Role title</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Date of creation</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>timestamp</td>
+<td>Date of update</td>
+</tr>
+<tr>
+<td>deleted_at</td>
+<td>timestamp</td>
+<td>Date of deletion</td>
+</tr>
+</tbody>
+</table>
+<h4 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h4>
+<p>This part allows to see all mercator permissions than can be allocated to roles.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span style="color: blue;"><em>permissions</em></span></td>
+<td style="text-align: left;"><code>/api/permissions</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int(10) unsigned</td>
+<td>auto_increment</td>
+</tr>
+<tr>
+<td>title</td>
+<td>varchar(255)</td>
+<td>Role title</td>
+</tr>
+<tr>
+<td>module</td>
+<td>varchar(255)</td>
+<td></td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Date of creation</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>timestamp</td>
+<td>Date of update</td>
+</tr>
+</tbody>
+</table>
 
 
 

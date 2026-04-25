@@ -751,9 +751,12 @@ The list of APIs can be found in /route/api.php</p>
 </ul>
 <h4 id="endpoints-for-configuration">Endpoints for Configuration<a class="headerlink" href="#endpoints-for-configuration" title="Permanent link">&para;</a></h4>
 <ul>
+<li><a href="../model/#users">/api/users</a></li>
+<li><a href="../model/#roles">/api/roles</a></li>
+<li><a href="../model/#permissions">/api/permissions</a> <em>access not allowed yet</em></li>
 <li><a href="../model/#documents">/api/documents</a></li>
 </ul>
-<p>The unique feature of this endpoint is that it allows you to either upload or download a document.
+<p>The unique feature of the endpoint <strong>documents</strong> is that it allows you to either upload or download a document.
 The syntax is as follows:</p>
 <h5 id="example-of-adding-a-document-in-mercator">Example of adding a document in Mercator:<a class="headerlink" href="#example-of-adding-a-document-in-mercator" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="nv">RESPONSE</span><span class="o">=</span><span class="k">$(</span>http_call<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$API</span><span class="s2">/api/documents&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -774,6 +777,10 @@ The syntax is as follows:</p>
 <span class="w">        </span>-o<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTFILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">        </span>-w<span class="w"> </span><span class="s2">&quot;HTTP %{http_code}\n&quot;</span>
 </code></pre></div>
+<h4 id="endpoint-for-queries">Endpoint for queries<a class="headerlink" href="#endpoint-for-queries" title="Permanent link">&para;</a></h4>
+<ul>
+<li>/api/queries</li>
+</ul>
 <h4 id="endpoints-for-reports">Endpoints for Reports<a class="headerlink" href="#endpoints-for-reports" title="Permanent link">&para;</a></h4>
 <ul>
 <li>/api/report/cartography</li>

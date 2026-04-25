@@ -1027,6 +1027,15 @@ and you want to visualize the links between entities
 <span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span>
 </code></pre></div>
 <p>Inventory of SSL/TLS certificates with their expiry date and the servers/applications on which they are deployed. Useful for anticipating renewals.</p>
+<h3 id="servers-in-production-without-backup-plans-and-with-at-least-one-application">Servers in production without backup plans and with at least one application<a class="headerlink" href="#servers-in-production-without-backup-plans-and-with-at-least-one-application" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span>
+<span class="k">AND</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">backups</span>
+<span class="k">AND</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">applications</span>
+<span class="k">OUTPUT</span><span class="w"> </span><span class="n">list</span>
+</code></pre></div>
+<p>Identify the servers and the names of the production applications that do not have backup plans and at least one application.</p>
 <h3 id="critical-applications-with-their-servers-and-databases">Critical applications with their servers and databases<a class="headerlink" href="#critical-applications-with-their-servers-and-databases" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">security_need_c</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">responsible</span><span class="p">,</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">.</span><span class="n">name</span>

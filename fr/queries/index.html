@@ -1042,6 +1042,15 @@ et que vous souhaitez visualiser les liens entre entités
 <span class="k">WITH</span><span class="w"> </span><span class="n">certificates</span>
 </code></pre></div>
 <p>Identifie les serveurs de production sur lesquels aucun certificat SSL/TLS n'est enregistré. Utile pour détecter des angles morts dans la gestion des certificats.</p>
+<h3 id="serveurs-en-production-sans-plans-de-backups-avec-une-application">Serveurs en production sans plans de backups avec une application<a class="headerlink" href="#serveurs-en-production-sans-plans-de-backups-avec-une-application" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span>
+<span class="k">AND</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">backups</span>
+<span class="k">AND</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">applications</span>
+<span class="k">OUTPUT</span><span class="w"> </span><span class="n">list</span>
+</code></pre></div>
+<p>Identifier les serveurs et le nom des applications en production qui n'ont pas de plans de backups et au moins une application.</p>
 <h3 id="applications-sans-serveur-logique-associe">Applications sans serveur logique associé<a class="headerlink" href="#applications-sans-serveur-logique-associe" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">responsible</span><span class="p">,</span><span class="w"> </span><span class="n">security_need_c</span>
