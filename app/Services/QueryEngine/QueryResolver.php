@@ -101,6 +101,40 @@ class QueryResolver
 
     protected function applyFilter(Builder $builder, array $filter): void
     {
+        // EXISTS : { exists: 'backups', ?conditions: [...] }
+        if (array_key_exists('exists', $filter)) {
+            $relation   = $filter['exists'];
+            $conditions = $filter['conditions'] ?? [];
+            $boolean    = strtolower($filter['boolean'] ?? 'and');
+            $method     = $boolean === 'or' ? 'orWhereHas' : 'whereHas';
+
+            $builder->$method($relation, function (Builder $q) use ($conditions) {
+                foreach ($conditions as $cond) {
+                    $this->applyFilter($q, $cond);
+                }
+            });
+            return;
+        }
+
+        // NOT EXISTS : { not_exists: 'backups', ?conditions: [...] }
+        if (array_key_exists('not_exists', $filter)) {
+            $relation   = $filter['not_exists'];
+            $conditions = $filter['conditions'] ?? [];
+            $boolean    = strtolower($filter['boolean'] ?? 'and');
+            $method     = $boolean === 'or' ? 'orWhereDoesntHave' : 'whereDoesntHave';
+
+            if (empty($conditions)) {
+                $builder->$method($relation);
+            } else {
+                $builder->$method($relation, function (Builder $q) use ($conditions) {
+                    foreach ($conditions as $cond) {
+                        $this->applyFilter($q, $cond);
+                    }
+                });
+            }
+            return;
+        }
+
         // Groupe : { boolean, group: [...] }
         if (array_key_exists('group', $filter)) {
             $boolean = strtolower($filter['boolean'] ?? 'and');

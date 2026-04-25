@@ -35,15 +35,15 @@ class QueryDslValidator
      */
     public static function validate(array $data): array
     {
-        return new self()->doValidate($data);
+        $instance = new static();
+        return $instance->doValidate($data);
     }
-
 
     protected function doValidate(array $data): array
     {
         // ── Validation des champs de premier niveau ───────────────
         $validator = Validator::make($data, [
-            'from'       => ['required', 'string', 'regex:/^[a-zA-Z][a-zA-Z0-9-]*$/'],
+            'from'       => ['required', 'string', 'regex:/^[a-zA-Z][a-zA-Z0-9_-]*$/'],
             'select'     => ['nullable', 'array'],
             'select.*'   => ['string',   'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
             'fields'     => ['nullable', 'array'],
@@ -56,7 +56,7 @@ class QueryDslValidator
             'limit'      => ['nullable', 'integer', 'min:1', 'max:1000'],
         ], [
             'from.required' => 'Le champ "from" est obligatoire.',
-            'from.regex'    => 'Le modèle "from" ne doit contenir que des lettres, chiffres et tirets.',
+            'from.regex'    => 'Le modèle "from" ne doit contenir que des lettres, chiffres et underscores.',
             'output.in'     => 'Le champ "output" doit être "graph" ou "list".',
             'depth.min'     => 'La profondeur doit être entre 1 et 5.',
             'depth.max'     => 'La profondeur doit être entre 1 et 5.',
@@ -103,14 +103,45 @@ class QueryDslValidator
             return;
         }
 
-        // ── Groupe : { boolean, group: [...] } ───────────────────
+        // EXISTS / NOT EXISTS
+        if (array_key_exists('exists', $filter) || array_key_exists('not_exists', $filter)) {
+            $this->validateExistsFilter($filter, $path);
+            return;
+        }
+
+        // Groupe
         if (array_key_exists('group', $filter)) {
             $this->validateGroup($filter, $path);
             return;
         }
 
-        // ── Condition : { field, operator, value, ?boolean } ─────
+        // Condition simple
         $this->validateCondition($filter, $path);
+    }
+
+    protected function validateExistsFilter(array $filter, string $path): void
+    {
+        $key      = array_key_exists('exists', $filter) ? 'exists' : 'not_exists';
+        $relation = $filter[$key] ?? null;
+
+        if (empty($relation) || ! preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $relation)) {
+            $this->errors["{$path}.{$key}"] = [
+                'Le nom de la relation doit être un identifiant valide.'
+            ];
+        }
+
+        if (isset($filter['boolean'])
+            && ! in_array(strtolower($filter['boolean']), self::ALLOWED_BOOLEANS, true)) {
+            $this->errors["{$path}.boolean"] = ['Le boolean doit être "and" ou "or".'];
+        }
+
+        if (! empty($filter['conditions'])) {
+            if (! is_array($filter['conditions'])) {
+                $this->errors["{$path}.conditions"] = ['Les conditions doivent être un tableau.'];
+            } else {
+                $this->validateFilters($filter['conditions'], "{$path}.conditions");
+            }
+        }
     }
 
     protected function validateGroup(array $filter, string $path): void

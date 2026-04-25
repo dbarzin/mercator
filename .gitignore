@@ -3,6 +3,7 @@
 .phpunit.result.cache
 .phpunit.cache
 .editorconfig
+site
 *~
 node_modules
 Homestead.json
