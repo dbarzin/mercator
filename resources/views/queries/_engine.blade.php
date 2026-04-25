@@ -46,9 +46,9 @@
               rows="8"
               style="font-size:0.85rem; resize:vertical;"
               spellcheck="false"
-              placeholder="FROM LogicalServer
+              placeholder="FROM logical-servers
 WHERE environment = &quot;production&quot;
-AND (os LIKE &quot;%Linux%&quot; OR os LIKE &quot;%Windows%&quot;)
+AND (operating_system LIKE &quot;%Linux%&quot; OR os LIKE &quot;%Windows%&quot;)
 WITH applications
 DEPTH 2
 OUTPUT graph

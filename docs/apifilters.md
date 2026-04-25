@@ -2,17 +2,17 @@
 
 This part is an addition of the API chapter [API](./api.md).
 
-### Filtering, Sorting and Including Relations
+## Filtering, Sorting and Including Relations
 
 List endpoints (`GET /api/objects`) support an advanced system of filters, sorting and relation inclusion via
 query parameters.
 
-#### Filterable Fields
+### Filterable Fields
 
 All fields declared in the model (`$fillable`) are automatically filterable. Filters on unauthorized
 fields are simply ignored.
 
-#### Filter Syntax
+### Filter Syntax
 
 Each filter is presented in the form:
 
@@ -21,9 +21,9 @@ filter[<field>]=<value>                     # Exact filter
 filter[<field>_<operator>]=<value>          # Filter with operator
 ```
 
-#### Available Filtering Operators
+### Available Filtering Operators
 
-##### Exact and Text Filters
+#### Exact and Text Filters
 
 | Operator  | Syntax                | Description             | Example                |
 |-----------|-----------------------|-------------------------|------------------------|
@@ -32,7 +32,7 @@ filter[<field>_<operator>]=<value>          # Filter with operator
 
 _* Automatic partial search applies to fields containing: `name`, `description`, `email`_
 
-##### Numeric Comparisons
+#### Numeric Comparisons
 
 | Operator | Syntax                                  | Description              | SQL Example                    |
 |----------|-----------------------------------------|--------------------------|--------------------------------|
@@ -41,7 +41,7 @@ _* Automatic partial search applies to fields containing: `name`, `description`,
 | `_gt`    | `filter[recovery_time_objective_gt]=8`  | Greater than             | `recovery_time_objective > 8`  |
 | `_gte`   | `filter[recovery_time_objective_gte]=8` | Greater than or equal to | `recovery_time_objective >= 8` |
 
-##### Advanced Operators
+#### Advanced Operators
 
 | Operator   | Syntax                                         | Description          | Example                                    |
 |------------|------------------------------------------------|----------------------|--------------------------------------------|
@@ -51,7 +51,7 @@ _* Automatic partial search applies to fields containing: `name`, `description`,
 | `_null`    | `filter[description_null]=false`               | NOT NULL value       | `description IS NOT NULL`                  |
 | `_not`     | `filter[type_not]=opensource`                  | Negation (different) | `type != 'opensource'`                     |
 
-##### Global Search and Relation Filters
+#### Global Search and Relation Filters
 
 | Operator   | Syntax                        | Description                                             | Example                                               |
 |------------|-------------------------------|---------------------------------------------------------|-------------------------------------------------------|
@@ -59,7 +59,7 @@ _* Automatic partial search applies to fields containing: `name`, `description`,
 | (relation) | `filter[actors.email]=john`   | LIKE search on relation fields                          | `actors.email LIKE '%john%'`                          |
 | (relation) | `filter[contacts.name]=alice` | LIKE search on name in a relation                       | `contacts.name LIKE '%alice%'`                        |
 
-##### Date Filters
+#### Date Filters
 
 For fields containing `date` or `at` in their name:
 
@@ -68,14 +68,14 @@ For fields containing `date` or `at` in their name:
 | `_after`  | `filter[created_at_after]=2024-01-01`  | After this date  | `created_at >= '2024-01-01'` |
 | `_before` | `filter[updated_at_before]=2024-12-31` | Before this date | `updated_at <= '2024-12-31'` |
 
-##### Soft Deletes
+#### Soft Deletes
 
 | Syntax                 | Description           |
 |------------------------|-----------------------|
 | `filter[trashed]=with` | Include deleted items |
 | `filter[trashed]=only` | Only deleted items    |
 
-#### Sorting Results
+### Sorting Results
 
 Sorting is done with the `sort` parameter:
 
@@ -90,7 +90,7 @@ Examples:
 - `sort=-created_at` : Sort by creation date descending
 - `sort=recovery_time_objective` : Sort by RTO ascending
 
-#### Including Relations (Eager Loading)
+### Including Relations (Eager Loading)
 
 Relations between objects can be loaded with the `include` parameter:
 
@@ -107,9 +107,9 @@ Available relations are automatically detected from the model. For activities, f
 
 Example: `include=processes,operations`
 
-#### Complete cases
+### Complete cases
 
-##### Simple Filters
+#### Simple Filters
 
 ```http
 # Activities with name containing "backup"
@@ -131,7 +131,7 @@ GET /api/applications?filter[search]=backup
 GET /api/activities?filter[actors.email]=john@example.com
 ```
 
-##### Combined Filters
+#### Combined Filters
 
 ```http
 # Activities with name containing "GDPR" and RTO >= 8
@@ -150,7 +150,7 @@ GET /api/activities?filter[search]=backup&filter[recovery_time_objective_lte]=8
 GET /api/activities?filter[actors.email]=admin&include=actors
 ```
 
-##### Advanced Filters
+#### Advanced Filters
 
 ```http
 # Activities with ID in the list 1, 2, 3, 5
@@ -172,7 +172,7 @@ GET /api/activities?filter[trashed]=with
 GET /api/activities?filter[trashed]=only
 ```
 
-##### With Sorting and Relations
+#### With Sorting and Relations
 
 ```http
 # Activities with RTO >= 8, sorted by creation date descending
@@ -185,9 +185,9 @@ GET /api/activities?filter[name]=GDPR&include=processes,operations
 GET /api/activities?filter[recovery_time_objective_gte]=8&filter[name]=GDPR&sort=-created_at&include=processes,operations
 ```
 
-### Authentication
+## Authentication
 
-#### Authentication with email / password
+### Authentication with email / password
 
 To use the API, it is necessary to obtain an authentication token.
 
@@ -221,7 +221,7 @@ curl -X GET http://127.0.0.1:8000/api/activities \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
-#### Authentication with API Token
+### Authentication with API Token
 
 It's possible to create an API token directly from the interface.
 
@@ -235,13 +235,13 @@ For this:
 
 The token must be used in the `Authorization` header as a Bearer token.
 
-### Filters Examples
+## Filters Examples
 
 Here are practical examples of API usage in different programming languages.
 
-#### PHP
+### PHP
 
-##### Authentication
+#### Authentication
 
 ```php
 <?php
@@ -283,7 +283,7 @@ Here are practical examples of API usage in different programming languages.
     var_dump($response);
 ```
 
-##### List of Activities with Filters
+#### List of Activities with Filters
 
 ```php
 <?php
@@ -321,7 +321,7 @@ Here are practical examples of API usage in different programming languages.
     var_dump($response);
 ```
 
-##### Retrieve an Activity with Relations
+#### Retrieve an Activity with Relations
 
 ```php
 <?php
@@ -349,7 +349,7 @@ Here are practical examples of API usage in different programming languages.
     var_dump($response);
 ```
 
-#### Python
+### Python
 
 Here is an example of API usage in Python with advanced filters
 
@@ -394,7 +394,7 @@ response = requests.get("http://127.0.0.1:8000/api/activities/1",
 print(response.json())
 ```
 
-#### bash
+### bash
 
 Here is an example of API usage from the command line with [CURL](https://curl.se/docs/manpage.html)
 and [JQ](https://stedolan.github.io/jq/)
@@ -446,11 +446,11 @@ UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
 echo "Updated object: ${UPDATED_OBJECT}"
 ```
 
-#### Powershell
+### Powershell
 
 The PowerShell script below shows how to authenticate with the API and use advanced filters.
 
-##### Step 1 — Authentication and Obtaining Access Token
+#### Step 1 — Authentication and Obtaining Access Token
 
 ```powershell
 # Define authentication URL and credentials
@@ -471,7 +471,7 @@ try {
 }
 ```
 
-##### Step 2 — Usage with Filters and Sort
+#### Step 2 — Usage with Filters and Sort
 
 ```powershell
 # Define headers
@@ -504,7 +504,7 @@ try {
 }
 ```
 
-### Feature Summary
+## Feature Summary
 
 | Feature        | Syntax                            | Example                                 |
 |----------------|-----------------------------------|-----------------------------------------|

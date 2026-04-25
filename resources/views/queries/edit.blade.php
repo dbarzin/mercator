@@ -88,7 +88,7 @@ LIMIT 100"></textarea>
                         @enderror
                     </div>
                     <div class="card-footer text-muted small">
-                        <code>FROM LogicalServer WHERE environment = "production" WITH applications OUTPUT graph</code>
+                        <code>FROM logical-servers WHERE environment = "production" WITH applications OUTPUT list</code>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,6 @@
-
 # Requêtes
 
 Les requêtes Mercator permettent d'explorer et de visualiser les données de votre cartographie de manière flexible, sans passer par l'interface standard. Elles s'écrivent dans un langage déclaratif inspiré du SQL et peuvent produire une **liste** ou un **graphe**.
-
----
 
 ## Format d'une requête
 
@@ -18,20 +15,18 @@ OUTPUT  list | graph
 LIMIT   <n>
 ```
 
-| Clause | Obligatoire | Description                                                                       |
-|--------|------------|-----------------------------------------------------------------------------------|
-| `FROM` | ✅ | Modèle de données cible (voir [Modèles disponibles](#modeles-disponibles))        |
+| Clause | Obligatoire | Description |
+|--------|-------------|-------------|
+| `FROM` | ✅ | Modèle de données cible (voir [Modèles disponibles](#modeles-disponibles)) |
 | `FIELDS` | ➖ | Liste des champs à afficher, y compris les champs de relations (`relation.champ`) |
-| `WHERE` | ➖ | Filtre sur les données (voir [Conditions](#conditions))                           |
-| `WITH` | ➖ | Relations à charger en eager loading                                              |
-| `OUTPUT` | ➖ | Format de sortie : `list` ou `graph` (`list` par défaut)                          |
-| `LIMIT` | ➖ | Nombre maximum d'enregistrements retournés (défaut : 100)                         |
-
----
+| `WHERE` | ➖ | Filtre sur les données (voir [Conditions](#conditions)) |
+| `WITH` | ➖ | Relations à charger en eager loading |
+| `OUTPUT` | ➖ | Format de sortie : `list` ou `graph` (`list` par défaut) |
+| `LIMIT` | ➖ | Nombre maximum d'enregistrements retournés (défaut : 100) |
 
 ## Modèles disponibles
 
-Les modèles correspondent aux entités de l'API Mercator. Les noms sont en **PascalCase** et identiques aux noms de ressources exposés par l'API REST.
+Les modèles correspondent aux entités de l'[API](api.fr.md) Mercator et sont en **kebab-case**.
 
 | Modèle             | Description |
 |--------------------|-------------|
@@ -47,9 +42,8 @@ Les modèles correspondent aux entités de l'API Mercator. Les noms sont en **Pa
 | …                  | _Tous les modèles de l'API_ |
 
 !!! info "Champs disponibles"
-    Les champs utilisables dans `FIELDS` et `WHERE` sont exactement ceux exposés par l'API Mercator. Consultez la [référence de l'API](api.fr.md) pour connaître l'ensemble des attributs de chaque modèle.
-
----
+Les champs utilisables dans `FIELDS` et `WHERE` sont ceux exposés par l'API Mercator.
+Consultez le [modèle de données](model.fr.md) pour connaître l'ensemble des attributs de chaque modèle.
 
 ## Clause FIELDS
 
@@ -63,9 +57,9 @@ FIELDS name, operating_system, cpu, memory, applications.name
 ```
 
 !!! warning "Cohérence avec WITH"
-    Si vous référencez un champ de relation dans `FIELDS` (ex. `applications.name`), la relation correspondante doit être déclarée dans `WITH` (ex. `WITH applications`), sans quoi les données ne seront pas chargées.
-
----
+Si vous référencez un champ de relation dans `FIELDS` (ex. `applications.name`),
+la relation correspondante doit être déclarée dans `WITH` (ex. `WITH applications`),
+sans quoi les données ne seront pas chargées.
 
 ## Clause WHERE {#conditions}
 
@@ -80,6 +74,8 @@ La clause `WHERE` filtre les enregistrements selon des conditions sur les champs
 | Comparaison | `<`, `>`, `<=`, `>=` | `memory >= 16` |
 | Recherche | `LIKE` | `operating_system LIKE "%Linux%"` |
 | Liste de valeurs | `IN` | `environment IN ("production", "staging")` |
+| Existence de relation | `EXISTS` | `EXISTS applications` |
+| Absence de relation | `NOT EXISTS` | `NOT EXISTS certificates` |
 
 ### Combinaisons logiques
 
@@ -93,7 +89,28 @@ WHERE (environment = "production") AND (operating_system LIKE "%Linux%")
 WHERE (environment IN ("production", "staging")) AND (operating_system LIKE "%Windows%")
 ```
 
----
+### Opérateur EXISTS {#exists}
+
+L'opérateur `EXISTS` filtre les enregistrements selon qu'une relation est présente ou absente. Il s'applique au nom de la relation Eloquent (tel que déclaré dans `WITH`).
+
+```sql
+WHERE (EXISTS applications)
+```
+
+```sql
+WHERE (NOT EXISTS certificates)
+```
+
+`EXISTS` peut être combiné avec d'autres conditions :
+
+```sql
+WHERE (environment = "production") AND (EXISTS certificates)
+```
+
+!!! info "EXISTS et eager loading"
+L'opérateur `EXISTS` n'implique pas le chargement des données de la relation.
+Si vous souhaitez également afficher les champs de cette relation dans `FIELDS`,
+déclarez-la explicitement dans `WITH`.
 
 ## Clause WITH
 
@@ -103,13 +120,11 @@ La clause `WITH` déclare les **relations à charger** (eager loading). Elle est
 WITH applications, databases, certificates
 ```
 
-Les noms de relations correspondent aux noms des méthodes de relation des modèles Eloquent, généralement en **camelCase** :
+Les noms de relations correspondent aux noms des méthodes de relation des modèles Eloquent, en **snake_case** :
 
 ```sql
-WITH logical-servers, databases, sites, bays
+WITH logical_servers, databases, sites, bays
 ```
-
----
 
 ## Format de sortie (OUTPUT)
 
@@ -130,15 +145,13 @@ OUTPUT graph
 ```
 
 !!! tip "Quand utiliser `graph` ?"
-    Préférez `OUTPUT graph` dès que votre requête charge des relations avec `WITH` et que vous souhaitez visualiser les liens entre entités (applications ↔ serveurs, réseaux ↔ serveurs, etc.).
+Préférez `OUTPUT graph` dès que votre requête charge des relations avec `WITH`
+et que vous souhaitez visualiser les liens entre entités
+(applications ↔ serveurs, réseaux ↔ serveurs, etc.).
 
----
-
-## Partage d'une requête
+## Sauvegarde des requêtes
 
 Il est possible de **sauvegarder des requêtes** dans l'interface pour les retrouver et les réexécuter sans les ressaisir. Les requêtes sauvegardées peuvent être rendues publiques (visibles par tous les utilisateurs) ou privées (visibles uniquement par leur auteur).
-
----
 
 ## Exemples
 
@@ -153,20 +166,16 @@ WITH applications
 
 Retourne la liste des serveurs logiques sous Linux en environnement de production, avec le nom des applications hébergées.
 
----
-
 ### Toutes les applications et leurs bases de données
 
 ```sql
 FROM applications
-FIELDS name, description, databases.name, logical-servers.name
-WITH databases, logical-servers
+FIELDS name, description, databases.name, logical_servers.name
+WITH databases, logical_servers
 OUTPUT graph
 ```
 
 Génère un graphe reliant les applications à leurs bases de données et serveurs logiques.
-
----
 
 ### Inventaire des serveurs physiques
 
@@ -178,19 +187,15 @@ WITH site, bay
 
 Liste complète des serveurs physiques avec leur localisation (site et baie).
 
----
-
 ### Réseaux, sous-réseaux et VLANs
 
 ```sql
 FROM networks
-Fields name, subnetworks.name, subnetworks.vlan.id, subnetworks.vlan.name
+FIELDS name, subnetworks.name, subnetworks.vlan.id, subnetworks.vlan.name
 WITH subnetworks, subnetworks.vlan
 ```
 
-Visualizes les réseaux, sous-réseaux et leurs VLANs.
-
----
+Visualise les réseaux, sous-réseaux et leurs VLANs.
 
 ### Filtres multiples avec `IN`
 
@@ -203,8 +208,6 @@ WITH applications, certificates
 
 Liste les applications et certificats installés sur les serveurs Windows en production ou en staging.
 
----
-
 ### Certificats SSL avec date d'expiration et périmètre d'installation
 
 ```sql
@@ -214,8 +217,6 @@ WITH logical_servers, applications
 ```
 
 Inventaire des certificats SSL/TLS avec leur date d'expiration et les serveurs/applications sur lesquels ils sont déployés. Utile pour anticiper les renouvellements.
-
----
 
 ### Applications critiques avec leurs serveurs et bases de données
 
@@ -229,12 +230,32 @@ OUTPUT graph
 
 Cartographie des applications à fort besoin de confidentialité (niveaux 3 et 4), avec leurs dépendances d'infrastructure.
 
----
+### Serveurs sans certificat SSL
+
+```sql
+FROM logical-servers
+FIELDS name, environment, operating_system
+WHERE (environment = "production") AND (NOT EXISTS certificates)
+WITH certificates
+```
+
+Identifie les serveurs de production sur lesquels aucun certificat SSL/TLS n'est enregistré. Utile pour détecter des angles morts dans la gestion des certificats.
+
+### Applications sans serveur logique associé
+
+```sql
+FROM applications
+FIELDS name, responsible, security_need_c
+WHERE (NOT EXISTS logical_servers)
+WITH logical_servers
+```
+
+Liste les applications non rattachées à un serveur logique, symptôme possible d'une cartographie incomplète.
 
 ## Bonnes pratiques
 
 - **Limitez le `LIMIT`** à la valeur nécessaire : des requêtes trop larges peuvent être lentes sur de grands référentiels.
 - **Utilisez `OUTPUT graph`** uniquement lorsque les relations sont déclarées dans `WITH` ; un graphe sans relations ne sera composé que de nœuds isolés.
 - **Vérifiez les noms de champs** dans la [référence API](api.fr.md) — une faute de frappe dans un champ n'affiche simplement rien, sans message d'erreur.
+- **Avec `EXISTS`**, déclarez la relation dans `WITH` uniquement si vous avez besoin d'afficher ses champs dans `FIELDS` ; sinon, `EXISTS` seul suffit à filtrer sans surcharge.
 - **Sauvegardez les requêtes récurrentes** pour faciliter le travail en équipe et garantir la reproductibilité des cartographies.
-

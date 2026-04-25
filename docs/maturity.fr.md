@@ -13,7 +13,7 @@ Cette maturité est divisée en trois niveaux :
 
 [<img src="/mercator/images/maturity.png" width="600">](images/maturity.png)
 
-### Signification des champs marqués d'un cardinal
+## Signification des champs marqués d'un cardinal
 
 Certains libellés de champs sont suivis d'un symbole **#** de couleur orange. Ces marqueurs indiquent que le champ
 contribue au calcul du niveau de maturité de la cartographie, selon le niveau concerné :
@@ -22,9 +22,9 @@ contribue au calcul du niveau de maturité de la cartographie, selon le niveau c
 |----------|-----------------------------------------------------------------------|
 | `#`      | Champ contribuant au niveau de maturité 1 — granularité minimale      |
 | `##`     | Champ contribuant au niveau de maturité 2 — granularité intermédiaire |
-| `###`    | Champ contribuant au niveau de maturité 3 — granularité fine          |
+| `##`    | Champ contribuant au niveau de maturité 3 — granularité fine          |
 
-### Calcul du niveau de maturité
+## Calcul du niveau de maturité
 
 Un élément est considéré comme **conforme** lorsque tous les champs marqués `#` correspondant au niveau visé sont
 renseignés et que les liens attendus avec d'autres éléments de la cartographie sont établis.
@@ -41,13 +41,13 @@ Le niveau de maturité est calculé selon la formule suivante :
 Niveau de maturité (%) = (Nombre d'éléments conformes / Nombre total d'éléments)
 ```
 
-### Identification visuelle des éléments non conformes
+## Identification visuelle des éléments non conformes
 
 Dans les listes, les entrées **non conformes** sont surlignées en **jaune**, signalant qu'au moins un champ marqué `#`
 n'a pas été renseigné. Cela permet d'identifier rapidement les éléments qui nécessitent une attention particulière pour
 progresser vers une cartographie complète.
 
-### Elements de conformité
+## Elements de conformité
 
 Le calcul des niveaux de conformité pour chaque objet de la cartographie est basé sur la présence des éléments
 suivants :
@@ -116,7 +116,7 @@ suivants :
 
 Les besoins de sécurité de l'information sont exprimés en termes de `confidentialité`, `intégrité`, `disponibilité` et `traçabilité` avec l'échelle suivante:
 
-### classification de sécurité (CIDT):  
+## classification de sécurité (CIDT):  
 
 | Classification  | Type |            Description                  |
 |-----------------|:----:|-----------------------------------------|
@@ -126,7 +126,7 @@ Les besoins de sécurité de l'information sont exprimés en termes de `confiden
 | Traçabilité | T | Permet de **savoir qui a fait quoi, quand et comment**.<br>Elle repose sur les journaux, les logs, l’audit et l’identification.<br><br>**Exemples:** logs d’accès, historique des actions, audit de sécurité. |
 
 
-### Niveaux de sécurité
+## Niveaux de sécurité
 | Niveau | Description  |                 Couleur                  |
 |:------:|:------------:|:----------------------------------------:|
 |   0    | Insignifiant |                  Blanc                   |

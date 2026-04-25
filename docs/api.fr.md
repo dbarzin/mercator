@@ -6,7 +6,7 @@ Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Re
 est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST
 et permet d'interagir avec les services web RESTful.
 
-### Installer l'API sur Mercator
+## Installer l'API sur Mercator
 
 pour installer l'API dans Mercator, il est nécessaire d'installer Passport en lançant cette commande :
 
@@ -16,24 +16,24 @@ php artisan passport:install
 
 - l'environnement Docker prend en charge cette fonctionnalité nativement, via l'entrypoint.
 
-### Les APIs
+## Les APIs
 
 Pour chaque objet du modèle de données de la cartographie, il existe une API.
 La liste des API se trouve dans le fichier /route/api.php
 
 *Note:* Pour visualiser le datamodel d'une API, cliquer sur son nom.
 
-#### Les points de terminaison du RGPD
+## Les points de terminaison du RGPD
 
 - [/api/data-processings](./model.fr.md#registre)
 - [/api/security-controls](./model.fr.md#mesures-de-securite)
 
-#### Les points de terminaison de l'écosystème
+## Les points de terminaison de l'écosystème
 
 - [/api/entities](./model.fr.md#entites)
 - [/api/relations](./model.fr.md#relations)
 
-#### Les points de terminaison du métier du système d'information
+## Les points de terminaison du métier du système d'information
 
 - [/api/macro-processuses](./model.fr.md#macro-processus)
 - [/api/processes](./model.fr.md#processus)
@@ -43,7 +43,7 @@ La liste des API se trouve dans le fichier /route/api.php
 - [/api/actors](./model.fr.md#acteurs)
 - [/api/information](./model.fr.md#information)
 
-#### Les points de terminaison des applications
+## Les points de terminaison des applications
 
 - [/api/application-blocks](./model.fr.md#blocs-applicatif)
 - [/api/applications](./model.fr.md#applications)
@@ -52,7 +52,7 @@ La liste des API se trouve dans le fichier /route/api.php
 - [/api/databases](./model.fr.md#bases-de-donnees)
 - [/api/fluxes](./model.fr.md#flux)
 
-#### Les points de terminaison de l'administration
+## Les points de terminaison de l'administration
 
 - [/api/zone-admins](./model.fr.md#zones-dadministration)
 - [/api/annuaires](./model.fr.md#services-dannuaire-dadministration)
@@ -60,7 +60,7 @@ La liste des API se trouve dans le fichier /route/api.php
 - [/api/domaine-ads](./model.fr.md#domaines-active-directory-ldap)
 - [/api/admin-users](./model.fr.md#utilisateurs)
 
-#### Les points de terminaison de l'infrastructure logique
+## Les points de terminaison de l'infrastructure logique
 
 - [/api/networks](./model.fr.md#reseaux)
 - [/api/subnetworks](./model.fr.md#sous-reseaux)
@@ -79,7 +79,7 @@ La liste des API se trouve dans le fichier /route/api.php
 - [/api/certificates](./model.fr.md#certificats)
 - [/api/vlans](./model.fr.md#vlans)
 
-#### Les points de terminaison de l'infrastructure physique
+## Les points de terminaison de l'infrastructure physique
 
 - [/api/sites](./model.fr.md#sites)
 - [/api/buildings](./model.fr.md#batiments-salles)
@@ -98,7 +98,7 @@ La liste des API se trouve dans le fichier /route/api.php
 - [/api/mans](./model.fr.md#mans)
 - [/api/lans](./model.fr.md#lans)
 
-#### Les points de terminaison de la Configuration
+## Les points de terminaison de la Configuration
 
 - [/api/users](./model.md#utilisateurs)
 - [/api/roles](./model.md#roles)
@@ -107,7 +107,7 @@ La liste des API se trouve dans le fichier /route/api.php
 
 La particularité du point de terminaison **documents** est qu'il permet d'ajouter ou de télécharger un document.
 La syntaxe est la suivante:
-##### Exemple d'ajout d'un document dans mercator:
+## Exemple d'ajout d'un document dans mercator:
 ```bash
 RESPONSE=$(http_call -X POST "$API/api/documents" \
     -H "Authorization: Bearer $TOKEN" \
@@ -120,7 +120,7 @@ echo "$RESPONSE" | jq .
 DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
 ```
 
-##### Exemple de téléchargement d'un document de mercator:
+## Exemple de téléchargement d'un document de mercator:
 ```bash
  OUTFILE="./downloaded_${DOC_ID}.pdf"
     curl -s -X GET "$API/api/documents/$DOC_ID/download" \
@@ -132,7 +132,7 @@ DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
 #### Les requêtes
 - /api/queries
 
-#### Les rapports
+## Les rapports
 - /api/report/cartography
 - /api/report/entities
 - /api/report/applicationsByBlocks
@@ -150,7 +150,7 @@ DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
 - /api/report/impacts
 - /api/report/rto
 
-### Actions gérées par le contrôleur de ressources
+## Actions gérées par le contrôleur de ressources
 
 Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
@@ -169,7 +169,7 @@ Les champs à fournir sont ceux décrits dans le [modèle de données](model.fr.
 
 Pour voir les fonctions avancées de filtres : voir la page [API avancée (filtres)](apifilters.fr.md)
 
-### Droits d'accès
+## Droits d'accès
 
 Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accéder aux API.
 Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
@@ -178,7 +178,7 @@ accédés par l'API.
 Lorsque l'authentification réussit, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.
 
-### Liaison entre les objets
+## Liaison entre les objets
 
 Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier un processus à
 une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire,
@@ -213,13 +213,13 @@ nous suivons ces étapes :
 Les noms de tous les champs supplémentaires
 sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].
 
-### Exemples
+## Exemples
 
 Voici quelques exemples d'utilisation de l'API avec différents langages :
 
-#### PHP
+## PHP
 
-##### Authentification
+## Authentification
 
 ```php
 <?php
@@ -264,7 +264,7 @@ Voici quelques exemples d'utilisation de l'API avec différents langages :
     var_dump($response);
 ```
 
-##### Liste des utilisateurs
+## Liste des utilisateurs
 
 ```php
 <?php
@@ -295,7 +295,7 @@ Voici quelques exemples d'utilisation de l'API avec différents langages :
 
 ```
 
-##### Récupérer un utilisateur
+## Récupérer un utilisateur
 
 ```php
 <?php
@@ -324,7 +324,7 @@ Voici quelques exemples d'utilisation de l'API avec différents langages :
     var_dump($response);
 ```
 
-##### Mettre à jour un utilisateur
+## Mettre à jour un utilisateur
 
 ```php
 <?php
@@ -361,7 +361,7 @@ Voici quelques exemples d'utilisation de l'API avec différents langages :
     var_dump($response);
 ```
 
-#### Python
+## Python
 
 Voici un exemple d'utilisation de l'API en Python
 
@@ -391,7 +391,7 @@ print(response.status_code)
 
 ```
 
-#### bash
+## bash
 
 Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html)
 et [JQ](https://stedolan.github.io/jq/)
@@ -441,12 +441,12 @@ echo "Objet mis à jour: ${UPDATED_OBJECT}"
 
 ```
 
-#### Powershell
+## Powershell
 
 Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs
 logiques.
 
-##### Étape 1 — Authentification et obtention du jeton d’accès
+## Étape 1 — Authentification et obtention du jeton d’accès
 
 ```powershell
 # Définir l’URL d’authentification et les identifiants
@@ -467,7 +467,7 @@ try {
 }
 ```
 
-##### Étape 2 — Utilisation du jeton pour interroger les serveurs logiques
+## Étape 2 — Utilisation du jeton pour interroger les serveurs logiques
 
 ```powershell
 # Définir l’endpoint et les en-têtes d’autorisation

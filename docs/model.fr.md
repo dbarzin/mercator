@@ -2,14 +2,14 @@
 
 [<img src="/mercator/fr/images/model.png" width="700">](images/model.fr.png)
 
-### Vue du RGPD
+## Vue du RGPD
 
 La vue du RGPD contient l'ensemble des données nécessaires au maintien du registre des traitements et fait le lien avec
 les processus, applications et informations utilisées par le système d'information.
 
 Cette vue permet de remplir les obligations prévues à l’article 30 du RGPD.
 
-#### Registre
+### Registre
 
 Le registre des activités de traitement contient les informations prévues à l'article 30.1 du RGPD.
 
@@ -61,7 +61,7 @@ Une information peut être rattachée à un traitement de données depuis un obj
 Une application peut être rattachée à un traitement de données depuis un objet traitement de données.  
 Un document peut être rattaché à un traitement de données depuis un objet traitement de données.
 
-#### Mesures de sécurité
+### Mesures de sécurité
 
 Cette table permet d'identifier les mesures de sécurité appliquées aux processus et applications.
 
@@ -80,7 +80,7 @@ Par défaut cette table est complétée avec les mesures de sécurité de la nor
 | updated_at  | timestamp    | Date de mise à jour      |
 | deleted_at  | timestamp    | Date de suppression      |
 
-### Vue de l’écosystème
+## Vue de l’écosystème
 
 La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré
 dans le cadre de la cartographie.
@@ -90,7 +90,7 @@ dans le cadre de la cartographie.
 Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble
 de l’écosystème sans se limiter à l’étude individuelle de chaque entité.
 
-#### Entités
+### Entités
 
 Les entités sont une partie de l’organisme (ex. : filiale, département, etc.) ou en relation avec le système
 d’information qui vise à être cartographié.
@@ -130,7 +130,7 @@ Une application peut être rattachée à une entité (en tant que responsable de
 Dans l'application, une base de données peut être rattachée à une entité (en tant que responsable de l'exploitation)
 depuis ces deux objets.
 
-#### Relations
+### Relations
 
 Les relations représentent un lien entre deux entités ou systèmes.
 
@@ -178,7 +178,7 @@ Les valeurs financières d'un contrat peuvent être indiquées dans des champs d
 
 ---
 
-### Vue métier du système d’information
+## Vue métier du système d’information
 
 La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y
 participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition.
@@ -188,7 +188,7 @@ participent, indépendamment des choix technologiques faits par l’organisme et
 La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier
 et ainsi de comprendre leur contexte d’emploi.
 
-#### Macro-processus
+### Macro-processus
 
 Les macro-processus représentent des ensembles de processus.
 
@@ -218,7 +218,7 @@ Il s'active depuis le menu Configuration > Paramètres.
 
 Dans l'application, un processus peut être rattaché à un macro-processus depuis ces deux objets.
 
-#### Processus
+### Processus
 
 Les processus sont un ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à
 valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.
@@ -278,7 +278,7 @@ Un traitement du registre RGPD peut être rattachée à un processus depuis un o
 Une mesure de sécurité peut être rattachée à une application depuis le bouton "Assigner une mesure de sécurité".  
 Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets Mesures de sécurité.
 
-#### Activités
+### Activités
 
 Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et
 pas forcément à une structure organisationnelle de l’entreprise.
@@ -313,7 +313,7 @@ Une application peut être rattachée à une activité depuis ces deux objets.
 
 Dans l'application, les champs "Type d'impact" et "Gravité" sont gérés dans une table à part.
 
-##### Impacts
+#### Impacts
 
 Les impacts sont les conséquences de la survenue d'un risque lors d'une activité.  
 Les impacts ne sont accessibles qu'à travers les objets activités.
@@ -333,7 +333,7 @@ Ils ne sont ni importables, ni exportables à travers l'outil graphique.
 | created_at  | timestamp     | Date de création                                      |
 | updated_at  | timestamp     | Date de mise à jour                                   |
 
-#### Opérations
+### Opérations
 
 Une opération est composée d’acteurs et de tâches.
 
@@ -360,7 +360,7 @@ Dans l'application, une activité peut être rattachée à une opération depuis
 Un acteur peut être rattaché à une opération depuis l'objet opérations.  
 Une tâche peut être rattachée à une opération depuis l'objet opérations.
 
-#### Tâches
+### Tâches
 
 Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible
 de travail dans la chaîne de valeur ajoutée d’un processus.
@@ -382,7 +382,7 @@ L'export du modèle de données référence les opérations rattachées à une t
 
 Dans l'application, une opération peut être rattachée à une tâche depuis l'objet opérations.
 
-#### Acteurs
+### Acteurs
 
 Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des
 décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.
@@ -407,7 +407,7 @@ L'export du modèle de données référence les opérations rattachées à un ac
 
 Dans l'application, une opération peut être rattachée à un acteur depuis l'objet opérations.
 
-#### Information
+### Information
 
 Une information est une donnée faisant l’objet d’un traitement informatique.
 Une information peut être héritée d'une ou plusieurs informations parentes.
@@ -455,7 +455,7 @@ champ **informations***
 
 ---
 
-### La vue des applications
+## La vue des applications
 
 La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ».
 
@@ -463,7 +463,7 @@ La vue des applications permet de décrire une partie de ce qui est classiquemen
 
 Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.
 
-#### Blocs applicatif
+### Blocs applicatif
 
 Un bloc applicatif représente un ensemble d’application.
 
@@ -485,7 +485,7 @@ Un bloc applicatif peut être : les applications bureautique, de gestion, d’an
 
 Dans l'application, une application peut être rattachée à un bloc applicatif depuis ces deux objets.
 
-#### Applications
+### Applications
 
 Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un
 regroupement de services applicatifs.
@@ -583,7 +583,7 @@ Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets M
 Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.  
 Dans l'application, le champ *évènements majeurs* est géré dans une table à part.
 
-##### Evènements majeurs
+#### Evènements majeurs
 
 Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.  
 Les évènements majeurs ne sont accessibles qu'à travers les objets applications.
@@ -603,7 +603,7 @@ Ils ne sont ni importables, ni exportables à travers l'outil graphique.
 | created_at       | timestamp    | Date de création                                    |
 | updated_at       | timestamp    | Date de mise à jour                                 |
 
-#### Services applicatif
+### Services applicatif
 
 Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le
 cadre de son travail.
@@ -635,7 +635,7 @@ Il y a deux champs comportant les mêmes informations dans l'export du modèle d
 *applications*.  
 La liaison avec les objets applications se fait par le champ *applications*.
 
-#### Modules applicatif
+### Modules applicatif
 
 Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière
 d’informatique et une homogénéité technologique.
@@ -660,7 +660,7 @@ d’informatique et une homogénéité technologique.
 L'export du modèle de données référence les services applicatifs rattachés à un module applicatif.  
 Dans l'application, un service applicatif peut être rattaché à un module applicatif depuis ces deux objets.
 
-#### Bases de données
+### Bases de données
 
 Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.
 
@@ -703,7 +703,7 @@ Dans l'application, une application peut être rattachée à une base de donnée
 Dans l'application, un serveur logique peut être rattaché à une base de données depuis ces deux objets.  
 Dans l'application, un conteneur peut être rattaché à une base de données depuis ces deux objets.
 
-#### Flux
+### Flux
 
 Un flux est un échange d’informations entre un émetteur ou un récepteur (application, service applicatif, module
 applicatif ou base de données).
@@ -745,7 +745,7 @@ Dans l'application, une information peut être rattaché à un flux applicatif d
 
 ---
 
-### Zone d’administration
+## Zone d’administration
 
 La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des
 utilisateurs du système d’information.
@@ -755,7 +755,7 @@ utilisateurs du système d’information.
 Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les
 opérateurs d’importance vitale (OIV).
 
-#### Zones d’administration
+### Zones d’administration
 
 Une zone d’administration est un ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (
 ou plusieurs) administrateur(s).
@@ -776,7 +776,7 @@ LDAP.
 | updated_at  | timestamp    | Date de mise à jour    |
 | deleted_at  | timestamp    | Date de suppression    |
 
-#### Services d’annuaire d’administration
+### Services d’annuaire d’administration
 
 Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les
 équipements informatiques de l’entreprise et permettant leur administration.
@@ -799,7 +799,7 @@ comme Mercator.
 | updated_at    | timestamp    | Date de mise à jour                     |
 | deleted_at    | timestamp    | Date de suppression                     |
 
-#### Forêts Active Directory / Arborescence LDAP
+### Forêts Active Directory / Arborescence LDAP
 
 Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.
 
@@ -821,7 +821,7 @@ Ces objets représentent un regroupement organisé de domaines Active Directory 
 L'export du modèle de données référence les domaines rattachés à une forêt AD / Arborescence LDAP.  
 Dans l'application, un domaine peut être rattaché à une forêt AD / arborescence LDAP depuis ces deux objets.
 
-#### Domaines Active Directory / LDAP
+### Domaines Active Directory / LDAP
 
 Les domaines Active Directory / LDAP sont des annuaires informatique d'entreprise. Ils contiennent les comptes
 utilisateurs et machines, les contacts, une partie des configurations de la gestion des SI (politiques de groupes,
@@ -849,7 +849,7 @@ Dans l'application, une forêt AD / arborescence LDAP peut être rattachée à u
 objets.  
 Un serveur logique peut être rattaché à un domaine AD / LDAP depuis ces deux objets.
 
-#### Utilisateurs
+### Utilisateurs
 
 Les utilisateurs représentent les comptes ayant des droits privilégiés sur les SI.
 
@@ -877,7 +877,7 @@ Dans l'application, un utilisateur peut être défini comme administrateur d'une
 
 ---
 
-### L’infrastructure logique
+## L’infrastructure logique
 
 La vue de l'infrastructure logique correspond à la répartition logique du réseau.
 
@@ -886,7 +886,7 @@ La vue de l'infrastructure logique correspond à la répartition logique du rés
 Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements
 réseau en charge du trafic.
 
-#### Réseaux
+### Réseaux
 
 Les réseaux sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.
 
@@ -915,7 +915,7 @@ Dans l'application, le besoin en authenticité est masqué par défaut. Il est o
 d'une entité soumise à la directive UE 2022/2554 (DORA).  
 Il s'active depuis le menu Configuration > Paramètres.
 
-#### Sous-réseaux
+### Sous-réseaux
 
 Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.
 
@@ -946,7 +946,7 @@ Les sous-réseaux sont une subdivision logique d’un réseau de taille plus imp
 
 Le champ "connected_subnets_id" sert à définir une clé étrangère. Cependant, celle-ci ne semble pas utilisée.
 
-#### Passerelles d’entrées depuis l’extérieur
+### Passerelles d’entrées depuis l’extérieur
 
 Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.
 
@@ -967,7 +967,7 @@ Les passerelles sont des composants permettant de relier un réseau local avec l
 
 Dans l'application, un sous-réseau peut être rattaché à une passerelle depuis ces objets.
 
-#### Entités extérieures connectées
+### Entités extérieures connectées
 
 Les entités extérieures connectées représentent les entités externes connectées au réseau.
 
@@ -999,7 +999,7 @@ Dans l'application, un sous-réseau peut être rattaché à une entité extérie
 extérieure connectée.  
 Un document peut être rattaché à une entité extérieure connectée depuis un objet entité extérieure connectée.
 
-#### Commutateurs réseau
+### Commutateurs réseau
 
 Les commutateurs réseau sont les composants gérant les connexions entre les différents serveurs au sein d’un réseau.
 
@@ -1022,7 +1022,7 @@ L'export du modèle de données référence les commutateurs physiques et les VL
 Dans l'application, un VLAN peut être rattaché à un commutateur réseau depuis ces deux objets.  
 Un commutateur physique peut être rattaché à un commutateur réseau depuis ces deux objets.
 
-#### Routeurs logiques
+### Routeurs logiques
 
 Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.
 
@@ -1045,7 +1045,7 @@ Les routeurs logiques sont des composants logiques gérant les connexions entre 
 L'export du modèle de données référence les routeurs physiques rattachés à un routeur logique.  
 Dans l'application, un routeur physique peut être rattaché à un routeur logique depuis ces deux objets.
 
-#### Équipements de sécurité
+### Équipements de sécurité
 
 Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la
 protection des équipements ou ayant une fonction de sécurisation du système d’information.
@@ -1082,7 +1082,7 @@ Dans l'application, un équipement de sécurité physique peut être rattaché �
 logique depuis ces deux objets.  
 Une application peut être rattachée à un équipement de sécurité logique depuis ces deux objets.
 
-#### Serveurs DHCP
+### Serveurs DHCP
 
 ```markdown
 ***NOTE***: Les serveurs dhcp sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf.
@@ -1105,7 +1105,7 @@ Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gest
 | updated_at  | timestamp    | Date de mise à jour      |
 | deleted_at  | timestamp    | Date de suppression      |
 
-#### Serveurs DNS
+### Serveurs DNS
 
 ```markdown
 ***NOTE***: Les serveurs dns sont conservés pour la rétrocompatibilité et la conformité au guide de l'ANSSI  (cf.
@@ -1129,7 +1129,7 @@ la conversion d’un nom de domaine en adresse IP.
 | updated_at  | timestamp    | Date de mise à jour      |
 | deleted_at  | timestamp    | Date de suppression      |
 
-#### Clusters
+### Clusters
 
 Les clusters représentent un ensemble de serveurs logiques hébergés sur un ou plusieurs serveurs physiques
 
@@ -1156,7 +1156,7 @@ Dans l'application, un routeur logique peut être rattaché à un cluster depuis
 Un serveur logique peut être rattaché à un cluster depuis ces deux objets.  
 Un serveur physique peut être rattaché à un cluster depuis ces deux objets.
 
-#### Serveurs logiques
+### Serveurs logiques
 
 Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il
 est découpé en un seul serveur logique.
@@ -1221,7 +1221,7 @@ Un conteneur peut être rattaché à un serveur logique depuis un objet conteneu
 Le champ "documents" ne semble pas utilisé dans le modèle de données d'un serveur logique.
 
 
-#### Plans de sauvegarde
+### Plans de sauvegarde
 
 Les **plans de sauvegarde** permettent d’associer à chaque **serveur logique** les **stratégies de sauvegarde réellement implémentées**.  
 Ces stratégies décrivent :  
@@ -1269,7 +1269,7 @@ Cette table constitue la base de référence permettant d’auditer la conformit
 | 6  | Miroir                    | 
 
 
-#### Conteneurs
+### Conteneurs
 
 Les conteneurs font partie des systèmes de virtualisation. Ils peuvent fonctionner en grappe ou isolément,
 sur des serveurs logiques internes ou externes (cloud).
@@ -1298,7 +1298,7 @@ Dans l'application, une application peut être rattachée à un conteneur depuis
 Une base de données peut être rattachée à un conteneur depuis ces deux objets.  
 Un serveur logique peut être rattaché à un conteneur depuis un objet conteneur.
 
-#### Flux logiques
+### Flux logiques
 
 Les flux logiques décrivent des relations au niveau des couches 3 et 4 du modèle OSI.
 
@@ -1345,7 +1345,7 @@ Les <span style="color: purple;">*actifs (devices)*</span> sources et destinatio
 | Clusters                        |   ✅    |      ✅      |
 | Sous-réseaux                    |   ✅    |      ✅      |
 
-#### Certificats
+### Certificats
 
 Les certificats électroniques sont utilisés pour identifier et authentifier des services, des personnes physiques ou
 morales, mais aussi pour chiffrer des échanges.
@@ -1381,7 +1381,7 @@ applications.
 Le champ "last_notification" n'est pas utilisé pour le moment et est donc absent de l'application.  
 L'export du modèle de données référence les applications et les serveurs logiques rattachés à un certificat.
 
-#### VLANs
+### VLANs
 
 Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements
 en s’affranchissant des contraintes physiques.
@@ -1407,7 +1407,7 @@ Dans l'application, un VLAN peut être rattaché à un sous-réseau ou un commut
 
 ---
 
-### L’infrastructure physique
+## L’infrastructure physique
 
 La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont
 utilisés par celui-ci.
@@ -1416,7 +1416,7 @@ utilisés par celui-ci.
 
 Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.
 
-#### Sites
+### Sites
 
 Les sites sont des emplacements géographiques rassemblant un ensemble de personnes et/ou de ressources.
 
@@ -1436,7 +1436,7 @@ Les sites sont des emplacements géographiques rassemblant un ensemble de person
 
 Dans l'application, un bâtiment / salle peut être rattaché à un site depuis un objet bâtiment / salle.
 
-#### Bâtiments / Salles
+### Bâtiments / Salles
 
 Les bâtiments ou salles représentent la localisation des personnes ou ressources à l’intérieur d’un site.
 
@@ -1461,7 +1461,7 @@ Les bâtiments ou salles représentent la localisation des personnes ou ressourc
 Dans l'application, un bâtiment / salle ou un site peut être rattaché à un bâtiment / salle depuis un objet bâtiment /
 salle.
 
-#### Baies
+### Baies
 
 Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.
 
@@ -1481,7 +1481,7 @@ Les baies sont des armoires techniques rassemblant des équipements de réseau i
 
 Dans l'application, une baie peut être rattachée à un bâtiment / baie depuis un objet baie.
 
-#### Serveurs physiques
+### Serveurs physiques
 
 Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.
 
@@ -1534,7 +1534,7 @@ moment dans l'application pour la table *physical_servers* ont été regroupés 
 | next_update        | date         | Date de la prochaine mise à jour        |
 | physical_swicth_id | int unsigned | Référence vers le commutateur physique  |
 
-#### Postes de travail
+### Postes de travail
 
 Les postes de travail sont des machines physiques permettant à un utilisateur d’accéder au système d’information.
 
@@ -1594,7 +1594,7 @@ dans l'application pour la table *workstations* ont été regroupés dans le tab
 | agent_version       | varchar(255) | Version de l'agent d'inventaire         |
 | physical_swicth_id  | int unsigned | Référence vers le commutateur physique  |
 
-#### Infrastructures de stockage
+### Infrastructures de stockage
 
 ```markdown
 ***NOTE***: Les infrastructures de stockage sont conservées pour la rétrocompatibilité, mais cette table n'est pas
@@ -1631,7 +1631,7 @@ réseau (NAS), réseau de stockage (SAN), disque dur…
 
 Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment et sont donc absents de l'application.
 
-#### Périphériques
+### Périphériques
 
 Les périphériques sont des composants physiques connectés à un poste de travail afin d’ajouter de nouvelles
 fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
@@ -1664,7 +1664,7 @@ fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
 L'export du modèle de données référence les applications utilisant un périphérique.  
 Dans l'application, un périphérique peut être rattaché à une application depuis un objet périphérique.
 
-#### Téléphones
+### Téléphones
 
 Les téléphones fixes ou portables appartenant à l’organisation.
 
@@ -1693,7 +1693,7 @@ Les champs "vendor", "product" et "version" ne sont pas utilisés pour le moment
 Le champ "physical_switch_id" n'est pas utilisé pour le moment et est donc absent de l'application. Cependant, un
 téléphone peut être rattaché à un commutateur réseau en utilisant l'objet lien physique.
 
-#### Commutateurs physiques
+### Commutateurs physiques
 
 Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein
 d’un réseau.
@@ -1725,7 +1725,7 @@ Dans l'application, un commutateur physique peut être rattaché à un commutate
 réseau")
 depuis ces deux types d'objets.
 
-#### Routeurs physiques
+### Routeurs physiques
 
 Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.
 
@@ -1756,7 +1756,7 @@ Dans l'application, un routeur physique peut être rattaché à un routeur logiq
 types d'objets.  
 Un VLAN peut être rattaché à un routeur physique depuis un objet routeur physique.
 
-#### Bornes WiFi
+### Bornes WiFi
 
 Les bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.
 
@@ -1782,7 +1782,7 @@ Les bornes WiFi sont des équipements matériel permettant l’accès au réseau
 | updated_at  | timestamp    | Date de mise à jour                     |
 | deleted_at  | timestamp    | Date de suppression                     |
 
-#### Équipements de sécurité physique
+### Équipements de sécurité physique
 
 Les équipements de sécurité physique sont des composants permettant la supervision du réseau, la détection d’incidents,
 la protection des équipements ou ayant une fonction de sécurisation du système d’information
@@ -1815,7 +1815,7 @@ physiques.
 Dans l'application, un équipement de sécurité physique peut être rattaché à un équipement de sécurité logique depuis ces
 deux types d'objets.
 
-#### Liens physiques
+### Liens physiques
 
 Les liens physiques représentent les câbles entre les objets physiques ou logiques.  
 Les objets logiques peuvent disposer de liens physiques, par exemple au sein d'un réseau virtualisé.  
@@ -1857,7 +1857,7 @@ Les actifs sources et destination peuvent être :
 | Commutateur logique             |   ✅    |      ✅      |
 | Routeur logique                 |   ✅    |      ✅      |
 
-#### WANs
+### WANs
 
 Les WAN (Wide Area Network) sont des réseaux informatiques reliant des équipements sur des distances importantes. Ils
 interconnectent généralement des MAN ou LAN entre eux.
@@ -1879,7 +1879,7 @@ interconnectent généralement des MAN ou LAN entre eux.
 L'export du modèle de données référence les MAN et LAN rattachés à un WAN.  
 Dans l'application, un WAN peut être rattaché à un MAN ou un LAN depuis les objets WAN.
 
-#### MANs
+### MANs
 
 Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement
 importantes. Ils interconnectent généralement des LAN entre eux.
@@ -1901,7 +1901,7 @@ L'export du modèle de données référence les WAN et LAN rattachés à un MAN.
 Dans l'application, un MAN peut être rattaché à un WAN depuis les objets WAN.  
 Un LAN peut être rattaché à un MAN depuis les objets MAN.
 
-#### LANs
+### LANs
 
 Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.
 
@@ -1923,13 +1923,11 @@ Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipe
 L'export du modèle de données référence les MAN et les WAN rattachés à un LAN.  
 Dans l'application, un LAN peut être rattaché à un MAN ou un WAN depuis les objets MAN et WAN.
 
----
-
-### Configuration
+## Configuration
 
 Dans le menu configuration, on trouve la partie documents.
 
-#### documents
+### documents
 
 Cette partie permet de voir les documents attachés, mais aussi les icônes personnalisées.
 
@@ -1951,7 +1949,7 @@ Cette partie permet de voir les documents attachés, mais aussi les icônes pers
 - Le document est créé dans le répertoire docs référencé par son id
 - Le document n'est pas inséré dans la base de donnée.
 
-##### Exemple d'information d'un document pour une icône de firewall:
+#### Exemple d'information d'un document pour une icône de firewall:
 
 ```json
     "id": 1,

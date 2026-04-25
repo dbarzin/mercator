@@ -101,6 +101,40 @@ class QueryResolver
 
     protected function applyFilter(Builder $builder, array $filter): void
     {
+        // EXISTS : { exists: 'backups', ?conditions: [...] }
+        if (array_key_exists('exists', $filter)) {
+            $relation   = $filter['exists'];
+            $conditions = $filter['conditions'] ?? [];
+            $boolean    = strtolower($filter['boolean'] ?? 'and');
+            $method     = $boolean === 'or' ? 'orWhereHas' : 'whereHas';
+
+            $builder->$method($relation, function (Builder $q) use ($conditions) {
+                foreach ($conditions as $cond) {
+                    $this->applyFilter($q, $cond);
+                }
+            });
+            return;
+        }
+
+        // NOT EXISTS : { not_exists: 'backups', ?conditions: [...] }
+        if (array_key_exists('not_exists', $filter)) {
+            $relation   = $filter['not_exists'];
+            $conditions = $filter['conditions'] ?? [];
+            $boolean    = strtolower($filter['boolean'] ?? 'and');
+            $method     = $boolean === 'or' ? 'orWhereDoesntHave' : 'whereDoesntHave';
+
+            if (empty($conditions)) {
+                $builder->$method($relation);
+            } else {
+                $builder->$method($relation, function (Builder $q) use ($conditions) {
+                    foreach ($conditions as $cond) {
+                        $this->applyFilter($q, $cond);
+                    }
+                });
+            }
+            return;
+        }
+
         // Groupe : { boolean, group: [...] }
         if (array_key_exists('group', $filter)) {
             $boolean = strtolower($filter['boolean'] ?? 'and');
@@ -145,8 +179,8 @@ class QueryResolver
             return;
         }
 
-        $field     = array_pop($parts);
-        $method    = $isOr ? 'orWhereHas' : 'whereHas';
+        $field  = array_pop($parts);
+        $method = $isOr ? 'orWhereHas' : 'whereHas';
         $this->applyNestedWhereHas($builder, $parts, $field, $operator, $value, $method);
     }
 
@@ -200,33 +234,20 @@ class QueryResolver
     // Normalisation des valeurs
     // ─────────────────────────────────────────────────────────────
 
-    /**
-     * Normalise une valeur pour la sérialisation JSON.
-     * Les dates Carbon sont converties en chaîne "YYYY-MM-DD".
-     * Les datetimes sont converties en "YYYY-MM-DD HH:MM:SS".
-     */
     protected function normalizeValue(mixed $value): mixed
     {
-        // Objet Carbon / CarbonInterface
         if ($value instanceof \Carbon\CarbonInterface) {
             return $value->toDateString();
         }
-        // Tout objet DateTimeInterface
         if ($value instanceof \DateTimeInterface) {
             return $value->format('Y-m-d');
         }
-        // Carbon sérialisé en tableau : ['date' => '2024-01-15 00:00:00.000000', 'timezone' => '...']
         if (is_array($value) && isset($value['date'])) {
             return substr($value['date'], 0, 10);
         }
         return $value;
     }
 
-    /**
-     * Retourne tous les attributs d'un modèle normalisés.
-     * Passe par getAttribute() pour déclencher les casts Eloquent,
-     * puis normalise les objets Carbon résultants.
-     */
     protected function getAttributes(Model $item): array
     {
         return collect(array_keys($item->getAttributes()))
@@ -285,6 +306,7 @@ class QueryResolver
 
     /**
      * Expansion récursive d'un objet en N lignes (produit cartésien).
+     * L'ordre des colonnes respecte l'ordre original de $fields.
      */
     protected function expandRow(Model $item, array $fields): array
     {
@@ -300,9 +322,9 @@ class QueryResolver
             }
         }
 
-        // Champs racine — via getAttribute pour les casts (dates, etc.)
-        $rootRow      = [];
-        $modelClass   = get_class($item);
+        // Champs racine
+        $rootRow    = [];
+        $modelClass = get_class($item);
         foreach ($rootFields as $f) {
             QueryEngineIntrospector::validateField($modelClass, $f);
             $rootRow[$f] = $this->normalizeValue($item->getAttribute($f));
@@ -351,7 +373,22 @@ class QueryResolver
             $result = $newResult;
         }
 
-        return $result;
+        // ── Réordonner chaque ligne selon l'ordre original de $fields ──
+        return array_map(function (array $row) use ($fields): array {
+            $ordered = [];
+            foreach ($fields as $key) {
+                if (array_key_exists($key, $row)) {
+                    $ordered[$key] = $row[$key];
+                }
+            }
+            // Clés non déclarées dans $fields ajoutées en fin
+            foreach ($row as $k => $v) {
+                if (! array_key_exists($k, $ordered)) {
+                    $ordered[$k] = $v;
+                }
+            }
+            return $ordered;
+        }, $result);
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -392,22 +429,21 @@ class QueryResolver
         }
 
         // Enregistrer le nœud seulement la première fois
-        $alreadyVisited = isset($this->visitedNodes[$nodeId]);
-        if (! $alreadyVisited) {
+        if (! isset($this->visitedNodes[$nodeId])) {
             $this->visitedNodes[$nodeId] = true;
             $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
         }
 
-        // Ne pas return ici même si déjà visité :
-        // un même nœud peut être atteint via un chemin différent qui a encore des enfants à traverser.
+        // Ne pas return même si déjà visité :
+        // un même nœud peut être atteint via un chemin différent avec des enfants à traverser.
 
         if (empty($traverse)) {
             return;
         }
 
-        // Regrouper les chemins traverse par relation de premier niveau
-        // Ex: ['logicalServers', 'logicalServers.applications', 'logicalServers.networks']
-        //  → ['logicalServers' => ['applications', 'networks']]
+        // Regrouper les chemins par relation de premier niveau
+        // Ex: ['logicalServers', 'logicalServers.applications']
+        //  → ['logicalServers' => ['applications']]
         $relationMap = [];
         foreach ($traverse as $traversePath) {
             $parts    = explode('.', $traversePath, 2);
@@ -457,6 +493,7 @@ class QueryResolver
             ],
         ];
     }
+
     protected function resolveUrl(string $modelName, int|string $id): string
     {
         $slug = QueryEngineIntrospector::modelToApiName($modelName);

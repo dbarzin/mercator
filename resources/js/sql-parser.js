@@ -7,9 +7,27 @@
  *   [FIELDS <field>, <relation.field>, ...]
  *   [WHERE <conditions>]
  *   [WITH <relation>, <relation.relation>, ...]
- *   [DEPTH <n>]
  *   [OUTPUT graph|list]
  *   [LIMIT <n>]
+ *
+ * Conditions :
+ *   field = "value"                    égalité
+ *   field != "value"                   différent
+ *   field >= 3                         comparaison
+ *   field LIKE "%val%"                 like
+ *   field NOT LIKE "%val%"             not like
+ *   field IN (1, 2, 3)                 in
+ *   field NOT IN (1, 2)                not in
+ *   field IS NULL                      null
+ *   field IS NOT NULL                  not null
+ *   EXISTS relation                    whereHas
+ *   NOT EXISTS relation                whereDoesntHave
+ *   EXISTS relation WHERE field = x    whereHas avec condition
+ *   cond AND cond                      et
+ *   cond OR cond                       ou
+ *   NOT cond                           négation
+ *   (cond OR cond) AND cond            groupes
+ *   relation.field = "value"           filtre sur sous-objet
  */
 
 (function () {
@@ -21,7 +39,7 @@
 
     const KEYWORDS = new Set([
         'FROM', 'WHERE', 'AND', 'OR', 'NOT', 'WITH', 'TRAVERSE',
-        'OUTPUT', 'LIMIT', 'LIKE', 'IN', 'IS',
+        'OUTPUT', 'LIMIT', 'LIKE', 'IN', 'IS', 'EXISTS',
         'FIELDS', 'SELECT', 'NULL', 'TRUE', 'FALSE',
     ]);
 
@@ -31,7 +49,7 @@
 
         while (i < input.length) {
 
-            // Espaces
+            // Espaces et sauts de ligne
             if (/\s/.test(input[i])) {
                 i++;
                 continue;
@@ -56,7 +74,7 @@
                 continue;
             }
 
-            // Nombres
+            // Nombres (entiers et décimaux, négatifs si contexte correct)
             const prev = tokens[tokens.length - 1];
             const canBeNeg = input[i] === '-'
                 && /[0-9]/.test(input[i + 1])
@@ -70,7 +88,7 @@
                 continue;
             }
 
-            // Opérateurs 2 caractères
+            // Opérateurs à 2 caractères
             const two = input.substring(i, i + 2);
             if (['>=', '<=', '!=', '<>'].includes(two)) {
                 tokens.push({type: 'OP', value: two === '<>' ? '!=' : two});
@@ -78,8 +96,8 @@
                 continue;
             }
 
-            // Opérateurs 1 caractère
-            if ('=<>'.includes(input[i])) {
+            // Opérateurs à 1 caractère
+            if ('=<>-'.includes(input[i])) {
                 tokens.push({type: 'OP', value: input[i]});
                 i++;
                 continue;
@@ -93,30 +111,20 @@
                 continue;
             }
 
-            // Identifiants et mots-clés
+            // Identifiants et mots-clés (point inclus pour relation.field)
             if (/[a-zA-Z_]/.test(input[i])) {
                 let id = '';
-                while (i < input.length) {
-                    // Tiret kebab : accepté seulement si suivi d'un alphanumérique (pas '--')
-                    if (input[i] === '-') {
-                        if (i + 1 < input.length && /[a-zA-Z0-9]/.test(input[i + 1])) {
-                            id += input[i++];
-                            continue;
-                        }
-                        break;
-                    }
-                    if (!/[a-zA-Z0-9_.]/.test(input[i])) break;
-                    id += input[i++];
-                }
+                while (i < input.length && /[a-zA-Z0-9_.]/.test(input[i])) id += input[i++];
                 const up = id.toUpperCase();
-                if (KEYWORDS.has(up)) tokens.push({type: up});
-                else if (up === 'TRUE') tokens.push({type: 'BOOLEAN', value: true});
-                else if (up === 'FALSE') tokens.push({type: 'BOOLEAN', value: false});
-                else tokens.push({type: 'IDENT', value: id});
+                if (KEYWORDS.has(up)) {
+                    tokens.push({type: up});
+                } else {
+                    tokens.push({type: 'IDENT', value: id});
+                }
                 continue;
             }
-            
-            i++;
+
+            i++; // caractère inconnu ignoré
         }
 
         tokens.push({type: 'EOF'});
@@ -151,16 +159,22 @@
         }
 
         expect(type) {
-            if (!this.check(type))
-                throw new Error(`Attendu "${type}", obtenu "${this.peek().type}" (valeur: "${this.peek().value ?? ''}")`);
+            if (!this.check(type)) {
+                throw new Error(
+                    `Attendu "${type}", obtenu "${this.peek().type}"` +
+                    (this.peek().value != null ? ` (valeur: "${this.peek().value}")` : '')
+                );
+            }
             return this.advance();
         }
+
+        // ── Clause principale ────────────────────────────────────
 
         parse() {
             const dsl = {};
 
             this.expect('FROM');
-            dsl.from = this.expect('IDENT').value;
+            dsl.from = this.parseModelName();
 
             while (!this.check('EOF')) {
                 if (this.match('WHERE')) dsl.filters = this.parseWhereClause();
@@ -174,17 +188,32 @@
             return dsl;
         }
 
+        // Lit un nom de modèle pouvant contenir des tirets : logical-servers, physical-server, etc.
+        parseModelName() {
+            let name = this.expect('IDENT').value;
+            while (this.check('OP') && this.peek().value === '-') {
+                this.advance();                    // consommer le tiret
+                name += '-' + this.expect('IDENT').value;
+            }
+            return name;
+        }
+
+        // ── Liste d'identifiants séparés par des virgules ────────
+
         parseIdentList() {
             const items = [this.expect('IDENT').value];
             while (this.match('COMMA')) items.push(this.expect('IDENT').value);
             return items;
         }
 
+        // ── Clause WHERE ─────────────────────────────────────────
+
         parseWhereClause() {
             const result = this.parseOrExpr();
             return Array.isArray(result) ? result : [result];
         }
 
+        // OR — priorité la plus faible
         parseOrExpr() {
             let left = this.parseAndExpr();
             while (this.match('OR')) {
@@ -194,6 +223,7 @@
             return left;
         }
 
+        // AND — priorité plus élevée que OR
         parseAndExpr() {
             let left = this.parseUnary();
             while (this.match('AND')) {
@@ -203,19 +233,62 @@
             return left;
         }
 
+        // NOT, EXISTS, NOT EXISTS, parenthèses
         parseUnary() {
+
+            // NOT EXISTS <relation> [WHERE <conditions>]
             if (this.match('NOT')) {
+                if (this.check('EXISTS')) {
+                    this.advance(); // consommer EXISTS
+                    const relation = this.expect('IDENT').value;
+                    const conditions = this.check('WHERE')
+                        ? (this.advance(), this.parseSubConditions())
+                        : [];
+                    return {not_exists: relation, ...(conditions.length ? {conditions} : {})};
+                }
+                // NOT ordinaire (groupes logiques)
                 const inner = this.parseUnary();
                 return {boolean: 'not', group: Array.isArray(inner) ? inner : [inner]};
             }
+
+            // EXISTS <relation> [WHERE <conditions>]
+            if (this.match('EXISTS')) {
+                const relation = this.expect('IDENT').value;
+                const conditions = this.check('WHERE')
+                    ? (this.advance(), this.parseSubConditions())
+                    : [];
+                return {exists: relation, ...(conditions.length ? {conditions} : {})};
+            }
+
+            // Groupe entre parenthèses
             if (this.match('LPAREN')) {
                 const inner = this.parseOrExpr();
                 this.expect('RPAREN');
                 const group = Array.isArray(inner) ? inner : [inner];
                 return {boolean: 'and', group};
             }
+
             return this.parseCondition();
         }
+
+        // Sous-conditions après EXISTS relation WHERE ...
+        // S'arrête aux mots-clés de clause ou opérateurs logiques de niveau supérieur
+        parseSubConditions() {
+            const stopTokens = new Set([
+                'AND', 'OR', 'RPAREN', 'EOF',
+                'WITH', 'TRAVERSE', 'OUTPUT', 'LIMIT', 'FIELDS', 'SELECT', 'FROM',
+            ]);
+            const conditions = [];
+
+            while (!stopTokens.has(this.peek().type)) {
+                conditions.push(this.parseCondition());
+                if (!this.match('AND')) break;
+            }
+
+            return conditions;
+        }
+
+        // ── Fusion de deux expressions ───────────────────────────
 
         buildAndGroup(left, right) {
             const leftArr = Array.isArray(left) ? left : [left];
@@ -230,6 +303,8 @@
                 : {...right, boolean: 'or'};
             return [...leftArr, rightItem];
         }
+
+        // ── Condition simple : field OP value ────────────────────
 
         parseCondition() {
             const field = this.expect('IDENT').value;
@@ -262,11 +337,21 @@
             return {field, operator: op, value: this.parseScalar()};
         }
 
+        // ── Valeur scalaire ──────────────────────────────────────
+
         parseScalar() {
             const tok = this.peek();
-            if (['STRING', 'NUMBER', 'BOOLEAN'].includes(tok.type)) {
+            if (['STRING', 'NUMBER'].includes(tok.type)) {
                 this.advance();
                 return tok.value;
+            }
+            if (tok.type === 'TRUE') {
+                this.advance();
+                return true;
+            }
+            if (tok.type === 'FALSE') {
+                this.advance();
+                return false;
             }
             if (tok.type === 'NULL') {
                 this.advance();
@@ -278,6 +363,8 @@
             }
             throw new Error(`Valeur attendue, obtenu : "${tok.type}"`);
         }
+
+        // ── Tableau (1, 2, 3) ou [1, 2, 3] ─────────────────────
 
         parseArray() {
             const open = this.check('LPAREN') ? 'LPAREN' : 'LBRACKET';
@@ -291,7 +378,7 @@
     }
 
     // ─────────────────────────────────────────────────────────────
-    // DSL → SQL-like
+    // DSL JSON → SQL-like lisible
     // ─────────────────────────────────────────────────────────────
 
     function dslToSql(dsl) {
@@ -312,14 +399,30 @@
         if (!Array.isArray(filters)) filters = [filters];
 
         return filters.map((f, i) => {
-            const bool = (f.boolean ?? (i === 0 ? 'and' : 'and')).toUpperCase();
+            const bool = (f.boolean ?? 'and').toUpperCase();
             const prefix = i === 0 ? '' : `${bool} `;
 
+            // EXISTS / NOT EXISTS
+            if (f.exists != null) {
+                const sub = f.conditions?.length
+                    ? ` WHERE ${filtersToSql(f.conditions, indent + '    ')}`
+                    : '';
+                return `${prefix}EXISTS ${f.exists}${sub}`;
+            }
+            if (f.not_exists != null) {
+                const sub = f.conditions?.length
+                    ? ` WHERE ${filtersToSql(f.conditions, indent + '    ')}`
+                    : '';
+                return `${prefix}NOT EXISTS ${f.not_exists}${sub}`;
+            }
+
+            // Groupe entre parenthèses
             if (f.group) {
                 const inner = filtersToSql(f.group, indent + '    ');
                 return `${prefix}(\n${indent}    ${inner}\n${indent})`;
             }
 
+            // Condition simple
             const val = fmtVal(f.value);
             const op = (f.operator ?? '').toUpperCase();
 
