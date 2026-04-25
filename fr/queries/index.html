@@ -464,30 +464,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Clause WHERE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#operateurs-supportes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Opérateurs supportés
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#combinaisons-logiques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Combinaisons logiques
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -506,36 +482,12 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Format de sortie (OUTPUT)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#output-list" class="md-nav__link">
-    <span class="md-ellipsis">
-      OUTPUT list
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-graph" class="md-nav__link">
-    <span class="md-ellipsis">
-      OUTPUT graph
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#partage-dune-requete" class="md-nav__link">
+  <a href="#sauvegarde-des-requetes" class="md-nav__link">
     <span class="md-ellipsis">
-      Partage d'une requête
+      Sauvegarde des requêtes
     </span>
   </a>
   
@@ -547,75 +499,6 @@
       Exemples
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Exemples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serveurs-linux-en-production-avec-leurs-applications" class="md-nav__link">
-    <span class="md-ellipsis">
-      Serveurs Linux en production avec leurs applications
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#toutes-les-applications-et-leurs-bases-de-donnees" class="md-nav__link">
-    <span class="md-ellipsis">
-      Toutes les applications et leurs bases de données
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inventaire-des-serveurs-physiques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inventaire des serveurs physiques
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reseaux-sous-reseaux-et-vlans" class="md-nav__link">
-    <span class="md-ellipsis">
-      Réseaux, sous-réseaux et VLANs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filtres-multiples-avec-in" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filtres multiples avec IN
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#certificats-ssl-avec-date-dexpiration-et-perimetre-dinstallation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Certificats SSL avec date d'expiration et périmètre d'installation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#applications-critiques-avec-leurs-serveurs-et-bases-de-donnees" class="md-nav__link">
-    <span class="md-ellipsis">
-      Applications critiques avec leurs serveurs et bases de données
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -889,7 +772,6 @@
 
 <h1 id="requetes">Requêtes<a class="headerlink" href="#requetes" title="Permanent link">&para;</a></h1>
 <p>Les requêtes Mercator permettent d'explorer et de visualiser les données de votre cartographie de manière flexible, sans passer par l'interface standard. Elles s'écrivent dans un langage déclaratif inspiré du SQL et peuvent produire une <strong>liste</strong> ou un <strong>graphe</strong>.</p>
-<hr />
 <h2 id="format-dune-requete">Format d'une requête<a class="headerlink" href="#format-dune-requete" title="Permanent link">&para;</a></h2>
 <p>Une requête Mercator suit la syntaxe suivante :</p>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w">    </span><span class="o">&lt;</span><span class="n">Modèle</span><span class="o">&gt;</span>
@@ -940,9 +822,8 @@
 </tr>
 </tbody>
 </table>
-<hr />
 <h2 id="modeles-disponibles">Modèles disponibles<a class="headerlink" href="#modeles-disponibles" title="Permanent link">&para;</a></h2>
-<p>Les modèles correspondent aux entités de l'<a href="../api/">API</a> Mercator et sont en <strong>snake_case</strong>.</p>
+<p>Les modèles correspondent aux entités de l'<a href="../api/">API</a> Mercator et sont en <strong>kebab-case</strong>.</p>
 <table>
 <thead>
 <tr>
@@ -995,9 +876,9 @@
 </table>
 <div class="admonition info">
 <p class="admonition-title">Champs disponibles</p>
-<p>Les champs utilisables dans <code>FIELDS</code> et <code>WHERE</code> sont ceux exposés par l'API Mercator. Consultez la <a href="../model/">modèle de données</a> pour connaître l'ensemble des attributs de chaque modèle.</p>
 </div>
-<hr />
+<p>Les champs utilisables dans <code>FIELDS</code> et <code>WHERE</code> sont ceux exposés par l'API Mercator.
+Consultez le <a href="../model/">modèle de données</a> pour connaître l'ensemble des attributs de chaque modèle.</p>
 <h2 id="clause-fields">Clause FIELDS<a class="headerlink" href="#clause-fields" title="Permanent link">&para;</a></h2>
 <p>La clause <code>FIELDS</code> liste les attributs à afficher dans le résultat. Elle accepte :</p>
 <ul>
@@ -1008,9 +889,10 @@
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Cohérence avec WITH</p>
-<p>Si vous référencez un champ de relation dans <code>FIELDS</code> (ex. <code>applications.name</code>), la relation correspondante doit être déclarée dans <code>WITH</code> (ex. <code>WITH applications</code>), sans quoi les données ne seront pas chargées.</p>
 </div>
-<hr />
+<p>Si vous référencez un champ de relation dans <code>FIELDS</code> (ex. <code>applications.name</code>),
+la relation correspondante doit être déclarée dans <code>WITH</code> (ex. <code>WITH applications</code>),
+sans quoi les données ne seront pas chargées.</p>
 <h2 id="conditions">Clause WHERE<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h2>
 <p>La clause <code>WHERE</code> filtre les enregistrements selon des conditions sur les champs du modèle principal.</p>
 <h3 id="operateurs-supportes">Opérateurs supportés<a class="headerlink" href="#operateurs-supportes" title="Permanent link">&para;</a></h3>
@@ -1048,6 +930,16 @@
 <td><code>IN</code></td>
 <td><code>environment IN ("production", "staging")</code></td>
 </tr>
+<tr>
+<td>Existence de relation</td>
+<td><code>EXISTS</code></td>
+<td><code>EXISTS applications</code></td>
+</tr>
+<tr>
+<td>Absence de relation</td>
+<td><code>NOT EXISTS</code></td>
+<td><code>NOT EXISTS certificates</code></td>
+</tr>
 </tbody>
 </table>
 <h3 id="combinaisons-logiques">Combinaisons logiques<a class="headerlink" href="#combinaisons-logiques" title="Permanent link">&para;</a></h3>
@@ -1056,15 +948,28 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">environment</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;production&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;staging&quot;</span><span class="p">))</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">operating_system</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="ss">&quot;%Windows%&quot;</span><span class="p">)</span>
 </code></pre></div>
-<hr />
+<h3 id="exists">Opérateur EXISTS<a class="headerlink" href="#exists" title="Permanent link">&para;</a></h3>
+<p>L'opérateur <code>EXISTS</code> filtre les enregistrements selon qu'une relation est présente ou absente. Il s'applique au nom de la relation Eloquent (tel que déclaré dans <code>WITH</code>).</p>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="k">EXISTS</span><span class="w"> </span><span class="n">applications</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">certificates</span><span class="p">)</span>
+</code></pre></div>
+<p><code>EXISTS</code> peut être combiné avec d'autres conditions :</p>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="k">EXISTS</span><span class="w"> </span><span class="n">certificates</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">EXISTS et eager loading</p>
+</div>
+<p>L'opérateur <code>EXISTS</code> n'implique pas le chargement des données de la relation.
+Si vous souhaitez également afficher les champs de cette relation dans <code>FIELDS</code>,
+déclarez-la explicitement dans <code>WITH</code>.</p>
 <h2 id="clause-with">Clause WITH<a class="headerlink" href="#clause-with" title="Permanent link">&para;</a></h2>
 <p>La clause <code>WITH</code> déclare les <strong>relations à charger</strong> (eager loading). Elle est indispensable pour accéder aux champs d'objets liés dans <code>FIELDS</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">applications</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span>
 </code></pre></div>
-<p>Les noms de relations correspondent aux noms des méthodes de relation des modèles Eloquent, généralement en <strong>camelCase</strong> :</p>
-<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">sites</span><span class="p">,</span><span class="w"> </span><span class="n">bays</span>
+<p>Les noms de relations correspondent aux noms des méthodes de relation des modèles Eloquent, en <strong>snake_case</strong> :</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">sites</span><span class="p">,</span><span class="w"> </span><span class="n">bays</span>
 </code></pre></div>
-<hr />
 <h2 id="format-de-sortie-output">Format de sortie (OUTPUT)<a class="headerlink" href="#format-de-sortie-output" title="Permanent link">&para;</a></h2>
 <h3 id="output-list"><code>OUTPUT list</code><a class="headerlink" href="#output-list" title="Permanent link">&para;</a></h3>
 <p>Génère un <strong>tableau</strong> avec une ligne par enregistrement. C'est le format adapté pour les inventaires, les exports, ou les vues tabulaires.</p>
@@ -1076,12 +981,12 @@
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Quand utiliser <code>graph</code> ?</p>
-<p>Préférez <code>OUTPUT graph</code> dès que votre requête charge des relations avec <code>WITH</code> et que vous souhaitez visualiser les liens entre entités (applications ↔ serveurs, réseaux ↔ serveurs, etc.).</p>
 </div>
-<hr />
-<h2 id="partage-dune-requete">Partage d'une requête<a class="headerlink" href="#partage-dune-requete" title="Permanent link">&para;</a></h2>
+<p>Préférez <code>OUTPUT graph</code> dès que votre requête charge des relations avec <code>WITH</code>
+et que vous souhaitez visualiser les liens entre entités
+(applications ↔ serveurs, réseaux ↔ serveurs, etc.).</p>
+<h2 id="sauvegarde-des-requetes">Sauvegarde des requêtes<a class="headerlink" href="#sauvegarde-des-requetes" title="Permanent link">&para;</a></h2>
 <p>Il est possible de <strong>sauvegarder des requêtes</strong> dans l'interface pour les retrouver et les réexécuter sans les ressaisir. Les requêtes sauvegardées peuvent être rendues publiques (visibles par tous les utilisateurs) ou privées (visibles uniquement par leur auteur).</p>
-<hr />
 <h2 id="exemples">Exemples<a class="headerlink" href="#exemples" title="Permanent link">&para;</a></h2>
 <h3 id="serveurs-linux-en-production-avec-leurs-applications">Serveurs Linux en production avec leurs applications<a class="headerlink" href="#serveurs-linux-en-production-avec-leurs-applications" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
@@ -1090,29 +995,25 @@
 <span class="k">WITH</span><span class="w"> </span><span class="n">applications</span>
 </code></pre></div>
 <p>Retourne la liste des serveurs logiques sous Linux en environnement de production, avec le nom des applications hébergées.</p>
-<hr />
 <h3 id="toutes-les-applications-et-leurs-bases-de-donnees">Toutes les applications et leurs bases de données<a class="headerlink" href="#toutes-les-applications-et-leurs-bases-de-donnees" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span>
-<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span><span class="p">.</span><span class="n">name</span>
-<span class="k">WITH</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">.</span><span class="n">name</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">logical_servers</span>
 <span class="k">OUTPUT</span><span class="w"> </span><span class="n">graph</span>
 </code></pre></div>
 <p>Génère un graphe reliant les applications à leurs bases de données et serveurs logiques.</p>
-<hr />
 <h3 id="inventaire-des-serveurs-physiques">Inventaire des serveurs physiques<a class="headerlink" href="#inventaire-des-serveurs-physiques" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">physical</span><span class="o">-</span><span class="n">servers</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">cpu</span><span class="p">,</span><span class="w"> </span><span class="n">memory</span><span class="p">,</span><span class="w"> </span><span class="n">site</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">bay</span><span class="p">.</span><span class="n">name</span>
 <span class="k">WITH</span><span class="w"> </span><span class="n">site</span><span class="p">,</span><span class="w"> </span><span class="n">bay</span>
 </code></pre></div>
 <p>Liste complète des serveurs physiques avec leur localisation (site et baie).</p>
-<hr />
 <h3 id="reseaux-sous-reseaux-et-vlans">Réseaux, sous-réseaux et VLANs<a class="headerlink" href="#reseaux-sous-reseaux-et-vlans" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">networks</span>
-<span class="n">Fields</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span><span class="p">.</span><span class="n">name</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span><span class="p">.</span><span class="n">name</span>
 <span class="k">WITH</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span>
 </code></pre></div>
-<p>Visualizes les réseaux, sous-réseaux et leurs VLANs.</p>
-<hr />
+<p>Visualise les réseaux, sous-réseaux et leurs VLANs.</p>
 <h3 id="filtres-multiples-avec-in">Filtres multiples avec <code>IN</code><a class="headerlink" href="#filtres-multiples-avec-in" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span><span class="p">.</span><span class="n">name</span>
@@ -1120,14 +1021,12 @@
 <span class="k">WITH</span><span class="w"> </span><span class="n">applications</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span>
 </code></pre></div>
 <p>Liste les applications et certificats installés sur les serveurs Windows en production ou en staging.</p>
-<hr />
 <h3 id="certificats-ssl-avec-date-dexpiration-et-perimetre-dinstallation">Certificats SSL avec date d'expiration et périmètre d'installation<a class="headerlink" href="#certificats-ssl-avec-date-dexpiration-et-perimetre-dinstallation" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">certificates</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">end_validity</span><span class="p">,</span><span class="w"> </span><span class="n">domains</span><span class="p">,</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span>
 <span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span>
 </code></pre></div>
 <p>Inventaire des certificats SSL/TLS avec leur date d'expiration et les serveurs/applications sur lesquels ils sont déployés. Utile pour anticiper les renouvellements.</p>
-<hr />
 <h3 id="applications-critiques-avec-leurs-serveurs-et-bases-de-donnees">Applications critiques avec leurs serveurs et bases de données<a class="headerlink" href="#applications-critiques-avec-leurs-serveurs-et-bases-de-donnees" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">security_need_c</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">responsible</span><span class="p">,</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">.</span><span class="n">name</span>
@@ -1136,12 +1035,26 @@
 <span class="k">OUTPUT</span><span class="w"> </span><span class="n">graph</span>
 </code></pre></div>
 <p>Cartographie des applications à fort besoin de confidentialité (niveaux 3 et 4), avec leurs dépendances d'infrastructure.</p>
-<hr />
+<h3 id="serveurs-sans-certificat-ssl">Serveurs sans certificat SSL<a class="headerlink" href="#serveurs-sans-certificat-ssl" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">environment</span><span class="p">,</span><span class="w"> </span><span class="n">operating_system</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">certificates</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">certificates</span>
+</code></pre></div>
+<p>Identifie les serveurs de production sur lesquels aucun certificat SSL/TLS n'est enregistré. Utile pour détecter des angles morts dans la gestion des certificats.</p>
+<h3 id="applications-sans-serveur-logique-associe">Applications sans serveur logique associé<a class="headerlink" href="#applications-sans-serveur-logique-associe" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">responsible</span><span class="p">,</span><span class="w"> </span><span class="n">security_need_c</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span>
+</code></pre></div>
+<p>Liste les applications non rattachées à un serveur logique, symptôme possible d'une cartographie incomplète.</p>
 <h2 id="bonnes-pratiques">Bonnes pratiques<a class="headerlink" href="#bonnes-pratiques" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Limitez le <code>LIMIT</code></strong> à la valeur nécessaire : des requêtes trop larges peuvent être lentes sur de grands référentiels.</li>
 <li><strong>Utilisez <code>OUTPUT graph</code></strong> uniquement lorsque les relations sont déclarées dans <code>WITH</code> ; un graphe sans relations ne sera composé que de nœuds isolés.</li>
 <li><strong>Vérifiez les noms de champs</strong> dans la <a href="../api/">référence API</a> — une faute de frappe dans un champ n'affiche simplement rien, sans message d'erreur.</li>
+<li><strong>Avec <code>EXISTS</code></strong>, déclarez la relation dans <code>WITH</code> uniquement si vous avez besoin d'afficher ses champs dans <code>FIELDS</code> ; sinon, <code>EXISTS</code> seul suffit à filtrer sans surcharge.</li>
 <li><strong>Sauvegardez les requêtes récurrentes</strong> pour faciliter le travail en équipe et garantir la reproductibilité des cartographies.</li>
 </ul>
 

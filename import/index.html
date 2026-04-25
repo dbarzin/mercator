@@ -566,39 +566,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Available Features">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#data-export" class="md-nav__link">
-    <span class="md-ellipsis">
-      Data Export
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Steps
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      File format
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -607,48 +574,6 @@
       Data import
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Data import">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#steps_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Steps
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#expected-file-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      Expected file format
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#import-behavior" class="md-nav__link">
-    <span class="md-ellipsis">
-      Import behavior
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-of-expected-excel-header" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example of expected Excel header
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -793,35 +718,35 @@
 
 <h1 id="data-importexport-interface">Data Import/Export Interface<a class="headerlink" href="#data-importexport-interface" title="Permanent link">&para;</a></h1>
 <p>This interface allows you to import and export information system mapping data via Excel files.</p>
-<h3 id="accessing-the-page">Accessing the Page<a class="headerlink" href="#accessing-the-page" title="Permanent link">&para;</a></h3>
+<h2 id="accessing-the-page">Accessing the Page<a class="headerlink" href="#accessing-the-page" title="Permanent link">&para;</a></h2>
 <p>The data import/export page is accessible via the "Configuration" -&gt; "Import" menu.</p>
 <p><a href="../images/import.png"><img src="/mercator/images/import.png" width="700"></a></p>
-<h3 id="available-features">Available Features<a class="headerlink" href="#available-features" title="Permanent link">&para;</a></h3>
-<h4 id="data-export">Data Export<a class="headerlink" href="#data-export" title="Permanent link">&para;</a></h4>
+<h2 id="available-features">Available Features<a class="headerlink" href="#available-features" title="Permanent link">&para;</a></h2>
+<h3 id="data-export">Data Export<a class="headerlink" href="#data-export" title="Permanent link">&para;</a></h3>
 <p>Export allows you to download business model data in <code>.xlsx</code> format.</p>
-<h4 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h4>
+<h3 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Select a <strong>filter</strong>: ecosystem, information system, applications, etc.</li>
 <li>Select an associated <strong>object</strong>.</li>
 <li>Click <strong>Export</strong>.</li>
 </ol>
-<h4 id="file-format">File format<a class="headerlink" href="#file-format" title="Permanent link">&para;</a></h4>
+<h3 id="file-format">File format<a class="headerlink" href="#file-format" title="Permanent link">&para;</a></h3>
 <p>The file contains: a <strong>first row</strong> of headers (columns) and the object data.</p>
 <p>The <code>created_at</code>, <code>updated_at</code>, and <code>deleted_at</code> columns are automatically <strong>excluded</strong>.</p>
-<h3 id="data-import">Data import<a class="headerlink" href="#data-import" title="Permanent link">&para;</a></h3>
+<h2 id="data-import">Data import<a class="headerlink" href="#data-import" title="Permanent link">&para;</a></h2>
 <p>Allows you to update or add data from a structured Excel file.</p>
-<h4 id="steps_1">Steps<a class="headerlink" href="#steps_1" title="Permanent link">&para;</a></h4>
+<h3 id="steps_1">Steps<a class="headerlink" href="#steps_1" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Choose the <strong>Excel file</strong> to import.</li>
 <li>Click <strong>Import</strong>.</li>
 </ol>
-<h4 id="expected-file-format">Expected file format<a class="headerlink" href="#expected-file-format" title="Permanent link">&para;</a></h4>
+<h3 id="expected-file-format">Expected file format<a class="headerlink" href="#expected-file-format" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>First row</strong>: column names</li>
 <li><strong>First column</strong>: <code>ID</code> field, the order of the other columns does not matter.</li>
 <li>Columns not present in the import file <strong>are not updated</strong>.</li>
 </ul>
-<h4 id="import-behavior">Import behavior<a class="headerlink" href="#import-behavior" title="Permanent link">&para;</a></h4>
+<h3 id="import-behavior">Import behavior<a class="headerlink" href="#import-behavior" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -845,7 +770,7 @@
 </tbody>
 </table>
 <p>If an error is detected in the file, no changes are applied.</p>
-<h4 id="example-of-expected-excel-header">Example of expected Excel header<a class="headerlink" href="#example-of-expected-excel-header" title="Permanent link">&para;</a></h4>
+<h3 id="example-of-expected-excel-header">Example of expected Excel header<a class="headerlink" href="#example-of-expected-excel-header" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>id, name, description, type, reference
 </code></pre></div>
 
