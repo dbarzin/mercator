@@ -241,6 +241,19 @@ WITH certificates
 
 Identifie les serveurs de production sur lesquels aucun certificat SSL/TLS n'est enregistré. Utile pour détecter des angles morts dans la gestion des certificats.
 
+### Serveurs en production sans plans de backups avec une application
+
+```sql
+FROM logical-servers
+FIELDS name, applications.name
+WHERE environment = "production"
+AND NOT EXISTS backups
+AND EXISTS applications
+OUTPUT list
+```
+
+Identifier les serveurs et le nom des applications en production qui n'ont pas de plans de backups et au moins une application.
+
 ### Applications sans serveur logique associé
 
 ```sql

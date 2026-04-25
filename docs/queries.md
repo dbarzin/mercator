@@ -218,6 +218,21 @@ WITH logical_servers, applications
 
 Inventory of SSL/TLS certificates with their expiry date and the servers/applications on which they are deployed. Useful for anticipating renewals.
 
+
+### Servers in production without backup plans and with at least one application
+
+```sql
+FROM logical-servers
+FIELDS name, applications.name
+WHERE environment = "production"
+AND NOT EXISTS backups
+AND EXISTS applications
+OUTPUT list
+```
+
+Identify the servers and the names of the production applications that do not have backup plans and at least one application.
+
+
 ### Critical applications with their servers and databases
 
 ```sql
