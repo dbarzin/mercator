@@ -78,10 +78,8 @@ class CPEController extends Controller
     {
         $search = $request['search'];
         $part = $request['part'];
-
-\Log::error("{$search},{$part}");
-
-        $cpeGuesserUrl = config('mercator.parameters.cpe.guesser');
+        
+        $cpeGuesserUrl = config('mercator.cpe.guesser');
 
         if ($cpeGuesserUrl) {
             // Découpage de la recherche en mots-clés pour l'API cpe-guesser
