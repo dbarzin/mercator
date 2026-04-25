@@ -217,7 +217,7 @@ $('#guess').on('click', function () {
     });
     cpeModal.show();
 
-$.get("/admin/cpe/search/guess?search=" + encodeURIComponent(name))
+$.get("/admin/cpe/search/guess?search=" + encodeURIComponent(name, cpePart))
     .then(function (result) {
         $('#cpeGuesserBody').html(generateCPEList(result));
 
