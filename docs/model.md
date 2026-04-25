@@ -1958,5 +1958,61 @@ Thsi part allow to see all attached documents, including specific image (icons)
 "updated_at": "2026-03-30T08:05:46.000000Z"
 ```
 
-⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be
-used by another asset of the same category as soon as there is, a least, one asset in the category. 
+⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be used by another asset of the same category as soon as there is, a least, one asset in the category. 
+
+#### users
+
+This part allows to see the mercator users list and their associated link to roles.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*users*</span> | `/api/users` |
+
+
+| Field             | Type             | Description               |
+|-------------------|------------------|---------------------------|
+| id                | int(10) unsigned | auto_increment            |
+| login             | varchar(255)     | Login User Id |
+| name              | varchar(255)     | Username  |
+| email             | varchar(255)     | User email |
+| email_verified_at | datetime         | Email verification date |
+| password          | varchar(255)     | User password   |
+| remember_token    | varchar(255)     | Session duration           |
+| granularity       | int(11)          | Display level by default for results (1, 2, 3) |
+| roles             | List int [,]     | IDs list of associated roles |
+| language          | varchar(2)       | User Language ( english, french, german,) |
+| created_at        | timestamp        | Date of creation                       |
+| updated_at        | timestamp        | Date of update                         |
+| deleted_at        | timestamp        | Date of deletion                       |
+
+#### Roles
+
+This part allows to see mercator roles list.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*roles*</span> | `/api/roles` |
+
+| Field      | Type             | Description          |
+|------------|------------------|----------------------|
+| id         | int(10) unsigned | auto_increment       |
+| title      | varchar(255)     | Role title           |
+| created_at | timestamp        | Date of creation     |
+| updated_at | timestamp        | Date of update       |
+| deleted_at | timestamp        | Date of deletion     |
+
+#### Permissions
+
+This part allows to see all mercator permissions than can be allocated to roles.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*permissions*</span> | `/api/permissions` |
+
+| Field      | Type             | Description          |
+|------------|------------------|----------------------|
+| id         | int(10) unsigned | auto_increment       |
+| title      | varchar(255)     | Role title           |
+| module     | varchar(255)     |                      |
+| created_at | timestamp        | Date of creation     |
+| updated_at | timestamp        | Date of update       |

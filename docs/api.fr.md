@@ -100,9 +100,12 @@ La liste des API se trouve dans le fichier /route/api.php
 
 ## Les points de terminaison de la Configuration
 
+- [/api/users](./model.md#utilisateurs)
+- [/api/roles](./model.md#roles)
+- [/api/permissions](./model.md#permissions) *access impossible pour le moment*
 - [/api/documents](./model.md#documents)
 
-La particularité de ce point de terminaison est qu'il permet d'ajouter ou de télécharger un document.
+La particularité du point de terminaison **documents** est qu'il permet d'ajouter ou de télécharger un document.
 La syntaxe est la suivante:
 ## Exemple d'ajout d'un document dans mercator:
 ```bash
@@ -126,7 +129,8 @@ DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
         -o "$OUTFILE" \
         -w "HTTP %{http_code}\n"
 ```
-
+#### Les requêtes
+- /api/queries
 
 ## Les rapports
 - /api/report/cartography
