@@ -42,8 +42,8 @@ Models correspond to Mercator API entities. Names are in **kebab-case** and iden
 | …                  | _All API models_ |
 
 !!! info "Available fields"
-The fields usable in `FIELDS` and `WHERE` are exactly those exposed by the Mercator API.
-Refer to the [Data Model](model.md) for the full list of attributes for each model.
+    The fields usable in `FIELDS` and `WHERE` are exactly those exposed by the Mercator API.
+    Refer to the [Data Model](model.md) for the full list of attributes for each model.
 
 ## FIELDS Clause
 
@@ -56,10 +56,12 @@ The `FIELDS` clause lists the attributes to display in the result. It accepts:
 FIELDS name, operating_system, cpu, memory, applications.name
 ```
 
+!!! info "Available fields"
+    The fields usable in `FIELDS` and `WHERE` are those exposed by the Mercator API.
+    Consult the [data model](model.md) for a complete list of attributes for each model.
+
 !!! warning "Consistency with WITH"
-If you reference a relation field in `FIELDS` (e.g. `applications.name`),
-the corresponding relation must be declared in `WITH` (e.g. `WITH applications`),
-otherwise the data will not be loaded.
+    If you reference a relation field in `FIELDS` (e.g. `applications.name`), the corresponding relation must be declared in `WITH` (e.g. `WITH applications`), otherwise the data will not be loaded.
 
 ## WHERE Clause {#conditions}
 
@@ -108,9 +110,7 @@ WHERE (environment = "production") AND (EXISTS certificates)
 ```
 
 !!! info "EXISTS and eager loading"
-The `EXISTS` operator does not load relation data.
-If you also want to display fields from that relation in `FIELDS`,
-declare it explicitly in `WITH`.
+    The `EXISTS` operator does not load relation data. If you also want to display fields from that relation in `FIELDS`, declare it explicitly in `WITH`.
 
 ## WITH Clause
 
@@ -145,9 +145,7 @@ OUTPUT graph
 ```
 
 !!! tip "When to use `graph`?"
-Prefer `OUTPUT graph` whenever your query loads relations with `WITH`
-and you want to visualize the links between entities
-(applications ↔ servers, networks ↔ servers, etc.).
+    Prefer `OUTPUT graph` whenever your query loads relations with `WITH` and you want to visualize the links between entities (applications ↔ servers, networks ↔ servers, etc.).
 
 ## Saving Queries
 

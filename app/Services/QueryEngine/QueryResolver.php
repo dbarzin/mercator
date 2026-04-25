@@ -248,9 +248,15 @@ class QueryResolver
         return $value;
     }
 
+    protected function isHidden(Model $item, string $field): bool
+    {
+        return in_array($field, $item->getHidden(), true);
+    }
+
     protected function getAttributes(Model $item): array
     {
         return collect(array_keys($item->getAttributes()))
+            ->reject(fn ($key) => $this->isHidden($item, $key))
             ->mapWithKeys(fn ($key) => [$key => $this->normalizeValue($item->getAttribute($key))])
             ->toArray();
     }
@@ -327,6 +333,9 @@ class QueryResolver
         $modelClass = get_class($item);
         foreach ($rootFields as $f) {
             QueryEngineIntrospector::validateField($modelClass, $f);
+            if ($this->isHidden($item, $f)) {
+                continue;
+            }
             $rootRow[$f] = $this->normalizeValue($item->getAttribute($f));
         }
 
