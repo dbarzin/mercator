@@ -3,17 +3,17 @@
 Ce chapitre vient en complément du chapitre [API](./api.fr.md).
 
 
-### Filtrage, tri et inclusion de relations
+## Filtrage, tri et inclusion de relations
 
 Les endpoints de liste (`GET /api/objets`) supportent un système avancé de filtres, tri et inclusion de relations via
 les paramètres de requête.
 
-#### Champs filtrables
+### Champs filtrables
 
 Tous les champs déclarés dans le modèle (`$fillable`) sont automatiquement filtrables. Les filtres sur des champs non
 autorisés sont simplement ignorés.
 
-#### Syntaxe des filtres
+### Syntaxe des filtres
 
 Chaque filtre se présente sous la forme :
 
@@ -22,9 +22,9 @@ filter[<champ>]=<valeur>                    # Filtre exact
 filter[<champ>_<operateur>]=<valeur>        # Filtre avec opérateur
 ```
 
-#### Opérateurs de filtrage disponibles
+### Opérateurs de filtrage disponibles
 
-##### Filtres exacts et textuels
+#### Filtres exacts et textuels
 
 | Opérateur | Syntaxe               | Description                  | Exemple                |
 |-----------|-----------------------|------------------------------|------------------------|
@@ -33,7 +33,7 @@ filter[<champ>_<operateur>]=<valeur>        # Filtre avec opérateur
 
 _* La recherche partielle automatique s'applique aux champs contenant : `name`, `description`, `email`_
 
-##### Comparaisons numériques
+#### Comparaisons numériques
 
 | Opérateur | Syntaxe                                 | Description         | Exemple SQL                    |
 |-----------|-----------------------------------------|---------------------|--------------------------------|
@@ -42,7 +42,7 @@ _* La recherche partielle automatique s'applique aux champs contenant : `name`, 
 | `_gt`     | `filter[recovery_time_objective_gt]=8`  | Supérieur à         | `recovery_time_objective > 8`  |
 | `_gte`    | `filter[recovery_time_objective_gte]=8` | Supérieur ou égal à | `recovery_time_objective >= 8` |
 
-##### Opérateurs avancés
+#### Opérateurs avancés
 
 | Opérateur  | Syntaxe                                        | Description           | Exemple                                    |
 |------------|------------------------------------------------|-----------------------|--------------------------------------------|
@@ -52,7 +52,7 @@ _* La recherche partielle automatique s'applique aux champs contenant : `name`, 
 | `_null`    | `filter[description_null]=false`               | Valeur NOT NULL       | `description IS NOT NULL`                  |
 | `_not`     | `filter[type_not]=opensource`                  | Négation (différent)  | `type != 'opensource'`                     |
 
-##### Recherche globale et filtres sur relations
+#### Recherche globale et filtres sur relations
 
 | Opérateur  | Syntaxe                       | Description                                                          | Exemple                                               |
 |------------|-------------------------------|----------------------------------------------------------------------|-------------------------------------------------------|
@@ -60,7 +60,7 @@ _* La recherche partielle automatique s'applique aux champs contenant : `name`, 
 | (relation) | `filter[actors.email]=john`   | Recherche LIKE sur champs de relations                               | `actors.email LIKE '%john%'`                          |
 | (relation) | `filter[contacts.name]=alice` | Recherche LIKE sur nom dans une relation                             | `contacts.name LIKE '%alice%'`                        |
 
-##### Filtres de dates
+#### Filtres de dates
 
 Pour les champs contenant `date` ou `at` dans leur nom :
 
@@ -69,14 +69,14 @@ Pour les champs contenant `date` ou `at` dans leur nom :
 | `_after`  | `filter[created_at_after]=2024-01-01`  | Après cette date | `created_at >= '2024-01-01'` |
 | `_before` | `filter[updated_at_before]=2024-12-31` | Avant cette date | `updated_at <= '2024-12-31'` |
 
-##### Elements supprimés
+#### Elements supprimés
 
 | Syntaxe                | Description                       |
 |------------------------|-----------------------------------|
 | `filter[trashed]=with` | Inclure les éléments supprimés    |
 | `filter[trashed]=only` | Uniquement les éléments supprimés |
 
-#### Tri des résultats
+### Tri des résultats
 
 Le tri se fait avec le paramètre `sort` :
 
@@ -91,7 +91,7 @@ Exemples :
 - `sort=-created_at` : Tri par date de création décroissant
 - `sort=recovery_time_objective` : Tri par RTO croissant
 
-#### Inclusion de relations (Eager Loading)
+### Inclusion de relations (Eager Loading)
 
 Les relations entre objets peuvent être chargées avec le paramètre `include` :
 
@@ -108,9 +108,9 @@ Les relations disponibles sont automatiquement détectées depuis le modèle. Po
 
 Exemple : `include=processes,operations`
 
-#### Cas d'usage
+### Cas d'usage
 
-##### Filtres simples
+#### Filtres simples
 
 ```http
 # Activités dont le nom contient "sauvegarde"
@@ -132,7 +132,7 @@ GET /api/applications?filter[search]=backup
 GET /api/activities?filter[actors.email]=john@example.com
 ```
 
-##### Filtres combinés
+#### Filtres combinés
 
 ```http
 # Activités dont le nom contient "GDPR" avec RTO >= 8
@@ -151,7 +151,7 @@ GET /api/activities?filter[search]=backup&filter[recovery_time_objective_lte]=8
 GET /api/activities?filter[actors.email]=admin&include=actors
 ```
 
-##### Filtres avancés
+#### Filtres avancés
 
 ```http
 # Activités avec ID dans la liste 1, 2, 3, 5
@@ -167,7 +167,7 @@ GET /api/activities?filter[description_null]=true
 GET /api/activities?filter[trashed]=with
 ```
 
-##### Tri
+#### Tri
 
 ```http
 # Tri par nom croissant
@@ -180,7 +180,7 @@ GET /api/activities?sort=-created_at
 GET /api/activities?sort=recovery_time_objective
 ```
 
-##### Inclusion de relations
+#### Inclusion de relations
 
 ```http
 # Charger les processus liés
@@ -193,7 +193,7 @@ GET /api/activities?include=processes,operations,applications
 GET /api/activities/1?include=processes,operations
 ```
 
-##### Combinaisons complexes
+#### Combinaisons complexes
 
 ```http
 # Activités GDPR avec RTO >= 8, triées par nom, avec relations
@@ -206,7 +206,7 @@ GET /api/logical-servers?filter[created_at_after]=2024-01-01&filter[created_at_b
 GET /api/applications?filter[name]=CRM&filter[id_in]=1,2,3&include=databases&sort=-updated_at
 ```
 
-### Droits d'accès
+## Droits d'accès
 
 Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accéder aux API.
 Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
@@ -215,7 +215,7 @@ accédés par l'API.
 Lorsque l'authentification réussit, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.
 
-### Liaison entre les objets
+## Liaison entre les objets
 
 Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier un processus à
 une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire,
@@ -254,13 +254,13 @@ Les noms de toutes les relations disponibles sont automatiquement détectés dep
 incluent : `actors`, `tasks`, `activities`, `entities`, `applications`, `informations`, `processes`, `databases`,
 `logical_servers`, `modules`, `operations`, `certificates`, `peripherals`, `physical_servers`, etc.
 
-### Exemples de filtres
+## Exemples de filtres
 
 Voici quelques exemples d'utilisation de l'API avec PHP :
 
-#### PHP
+### PHP
 
-##### Authentification
+#### Authentification
 
 ```php
 <?php
@@ -303,7 +303,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
     var_dump($response);
 ```
 
-##### Liste des activités avec filtres
+#### Liste des activités avec filtres
 
 ```php
 <?php
@@ -341,7 +341,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
     var_dump($response);
 ```
 
-##### Récupérer une activité avec relations
+#### Récupérer une activité avec relations
 
 ```php
 <?php
@@ -369,7 +369,7 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
     var_dump($response);
 ```
 
-#### Python
+### Python
 
 Voici un exemple d'utilisation de l'API en Python avec filtres avancés
 
@@ -414,7 +414,7 @@ response = requests.get("http://127.0.0.1:8000/api/activities/1",
 print(response.json())
 ```
 
-#### bash
+### bash
 
 Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html)
 et [JQ](https://stedolan.github.io/jq/)
@@ -466,11 +466,11 @@ UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
 echo "Objet mis à jour: ${UPDATED_OBJECT}"
 ```
 
-#### Powershell
+### Powershell
 
 Le script PowerShell ci-dessous montre comment s'authentifier auprès de l'API et utiliser les filtres avancés.
 
-##### Étape 1 — Authentification et obtention du jeton d'accès
+#### Étape 1 — Authentification et obtention du jeton d'accès
 
 ```powershell
 # Définir l'URL d'authentification et les identifiants
@@ -491,7 +491,7 @@ try {
 }
 ```
 
-##### Étape 2 — Utilisation avec filtres et tri
+#### Étape 2 — Utilisation avec filtres et tri
 
 ```powershell
 # Définir les en-têtes
@@ -524,7 +524,7 @@ try {
 }
 ```
 
-### Résumé des fonctionnalités
+## Résumé des fonctionnalités
 
 | Fonctionnalité    | Syntaxe                           | Exemple                                 |
 |-------------------|-----------------------------------|-----------------------------------------|
