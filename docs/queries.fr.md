@@ -42,8 +42,8 @@ Les modèles correspondent aux entités de l'[API](api.fr.md) Mercator et sont e
 | …                  | _Tous les modèles de l'API_ |
 
 !!! info "Champs disponibles"
-Les champs utilisables dans `FIELDS` et `WHERE` sont ceux exposés par l'API Mercator.
-Consultez le [modèle de données](model.fr.md) pour connaître l'ensemble des attributs de chaque modèle.
+    Les champs utilisables dans `FIELDS` et `WHERE` sont ceux exposés par l'API Mercator.
+    Consultez le [modèle de données](model.fr.md) pour connaître l'ensemble des attributs de chaque modèle.
 
 ## Clause FIELDS
 
@@ -57,10 +57,10 @@ FIELDS name, operating_system, cpu, memory, applications.name
 ```
 
 !!! info "Champs protégés"
-Les champs marqués comme cachés dans les modèles ($hidden Eloquent), tels que password ou remember_token, ne sont jamais retournés par le moteur de requêtes, même s'ils sont explicitement listés dans FIELDS.
+    Les champs marqués comme cachés dans les modèles ($hidden Eloquent), tels que password ou remember_token, ne sont jamais retournés par le moteur de requêtes, même s'ils sont explicitement listés dans FIELDS.
 
 !!! warning "Cohérence avec WITH"
-Si vous référencez un champ de relation dans `FIELDS` (ex. `applications.name`), la relation correspondante doit être déclarée dans `WITH` (ex. `WITH applications`), sans quoi les données ne seront pas chargées.
+    Si vous référencez un champ de relation dans `FIELDS` (ex. `applications.name`), la relation correspondante doit être déclarée dans `WITH` (ex. `WITH applications`), sans quoi les données ne seront pas chargées.
 
 ## Clause WHERE {#conditions}
 
@@ -109,8 +109,8 @@ WHERE (environment = "production") AND (EXISTS certificates)
 ```
 
 !!! info "EXISTS et eager loading"
-L'opérateur `EXISTS` n'implique pas le chargement des données de la relation.
-Si vous souhaitez également afficher les champs de cette relation dans `FIELDS`, déclarez-la explicitement dans `WITH`.
+    L'opérateur `EXISTS` n'implique pas le chargement des données de la relation.
+    Si vous souhaitez également afficher les champs de cette relation dans `FIELDS`, déclarez-la explicitement dans `WITH`.
 
 ## Clause WITH
 
@@ -153,7 +153,7 @@ Les règles à respecter :
 - Les parenthèses imbriquées `((rel))` sont interdites.
 
 !!! tip "Quand masquer un niveau ?"
-Masquez un intermédiaire lorsque la relation pivot n'a pas de valeur sémantique dans la visualisation — par exemple, les sous-réseaux entre un réseau et ses VLANs, ou les interfaces entre un serveur et ses VLANs.
+    Masquez un intermédiaire lorsque la relation pivot n'a pas de valeur sémantique dans la visualisation — par exemple, les sous-réseaux entre un réseau et ses VLANs, ou les interfaces entre un serveur et ses VLANs.
 
 ## Format de sortie (OUTPUT)
 
@@ -174,7 +174,7 @@ OUTPUT graph
 ```
 
 !!! tip "Quand utiliser `graph` ?"
-Préférez `OUTPUT graph` dès que votre requête charge des relations avec `WITH` et que vous souhaitez visualiser les liens entre entités (applications ↔ serveurs, réseaux ↔ serveurs, etc.).
+    Préférez `OUTPUT graph` dès que votre requête charge des relations avec `WITH` et que vous souhaitez visualiser les liens entre entités (applications ↔ serveurs, réseaux ↔ serveurs, etc.).
 
 ## Sauvegarde des requêtes
 

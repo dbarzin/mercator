@@ -42,8 +42,8 @@ Models correspond to entities in the Mercator [API](api.md) and are written in *
 | …                  | _All API models_ |
 
 !!! info "Available fields"
-The fields available in `FIELDS` and `WHERE` are those exposed by the Mercator API.
-Refer to the [data model](model.md) for the full list of attributes for each model.
+    The fields available in `FIELDS` and `WHERE` are those exposed by the Mercator API.
+    Refer to the [data model](model.md) for the full list of attributes for each model.
 
 ## FIELDS clause
 
@@ -57,10 +57,10 @@ FIELDS name, operating_system, cpu, memory, applications.name
 ```
 
 !!! info "Protected fields"
-Fields marked as hidden in Eloquent models (`$hidden`), such as `password` or `remember_token`, are never returned by the query engine, even if explicitly listed in `FIELDS`.
+    Fields marked as hidden in Eloquent models (`$hidden`), such as `password` or `remember_token`, are never returned by the query engine, even if explicitly listed in `FIELDS`.
 
 !!! warning "Consistency with WITH"
-If you reference a relation field in `FIELDS` (e.g. `applications.name`), the corresponding relation must be declared in `WITH` (e.g. `WITH applications`), otherwise the data will not be loaded.
+    If you reference a relation field in `FIELDS` (e.g. `applications.name`), the corresponding relation must be declared in `WITH` (e.g. `WITH applications`), otherwise the data will not be loaded.
 
 ## WHERE clause {#conditions}
 
@@ -109,8 +109,8 @@ WHERE (environment = "production") AND (EXISTS certificates)
 ```
 
 !!! info "EXISTS and eager loading"
-The `EXISTS` operator does not load the relation's data.
-If you also want to display fields from that relation in `FIELDS`, declare it explicitly in `WITH`.
+    The `EXISTS` operator does not load the relation's data.
+    If you also want to display fields from that relation in `FIELDS`, declare it explicitly in `WITH`.
 
 ## WITH clause
 
@@ -153,7 +153,7 @@ Rules to follow:
 - Nested parentheses `((rel))` are not allowed.
 
 !!! tip "When to hide a level?"
-Hide an intermediate node when the pivot relation has no semantic value in the visualisation — for example, subnetworks between a network and its VLANs, or interfaces between a server and its VLANs.
+    Hide an intermediate node when the pivot relation has no semantic value in the visualisation — for example, subnetworks between a network and its VLANs, or interfaces between a server and its VLANs.
 
 ## Output format (OUTPUT)
 
@@ -174,7 +174,7 @@ OUTPUT graph
 ```
 
 !!! tip "When to use `graph`?"
-Prefer `OUTPUT graph` when your query loads relations with `WITH` and you want to visualise the links between entities (applications ↔ servers, networks ↔ servers, etc.).
+    Prefer `OUTPUT graph` when your query loads relations with `WITH` and you want to visualise the links between entities (applications ↔ servers, networks ↔ servers, etc.).
 
 ## Saving queries
 
