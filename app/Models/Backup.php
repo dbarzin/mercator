@@ -2,19 +2,23 @@
 
 namespace App\Models;
 
+use App\Contracts\HasIconContract;
 use App\Factories\BackupFactory;
 use App\Traits\Auditable;
+use App\Traits\HasIcon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Backup extends Model
+class Backup extends Model implements HasIconContract
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, HasIcon, HasFactory, SoftDeletes;
 
     protected $table = 'backups';
+
+    public static string $icon = '/images/backup.png';
 
     public $incrementing = false;
     public $timestamps = false;
