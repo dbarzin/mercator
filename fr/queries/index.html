@@ -887,12 +887,14 @@ Consultez le <a href="../model/">modèle de données</a> pour connaître l'ensem
 </ul>
 <div class="highlight"><pre><span></span><code><span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">operating_system</span><span class="p">,</span><span class="w"> </span><span class="n">cpu</span><span class="p">,</span><span class="w"> </span><span class="n">memory</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span>
 </code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Champs protégés</p>
+</div>
+<p>Les champs marqués comme cachés dans les modèles ($hidden Eloquent), tels que password ou remember_token, ne sont jamais retournés par le moteur de requêtes, même s'ils sont explicitement listés dans FIELDS.</p>
 <div class="admonition warning">
 <p class="admonition-title">Cohérence avec WITH</p>
 </div>
-<p>Si vous référencez un champ de relation dans <code>FIELDS</code> (ex. <code>applications.name</code>),
-la relation correspondante doit être déclarée dans <code>WITH</code> (ex. <code>WITH applications</code>),
-sans quoi les données ne seront pas chargées.</p>
+<p>Si vous référencez un champ de relation dans <code>FIELDS</code> (ex. <code>applications.name</code>), la relation correspondante doit être déclarée dans <code>WITH</code> (ex. <code>WITH applications</code>), sans quoi les données ne seront pas chargées.</p>
 <h2 id="conditions">Clause WHERE<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h2>
 <p>La clause <code>WHERE</code> filtre les enregistrements selon des conditions sur les champs du modèle principal.</p>
 <h3 id="operateurs-supportes">Opérateurs supportés<a class="headerlink" href="#operateurs-supportes" title="Permanent link">&para;</a></h3>
@@ -961,8 +963,7 @@ sans quoi les données ne seront pas chargées.</p>
 <p class="admonition-title">EXISTS et eager loading</p>
 </div>
 <p>L'opérateur <code>EXISTS</code> n'implique pas le chargement des données de la relation.
-Si vous souhaitez également afficher les champs de cette relation dans <code>FIELDS</code>,
-déclarez-la explicitement dans <code>WITH</code>.</p>
+Si vous souhaitez également afficher les champs de cette relation dans <code>FIELDS</code>, déclarez-la explicitement dans <code>WITH</code>.</p>
 <h2 id="clause-with">Clause WITH<a class="headerlink" href="#clause-with" title="Permanent link">&para;</a></h2>
 <p>La clause <code>WITH</code> déclare les <strong>relations à charger</strong> (eager loading). Elle est indispensable pour accéder aux champs d'objets liés dans <code>FIELDS</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">applications</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span>
@@ -970,6 +971,28 @@ déclarez-la explicitement dans <code>WITH</code>.</p>
 <p>Les noms de relations correspondent aux noms des méthodes de relation des modèles Eloquent, en <strong>snake_case</strong> :</p>
 <div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">sites</span><span class="p">,</span><span class="w"> </span><span class="n">bays</span>
 </code></pre></div>
+<h3 id="nuds-intermediaires-masques">Nœuds intermédiaires masqués<a class="headerlink" href="#nuds-intermediaires-masques" title="Permanent link">&para;</a></h3>
+<p>Par défaut, chaque segment d'un chemin <code>WITH</code> crée un nœud dans le graphe. Il est possible de <strong>masquer un niveau intermédiaire</strong> en l'entourant de parenthèses : le niveau est alors traversé pour accéder aux niveaux suivants, mais il n'apparaît ni comme nœud ni comme arête dans le graphe résultant.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).</span><span class="n">vlan</span>
+</code></pre></div>
+<p>Dans cet exemple, les sous-réseaux servent uniquement de pivot de traversée. Le graphe affiche directement des arêtes <code>networks → vlan</code>, sans représenter les <code>subnetworks</code>.</p>
+<p>La syntaxe se généralise à plusieurs niveaux masqués :</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Masquer un niveau sur deux</span>
+<span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).</span><span class="n">routers</span><span class="p">.(</span><span class="n">interfaces</span><span class="p">).</span><span class="n">vlan</span>
+
+<span class="c1">-- Masquer plusieurs niveaux consécutifs</span>
+<span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).(</span><span class="n">routers</span><span class="p">).</span><span class="n">vlan</span>
+</code></pre></div>
+<p>Les règles à respecter :</p>
+<ul>
+<li>Un chemin entièrement masqué (tous les segments entre parenthèses) est sans effet.</li>
+<li>Le dernier segment d'un chemin ne peut pas être masqué.</li>
+<li>Les parenthèses imbriquées <code>((rel))</code> sont interdites.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Quand masquer un niveau ?</p>
+</div>
+<p>Masquez un intermédiaire lorsque la relation pivot n'a pas de valeur sémantique dans la visualisation — par exemple, les sous-réseaux entre un réseau et ses VLANs, ou les interfaces entre un serveur et ses VLANs.</p>
 <h2 id="format-de-sortie-output">Format de sortie (OUTPUT)<a class="headerlink" href="#format-de-sortie-output" title="Permanent link">&para;</a></h2>
 <h3 id="output-list"><code>OUTPUT list</code><a class="headerlink" href="#output-list" title="Permanent link">&para;</a></h3>
 <p>Génère un <strong>tableau</strong> avec une ligne par enregistrement. C'est le format adapté pour les inventaires, les exports, ou les vues tabulaires.</p>
@@ -982,9 +1005,7 @@ déclarez-la explicitement dans <code>WITH</code>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Quand utiliser <code>graph</code> ?</p>
 </div>
-<p>Préférez <code>OUTPUT graph</code> dès que votre requête charge des relations avec <code>WITH</code>
-et que vous souhaitez visualiser les liens entre entités
-(applications ↔ serveurs, réseaux ↔ serveurs, etc.).</p>
+<p>Préférez <code>OUTPUT graph</code> dès que votre requête charge des relations avec <code>WITH</code> et que vous souhaitez visualiser les liens entre entités (applications ↔ serveurs, réseaux ↔ serveurs, etc.).</p>
 <h2 id="sauvegarde-des-requetes">Sauvegarde des requêtes<a class="headerlink" href="#sauvegarde-des-requetes" title="Permanent link">&para;</a></h2>
 <p>Il est possible de <strong>sauvegarder des requêtes</strong> dans l'interface pour les retrouver et les réexécuter sans les ressaisir. Les requêtes sauvegardées peuvent être rendues publiques (visibles par tous les utilisateurs) ou privées (visibles uniquement par leur auteur).</p>
 <h2 id="exemples">Exemples<a class="headerlink" href="#exemples" title="Permanent link">&para;</a></h2>
@@ -1014,6 +1035,12 @@ et que vous souhaitez visualiser les liens entre entités
 <span class="k">WITH</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span>
 </code></pre></div>
 <p>Visualise les réseaux, sous-réseaux et leurs VLANs.</p>
+<h3 id="reseaux-et-vlans-sans-les-sous-reseaux-intermediaires">Réseaux et VLANs sans les sous-réseaux intermédiaires<a class="headerlink" href="#reseaux-et-vlans-sans-les-sous-reseaux-intermediaires" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">networks</span>
+<span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).</span><span class="n">vlan</span>
+<span class="k">OUTPUT</span><span class="w"> </span><span class="n">graph</span>
+</code></pre></div>
+<p>Génère un graphe reliant directement chaque réseau à ses VLANs. Les sous-réseaux servent de pivot de traversée mais n'apparaissent pas dans le graphe — utile pour obtenir une vue synthétique lorsque les sous-réseaux n'apportent pas d'information supplémentaire dans la visualisation.</p>
 <h3 id="filtres-multiples-avec-in">Filtres multiples avec <code>IN</code><a class="headerlink" href="#filtres-multiples-avec-in" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span><span class="p">.</span><span class="n">name</span>

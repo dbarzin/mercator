@@ -433,7 +433,7 @@
         <li class="md-nav__item">
   <a href="#query-format" class="md-nav__link">
     <span class="md-ellipsis">
-      Query Format
+      Query format
     </span>
   </a>
   
@@ -442,7 +442,7 @@
         <li class="md-nav__item">
   <a href="#available-models" class="md-nav__link">
     <span class="md-ellipsis">
-      Available Models
+      Available models
     </span>
   </a>
   
@@ -451,7 +451,7 @@
         <li class="md-nav__item">
   <a href="#fields-clause" class="md-nav__link">
     <span class="md-ellipsis">
-      FIELDS Clause
+      FIELDS clause
     </span>
   </a>
   
@@ -460,7 +460,7 @@
         <li class="md-nav__item">
   <a href="#conditions" class="md-nav__link">
     <span class="md-ellipsis">
-      WHERE Clause
+      WHERE clause
     </span>
   </a>
   
@@ -469,7 +469,7 @@
         <li class="md-nav__item">
   <a href="#with-clause" class="md-nav__link">
     <span class="md-ellipsis">
-      WITH Clause
+      WITH clause
     </span>
   </a>
   
@@ -478,7 +478,7 @@
         <li class="md-nav__item">
   <a href="#output-format-output" class="md-nav__link">
     <span class="md-ellipsis">
-      Output Format (OUTPUT)
+      Output format (OUTPUT)
     </span>
   </a>
   
@@ -487,7 +487,7 @@
         <li class="md-nav__item">
   <a href="#saving-queries" class="md-nav__link">
     <span class="md-ellipsis">
-      Saving Queries
+      Saving queries
     </span>
   </a>
   
@@ -505,7 +505,7 @@
         <li class="md-nav__item">
   <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
-      Best Practices
+      Best practices
     </span>
   </a>
   
@@ -771,8 +771,8 @@
 
 
 <h1 id="queries">Queries<a class="headerlink" href="#queries" title="Permanent link">&para;</a></h1>
-<p>Mercator queries let you explore and visualize your cartography data in a flexible way, without going through the standard interface. They are written in a declarative language inspired by SQL and can produce a <strong>list</strong> or a <strong>graph</strong>.</p>
-<h2 id="query-format">Query Format<a class="headerlink" href="#query-format" title="Permanent link">&para;</a></h2>
+<p>Mercator queries let you explore and visualise your cartography data flexibly, without going through the standard interface. They are written in a declarative SQL-inspired language and can produce either a <strong>list</strong> or a <strong>graph</strong>.</p>
+<h2 id="query-format">Query format<a class="headerlink" href="#query-format" title="Permanent link">&para;</a></h2>
 <p>A Mercator query follows this syntax:</p>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w">    </span><span class="o">&lt;</span><span class="n">Model</span><span class="o">&gt;</span>
 <span class="n">FIELDS</span><span class="w">  </span><span class="o">&lt;</span><span class="n">field1</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">field2</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">relation</span><span class="p">.</span><span class="n">field</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="p">...</span>
@@ -793,7 +793,7 @@
 <tr>
 <td><code>FROM</code></td>
 <td>✅</td>
-<td>Target data model (see <a href="#available-models">Available Models</a>)</td>
+<td>Target data model (see <a href="#available-models">Available models</a>)</td>
 </tr>
 <tr>
 <td><code>FIELDS</code></td>
@@ -813,7 +813,7 @@
 <tr>
 <td><code>OUTPUT</code></td>
 <td>➖</td>
-<td>Output format: <code>list</code> or <code>graph</code> (<code>list</code> by default)</td>
+<td>Output format: <code>list</code> or <code>graph</code> (default: <code>list</code>)</td>
 </tr>
 <tr>
 <td><code>LIMIT</code></td>
@@ -822,8 +822,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="available-models">Available Models<a class="headerlink" href="#available-models" title="Permanent link">&para;</a></h2>
-<p>Models correspond to Mercator API entities. Names are in <strong>kebab-case</strong> and identical to the resource names exposed by the REST API.</p>
+<h2 id="available-models">Available models<a class="headerlink" href="#available-models" title="Permanent link">&para;</a></h2>
+<p>Models correspond to entities in the Mercator <a href="../api/">API</a> and are written in <strong>kebab-case</strong>.</p>
 <table>
 <thead>
 <tr>
@@ -854,7 +854,7 @@
 </tr>
 <tr>
 <td><code>networks</code></td>
-<td>Networks / subnets</td>
+<td>Networks / subnetworks</td>
 </tr>
 <tr>
 <td><code>storage-devices</code></td>
@@ -877,25 +877,27 @@
 <div class="admonition info">
 <p class="admonition-title">Available fields</p>
 </div>
-<p>The fields usable in <code>FIELDS</code> and <code>WHERE</code> are exactly those exposed by the Mercator API.
-Refer to the <a href="../model/">Data Model</a> for the full list of attributes for each model.</p>
-<h2 id="fields-clause">FIELDS Clause<a class="headerlink" href="#fields-clause" title="Permanent link">&para;</a></h2>
+<p>The fields available in <code>FIELDS</code> and <code>WHERE</code> are those exposed by the Mercator API.
+Refer to the <a href="../model/">data model</a> for the full list of attributes for each model.</p>
+<h2 id="fields-clause">FIELDS clause<a class="headerlink" href="#fields-clause" title="Permanent link">&para;</a></h2>
 <p>The <code>FIELDS</code> clause lists the attributes to display in the result. It accepts:</p>
 <ul>
-<li><strong>Direct fields</strong> of the model: <code>name</code>, <code>cpu</code>, <code>environment</code>, <code>end_validity</code>, …</li>
+<li><strong>Direct model fields</strong>: <code>name</code>, <code>cpu</code>, <code>environment</code>, <code>end_validity</code>, …</li>
 <li><strong>Relation fields</strong> in <code>relation.field</code> format: <code>applications.name</code>, <code>site.name</code>, <code>databases.name</code>, …</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">operating_system</span><span class="p">,</span><span class="w"> </span><span class="n">cpu</span><span class="p">,</span><span class="w"> </span><span class="n">memory</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span>
 </code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Protected fields</p>
+</div>
+<p>Fields marked as hidden in Eloquent models (<code>$hidden</code>), such as <code>password</code> or <code>remember_token</code>, are never returned by the query engine, even if explicitly listed in <code>FIELDS</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Consistency with WITH</p>
 </div>
-<p>If you reference a relation field in <code>FIELDS</code> (e.g. <code>applications.name</code>),
-the corresponding relation must be declared in <code>WITH</code> (e.g. <code>WITH applications</code>),
-otherwise the data will not be loaded.</p>
-<h2 id="conditions">WHERE Clause<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h2>
+<p>If you reference a relation field in <code>FIELDS</code> (e.g. <code>applications.name</code>), the corresponding relation must be declared in <code>WITH</code> (e.g. <code>WITH applications</code>), otherwise the data will not be loaded.</p>
+<h2 id="conditions">WHERE clause<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h2>
 <p>The <code>WHERE</code> clause filters records based on conditions on the main model's fields.</p>
-<h3 id="supported-operators">Supported Operators<a class="headerlink" href="#supported-operators" title="Permanent link">&para;</a></h3>
+<h3 id="supported-operators">Supported operators<a class="headerlink" href="#supported-operators" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -921,7 +923,7 @@ otherwise the data will not be loaded.</p>
 <td><code>memory &gt;= 16</code></td>
 </tr>
 <tr>
-<td>Search</td>
+<td>Pattern match</td>
 <td><code>LIKE</code></td>
 <td><code>operating_system LIKE "%Linux%"</code></td>
 </tr>
@@ -942,13 +944,13 @@ otherwise the data will not be loaded.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="logical-combinations">Logical Combinations<a class="headerlink" href="#logical-combinations" title="Permanent link">&para;</a></h3>
-<p>Conditions can be combined with <code>AND</code> and <code>OR</code>. Each condition must be enclosed in parentheses:</p>
+<h3 id="logical-combinations">Logical combinations<a class="headerlink" href="#logical-combinations" title="Permanent link">&para;</a></h3>
+<p>Conditions can be combined with <code>AND</code> and <code>OR</code>. Each condition should be wrapped in parentheses:</p>
 <div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">operating_system</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="ss">&quot;%Linux%&quot;</span><span class="p">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">environment</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;production&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;staging&quot;</span><span class="p">))</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">operating_system</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="ss">&quot;%Windows%&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="exists">EXISTS Operator<a class="headerlink" href="#exists" title="Permanent link">&para;</a></h3>
+<h3 id="exists">EXISTS operator<a class="headerlink" href="#exists" title="Permanent link">&para;</a></h3>
 <p>The <code>EXISTS</code> operator filters records based on whether a relation is present or absent. It takes the Eloquent relation name (as declared in <code>WITH</code>).</p>
 <div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="k">EXISTS</span><span class="w"> </span><span class="n">applications</span><span class="p">)</span>
 </code></pre></div>
@@ -960,33 +962,52 @@ otherwise the data will not be loaded.</p>
 <div class="admonition info">
 <p class="admonition-title">EXISTS and eager loading</p>
 </div>
-<p>The <code>EXISTS</code> operator does not load relation data.
-If you also want to display fields from that relation in <code>FIELDS</code>,
-declare it explicitly in <code>WITH</code>.</p>
-<h2 id="with-clause">WITH Clause<a class="headerlink" href="#with-clause" title="Permanent link">&para;</a></h2>
-<p>The <code>WITH</code> clause declares the <strong>relations to load</strong> (eager loading). It is required in order to access linked object fields in <code>FIELDS</code>.</p>
+<p>The <code>EXISTS</code> operator does not load the relation's data.
+If you also want to display fields from that relation in <code>FIELDS</code>, declare it explicitly in <code>WITH</code>.</p>
+<h2 id="with-clause">WITH clause<a class="headerlink" href="#with-clause" title="Permanent link">&para;</a></h2>
+<p>The <code>WITH</code> clause declares the <strong>relations to load</strong> (eager loading). It is required to access fields from related objects in <code>FIELDS</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">applications</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span>
 </code></pre></div>
-<p>Relation names correspond to the relation method names of the Eloquent models, in <strong>snake_case</strong>:</p>
+<p>Relation names correspond to Eloquent relation method names, in <strong>snake_case</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">sites</span><span class="p">,</span><span class="w"> </span><span class="n">bays</span>
 </code></pre></div>
-<h2 id="output-format-output">Output Format (OUTPUT)<a class="headerlink" href="#output-format-output" title="Permanent link">&para;</a></h2>
+<h3 id="hidden-intermediate-nodes">Hidden intermediate nodes<a class="headerlink" href="#hidden-intermediate-nodes" title="Permanent link">&para;</a></h3>
+<p>By default, each segment of a <code>WITH</code> path creates a node in the graph. You can <strong>hide an intermediate level</strong> by wrapping it in parentheses: the level is still traversed to reach the next levels, but it appears neither as a node nor as an edge in the resulting graph.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).</span><span class="n">vlan</span>
+</code></pre></div>
+<p>In this example, subnetworks act only as a traversal pivot. The graph displays direct <code>networks → vlan</code> edges without representing the <code>subnetworks</code> themselves.</p>
+<p>The syntax generalises to multiple hidden levels:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Hide every other level</span>
+<span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).</span><span class="n">routers</span><span class="p">.(</span><span class="n">interfaces</span><span class="p">).</span><span class="n">vlan</span>
+
+<span class="c1">-- Hide several consecutive levels</span>
+<span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).(</span><span class="n">routers</span><span class="p">).</span><span class="n">vlan</span>
+</code></pre></div>
+<p>Rules to follow:</p>
+<ul>
+<li>A fully hidden path (all segments in parentheses) has no effect.</li>
+<li>The last segment of a path cannot be hidden.</li>
+<li>Nested parentheses <code>((rel))</code> are not allowed.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">When to hide a level?</p>
+</div>
+<p>Hide an intermediate node when the pivot relation has no semantic value in the visualisation — for example, subnetworks between a network and its VLANs, or interfaces between a server and its VLANs.</p>
+<h2 id="output-format-output">Output format (OUTPUT)<a class="headerlink" href="#output-format-output" title="Permanent link">&para;</a></h2>
 <h3 id="output-list"><code>OUTPUT list</code><a class="headerlink" href="#output-list" title="Permanent link">&para;</a></h3>
-<p>Generates a <strong>table</strong> with one row per record. This format is suited for inventories, exports, or tabular views.</p>
+<p>Produces a <strong>table</strong> with one row per record. This format suits inventories, exports, and tabular views.</p>
 <div class="highlight"><pre><span></span><code><span class="k">OUTPUT</span><span class="w"> </span><span class="n">list</span>
 </code></pre></div>
 <h3 id="output-graph"><code>OUTPUT graph</code><a class="headerlink" href="#output-graph" title="Permanent link">&para;</a></h3>
-<p>Generates a <strong>relationship graph</strong> between the returned entities. This format is suited for visualizing dependencies, application maps, or network relationships.</p>
+<p>Produces a <strong>relationship graph</strong> between the returned entities. This format suits dependency visualisation, application cartography, or network relationships.</p>
 <div class="highlight"><pre><span></span><code><span class="k">OUTPUT</span><span class="w"> </span><span class="n">graph</span>
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">When to use <code>graph</code>?</p>
 </div>
-<p>Prefer <code>OUTPUT graph</code> whenever your query loads relations with <code>WITH</code>
-and you want to visualize the links between entities
-(applications ↔ servers, networks ↔ servers, etc.).</p>
-<h2 id="saving-queries">Saving Queries<a class="headerlink" href="#saving-queries" title="Permanent link">&para;</a></h2>
-<p>It is possible to <strong>save queries</strong> in the interface to retrieve and re-run them without retyping them. Saved queries can be made public (visible to all users) or private (visible only to their author).</p>
+<p>Prefer <code>OUTPUT graph</code> when your query loads relations with <code>WITH</code> and you want to visualise the links between entities (applications ↔ servers, networks ↔ servers, etc.).</p>
+<h2 id="saving-queries">Saving queries<a class="headerlink" href="#saving-queries" title="Permanent link">&para;</a></h2>
+<p>Queries can be <strong>saved</strong> in the interface so they can be retrieved and re-executed without retyping them. Saved queries can be made public (visible to all users) or private (visible only to their author).</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <h3 id="linux-production-servers-with-their-applications">Linux production servers with their applications<a class="headerlink" href="#linux-production-servers-with-their-applications" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
@@ -1013,7 +1034,13 @@ and you want to visualize the links between entities
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span><span class="p">.</span><span class="n">name</span>
 <span class="k">WITH</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">,</span><span class="w"> </span><span class="n">subnetworks</span><span class="p">.</span><span class="n">vlan</span>
 </code></pre></div>
-<p>Visualizes networks, subnetworks and their VLANs.</p>
+<p>Visualises networks, subnetworks and their VLANs.</p>
+<h3 id="networks-and-vlans-without-intermediate-subnetworks">Networks and VLANs without intermediate subnetworks<a class="headerlink" href="#networks-and-vlans-without-intermediate-subnetworks" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">networks</span>
+<span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="n">subnetworks</span><span class="p">).</span><span class="n">vlan</span>
+<span class="k">OUTPUT</span><span class="w"> </span><span class="n">graph</span>
+</code></pre></div>
+<p>Generates a graph linking each network directly to its VLANs. Subnetworks act as a traversal pivot but do not appear in the graph — useful for a concise view when subnetworks add no meaningful information to the visualisation.</p>
 <h3 id="multiple-filters-with-in">Multiple filters with <code>IN</code><a class="headerlink" href="#multiple-filters-with-in" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span><span class="p">.</span><span class="n">name</span>
@@ -1027,15 +1054,6 @@ and you want to visualize the links between entities
 <span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span>
 </code></pre></div>
 <p>Inventory of SSL/TLS certificates with their expiry date and the servers/applications on which they are deployed. Useful for anticipating renewals.</p>
-<h3 id="servers-in-production-without-backup-plans-and-with-at-least-one-application">Servers in production without backup plans and with at least one application<a class="headerlink" href="#servers-in-production-without-backup-plans-and-with-at-least-one-application" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
-<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span>
-<span class="k">AND</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">backups</span>
-<span class="k">AND</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">applications</span>
-<span class="k">OUTPUT</span><span class="w"> </span><span class="n">list</span>
-</code></pre></div>
-<p>Identify the servers and the names of the production applications that do not have backup plans and at least one application.</p>
 <h3 id="critical-applications-with-their-servers-and-databases">Critical applications with their servers and databases<a class="headerlink" href="#critical-applications-with-their-servers-and-databases" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">security_need_c</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">responsible</span><span class="p">,</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">.</span><span class="n">name</span>
@@ -1043,28 +1061,37 @@ and you want to visualize the links between entities
 <span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span>
 <span class="k">OUTPUT</span><span class="w"> </span><span class="n">graph</span>
 </code></pre></div>
-<p>Maps applications with high confidentiality requirements (levels 3 and 4) along with their infrastructure dependencies.</p>
+<p>Cartography of applications with high confidentiality requirements (levels 3 and 4), with their infrastructure dependencies.</p>
 <h3 id="servers-without-an-ssl-certificate">Servers without an SSL certificate<a class="headerlink" href="#servers-without-an-ssl-certificate" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">environment</span><span class="p">,</span><span class="w"> </span><span class="n">operating_system</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">certificates</span><span class="p">)</span>
 <span class="k">WITH</span><span class="w"> </span><span class="n">certificates</span>
 </code></pre></div>
-<p>Identifies production servers with no SSL/TLS certificate registered. Useful for detecting blind spots in certificate management.</p>
-<h3 id="applications-not-linked-to-any-logical-server">Applications not linked to any logical server<a class="headerlink" href="#applications-not-linked-to-any-logical-server" title="Permanent link">&para;</a></h3>
+<p>Identifies production servers on which no SSL/TLS certificate is registered. Useful for detecting blind spots in certificate management.</p>
+<h3 id="production-servers-without-backup-plans-but-with-an-application">Production servers without backup plans but with an application<a class="headerlink" href="#production-servers-without-backup-plans-but-with-an-application" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">logical</span><span class="o">-</span><span class="n">servers</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="n">name</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;production&quot;</span>
+<span class="k">AND</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">backups</span>
+<span class="k">AND</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">applications</span>
+<span class="k">OUTPUT</span><span class="w"> </span><span class="n">list</span>
+</code></pre></div>
+<p>Identifies servers and application names in production that have no backup plans but have at least one application attached.</p>
+<h3 id="applications-without-an-associated-logical-server">Applications without an associated logical server<a class="headerlink" href="#applications-without-an-associated-logical-server" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span>
 <span class="n">FIELDS</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">responsible</span><span class="p">,</span><span class="w"> </span><span class="n">security_need_c</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">logical_servers</span><span class="p">)</span>
 <span class="k">WITH</span><span class="w"> </span><span class="n">logical_servers</span>
 </code></pre></div>
-<p>Lists applications not attached to any logical server, which may indicate an incomplete cartography.</p>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<p>Lists applications not attached to any logical server — a possible indicator of an incomplete cartography.</p>
+<h2 id="best-practices">Best practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Keep <code>LIMIT</code> to the necessary value</strong>: overly broad queries can be slow on large repositories.</li>
-<li><strong>Use <code>OUTPUT graph</code></strong> only when relations are declared in <code>WITH</code>; a graph without relations will consist only of isolated nodes.</li>
-<li><strong>Verify field names</strong> in the <a href="../api/">API reference</a> — a typo in a field name simply displays nothing, with no error message.</li>
-<li><strong>With <code>EXISTS</code></strong>, declare the relation in <code>WITH</code> only if you need to display its fields in <code>FIELDS</code>; otherwise, <code>EXISTS</code> alone is sufficient to filter without additional overhead.</li>
-<li><strong>Save recurring queries</strong> to facilitate teamwork and ensure reproducibility of cartographies.</li>
+<li><strong>Use <code>OUTPUT graph</code></strong> only when relations are declared in <code>WITH</code>; a graph without relations will consist of isolated nodes only.</li>
+<li><strong>Check field names</strong> in the <a href="../api/">API reference</a> — a typo in a field name simply returns nothing, with no error message.</li>
+<li><strong>With <code>EXISTS</code></strong>, declare the relation in <code>WITH</code> only if you need to display its fields in <code>FIELDS</code>; otherwise, <code>EXISTS</code> alone is sufficient to filter without extra overhead.</li>
+<li><strong>Save recurring queries</strong> to facilitate teamwork and ensure the reproducibility of cartographies.</li>
 </ul>
 
 
