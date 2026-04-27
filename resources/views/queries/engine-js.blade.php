@@ -268,6 +268,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ── DOT ──────────────────────────────────────────────────────
+
+    /**
+     * Résout l'icône d'un nœud en garantissant toujours une string.
+     * n.icon est fourni par PHP (HasIconContract ou default.png).
+     */
+    function resolveIcon(n) {
+        return String(n.icon || '/images/default.png');
+    }
+
     function buildDot(nodes, edges) {
         const lines = [
             'digraph G {',
@@ -276,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
             '  edge  [color="#666666" arrowsize=0.7]', '',
         ];
         for (const n of nodes)
-            lines.push(`  "${n.id}" [label="${esc(n.label??n.id)}" image="${n.icon}" tooltip="${esc(n.label??n.id)}" URL="${n.data?.url??''}"]`);
+            lines.push(`  "${n.id}" [label="${esc(n.label??n.id)}" image="${resolveIcon(n)}" tooltip="${esc(n.label??n.id)}" URL="${String(n.data?.url??'')}"]`);
         lines.push('');
         for (const e of edges) lines.push(`  "${e.from}" -> "${e.to}"`);
         lines.push('}');
@@ -286,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function buildImagesArray(nodes) {
         const seen = new Set(), images = [];
         for (const n of nodes) {
-            const icon = n.icon;
+            const icon = resolveIcon(n);
             if (!seen.has(icon)) { seen.add(icon); images.push({ path: icon, width: '64px', height: '64px' }); }
         }
         return images;

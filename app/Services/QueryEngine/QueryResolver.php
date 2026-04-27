@@ -45,12 +45,53 @@ class QueryResolver
     }
 
     // ─────────────────────────────────────────────────────────────
+    // Normalisation du format traverse (string | {segments:[...]})
+    // ─────────────────────────────────────────────────────────────
+
+    /**
+     * Normalise un item de traverse en tableau de segments typés.
+     *
+     * Entrées :
+     *   "subnetworks.vlan"
+     *   {"segments":[{"name":"subnetworks","hidden":true},{"name":"vlan","hidden":false}]}
+     *
+     * Sortie :
+     *   [["name"=>"subnetworks","hidden"=>false],["name"=>"vlan","hidden"=>false]]
+     *   [["name"=>"subnetworks","hidden"=>true], ["name"=>"vlan","hidden"=>false]]
+     */
+    public static function normalizeSegments(string|array $item): array
+    {
+        if (is_string($item)) {
+            return array_map(
+                fn (string $name) => ['name' => $name, 'hidden' => false],
+                explode('.', $item)
+            );
+        }
+
+        return array_map(
+            fn (array $s) => ['name' => (string) $s['name'], 'hidden' => (bool) ($s['hidden'] ?? false)],
+            $item['segments']
+        );
+    }
+
+    /**
+     * Extrait le chemin plat (sans parenthèses) pour le eager-loading Laravel.
+     * Ex: {segments:[{name:"sub",hidden:true},{name:"vlan",hidden:false}]} → "sub.vlan"
+     */
+    public static function flattenTraversePath(string|array $item): string
+    {
+        return implode('.', array_column(self::normalizeSegments($item), 'name'));
+    }
+
+    // ─────────────────────────────────────────────────────────────
     // Eager loads
     // ─────────────────────────────────────────────────────────────
 
     protected function resolveEagerLoads(string $modelClass, array $traverse, array $fields): array
     {
-        $paths = collect($traverse);
+        // Flatten les chemins traverse (ignore hidden/visible, on charge tout)
+        $paths = collect($traverse)
+            ->map(fn ($item) => self::flattenTraversePath($item));
 
         foreach ($fields as $field) {
             $parts = explode('.', $field);
@@ -60,8 +101,6 @@ class QueryResolver
             }
         }
 
-        // Convertir chaque path snake_case en noms de méthodes Eloquent réels
-        // Ex : logical_servers.applications → logicalServers.applications
         return $paths->unique()
             ->map(fn ($path) => $this->resolveRelationPath($modelClass, $path))
             ->sort()
@@ -413,8 +452,11 @@ class QueryResolver
         $this->nodes        = [];
         $this->edges        = [];
 
+        // Normaliser une seule fois : chaque item devient [[{name,hidden},...],...]
+        $normalizedTraverse = array_map([self::class, 'normalizeSegments'], $traverse);
+
         foreach ($items as $item) {
-            $this->traverseNode($item, $modelName, $traverse, null);
+            $this->traverseNode($item, $modelName, $normalizedTraverse, null);
         }
 
         return new GraphResult(
@@ -428,7 +470,7 @@ class QueryResolver
     protected function traverseNode(
         Model   $item,
         string  $modelName,
-        array   $traverse,
+        array   $normalizedTraverse,   // [[{name,hidden},...],...]
         ?string $parentNodeId
     ): void {
         $nodeId = $modelName . '_' . $item->getKey();
@@ -437,39 +479,34 @@ class QueryResolver
             $this->edges[$parentNodeId . '||' . $nodeId] = ['from' => $parentNodeId, 'to' => $nodeId];
         }
 
-        // Enregistrer le nœud seulement la première fois
         if (! isset($this->visitedNodes[$nodeId])) {
             $this->visitedNodes[$nodeId] = true;
             $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
         }
 
-        // Ne pas return même si déjà visité :
-        // un même nœud peut être atteint via un chemin différent avec des enfants à traverser.
-
-        if (empty($traverse)) {
+        if (empty($normalizedTraverse)) {
             return;
         }
 
-        // Regrouper les chemins par relation de premier niveau
-        // Ex: ['logicalServers', 'logicalServers.applications']
-        //  → ['logicalServers' => ['applications']]
+        // Regrouper par relation de premier niveau
         $relationMap = [];
-        foreach ($traverse as $traversePath) {
-            $parts    = explode('.', $traversePath, 2);
-            $relation = $parts[0];
-            $subPath  = $parts[1] ?? null;
+        foreach ($normalizedTraverse as $segments) {
+            if (empty($segments)) continue;
+            $first    = $segments[0];
+            $rest     = array_slice($segments, 1);
+            $mapKey   = $first['name'] . ($first['hidden'] ? ':h' : ':v');
 
-            if (! isset($relationMap[$relation])) {
-                $relationMap[$relation] = [];
+            if (! isset($relationMap[$mapKey])) {
+                $relationMap[$mapKey] = ['name' => $first['name'], 'hidden' => $first['hidden'], 'sub' => []];
             }
-            if ($subPath !== null) {
-                $relationMap[$relation][] = $subPath;
+            if (! empty($rest)) {
+                $relationMap[$mapKey]['sub'][] = $rest;
             }
         }
 
-        foreach ($relationMap as $relation => $subPaths) {
+        foreach ($relationMap as $config) {
             try {
-                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $relation);
+                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $config['name']);
                 $related   = $item->$relMethod;
                 if (! $related) continue;
 
@@ -479,7 +516,67 @@ class QueryResolver
                 $relatedModelName = class_basename(get_class($related->first()));
 
                 foreach ($related as $relatedItem) {
-                    $this->traverseNode($relatedItem, $relatedModelName, $subPaths, $nodeId);
+                    if ($config['hidden']) {
+                        // Segment masqué : pas de nœud/arête, on traverse avec $nodeId comme ancêtre visible
+                        $this->traverseNodeSkip($relatedItem, $relatedModelName, $config['sub'], $nodeId);
+                    } else {
+                        $this->traverseNode($relatedItem, $relatedModelName, $config['sub'], $nodeId);
+                    }
+                }
+            } catch (\Throwable) {
+                continue;
+            }
+        }
+    }
+
+    /**
+     * Traverse un nœud masqué : ni nœud ni arête créés.
+     * Les enfants visibles sont liés directement à $visibleAncestorId.
+     */
+    protected function traverseNodeSkip(
+        Model   $item,
+        string  $modelName,
+        array   $normalizedTraverse,   // segments restants après le masqué
+        string  $visibleAncestorId
+    ): void {
+        if (empty($normalizedTraverse)) {
+            return; // no-op : dernier segment masqué
+        }
+
+        $relationMap = [];
+        foreach ($normalizedTraverse as $segments) {
+            if (empty($segments)) continue;
+            $first  = $segments[0];
+            $rest   = array_slice($segments, 1);
+            $mapKey = $first['name'] . ($first['hidden'] ? ':h' : ':v');
+
+            if (! isset($relationMap[$mapKey])) {
+                $relationMap[$mapKey] = ['name' => $first['name'], 'hidden' => $first['hidden'], 'sub' => []];
+            }
+            if (! empty($rest)) {
+                $relationMap[$mapKey]['sub'][] = $rest;
+            }
+        }
+
+        foreach ($relationMap as $config) {
+            try {
+                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $config['name']);
+                $related   = $item->$relMethod;
+                if (! $related) continue;
+
+                $related = $related instanceof Model ? collect([$related]) : $related;
+                if ($related->isEmpty()) continue;
+
+                $relatedModelName = class_basename(get_class($related->first()));
+
+                foreach ($related as $relatedItem) {
+                    if ($config['hidden']) {
+                        // Encore masqué : continuer à sauter
+                        $this->traverseNodeSkip($relatedItem, $relatedModelName, $config['sub'], $visibleAncestorId);
+                    } else {
+                        // Premier visible : lier directement à l'ancêtre visible
+                        $this->traverseNode($relatedItem, $relatedModelName, $config['sub'], $visibleAncestorId);
+                    }
                 }
             } catch (\Throwable) {
                 continue;

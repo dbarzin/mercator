@@ -104,17 +104,17 @@
             }
 
             // Ponctuation
-            const punct = {'(': 'LPAREN', ')': 'RPAREN', '[': 'LBRACKET', ']': 'RBRACKET', ',': 'COMMA'};
+            const punct = {'(': 'LPAREN', ')': 'RPAREN', '[': 'LBRACKET', ']': 'RBRACKET', ',': 'COMMA', '.': 'DOT'};
             if (punct[input[i]]) {
                 tokens.push({type: punct[input[i]]});
                 i++;
                 continue;
             }
 
-            // Identifiants et mots-clés (point inclus pour relation.field)
+            // Identifiants et mots-clés (sans point — le DOT est un token séparé)
             if (/[a-zA-Z_]/.test(input[i])) {
                 let id = '';
-                while (i < input.length && /[a-zA-Z0-9_.]/.test(input[i])) id += input[i++];
+                while (i < input.length && /[a-zA-Z0-9_]/.test(input[i])) id += input[i++];
                 const up = id.toUpperCase();
                 if (KEYWORDS.has(up)) {
                     tokens.push({type: up});
@@ -178,7 +178,7 @@
 
             while (!this.check('EOF')) {
                 if (this.match('WHERE')) dsl.filters = this.parseWhereClause();
-                else if (this.match('WITH', 'TRAVERSE')) dsl.traverse = this.parseIdentList();
+                else if (this.match('WITH', 'TRAVERSE')) dsl.traverse = this.parseTraverseList();
                 else if (this.match('FIELDS', 'SELECT')) dsl.fields = this.parseIdentList();
                 else if (this.match('OUTPUT')) dsl.output = this.expect('IDENT').value.toLowerCase();
                 else if (this.match('LIMIT')) dsl.limit = this.expect('NUMBER').value;
@@ -198,12 +198,67 @@
             return name;
         }
 
-        // ── Liste d'identifiants séparés par des virgules ────────
+        // ── FIELDS : liste de chemins pointés simples ────────────
+        // Retourne des strings "relation.field" ou "field"
 
         parseIdentList() {
-            const items = [this.expect('IDENT').value];
-            while (this.match('COMMA')) items.push(this.expect('IDENT').value);
+            const items = [this.parseDotPath()];
+            while (this.match('COMMA')) items.push(this.parseDotPath());
             return items;
+        }
+
+        parseDotPath() {
+            let path = this.expect('IDENT').value;
+            while (this.check('DOT')) {
+                this.advance();
+                path += '.' + this.expect('IDENT').value;
+            }
+            return path;
+        }
+
+        // ── WITH : liste de chemins avec support des nœuds masqués ─
+        // Syntaxe : rel | rel.rel | (rel).rel | (rel).(rel).rel
+        //
+        // Retour :
+        //   - string "rel.rel"     si aucun segment masqué (rétrocompat)
+        //   - { segments: [{name, hidden}] }  si parenthèses présentes
+
+        parseTraverseList() {
+            const items = [this.parseTraversePath()];
+            while (this.match('COMMA')) items.push(this.parseTraversePath());
+            return items;
+        }
+
+        parseTraversePath() {
+            const segments = [this._parseTraverseSegment()];
+
+            while (this.check('DOT')) {
+                this.advance(); // consommer DOT
+                segments.push(this._parseTraverseSegment());
+            }
+
+            // Validations sémantiques
+            const hasHidden = segments.some(s => s.hidden);
+            const allHidden = segments.every(s => s.hidden);
+            const lastHidden = segments[segments.length - 1].hidden;
+
+            if (allHidden) console.warn('[QueryEngine] WITH : chemin entièrement masqué (no-op) :', segments.map(s => s.name).join('.'));
+            if (lastHidden) console.warn('[QueryEngine] WITH : dernier segment masqué (no-op partiel) :', segments.map(s => s.name).join('.'));
+
+            // Rétrocompatibilité : pas de parenthèses → string simple
+            if (!hasHidden) return segments.map(s => s.name).join('.');
+            return {segments};
+        }
+
+        _parseTraverseSegment() {
+            if (this.match('LPAREN')) {
+                if (this.check('LPAREN')) throw new Error('Parenthèses imbriquées interdites dans WITH');
+                if (!this.check('IDENT')) throw new Error(`Identifiant attendu dans "()", obtenu "${this.peek().type}"`);
+                const name = this.advance().value;
+                this.expect('RPAREN');
+                return {name, hidden: true};
+            }
+            return {name: this.expect('IDENT').value, hidden: false};
         }
 
         // ── Clause WHERE ─────────────────────────────────────────
@@ -381,6 +436,11 @@
     // DSL JSON → SQL-like lisible
     // ─────────────────────────────────────────────────────────────
 
+    function traverseItemToSql(item) {
+        if (typeof item === 'string') return item;
+        return item.segments.map(s => s.hidden ? `(${s.name})` : s.name).join('.');
+    }
+
     function dslToSql(dsl) {
         if (!dsl || !dsl.from) return '';
         const lines = [];
@@ -388,7 +448,7 @@
         lines.push(`FROM ${dsl.from}`);
         if (dsl.fields?.length) lines.push(`FIELDS ${dsl.fields.join(', ')}`);
         if (dsl.filters?.length) lines.push(`WHERE ${filtersToSql(dsl.filters, '')}`);
-        if (dsl.traverse?.length) lines.push(`WITH ${dsl.traverse.join(', ')}`);
+        if (dsl.traverse?.length) lines.push(`WITH ${dsl.traverse.map(traverseItemToSql).join(', ')}`);
         if (dsl.output != null) lines.push(`OUTPUT ${dsl.output}`);
         if (dsl.limit != null) lines.push(`LIMIT ${dsl.limit}`);
 

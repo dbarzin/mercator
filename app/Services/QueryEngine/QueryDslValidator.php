@@ -50,7 +50,7 @@ class QueryDslValidator
             'fields.*'   => ['string',   'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
             'filters'    => ['nullable', 'array'],
             'traverse'   => ['nullable', 'array'],
-            'traverse.*' => ['string',   'regex:/^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$/'],
+            // traverse.* validé manuellement (format mixte : string ou {segments:[...]})
             'depth'      => ['prohibited'],
             'output'     => ['nullable', 'string',  'in:graph,list'],
             'limit'      => ['nullable', 'integer', 'min:1', 'max:1000'],
@@ -69,6 +69,11 @@ class QueryDslValidator
 
         $validated = $validator->validated();
 
+        // ── Validation du tableau traverse (format mixte) ─────────
+        if (! empty($data['traverse'])) {
+            $this->validateTraverse($data['traverse']);
+        }
+
         // ── Validation récursive des filtres ─────────────────────
         if (! empty($data['filters'])) {
             $this->validateFilters($data['filters'], 'filters');
@@ -83,6 +88,77 @@ class QueryDslValidator
         $validated['filters'] = $data['filters'] ?? [];
 
         return $validated;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Validation du tableau traverse
+    // ─────────────────────────────────────────────────────────────
+
+    protected function validateTraverse(array $traverse): void
+    {
+        foreach ($traverse as $index => $item) {
+            $path = "traverse.{$index}";
+
+            if (is_string($item)) {
+                // Format historique : "subnetworks.vlan"
+                if (! preg_match('/^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)*$/', $item)) {
+                    $this->errors[$path][] = 'Le chemin de traversée doit être un identifiant valide (ex: subnetworks.vlan).';
+                }
+                continue;
+            }
+
+            if (! is_array($item)) {
+                $this->errors[$path][] = 'Chaque élément de traverse doit être une chaîne ou un objet structuré.';
+                continue;
+            }
+
+            // Format nouveau : { segments: [{name, hidden}, ...] }
+            $this->validateTraverseObject($item, $path);
+        }
+    }
+
+    protected function validateTraverseObject(array $item, string $path): void
+    {
+        if (! array_key_exists('segments', $item) || ! is_array($item['segments']) || empty($item['segments'])) {
+            $this->errors["{$path}.segments"][] = 'Un objet traverse doit contenir une clé "segments" tableau non vide.';
+            return;
+        }
+
+        foreach ($item['segments'] as $i => $segment) {
+            $this->validateTraverseSegment($segment, "{$path}.segments.{$i}");
+        }
+
+        // Sémantique : dernier segment masqué = no-op
+        $last = end($item['segments']);
+        if (is_array($last) && ($last['hidden'] ?? false)) {
+            $this->errors[$path][] = 'Le dernier segment d\'un chemin traverse ne peut pas être masqué (no-op).';
+        }
+
+        // Sémantique : tous masqués = no-op total
+        $allHidden = array_reduce(
+            $item['segments'],
+            fn (bool $c, mixed $s) => $c && is_array($s) && ($s['hidden'] ?? false),
+            true
+        );
+        if ($allHidden) {
+            $this->errors[$path][] = 'Un chemin traverse entièrement masqué est inutile.';
+        }
+    }
+
+    protected function validateTraverseSegment(mixed $segment, string $path): void
+    {
+        if (! is_array($segment)) {
+            $this->errors[$path][] = 'Chaque segment doit être un objet {name, hidden}.';
+            return;
+        }
+
+        if (! isset($segment['name']) || ! preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', (string) ($segment['name'] ?? ''))) {
+            $this->errors["{$path}.name"][] = '"name" doit être un identifiant valide.';
+        }
+
+        if (! array_key_exists('hidden', $segment) || ! is_bool($segment['hidden'])) {
+            $this->errors["{$path}.hidden"][] = '"hidden" doit être un booléen.';
+        }
     }
 
     // ─────────────────────────────────────────────────────────────

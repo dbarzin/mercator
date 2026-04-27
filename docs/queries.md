@@ -1,8 +1,8 @@
 # Queries
 
-Mercator queries let you explore and visualize your cartography data in a flexible way, without going through the standard interface. They are written in a declarative language inspired by SQL and can produce a **list** or a **graph**.
+Mercator queries let you explore and visualise your cartography data flexibly, without going through the standard interface. They are written in a declarative SQL-inspired language and can produce either a **list** or a **graph**.
 
-## Query Format
+## Query format
 
 A Mercator query follows this syntax:
 
@@ -17,16 +17,16 @@ LIMIT   <n>
 
 | Clause | Required | Description |
 |--------|----------|-------------|
-| `FROM` | ✅ | Target data model (see [Available Models](#available-models)) |
+| `FROM` | ✅ | Target data model (see [Available models](#available-models)) |
 | `FIELDS` | ➖ | List of fields to display, including relation fields (`relation.field`) |
 | `WHERE` | ➖ | Data filter (see [Conditions](#conditions)) |
 | `WITH` | ➖ | Relations to load via eager loading |
-| `OUTPUT` | ➖ | Output format: `list` or `graph` (`list` by default) |
+| `OUTPUT` | ➖ | Output format: `list` or `graph` (default: `list`) |
 | `LIMIT` | ➖ | Maximum number of records returned (default: 100) |
 
-## Available Models
+## Available models {#available-models}
 
-Models correspond to Mercator API entities. Names are in **kebab-case** and identical to the resource names exposed by the REST API.
+Models correspond to entities in the Mercator [API](api.md) and are written in **kebab-case**.
 
 | Model              | Description |
 |--------------------|-------------|
@@ -35,53 +35,52 @@ Models correspond to Mercator API entities. Names are in **kebab-case** and iden
 | `applications`     | Applications |
 | `databases`        | Databases |
 | `certificates`     | SSL/TLS certificates |
-| `networks`         | Networks / subnets |
+| `networks`         | Networks / subnetworks |
 | `storage-devices`  | Storage devices |
 | `sites`            | Physical sites |
 | `bays`             | Hosting bays |
 | …                  | _All API models_ |
 
 !!! info "Available fields"
-    The fields usable in `FIELDS` and `WHERE` are exactly those exposed by the Mercator API.
-    Refer to the [Data Model](model.md) for the full list of attributes for each model.
+The fields available in `FIELDS` and `WHERE` are those exposed by the Mercator API.
+Refer to the [data model](model.md) for the full list of attributes for each model.
 
-## FIELDS Clause
+## FIELDS clause
 
 The `FIELDS` clause lists the attributes to display in the result. It accepts:
 
-- **Direct fields** of the model: `name`, `cpu`, `environment`, `end_validity`, …
+- **Direct model fields**: `name`, `cpu`, `environment`, `end_validity`, …
 - **Relation fields** in `relation.field` format: `applications.name`, `site.name`, `databases.name`, …
 
 ```sql
 FIELDS name, operating_system, cpu, memory, applications.name
 ```
 
-!!! info "Available fields"
-    The fields usable in `FIELDS` and `WHERE` are those exposed by the Mercator API.
-    Consult the [data model](model.md) for a complete list of attributes for each model.
+!!! info "Protected fields"
+Fields marked as hidden in Eloquent models (`$hidden`), such as `password` or `remember_token`, are never returned by the query engine, even if explicitly listed in `FIELDS`.
 
 !!! warning "Consistency with WITH"
-    If you reference a relation field in `FIELDS` (e.g. `applications.name`), the corresponding relation must be declared in `WITH` (e.g. `WITH applications`), otherwise the data will not be loaded.
+If you reference a relation field in `FIELDS` (e.g. `applications.name`), the corresponding relation must be declared in `WITH` (e.g. `WITH applications`), otherwise the data will not be loaded.
 
-## WHERE Clause {#conditions}
+## WHERE clause {#conditions}
 
 The `WHERE` clause filters records based on conditions on the main model's fields.
 
-### Supported Operators
+### Supported operators
 
 | Operator | Syntax | Example |
 |----------|--------|---------|
 | Equality | `=` | `environment = "production"` |
 | Inequality | `!=` | `type != "virtual"` |
 | Comparison | `<`, `>`, `<=`, `>=` | `memory >= 16` |
-| Search | `LIKE` | `operating_system LIKE "%Linux%"` |
+| Pattern match | `LIKE` | `operating_system LIKE "%Linux%"` |
 | Value list | `IN` | `environment IN ("production", "staging")` |
 | Relation exists | `EXISTS` | `EXISTS applications` |
 | Relation absent | `NOT EXISTS` | `NOT EXISTS certificates` |
 
-### Logical Combinations
+### Logical combinations
 
-Conditions can be combined with `AND` and `OR`. Each condition must be enclosed in parentheses:
+Conditions can be combined with `AND` and `OR`. Each condition should be wrapped in parentheses:
 
 ```sql
 WHERE (environment = "production") AND (operating_system LIKE "%Linux%")
@@ -91,7 +90,7 @@ WHERE (environment = "production") AND (operating_system LIKE "%Linux%")
 WHERE (environment IN ("production", "staging")) AND (operating_system LIKE "%Windows%")
 ```
 
-### EXISTS Operator {#exists}
+### EXISTS operator {#exists}
 
 The `EXISTS` operator filters records based on whether a relation is present or absent. It takes the Eloquent relation name (as declared in `WITH`).
 
@@ -110,27 +109,57 @@ WHERE (environment = "production") AND (EXISTS certificates)
 ```
 
 !!! info "EXISTS and eager loading"
-    The `EXISTS` operator does not load relation data. If you also want to display fields from that relation in `FIELDS`, declare it explicitly in `WITH`.
+The `EXISTS` operator does not load the relation's data.
+If you also want to display fields from that relation in `FIELDS`, declare it explicitly in `WITH`.
 
-## WITH Clause
+## WITH clause
 
-The `WITH` clause declares the **relations to load** (eager loading). It is required in order to access linked object fields in `FIELDS`.
+The `WITH` clause declares the **relations to load** (eager loading). It is required to access fields from related objects in `FIELDS`.
 
 ```sql
 WITH applications, databases, certificates
 ```
 
-Relation names correspond to the relation method names of the Eloquent models, in **snake_case**:
+Relation names correspond to Eloquent relation method names, in **snake_case**:
 
 ```sql
 WITH logical_servers, databases, sites, bays
 ```
 
-## Output Format (OUTPUT)
+### Hidden intermediate nodes
+
+By default, each segment of a `WITH` path creates a node in the graph. You can **hide an intermediate level** by wrapping it in parentheses: the level is still traversed to reach the next levels, but it appears neither as a node nor as an edge in the resulting graph.
+
+```sql
+WITH (subnetworks).vlan
+```
+
+In this example, subnetworks act only as a traversal pivot. The graph displays direct `networks → vlan` edges without representing the `subnetworks` themselves.
+
+The syntax generalises to multiple hidden levels:
+
+```sql
+-- Hide every other level
+WITH (subnetworks).routers.(interfaces).vlan
+
+-- Hide several consecutive levels
+WITH (subnetworks).(routers).vlan
+```
+
+Rules to follow:
+
+- A fully hidden path (all segments in parentheses) has no effect.
+- The last segment of a path cannot be hidden.
+- Nested parentheses `((rel))` are not allowed.
+
+!!! tip "When to hide a level?"
+Hide an intermediate node when the pivot relation has no semantic value in the visualisation — for example, subnetworks between a network and its VLANs, or interfaces between a server and its VLANs.
+
+## Output format (OUTPUT)
 
 ### `OUTPUT list`
 
-Generates a **table** with one row per record. This format is suited for inventories, exports, or tabular views.
+Produces a **table** with one row per record. This format suits inventories, exports, and tabular views.
 
 ```sql
 OUTPUT list
@@ -138,18 +167,18 @@ OUTPUT list
 
 ### `OUTPUT graph`
 
-Generates a **relationship graph** between the returned entities. This format is suited for visualizing dependencies, application maps, or network relationships.
+Produces a **relationship graph** between the returned entities. This format suits dependency visualisation, application cartography, or network relationships.
 
 ```sql
 OUTPUT graph
 ```
 
 !!! tip "When to use `graph`?"
-    Prefer `OUTPUT graph` whenever your query loads relations with `WITH` and you want to visualize the links between entities (applications ↔ servers, networks ↔ servers, etc.).
+Prefer `OUTPUT graph` when your query loads relations with `WITH` and you want to visualise the links between entities (applications ↔ servers, networks ↔ servers, etc.).
 
-## Saving Queries
+## Saving queries
 
-It is possible to **save queries** in the interface to retrieve and re-run them without retyping them. Saved queries can be made public (visible to all users) or private (visible only to their author).
+Queries can be **saved** in the interface so they can be retrieved and re-executed without retyping them. Saved queries can be made public (visible to all users) or private (visible only to their author).
 
 ## Examples
 
@@ -193,7 +222,17 @@ FIELDS name, subnetworks.name, subnetworks.vlan.id, subnetworks.vlan.name
 WITH subnetworks, subnetworks.vlan
 ```
 
-Visualizes networks, subnetworks and their VLANs.
+Visualises networks, subnetworks and their VLANs.
+
+### Networks and VLANs without intermediate subnetworks
+
+```sql
+FROM networks
+WITH (subnetworks).vlan
+OUTPUT graph
+```
+
+Generates a graph linking each network directly to its VLANs. Subnetworks act as a traversal pivot but do not appear in the graph — useful for a concise view when subnetworks add no meaningful information to the visualisation.
 
 ### Multiple filters with `IN`
 
@@ -216,21 +255,6 @@ WITH logical_servers, applications
 
 Inventory of SSL/TLS certificates with their expiry date and the servers/applications on which they are deployed. Useful for anticipating renewals.
 
-
-### Servers in production without backup plans and with at least one application
-
-```sql
-FROM logical-servers
-FIELDS name, applications.name
-WHERE environment = "production"
-AND NOT EXISTS backups
-AND EXISTS applications
-OUTPUT list
-```
-
-Identify the servers and the names of the production applications that do not have backup plans and at least one application.
-
-
 ### Critical applications with their servers and databases
 
 ```sql
@@ -241,7 +265,7 @@ WITH logical_servers, databases
 OUTPUT graph
 ```
 
-Maps applications with high confidentiality requirements (levels 3 and 4) along with their infrastructure dependencies.
+Cartography of applications with high confidentiality requirements (levels 3 and 4), with their infrastructure dependencies.
 
 ### Servers without an SSL certificate
 
@@ -252,9 +276,22 @@ WHERE (environment = "production") AND (NOT EXISTS certificates)
 WITH certificates
 ```
 
-Identifies production servers with no SSL/TLS certificate registered. Useful for detecting blind spots in certificate management.
+Identifies production servers on which no SSL/TLS certificate is registered. Useful for detecting blind spots in certificate management.
 
-### Applications not linked to any logical server
+### Production servers without backup plans but with an application
+
+```sql
+FROM logical-servers
+FIELDS name, applications.name
+WHERE environment = "production"
+AND NOT EXISTS backups
+AND EXISTS applications
+OUTPUT list
+```
+
+Identifies servers and application names in production that have no backup plans but have at least one application attached.
+
+### Applications without an associated logical server
 
 ```sql
 FROM applications
@@ -263,12 +300,12 @@ WHERE (NOT EXISTS logical_servers)
 WITH logical_servers
 ```
 
-Lists applications not attached to any logical server, which may indicate an incomplete cartography.
+Lists applications not attached to any logical server — a possible indicator of an incomplete cartography.
 
-## Best Practices
+## Best practices
 
 - **Keep `LIMIT` to the necessary value**: overly broad queries can be slow on large repositories.
-- **Use `OUTPUT graph`** only when relations are declared in `WITH`; a graph without relations will consist only of isolated nodes.
-- **Verify field names** in the [API reference](api.md) — a typo in a field name simply displays nothing, with no error message.
-- **With `EXISTS`**, declare the relation in `WITH` only if you need to display its fields in `FIELDS`; otherwise, `EXISTS` alone is sufficient to filter without additional overhead.
-- **Save recurring queries** to facilitate teamwork and ensure reproducibility of cartographies.
+- **Use `OUTPUT graph`** only when relations are declared in `WITH`; a graph without relations will consist of isolated nodes only.
+- **Check field names** in the [API reference](api.md) — a typo in a field name simply returns nothing, with no error message.
+- **With `EXISTS`**, declare the relation in `WITH` only if you need to display its fields in `FIELDS`; otherwise, `EXISTS` alone is sufficient to filter without extra overhead.
+- **Save recurring queries** to facilitate teamwork and ensure the reproducibility of cartographies.
