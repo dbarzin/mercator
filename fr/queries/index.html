@@ -876,9 +876,9 @@
 </table>
 <div class="admonition info">
 <p class="admonition-title">Champs disponibles</p>
-</div>
 <p>Les champs utilisables dans <code>FIELDS</code> et <code>WHERE</code> sont ceux exposés par l'API Mercator.
 Consultez le <a href="../model/">modèle de données</a> pour connaître l'ensemble des attributs de chaque modèle.</p>
+</div>
 <h2 id="clause-fields">Clause FIELDS<a class="headerlink" href="#clause-fields" title="Permanent link">&para;</a></h2>
 <p>La clause <code>FIELDS</code> liste les attributs à afficher dans le résultat. Elle accepte :</p>
 <ul>
@@ -889,12 +889,12 @@ Consultez le <a href="../model/">modèle de données</a> pour connaître l'ensem
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Champs protégés</p>
-</div>
 <p>Les champs marqués comme cachés dans les modèles ($hidden Eloquent), tels que password ou remember_token, ne sont jamais retournés par le moteur de requêtes, même s'ils sont explicitement listés dans FIELDS.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Cohérence avec WITH</p>
-</div>
 <p>Si vous référencez un champ de relation dans <code>FIELDS</code> (ex. <code>applications.name</code>), la relation correspondante doit être déclarée dans <code>WITH</code> (ex. <code>WITH applications</code>), sans quoi les données ne seront pas chargées.</p>
+</div>
 <h2 id="conditions">Clause WHERE<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h2>
 <p>La clause <code>WHERE</code> filtre les enregistrements selon des conditions sur les champs du modèle principal.</p>
 <h3 id="operateurs-supportes">Opérateurs supportés<a class="headerlink" href="#operateurs-supportes" title="Permanent link">&para;</a></h3>
@@ -961,9 +961,9 @@ Consultez le <a href="../model/">modèle de données</a> pour connaître l'ensem
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">EXISTS et eager loading</p>
-</div>
 <p>L'opérateur <code>EXISTS</code> n'implique pas le chargement des données de la relation.
 Si vous souhaitez également afficher les champs de cette relation dans <code>FIELDS</code>, déclarez-la explicitement dans <code>WITH</code>.</p>
+</div>
 <h2 id="clause-with">Clause WITH<a class="headerlink" href="#clause-with" title="Permanent link">&para;</a></h2>
 <p>La clause <code>WITH</code> déclare les <strong>relations à charger</strong> (eager loading). Elle est indispensable pour accéder aux champs d'objets liés dans <code>FIELDS</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">applications</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span>
@@ -991,8 +991,8 @@ Si vous souhaitez également afficher les champs de cette relation dans <code>FI
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Quand masquer un niveau ?</p>
-</div>
 <p>Masquez un intermédiaire lorsque la relation pivot n'a pas de valeur sémantique dans la visualisation — par exemple, les sous-réseaux entre un réseau et ses VLANs, ou les interfaces entre un serveur et ses VLANs.</p>
+</div>
 <h2 id="format-de-sortie-output">Format de sortie (OUTPUT)<a class="headerlink" href="#format-de-sortie-output" title="Permanent link">&para;</a></h2>
 <h3 id="output-list"><code>OUTPUT list</code><a class="headerlink" href="#output-list" title="Permanent link">&para;</a></h3>
 <p>Génère un <strong>tableau</strong> avec une ligne par enregistrement. C'est le format adapté pour les inventaires, les exports, ou les vues tabulaires.</p>
@@ -1004,8 +1004,8 @@ Si vous souhaitez également afficher les champs de cette relation dans <code>FI
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Quand utiliser <code>graph</code> ?</p>
-</div>
 <p>Préférez <code>OUTPUT graph</code> dès que votre requête charge des relations avec <code>WITH</code> et que vous souhaitez visualiser les liens entre entités (applications ↔ serveurs, réseaux ↔ serveurs, etc.).</p>
+</div>
 <h2 id="sauvegarde-des-requetes">Sauvegarde des requêtes<a class="headerlink" href="#sauvegarde-des-requetes" title="Permanent link">&para;</a></h2>
 <p>Il est possible de <strong>sauvegarder des requêtes</strong> dans l'interface pour les retrouver et les réexécuter sans les ressaisir. Les requêtes sauvegardées peuvent être rendues publiques (visibles par tous les utilisateurs) ou privées (visibles uniquement par leur auteur).</p>
 <h2 id="exemples">Exemples<a class="headerlink" href="#exemples" title="Permanent link">&para;</a></h2>

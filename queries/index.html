@@ -876,9 +876,9 @@
 </table>
 <div class="admonition info">
 <p class="admonition-title">Available fields</p>
-</div>
 <p>The fields available in <code>FIELDS</code> and <code>WHERE</code> are those exposed by the Mercator API.
 Refer to the <a href="../model/">data model</a> for the full list of attributes for each model.</p>
+</div>
 <h2 id="fields-clause">FIELDS clause<a class="headerlink" href="#fields-clause" title="Permanent link">&para;</a></h2>
 <p>The <code>FIELDS</code> clause lists the attributes to display in the result. It accepts:</p>
 <ul>
@@ -889,12 +889,12 @@ Refer to the <a href="../model/">data model</a> for the full list of attributes 
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Protected fields</p>
-</div>
 <p>Fields marked as hidden in Eloquent models (<code>$hidden</code>), such as <code>password</code> or <code>remember_token</code>, are never returned by the query engine, even if explicitly listed in <code>FIELDS</code>.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Consistency with WITH</p>
-</div>
 <p>If you reference a relation field in <code>FIELDS</code> (e.g. <code>applications.name</code>), the corresponding relation must be declared in <code>WITH</code> (e.g. <code>WITH applications</code>), otherwise the data will not be loaded.</p>
+</div>
 <h2 id="conditions">WHERE clause<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h2>
 <p>The <code>WHERE</code> clause filters records based on conditions on the main model's fields.</p>
 <h3 id="supported-operators">Supported operators<a class="headerlink" href="#supported-operators" title="Permanent link">&para;</a></h3>
@@ -961,9 +961,9 @@ Refer to the <a href="../model/">data model</a> for the full list of attributes 
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">EXISTS and eager loading</p>
-</div>
 <p>The <code>EXISTS</code> operator does not load the relation's data.
 If you also want to display fields from that relation in <code>FIELDS</code>, declare it explicitly in <code>WITH</code>.</p>
+</div>
 <h2 id="with-clause">WITH clause<a class="headerlink" href="#with-clause" title="Permanent link">&para;</a></h2>
 <p>The <code>WITH</code> clause declares the <strong>relations to load</strong> (eager loading). It is required to access fields from related objects in <code>FIELDS</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">applications</span><span class="p">,</span><span class="w"> </span><span class="n">databases</span><span class="p">,</span><span class="w"> </span><span class="n">certificates</span>
@@ -991,8 +991,8 @@ If you also want to display fields from that relation in <code>FIELDS</code>, de
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">When to hide a level?</p>
-</div>
 <p>Hide an intermediate node when the pivot relation has no semantic value in the visualisation — for example, subnetworks between a network and its VLANs, or interfaces between a server and its VLANs.</p>
+</div>
 <h2 id="output-format-output">Output format (OUTPUT)<a class="headerlink" href="#output-format-output" title="Permanent link">&para;</a></h2>
 <h3 id="output-list"><code>OUTPUT list</code><a class="headerlink" href="#output-list" title="Permanent link">&para;</a></h3>
 <p>Produces a <strong>table</strong> with one row per record. This format suits inventories, exports, and tabular views.</p>
@@ -1004,8 +1004,8 @@ If you also want to display fields from that relation in <code>FIELDS</code>, de
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">When to use <code>graph</code>?</p>
-</div>
 <p>Prefer <code>OUTPUT graph</code> when your query loads relations with <code>WITH</code> and you want to visualise the links between entities (applications ↔ servers, networks ↔ servers, etc.).</p>
+</div>
 <h2 id="saving-queries">Saving queries<a class="headerlink" href="#saving-queries" title="Permanent link">&para;</a></h2>
 <p>Queries can be <strong>saved</strong> in the interface so they can be retrieved and re-executed without retyping them. Saved queries can be made public (visible to all users) or private (visible only to their author).</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
