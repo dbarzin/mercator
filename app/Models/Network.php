@@ -25,7 +25,7 @@ class Network extends Model implements HasPrefix, HasIconContract
 
     public static string $prefix = 'NETWORK_';
 
-    public static string $icon = '/images/network.png';
+    public static string $icon = '/images/cloud.png';
 
     public static array $searchable = [
         'name',
