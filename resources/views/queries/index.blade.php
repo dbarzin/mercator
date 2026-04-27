@@ -181,13 +181,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!row) return;
         if (e.target.closest('a, button, input[type="submit"], input[type="checkbox"]')) return;
 
-        console.group('[QueryEngine] Clic sur ligne');
+        // console.group('[QueryEngine] Clic sur ligne');
 
         // 1. Données brutes sur la ligne
-        console.log('row.dataset:', JSON.parse(JSON.stringify(row.dataset)));
+        // console.log('row.dataset:', JSON.parse(JSON.stringify(row.dataset)));
 
         const dslRaw = row.dataset.queryDsl;
-        console.log('dslRaw:', dslRaw);
+        // console.log('dslRaw:', dslRaw);
 
         if (!dslRaw) { console.warn('⛔ dslRaw vide — attribut data-query-dsl manquant ?'); console.groupEnd(); return; }
 
@@ -203,16 +203,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // 2. Vérification QueryEngine
-        console.log('window.QueryEngine :', window.QueryEngine);
+        // console.log('window.QueryEngine :', window.QueryEngine);
         if (!window.QueryEngine) { console.error('⛔ window.QueryEngine non défini !'); console.groupEnd(); return; }
         if (typeof window.QueryEngine.load !== 'function') { console.error('⛔ QueryEngine.load n\'est pas une fonction !'); console.groupEnd(); return; }
 
         // 3. Vérification dslToSql / parseSql
-        console.log('window.MercatorQuery :', window.MercatorQuery);
+        //console.log('window.MercatorQuery :', window.MercatorQuery);
         if (window.MercatorQuery?.dslToSql) {
             try {
                 const sql = window.MercatorQuery.dslToSql(dsl);
-                console.log('dslToSql() =>', sql);
+                // console.log('dslToSql() =>', sql);
             } catch (err) {
                 console.error('⛔ dslToSql() a levé une exception :', err);
             }
@@ -223,8 +223,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // 4. Vérification de l'éditeur
         const editorPanel = document.getElementById('editor-panel');
         const editor      = document.getElementById('query-editor');
-        console.log('editor-panel :', editorPanel, '| classes :', editorPanel?.className);
-        console.log('query-editor :', editor, '| valeur avant load :', editor?.value);
+        // console.log('editor-panel :', editorPanel, '| classes :', editorPanel?.className);
+        // console.log('query-editor :', editor, '| valeur avant load :', editor?.value);
 
         // Mise à jour panneau
         panelTitle.textContent = row.dataset.name;
@@ -238,11 +238,11 @@ document.addEventListener('DOMContentLoaded', function () {
         editorPanel?.classList.remove('d-none');
 
         // 5. Appel load
-        console.log('→ Appel QueryEngine.load(dsl)');
+        // console.log('→ Appel QueryEngine.load(dsl)');
         try {
             window.QueryEngine.load(dsl);
-            console.log('✅ QueryEngine.load() terminé');
-            console.log('query-editor valeur après load :', editor?.value);
+            // console.log('✅ QueryEngine.load() terminé');
+            // console.log('query-editor valeur après load :', editor?.value);
         } catch (err) {
             console.error('⛔ QueryEngine.load() a levé une exception :', err);
         }
