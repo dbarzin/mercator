@@ -256,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const svgStr = window.graphviz.layout(
                 buildDot(nodes, edges), 'svg', engine, { images: buildImagesArray(nodes) }
             );
-            console.log('graphviz.layout:', svgStr);
             lastSvgContent = svgStr;
             hideAll();
             document.getElementById('graph-svg-container').innerHTML = svgStr;
