@@ -27,7 +27,7 @@ class StorageDevice extends Model implements HasIconContract, HasPrefix
 
     public static string $prefix = 'STORAGE_';
 
-    public static string $icon = '/images/storagedevice.png';
+    public static string $icon = '/images/storagedev.png';
 
     public static array $searchable = [
         'name',

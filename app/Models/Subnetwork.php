@@ -26,7 +26,7 @@ class Subnetwork extends Model implements HasIconContract, HasPrefix
 
     public static string $prefix = 'SUBNETWORK_';
 
-    public static string $icon = '/images/subnetwork.png';
+    public static string $icon = '/images/network.png';
 
     protected $fillable = [
         'name',

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Log;
 use App\Models\CPEProduct;
 use App\Models\CPEVendor;
 use App\Models\CPEVersion;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Log;
 
 class CPEController extends Controller
 {
@@ -77,8 +77,9 @@ class CPEController extends Controller
     public function guess(Request $request)
     {
         $search = $request['search'];
-
-        $cpeGuesserUrl = config('mercator.parameters.cpe.guesser');
+        $part = $request['part'];
+        
+        $cpeGuesserUrl = config('mercator.cpe.guesser');
 
         if ($cpeGuesserUrl) {
             // Découpage de la recherche en mots-clés pour l'API cpe-guesser
@@ -93,6 +94,7 @@ class CPEController extends Controller
                     ->withUserAgent('Mercator/' . trim(file_get_contents(base_path('version.txt'))))
                     ->post(rtrim($cpeGuesserUrl, '/') . '/search', [
                         'query' => $keywords,
+                        'part' => $part
                     ]);
 
                 if ($response->failed()) {
