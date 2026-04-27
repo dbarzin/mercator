@@ -150,7 +150,7 @@ class LoginController extends Controller
             return null;
         } catch (BindException $e) {
             Log::warning('LDAP bind failed', [
-                'error' => $e->getMessage(),
+                'error'      => $e->getMessage(),
                 'diagnostic' => $e->getDetailedError()?->getDiagnosticMessage(),
             ]);
 
@@ -167,14 +167,14 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request): bool
     {
-        $useLdap = (bool) config('ldap.enabled');
-        $fallbackLocal = (bool) config('app.ldap_fallback_local');
-        $autoProvision = (bool) config('app.ldap_auto_provision');
+        $useLdap        = (bool) config('ldap.enabled');
+        $fallbackLocal  = (bool) config('app.ldap_fallback_local');
+        $autoProvision  = (bool) config('app.ldap_auto_provision');
 
         $credentials = $request->only($this->username(), 'password'); // ['login' => ..., 'password' => ...]
-        $identifier = (string) ($credentials[$this->username()] ?? '');
-        $password = (string) ($credentials['password'] ?? '');
-        $remember = $request->boolean('remember');
+        $identifier  = (string) ($credentials[$this->username()] ?? '');
+        $password    = (string) ($credentials['password'] ?? '');
+        $remember    = $request->boolean('remember');
 
         if ($useLdap) {
             $ldapUser = $this->ldapBindAndGetUser($identifier, $password);
@@ -185,17 +185,46 @@ class LoginController extends Controller
 
                 if (! $local && $autoProvision) {
                     $local = User::create([
-                        'name' => $ldapUser->getFirstAttribute('cn') ?: $identifier,
-                        'email' => $ldapUser->getFirstAttribute('mail') ?: 'user@localhost.local',
-                        'login' => $identifier,
+                        'name'     => $ldapUser->getFirstAttribute('cn') ?: $identifier,
+                        'email'    => $ldapUser->getFirstAttribute('mail') ?: 'user@localhost.local',
+                        'login'    => $identifier,
                         'password' => Hash::make(Str::random(32)), // inutilisable en local par défaut
                     ]);
 
-                    // Get default Role
+                    // Assignation du rôle par défaut
+                    // filled() rejette null ET les chaînes vides (ex: LDAP_AUTO_PROVISION_ROLE='')
                     $roleName = config('app.ldap_auto_provision_role');
-                    if ($roleName !== null) {
-                        $role = Role::query()->where('title', $roleName)->firstOrFail();
-                        $local->roles()->sync([$role->id]);
+
+                    if (filled($roleName)) {
+                        // first() au lieu de firstOrFail() : évite le crash 404 si le rôle
+                        // est absent ou mal orthographié (la valeur est case-sensitive).
+                        $role = Role::query()->where('title', $roleName)->first();
+
+                        if ($role !== null) {
+                            try {
+                                $local->roles()->sync([$role->id]);
+                                Log::info('LDAP auto-provision: role assigned.', [
+                                    'user' => $identifier,
+                                    'role' => $roleName,
+                                ]);
+                            } catch (\Throwable $e) {
+                                // L'utilisateur est déjà persisté : on isole l'échec de
+                                // l'assignation pour ne pas bloquer la connexion.
+                                Log::error('LDAP auto-provision: failed to assign role.', [
+                                    'user'  => $identifier,
+                                    'role'  => $roleName,
+                                    'error' => $e->getMessage(),
+                                ]);
+                            }
+                        } else {
+                            // Rôle introuvable → log d'avertissement sans crash.
+                            // Vérifier que LDAP_AUTO_PROVISION_ROLE correspond exactement
+                            // au champ `title` en base (sensible à la casse).
+                            Log::warning('LDAP auto-provision: role not found — user created without role.', [
+                                'user' => $identifier,
+                                'role' => $roleName,
+                            ]);
+                        }
                     }
                 }
 
