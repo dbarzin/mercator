@@ -362,7 +362,7 @@
         // ── Condition simple : field OP value ────────────────────
 
         parseCondition() {
-            const field = this.expect('IDENT').value;
+            const field = this.parseDotPath();
 
             // IS NULL / IS NOT NULL
             if (this.match('IS')) {
