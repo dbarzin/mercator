@@ -203,7 +203,7 @@ docker compose up -d
 Sans aucune configuration de base de données, Mercator démarre en mode SQLite avec une base locale :
 
 ```bash
-docker run -p 8080:8080 ghcr.io/dbarzin/mercator:latest
+docker run -p 8080:8080 -e USE_DEMO_DATA=1 ghcr.io/dbarzin/mercator:latest
 ```
 
 Ce mode est adapté pour une démonstration ou un test rapide. Les données sont perdues à l'arrêt du conteneur sauf si un
@@ -219,33 +219,6 @@ volume est monté sur `/var/www/mercator/sql`.
 
 > ⚠️ Ne pas définir de directive `user:` dans la configuration du stack. Le conteneur gère lui-même son utilisateur (
 `mercator`, UID 1000) via le `Dockerfile`.
-
----
-
-## Résolution des problèmes courants
-
-### `Unable to set application key. No APP_KEY variable was found`
-
-Le fichier `.env` ne contient pas de ligne `APP_KEY=`. Mercator la crée automatiquement depuis la version 2026.03.12. Si
-le problème persiste sur une image plus ancienne, ajouter la variable dans le `docker-compose.yml` :
-
-```yaml
-environment:
-  APP_KEY: base64:VOTRE_CLE_ICI
-```
-
-Générer une clé :
-
-```bash
-docker run --rm ghcr.io/dbarzin/mercator:latest php artisan key:generate --show
-```
-
-### `Error: Can't drop privilege as nonroot user`
-
-supervisord tente de démarrer avec des changements d'utilisateur mais tourne déjà en non-root. Vérifier que :
-
-- La directive `user:` est absente du `docker-compose.yml`
-- Portainer ne force pas le mode non-root dans ses paramètres de sécurité
 
 ### Erreurs de permissions sur les volumes montés
 
