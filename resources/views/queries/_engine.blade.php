@@ -95,7 +95,7 @@ LIMIT 100"></textarea>
     <div id="result-graph"
          class="d-none p-2 text-center"
          style="position:absolute; inset:0; overflow:auto;">
-        <div id="graph-svg-container"></div>
+        <div id="graph"></div>
     </div>
 
 </div>
@@ -105,7 +105,7 @@ LIMIT 100"></textarea>
 
     {{-- Gauche : téléchargement + sélection engine --}}
     <div class="d-flex align-items-center gap-3 flex-wrap">
-        <a href="#" id="btn-export-svg" class="d-none small text-decoration-none"
+        <a href="#" id="downloadSvg" class="d-none small text-decoration-none"
            title="@lang('Télécharger le graphe en SVG')">
             <i class="bi bi-download"></i>
         </a>
