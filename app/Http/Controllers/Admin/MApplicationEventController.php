@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\MApplication;
 use App\Models\MApplicationEvent;
+use Gate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationEventController extends Controller
 {
@@ -18,6 +20,8 @@ class MApplicationEventController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'id' => ['required', 'integer', 'exists:m_applications,id'],
         ]);
@@ -32,18 +36,11 @@ class MApplicationEventController extends Controller
         return response()->json($events);
     }
 
-    /**
-     * Crée un événement pour une application et retourne la liste mise à jour.
-     *
-     * @param  \Illuminate\Http\Request  $request  Doit contenir :
-     *                                             - `m_application_id` (int): ID de l'application.
-     *                                             - `message` (string): Message de l'événement.
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Si l'application est introuvable.
-     * @throws \Throwable                                           Si la sauvegarde échoue.
-     */
+
     public function store(Request $request): JsonResponse
     {
+        abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'm_application_id' => ['required', 'integer', 'exists:m_applications,id'],
             'message'          => ['required', 'string', 'max:2000'],
@@ -51,11 +48,8 @@ class MApplicationEventController extends Controller
 
         $application = MApplication::findOrFail($request->integer('m_application_id'));
 
-        $this->authorize('m_application_create', [MApplicationEvent::class, $application]);
-
         $event = new MApplicationEvent();
         $event->application()->associate($application);
-        // Toujours utiliser l'utilisateur authentifié — ne jamais accepter user_id du client.
         $event->user()->associate($request->user());
         $event->message = $request->string('message');
         $event->saveOrFail();
@@ -65,27 +59,17 @@ class MApplicationEventController extends Controller
         ], 201);
     }
 
-    /**
-     * Supprime un événement d'une application et retourne la liste mise à jour.
-     *
-     * @param  \Illuminate\Http\Request  $request  Doit contenir :
-     *                                             - `m_application_id` (int): ID de l'application.
-     * @param  int                       $id        ID de l'événement à supprimer.
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Si l'application ou l'événement est introuvable.
-     */
     public function destroy(Request $request, int $id): JsonResponse
     {
+        abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'm_application_id' => ['required', 'integer', 'exists:m_applications,id'],
         ]);
 
         $application = MApplication::findOrFail($request->integer('m_application_id'));
 
-        // Recherche scopée à l'application pour éviter la suppression cross-application.
         $event = $application->events()->findOrFail($id);
-
-        $this->authorize('m_application_delete', $event);
 
         $event->delete();
 

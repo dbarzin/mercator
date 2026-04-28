@@ -2,10 +2,15 @@
     Partiel : panneau moteur de requêtes
     Fournit : toolbar (card-header), éditeur, zone de résultat, barre de statut (card-footer).
     La card englobante (et son éventuel card-header de titre) est fournie par le parent.
-
-    Variables optionnelles :
-      (aucune pour l'instant – extensible via $editorVisible si besoin)
 --}}
+
+{{-- ── Keyframes inline (pas de @push/@stack disponible dans ce layout) --}}
+<style>
+@keyframes spin-loop {
+    from { transform: rotate(0deg);   }
+    to   { transform: rotate(360deg); }
+}
+</style>
 
 {{-- ── Barre d'outils ─────────────────────────────────────────────── --}}
 <div class="card-header py-2 d-flex gap-2 align-items-center flex-wrap">
@@ -57,7 +62,6 @@ LIMIT 100"></textarea>
 </div>
 
 {{-- ── Zone de résultat ────────────────────────────────────────────── --}}
-{{-- position:relative seul — pas de overflow:hidden qui bloque le scroll interne --}}
 <div class="flex-grow-1 position-relative" style="min-height:0;">
 
     <div id="result-placeholder"
@@ -69,11 +73,15 @@ LIMIT 100"></textarea>
         </div>
     </div>
 
+    {{-- Spinner affiché pendant le traitement par le contrôleur (id unique) --}}
     <div id="result-spinner"
-         class="d-none align-items-center justify-content-center"
-         style="position:absolute; inset:0; display:none;">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">@lang('Chargement...')</span>
+         class="d-none"
+         style="position:absolute; inset:0; z-index:10;
+                background:rgba(255,255,255,.82); backdrop-filter:blur(3px);
+                display:flex; align-items:center; justify-content:center;">
+        <div class="d-flex flex-column align-items-center justify-content-center gap-2">
+            <i class="bi bi-arrow-repeat text-primary"
+               style="font-size:2.8rem; animation:spin-loop .8s linear infinite; display:block;"></i>
         </div>
     </div>
 
@@ -95,7 +103,7 @@ LIMIT 100"></textarea>
     <div id="result-graph"
          class="d-none p-2 text-center"
          style="position:absolute; inset:0; overflow:auto;">
-        <div id="graph-svg-container"></div>
+        <div id="graph"></div>
     </div>
 
 </div>
@@ -103,9 +111,8 @@ LIMIT 100"></textarea>
 {{-- ── Barre de statut ─────────────────────────────────────────────── --}}
 <div class="card-footer py-1 px-3 d-flex justify-content-between align-items-center flex-wrap gap-1">
 
-    {{-- Gauche : téléchargement + sélection engine --}}
     <div class="d-flex align-items-center gap-3 flex-wrap">
-        <a href="#" id="btn-export-svg" class="d-none small text-decoration-none"
+        <a href="#" id="downloadSvg" class="d-none small text-decoration-none"
            title="@lang('Télécharger le graphe en SVG')">
             <i class="bi bi-download"></i>
         </a>
@@ -124,7 +131,6 @@ LIMIT 100"></textarea>
         </div>
     </div>
 
-    {{-- Droite : statut + compteur --}}
     <div class="d-flex align-items-center gap-2">
         <small class="text-muted" id="status-msg">—</small>
         <small class="text-muted" id="status-count"></small>

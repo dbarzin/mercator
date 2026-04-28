@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnFormat    = document.getElementById('btn-format');
     const btnSave      = document.getElementById('btn-save');
     const btnToggle    = document.getElementById('btn-toggle-editor');
-    const btnExportSvg = document.getElementById('btn-export-svg');
+    const btnExportSvg = document.getElementById('downloadSvg');
     const statusMsg    = document.getElementById('status-msg');
     const statusCount  = document.getElementById('status-count');
 
@@ -105,26 +105,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     @endif
-
-    // ── Export SVG ───────────────────────────────────────────────
-    btnExportSvg?.addEventListener('click', async e => {
-        e.preventDefault();
-        if (!lastSvgContent) return;
-
-        btnExportSvg.classList.add('disabled');
-        try {
-            const svgWithImages = await embedSvgImages(lastSvgContent);
-            const a = Object.assign(document.createElement('a'), {
-                href:     URL.createObjectURL(new Blob([svgWithImages], { type: 'image/svg+xml' })),
-                download: 'mercator-query.svg',
-            });
-            a.click();
-        } catch (err) {
-            console.error('SVG export error:', err);
-        } finally {
-            btnExportSvg.classList.remove('disabled');
-        }
-    });
 
     /**
      * Parcourt les éléments <image> du SVG et remplace chaque href
@@ -258,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
             );
             lastSvgContent = svgStr;
             hideAll();
-            document.getElementById('graph-svg-container').innerHTML = svgStr;
+            document.getElementById('graph').innerHTML = svgStr;
             document.getElementById('result-graph').classList.remove('d-none');
             document.getElementById('engine-panel').classList.remove('d-none');
             btnExportSvg.classList.remove('d-none');
