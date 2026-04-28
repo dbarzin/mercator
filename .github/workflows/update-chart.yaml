@@ -19,8 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
 
       - name: Read version
         id: version
@@ -48,5 +47,7 @@ jobs:
           charts_dir: docs/_helm_chart
           skip_existing: true
           mark_as_latest: false
+          pages_branch: master
+          pages_index_path: docs/index.yaml
         env:
           CR_TOKEN: "${{secrets.GITHUB_TOKEN}}"
