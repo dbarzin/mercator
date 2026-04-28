@@ -59,15 +59,13 @@ class QueryController extends Controller
     /**
      * Enregistrement d'une nouvelle requête.
      */
-    public function store(StoreSavedQueryRequest $request): RedirectResponse
+    public function store(StoreSavedQueryRequest $request)
     {
-        $data            = $request->validated();
-        $data['user_id'] = auth()->id();
+        abort_if(Gate::denies('query_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $savedQuery = SavedQuery::query()->create($data);
+        $query = SavedQuery::query()->create($request->validated());
 
-        return redirect()
-            ->route('admin.queries.show', $savedQuery);
+        return response()->json($query, Response::HTTP_CREATED);
     }
 
     /**

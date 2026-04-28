@@ -50,17 +50,19 @@ class StoreSavedQueryRequest extends FormRequest
             'user_id'   => auth()->id(),
         ]);
 
+        // Priorité 1 : query envoyé directement comme tableau (objet JSON natif)
+        if (is_array($this->input('query'))) {
+            return; // déjà correct, rien à merger
+        }
+
+        // Priorité 2 : query_json (string JSON sérialisée) — rétrocompatibilité
         $raw     = $this->input('query_json', '');
         $decoded = json_decode($raw, true);
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            // JSON invalide — on laisse la validation échouer proprement
-            $this->merge(['query' => null]);
-            return;
-        }
-
         $this->merge([
-            'query' => is_array($decoded) ? $decoded : null,
+            'query' => (json_last_error() === JSON_ERROR_NONE && is_array($decoded))
+                ? $decoded
+                : null,
         ]);
     }
 }
