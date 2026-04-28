@@ -162,7 +162,6 @@
                 @endforeach
             </td>
         </tr>
-        @hasModule("bmpn")
         @if($process->graphs()->count()>0)
         <tr>
             <th>
@@ -193,6 +192,5 @@
             </td>
         </tr>
         @endif
-        @endhasModule
     </tbody>
 </table>

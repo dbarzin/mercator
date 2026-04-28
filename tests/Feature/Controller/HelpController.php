@@ -7,7 +7,7 @@ use Database\Seeders\RolesTableSeeder;
 use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mercator\Core\Models\User;
+use App\Models\User;
 
 uses(RefreshDatabase::class);
 

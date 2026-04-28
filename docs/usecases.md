@@ -20,14 +20,14 @@ up-to-date.
 ### Information classification
 
 ISO 27002-5.12 recommends classifying information according to the organization's information security needs, based on
-confidentiality, integrity, availability and important stakeholder requirements.
+confidentiality, integrity, availability, and important stakeholder requirements.
 
 With Mercator, it is possible to assign a security level to information in terms of confidentiality, integrity,
-availability and traceability, as well as to the databases, applications, processes and macro-processes that use this
+availability, and traceability, as well as to the databases, applications, processes, and macro-processes that use this
 information.
 
 To ensure that these requirements are in line with the organization's information security needs, it is possible to
-generate a [security requirements analysis] report (/mercator/reports/) that denormalizes the security requirements
+generate a [security requirements analysis report](reports.md) that denormalizes the security requirements
 between the information, databases, applications, processes and macro-processes that use this information.
 
 You can check whether security requirements are correctly documented for each line of this report.
@@ -35,13 +35,13 @@ You can check whether security requirements are correctly documented for each li
 ### Planning and preparation for information security incident management
 
 ISO 27002-5.24 recommends that the organization should plan and prepare for the management of information security
-incidents by defining, establishing and communicating the processes, functions and responsibilities involved in
+incidents by defining, establishing, and communicating the processes, functions, and responsibilities involved in
 information security incident management.
 
-In order to ensure a rapid, efficient, consistent and orderly response to information security incidents, it is
-important to be able to quickly identify the processes, suppliers and managers involved in an incident.
+In order to ensure a rapid, efficient, consistent, and orderly response to information security incidents, it is
+important to be able to quickly identify the processes, suppliers, and managers involved in an incident.
 
-Mercator provides a complete inventory of this information, and with the [free text search tool](/mercator/application/)
+Mercator provides a complete inventory of this information, and with the [free text search tool](application.md)
 at the top left of the screen, it is possible to quickly find an asset, the process(es) concerned, the suppliers and
 those responsible.
 
@@ -52,7 +52,7 @@ ISO 27002-7.8 recommends choosing a secure location for hardware and protecting 
 Mercator lets you specify the location of each piece of physical equipment (server, router, switch, etc.) and extract an
 inventory of equipment by location.
 
-You can check with the [physical infrastructure inventory] report (/mercator/reports/) that this inventory is up to date
+You can check with the [physical infrastructure inventory report](reports.md) that this inventory is up to date
 and that there is no equipment that is either not in the inventory or is in the inventory but in the wrong location.
 
 It is recommended to check at least annually that the physical equipment listed in the inventory is actually present in
@@ -72,11 +72,9 @@ You can check that the organization's future information processing capacity req
 ### Technical vulnerability management
 
 IS 27002-8.8 recommends obtaining information on the technical vulnerabilities of the information systems in use,
-assessing the organization's exposure to these vulnerabilities and taking appropriate action.
+assessing the organization's exposure to these vulnerabilities, and taking appropriate action.
 
-Mercator identifies vulnerabilities in the information system, based on application names and CPEs (Common Platform
-Enumeration) associated with applications and equipment. A report can be sent when a CVE is detected, identifying the
-application, its criticality and its exposure.
+Mercator identifies vulnerabilities in the information system, based on application names and CPEs (Common Platform Enumeration) associated with applications and equipment. A report can be sent when a CVE is detected, identifying the application, its criticality, and its exposure.
 
 You can check that these detection alerts are analyzed, and that preventive or corrective measures are taken.
 
@@ -89,19 +87,19 @@ With Mercator, you can use the [applications by application group] report (/merc
 applications according to their availability requirements, as well as the logical and physical servers on which these
 applications are installed.
 
-You can check that these applications have sufficient redundancy to meet availability requirements.
+You can check that these applications have enough redundancy to meet availability requirements.
 A critical application should be located on more than one physical device and, depending on the deployment model, on
 more than one logical server.
 
 ### Network partitioning
 
-ISO 27001-8.22 recommends that groups of information services, users and information systems be partitioned within the
+ISO 27001-8.22 recommends that groups of information services, users, and information systems be partitioned within the
 organization's networks.
 
-With Mercator, you can generate a VLAN report that identifies for each VLAN the types of equipment, logical servers and
+With Mercator, you can generate a VLAN report that identifies for each VLAN the types of equipment, logical servers, and
 applications that are in that VLAN.
 
-You can check that each VLAN corresponds to a distinct group of information services, users or information systems.
+You can check that each VLAN corresponds to a distinct group of information services, users, or information systems.
 
 ### Change management
 

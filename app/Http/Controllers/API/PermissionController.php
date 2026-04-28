@@ -7,10 +7,10 @@ use App\Http\Requests\MassStorePermissionRequest;
 use App\Http\Requests\MassUpdatePermissionRequest;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
+use App\Models\Permission;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Permission;
 use Symfony\Component\HttpFoundation\Response;
 
 class PermissionController extends APIController
@@ -28,7 +28,6 @@ class PermissionController extends APIController
     {
         abort_if(Gate::denies('permission_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var Permission $permission */
         $permission = Permission::query()->create($request->all());
 
         return response()->json($permission, 201);
@@ -37,6 +36,8 @@ class PermissionController extends APIController
     public function show(Permission $permission)
     {
         abort_if(Gate::denies('permission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $permission['users'] = $permission->users()->pluck('id');
 
         return new JsonResource($permission);
     }

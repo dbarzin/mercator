@@ -1,8 +1,8 @@
 <?php
 
-use Mercator\Core\Models\MApplication;
-use Mercator\Core\Models\MApplicationEvent;
-use Mercator\Core\Models\User;
+use App\Models\MApplication;
+use App\Models\MApplicationEvent;
+use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;
@@ -54,20 +54,19 @@ describe('MApplicationEventController', function () {
 
         $payload = [
             'm_application_id' => $app->id,
-            'user_id' => $this->user->id,
             'message' => 'New event message',
         ];
 
         $response = $this->post(route('admin.application-events.store'), $payload);
 
-        $response->assertOk();
+        $response->assertCreated();  // 201
         $response->assertJsonStructure(['events']);
         $response->assertJsonFragment(['message' => 'New event message']);
 
         $this->assertDatabaseHas('m_application_events', [
             'm_application_id' => $app->id,
-            'user_id' => $this->user->id,
-            'message' => 'New event message',
+            'user_id'          => $this->user->id, 
+            'message'          => 'New event message',
         ]);
     });
 

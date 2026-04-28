@@ -12,7 +12,7 @@
     "cartographie",
     "urbanisation"
   ],
-  "version": "2026.04.15",
+  "version": "2026.04.27",
   "license": "GPL-3.0",
   "author": "Didier Barzin",
   "repository": "https://www.github.com/dbarzin/mercator",
@@ -24,7 +24,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build --config vite.config.mjs"
+    "build": "vite build --config vite.config.mjs",
+    "watch": "node watch-and-sync.mjs"
   },
   "require": {
     "laravel/framework": "^12.0",
@@ -70,7 +71,7 @@
     "select2": "^4.1.0-rc.0",
     "sweetalert2": "^11.22.4",
     "terser": "^5.16.9",
-    "uuid": "^8.3.2",
+    "uuid": "^11.1.0",
     "vis-data": "^7.1.9",
     "vis-network": "^9.1.9",
     "webpack": "^5.105.0",
@@ -78,6 +79,7 @@
   },
   "devDependencies": {
     "laravel-vite-plugin": "^1.0.6",
-    "vite": "^6.4.2"
+    "vite": "^6.4.2",
+    "vite-plugin-static-copy": "^3.4.0"
   }
 }

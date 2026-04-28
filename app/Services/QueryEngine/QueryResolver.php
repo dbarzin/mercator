@@ -2,16 +2,15 @@
 
 namespace App\Services\QueryEngine;
 
+use App\Contracts\HasIconContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Schema;
 
 class QueryResolver
 {
-    protected const ALLOWED_OPERATORS = ['=', '!=', '<', '>', '<=', '>=', 'like', 'in', 'not in'];
+    protected const ALLOWED_OPERATORS = ['=', '!=', '<', '>', '<=', '>=', 'like', 'not like', 'in', 'not in'];
 
-    // État de la traversée graphe
     protected array $visitedNodes = [];
     protected array $nodes        = [];
     protected array $edges        = [];
@@ -31,7 +30,7 @@ class QueryResolver
 
         $traverse  = $dsl['traverse'] ?? [];
         $fields    = $dsl['fields']   ?? [];
-        $eagerLoad = $this->resolveEagerLoads($traverse, $fields);
+        $eagerLoad = $this->resolveEagerLoads($modelClass, $traverse, $fields);
 
         if (! empty($eagerLoad)) {
             $builder->with($eagerLoad);
@@ -46,19 +45,53 @@ class QueryResolver
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Résolution des eager loads
+    // Normalisation du format traverse (string | {segments:[...]})
     // ─────────────────────────────────────────────────────────────
 
     /**
-     * Combine traverse et fields pour produire les with() Eloquent.
+     * Normalise un item de traverse en tableau de segments typés.
      *
-     * traverse: ["logicalServers.applications"]
-     * fields:   ["name", "logicalServers.name", "logicalServers.applications.name"]
-     * → with:   ["logicalServers.applications"]
+     * Entrées :
+     *   "subnetworks.vlan"
+     *   {"segments":[{"name":"subnetworks","hidden":true},{"name":"vlan","hidden":false}]}
+     *
+     * Sortie :
+     *   [["name"=>"subnetworks","hidden"=>false],["name"=>"vlan","hidden"=>false]]
+     *   [["name"=>"subnetworks","hidden"=>true], ["name"=>"vlan","hidden"=>false]]
      */
-    protected function resolveEagerLoads(array $traverse, array $fields): array
+    public static function normalizeSegments(string|array $item): array
     {
-        $paths = collect($traverse);
+        if (is_string($item)) {
+            return array_map(
+                fn (string $name) => ['name' => $name, 'hidden' => false],
+                explode('.', $item)
+            );
+        }
+
+        return array_map(
+            fn (array $s) => ['name' => (string) $s['name'], 'hidden' => (bool) ($s['hidden'] ?? false)],
+            $item['segments']
+        );
+    }
+
+    /**
+     * Extrait le chemin plat (sans parenthèses) pour le eager-loading Laravel.
+     * Ex: {segments:[{name:"sub",hidden:true},{name:"vlan",hidden:false}]} → "sub.vlan"
+     */
+    public static function flattenTraversePath(string|array $item): string
+    {
+        return implode('.', array_column(self::normalizeSegments($item), 'name'));
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Eager loads
+    // ─────────────────────────────────────────────────────────────
+
+    protected function resolveEagerLoads(string $modelClass, array $traverse, array $fields): array
+    {
+        // Flatten les chemins traverse (ignore hidden/visible, on charge tout)
+        $paths = collect($traverse)
+            ->map(fn ($item) => self::flattenTraversePath($item));
 
         foreach ($fields as $field) {
             $parts = explode('.', $field);
@@ -68,16 +101,80 @@ class QueryResolver
             }
         }
 
-        return $paths->unique()->sort()->values()->toArray();
+        return $paths->unique()
+            ->map(fn ($path) => $this->resolveRelationPath($modelClass, $path))
+            ->sort()
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Résout un chemin de relation pointé en noms de méthodes Eloquent.
+     * Ex : logical_servers.applications → logicalServers.applications
+     * Chaque segment est résolu sur la classe liée du segment précédent.
+     */
+    protected function resolveRelationPath(string $modelClass, string $path): string
+    {
+        $parts    = explode('.', $path);
+        $resolved = [];
+        $class    = $modelClass;
+
+        foreach ($parts as $segment) {
+            $method     = QueryEngineIntrospector::resolveRelationMethod($class, $segment);
+            $resolved[] = $method;
+
+            // Avancer vers la classe liée pour le segment suivant
+            $relDef = collect(QueryEngineIntrospector::getRelations($class))
+                ->firstWhere('method', $method);
+            if ($relDef) {
+                $class = QueryEngineIntrospector::resolveModelClassFromAny($relDef['related']);
+            }
+        }
+
+        return implode('.', $resolved);
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Filtres — supporte a, a.b, a.b.c
+    // Filtres — supporte a, a.b, a.b.c et groupes
     // ─────────────────────────────────────────────────────────────
 
     protected function applyFilter(Builder $builder, array $filter): void
     {
-        // ── Groupe : { boolean, group: [...] } ───────────────────
+        // EXISTS : { exists: 'backups', ?conditions: [...] }
+        if (array_key_exists('exists', $filter)) {
+            $relation   = $filter['exists'];
+            $conditions = $filter['conditions'] ?? [];
+            $boolean    = strtolower($filter['boolean'] ?? 'and');
+            $method     = $boolean === 'or' ? 'orWhereHas' : 'whereHas';
+
+            $builder->$method($relation, function (Builder $q) use ($conditions) {
+                foreach ($conditions as $cond) {
+                    $this->applyFilter($q, $cond);
+                }
+            });
+            return;
+        }
+
+        // NOT EXISTS : { not_exists: 'backups', ?conditions: [...] }
+        if (array_key_exists('not_exists', $filter)) {
+            $relation   = $filter['not_exists'];
+            $conditions = $filter['conditions'] ?? [];
+            $boolean    = strtolower($filter['boolean'] ?? 'and');
+            $method     = $boolean === 'or' ? 'orWhereDoesntHave' : 'whereDoesntHave';
+
+            if (empty($conditions)) {
+                $builder->$method($relation);
+            } else {
+                $builder->$method($relation, function (Builder $q) use ($conditions) {
+                    foreach ($conditions as $cond) {
+                        $this->applyFilter($q, $cond);
+                    }
+                });
+            }
+            return;
+        }
+
+        // Groupe : { boolean, group: [...] }
         if (array_key_exists('group', $filter)) {
             $boolean = strtolower($filter['boolean'] ?? 'and');
 
@@ -99,19 +196,17 @@ class QueryResolver
             return;
         }
 
-        // ── Condition simple ─────────────────────────────────────
+        // Condition simple
         $operator = $filter['operator'] ?? '=';
         $value    = $filter['value'] ?? null;
+        $boolean  = strtolower($filter['boolean'] ?? 'and');
+        $isOr     = $boolean === 'or';
 
         abort_if(
             ! in_array($operator, self::ALLOWED_OPERATORS, true),
             422,
             "Opérateur interdit : [{$operator}]"
         );
-
-        // boolean du filtre (and par défaut, or pour les OR dans les groupes plats)
-        $boolean = strtolower($filter['boolean'] ?? 'and');
-        $isOr    = $boolean === 'or';
 
         $parts = array_map(
             fn ($p) => preg_replace('/[^a-zA-Z0-9_]/', '', $p),
@@ -123,11 +218,9 @@ class QueryResolver
             return;
         }
 
-        $field     = array_pop($parts);
-        $relations = $parts;
-        $method    = $isOr ? 'orWhereHas' : 'whereHas';
-
-        $this->applyNestedWhereHas($builder, $relations, $field, $operator, $value, $method);
+        $field  = array_pop($parts);
+        $method = $isOr ? 'orWhereHas' : 'whereHas';
+        $this->applyNestedWhereHas($builder, $parts, $field, $operator, $value, $method);
     }
 
     protected function applyNestedWhereHas(
@@ -138,9 +231,11 @@ class QueryResolver
         mixed   $value,
         string  $method = 'whereHas'
     ): void {
-        $relation = array_shift($relations);
+        $relation   = array_shift($relations);
+        $modelClass = get_class($builder->getModel());
+        $relMethod  = QueryEngineIntrospector::resolveRelationMethod($modelClass, $relation);
 
-        $builder->$method($relation, function (Builder $q) use ($relations, $field, $operator, $value) {
+        $builder->$method($relMethod, function (Builder $q) use ($relations, $field, $operator, $value) {
             if (empty($relations)) {
                 $this->applyWhereOnBuilder($q, $field, $operator, $value);
             } else {
@@ -156,12 +251,8 @@ class QueryResolver
         mixed   $value,
         bool    $isOr = false
     ): void {
-        $table = $builder->getModel()->getTable();
-        abort_if(
-            ! Schema::hasColumn($table, $field),
-            422,
-            "Colonne inconnue : [{$field}] dans [{$table}]"
-        );
+        $modelClass = get_class($builder->getModel());
+        QueryEngineIntrospector::validateField($modelClass, $field);
 
         if ($isOr) {
             match ($operator) {
@@ -179,7 +270,38 @@ class QueryResolver
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Liste — Option A : une ligne par combinaison (produit cartésien)
+    // Normalisation des valeurs
+    // ─────────────────────────────────────────────────────────────
+
+    protected function normalizeValue(mixed $value): mixed
+    {
+        if ($value instanceof \Carbon\CarbonInterface) {
+            return $value->toDateString();
+        }
+        if ($value instanceof \DateTimeInterface) {
+            return $value->format('Y-m-d');
+        }
+        if (is_array($value) && isset($value['date'])) {
+            return substr($value['date'], 0, 10);
+        }
+        return $value;
+    }
+
+    protected function isHidden(Model $item, string $field): bool
+    {
+        return in_array($field, $item->getHidden(), true);
+    }
+
+    protected function getAttributes(Model $item): array
+    {
+        return collect(array_keys($item->getAttributes()))
+            ->reject(fn ($key) => $this->isHidden($item, $key))
+            ->mapWithKeys(fn ($key) => [$key => $this->normalizeValue($item->getAttribute($key))])
+            ->toArray();
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Liste — Option A : une ligne par combinaison
     // ─────────────────────────────────────────────────────────────
 
     protected function buildList(Collection $items, array $dsl): ListResult
@@ -187,8 +309,7 @@ class QueryResolver
         $fields   = $dsl['fields']   ?? [];
         $traverse = $dsl['traverse'] ?? [];
         $select   = $dsl['select']   ?? [];
-
-        $rows = [];
+        $rows     = [];
 
         foreach ($items as $item) {
             if (! empty($fields)) {
@@ -196,17 +317,23 @@ class QueryResolver
                     $rows[] = $row;
                 }
             } else {
-                // Mode legacy : colonnes plates + relations concaténées
-                $row = $select
-                    ? collect($item->toArray())->only($select)->toArray()
-                    : collect($item->toArray())
-                        ->except(['created_at', 'updated_at', 'deleted_at'])
-                        ->toArray();
+                $modelClass = get_class($item);
+                $attrs      = $this->getAttributes($item);
+
+                if ($select) {
+                    foreach ($select as $f) {
+                        QueryEngineIntrospector::validateField($modelClass, $f);
+                    }
+                    $row = collect($attrs)->only($select)->toArray();
+                } else {
+                    $row = collect($attrs)->except(['created_at', 'updated_at', 'deleted_at'])->toArray();
+                }
 
                 foreach ($traverse as $rel) {
                     $firstSegment = explode('.', $rel)[0];
                     try {
-                        $related = $item->$firstSegment;
+                        $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $firstSegment);
+                        $related   = $item->$relMethod;
                         if (! $related) { $row[$firstSegment] = ''; continue; }
                         $related = $related instanceof Model ? collect([$related]) : $related;
                         $row[$firstSegment] = $related->pluck('name')->filter()->join(', ');
@@ -219,26 +346,17 @@ class QueryResolver
             }
         }
 
-        $columns = array_keys($rows[0] ?? []);
-
-        return new ListResult(rows: collect($rows), columns: $columns);
+        return new ListResult(rows: collect($rows), columns: array_keys($rows[0] ?? []));
     }
 
     /**
-     * Expanse récursivement un objet en N lignes selon la liste de champs.
-     *
-     * fields = ["name", "logicalServers.name", "logicalServers.applications.name"]
-     *
-     * PhysicalServer(srv1)
-     *  → ls1 → app1  ⟹  {name:srv1, logicalServers.name:ls1, logicalServers.applications.name:app1}
-     *  → ls1 → app2  ⟹  {name:srv1, logicalServers.name:ls1, logicalServers.applications.name:app2}
-     *  → ls2 → app3  ⟹  {name:srv1, logicalServers.name:ls2, logicalServers.applications.name:app3}
+     * Expansion récursive d'un objet en N lignes (produit cartésien).
+     * L'ordre des colonnes respecte l'ordre original de $fields.
      */
     protected function expandRow(Model $item, array $fields): array
     {
-        // Séparer champs racine et champs de relation
         $rootFields     = [];
-        $relationFields = []; // ['logicalServers' => ['name', 'applications.name']]
+        $relationFields = [];
 
         foreach ($fields as $field) {
             $parts = explode('.', $field, 2);
@@ -249,22 +367,27 @@ class QueryResolver
             }
         }
 
-        // Valeurs des champs racine
-        $rootRow = [];
+        // Champs racine
+        $rootRow    = [];
+        $modelClass = get_class($item);
         foreach ($rootFields as $f) {
-            $rootRow[$f] = $item->getAttribute($f);
+            QueryEngineIntrospector::validateField($modelClass, $f);
+            if ($this->isHidden($item, $f)) {
+                continue;
+            }
+            $rootRow[$f] = $this->normalizeValue($item->getAttribute($f));
         }
 
         if (empty($relationFields)) {
             return [$rootRow];
         }
 
-        // Produit cartésien des relations
         $result = [$rootRow];
 
         foreach ($relationFields as $relation => $subFields) {
             try {
-                $related = $item->$relation;
+                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $relation);
+                $related   = $item->$relMethod;
             } catch (\Throwable) {
                 continue;
             }
@@ -274,7 +397,6 @@ class QueryResolver
                 : collect();
 
             if ($related->isEmpty()) {
-                // Relation vide : garder les lignes avec null
                 foreach ($result as &$row) {
                     foreach ($subFields as $sf) {
                         $row[$relation . '.' . $sf] = null;
@@ -284,11 +406,9 @@ class QueryResolver
                 continue;
             }
 
-            // Expansion : lignes existantes × objets liés
             $newResult = [];
             foreach ($result as $row) {
                 foreach ($related as $relatedItem) {
-                    // Récursion pour les sous-champs (ex: "applications.name")
                     foreach ($this->expandRow($relatedItem, $subFields) as $subRow) {
                         $newRow = $row;
                         foreach ($subRow as $k => $v) {
@@ -301,11 +421,26 @@ class QueryResolver
             $result = $newResult;
         }
 
-        return $result;
+        // ── Réordonner chaque ligne selon l'ordre original de $fields ──
+        return array_map(function (array $row) use ($fields): array {
+            $ordered = [];
+            foreach ($fields as $key) {
+                if (array_key_exists($key, $row)) {
+                    $ordered[$key] = $row[$key];
+                }
+            }
+            // Clés non déclarées dans $fields ajoutées en fin
+            foreach ($row as $k => $v) {
+                if (! array_key_exists($k, $ordered)) {
+                    $ordered[$k] = $v;
+                }
+            }
+            return $ordered;
+        }, $result);
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Graphe — supporte traverse imbriqué (a.b, a.b.c)
+    // Graphe
     // ─────────────────────────────────────────────────────────────
 
     protected function buildGraph(
@@ -317,8 +452,11 @@ class QueryResolver
         $this->nodes        = [];
         $this->edges        = [];
 
+        // Normaliser une seule fois : chaque item devient [[{name,hidden},...],...]
+        $normalizedTraverse = array_map([self::class, 'normalizeSegments'], $traverse);
+
         foreach ($items as $item) {
-            $this->traverseNode($item, $modelName, $traverse, null);
+            $this->traverseNode($item, $modelName, $normalizedTraverse, null);
         }
 
         return new GraphResult(
@@ -332,38 +470,44 @@ class QueryResolver
     protected function traverseNode(
         Model   $item,
         string  $modelName,
-        array   $traverse,
+        array   $normalizedTraverse,   // [[{name,hidden},...],...]
         ?string $parentNodeId
     ): void {
         $nodeId = $modelName . '_' . $item->getKey();
 
         if ($parentNodeId !== null && $parentNodeId !== $nodeId) {
-            $edgeKey               = $parentNodeId . '||' . $nodeId;
-            $this->edges[$edgeKey] = ['from' => $parentNodeId, 'to' => $nodeId];
+            $this->edges[$parentNodeId . '||' . $nodeId] = ['from' => $parentNodeId, 'to' => $nodeId];
         }
 
-        if (isset($this->visitedNodes[$nodeId])) {
-            return;
+        if (! isset($this->visitedNodes[$nodeId])) {
+            $this->visitedNodes[$nodeId] = true;
+            $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
         }
-        $this->visitedNodes[$nodeId] = true;
-        $this->nodes[$nodeId]        = $this->buildNode($item, $nodeId, $modelName);
 
-        // Arrêt : plus de chemins à suivre — la profondeur est portée par WITH
-        if (empty($traverse)) {
+        if (empty($normalizedTraverse)) {
             return;
         }
 
-        foreach ($traverse as $traversePath) {
-            $parts    = explode('.', $traversePath, 2);
-            $relation = $parts[0];
-            $subPath  = $parts[1] ?? null;
+        // Regrouper par relation de premier niveau
+        $relationMap = [];
+        foreach ($normalizedTraverse as $segments) {
+            if (empty($segments)) continue;
+            $first    = $segments[0];
+            $rest     = array_slice($segments, 1);
+            $mapKey   = $first['name'] . ($first['hidden'] ? ':h' : ':v');
 
-            if (! method_exists($item, $relation)) {
-                continue;
+            if (! isset($relationMap[$mapKey])) {
+                $relationMap[$mapKey] = ['name' => $first['name'], 'hidden' => $first['hidden'], 'sub' => []];
             }
+            if (! empty($rest)) {
+                $relationMap[$mapKey]['sub'][] = $rest;
+            }
+        }
 
+        foreach ($relationMap as $config) {
             try {
-                $related = $item->$relation;
+                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $config['name']);
+                $related   = $item->$relMethod;
                 if (! $related) continue;
 
                 $related = $related instanceof Model ? collect([$related]) : $related;
@@ -371,11 +515,68 @@ class QueryResolver
 
                 $relatedModelName = class_basename(get_class($related->first()));
 
-                // Continuer uniquement si le chemin a un segment suivant
-                $subTraverse = $subPath ? [$subPath] : [];
+                foreach ($related as $relatedItem) {
+                    if ($config['hidden']) {
+                        // Segment masqué : pas de nœud/arête, on traverse avec $nodeId comme ancêtre visible
+                        $this->traverseNodeSkip($relatedItem, $relatedModelName, $config['sub'], $nodeId);
+                    } else {
+                        $this->traverseNode($relatedItem, $relatedModelName, $config['sub'], $nodeId);
+                    }
+                }
+            } catch (\Throwable) {
+                continue;
+            }
+        }
+    }
+
+    /**
+     * Traverse un nœud masqué : ni nœud ni arête créés.
+     * Les enfants visibles sont liés directement à $visibleAncestorId.
+     */
+    protected function traverseNodeSkip(
+        Model   $item,
+        string  $modelName,
+        array   $normalizedTraverse,   // segments restants après le masqué
+        string  $visibleAncestorId
+    ): void {
+        if (empty($normalizedTraverse)) {
+            return; // no-op : dernier segment masqué
+        }
+
+        $relationMap = [];
+        foreach ($normalizedTraverse as $segments) {
+            if (empty($segments)) continue;
+            $first  = $segments[0];
+            $rest   = array_slice($segments, 1);
+            $mapKey = $first['name'] . ($first['hidden'] ? ':h' : ':v');
+
+            if (! isset($relationMap[$mapKey])) {
+                $relationMap[$mapKey] = ['name' => $first['name'], 'hidden' => $first['hidden'], 'sub' => []];
+            }
+            if (! empty($rest)) {
+                $relationMap[$mapKey]['sub'][] = $rest;
+            }
+        }
+
+        foreach ($relationMap as $config) {
+            try {
+                $relMethod = QueryEngineIntrospector::resolveRelationMethod(get_class($item), $config['name']);
+                $related   = $item->$relMethod;
+                if (! $related) continue;
+
+                $related = $related instanceof Model ? collect([$related]) : $related;
+                if ($related->isEmpty()) continue;
+
+                $relatedModelName = class_basename(get_class($related->first()));
 
                 foreach ($related as $relatedItem) {
-                    $this->traverseNode($relatedItem, $relatedModelName, $subTraverse, $nodeId);
+                    if ($config['hidden']) {
+                        // Encore masqué : continuer à sauter
+                        $this->traverseNodeSkip($relatedItem, $relatedModelName, $config['sub'], $visibleAncestorId);
+                    } else {
+                        // Premier visible : lier directement à l'ancêtre visible
+                        $this->traverseNode($relatedItem, $relatedModelName, $config['sub'], $visibleAncestorId);
+                    }
                 }
             } catch (\Throwable) {
                 continue;
@@ -389,7 +590,7 @@ class QueryResolver
             'id'    => $nodeId,
             'label' => $item->name ?? $item->getAttribute('label') ?? (string) $item->getKey(),
             'group' => $modelName,
-            'icon'  => $item->getIcon(),
+            'icon'  => $item instanceof HasIconContract ? $item->getIcon() : '/images/default.png',
             'data'  => [
                 'id'    => $item->getKey(),
                 'name'  => $item->name ?? '',
@@ -401,7 +602,7 @@ class QueryResolver
 
     protected function resolveUrl(string $modelName, int|string $id): string
     {
-        $slug = \Illuminate\Support\Str::kebab($modelName) . 's';
+        $slug = QueryEngineIntrospector::modelToApiName($modelName);
         return "/admin/{$slug}/{$id}";
     }
 }

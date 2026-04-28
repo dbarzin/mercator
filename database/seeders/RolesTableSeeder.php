@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\Role;
+use App\Models\Role;
 
 class RolesTableSeeder extends Seeder
 {

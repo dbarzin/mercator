@@ -67,8 +67,7 @@ class QueryController extends Controller
         $savedQuery = SavedQuery::query()->create($data);
 
         return redirect()
-            ->route('admin.queries.show', $savedQuery)
-            ->with('message', __('Requête « :name » sauvegardée.', ['name' => $savedQuery->name]));
+            ->route('admin.queries.show', $savedQuery);
     }
 
     /**
@@ -91,8 +90,7 @@ class QueryController extends Controller
         $query->update($request->validated());
 
         return redirect()
-            ->route('admin.queries.index')
-            ->with('message', __('Requête « :name » mise à jour.', ['name' => $query->name]));
+            ->route('admin.queries.index');
     }
 
     /**
@@ -106,8 +104,7 @@ class QueryController extends Controller
         $query->delete();
 
         return redirect()
-            ->route('admin.queries.index')
-            ->with('message', __('Requête « :name » supprimée.', ['name' => $name]));
+            ->route('admin.queries.index');
     }
 
     /**
@@ -119,8 +116,7 @@ class QueryController extends Controller
         $copy->save();
 
         return redirect()
-            ->route('admin.queries.edit', $copy)
-            ->with('message', __('Requête dupliquée. Modifiez-la avant de la sauvegarder.'));
+            ->route('admin.queries.edit', $copy);
     }
 
 

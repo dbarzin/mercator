@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateRelationRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Relation;
+use App\Models\Relation;
 use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends APIController

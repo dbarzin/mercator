@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Mercator\Core\Models\Activity;
-use Mercator\Core\Models\Actor;
-use Mercator\Core\Models\Information;
-use Mercator\Core\Models\MacroProcessus;
-use Mercator\Core\Models\Operation;
-use Mercator\Core\Models\Process;
-use Mercator\Core\Models\Task;
+use App\Models\Activity;
+use App\Models\Actor;
+use App\Models\Information;
+use App\Models\MacroProcessus;
+use App\Models\Operation;
+use App\Models\Process;
+use App\Models\Task;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationSystemView extends Controller

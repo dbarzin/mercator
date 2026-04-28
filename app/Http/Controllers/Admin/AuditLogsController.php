@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\AuditLog;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuditLogsController extends Controller
 {
-
 
     public function index(Request $request)
     {

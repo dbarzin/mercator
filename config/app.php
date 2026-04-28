@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', true),
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -232,7 +232,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /* Modules Service Providers */
-        Mercator\Core\Providers\MercatorServiceProvider::class,
+        // Mercator\Core\Providers\MercatorServiceProvider::class,
 
     ],
 

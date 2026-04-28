@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateSubnetworkRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Subnetwork;
+use App\Models\Subnetwork;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubnetworkController extends APIController

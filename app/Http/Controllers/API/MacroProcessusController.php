@@ -10,8 +10,8 @@ use App\Http\Requests\UpdateMacroProcessusRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\MacroProcessus;
-use Mercator\Core\Models\Process;
+use App\Models\MacroProcessus;
+use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class MacroProcessusController extends APIController

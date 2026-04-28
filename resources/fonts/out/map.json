@@ -1,0 +1,668 @@
+[
+  {
+    "codepoint": "U+E801",
+    "char": "\\uE801",
+    "glyph": "trash",
+    "svg": "svg/bpmn_uE801.svg"
+  },
+  {
+    "codepoint": "U+E804",
+    "char": "\\uE804",
+    "glyph": "gateway-parallel",
+    "svg": "svg/bpmn_uE804.svg"
+  },
+  {
+    "codepoint": "U+E805",
+    "char": "\\uE805",
+    "glyph": "intermediate-event-catch-cancel",
+    "svg": "svg/bpmn_uE805.svg"
+  },
+  {
+    "codepoint": "U+E806",
+    "char": "\\uE806",
+    "glyph": "intermediate-event-catch-non-interrupting-message",
+    "svg": "svg/bpmn_uE806.svg"
+  },
+  {
+    "codepoint": "U+E807",
+    "char": "\\uE807",
+    "glyph": "start-event-compensation",
+    "svg": "svg/bpmn_uE807.svg"
+  },
+  {
+    "codepoint": "U+E808",
+    "char": "\\uE808",
+    "glyph": "start-event-non-interrupting-parallel-multiple",
+    "svg": "svg/bpmn_uE808.svg"
+  },
+  {
+    "codepoint": "U+E809",
+    "char": "\\uE809",
+    "glyph": "loop-marker",
+    "svg": "svg/bpmn_uE809.svg"
+  },
+  {
+    "codepoint": "U+E80A",
+    "char": "\\uE80A",
+    "glyph": "parallel-mi-marker",
+    "svg": "svg/bpmn_uE80A.svg"
+  },
+  {
+    "codepoint": "U+E80B",
+    "char": "\\uE80B",
+    "glyph": "start-event-non-interrupting-signal",
+    "svg": "svg/bpmn_uE80B.svg"
+  },
+  {
+    "codepoint": "U+E80C",
+    "char": "\\uE80C",
+    "glyph": "intermediate-event-catch-non-interrupting-timer",
+    "svg": "svg/bpmn_uE80C.svg"
+  },
+  {
+    "codepoint": "U+E80D",
+    "char": "\\uE80D",
+    "glyph": "intermediate-event-catch-parallel-multiple",
+    "svg": "svg/bpmn_uE80D.svg"
+  },
+  {
+    "codepoint": "U+E80E",
+    "char": "\\uE80E",
+    "glyph": "intermediate-event-catch-compensation",
+    "svg": "svg/bpmn_uE80E.svg"
+  },
+  {
+    "codepoint": "U+E80F",
+    "char": "\\uE80F",
+    "glyph": "gateway-xor",
+    "svg": "svg/bpmn_uE80F.svg"
+  },
+  {
+    "codepoint": "U+E811",
+    "char": "\\uE811",
+    "glyph": "end-event-cancel",
+    "svg": "svg/bpmn_uE811.svg"
+  },
+  {
+    "codepoint": "U+E812",
+    "char": "\\uE812",
+    "glyph": "intermediate-event-catch-condition",
+    "svg": "svg/bpmn_uE812.svg"
+  },
+  {
+    "codepoint": "U+E813",
+    "char": "\\uE813",
+    "glyph": "intermediate-event-catch-non-interrupting-parallel-multiple",
+    "svg": "svg/bpmn_uE813.svg"
+  },
+  {
+    "codepoint": "U+E814",
+    "char": "\\uE814",
+    "glyph": "start-event-condition",
+    "svg": "svg/bpmn_uE814.svg"
+  },
+  {
+    "codepoint": "U+E815",
+    "char": "\\uE815",
+    "glyph": "start-event-non-interrupting-timer",
+    "svg": "svg/bpmn_uE815.svg"
+  },
+  {
+    "codepoint": "U+E816",
+    "char": "\\uE816",
+    "glyph": "sequential-mi-marker",
+    "svg": "svg/bpmn_uE816.svg"
+  },
+  {
+    "codepoint": "U+E817",
+    "char": "\\uE817",
+    "glyph": "user-task",
+    "svg": "svg/bpmn_uE817.svg"
+  },
+  {
+    "codepoint": "U+E818",
+    "char": "\\uE818",
+    "glyph": "business-rule",
+    "svg": "svg/bpmn_uE818.svg"
+  },
+  {
+    "codepoint": "U+E819",
+    "char": "\\uE819",
+    "glyph": "sub-process-marker",
+    "svg": "svg/bpmn_uE819.svg"
+  },
+  {
+    "codepoint": "U+E81A",
+    "char": "\\uE81A",
+    "glyph": "start-event-parallel-multiple",
+    "svg": "svg/bpmn_uE81A.svg"
+  },
+  {
+    "codepoint": "U+E81B",
+    "char": "\\uE81B",
+    "glyph": "start-event-error",
+    "svg": "svg/bpmn_uE81B.svg"
+  },
+  {
+    "codepoint": "U+E81C",
+    "char": "\\uE81C",
+    "glyph": "intermediate-event-catch-signal",
+    "svg": "svg/bpmn_uE81C.svg"
+  },
+  {
+    "codepoint": "U+E81D",
+    "char": "\\uE81D",
+    "glyph": "intermediate-event-catch-error",
+    "svg": "svg/bpmn_uE81D.svg"
+  },
+  {
+    "codepoint": "U+E81E",
+    "char": "\\uE81E",
+    "glyph": "end-event-compensation",
+    "svg": "svg/bpmn_uE81E.svg"
+  },
+  {
+    "codepoint": "U+E81F",
+    "char": "\\uE81F",
+    "glyph": "subprocess-collapsed",
+    "svg": "svg/bpmn_uE81F.svg"
+  },
+  {
+    "codepoint": "U+E820",
+    "char": "\\uE820",
+    "glyph": "subprocess-expanded",
+    "svg": "svg/bpmn_uE820.svg"
+  },
+  {
+    "codepoint": "U+E821",
+    "char": "\\uE821",
+    "glyph": "task",
+    "svg": "svg/bpmn_uE821.svg"
+  },
+  {
+    "codepoint": "U+E822",
+    "char": "\\uE822",
+    "glyph": "end-event-error",
+    "svg": "svg/bpmn_uE822.svg"
+  },
+  {
+    "codepoint": "U+E823",
+    "char": "\\uE823",
+    "glyph": "intermediate-event-catch-escalation",
+    "svg": "svg/bpmn_uE823.svg"
+  },
+  {
+    "codepoint": "U+E824",
+    "char": "\\uE824",
+    "glyph": "intermediate-event-catch-timer",
+    "svg": "svg/bpmn_uE824.svg"
+  },
+  {
+    "codepoint": "U+E825",
+    "char": "\\uE825",
+    "glyph": "start-event-escalation",
+    "svg": "svg/bpmn_uE825.svg"
+  },
+  {
+    "codepoint": "U+E826",
+    "char": "\\uE826",
+    "glyph": "start-event-signal",
+    "svg": "svg/bpmn_uE826.svg"
+  },
+  {
+    "codepoint": "U+E827",
+    "char": "\\uE827",
+    "glyph": "business-rule-task",
+    "svg": "svg/bpmn_uE827.svg"
+  },
+  {
+    "codepoint": "U+E828",
+    "char": "\\uE828",
+    "glyph": "manual",
+    "svg": "svg/bpmn_uE828.svg"
+  },
+  {
+    "codepoint": "U+E829",
+    "char": "\\uE829",
+    "glyph": "receive",
+    "svg": "svg/bpmn_uE829.svg"
+  },
+  {
+    "codepoint": "U+E82A",
+    "char": "\\uE82A",
+    "glyph": "call-activity",
+    "svg": "svg/bpmn_uE82A.svg"
+  },
+  {
+    "codepoint": "U+E82B",
+    "char": "\\uE82B",
+    "glyph": "start-event-timer",
+    "svg": "svg/bpmn_uE82B.svg"
+  },
+  {
+    "codepoint": "U+E82C",
+    "char": "\\uE82C",
+    "glyph": "start-event-message",
+    "svg": "svg/bpmn_uE82C.svg"
+  },
+  {
+    "codepoint": "U+E82D",
+    "char": "\\uE82D",
+    "glyph": "intermediate-event-none",
+    "svg": "svg/bpmn_uE82D.svg"
+  },
+  {
+    "codepoint": "U+E82E",
+    "char": "\\uE82E",
+    "glyph": "intermediate-event-catch-link",
+    "svg": "svg/bpmn_uE82E.svg"
+  },
+  {
+    "codepoint": "U+E82F",
+    "char": "\\uE82F",
+    "glyph": "end-event-escalation",
+    "svg": "svg/bpmn_uE82F.svg"
+  },
+  {
+    "codepoint": "U+E831",
+    "char": "\\uE831",
+    "glyph": "bpmn-io",
+    "svg": "svg/bpmn_uE831.svg"
+  },
+  {
+    "codepoint": "U+E832",
+    "char": "\\uE832",
+    "glyph": "gateway-complex",
+    "svg": "svg/bpmn_uE832.svg"
+  },
+  {
+    "codepoint": "U+E833",
+    "char": "\\uE833",
+    "glyph": "gateway-eventbased",
+    "svg": "svg/bpmn_uE833.svg"
+  },
+  {
+    "codepoint": "U+E834",
+    "char": "\\uE834",
+    "glyph": "gateway-none",
+    "svg": "svg/bpmn_uE834.svg"
+  },
+  {
+    "codepoint": "U+E835",
+    "char": "\\uE835",
+    "glyph": "gateway-or",
+    "svg": "svg/bpmn_uE835.svg"
+  },
+  {
+    "codepoint": "U+E836",
+    "char": "\\uE836",
+    "glyph": "end-event-terminate",
+    "svg": "svg/bpmn_uE836.svg"
+  },
+  {
+    "codepoint": "U+E837",
+    "char": "\\uE837",
+    "glyph": "end-event-signal",
+    "svg": "svg/bpmn_uE837.svg"
+  },
+  {
+    "codepoint": "U+E838",
+    "char": "\\uE838",
+    "glyph": "end-event-none",
+    "svg": "svg/bpmn_uE838.svg"
+  },
+  {
+    "codepoint": "U+E839",
+    "char": "\\uE839",
+    "glyph": "end-event-multiple",
+    "svg": "svg/bpmn_uE839.svg"
+  },
+  {
+    "codepoint": "U+E83A",
+    "char": "\\uE83A",
+    "glyph": "end-event-message",
+    "svg": "svg/bpmn_uE83A.svg"
+  },
+  {
+    "codepoint": "U+E83B",
+    "char": "\\uE83B",
+    "glyph": "end-event-link",
+    "svg": "svg/bpmn_uE83B.svg"
+  },
+  {
+    "codepoint": "U+E83C",
+    "char": "\\uE83C",
+    "glyph": "intermediate-event-catch-message",
+    "svg": "svg/bpmn_uE83C.svg"
+  },
+  {
+    "codepoint": "U+E83D",
+    "char": "\\uE83D",
+    "glyph": "intermediate-event-throw-compensation",
+    "svg": "svg/bpmn_uE83D.svg"
+  },
+  {
+    "codepoint": "U+E83E",
+    "char": "\\uE83E",
+    "glyph": "start-event-multiple",
+    "svg": "svg/bpmn_uE83E.svg"
+  },
+  {
+    "codepoint": "U+E83F",
+    "char": "\\uE83F",
+    "glyph": "script",
+    "svg": "svg/bpmn_uE83F.svg"
+  },
+  {
+    "codepoint": "U+E840",
+    "char": "\\uE840",
+    "glyph": "manual-task",
+    "svg": "svg/bpmn_uE840.svg"
+  },
+  {
+    "codepoint": "U+E841",
+    "char": "\\uE841",
+    "glyph": "send",
+    "svg": "svg/bpmn_uE841.svg"
+  },
+  {
+    "codepoint": "U+E842",
+    "char": "\\uE842",
+    "glyph": "service",
+    "svg": "svg/bpmn_uE842.svg"
+  },
+  {
+    "codepoint": "U+E843",
+    "char": "\\uE843",
+    "glyph": "receive-task",
+    "svg": "svg/bpmn_uE843.svg"
+  },
+  {
+    "codepoint": "U+E844",
+    "char": "\\uE844",
+    "glyph": "user",
+    "svg": "svg/bpmn_uE844.svg"
+  },
+  {
+    "codepoint": "U+E845",
+    "char": "\\uE845",
+    "glyph": "start-event-none",
+    "svg": "svg/bpmn_uE845.svg"
+  },
+  {
+    "codepoint": "U+E846",
+    "char": "\\uE846",
+    "glyph": "intermediate-event-throw-escalation",
+    "svg": "svg/bpmn_uE846.svg"
+  },
+  {
+    "codepoint": "U+E847",
+    "char": "\\uE847",
+    "glyph": "intermediate-event-catch-multiple",
+    "svg": "svg/bpmn_uE847.svg"
+  },
+  {
+    "codepoint": "U+E848",
+    "char": "\\uE848",
+    "glyph": "intermediate-event-catch-non-interrupting-escalation",
+    "svg": "svg/bpmn_uE848.svg"
+  },
+  {
+    "codepoint": "U+E849",
+    "char": "\\uE849",
+    "glyph": "intermediate-event-throw-link",
+    "svg": "svg/bpmn_uE849.svg"
+  },
+  {
+    "codepoint": "U+E84A",
+    "char": "\\uE84A",
+    "glyph": "start-event-non-interrupting-condition",
+    "svg": "svg/bpmn_uE84A.svg"
+  },
+  {
+    "codepoint": "U+E84B",
+    "char": "\\uE84B",
+    "glyph": "data-object",
+    "svg": "svg/bpmn_uE84B.svg"
+  },
+  {
+    "codepoint": "U+E84C",
+    "char": "\\uE84C",
+    "glyph": "script-task",
+    "svg": "svg/bpmn_uE84C.svg"
+  },
+  {
+    "codepoint": "U+E84D",
+    "char": "\\uE84D",
+    "glyph": "send-task",
+    "svg": "svg/bpmn_uE84D.svg"
+  },
+  {
+    "codepoint": "U+E84E",
+    "char": "\\uE84E",
+    "glyph": "data-store",
+    "svg": "svg/bpmn_uE84E.svg"
+  },
+  {
+    "codepoint": "U+E84F",
+    "char": "\\uE84F",
+    "glyph": "start-event-non-interrupting-escalation",
+    "svg": "svg/bpmn_uE84F.svg"
+  },
+  {
+    "codepoint": "U+E850",
+    "char": "\\uE850",
+    "glyph": "intermediate-event-throw-message",
+    "svg": "svg/bpmn_uE850.svg"
+  },
+  {
+    "codepoint": "U+E851",
+    "char": "\\uE851",
+    "glyph": "intermediate-event-catch-non-interrupting-multiple",
+    "svg": "svg/bpmn_uE851.svg"
+  },
+  {
+    "codepoint": "U+E852",
+    "char": "\\uE852",
+    "glyph": "intermediate-event-catch-non-interrupting-signal",
+    "svg": "svg/bpmn_uE852.svg"
+  },
+  {
+    "codepoint": "U+E853",
+    "char": "\\uE853",
+    "glyph": "intermediate-event-throw-multiple",
+    "svg": "svg/bpmn_uE853.svg"
+  },
+  {
+    "codepoint": "U+E854",
+    "char": "\\uE854",
+    "glyph": "start-event-non-interrupting-message",
+    "svg": "svg/bpmn_uE854.svg"
+  },
+  {
+    "codepoint": "U+E855",
+    "char": "\\uE855",
+    "glyph": "ad-hoc-marker",
+    "svg": "svg/bpmn_uE855.svg"
+  },
+  {
+    "codepoint": "U+E856",
+    "char": "\\uE856",
+    "glyph": "service-task",
+    "svg": "svg/bpmn_uE856.svg"
+  },
+  {
+    "codepoint": "U+E857",
+    "char": "\\uE857",
+    "glyph": "task-none",
+    "svg": "svg/bpmn_uE857.svg"
+  },
+  {
+    "codepoint": "U+E858",
+    "char": "\\uE858",
+    "glyph": "compensation-marker",
+    "svg": "svg/bpmn_uE858.svg"
+  },
+  {
+    "codepoint": "U+E859",
+    "char": "\\uE859",
+    "glyph": "start-event-non-interrupting-multiple",
+    "svg": "svg/bpmn_uE859.svg"
+  },
+  {
+    "codepoint": "U+E85A",
+    "char": "\\uE85A",
+    "glyph": "intermediate-event-throw-signal",
+    "svg": "svg/bpmn_uE85A.svg"
+  },
+  {
+    "codepoint": "U+E85B",
+    "char": "\\uE85B",
+    "glyph": "intermediate-event-catch-non-interrupting-condition",
+    "svg": "svg/bpmn_uE85B.svg"
+  },
+  {
+    "codepoint": "U+E85C",
+    "char": "\\uE85C",
+    "glyph": "participant",
+    "svg": "svg/bpmn_uE85C.svg"
+  },
+  {
+    "codepoint": "U+E85D",
+    "char": "\\uE85D",
+    "glyph": "event-subprocess-expanded",
+    "svg": "svg/bpmn_uE85D.svg"
+  },
+  {
+    "codepoint": "U+E85E",
+    "char": "\\uE85E",
+    "glyph": "lane-insert-below",
+    "svg": "svg/bpmn_uE85E.svg"
+  },
+  {
+    "codepoint": "U+E85F",
+    "char": "\\uE85F",
+    "glyph": "space-tool",
+    "svg": "svg/bpmn_uE85F.svg"
+  },
+  {
+    "codepoint": "U+E860",
+    "char": "\\uE860",
+    "glyph": "connection-multi",
+    "svg": "svg/bpmn_uE860.svg"
+  },
+  {
+    "codepoint": "U+E861",
+    "char": "\\uE861",
+    "glyph": "lane",
+    "svg": "svg/bpmn_uE861.svg"
+  },
+  {
+    "codepoint": "U+E862",
+    "char": "\\uE862",
+    "glyph": "lasso-tool",
+    "svg": "svg/bpmn_uE862.svg"
+  },
+  {
+    "codepoint": "U+E863",
+    "char": "\\uE863",
+    "glyph": "lane-insert-above",
+    "svg": "svg/bpmn_uE863.svg"
+  },
+  {
+    "codepoint": "U+E864",
+    "char": "\\uE864",
+    "glyph": "lane-divide-three",
+    "svg": "svg/bpmn_uE864.svg"
+  },
+  {
+    "codepoint": "U+E865",
+    "char": "\\uE865",
+    "glyph": "lane-divide-two",
+    "svg": "svg/bpmn_uE865.svg"
+  },
+  {
+    "codepoint": "U+E866",
+    "char": "\\uE866",
+    "glyph": "data-input",
+    "svg": "svg/bpmn_uE866.svg"
+  },
+  {
+    "codepoint": "U+E867",
+    "char": "\\uE867",
+    "glyph": "data-output",
+    "svg": "svg/bpmn_uE867.svg"
+  },
+  {
+    "codepoint": "U+E868",
+    "char": "\\uE868",
+    "glyph": "hand-tool",
+    "svg": "svg/bpmn_uE868.svg"
+  },
+  {
+    "codepoint": "U+E869",
+    "char": "\\uE869",
+    "glyph": "group",
+    "svg": "svg/bpmn_uE869.svg"
+  },
+  {
+    "codepoint": "U+E86B",
+    "char": "\\uE86B",
+    "glyph": "text-annotation",
+    "svg": "svg/bpmn_uE86B.svg"
+  },
+  {
+    "codepoint": "U+E870",
+    "char": "\\uE870",
+    "glyph": "data-input-icon",
+    "svg": "svg/bpmn_uE870.svg"
+  },
+  {
+    "codepoint": "U+E871",
+    "char": "\\uE871",
+    "glyph": "data-output-icon",
+    "svg": "svg/bpmn_uE871.svg"
+  },
+  {
+    "codepoint": "U+E8C4",
+    "char": "\\uE8C4",
+    "glyph": "transaction",
+    "svg": "svg/bpmn_uE8C4.svg"
+  },
+  {
+    "codepoint": "U+E8DB",
+    "char": "\\uE8DB",
+    "glyph": "screw-wrench",
+    "svg": "svg/bpmn_uE8DB.svg"
+  },
+  {
+    "codepoint": "U+E8DC",
+    "char": "\\uE8DC",
+    "glyph": "connection",
+    "svg": "svg/bpmn_uE8DC.svg"
+  },
+  {
+    "codepoint": "U+E8E0",
+    "char": "\\uE8E0",
+    "glyph": "conditional-flow",
+    "svg": "svg/bpmn_uE8E0.svg"
+  },
+  {
+    "codepoint": "U+E8E1",
+    "char": "\\uE8E1",
+    "glyph": "default-flow",
+    "svg": "svg/bpmn_uE8E1.svg"
+  },
+  {
+    "codepoint": "U+E8E2",
+    "char": "\\uE8E2",
+    "glyph": "message-flow",
+    "svg": "svg/bpmn_uE8E2.svg"
+  },
+  {
+  "codepoint": "U+E8E3",
+  "char": "\\uE8E3",
+  "glyph": "conversation",
+  "svg": "svg/bpmn_uE8E3.svg"
+  }
+]

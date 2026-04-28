@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-use Mercator\Core\Models\AuditLog;
-use Mercator\Core\Models\Role;
-use Mercator\Core\Models\User;
+use App\Models\AuditLog;
+use App\Models\Role;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SsoController extends Controller

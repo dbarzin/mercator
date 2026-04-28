@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateInformationRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Information;
+use App\Models\Information;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationController extends APIController

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Gate;
-use Mercator\Core\Models\LogicalServer;
+use App\Models\LogicalServer;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerConfigs extends Controller

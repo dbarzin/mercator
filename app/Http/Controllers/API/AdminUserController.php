@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateAdminUserRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\AdminUser;
+use App\Models\AdminUser;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminUserController extends APIController

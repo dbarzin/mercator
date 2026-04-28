@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
-use Mercator\Core\Models\DataProcessing;
-use Mercator\Core\Models\MacroProcessus;
-use Mercator\Core\Models\MApplication;
-use Mercator\Core\Models\Process;
+use App\Models\DataProcessing;
+use App\Models\MacroProcessus;
+use App\Models\MApplication;
+use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class GDPRView extends Controller

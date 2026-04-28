@@ -64,6 +64,7 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
+      toc_depth: 2
   - pymdownx.highlight
   - pymdownx.superfences
 
@@ -73,8 +74,10 @@ nav:
   - cartography.md
   - maturity.md
   - bpmn.md
-  - reports.md
+  - queries.md
   - features.md
+  - reports.md
+  - vulnerabilities.md
   - usecases.md
   - model.md
   - import.md

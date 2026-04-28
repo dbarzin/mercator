@@ -1,9 +1,9 @@
 
 <?php
 
-use Mercator\Core\Models\Entity;
-use Mercator\Core\Models\Relation;
-use Mercator\Core\Models\User;
+use App\Models\Entity;
+use App\Models\Relation;
+use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;

@@ -13,7 +13,7 @@ This maturity is divided into three levels:
 
 [<img src="/mercator/images/maturity.png" width="600" alt="Cartography maturity levels">](images/maturity.png)
 
-### Meaning of Fields Marked with a Hash (#)
+## Meaning of Fields Marked with a Hash (#)
 
 Some field labels are followed by an **#** symbol in orange. These markers indicate that the field
 contributes to the calculation of the cartography maturity level, according to the relevant level:
@@ -22,9 +22,9 @@ contributes to the calculation of the cartography maturity level, according to t
 |--------|-------------------------------------------------------------------|
 | `#`    | Field contributing to maturity level 1 — minimum granularity      |
 | `##`   | Field contributing to maturity level 2 — intermediate granularity |
-| `###`  | Field contributing to maturity level 3 — fine granularity         |
+| `##`  | Field contributing to maturity level 3 — fine granularity         |
 
-### Calculating the Maturity Level
+## Calculating the Maturity Level
 
 An element is considered **compliant** when all fields marked `#` corresponding to the target level are
 filled in and the expected links with other cartography elements have been established.
@@ -41,13 +41,13 @@ The maturity level is calculated using the following formula:
 Maturity level (%) = (Number of compliant elements / Total number of elements) 
 ```
 
-### Visual Identification of Non-Compliant Elements
+## Visual Identification of Non-Compliant Elements
 
 In lists, **non-compliant** entries are highlighted in **yellow**, indicating that at least one field marked `#`
 has not been filled in. This allows quick identification of elements requiring particular attention in order
 to progress toward a complete cartography.
 
-### Compliance fields
+## Compliance fields
 
 The calculation of conformity levels for each mapping object is based on the presence of the following elements:
 
@@ -115,7 +115,7 @@ The calculation of conformity levels for each mapping object is based on the pre
 
 Information security needs are expressed in terms of <span style="color: blue;">confidentiality</span>, <span style="color: blue;">integrity</span>, <span style="color: blue;">availability</span> and <span style="color: blue;">traceability</span>  with the following scale:
 
-### Security Classification (CIDT)
+## Security Classification (CIDT)
 
 | Classification  | Type | Description |
 |-----------------|:----:|-------------|
@@ -124,7 +124,7 @@ Information security needs are expressed in terms of <span style="color: blue;">
 | **Availability** | D | Ensures that information and services are **accessible whenever needed**.<br>If a system is unavailable, it becomes unusable.<br><br>**Examples:** outages, DDoS attacks, unplanned maintenance. |
 | **Traceability** | T | Ensures the ability to **track who did what, when, and how**.<br>Relies on logging, auditing, and user identification.<br><br>**Examples:** access logs, action history, security audits. |
 
-### Security levels
+## Security levels
 | Level |  Description  |                   Color                   |
 |:-----:|:-------------:|:-----------------------------------------:|
 |   0   | Insignificant |                   White                   |

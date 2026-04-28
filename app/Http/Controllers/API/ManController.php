@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateManRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Man;
+use App\Models\Man;
 use Symfony\Component\HttpFoundation\Response;
 
 class ManController extends APIController

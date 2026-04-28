@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
+use App\Models\Building;
+use App\Models\Site;
 use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Mercator\Core\Models\Building;
-use Mercator\Core\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller

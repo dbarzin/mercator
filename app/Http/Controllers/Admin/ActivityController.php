@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
+use App\Models\Activity;
+use App\Models\ActivityImpact;
+use App\Models\Graph;
+use App\Models\MApplication;
+use App\Models\Operation;
+use App\Models\Process;
 use Gate;
-use Mercator\Core\Models\Activity;
-use Mercator\Core\Models\ActivityImpact;
-use Mercator\Core\Models\Graph;
-use Mercator\Core\Models\MApplication;
-use Mercator\Core\Models\Operation;
-use Mercator\Core\Models\Process;
-use Mercator\Core\Modules\ModuleRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
@@ -139,23 +138,18 @@ class ActivityController extends Controller
     }
 
 
-    public function show(Activity $activity, ModuleRegistry $moduleRegistry)
+    public function show(Activity $activity)
     {
         abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activity->load('operations', 'processes');
 
         // Select BPMN graphs
-        if ($moduleRegistry->isEnabled('bpmn')) {
-            $BPMNGraphs = Graph::query()
-                ->select("id", "name")
-                ->where("class", "=", 2)
-                ->whereLike('content', '%"#' . $activity->getUID() . '"%')
-                ->get();
-        }
-        else {
-            $BPMNGraphs = [];
-        }
+        $BPMNGraphs = Graph::query()
+            ->select("id", "name")
+            ->where("class", "=", 2)
+            ->whereLike('content', '%"#' . $activity->getUID() . '"%')
+            ->get();
 
         return view('admin.activities.show',
             compact('activity', 'BPMNGraphs'));

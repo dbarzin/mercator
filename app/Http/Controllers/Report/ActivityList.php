@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use Gate;
-use Mercator\Core\Models\DataProcessing;
+use App\Models\DataProcessing;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\HttpFoundation\Response;
 

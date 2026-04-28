@@ -8,12 +8,12 @@ use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
 use App\Services\IconUploadService;
 use Gate;
-use Mercator\Core\Models\Container;
-use Mercator\Core\Models\Database;
-use Mercator\Core\Models\Entity;
-use Mercator\Core\Models\Information;
-use Mercator\Core\Models\LogicalServer;
-use Mercator\Core\Models\MApplication;
+use App\Models\Container;
+use App\Models\Database;
+use App\Models\Entity;
+use App\Models\Information;
+use App\Models\LogicalServer;
+use App\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller

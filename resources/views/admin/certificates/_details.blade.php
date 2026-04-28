@@ -58,7 +58,7 @@
             {{ trans('cruds.certificate.fields.logical_servers') }}
         </th>
         <td colspan="5">
-            @foreach($certificate->logical_servers as $server)
+            @foreach($certificate->logicalServers as $server)
                 <a href="{{ route('admin.logical-servers.show', $server->id) }}">
                     {{ $server->name }}
                 </a>

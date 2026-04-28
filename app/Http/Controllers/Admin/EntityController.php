@@ -8,10 +8,10 @@ use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
 use App\Services\IconUploadService;
 use Gate;
-use Mercator\Core\Models\Database;
-use Mercator\Core\Models\Entity;
-use Mercator\Core\Models\MApplication;
-use Mercator\Core\Models\Process;
+use App\Models\Database;
+use App\Models\Entity;
+use App\Models\MApplication;
+use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityController extends Controller

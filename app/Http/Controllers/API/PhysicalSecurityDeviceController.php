@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\PhysicalSecurityDevice;
+use App\Models\PhysicalSecurityDevice;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSecurityDeviceController extends APIController

@@ -74,7 +74,7 @@ class GlobalSearchController extends Controller
         }
 
         foreach ($this->models as $model => $translation) {
-            $modelClass = 'Mercator\\Core\\Models\\'.$model;
+            $modelClass = 'App\\Models\\'.$model;
             $query = $modelClass::query();
 
             $fields = property_exists($modelClass, 'searchable') ? $modelClass::$searchable : [];

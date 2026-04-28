@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateMApplicationRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\MApplication;
+use App\Models\MApplication;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationController extends APIController

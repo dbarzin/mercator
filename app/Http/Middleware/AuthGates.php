@@ -6,8 +6,8 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
-use Mercator\Core\Models\Role;
-use Mercator\Core\Models\User;
+use App\Models\Role;
+use App\Models\User;
 
 class AuthGates
 {

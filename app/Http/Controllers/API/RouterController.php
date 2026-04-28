@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateRouterRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Router;
+use App\Models\Router;
 use Symfony\Component\HttpFoundation\Response;
 
 class RouterController extends APIController

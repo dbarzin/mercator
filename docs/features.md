@@ -21,7 +21,7 @@ Nodes are positioned by a physics engine (attraction / repulsion), which allows 
 
 This mode is ideal for **intuitive exploration**.
 
-🔍 See also the [interface overview](./application.md/#map-exploration)
+🔍 See also the [interface overview](application.md/#exploration)
 
 ## Dependencies
 
@@ -35,7 +35,7 @@ Dependencies are directed and organised by level, which allows you to:
 
 This mode is ideal for **structured analysis**.
 
-🔍 See also [interface overview](./application.md/#dependency-analysis)
+🔍 See also [interface overview](./application.md/#dependencies)
 
 ---
 

@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateOperationRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Operation;
+use App\Models\Operation;
 use Symfony\Component\HttpFoundation\Response;
 
 class OperationController extends APIController

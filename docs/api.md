@@ -66,7 +66,7 @@ The list of APIs can be found in /route/api.php
 - [/api/external-connected-entities](./model.md#connected-external-entities)
 - [/api/network-switches](./model.md#network-switches)
 - [/api/routers](./model.md#logical-routers)
-- [/api/security-devices](./model.md#security-equipments)
+- [/api/security-devices](model.md#security-devices)
 - [/api/dhcp-servers *(usage not recommended)*](./model.md#dhcp-servers)
 - [/api/dnsservers *(usage not recommended)*](./model.md#dns-servers)
 - [/api/clusters](./model.md#clusters)
@@ -90,16 +90,20 @@ The list of APIs can be found in /route/api.php
 - [/api/physical-switches](./model.md#physical-switches)
 - [/api/physical-routers](./model.md#physical-routers)
 - [/api/wifi-terminals](./model.md#wifi-terminals)
-- [/api/physical-security-devices](./model.md#physical-security-equipments)
+- [/api/physical-security-devices](./model.md#physical-security-devices)
 - [/api/wans](./model.md#wans)
 - [/api/mans](./model.md#mans)
 - [/api/lans](./model.md#lans)
 - [/api/physical-links](./model.md#physical-links)
 
 #### Endpoints for Configuration
+
+- [/api/users](./model.md#users)
+- [/api/roles](./model.md#roles)
+- [/api/permissions](./model.md#permissions) *access not allowed yet*
 - [/api/documents](./model.md#documents)
 
-The unique feature of this endpoint is that it allows you to either upload or download a document.
+The unique feature of the endpoint **documents** is that it allows you to either upload or download a document.
 The syntax is as follows:
 ##### Example of adding a document in Mercator:
 ```bash
@@ -123,6 +127,10 @@ DOC_ID=$(echo "$RESPONSE" | jq -r '.id // empty' 2>/dev/null)
         -o "$OUTFILE" \
         -w "HTTP %{http_code}\n"
 ```
+
+#### Endpoint for queries
+
+- /api/queries
 
 #### Endpoints for Reports
 

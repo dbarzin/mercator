@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Report;
 // ecosystem
 use Carbon\Carbon;
 use Gate;
-use Mercator\Core\Models\DataProcessing;
+use App\Models\DataProcessing;
 use Symfony\Component\HttpFoundation\Response;
 
 // information system

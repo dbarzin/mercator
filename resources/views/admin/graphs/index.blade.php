@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    {{ trans('cruds.graph.title_singular') }} {{ trans('global.list') }}
+    {{ trans('cruds.graph.index') }}
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
 
         <div class="card flex-grow-1" style="overflow: hidden; display: flex; flex-direction: column;">
             <div class="card-header py-2 px-3">
-                {{ trans('cruds.graph.title_singular') }} {{ trans('global.list') }}
+                {{ trans('cruds.graph.index') }}
             </div>
             <div class="card-body p-2" style="overflow-y: auto; flex: 1;">
                 <table id="dataTable" class="table table-bordered table-striped table-hover datatable w-100">

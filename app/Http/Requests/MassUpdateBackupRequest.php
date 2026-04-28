@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Mercator\Core\Models\Backup;
+use App\Models\Backup;
 use Symfony\Component\HttpFoundation\Response;
 
 class MassUpdateBackupRequest extends FormRequest

@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateBuildingRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Building;
+use App\Models\Building;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends APIController

@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateBayRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Bay;
+use App\Models\Bay;
 use Symfony\Component\HttpFoundation\Response;
 
 class BayController extends APIController

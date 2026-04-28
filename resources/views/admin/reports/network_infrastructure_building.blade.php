@@ -1,6 +1,6 @@
 {{-- Loop Protection --}}
 @php
-    /** @var \Mercator\Core\Models\Building $building */
+    /** @var App\Models\Building $building */
     $visited = $visited ?? [];
 
     // Si déjà vu, on coupe pour éviter boucle

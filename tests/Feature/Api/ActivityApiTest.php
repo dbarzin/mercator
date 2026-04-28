@@ -8,7 +8,7 @@ use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Passport;
-use Mercator\Core\Models\Activity;
+use App\Models\Activity;
 
 uses(RefreshDatabase::class);
 

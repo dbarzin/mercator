@@ -277,7 +277,7 @@ return [
         'title' => 'Racks',
         'title_singular' => 'Rack',
     ],
-    'bpmns' => [
+    'bpmn' => [
         'description' => 'Business Process Management Notation',
         'fields' => [
             'name' => 'Nom',
@@ -785,6 +785,7 @@ return [
         'title_singular' => 'Passerelle d’entrée depuis l’extérieur',
     ],
     'graph' => [
+        'index' => 'Liste des cartes',
         'description' => 'Dessin de la cartographie du système d\'information',
         'fields' => [
             'name' => 'Nom',

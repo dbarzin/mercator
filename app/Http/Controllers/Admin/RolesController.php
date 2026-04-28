@@ -10,8 +10,8 @@ use Gate;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Mercator\Core\Models\Permission;
-use Mercator\Core\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller

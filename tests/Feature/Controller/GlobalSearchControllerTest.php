@@ -6,8 +6,8 @@ use Database\Seeders\RolesTableSeeder;
 use Database\Seeders\RoleUserTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mercator\Core\Models\User;
-use Mercator\Core\Models\ZoneAdmin;
+use App\Models\User;
+use App\Models\ZoneAdmin;
 
 uses(RefreshDatabase::class);
 

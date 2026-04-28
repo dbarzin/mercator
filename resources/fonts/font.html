@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test fonte BPMN</title>
+    <style>
+        @font-face {
+            font-family: "bpmn";
+            src: url("./bpmn.ttf") format("truetype");
+            font-display: swap;
+        }
+
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .bpmn-icon {
+            font-family: "bpmn", sans-serif;
+            font-size: 40px;
+            line-height: 1;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            /* Amélioration du rendu des icônes */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        /* Optionnel : pour debug */
+        .bpmn-icon:hover {
+            background: #e0e0e0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test de la fonte BPMN</h1>
+
+    <div>
+        <i class="bpmn-icon">&#xE845;</i>
+        <i class="bpmn-icon">&#xE846;</i>
+        <i class="bpmn-icon">&#xE847;</i>
+        <i class="bpmn-icon">&#xE848;</i>
+        <i class="bpmn-icon">&#xE849;</i>
+    </div>
+
+    <br><br>
+
+    <div>
+        <i class="bpmn-icon">&#xE8E1;</i>
+        <i class="bpmn-icon">&#xE8E2;</i>
+        <i class="bpmn-icon">&#xE873;</i>
+    </div>
+</body>
+</html>

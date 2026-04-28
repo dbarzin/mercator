@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateTaskRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\Task;
+use App\Models\Task;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends APIController

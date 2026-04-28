@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateSecurityDeviceRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\SecurityDevice;
+use App\Models\SecurityDevice;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityDeviceController extends APIController

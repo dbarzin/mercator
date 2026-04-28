@@ -2,14 +2,14 @@
 
 [<img src="/mercator/images/model.png" width="700">](images/model.png)
 
-### GDPR view
+## GDPR view
 
 The GDPR view contains all the data required to maintain the data processing register, and provides a link with the
 processes, applications, and information used by the information system.
 
 This view is used to fulfill the obligations set out in article 30 of the GDPR.
 
-#### Register
+## Register
 
 The register of processing activities contains the information required by article 30.1 of the GDPR.
 
@@ -60,7 +60,7 @@ An information can be linked with a data processing from a data processing objec
 An application can be linked to a data processing from a data processing object.  
 A document can be linked to a data processing from a data processing object.
 
-#### Security measures
+## Security measures
 
 This table identifies the security measures applied to processes and applications.
 
@@ -79,7 +79,7 @@ By default, this table is populated with the security measures of ISO 27001:2022
 | updated_at  | timestamp    | Date of update      |
 | deleted_at  | timestamp    | Date of deletion    |
 
-### Ecosystem view
+## Ecosystem view
 
 The ecosystem view describes all the entities or systems that revolve around the information system considered in the
 mapping.
@@ -89,7 +89,7 @@ mapping.
 This view not only delimits the scope of the mapping, but also provides an overall view of the ecosystem without being
 limited to the individual study of each entity.
 
-#### Entities
+## Entities
 
 Entities are a part of the organization (e.g.: subsidiary, department, etc.) or related to the information system to be
 mapped.
@@ -127,7 +127,7 @@ An application can be linked with an entity (as operations manager) from these t
 
 In the app, a database can be linked with an entity (as operations manager) from these two objects.
 
-#### Relationships
+## Relationships
 
 Relationships represent a link between two entities or systems.
 
@@ -174,7 +174,7 @@ The financial values of a contract can be indicated in dedicated fields.
 
 ---
 
-### Business view of the information system
+## Business view of the information system
 
 The business view of the information system describes all the organization's business processes and the players
 involved, independently of the technological choices made by the organization and the resources made available to it.
@@ -184,7 +184,7 @@ involved, independently of the technological choices made by the organization an
 The business view is essential, as it allows you to reposition technical elements in their business environment, and
 thus understand their context of use.
 
-#### Macro-processes
+## Macro-processes
 
 Macro-processes represent sets of processes.
 
@@ -214,7 +214,7 @@ This default configuration can be changed in the menu Configuration > Parameters
 
 In the application, a process can be linked with a macro-process from these two objects.
 
-#### Processes
+## Processes
 
 Processes are a set of activities designed to achieve a goal. The process produces value-added information (
 output) (in the form of deliverables) from information (input) produced by other processes.
@@ -273,7 +273,7 @@ A GDPR registry data processing can be linked with a process from a registry dat
 A security measure can be linked with an application from the "Assign security controls" button.  
 This button is in the GDPR view and visible in the list of Security controls objects.
 
-#### Activities
+## Activities
 
 An activity is a step required to carry out a process. It corresponds to a speciﬁc know-how and not necessarily to an
 organizational structure of the company.
@@ -308,7 +308,7 @@ An application can be linked with an activity from these two objects.
 
 In the app, the "Impact Type" and "Severity" fields are managed in a separate table.
 
-##### Impacts
+### Impacts
 
 Impacts are the consequences of the occurrence of a risk during an activity.  
 Impacts are only accessible through "activities" objects.
@@ -335,7 +335,7 @@ Impacts are only accessible through "activities" objects.
 | created_at  | timestamp     | Date of creation                                         |
 | updated_at  | timestamp     | Date of update                                           |
 
-#### Operations
+## Operations
 
 An operation is made up of actors and tasks.
 
@@ -362,7 +362,7 @@ In the app, an activity can be linked with an operation from these two objects.
 An actor can be linked to an operation from the object "operation".  
 A task can be linked to an operation from the object "operation".
 
-#### Tasks
+## Tasks
 
 A task is an elementary activity performed by an organizational function and constituting an indivisible unit of work in
 the value-added chain of a process.
@@ -384,7 +384,7 @@ The data model export lists operations linked to a task.
 
 In the app, an operation can be linked to a task from the object "operation".
 
-#### Actors
+## Actors
 
 An actor is a representative of a business role who performs operations, uses applications, and makes decisions within
 processes. This role can be carried by a person, a group of people, or an entity.
@@ -409,7 +409,7 @@ The data model export lists operations linked with an actor.
 
 In the app, an operation can be linked with an actor from the object "operation".
 
-#### Information
+## Information
 
 Information is data processed by a computer.
 Information can be inherited from another information.
@@ -458,7 +458,7 @@ field **informations***
 
 ---
 
-### Applications view
+## Applications view
 
 The application view is used to describe part of what is classically referred to as the "computer system".
 
@@ -466,7 +466,7 @@ The application view is used to describe part of what is classically referred to
 
 This view describes the technological solutions that support business processes, mainly applications.
 
-#### Applications blocks
+## Applications blocks
 
 An application block represents a set of applications.
 
@@ -489,7 +489,7 @@ applications, etc.
 
 In the app, an application can be linked to an application block from these two objects.
 
-#### Applications
+## Applications
 
 An application is a coherent set of IT objects (executables, programs, data, etc.). It is a grouping of application
 services.
@@ -587,7 +587,7 @@ This button is present in the GDPR view and visible in the list of Security cont
 In the app, a container can be linked with an application from these two objects.  
 In the app, the *major events* field is managed in a separate table.
 
-##### Major events
+### Major events
 
 Major events are the main events undergone by an application during its operation.  
 Major events are only accessible through application objects.
@@ -607,7 +607,7 @@ They are neither importable nor exportable through the graphics tool.
 | created_at       | timestamp    | Date of creation                                               |
 | updated_at       | timestamp    | Date of update                                                 |
 
-#### Applications services
+## Applications services
 
 An application service is a specific service provided to a user to perform specific tasks related to their role in the
 organisation.
@@ -639,7 +639,7 @@ There are two fields containing the same information in the data model export, *
 *applications*.  
 The connection with application objects is made through the *applications* field.
 
-#### Application modules
+## Application modules
 
 An application module is a component of an application characterized by functional coherence and technological
 homogeneity.
@@ -663,7 +663,7 @@ The export of the data model lists application services linked with an applicati
 
 In the app, an application service can be linked to an application module from these two objects.
 
-#### Databases
+## Databases
 
 A database is a set of structured and ordered information meant for computed processing.
 
@@ -707,7 +707,7 @@ In the app, an application can be linked with a database from these two objects.
 In the app, a logical server can be linked with a database from these two objects.  
 In the app, a container can be linked with a database from these two objects.
 
-#### Application Flows
+## Application Flows {#flows}
 
 An application flow is an exchange of information between a sender and a receiver (application, application service,
 application module, or database).
@@ -746,14 +746,14 @@ The  ***device***_ for source_id or dest_id can be: :
 
 In the app, an information can be linked with an application flow from an application flow object.
 
-### Administration areas
+## Administration areas
 
 *Nota*: OVI is coming from the French military programme law. The closest equivalents in EU regulations are OES
 (Operators of Essential Services, EU 2016/1148, NIS) and EE (Essential Entities, EU 2022/2555, NIS 2).
 
 [<img src="/mercator/images/administration.png" width="400">](images/administration.png)
 
-#### Administration area
+## Administration area
 
 An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more)
 administrator(s).
@@ -773,7 +773,7 @@ An administration zone is made up of Active Directory (AD) directory services an
 | updated_at  | timestamp    | Date of update   |
 | deleted_at  | timestamp    | Date of deletion |
 
-#### Administration directory services
+## Administration directory services
 
 An administration directory service is an application that collects data on a company's users or IT equipment, enabling
 them to be administered.
@@ -795,7 +795,7 @@ It can be an inventory tool used to manage changes or tickets, or a mapping tool
 | updated_at    | timestamp    | Date of update                   |
 | deleted_at    | timestamp    | Date of deletion                 |
 
-#### Active Directory forests / LDAP tree structure
+## Active Directory forests / LDAP tree structure
 
 These objects represent an organized grouping of Active Directory domains or LDAP trees.
 
@@ -814,7 +814,7 @@ These objects represent an organized grouping of Active Directory domains or LDA
 | updated_at    | timestamp    | Date of update                                  |
 | deleted_at    | timestamp    | Date of deletion                                |
 
-#### Active Directory domains / LDAP
+## Active Directory domains / LDAP
 
 Active Directory domains / LDAP are company IT directories. They contains user and computer accounts, contacts,
 objects rights, and a part of IT policies (e.g. Group Policy Object - GPO).
@@ -841,7 +841,7 @@ The data model esport lists AD forests / LDAP trees linked with an AD domain / L
 In the app, an AD forest / LDAP tree can be linked with an AD domain / LDAP from these two objects.  
 A logical server can be linked with an AD domain / LDAP from these two objects.
 
-#### Users
+## Users
 
 Users are user accounts with privileged rights on IT systems.
 
@@ -870,7 +870,7 @@ In the app, an user can be defined as administrator of an application from an ap
 
 ---
 
-### Logical infrastructure
+## Logical infrastructure
 
 The logical infrastructure view corresponds to the logical distribution of the network.
 
@@ -879,7 +879,7 @@ The logical infrastructure view corresponds to the logical distribution of the n
 It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that
 handles the traffic.
 
-#### Networks
+## Networks
 
 Networks are a set of logically interconnected devices that exchange information.
 
@@ -908,7 +908,7 @@ In the app, the field for the authenticity need ("security_need_auth") is hidden
 entities subject to the regulation (EU) 2022/2554 (DORA).  
 This default configuration can be changed in the menu Configuration > Parameters.
 
-#### Subnetworks
+## Subnetworks
 
 Subnetworks are a logical subdivision of a larger network.
 
@@ -939,7 +939,7 @@ Subnetworks are a logical subdivision of a larger network.
 
 The field "connected_subnets_id" is a foreign key. However, this one doesn't seem to be used.
 
-#### External input gateways
+## External input gateways
 
 Gateways are components used to connect a local network to the outside world.
 
@@ -960,7 +960,7 @@ Gateways are components used to connect a local network to the outside world.
 
 In the application, a subnet can be linked with a gateway from these two objects.
 
-#### Connected external entities
+## Connected external entities
 
 Connected external entities represent external entities connected to the network.
 
@@ -992,7 +992,7 @@ The data model export lists subnets and documents attached to a connected extern
 In the app, a subnet can be linked to a connected external entity from a connected external entity object.
 A document can be attached to a connected external entity from a connected external entity object.
 
-#### Network switches
+## Network switches
 
 Network switches are the components that manage connections between the various servers on a network.
 
@@ -1015,7 +1015,7 @@ The data model export lists physical switches and VLANs linked with a network sw
 In the app, a VLAN can be linked with a network switch from these two objects.  
 A physical switch can be linked with a network switch from these two objects.
 
-#### Logical routers
+## Logical routers
 
 Logical routers are logical components that manage connections between different networks.
 
@@ -1039,7 +1039,7 @@ The data model export lists physical routers linked to a logical router.
 
 In the app, a physical router can be linked to a logical router from these two objects.
 
-#### Security devices
+## Security devices {#security-devices}
 
 Security devices are components used for network supervision, incident detection, equipment protection, and information
 system security.
@@ -1074,7 +1074,7 @@ The data model export lists physical security device and applications linked to 
 In the app, physical security device can be linked to a logical security device from these two objects.  
 An application can be linked a to logical security device from these two objects.
 
-#### DHCP servers
+## DHCP servers
 
 ```markdown
 ***NOTE***: The DHCP servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
@@ -1099,7 +1099,7 @@ DHCP servers are physical or virtual devices that manage a network's IP addresse
 | updated_at  | timestamp    | Date of update                  |
 | deleted_at  | timestamp    | Date of deletion                |
 
-#### DNS servers
+## DNS servers
 
 ```markdown
 ***NOTE***: The DNS servers are kept for backward compatibility and to be compliant with ANSSI's guidelines.
@@ -1124,7 +1124,7 @@ Domain Name System (DNS) servers are physical or virtual devices that convert a 
 | updated_at  | timestamp    | Date of update                |
 | deleted_at  | timestamp    | Date of deletion              |
 
-#### Clusters
+## Clusters
 
 Clusters are a set of logical servers hosted on one or more physical servers.
 
@@ -1151,7 +1151,7 @@ In the app, a logical router can be linked to a cluster from a cluster object.
 A logical server can be linked to a cluster from these two objects.  
 A physical server can be linked to a cluster from these two objects.
 
-#### Logical servers
+## Logical servers
 
 Logical servers are a logical breakdown of a physical server. If the physical server is not virtualized, it is split
 into a single logical server.
@@ -1218,7 +1218,7 @@ A container can be linked with a logical server from a container object.
 The "documents" field doesn't appear to be used in a logical server's data model.
 
 
-#### Backup Plans
+## Backup Plans
 
 Backup plans allow you to associate the **implemented backup strategies** with each **logical server**.  
 These strategies describe:  
@@ -1265,7 +1265,7 @@ This table serves as the reference for auditing backup compliance, identifying u
 | 6  | Mirror                    | 
 
 
-#### Containers
+## Containers
 
 Containers are part of virtualization systems. They can operate in clusters or in isolation.
 on internal or external (cloud) logical servers.
@@ -1294,7 +1294,7 @@ In the app, an application can be linked to a container from these two objects.
 A database can be linked to a container from these two objects.  
 A logical server can be linked to a container from a container object.
 
-#### Logical flows
+## Logical flows
 
 Logical flows describe relationships at layers 3 and 4 of the OSI model.
 
@@ -1341,7 +1341,7 @@ Source and destination devices can be:
 | clusters                 |   ✅    |      ✅      |
 | Subnetworks              |   ✅    |      ✅      |
 
-#### Certificates
+## Certificates
 
 Electronic certificates are used to identify and authenticate services and individuals, as well as to encrypt exchanges.
 
@@ -1376,7 +1376,7 @@ The "last_notification" field is not used and therefore is absent in the app.
 
 The data model export lists applications and logical servers linked with a certificate.
 
-#### VLANs
+## VLANs
 
 A VLAN (Virtual Local Area Network) or virtual LAN enables equipment to be logically grouped together, free from
 physical constraints.
@@ -1403,7 +1403,7 @@ In the app, a VLAN can be linked to a logic switch from these two objects.
 
 ---
 
-### Physical infrastructure
+## Physical infrastructure
 
 The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
 
@@ -1411,7 +1411,7 @@ The physical infrastructure view describes the physical equipment that makes up 
 
 This view corresponds to the geographical distribution of network equipment within the various sites.
 
-#### Sites
+## Sites
 
 Sites are geographical locations that bring together a group of people and/or resources.
 
@@ -1431,7 +1431,7 @@ Sites are geographical locations that bring together a group of people and/or re
 
 In the app, a building / room can be linked with a site from a building / room objet.
 
-#### Buildings / Rooms
+## Buildings / Rooms
 
 Buildings or rooms represent the location of people or resources within a site.
 
@@ -1456,7 +1456,7 @@ Buildings or rooms represent the location of people or resources within a site.
 In the app, a building / room or a site can be linked with a building / room from a building object /
 room.
 
-#### Racks
+## Racks
 
 Racks are technical cabinets housing computer network or telephony equipment.
 
@@ -1476,7 +1476,7 @@ Racks are technical cabinets housing computer network or telephony equipment.
 
 In the app, a rack can be linked to a building / room from a rack objet.
 
-#### Physical servers
+## Physical servers
 
 Physical servers are physical machines running a set of IT services.
 
@@ -1529,7 +1529,7 @@ have been gathered into the following table:
 | next_update        | date         | Date of next upgrade                |
 | physical_swicth_id | int unsigned | ID of related Physical switch       |
 
-#### Workstations
+## Workstations
 
 Workstations are physical machines that enable a user to access the information system.
 
@@ -1592,7 +1592,7 @@ been gathered in the following table:
 
 The "vendor", "product" and "version" fields are not used and therefore are absent of the app.
 
-#### Storage infrastructures
+## Storage infrastructures
 
 ```markdown
 ***NOTE***: The storage infrastructures are kept for compatibility, but this table is not maintained anymore.
@@ -1628,7 +1628,7 @@ network (SAN), hard disk...
 
 The "vendor", "product" and "version" fields are not used and therefore are absent of the app.
 
-#### Peripherals
+## Peripherals
 
 Peripherals are physical components connected to a workstation to add new functions (e.g. keyboard, mouse, printer,
 scanner, etc.).
@@ -1662,7 +1662,7 @@ The data model export lists applications using a peripheral.
 
 In the app, an application can be linked to a peripheral from a peripheral object.
 
-#### Phones
+## Phones
 
 Landlines and mobile phones belonging to the organization.
 
@@ -1688,7 +1688,7 @@ The "vendor", "product" and "version" fields are not used and therefore are abse
 The filed "physical_switch_id" is not used and therefore is absent in the app. However, a phone object can be linked
 with a network switch (either physical or logical) through a physical link object.
 
-#### Physical switches
+## Physical switches
 
 Physical switches are physical components that manage connections between different servers within a network.
 
@@ -1718,7 +1718,7 @@ The data model export lists logical network switches linked with a physical swit
 
 In the app, a physical switch can be linked with a logical network switch from these two objects.
 
-#### Physical routers
+## Physical routers
 
 Physical routers are physical components that manage connections between different networks.
 
@@ -1752,7 +1752,7 @@ In the app, a physical router can be linked to a logical router (denoted as "Rou
 objects.  
 A VLAN can be linked to a physical router from a physical router object.
 
-#### WiFi terminals
+## WiFi terminals
 
 WiFi hotspots are hardware devices that enable access to the WiFi wireless network.
 
@@ -1777,7 +1777,7 @@ WiFi hotspots are hardware devices that enable access to the WiFi wireless netwo
 | updated_at  | timestamp    | Date of update                      |
 | deleted_at  | timestamp    | Date of deletion                    |
 
-#### Physical security device
+## Physical security device {#physical-security-devices}
 
 Physical security device includes components for network supervision, incident detection, equipment protection, and
 information system security.
@@ -1808,7 +1808,7 @@ The data model export lists logical security devices linked to a physical securi
 
 In the app, a logical security device can be linked to a physical security device from these two objects.
 
-#### Physical links
+## Physical links
 
 Physical links represent the cables between physical or logical objects.  
 Logical objects can have physical links, for example within a virtualized network.  
@@ -1848,7 +1848,7 @@ Source and destination devices can be:
 | Logical switch           |   ✅    |      ✅      |
 | Logical router           |   ✅    |      ✅      |
 
-#### WANs
+## WANs
 
 WANs (Wide Area Networks) are computer networks linking equipment over long distances. They generally interconnect MANs
 or LANs.
@@ -1872,7 +1872,7 @@ The data model export lists LANs and MANs linked to a WAN.
 In the app, a LAN can be linked to a WAN from a WAN object.  
 A MAN can be linked to a WAN from a WAN object.
 
-#### MANs
+## MANs
 
 MANs (Middle Area Networks) are computer networks linking equipment over medium-sized distances. They generally
 interconnect LANs.
@@ -1895,7 +1895,7 @@ The data model export lists WANs and LANs linked to a MAN.
 In the app, a WAN can be linked to a MAN from a WAN object.  
 A LAN can be linked to a MAN from a MAN object.
 
-#### LANs
+## LANs
 
 LANs (Local Area Networks) are computer networks linking equipment over a small geographical area.
 
@@ -1919,11 +1919,11 @@ The data model export lists MANs and WANs linked to a LAN.
 In the app, a MAN can be linked to a LAN from a MAN object.  
 A WAN can be linked to a LAN from a WAN object.
 
-### Configuration
+## Configuration
 
 Dans le menu configuration, on trouve la partie documents.
 
-#### documents
+## documents
 
 Thsi part allow to see all attached documents, including specific image (icons)
 
@@ -1945,7 +1945,7 @@ Thsi part allow to see all attached documents, including specific image (icons)
 - The document is created in docs directory, referenced by its ID
 - The document is not inserted in the database.
 
-##### Exemple of a document fields for a specific image of firewall:
+### Exemple of a document fields for a specific image of firewall:
 
 ```json
     "id": 1,
@@ -1958,5 +1958,61 @@ Thsi part allow to see all attached documents, including specific image (icons)
 "updated_at": "2026-03-30T08:05:46.000000Z"
 ```
 
-⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be
-used by another asset of the same category as soon as there is, a least, one asset in the category. 
+⚠️ From user interface of mercator, if a document of specific image (personnalized icon) is created, This icon might be used by another asset of the same category as soon as there is, a least, one asset in the category. 
+
+#### users
+
+This part allows to see the mercator users list and their associated link to roles.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*users*</span> | `/api/users` |
+
+
+| Field             | Type             | Description               |
+|-------------------|------------------|---------------------------|
+| id                | int(10) unsigned | auto_increment            |
+| login             | varchar(255)     | Login User Id |
+| name              | varchar(255)     | Username  |
+| email             | varchar(255)     | User email |
+| email_verified_at | datetime         | Email verification date |
+| password          | varchar(255)     | User password   |
+| remember_token    | varchar(255)     | Session duration           |
+| granularity       | int(11)          | Display level by default for results (1, 2, 3) |
+| roles             | List int [,]     | IDs list of associated roles |
+| language          | varchar(2)       | User Language ( english, french, german,) |
+| created_at        | timestamp        | Date of creation                       |
+| updated_at        | timestamp        | Date of update                         |
+| deleted_at        | timestamp        | Date of deletion                       |
+
+#### Roles
+
+This part allows to see mercator roles list.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*roles*</span> | `/api/roles` |
+
+| Field      | Type             | Description          |
+|------------|------------------|----------------------|
+| id         | int(10) unsigned | auto_increment       |
+| title      | varchar(255)     | Role title           |
+| created_at | timestamp        | Date of creation     |
+| updated_at | timestamp        | Date of update       |
+| deleted_at | timestamp        | Date of deletion     |
+
+#### Permissions
+
+This part allows to see all mercator permissions than can be allocated to roles.
+
+| Table                                         | api              |
+|:----------------------------------------------|:-----------------|
+| <span style="color: blue;">*permissions*</span> | `/api/permissions` |
+
+| Field      | Type             | Description          |
+|------------|------------------|----------------------|
+| id         | int(10) unsigned | auto_increment       |
+| title      | varchar(255)     | Role title           |
+| module     | varchar(255)     |                      |
+| created_at | timestamp        | Date of creation     |
+| updated_at | timestamp        | Date of update       |

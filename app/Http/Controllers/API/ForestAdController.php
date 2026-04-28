@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateForestAdRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\ForestAd;
+use App\Models\ForestAd;
 use Symfony\Component\HttpFoundation\Response;
 
 class ForestAdController extends APIController

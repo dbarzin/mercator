@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePhysicalSwitchRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mercator\Core\Models\PhysicalSwitch;
+use App\Models\PhysicalSwitch;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSwitchController extends APIController
