@@ -353,6 +353,7 @@ Route::middleware(['api.protected'])->group(function () {
     Route::resource('roles', API\RoleController::class);
 
     // Queries
+    Route::get('queries/execute/{query}', [API\QueryController::class, 'execute'])->name('api.queries.execute');
     Route::resource('queries', API\QueryController::class);
 
     // =======================================
