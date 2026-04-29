@@ -64,8 +64,12 @@ class QueryController extends Controller
         abort_if(Gate::denies('query_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $query = SavedQuery::query()->create($request->validated());
+        $query->user_id = auth()->id();
+        $query->save();
 
-        return response()->json($query, Response::HTTP_CREATED);
+        // return response()->json($query, Response::HTTP_CREATED);
+        return redirect()
+            ->route('admin.queries.index');
     }
 
     /**
