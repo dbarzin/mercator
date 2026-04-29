@@ -244,7 +244,7 @@ celui-ci.
 | security_need_t    | int          | Traçabilité                         |
 | security_need_auth | int          | Authenticité                        |
 | macroprocess_id    | int unsigned | Référence vers le macro-processus   |
-| activities         | List int [,] | Liste d'id des activitées liées     |
+| activities         | List int [,] | Liste d'id des activités liées     |
 | entities           | List int [,] | Liste d'id des entitées liées       |
 | informations       | List int [,] | Liste d'id des informations liées   |
 | applications       | List int [,] | Liste d'id des applications liées   |
@@ -295,15 +295,15 @@ pas forcément à une structure organisationnelle de l’entreprise.
 | recovery_time_objective     | int signed   | RTO, Temps cible de rétablissement de l'activité |
 | maximum_tolerable_downtime  | int signed   | Durée Maximale Tolérable de perturbation (DMTP)  |
 | recovery_point_objective    | int signed   | RPO, Point temporel de restauration des données  |
-| maximum_tolerable_data_loss | int signed   | Perte de Données Maximale Admissble (PDMA)       |
+| maximum_tolerable_data_loss | int signed   | Perte de Données Maximale Admissible (PDMA)       |
 | drp                         | text         | Description du plan de reprise d'activité (PRA)  |
 | drp_link                    | varchar(255) | Lien (URL) vers le PRA                           |
 | created_at                  | timestamp    | Date de création                                 |
 | updated_at                  | timestamp    | Date de mise à jour                              |
 | deleted_at                  | timestamp    | Date de suppression                              |
 
-DMTP : Temps d'interruption maximale avant que les conséquences ne se soient critiques ou ne deviennent innaceptables.  
-PDMA : perte de données maximales avant des conséquences critiques ou innaceptables.
+DMTP : Temps d'interruption maximale avant que les conséquences ne se soient critiques ou ne deviennent inacceptables.  
+PDMA : perte de données maximales avant des conséquences critiques ou inacceptables.
 
 L'export du modèle de données référence les processus, opérations et applications rattachées à une activité.
 
@@ -349,7 +349,7 @@ Une opération est composée d’acteurs et de tâches.
 | process_id  | int unsigned | Référence vers le processus dont fait partie l'opération |
 | actors      | List int [,] | Liste d'id des acteurs liés                              |
 | tasks       | List int [,] | Liste d'id des taches liées                              |
-| activities  | List int [,] | Liste d'id des activitées liées                          |
+| activities  | List int [,] | Liste d'id des activités liées                          |
 | created_at  | timestamp    | Date de création                                         |
 | updated_at  | timestamp    | Date de mise à jour                                      |
 | deleted_at  | timestamp    | Date de suppression                                      |
@@ -529,12 +529,12 @@ a un serveur logique par serveur physique.
 | product              | varchar(255) | Produit d'un éditeur pour recherche CPE                             |
 | version              | varchar(255) | Version d'un produit pour recherche CPE                             |
 | patching_frequency   | int          | Fréquence des mises à jour en part. de sécurité                     |
-| entities             | List int [,] | Liste d'id de(s) entitée(s) liée(s)                                 |
-| processes            | List int [,] | Liste d'id de(s) proces(ses) lié(s)                                 |
+| entities             | List int [,] | Liste d'id de(s) entité(s) liée(s)                                 |
+| processes            | List int [,] | Liste d'id de(s) process(es) lié(s)                                 |
 | services             | List int [,] | Liste d'id de(s) service(s) lié(s)                                  |
 | databases            | List int [,] | Liste d'id de(s) database(s) liée(s)                                |
 | logical_servers      | List int [,] | Liste d'id de(s) serveur(s) logique(s) servant(s) cette application |
-| activities           | List int [,] | Liste d'id de(s) activitée(s) associée(s)                           |
+| activities           | List int [,] | Liste d'id de(s) activité(s) associée(s)                           |
 | containers           | List int [,] | Liste d'id de(s) containers associé(s)                              |
 | created_at           | timestamp    | Date de création                                                    |
 | updated_at           | timestamp    | Date de mise à jour                                                 |
@@ -583,7 +583,7 @@ Ce bouton est présent dans la vue du RGDP et visible dans la liste des objets M
 Dans l'application, un conteneur peut être rattaché à une application depuis ces deux objets.  
 Dans l'application, le champ *évènements majeurs* est géré dans une table à part.
 
-#### Evènements majeurs
+#### Évènements majeurs
 
 Les évènements majeurs sont les principaux évènements subis par une application au cours de son exploitation.  
 Les évènements majeurs ne sont accessibles qu'à travers les objets applications.
@@ -727,7 +727,7 @@ Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comm
 | <span style="color: purple;">*device***_dest_id   | int unsigned | Lien vers l'actif destinataire            |
 | crypted                                           | tinyint(1)   | Le flux est chiffré (1=oui, O=non)        |
 | bidirectional                                     | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non) |
-| nature                                            | varcahr(255) | Nature du flux applicatif                 |
+| nature                                            | varchar(255) | Nature du flux applicatif                 |
 | created_at                                        | timestamp    | Date de création                          |
 | updated_at                                        | timestamp    | Date de mise à jour                       |
 | deleted_at                                        | timestamp    | Date de suppression                       |
@@ -1051,7 +1051,7 @@ Les équipements de sécurité sont des composants permettant la supervision du 
 protection des équipements ou ayant une fonction de sécurisation du système d’information.
 
 Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des
-systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des
+systèmes de prévention d'intrusion (ou IPS : Intrusion Prevention System), des systèmes de surveillance des
 équipements.
 
 | Table                                                | api                     |
@@ -1172,7 +1172,7 @@ est découpé en un seul serveur logique.
 | icon_id            | int unsigned | Référence vers une image spécifique               |
 | type               | varchar(255) | Type du serveur (appli, DB, etc.)                 |
 | active             | tinyint(1)   | Serveur actif (1) ou obsolète (0)                 |
-| attributes         | varchar(255) | Attributs (tages) du serveur                      |
+| attributes         | varchar(255) | Attributs (tags) du serveur                      |
 | description        | longtext     | Description du serveur                            |
 | operating_system   | varchar(255) | Système d'exploitation                            |
 | install_date       | date         | Date d'installation du serveur                    |
@@ -1191,8 +1191,8 @@ est découpé en un seul serveur logique.
 | databases          | List int [,] | Liste d'id de(s)  base(s) de données liée(s)      |
 | cluster_id         | List int [,] | Liste d'id de(s) lien(s) cluster(s)               |
 | physical_servers   | List int [,] | Liste d'id de(s) serveur(s) physiques(s) associés |
-| applications       | List int [,] | Liste d'id de(s) application(s) hebergée(s)       |
-| containers         | List int [,] | Liste d'id de(s) containers hebergé(s)            |
+| applications       | List int [,] | Liste d'id de(s) application(s) hébergés(s)       |
+| containers         | List int [,] | Liste d'id de(s) containers hébergés(s)            |
 | created_at         | timestamp    | Date de création                                  |
 | updated_at         | timestamp    | Date de mise à jour                               |
 | deleted_at         | timestamp    | Date de suppression                               |
@@ -1283,7 +1283,7 @@ sur des serveurs logiques internes ou externes (cloud).
 | id          | int unsigned | auto_increment                               |
 | name        | varchar(255) | Nom du conteneur                             |
 | description | longtext     | Description du conteneur                     |
-| type        | varchar(255) | Type du conteneur (docker, kubernetes, etc.) |
+| type        | varchar(255) | Type du conteneur (docker, Kubernetes, etc.) |
 | icon_id     | int unsigned | Référence vers une image spécifique          |
 | applications | List int [,] | Liste d'id de(s) application(s) liée(s) |
 | databases   | List int [,] | Liste d'id de(s) base(s) de données liée(s)         |
@@ -1497,11 +1497,11 @@ Les serveurs physiques sont des machines physiques exécutant un ensemble de ser
 | description      | longtext     | Description du serveur                               |
 | type             | varchar(255) | Type / modèle du serveur                             |
 | cpu              | varchar(255) | Processeur(s) du serveur                             |
-| memory           | varchar(255) | RAM / mémoive vive du serveur                        |
+| memory           | varchar(255) | RAM / mémoire vive du serveur                        |
 | disk             | varchar(255) | Stockage du serveur                                  | 
 | disk_used        | varchar(255) | Stockage utilisé du serveur                          |
 | configuration    | longtext     | Configuration du serveur                             |
-| operating_system | varchar(255) | Système d'exploitaion du serveur                     |
+| operating_system | varchar(255) | Système d’exploitation du serveur                     |
 | install_date     | datetime     | Date d'installation du serveur                       |
 | update_date      | datetime     | Date de mise à jour du serveur                       |
 | responsible      | varchar(255) | Responsable d'exploitation du serveur                |
@@ -1547,7 +1547,7 @@ Les postes de travail sont des machines physiques permettant à un utilisateur d
 | id                | int unsigned | auto_increment                                                  |
 | name              | varchar(255) | Nom du poste de travail                                         |
 | icon_id           | int unsigned | Référence vers une image spécifique                             |
-| status            | varchar(255) | Status du poste (cyle de vie, incident)                         |
+| status            | varchar(255) | Status du poste (cycle de vie, incident)                         |
 | description       | longtext     | Description du poste de travail                                 |
 | type              | varchar(255) | Type / modèle du poste de travail                               |
 | entity_id         | int unsigned | Référence vers l'entité utilisatrice du poste                   |
@@ -1558,9 +1558,9 @@ Les postes de travail sont des machines physiques permettant à un utilisateur d
 | model             | varchar(255) | Modèle du poste                                                 |
 | serial_number     | varchar(255) | Numéro de série                                                 |
 | cpu               | varchar(255) | Processeur(s) du poste                                          |
-| memory            | varchar(255) | RAM / mémoive vive du poste                                     |
+| memory            | varchar(255) | RAM / mémoire vive du poste                                     |
 | disk              | int signed   | Quantité de stockage interne du poste                           |
-| operating_system  | varchar(255) | Système d'exploitaion du poste                                  |
+| operating_system  | varchar(255) | Système d’exploitation du poste                                  |
 | network_id        | int unsigned | Référence vers le réseau d'appartenance du poste                |
 | address_ip        | varchar(255) | Adresse(s) IP du poste                                          |
 | mac_address       | varchar(255) | Adresse(s) MAC / physique(s) du poste                           |
@@ -1616,7 +1616,7 @@ réseau (NAS), réseau de stockage (SAN), disque dur…
 |:------------|:-------------|:--------------------------------------------|
 | id          | int unsigned | auto_increment                              |
 | name        | varchar(255) | Nom de l'infrastructure de stockage         |
-| type        | varchar(255) | Type de l'infractructure de stockage        |
+| type        | varchar(255) | Type de l’infrastructure de stockage        |
 | description | longtext     | Description de l'infrastructure de stockage |
 | vendor      | varchar(255) | Vendeur / éditeur pour recherche CPE        |
 | product     | varchar(255) | Produit d'un éditeur pour recherche CPE     |
@@ -1804,7 +1804,7 @@ Les équipements de sécurité physique sont des sondes de températures, des ca
 | site_id          | int unsigned | Référence vers le site                                         |
 | building_id      | int unsigned | Référence vers le building / salle                             |
 | bay_id           | int unsigned | Référence vers la baie                                         |
-| security_devices | List int [,] | Liste des id de(s) equipements de sécurité (logiques) associés |
+| security_devices | List int [,] | Liste des id de(s) équipements de sécurité (logiques) associés |
 | address_ip       | varchar(255) | Adresse(s) IP de l'équipement                                  |
 | created_at       | timestamp    | Date de création                                               |
 | updated_at       | timestamp    | Date de mise à jour                                            |
@@ -1941,7 +1941,7 @@ Cette partie permet de voir les documents attachés, mais aussi les icônes pers
 | filename   | varchar(255) | Nom du document avec son extension       |
 | mimetype   | varchar(255) | Type du document. Rempli automatiquement |
 | size       | int unsigned | Remplie automatiquement                  |
-| hash       | longtext     | Hash du docuemnt. Rempli automatiquement |
+| hash       | longtext     | Hash du document. Rempli automatiquement |
 | created_at | timestamp    | Date de création                         |
 | updated_at | timestamp    | Date de mise à jour                      |
 | deleted_at | timestamp    | Date de suppression                      |
@@ -1964,7 +1964,7 @@ Cette partie permet de voir les documents attachés, mais aussi les icônes pers
 
 ⚠️ A partir de l'interface utilisateur, si un document d'icône personnalisé est créé, il peut être utilisé par un asset de même catégorie tant qu'il existe au moins un asset dans la catégorie.
 
-#### utilisateurs
+### utilisateurs
 
 Cette partie permet de voir la liste des utilisateurs de mercator avec le lien sur leur rôle associé.
 
@@ -1989,7 +1989,7 @@ Cette partie permet de voir la liste des utilisateurs de mercator avec le lien s
 | updated_at        | timestamp        | Date de mise à jour                      |
 | deleted_at        | timestamp        | Date de suppression                      |
 
-#### Roles
+### Roles
 
 Cette partie permet de voir la liste des roles des users dans mercator.
 
@@ -2005,7 +2005,7 @@ Cette partie permet de voir la liste des roles des users dans mercator.
 | updated_at | timestamp        | Date de mise à jour  |
 | deleted_at | timestamp        | Date de suppression  |
 
-#### Permissions
+### Permissions
 
 Cette partie permet de voir la liste des permissions qui peuvent être affectées aux roles.
 
