@@ -47,7 +47,6 @@ class QueryController extends Controller
                 'select'   => [],
                 'filters'  => [],
                 'traverse' => [],
-                'depth'    => 2,
                 'output'   => 'list',
                 'limit'    => 100,
             ])),
