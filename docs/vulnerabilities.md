@@ -313,9 +313,6 @@ UNION ALL
 SELECT 'products', COUNT(*) FROM cpe_products
 UNION ALL
 SELECT 'versions', COUNT(*) FROM cpe_versions;
-
--- Date of last synchronization (approximation via updated_at)
-SELECT MAX(updated_at) AS last_sync FROM cpe_versions;
 ```
 
 Under Docker:

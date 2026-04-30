@@ -19,7 +19,7 @@ theme:
     - navigation.sections
     - navigation.expand
     - navigation.top
-    - toc.integrate
+    #- toc.integrate
     - content.code.copy
     - content.action.edit
     - content.action.view
@@ -64,7 +64,7 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
-      toc_depth: 2
+      toc_depth: 3
   - pymdownx.highlight
   - pymdownx.superfences
 
