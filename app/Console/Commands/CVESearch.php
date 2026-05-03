@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Models\ApplicationModule;
-use App\Models\MApplication;
+use App\Models\Application;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Random\RandomException;
@@ -66,7 +66,7 @@ class CVESearch extends Command
         Log::debug('CVESearch - min timestamp', ['published_after' => $minTimestamp]);
 
         // Récupérer les Applications & ApplicationModules & noms à matcher (lowercase)
-        $namesApplications = MApplication::query()
+        $namesApplications = Application::query()
             ->orderBy('name')
             ->pluck('name')
             ->filter();

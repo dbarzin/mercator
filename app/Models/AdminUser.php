@@ -67,9 +67,9 @@ class AdminUser extends Model implements HasPrefix, HasIconContract
         return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class, 'admin_user_m_application', 'admin_user_id', 'm_application_id');
+        return $this->belongsToMany(Application::class);
     }
 }

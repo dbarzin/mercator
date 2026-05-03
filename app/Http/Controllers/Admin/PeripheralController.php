@@ -9,7 +9,7 @@ use App\Http\Requests\UpdatePeripheralRequest;
 use App\Models\Bay;
 use App\Models\Building;
 use App\Models\Entity;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Peripheral;
 use App\Models\Site;
 use App\Services\IconUploadService;
@@ -38,7 +38,7 @@ class PeripheralController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
         $icons = Peripheral::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
@@ -70,7 +70,7 @@ class PeripheralController extends Controller
         $buildings = Building::query()->orderBy('name')->pluck('name', 'id');
         $bays = Bay::query()->orderBy('name')->pluck('name', 'id');
         $entities = Entity::query()->orderBy('name')->pluck('name', 'id');
-        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $applications = Application::query()->orderBy('name')->pluck('name', 'id');
         $icons = Peripheral::query()->select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
@@ -130,7 +130,7 @@ class PeripheralController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
         $icons = Peripheral::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists

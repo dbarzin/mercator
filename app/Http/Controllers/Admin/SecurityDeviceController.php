@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\PhysicalSecurityDevice;
 use App\Models\SecurityDevice;
 use App\Services\IconUploadService;
@@ -34,7 +34,7 @@ class SecurityDeviceController extends Controller
         abort_if(Gate::denies('security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
 
         // List
         $type_list = SecurityDevice::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -76,7 +76,7 @@ class SecurityDeviceController extends Controller
         abort_if(Gate::denies('security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
 
         // List
         $type_list = SecurityDevice::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');

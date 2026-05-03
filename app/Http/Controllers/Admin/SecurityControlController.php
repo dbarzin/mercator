@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Process;
 use App\Models\SecurityControl;
 use Gate;
@@ -64,7 +64,7 @@ class SecurityControlController extends Controller
     {
         abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::All()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::All()->sortBy('name')->pluck('name', 'id');
         $processes = Process::All()->sortBy('name')->pluck('name', 'id');
 
         // Create items
@@ -95,7 +95,7 @@ class SecurityControlController extends Controller
 
         $source = $request->get('source');
         if (str_starts_with($source, 'APP_')) {
-            $app = MApplication::query()->where('id', substr($source, 4))->first();
+            $app = Application::query()->where('id', substr($source, 4))->first();
             if ($app === null) {
                 return back()->withErrors(['associate' => 'Application not found'])->setStatusCode(422);
             }
@@ -121,7 +121,7 @@ class SecurityControlController extends Controller
 
         // Get control list of object base on the ID
         if (str_starts_with($request->id, 'APP_')) {
-            $list = MApplication::query()->where('id', substr($request->id, 4))->first()->securityControls;
+            $list = Application::query()->where('id', substr($request->id, 4))->first()->securityControls;
         } elseif (str_starts_with($request->id, 'PR_')) {
             $list = Process::query()->where('id', substr($request->id, 3))->first()->securityControls;
         } else {

@@ -8,7 +8,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\LogicalServer;
-use App\Models\MApplication;
+use App\Models\Application;
 use Symfony\Component\HttpFoundation\Response;
 
 class PatchingController extends Controller
@@ -51,7 +51,7 @@ class PatchingController extends Controller
         )
             ->where('active', '=', '1');
 
-        $applications = MApplication::select(
+        $applications = Application::select(
             DB::raw(
                 "'APP' as type"
             ),
@@ -115,7 +115,7 @@ class PatchingController extends Controller
     {
         abort_if(Gate::denies('patching_make'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application = MApplication::find($request['id']);
+        $application = Application::find($request['id']);
 
         // Lists
         $attributes_list = $this->getAttributes();
@@ -152,7 +152,7 @@ class PatchingController extends Controller
 
     public function updateApplication(Request $request)
     {
-        $application = MApplication::find($request['id']);
+        $application = Application::find($request['id']);
 
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $application->update($request->all());
@@ -162,7 +162,7 @@ class PatchingController extends Controller
 
         // Update frequency
         if ($request->get('global_periodicity') !== null) {
-            $apps = MApplication::where('attributes', '=', $application->attributes)->get();
+            $apps = Application::where('attributes', '=', $application->attributes)->get();
             foreach ($apps as $s) {
                 $s->patching_frequency = $application->patching_frequency;
                 if ($s->update_date !== null) {
@@ -211,7 +211,7 @@ class PatchingController extends Controller
         )
             ->where('active', '=', 1);
 
-        $applications = MApplication::select(
+        $applications = Application::select(
             DB::raw(
                 "'APP' as type"
             ),
@@ -278,7 +278,7 @@ class PatchingController extends Controller
                 }
             }
         }
-        $attributes_list = MApplication::select('attributes')
+        $attributes_list = Application::select('attributes')
             ->whereNotNull('attributes')
             ->distinct()
             ->pluck('attributes');

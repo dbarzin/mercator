@@ -163,22 +163,22 @@ class ApplicationList extends ReportController
                         'logical_server_physical_server.logical_server_id'
                     )
                     ->join(
-                        'logical_server_m_application',
-                        'logical_server_m_application.logical_server_id',
+                        'application_logical_server',
+                        'application_logical_server.logical_server_id',
                         '=',
                         'logical_servers.id'
                     )
 
                     ->leftJoin(
-                        'm_application_physical_server',
-                        'm_application_physical_server.physical_server_id',
+                        'application_physical_server',
+                        'application_physical_server.physical_server_id',
                         '=',
                         'physical_servers.id',
                     )
                     ->whereNull('logical_servers.deleted_at')
                     ->whereNull('physical_servers.deleted_at')
-                    ->where('logical_server_m_application.m_application_id', '=', $application->id)
-                    ->orWhere('m_application_physical_server.m_application_id', '=', $application->id)
+                    ->where('application_logical_server.application_id', '=', $application->id)
+                    ->orWhere('application_physical_server.application_id', '=', $application->id)
                     ->orderBy('physical_servers.name')
                     ->get()
                     ->implode('name', ', ');

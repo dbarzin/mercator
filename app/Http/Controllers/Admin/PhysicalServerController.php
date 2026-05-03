@@ -13,7 +13,7 @@ use App\Models\Bay;
 use App\Models\Building;
 use App\Models\Cluster;
 use App\Models\LogicalServer;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\PhysicalServer;
 use App\Models\Site;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +44,7 @@ class PhysicalServerController extends Controller
         $icons = PhysicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // List
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+        $application_list = Application::orderBy('name')->pluck('name', 'id');
         $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -78,7 +78,7 @@ class PhysicalServerController extends Controller
         $icons = PhysicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // List
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+        $application_list = Application::orderBy('name')->pluck('name', 'id');
         $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -145,7 +145,7 @@ class PhysicalServerController extends Controller
         $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+        $application_list = Application::orderBy('name')->pluck('name', 'id');
         $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
 
         $physicalServer->load('site', 'building', 'bay');

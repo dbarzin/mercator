@@ -53,9 +53,9 @@ class ApplicationBlock extends Model implements HasPrefix, HasIconContract
         return ApplicationBlockFactory::new();
     }
 
-    /** @return HasMany<MApplication, $this> */
+    /** @return HasMany<Application, $this> */
     public function applications(): HasMany
     {
-        return $this->hasMany(MApplication::class, 'application_block_id', 'id')->orderBy('name');
+        return $this->hasMany(Application::class, 'application_block_id', 'id')->orderBy('name');
     }
 }

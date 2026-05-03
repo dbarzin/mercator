@@ -12,7 +12,7 @@ use App\Models\Activity;
 use App\Models\Entity;
 use App\Models\Information;
 use App\Models\MacroProcessus;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +37,7 @@ class ProcessController extends Controller
         $entities = Entity::orderBy('name')->pluck('name', 'id');
         $informations = Information::orderBy('name')->pluck('name', 'id');
         $macroProcessuses = MacroProcessus::orderBy('name')->pluck('name', 'id');
-        $applications = MApplication::orderBy('name')->pluck('name', 'id');
+        $applications = Application::orderBy('name')->pluck('name', 'id');
         // lists
         $owner_list = Process::select('owner')->where('owner', '<>', null)
             ->distinct()->orderBy('owner')->pluck('owner');
@@ -75,7 +75,7 @@ class ProcessController extends Controller
         $entities = Entity::orderBy('name')->pluck('name', 'id');
         $informations = Information::orderBy('name')->pluck('name', 'id');
         $macroProcessuses = MacroProcessus::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::orderBy('name')->pluck('name', 'id');
+        $applications = Application::orderBy('name')->pluck('name', 'id');
         $icons = Process::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         // lists
         $owner_list = Process::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');

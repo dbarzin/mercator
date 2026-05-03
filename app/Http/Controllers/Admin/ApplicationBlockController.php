@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
 use App\Models\ApplicationBlock;
-use App\Models\MApplication;
+use App\Models\Application;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +27,7 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::query()
+        $applications = Application::query()
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
@@ -39,7 +39,7 @@ class ApplicationBlockController extends Controller
     {
         $applicationBlock = ApplicationBlock::create($request->all());
 
-        MApplication::whereIn('id', $request->input('linkToApplications', []))
+        Application::whereIn('id', $request->input('linkToApplications', []))
             ->update(['application_block_id' => $applicationBlock->id]);
 
         return redirect()->route('admin.application-blocks.index');
@@ -49,7 +49,7 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::query()
+        $applications = Application::query()
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
@@ -61,10 +61,10 @@ class ApplicationBlockController extends Controller
     {
         $applicationBlock->update($request->all());
 
-        MApplication::where('application_block_id', $applicationBlock->id)
+        Application::where('application_block_id', $applicationBlock->id)
             ->update(['application_block_id' => null]);
 
-        MApplication::whereIn('id', $request->input('linkToApplications', []))
+        Application::whereIn('id', $request->input('linkToApplications', []))
             ->update(['application_block_id' => $applicationBlock->id]);
 
         return redirect()->route('admin.application-blocks.index');

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Workstation;
 use App\Services\IconUploadService;
 use Gate;
@@ -41,7 +41,7 @@ class WorkstationController extends Controller
         // Get icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+        $application_list = Application::orderBy('name')->pluck('name', 'id');
 
         $type_list = Workstation::select('type')
             ->where('type', '<>', null)
@@ -143,7 +143,7 @@ class WorkstationController extends Controller
         // Select icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+        $application_list = Application::orderBy('name')->pluck('name', 'id');
 
         $type_list = Workstation::select('type')
             ->where('type', '<>', null)
@@ -221,7 +221,7 @@ class WorkstationController extends Controller
         // Get icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+        $application_list = Application::orderBy('name')->pluck('name', 'id');
 
         $type_list = Workstation::select('type')
             ->where('type', '<>', null)

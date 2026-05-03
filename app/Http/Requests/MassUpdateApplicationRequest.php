@@ -5,28 +5,36 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Application;
 
-class MassStoreMApplicationRequest extends FormRequest
+class MassUpdateApplicationRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
 
     public function rules()
     {
-        // On récupère les règles du StoreMApplicationRequest classique
-        $storeRules = (new StoreMApplicationRequest())->rules();
+        // Règles du UpdateApplicationRequest classique
+        $updateRules = (new UpdateApplicationRequest())->rules();
+
+        // On récupère dynamiquement le nom de la table du modèle
+        $model = new Application();
+        $table = $model->getTable();
 
         $rules = [
             'items'   => ['required', 'array', 'min:1'],
             'items.*' => ['required', 'array'],
+
+            // l'id n'est pas dans UpdateApplicationRequest (route model binding),
+            'items.*.id' => ['required', 'integer', "exists:{$table},id"],
         ];
 
-        // On applique les règles du StoreMApplicationRequest à chaque item : items.*.field
-        foreach ($storeRules as $field => $rule) {
+        // On applique les règles du UpdateApplicationRequest à chaque item : items.*.field
+        foreach ($updateRules as $field => $rule) {
             $rules["items.*.$field"] = $rule;
         }
 

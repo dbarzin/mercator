@@ -660,7 +660,7 @@
                     <div class="col-md-2">
                         <div class="form-check">
                             <label>{{ trans('cruds.application.title') }}</label>
-                            @php($permission = $permissions_sorted['m_application'])
+                            @php($permission = $permissions_sorted['application'])
                             <div class="form-switch form-switch-lg">
                                 <input class="form-check-input" type="checkbox" name="permissions[]"
                                        data-check="{{ $permission['name'] }}"

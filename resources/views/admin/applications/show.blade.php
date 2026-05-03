@@ -13,19 +13,19 @@
             <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$application->getUID()}}">
                 {{ trans('global.explore') }}
             </a>
-            @if(auth()->user()->can('m_application_edit'))
+            @if(auth()->user()->can('application_edit'))
                 <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
                     {{ trans('global.edit') }}
                 </a>
             @endif
 
-            @can('m_application_create')
+            @can('application_create')
                 <a class="btn btn-warning" href="{{ route('admin.applications.clone', $application->id) }}">
                     {{ trans('global.clone') }}
                 </a>
             @endcan
 
-            @if(auth()->user()->can('m_application_delete'))
+            @if(auth()->user()->can('application_delete'))
                 <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST"
                       onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                     <input type="hidden" name="_method" value="DELETE">

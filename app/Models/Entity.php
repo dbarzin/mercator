@@ -65,10 +65,10 @@ class Entity extends Model implements HasIconContract, HasPrefix
         return $this->hasMany(Database::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
-    /** @return HasMany<MApplication, $this> */
+    /** @return HasMany<Application, $this> */
     public function respApplications(): HasMany
     {
-        return $this->hasMany(MApplication::class, 'entity_resp_id', 'id')->orderBy('name');
+        return $this->hasMany(Application::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
     /** @return HasMany<Relation, $this> */
@@ -83,10 +83,10 @@ class Entity extends Model implements HasIconContract, HasPrefix
         return $this->hasMany(Relation::class, 'destination_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 
     /** @return BelongsToMany<Process, $this> */

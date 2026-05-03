@@ -31,7 +31,7 @@ use App\Models\LogicalFlow;
 use App\Models\LogicalServer;
 use App\Models\MacroProcessus;
 use App\Models\Man;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
@@ -97,7 +97,7 @@ class ExplorerController extends Controller
         abort_if(Gate::denies('explore_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tables = [
-            'm_applications', 'logical_servers', 'clusters', 'entities',
+            'applications', 'logical_servers', 'clusters', 'entities',
             'buildings', 'physical_security_devices', 'relations', 'security_devices', 'fluxes',
         ];
         $allAttributes = collect();
@@ -299,9 +299,9 @@ class ExplorerController extends Controller
                     $this->formatId(Workstation::$prefix, $workstation->id));
         }
 
-        $this->linkJoinTable('m_application_workstation',
-            MApplication::$prefix, Workstation::$prefix,
-            'm_application_id', 'workstation_id');
+        $this->linkJoinTable('application_workstation',
+            Application::$prefix, Workstation::$prefix,
+            'application_id', 'workstation_id');
     }
 
     private function buildPhones(): void
@@ -377,14 +377,14 @@ class ExplorerController extends Controller
             }
         }
 
-        // m_application_peripheral
-        $joins = DB::table('m_application_peripheral')
-            ->select('m_application_id', 'peripheral_id')
+        // application_peripheral
+        $joins = DB::table('application_peripheral')
+            ->select('application_id', 'peripheral_id')
             ->get();
 
         foreach ($joins as $join) {
             $this->addLinkEdge(
-                $this->formatId(MApplication::$prefix, $join->m_application_id),
+                $this->formatId(Application::$prefix, $join->application_id),
                 $this->formatId(Peripheral::$prefix, $join->peripheral_id));
         }
 
@@ -842,13 +842,13 @@ class ExplorerController extends Controller
         }
 
         // Container - Applications
-        $joins = DB::table('container_m_application')
-            ->select('container_id', 'm_application_id')
+        $joins = DB::table('application_container')
+            ->select('container_id', 'application_id')
             ->get();
         foreach ($joins as $join) {
             $this->addLinkEdge(
                 $this->formatId(Container::$prefix, $join->container_id),
-                $this->formatId(MApplication::$prefix, $join->m_application_id));
+                $this->formatId(Application::$prefix, $join->application_id));
         }
 
         // Container - Databases
@@ -976,9 +976,9 @@ class ExplorerController extends Controller
             PhysicalSecurityDevice::$prefix, SecurityDevice::$prefix,
             'physical_security_device_id', 'security_device_id');
 
-        $this->linkJoinTable('m_application_security_device',
-            MApplication::$prefix, SecurityDevice::$prefix,
-            'm_application_id', 'security_device_id');
+        $this->linkJoinTable('application_security_device',
+            Application::$prefix, SecurityDevice::$prefix,
+            'application_id', 'security_device_id');
 
 
     }
@@ -1039,9 +1039,9 @@ class ExplorerController extends Controller
             Certificate::$prefix, LogicalServer::$prefix,
             'certificate_id', 'logical_server_id');
 
-        $this->linkJoinTable('certificate_m_application',
-            Certificate::$prefix, MApplication::$prefix,
-            'certificate_id', 'm_application_id');;
+        $this->linkJoinTable('application_certificate',
+            Certificate::$prefix, Application::$prefix,
+            'certificate_id', 'application_id');;
 
     }
 
@@ -1129,7 +1129,7 @@ class ExplorerController extends Controller
         $fluxes = DB::table('fluxes')->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
             if ($flux->application_source_id !== null) {
-                $src_id = $this->formatId(MApplication::$prefix, $flux->application_source_id);
+                $src_id = $this->formatId(Application::$prefix, $flux->application_source_id);
             } elseif ($flux->service_source_id !== null) {
                 $src_id = $this->formatId(ApplicationService::$prefix, $flux->service_source_id);
             } elseif ($flux->module_source_id !== null) {
@@ -1141,7 +1141,7 @@ class ExplorerController extends Controller
             }
 
             if ($flux->application_dest_id !== null) {
-                $dest_id = $this->formatId(MApplication::$prefix, $flux->application_dest_id);
+                $dest_id = $this->formatId(Application::$prefix, $flux->application_dest_id);
             } elseif ($flux->service_dest_id !== null) {
                 $dest_id = $this->formatId(ApplicationService::$prefix, $flux->service_dest_id);
             } elseif ($flux->module_dest_id !== null) {
@@ -1176,7 +1176,7 @@ class ExplorerController extends Controller
 
     private function buildApplications(): void
     {
-        $applications = DB::table('m_applications')
+        $applications = DB::table('applications')
             ->select('id', 'name', 'icon_id', 'application_block_id', 'attributes')
             ->whereNull('deleted_at')
             ->get();
@@ -1184,7 +1184,7 @@ class ExplorerController extends Controller
         foreach ($applications as $app) {
             $this->addNode(
                 3,
-                $this->formatId(MApplication::$prefix, $app->id),
+                $this->formatId(Application::$prefix, $app->id),
                 $app->name,
                 $this->getIcon($app->icon_id, '/images/application.png'),
                 'applications', 310,
@@ -1194,18 +1194,18 @@ class ExplorerController extends Controller
 
             if ($app->application_block_id !== null) {
                 $this->addLinkEdge(
-                    $this->formatId(MApplication::$prefix, $app->id),
+                    $this->formatId(Application::$prefix, $app->id),
                     $this->formatId(ApplicationBlock::$prefix, $app->application_block_id)
                 );
             }
         }
 
-        $this->linkJoinTable('application_service_m_application',
-            ApplicationService::$prefix, MApplication::$prefix,
-            'application_service_id', 'm_application_id');
-        $this->linkJoinTable('logical_server_m_application',
-            LogicalServer::$prefix, MApplication::$prefix,
-            'logical_server_id', 'm_application_id');
+        $this->linkJoinTable('application_application_service',
+            ApplicationService::$prefix, Application::$prefix,
+            'application_service_id', 'application_id');
+        $this->linkJoinTable('application_logical_server',
+            LogicalServer::$prefix, Application::$prefix,
+            'logical_server_id', 'application_id');
     }
 
 
@@ -1275,9 +1275,9 @@ class ExplorerController extends Controller
         $this->linkJoinTable('database_logical_server',
             Database::$prefix, LogicalServer::$prefix,
             'database_id', 'logical_server_id');
-        $this->linkJoinTable('database_m_application',
-            Database::$prefix, MApplication::$prefix,
-            'database_id', 'm_application_id');
+        $this->linkJoinTable('application_database',
+            Database::$prefix, Application::$prefix,
+            'database_id', 'application_id');
         $this->linkJoinTable('database_entity',
             Database::$prefix, Entity::$prefix,
             'database_id', 'entity_id');
@@ -1411,9 +1411,9 @@ class ExplorerController extends Controller
 
         }
 
-        $this->linkJoinTable('admin_user_m_application',
-            AdminUser::$prefix, MApplication::$prefix,
-            'admin_user_id', 'm_application_id');
+        $this->linkJoinTable('admin_user_application',
+            AdminUser::$prefix, Application::$prefix,
+            'admin_user_id', 'application_id');
     }
 
     /**
@@ -1531,9 +1531,9 @@ class ExplorerController extends Controller
             Activity::$prefix, Process::$prefix,
             'activity_id', 'process_id');
 
-        $this->linkJoinTable('activity_m_application',
-            Activity::$prefix, MApplication::$prefix,
-            'activity_id', 'm_application_id');
+        $this->linkJoinTable('activity_application',
+            Activity::$prefix, Application::$prefix,
+            'activity_id', 'application_id');
     }
 
     private function buildOperations(): void
@@ -1640,9 +1640,9 @@ class ExplorerController extends Controller
         $this->linkJoinTable('entity_process',
             Entity::$prefix, Process::$prefix,
             'entity_id', 'process_id');
-        $this->linkJoinTable('entity_m_application',
-            Entity::$prefix, MApplication::$prefix,
-            'entity_id', 'm_application_id');
+        $this->linkJoinTable('application_entity',
+            Entity::$prefix, Application::$prefix,
+            'entity_id', 'application_id');
     }
 
     private function buildRelations(): void

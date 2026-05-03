@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     url: '/admin/application-events/' + eventId,
                     type: 'DELETE',
                     data: {
-                        m_application_id: {{ $application->id }},
+                        application_id: {{ $application->id }},
                         _token: "{{ csrf_token() }}"
                     },
                     success: (data) => {
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (message !== '' && user_id && app_id) {
             $.post("{{ route('admin.application-events.store') }}", {
-                m_application_id: app_id,
+                application_id: app_id,
                 user_id: user_id,
                 message: message,
                 _token: "{{ csrf_token() }}"

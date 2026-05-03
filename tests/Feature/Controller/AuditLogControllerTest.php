@@ -4,7 +4,7 @@
 use App\Models\Activity;
 use App\Models\AuditLog;
 use App\Models\LogicalServer;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
 use Database\Seeders\PermissionsTableSeeder;
@@ -36,7 +36,7 @@ describe('index', function () {
 
         // create some objets
         Activity::factory()->count(3)->create();
-        MApplication::factory()->count(3)->create();
+        Application::factory()->count(3)->create();
         \App\Models\Process::factory()->count(3)->create();
         \App\Models\PhysicalRouter::factory()->count(3)->create();
 

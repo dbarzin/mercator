@@ -105,10 +105,10 @@ class Flux extends Model implements HasPrefix
 
     /* '*~-.,¸¸.-~·*'¨¯'*~-.,¸¸.-~·*'¨¯ Relations ¯¨'*·~-.¸¸,.-~*''*~-.,¸¸.-~·*'¨¯ */
 
-    /** @return BelongsTo<MApplication, $this> */
+    /** @return BelongsTo<Application, $this> */
     public function application_source(): BelongsTo
     {
-        return $this->belongsTo(MApplication::class, 'application_source_id');
+        return $this->belongsTo(Application::class, 'application_source_id');
     }
 
     /** @return BelongsTo<ApplicationService, $this> */
@@ -129,10 +129,10 @@ class Flux extends Model implements HasPrefix
         return $this->belongsTo(Database::class, 'database_source_id');
     }
 
-    /** @return BelongsTo<MApplication, $this> */
+    /** @return BelongsTo<Application, $this> */
     public function application_dest(): BelongsTo
     {
-        return $this->belongsTo(MApplication::class, 'application_dest_id');
+        return $this->belongsTo(Application::class, 'application_dest_id');
     }
 
     /** @return BelongsTo<ApplicationService, $this> */

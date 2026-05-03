@@ -3,36 +3,36 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyMApplicationRequest;
-use App\Http\Requests\StoreMApplicationRequest;
-use App\Http\Requests\UpdateMApplicationRequest;
+use App\Http\Requests\MassDestroyApplicationRequest;
+use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\UpdateApplicationRequest;
 use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Activity;
 use App\Models\AdminUser;
+use App\Models\Application;
 use App\Models\ApplicationBlock;
 use App\Models\ApplicationService;
 use App\Models\Container;
 use App\Models\Database;
 use App\Models\Entity;
 use App\Models\LogicalServer;
-use App\Models\MApplication;
 use App\Models\Process;
 use App\Models\SecurityDevice;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
-class MApplicationController extends Controller
+class ApplicationController extends Controller
 {
     public function __construct(private readonly IconUploadService $iconUploadService) {}
 
     public function index()
     {
-        abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with(
+        $applications = Application::with(
             'applicationBlock:id,name',
             'entityResp:id,name',
             'entities:id,name',
@@ -45,19 +45,19 @@ class MApplicationController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.applications.create', $this->getCreateFormData());
     }
 
     public function clone(Request $request, int $id)
     {
-        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $data = $this->getCreateFormData();
 
         // Récupérer l'application avec ses relations
-        $application = MApplication::query()
+        $application = Application::query()
             ->with([
                 'entities',
                 'processes',
@@ -107,17 +107,17 @@ class MApplicationController extends Controller
         $containers = Container::all()->sortBy('name')->pluck('name', 'id');
         $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
-        $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Application::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // lists
-        $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
-        $technology_list = MApplication::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
-        $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
-        $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
+        $type_list = Application::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $technology_list = Application::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
+        $users_list = Application::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
+        $external_list = Application::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
 
         // Get Attributes
-        $attributes_list = MApplication::select('attributes')
+        $attributes_list = Application::select('attributes')
             ->whereNotNull('attributes')
             ->distinct()
             ->pluck('attributes');
@@ -133,7 +133,7 @@ class MApplicationController extends Controller
         $attributes_list = array_unique($res);
 
         // Get Responsibles
-        $responsible_list = MApplication::select('responsible')
+        $responsible_list = Application::select('responsible')
             ->whereNotNull('responsible')
             ->distinct()
             ->orderBy('responsible')
@@ -148,8 +148,8 @@ class MApplicationController extends Controller
         }
         $responsible_list = array_unique($res);
 
-        $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
-        $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
+        $referent_list = Application::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
+        $editor_list = Application::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         return compact(
@@ -175,13 +175,13 @@ class MApplicationController extends Controller
             'attributes_list'
         );
     }
-    public function store(StoreMApplicationRequest $request)
+    public function store(StoreApplicationRequest $request)
     {
         $request->merge(['responsible' => implode(', ', $request->responsibles !== null ? $request->responsibles : [])]);
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Create application
-        $application = MApplication::create($request->all());
+        $application = Application::create($request->all());
 
         // Compute RTO - RPO
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
@@ -204,18 +204,12 @@ class MApplicationController extends Controller
         $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
-        // Attribution du role pour les nouveaux cartographes
-        // $this->cartographerService->attributeCartographerRole($application);
-
         return redirect()->route('admin.applications.index');
     }
 
-    public function edit(MApplication $application)
+    public function edit(Application $application)
     {
-        abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // Check for cartographers
-        // LaravelGate::authorize('is-cartographer-m-application', $application);
+        abort_if(Gate::denies('application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
@@ -226,11 +220,10 @@ class MApplicationController extends Controller
         $containers = Container::all()->sortBy('name')->pluck('name', 'id');
         $security_devices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
-        $icons = MApplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $icons = Application::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // rto-rpo
-        // TODO : Add a function in MApplication for it
         $application['rto_days'] = intdiv($application->rto, 60 * 24);
         $application['rto_hours'] = intdiv($application->rto, 60) % 24;
         $application['rto_minutes'] = $application->rto % 60;
@@ -240,13 +233,13 @@ class MApplicationController extends Controller
         $application['rpo_minutes'] = $application->rpo % 60;
 
         // lists
-        $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
-        $technology_list = MApplication::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
-        $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
-        $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
+        $type_list = Application::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $technology_list = Application::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
+        $users_list = Application::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
+        $external_list = Application::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
 
         // Get Attributes
-        $attributes_list = MApplication::select('attributes')
+        $attributes_list = Application::select('attributes')
             ->whereNotNull('attributes')
             ->distinct()
             ->pluck('attributes');
@@ -261,7 +254,7 @@ class MApplicationController extends Controller
         sort($res);
         $attributes_list = array_unique($res);
 
-        $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $responsible_list = Application::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $res = [];
         foreach ($responsible_list as $i) {
             foreach (explode(',', $i) as $j) {
@@ -272,8 +265,8 @@ class MApplicationController extends Controller
         }
         $responsible_list = array_unique($res);
 
-        $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
-        $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
+        $referent_list = Application::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
+        $editor_list = Application::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock');
@@ -306,7 +299,7 @@ class MApplicationController extends Controller
         );
     }
 
-    public function update(UpdateMApplicationRequest $request, MApplication $application)
+    public function update(UpdateApplicationRequest $request, Application $application)
     {
         $application->responsible = implode(', ', $request->responsibles !== null ? $request->responsibles : []);
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
@@ -332,33 +325,30 @@ class MApplicationController extends Controller
         $application->securityDevices()->sync($request->input('security_devices', []));
         $application->administrators()->sync($request->input('administrators', []));
 
-        // Attribution du role pour les nouveaux cartographes
-        // $this->cartographerService->attributeCartographerRole($application);
-
         return redirect()->route('admin.applications.index');
     }
 
-    public function show(MApplication $application): View
+    public function show(Application $application): View
     {
-        abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'applicationSourceFluxes', 'applicationDestFluxes');
 
         return view('admin.applications.show', compact('application'));
     }
 
-    public function destroy(MApplication $application): Response
+    public function destroy(Application $application): Response
     {
-        abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application->delete();
 
         return redirect()->route('admin.applications.index');
     }
 
-    public function massDestroy(MassDestroyMApplicationRequest $request): Response
+    public function massDestroy(MassDestroyApplicationRequest $request): Response
     {
-        MApplication::query()->whereIn('id', request('ids'))->delete();
+        Application::query()->whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

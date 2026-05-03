@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Contracts\HasIconContract;
 use App\Contracts\HasPrefix;
-use App\Factories\MApplicationFactory;
+use App\Factories\ApplicationFactory;
 use App\Traits\Auditable;
 use App\Traits\HasIcon;
 use App\Traits\HasUniqueIdentifier;
@@ -16,11 +16,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MApplication extends Model implements HasIconContract, HasPrefix
+class Application extends Model implements HasIconContract, HasPrefix
 {
     use Auditable, HasIcon, HasUniqueIdentifier, HasFactory, SoftDeletes;
 
-    public $table = 'm_applications';
+    public $table = 'applications';
 
     public static string $prefix = 'APP_';
 
@@ -84,7 +84,7 @@ class MApplication extends Model implements HasIconContract, HasPrefix
 
     protected static function newFactory(): Factory
     {
-        return MApplicationFactory::new();
+        return ApplicationFactory::new();
     }
 
     /**
@@ -199,19 +199,19 @@ class MApplication extends Model implements HasIconContract, HasPrefix
     /** @return BelongsToMany<AdminUser, $this> */
     public function administrators(): BelongsToMany
     {
-        return $this->belongsToMany(AdminUser::class, 'admin_user_m_application', 'm_application_id', 'admin_user_id');
+        return $this->belongsToMany(AdminUser::class);
     }
 
     /** @return HasMany<MApplicationEvent, $this> */
     public function events(): HasMany
     {
-        return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id')->with('user');
+        return $this->hasMany(MApplicationEvent::class, 'application_id', 'id')->with('user');
     }
 
     /** @return BelongsToMany<SecurityControl, $this> */
     public function securityControls(): BelongsToMany
     {
-        return $this->belongsToMany(SecurityControl::class, 'security_control_m_application')->orderBy('name');
+        return $this->belongsToMany(SecurityControl::class)->orderBy('name');
     }
 
     /** @return BelongsToMany<Certificate, $this> */
@@ -219,7 +219,4 @@ class MApplication extends Model implements HasIconContract, HasPrefix
     {
         return $this->belongsToMany(Certificate::class)->orderBy('name');
     }
-
 }
-
-

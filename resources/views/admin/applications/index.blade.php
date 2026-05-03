@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-@can('m_application_create')
+@can('application_create')
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-12">
         <a id="btn-new" class="btn btn-success" href="{{ route('admin.applications.create') }}">
@@ -120,19 +120,19 @@
                                 @endphp
                             </td>
                             <td nowrap>
-                                @can('m_application_show')
+                                @can('application_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.applications.show', $application->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @if(auth()->user()->can('m_application_edit'))
+                                @if(auth()->user()->can('application_edit'))
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endif
 
-                                @if(auth()->user()->can('m_application_delete'))
+                                @if(auth()->user()->can('application_delete'))
                                     <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -156,7 +156,7 @@
     'id' => '#dataTable',
     'title' => trans("cruds.application.title_singular"),
     'URL' => route('admin.applications.massDestroy'),
-    'canDelete' => auth()->user()->can('m_application_delete') ? true : false
+    'canDelete' => auth()->user()->can('application_delete') ? true : false
 ));
 </script>
 @endsection

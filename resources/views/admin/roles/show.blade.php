@@ -607,7 +607,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>{{ trans('cruds.application.title') }}</label>
-                        @php($permission = $permissions_sorted['m_application'])
+                        @php($permission = $permissions_sorted['application'])
                         <div class="form-switch">
                             <input class="form-check-input" type="checkbox" disabled name="permissions[]"
                                    data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][4][0] }}"

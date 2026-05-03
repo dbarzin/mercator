@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Report;
 use App\Models\Database;
 use App\Models\Information;
 use App\Models\MacroProcessus;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Process;
 use Carbon\Carbon;
 use Gate;
@@ -221,7 +221,7 @@ class SecurityNeeds extends ReportController
         int $row,
         MacroProcessus $macroprocess,
         ?Process $process = null,
-        ?MApplication $application = null,
+        ?Application $application = null,
         ?Database $database = null,
         ?Information $information = null
     ): void {

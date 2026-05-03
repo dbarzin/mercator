@@ -7,7 +7,7 @@ use App\Services\MospService;
 use App\Models\Building;
 use App\Models\Entity;
 use App\Models\Information;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Process;
 use App\Models\Site;
 
@@ -25,7 +25,7 @@ class MonarcController extends Controller
         $entities = Entity::select('id', 'name')->orderBy('name')->get();
         $processes = Process::select('id', 'name')->orderBy('name')->get();
         $informations = Information::select('id', 'name')->orderBy('name')->get();
-        $applications = MApplication::select('id', 'name')->orderBy('name')->get();
+        $applications = Application::select('id', 'name')->orderBy('name')->get();
 
         $sites = Site::select('id', 'name')->orderBy('name')->get();
         $buildings = Building::select('id', 'name')->orderBy('name')->get();

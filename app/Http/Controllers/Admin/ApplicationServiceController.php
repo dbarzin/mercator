@@ -8,7 +8,7 @@ use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
 use App\Models\ApplicationModule;
 use App\Models\ApplicationService;
-use App\Models\MApplication;
+use App\Models\Application;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +27,7 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::query()
+        $applications = Application::query()
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
@@ -54,7 +54,7 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::query()
+        $applications = Application::query()
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');

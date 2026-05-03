@@ -11,7 +11,7 @@ use App\Models\ApplicationModule;
 use App\Models\ApplicationService;
 use App\Models\Database;
 use App\Models\Flux;
-use App\Models\MApplication;
+use App\Models\Application;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationView extends Controller
@@ -63,7 +63,7 @@ class ApplicationView extends Controller
                     return $item->id === $applicationBlock;
                 });
 
-            $applications = MApplication::All()->sortBy('name')
+            $applications = Application::All()->sortBy('name')
                 ->filter(function ($item) use ($applicationBlock, $application) {
                     if ($application !== null) {
                         return $item->id === $application;
@@ -72,12 +72,12 @@ class ApplicationView extends Controller
                     return $item->application_block_id = $applicationBlock;
                 });
 
-            $all_applications = MApplication::All()->sortBy('name')
+            $all_applications = Application::All()->sortBy('name')
                 ->filter(function ($item) use ($applicationBlock) {
                     return $item->application_block_id === $applicationBlock;
                 });
 
-            $applications = MApplication::All()->sortBy('name')
+            $applications = Application::All()->sortBy('name')
                 ->filter(function ($item) use ($applicationBlock, $application) {
                     if ($application === null) {
                         return $item->application_block_id === $applicationBlock;
@@ -157,7 +157,7 @@ class ApplicationView extends Controller
                 });
         } else {
             $applicationBlocks = ApplicationBlock::All()->sortBy('name');
-            $applications = MApplication::All()->sortBy('name');
+            $applications = Application::All()->sortBy('name');
             $applicationServices = ApplicationService::All()->sortBy('name');
             $applicationModules = ApplicationModule::All()->sortBy('name');
             $databases = Database::All()->sortBy('name');

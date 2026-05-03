@@ -290,30 +290,6 @@ class DemoPermissionsTableSeeder extends Seeder
                 'title' => 'application_access',
             ],
             68 => [
-                'id' => 69,
-                'title' => 'papplication_access',
-            ],
-            69 => [
-                'id' => 70,
-                'title' => 'm_application_create',
-            ],
-            70 => [
-                'id' => 71,
-                'title' => 'm_application_edit',
-            ],
-            71 => [
-                'id' => 72,
-                'title' => 'm_application_show',
-            ],
-            72 => [
-                'id' => 73,
-                'title' => 'm_application_delete',
-            ],
-            73 => [
-                'id' => 74,
-                'title' => 'm_application_access',
-            ],
-            74 => [
                 'id' => 75,
                 'title' => 'application_service_create',
             ],

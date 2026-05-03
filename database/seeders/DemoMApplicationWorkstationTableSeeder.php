@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DemoMApplicationWorkstationTableSeeder extends Seeder
+class DemoApplicationWorkstationTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
@@ -14,7 +14,7 @@ class DemoMApplicationWorkstationTableSeeder extends Seeder
     public function run()
     {
 
-        \DB::table('m_application_workstation')->delete();
+        \DB::table('application_workstation')->delete();
 
     }
 }

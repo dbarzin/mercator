@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\MassDestroyMApplicationRequest;
-use App\Http\Requests\MassStoreMApplicationRequest;
-use App\Http\Requests\MassUpdateMApplicationRequest;
-use App\Http\Requests\StoreMApplicationRequest;
-use App\Http\Requests\UpdateMApplicationRequest;
+use App\Http\Requests\MassDestroyApplicationRequest;
+use App\Http\Requests\MassStoreApplicationRequest;
+use App\Http\Requests\MassUpdateApplicationRequest;
+use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\UpdateApplicationRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\MApplication;
+use App\Models\Application;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationController extends APIController
 {
-    protected string $modelClass = MApplication::class;
+    protected string $modelClass = Application::class;
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return $this->indexResource($request);
     }
 
-    public function store(StoreMApplicationRequest $request)
+    public function store(StoreApplicationRequest $request)
     {
-        abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /** @var MApplication $application */
-        $application = MApplication::query()->create($request->all());
+        /** @var Application $application */
+        $application = Application::query()->create($request->all());
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('application_services', []));
@@ -41,9 +41,9 @@ class ApplicationController extends APIController
         return response()->json($application, Response::HTTP_CREATED);
     }
 
-    public function show(MApplication $application)
+    public function show(Application $application)
     {
-        abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application['entities']       = $application->entities()->pluck('id');
         $application['processes']      = $application->processes()->pluck('id');
@@ -56,9 +56,9 @@ class ApplicationController extends APIController
         return new JsonResource($application);
     }
 
-    public function update(UpdateMApplicationRequest $request, MApplication $application)
+    public function update(UpdateApplicationRequest $request, Application $application)
     {
-        abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application->update($request->all());
 
@@ -87,31 +87,31 @@ class ApplicationController extends APIController
         return response()->json();
     }
 
-    public function destroy(MApplication $application)
+    public function destroy(Application $application)
     {
-        abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application->delete();
 
         return response()->json();
     }
 
-    public function massDestroy(MassDestroyMApplicationRequest $request)
+    public function massDestroy(MassDestroyApplicationRequest $request)
     {
-        abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        MApplication::whereIn('id', $request->input('ids', []))->delete();
+        Application::whereIn('id', $request->input('ids', []))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function massStore(MassStoreMApplicationRequest $request)
+    public function massStore(MassStoreApplicationRequest $request)
     {
-        // L’authorize() du FormRequest gère déjà le Gate::denies('m_application_create')
+        // L’authorize() du FormRequest gère déjà le Gate::denies('application_create')
         $data       = $request->validated();
         $createdIds = [];
 
-        $model    = new MApplication();
+        $model    = new Application();
         $fillable = $model->getFillable();
 
         foreach ($data['items'] as $item) {
@@ -135,8 +135,8 @@ class ApplicationController extends APIController
                 ->only($fillable)
                 ->toArray();
 
-            /** @var MApplication $application */
-            $application = MApplication::query()->create($attributes);
+            /** @var Application $application */
+            $application = Application::query()->create($attributes);
 
             // Relations uniquement si la clé est présente dans l’item
             if (array_key_exists('entities', $item)) {
@@ -168,11 +168,11 @@ class ApplicationController extends APIController
         ], Response::HTTP_CREATED);
     }
 
-    public function massUpdate(MassUpdateMApplicationRequest $request)
+    public function massUpdate(MassUpdateApplicationRequest $request)
     {
-        // L’authorize() du FormRequest gère déjà le Gate::denies('m_application_edit')
+        // L’authorize() du FormRequest gère déjà le Gate::denies('application_edit')
         $data    = $request->validated();
-        $model   = new MApplication();
+        $model   = new Application();
         $fillable = $model->getFillable();
 
         foreach ($data['items'] as $rawItem) {
@@ -184,8 +184,8 @@ class ApplicationController extends APIController
             $logicalServersIds  = $rawItem['logical_servers'] ?? null;
             $applicationServices = $rawItem['application_services'] ?? null;
 
-            /** @var MApplication $application */
-            $application = MApplication::query()->findOrFail($id);
+            /** @var Application $application */
+            $application = Application::query()->findOrFail($id);
 
             // Ne garde que les colonnes du modèle, sans l'id ni les relations
             $attributes = collect($rawItem)

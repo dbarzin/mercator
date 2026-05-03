@@ -67,10 +67,10 @@ class ApplicationService extends Model implements HasPrefix, HasIconContract
         return $this->hasMany(Flux::class, 'service_dest_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function servicesApplications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 
     /** @return BelongsToMany<ApplicationModule, $this> */
@@ -79,9 +79,9 @@ class ApplicationService extends Model implements HasPrefix, HasIconContract
         return $this->belongsToMany(ApplicationModule::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 }

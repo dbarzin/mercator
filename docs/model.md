@@ -499,9 +499,9 @@ An application can be deployed on one or more logical servers.
 When there is no virtualized environment, there are not several logical servers per physical server, but one logical
 server per physical server.
 
-| Table                                              | api                 |
-|:---------------------------------------------------|:--------------------|
-| <span style="color: blue;">*m_applications*</span> | `/api/applications` |
+| Table                                            | api                 |
+|:-------------------------------------------------|:--------------------|
+| <span style="color: blue;">*applications*</span> | `/api/applications` |
 
 | Field                | Type         | Description                         |
 |:---------------------|:-------------|:------------------------------------|
@@ -594,18 +594,18 @@ Major events are only accessible through application objects.
 
 They are neither importable nor exportable through the graphics tool.
 
-| Table                                                    | api |
-|:---------------------------------------------------------|:----|
-| <span style="color: blue;">*m_application_events*</span> | N/A |
+| Table                                                  | api |
+|:-------------------------------------------------------|:----|
+| <span style="color: blue;">*application_events*</span> | N/A |
 
-| Field            | Type         | Description                                                    |
-|:-----------------|:-------------|:---------------------------------------------------------------|
-| id               | int unsigned | auto_increment                                                 |
-| user_id          | int unsigned | Mercator user id who has register the event                    |
-| m_application_id | varchar(255) | Reference to the id of the application that suffered the event |
-| message          | longtext     | Description of the event                                       |
-| created_at       | timestamp    | Date of creation                                               |
-| updated_at       | timestamp    | Date of update                                                 |
+| Field          | Type         | Description                                                    |
+|:---------------|:-------------|:---------------------------------------------------------------|
+| id             | int unsigned | auto_increment                                                 |
+| user_id        | int unsigned | Mercator user id who has register the event                    |
+| application_id | int unsigned | Reference to the id of the application that suffered the event |
+| message        | longtext     | Description of the event                                       |
+| created_at     | timestamp    | Date of creation                                               |
+| updated_at     | timestamp    | Date of update                                                 |
 
 ## Applications services
 

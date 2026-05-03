@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DemoCertificateMApplicationTableSeeder extends Seeder
+class DemoCertificateApplicationTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
@@ -14,12 +14,12 @@ class DemoCertificateMApplicationTableSeeder extends Seeder
     public function run()
     {
 
-        \DB::table('certificate_m_application')->delete();
+        \DB::table('application_certificate')->delete();
 
-        \DB::table('certificate_m_application')->insert([
+        \DB::table('application_certificate')->insert([
             0 => [
                 'certificate_id' => 8,
-                'm_application_id' => 4,
+                'application_id' => 4,
             ],
         ]);
 

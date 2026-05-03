@@ -10,7 +10,7 @@ use App\Services\IconUploadService;
 use Gate;
 use App\Models\Database;
 use App\Models\Entity;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,7 +35,7 @@ class EntityController extends Controller
         abort_if(Gate::denies('entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $processes = Process::query()->orderBy('name')->pluck('name', 'id');
-        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $applications = Application::query()->orderBy('name')->pluck('name', 'id');
         $databases = Database::query()->orderBy('name')->pluck('name', 'id');
         $entityTypes = Entity::query()->select('entity_type')
             ->where('entity_type', '<>', null)->distinct()
@@ -63,7 +63,7 @@ class EntityController extends Controller
         $entity->processes()->sync($request->input('processes', []));
 
         // update applications table
-        MApplication::query()->whereIn('id', $request->input('respApplications', []))
+        Application::query()->whereIn('id', $request->input('respApplications', []))
             ->update(['entity_resp_id' => $entity->id]);
 
         // update databases table
@@ -77,7 +77,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $processes = Process::query()->orderBy('name')->pluck('name', 'id');
-        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $applications = Application::query()->orderBy('name')->pluck('name', 'id');
         $databases = Database::query()->orderBy('name')->pluck('name', 'id');
         $entityTypes = Entity::query()->select('entity_type')
             ->where('entity_type', '<>', null)->distinct()
@@ -107,10 +107,10 @@ class EntityController extends Controller
         $entity->processes()->sync($request->input('processes', []));
 
         // update applications table
-        MApplication::query()->where('entity_resp_id', $entity->id)
+        Application::query()->where('entity_resp_id', $entity->id)
             ->update(['entity_resp_id' => null]);
 
-        MApplication::query()->whereIn('id', $request->input('respApplications', []))
+        Application::query()->whereIn('id', $request->input('respApplications', []))
             ->update(['entity_resp_id' => $entity->id]);
 
         // update databases table

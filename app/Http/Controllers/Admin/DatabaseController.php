@@ -13,7 +13,7 @@ use App\Models\Database;
 use App\Models\Entity;
 use App\Models\Information;
 use App\Models\LogicalServer;
-use App\Models\MApplication;
+use App\Models\Application;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
@@ -37,7 +37,7 @@ class DatabaseController extends Controller
         $entities = Entity::query()->orderBy('name')->pluck('name', 'id');
         $entity_resps = Entity::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $informations = Information::query()->orderBy('name')->pluck('name', 'id');
-        $applications = MApplication::query()
+        $applications = Application::query()
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
@@ -94,7 +94,7 @@ class DatabaseController extends Controller
         $entities = Entity::query()->orderBy('name')->pluck('name', 'id');
         $entity_resps = Entity::query()->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $informations = Information::query()->orderBy('name')->pluck('name', 'id');
-        $applications = MApplication::query()
+        $applications = Application::query()
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');

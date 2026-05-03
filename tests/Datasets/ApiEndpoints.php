@@ -27,7 +27,7 @@ use App\Models\LogicalFlow;
 use App\Models\LogicalServer;
 use App\Models\MacroProcessus;
 use App\Models\Man;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
@@ -123,7 +123,7 @@ dataset('api_endpoints', [
     'applications' => [
         [
             'route' => 'applications',
-            'model' => MApplication::class,
+            'model' => Application::class,
         ]
     ],
     'application-blocks' => [

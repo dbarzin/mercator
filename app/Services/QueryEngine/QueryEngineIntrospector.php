@@ -139,7 +139,7 @@ class QueryEngineIntrospector
      */
     public static function modelToApiName(string $modelName): string
     {
-        return $modelName === 'MApplication'
+        return $modelName === 'Application'
             ? 'applications'
             : Str::plural(Str::snake($modelName, '-'));
     }
@@ -202,7 +202,7 @@ class QueryEngineIntrospector
 
     /**
      * Retourne les noms d'API (slugs) pour tous les modèles concrets.
-     * Ex : MApplication → applications, LogicalServer → logical-servers
+     * Ex : Application → applications, LogicalServer → logical-servers
      */
     public static function listModels(): array
     {

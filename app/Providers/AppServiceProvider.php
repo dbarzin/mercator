@@ -48,12 +48,12 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        if (config('app.db_trace')) {
+        if (config('app.db_trace') && ! $this->app->runningInConsole()) {
             DB::listen(function ($query): void {
                 Log::info($query->time.':'.$query->sql);
             });
         }
-
+        
         if (config('ldap.logging.enabled')) {
             Container::setLogger(
                 Log::channel(config('ldap.logging.channel'))
@@ -75,7 +75,13 @@ class AppServiceProvider extends ServiceProvider
 
     private function logStartupInfo(string $version): void
     {
-        if (! $this->app->runningInConsole() && ! config('app.startup_log', false)) {
+        if ($this->app->runningInConsole()) {
+            // En console, ne logger que pour les commandes de démarrage serveur
+            // (serve, octane:start, octane:reload) ou si startup_log est forcé à true
+            if (! $this->isServerStartupCommand() && ! config('app.startup_log', false)) {
+                return;
+            }
+        } elseif (! config('app.startup_log', false)) {
             return;
         }
 
@@ -181,5 +187,19 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Throwable) {
             return 'unavailable';
         }
+    }
+
+    /**
+     * Returns true only for artisan commands that actually start a server process.
+     */
+    private function isServerStartupCommand(): bool
+    {
+        $command = $_SERVER['argv'][1] ?? '';
+
+        return in_array($command, [
+            'serve',
+            'octane:start',
+            'octane:reload',
+        ], strict: true);
     }
 }

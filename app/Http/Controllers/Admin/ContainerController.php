@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateContainerRequest;
 use App\Models\Container;
 use App\Models\Database;
 use App\Models\LogicalServer;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Services\IconUploadService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ class ContainerController extends Controller
         $type_list = Container::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.containers.create', compact('icons', 'type_list', 'logical_servers', 'applications', 'databases'));
     }
@@ -67,7 +67,7 @@ class ContainerController extends Controller
         $icons = Container::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $type_list = Container::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
 
         return view(

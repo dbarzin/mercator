@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyFluxRequest;
 use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
-use Gate;
-use Illuminate\Support\Collection;
+use App\Models\Application;
 use App\Models\ApplicationModule;
 use App\Models\ApplicationService;
 use App\Models\Database;
 use App\Models\Flux;
 use App\Models\Information;
-use App\Models\MApplication;
+use Gate;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends Controller
@@ -31,7 +31,7 @@ class FluxController extends Controller
     {
         abort_if(Gate::denies('flux_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
@@ -43,7 +43,7 @@ class FluxController extends Controller
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
-            $items->put(MApplication::$prefix . $key, $value . ' [Application]');
+            $items->put(Application::$prefix . $key, $value . ' [Application]');
         }
         foreach ($services as $key => $value) {
             $items->put(ApplicationService::$prefix . $key, $value . ' [Service]');
@@ -70,8 +70,8 @@ class FluxController extends Controller
         $flux->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Source item
-        if (str_starts_with($request->src_id, MApplication::$prefix)) {
-            $flux->application_source_id = intval(substr($request->src_id, strlen(MApplication::$prefix)));
+        if (str_starts_with($request->src_id, Application::$prefix)) {
+            $flux->application_source_id = intval(substr($request->src_id, strlen(Application::$prefix)));
         } else {
             $flux->application_source_id = null;
         }
@@ -95,8 +95,8 @@ class FluxController extends Controller
         }
 
         // Dest item
-        if (str_starts_with($request->dest_id, MApplication::$prefix)) {
-            $flux->application_dest_id = intval(substr($request->dest_id, strlen(Mapplication::$prefix)));
+        if (str_starts_with($request->dest_id, Application::$prefix)) {
+            $flux->application_dest_id = intval(substr($request->dest_id, strlen(Application::$prefix)));
         } else {
             $flux->application_dest_id = null;
         }
@@ -132,7 +132,7 @@ class FluxController extends Controller
     {
         abort_if(Gate::denies('flux_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $applications = Application::query()->orderBy('name')->pluck('name', 'id');
         $services = ApplicationService::query()->orderBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::query()->orderBy('name')->pluck('name', 'id');
         $databases = Database::query()->orderBy('name')->pluck('name', 'id');
@@ -144,7 +144,7 @@ class FluxController extends Controller
 
         $items = Collection::make();
         foreach ($applications as $key => $value) {
-            $items->put( MApplication::$prefix . $key, $value . ' [Application]');
+            $items->put( Application::$prefix . $key, $value . ' [Application]');
         }
         foreach ($services as $key => $value) {
             $items->put(ApplicationService::$prefix . $key, $value . ' [Service]');
@@ -170,8 +170,8 @@ class FluxController extends Controller
         $flux->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Source item
-        if (str_starts_with($request->src_id, MApplication::$prefix)) {
-            $flux->application_source_id = intval(substr($request->src_id, strlen(MApplication::$prefix)));
+        if (str_starts_with($request->src_id, Application::$prefix)) {
+            $flux->application_source_id = intval(substr($request->src_id, strlen(Application::$prefix)));
         } else {
             $flux->application_source_id = null;
         }
@@ -195,8 +195,8 @@ class FluxController extends Controller
         }
 
         // Dest item
-        if (str_starts_with($request->dest_id, MApplication::$prefix)) {
-            $flux->application_dest_id = intval(substr($request->dest_id, strlen(MApplication::$prefix)));
+        if (str_starts_with($request->dest_id, Application::$prefix)) {
+            $flux->application_dest_id = intval(substr($request->dest_id, strlen(Application::$prefix)));
         } else {
             $flux->application_dest_id = null;
         }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\MApplication;
+use App\Models\Application;
 use Gate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -19,7 +19,7 @@ class RTO extends Controller
         $rows = [];
 
         // Charger les applications avec leurs activités
-        $applications = MApplication::with('activities')->get();
+        $applications = Application::with('activities')->get();
 
         foreach ($applications as $app) {
             foreach ($app->activities as $activity) {

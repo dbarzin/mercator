@@ -14,7 +14,7 @@ class DemoMApplicationEventsTableSeeder extends Seeder
     public function run()
     {
 
-        \DB::table('m_application_events')->delete();
+        \DB::table('application_events')->delete();
 
     }
 }

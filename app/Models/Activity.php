@@ -79,10 +79,10 @@ class Activity extends Model implements HasPrefix, HasIconContract
         return $this->belongsToMany(Operation::class)->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 
     /** @return HasMany<ActivityImpact, $this> */

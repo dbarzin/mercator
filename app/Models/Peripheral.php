@@ -68,10 +68,10 @@ class Peripheral extends Model implements HasIconContract, HasPrefix
         return PeripheralFactory::new();
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 
     /** @return BelongsTo<Entity, $this> */

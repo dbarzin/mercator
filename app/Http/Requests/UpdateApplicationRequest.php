@@ -6,12 +6,12 @@ use Gate;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdateMApplicationRequest extends BaseFormRequest
+class UpdateApplicationRequest extends BaseFormRequest
 {
     protected array $htmlFields = ['description'];
     public function authorize() : bool
     {
-        abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -23,7 +23,7 @@ class UpdateMApplicationRequest extends BaseFormRequest
                 'min:3',
                 'max:32',
                 'required',
-                Rule::unique('m_applications')
+                Rule::unique('applications')
                     ->ignore($this->route('application')->id ?? $this->id)
                     ->whereNull('deleted_at'),
             ],

@@ -31,7 +31,7 @@ use App\Models\Lan;
 use App\Models\LogicalServer;
 use App\Models\MacroProcessus;
 use App\Models\Man;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
@@ -640,7 +640,7 @@ class CartographyController extends Controller
 
             // get all data
             $applicationBlocks = ApplicationBlock::orderBy('name')->get();
-            $applications = MApplication::orderBy('name')->get();
+            $applications = Application::orderBy('name')->get();
             $applicationServices = ApplicationService::orderBy('name')->get();
             $applicationModules = ApplicationModule::orderBy('name')->get();
             $databases = Database::orderBy('name')->get();
@@ -713,7 +713,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (Auth::user()->can('m_application_show') && ($applications->count() > 0)) {
+            if (Auth::user()->can('application_show') && ($applications->count() > 0)) {
                 $section->addTitle(trans('cruds.application.title'), 2);
                 $section->addText(trans('cruds.application.description'));
                 $section->addTextBreak(1);

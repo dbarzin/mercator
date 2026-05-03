@@ -7,7 +7,7 @@ use Gate;
 use Illuminate\Http\Request;
 use App\Models\DataProcessing;
 use App\Models\MacroProcessus;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Process;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -140,8 +140,8 @@ class GDPRView extends Controller
         }
 
         // Select applications
-        $applications = MApplication::query()
-            ->join('data_processing_m_application', 'm_application_id', 'm_applications.id')
+        $applications = Application::query()
+            ->join('application_data_processing', 'application_id', 'applications.id')
             ->wherein('data_processing_id', $dataProcessings->pluck('id')->all())->get();
 
         return view('admin/reports/gdpr')

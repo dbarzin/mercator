@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\MApplicationEvent;
 use App\Models\User;
 use Database\Seeders\PermissionRoleTableSeeder;
@@ -28,7 +28,7 @@ beforeEach(function () {
 describe('MApplicationEventController', function () {
 
     test('index returns events for given application id', function () {
-        $app = MApplication::factory()->create();
+        $app = Application::factory()->create();
 
         // Create a couple of events attached to the application
         $e1 = MApplicationEvent::factory()
@@ -50,10 +50,10 @@ describe('MApplicationEventController', function () {
     });
 
     test('store creates a new event and returns updated events list', function () {
-        $app = MApplication::factory()->create();
+        $app = Application::factory()->create();
 
         $payload = [
-            'm_application_id' => $app->id,
+            'application_id' => $app->id,
             'message' => 'New event message',
         ];
 
@@ -63,15 +63,15 @@ describe('MApplicationEventController', function () {
         $response->assertJsonStructure(['events']);
         $response->assertJsonFragment(['message' => 'New event message']);
 
-        $this->assertDatabaseHas('m_application_events', [
-            'm_application_id' => $app->id,
+        $this->assertDatabaseHas('application_events', [
+            'application_id' => $app->id,
             'user_id'          => $this->user->id, 
             'message'          => 'New event message',
         ]);
     });
 
     test('destroy removes an event and returns remaining list', function () {
-        $app = MApplication::factory()->create();
+        $app = Application::factory()->create();
         $eventToDelete = MApplicationEvent::factory()
             ->for($app, 'application')
             ->for($this->user)
@@ -84,7 +84,7 @@ describe('MApplicationEventController', function () {
 
         $response = $this->delete(
             route('admin.application-events.destroy', $eventToDelete->id),
-            ['m_application_id' => $app->id]
+            ['application_id' => $app->id]
         );
 
         $response->assertOk();
@@ -92,11 +92,11 @@ describe('MApplicationEventController', function () {
         $response->assertJsonMissing(['message' => 'To be deleted']);
         $response->assertJsonFragment(['message' => 'To keep']);
 
-        $this->assertDatabaseMissing('m_application_events', [
+        $this->assertDatabaseMissing('application_events', [
             'id' => $eventToDelete->id,
         ]);
 
-        $this->assertDatabaseHas('m_application_events', [
+        $this->assertDatabaseHas('application_events', [
             'id' => $eventToKeep->id,
         ]);
     });

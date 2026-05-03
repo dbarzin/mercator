@@ -44,7 +44,7 @@ class CVEController extends Controller
             return back()->withErrors('CVE provider is not set.');
         }
 
-        $applications = DB::table('m_applications')
+        $applications = DB::table('applications')
             ->select('name', 'vendor', 'product', 'version')
             ->whereNull('deleted_at')
             ->orderBy('name')

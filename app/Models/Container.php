@@ -53,10 +53,10 @@ class Container extends Model implements HasIconContract, HasPrefix
         return ContainerFactory::new();
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 
     /** @return BelongsToMany<Database, $this> */

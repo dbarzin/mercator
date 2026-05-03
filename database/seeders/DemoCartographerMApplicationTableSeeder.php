@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DemoCartographerMApplicationTableSeeder extends Seeder
+class DemoCartographerApplicationTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
@@ -14,7 +14,7 @@ class DemoCartographerMApplicationTableSeeder extends Seeder
     public function run()
     {
 
-        \DB::table('cartographer_m_application')->delete();
+        \DB::table('application_cartographer')->delete();
 
     }
 }

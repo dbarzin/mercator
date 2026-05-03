@@ -34,7 +34,7 @@ class UpdateWorkstationRequest extends BaseFormRequest
                 new IPList,
             ],
             'applications' => ['array', 'nullable'],
-            'applications.*' => ['exists:m_applications,id'],
+            'applications.*' => ['exists:applications,id'],
             ];
     }
 }

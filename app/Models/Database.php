@@ -77,10 +77,10 @@ class Database extends Model implements HasIconContract, HasPrefix
         return $this->hasMany(Flux::class, 'database_dest_id', 'id')->orderBy('name');
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 
     /** @return BelongsToMany<Entity, $this> */

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DemoMApplicationsTableSeeder extends Seeder
+class DemoApplicationsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
@@ -14,9 +14,9 @@ class DemoMApplicationsTableSeeder extends Seeder
     public function run()
     {
 
-        \DB::table('m_applications')->delete();
+        \DB::table('applications')->delete();
 
-        \DB::table('m_applications')->insert([
+        \DB::table('applications')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Application 1',

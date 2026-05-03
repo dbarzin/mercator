@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\MApplicationEvent;
 use Gate;
 use Illuminate\Http\JsonResponse;
@@ -20,16 +20,16 @@ class MApplicationEventController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'id' => ['required', 'integer', 'exists:m_applications,id'],
+            'id' => ['required', 'integer', 'exists:applications,id'],
         ]);
 
-        $this->authorize('m_application_show', MApplicationEvent::class);
+        $this->authorize('application_show', MApplicationEvent::class);
 
         $events = MApplicationEvent::with('user')
-            ->where('m_application_id', $request->integer('id'))
+            ->where('application_id', $request->integer('id'))
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -39,14 +39,14 @@ class MApplicationEventController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'm_application_id' => ['required', 'integer', 'exists:m_applications,id'],
+            'application_id' => ['required', 'integer', 'exists:applications,id'],
             'message'          => ['required', 'string', 'max:2000'],
         ]);
 
-        $application = MApplication::findOrFail($request->integer('m_application_id'));
+        $application = Application::findOrFail($request->integer('application_id'));
 
         $event = new MApplicationEvent();
         $event->application()->associate($application);
@@ -61,13 +61,13 @@ class MApplicationEventController extends Controller
 
     public function destroy(Request $request, int $id): JsonResponse
     {
-        abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'm_application_id' => ['required', 'integer', 'exists:m_applications,id'],
+            'application_id' => ['required', 'integer', 'exists:applications,id'],
         ]);
 
-        $application = MApplication::findOrFail($request->integer('m_application_id'));
+        $application = Application::findOrFail($request->integer('application_id'));
 
         $event = $application->events()->findOrFail($id);
 

@@ -48,10 +48,12 @@ class AuditLog extends Model
     }
 
     public static function URL(string $subject_type, string $subject_id): string {
+        // For non regression
+        if ($subject_type === 'App\Models\MApplication')
+            $subject_type = 'App\Models\Application';
+
         return '/admin/'.
-            ($subject_type === 'App\\Models\\MApplication' ?
-                'applications' :
-                Str::plural(Str::snake(Str::afterLast($subject_type, '\\'), '-'))).
+            Str::plural(Str::snake(Str::afterLast($subject_type, '\\'), '-')).
             '/' . $subject_id;
     }
 

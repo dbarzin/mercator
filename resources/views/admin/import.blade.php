@@ -112,7 +112,7 @@
             ],
             3 => [ // Applications
                 ['id' => 'ApplicationBlock',   'label' => trans('cruds.applicationBlock.title')],
-                ['id' => 'MApplication',       'label' => trans('cruds.application.title')],
+                ['id' => 'Application',       'label' => trans('cruds.application.title')],
                 ['id' => 'ApplicationService', 'label' => trans('cruds.applicationService.title')],
                 ['id' => 'ApplicationModule',  'label' => trans('cruds.applicationModule.title')],
                 ['id' => 'Database',           'label' => trans('cruds.database.title')],

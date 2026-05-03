@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateActivityRequest;
 use App\Models\Activity;
 use App\Models\ActivityImpact;
 use App\Models\Graph;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Operation;
 use App\Models\Process;
 use Gate;
@@ -36,7 +36,7 @@ class ActivityController extends Controller
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
 
         $types = ActivityImpact::select('impact_type')
             ->whereNotNull('impact_type')
@@ -87,7 +87,7 @@ class ActivityController extends Controller
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = Application::all()->sortBy('name')->pluck('name', 'id');
 
         $types = ActivityImpact::select('impact_type')
             ->whereNotNull('impact_type')

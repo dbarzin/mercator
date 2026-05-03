@@ -81,10 +81,10 @@ class LogicalServer extends Model implements HasIconContract, HasPrefix
         return LogicalServerFactory::new();
     }
 
-    /** @return BelongsToMany<MApplication, $this> */
+    /** @return BelongsToMany<Application, $this> */
     public function applications(): BelongsToMany
     {
-        return $this->belongsToMany(MApplication::class)->orderBy('name');
+        return $this->belongsToMany(Application::class)->orderBy('name');
     }
 
     /** @return BelongsToMany<PhysicalServer, $this> */

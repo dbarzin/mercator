@@ -116,9 +116,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web.prote
     Route::delete('application-blocks-destroy', [Admin\ApplicationBlockController::class, 'massDestroy'])->name('application-blocks.massDestroy');
 
     // Applications
-    Route::resource('applications', Admin\MApplicationController::class);
-    Route::get('applications-clone/{id}', [Admin\MApplicationController::class, 'clone'])->name('applications.clone');
-    Route::delete('applications-destroy', [Admin\MApplicationController::class, 'massDestroy'])->name('applications.massDestroy');
+    Route::resource('applications', Admin\ApplicationController::class);
+    Route::get('applications-clone/{id}', [Admin\ApplicationController::class, 'clone'])->name('applications.clone');
+    Route::delete('applications-destroy', [Admin\ApplicationController::class, 'massDestroy'])->name('applications.massDestroy');
 
     // Application Services
     Route::resource('application-services', Admin\ApplicationServiceController::class);

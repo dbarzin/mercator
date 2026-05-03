@@ -8,7 +8,7 @@ use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
 use App\Models\DataProcessing;
 use App\Models\Information;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +33,7 @@ class DataProcessingController extends Controller
 
         $processes = Process::query()->orderBy('name')->pluck('name', 'id');
         $informations = Information::query()->orderBy('name')->pluck('name', 'id');
-        $applications = MApplication::query()->orderBy('name')->pluck('name', 'id');
+        $applications = Application::query()->orderBy('name')->pluck('name', 'id');
 
         // Get Legal Basis
         $legal_basis_list = DataProcessing::query()
@@ -97,7 +97,7 @@ class DataProcessingController extends Controller
 
         $processes = Process::select(['id', 'name'])->orderBy('name')->get();
         $informations = Information::select(['id', 'name'])->orderBy('name')->get();
-        $applications = MApplication::select(['id', 'name'])->orderBy('name')->get();
+        $applications = Application::select(['id', 'name'])->orderBy('name')->get();
 
         // Get Legal Basis
         $legal_basis_list = DataProcessing::select('legal_basis')

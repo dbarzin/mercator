@@ -103,7 +103,7 @@
                             <br>
                         </li>
                         @endcan
-                        @can('m_application_access')
+                        @can('application_access')
                         <li>
                             <a href="{{ route('admin.report.applicationsByBlocks') }}"
                                target="_new">{{ trans("cruds.report.lists.applications") }}</a>

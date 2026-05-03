@@ -495,9 +495,9 @@ Une application peut être déployée sur un ou plusieurs serveurs logiques.
 Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y
 a un serveur logique par serveur physique.
 
-| Table                                              | api                 |
-|:---------------------------------------------------|:--------------------|
-| <span style="color: blue;">*m_applications*</span> | `/api/applications` |
+| Table                                            | api                 |
+|:-------------------------------------------------|:--------------------|
+| <span style="color: blue;">*applications*</span> | `/api/applications` |
 
 | Champ                | Type         | Description                                                         |
 |:---------------------|:-------------|:--------------------------------------------------------------------|
@@ -590,18 +590,18 @@ Les évènements majeurs ne sont accessibles qu'à travers les objets applicatio
 
 Ils ne sont ni importables, ni exportables à travers l'outil graphique.
 
-| Table                                                    | api |
-|:---------------------------------------------------------|:----|
-| <span style="color: blue;">*m_application_events*</span> | S/O |
+| Table                                                  | api |
+|:-------------------------------------------------------|:----|
+| <span style="color: blue;">*application_events*</span> | S/O |
 
-| Champ            | Type         | Description                                         |
-|:-----------------|:-------------|:----------------------------------------------------|
-| id               | int unsigned | auto_increment                                      |
-| user_id          | int unsigned | Utilisateur de Mercator ayant renseigné l'évènement |
-| m_application_id | varchar(255) | Référence vers l'application ayant subi l'évènement |
-| message          | longtext     | Description de l'évènement                          |
-| created_at       | timestamp    | Date de création                                    |
-| updated_at       | timestamp    | Date de mise à jour                                 |
+| Champ          | Type         | Description                                         |
+|:---------------|:-------------|:----------------------------------------------------|
+| id             | int unsigned | auto_increment                                      |
+| user_id        | int unsigned | Utilisateur de Mercator ayant renseigné l'évènement |
+| application_id | int unsigned | Référence vers l'application ayant subi l'évènement |
+| message        | longtext     | Description de l'évènement                          |
+| created_at     | timestamp    | Date de création                                    |
+| updated_at     | timestamp    | Date de mise à jour                                 |
 
 ### Services applicatif
 

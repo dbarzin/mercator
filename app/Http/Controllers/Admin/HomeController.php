@@ -31,7 +31,7 @@ use App\Models\Lan;
 use App\Models\LogicalServer;
 use App\Models\MacroProcessus;
 use App\Models\Man;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\Network;
 use App\Models\NetworkSwitch;
 use App\Models\Operation;
@@ -189,9 +189,9 @@ class HomeController extends Controller
                 })
                 // process must be supported by one application
                 ->whereExists(function ($query) {
-                    $query->select("m_application_process.process_id")
-                        ->from("m_application_process")
-                        ->whereRaw("m_application_process.process_id = processes.id");
+                    $query->select("application_process.process_id")
+                        ->from("application_process")
+                        ->whereRaw("application_process.process_id = processes.id");
                 })
                 */
                 ->count(),
@@ -287,35 +287,35 @@ class HomeController extends Controller
                 ->where('responsible', '<>', null)
                 // applicationBlock must have one application
                 ->whereExists(function ($query): void {
-                    $query->select('m_applications.id')
-                        ->from('m_applications')
-                        ->whereRaw('m_applications.application_block_id = application_blocks.id');
+                    $query->select('applications.id')
+                        ->from('applications')
+                        ->whereRaw('applications.application_block_id = application_blocks.id');
                 })
                 ->count(),
 
-            'applications' => MApplication::count(),
-            'applications_lvl1' => MApplication::where('description', '<>', null)
+            'applications' => Application::count(),
+            'applications_lvl1' => Application::where('description', '<>', null)
                 ->where('responsible', '<>', null)
                 ->where('technology', '<>', null)
                 ->where('type', '<>', null)
                 ->where('users', '<>', null)
                 // application must have one process
                 ->whereExists(function ($query): void {
-                    $query->select('m_application_process.m_application_id')
-                        ->from('m_application_process')
-                        ->whereRaw('m_application_process.m_application_id = m_applications.id');
+                    $query->select('application_process.application_id')
+                        ->from('application_process')
+                        ->whereRaw('application_process.application_id = applications.id');
                 })
                 // application must have one logical server
                 /* No - fat client application does not have a logical server
                 ->whereExists(function ($query) {
-                    $query->select("logical_server_m_application.m_application_id")
-                        ->from("logical_server_m_application")
-                        ->whereRaw("logical_server_m_application.m_application_id = m_applications.id");
+                    $query->select("application_logical_server.application_id")
+                        ->from("application_logical_server")
+                        ->whereRaw("application_logical_server.application_id = applications.id");
                 })
                 */
                 ->count(),
 
-            'applications_lvl2' => MApplication::where('description', '<>', null)
+            'applications_lvl2' => Application::where('description', '<>', null)
                 ->where('responsible', '<>', null)
                 ->where('technology', '<>', null)
                 ->where('type', '<>', null)
@@ -327,16 +327,16 @@ class HomeController extends Controller
                 ->where('security_need_t', '<>', null)
                 // application must have one process
                 ->whereExists(function ($query): void {
-                    $query->select('m_application_process.m_application_id')
-                        ->from('m_application_process')
-                        ->whereRaw('m_application_process.m_application_id = m_applications.id');
+                    $query->select('application_process.application_id')
+                        ->from('application_process')
+                        ->whereRaw('application_process.application_id = applications.id');
                 })
                 // application must have one logical server
                 /* No - fat client application does not have a logical server
                 ->whereExists(function ($query) {
-                    $query->select("logical_server_m_application.m_application_id")
-                        ->from("logical_server_m_application")
-                        ->whereRaw("logical_server_m_application.m_application_id = m_applications.id");
+                    $query->select("application_logical_server.application_id")
+                        ->from("application_logical_server")
+                        ->whereRaw("application_logical_server.application_id = applications.id");
                 })
                 */
 
@@ -344,14 +344,14 @@ class HomeController extends Controller
                 // NO - services of external applications are not documented
                 /*
                 ->whereExists(function ($query) {
-                   $query->select("application_service_m_application.m_application_id")
-                        ->from("application_service_m_application")
-                        ->whereRaw("application_service_m_application.m_application_id = m_applications.id");
+                   $query->select("application_application_service.application_id")
+                        ->from("application_application_service")
+                        ->whereRaw("application_application_service.application_id = applications.id");
                 })
                 */
                 ->count(),
 
-            'applications_lvl3' => MApplication::where('description', '<>', null)
+            'applications_lvl3' => Application::where('description', '<>', null)
                 ->where('entity_resp_id', '<>', null)
                 ->where('responsible', '<>', null)
                 ->where('technology', '<>', null)
@@ -363,9 +363,9 @@ class HomeController extends Controller
                 ->where('security_need_t', '<>', null)
                 // application must have one process
                 ->whereExists(function ($query): void {
-                    $query->select('m_application_process.m_application_id')
-                        ->from('m_application_process')
-                        ->whereRaw('m_application_process.m_application_id = m_applications.id');
+                    $query->select('application_process.application_id')
+                        ->from('application_process')
+                        ->whereRaw('application_process.application_id = applications.id');
                 })
                 // CPE must be given
                 //    ->where('vendor', '<>', null)
@@ -377,9 +377,9 @@ class HomeController extends Controller
             'applicationServices_lvl2' => ApplicationService::where('description', '<>', null)
                 // applicationService must have one application
                 ->whereExists(function ($query): void {
-                    $query->select('application_service_m_application.m_application_id')
-                        ->from('application_service_m_application')
-                        ->whereRaw('application_service_m_application.application_service_id = application_services.id');
+                    $query->select('application_application_service.application_id')
+                        ->from('application_application_service')
+                        ->whereRaw('application_application_service.application_service_id = application_services.id');
                 })
                 ->count(),
 
@@ -516,8 +516,8 @@ class HomeController extends Controller
                 // doit avoir au moins une application
                 ->whereExists(function ($q): void {
                     $q->select(DB::raw(1))
-                        ->from('logical_server_m_application')
-                        ->whereColumn('logical_server_m_application.logical_server_id', 'logical_servers.id');
+                        ->from('application_logical_server')
+                        ->whereColumn('application_logical_server.logical_server_id', 'logical_servers.id');
                 })
 
                 // doit être installé sur un serveur physique OU appartenir à un cluster
@@ -539,9 +539,9 @@ class HomeController extends Controller
                 ->where('type', '<>', null)
                 // Container must have one application
                 ->whereExists(function ($query): void {
-                    $query->select('container_m_application.m_application_id')
-                        ->from('container_m_application')
-                        ->whereRaw('container_m_application.container_id = containers.id');
+                    $query->select('application_container.application_id')
+                        ->from('application_container')
+                        ->whereRaw('application_container.container_id = containers.id');
                 })
                 // Container must be deployer one logical_server
                 ->whereExists(function ($query): void {

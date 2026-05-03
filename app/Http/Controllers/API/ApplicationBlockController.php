@@ -11,7 +11,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\ApplicationBlock;
-use App\Models\MApplication;
+use App\Models\Application;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationBlockController extends APIController
@@ -35,7 +35,7 @@ class ApplicationBlockController extends APIController
         // Mise à jour des applications liées
         $applications = $request->input('applications', []);
         if (! empty($applications)) {
-            MApplication::whereIn('id', $applications)
+            Application::whereIn('id', $applications)
                 ->update(['application_block_id' => $applicationBlock->id]);
         }
 
@@ -60,7 +60,7 @@ class ApplicationBlockController extends APIController
 
             // Même logique que le contrôleur existant : ne fait qu’un update sur les IDs fournis
             if (! empty($applications)) {
-                MApplication::whereIn('id', $applications)
+                Application::whereIn('id', $applications)
                     ->update(['application_block_id' => $applicationBlock->id]);
             }
         }
@@ -107,7 +107,7 @@ class ApplicationBlockController extends APIController
             $applicationBlock = ApplicationBlock::query()->create($attributes);
 
             if (array_key_exists('applications', $item) && ! empty($applications)) {
-                MApplication::whereIn('id', $applications)
+                Application::whereIn('id', $applications)
                     ->update(['application_block_id' => $applicationBlock->id]);
             }
 
@@ -147,7 +147,7 @@ class ApplicationBlockController extends APIController
 
             // Si la clé est présente dans l’item, applique la même logique que update()
             if (array_key_exists('applications', $rawItem) && ! empty($applications)) {
-                MApplication::whereIn('id', $applications)
+                Application::whereIn('id', $applications)
                     ->update(['application_block_id' => $applicationBlock->id]);
             }
         }

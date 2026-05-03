@@ -89,7 +89,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             14 => [
                 'id' => 15,
-                'migration' => '2021_05_08_191249_create_application_service_m_application_table',
+                'migration' => '2021_05_08_191249_create_application_application_service_table',
                 'batch' => 1,
             ],
             15 => [
@@ -129,7 +129,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             22 => [
                 'id' => 23,
-                'migration' => '2021_05_08_191249_create_database_m_application_table',
+                'migration' => '2021_05_08_191249_create_application_database_table',
                 'batch' => 1,
             ],
             23 => [
@@ -164,7 +164,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             29 => [
                 'id' => 30,
-                'migration' => '2021_05_08_191249_create_entity_m_application_table',
+                'migration' => '2021_05_08_191249_create_application_entity_table',
                 'batch' => 1,
             ],
             30 => [
@@ -224,7 +224,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             41 => [
                 'id' => 42,
-                'migration' => '2021_05_08_191249_create_logical_server_m_application_table',
+                'migration' => '2021_05_08_191249_create_application_logical_server_table',
                 'batch' => 1,
             ],
             42 => [
@@ -239,12 +239,12 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             44 => [
                 'id' => 45,
-                'migration' => '2021_05_08_191249_create_m_application_process_table',
+                'migration' => '2021_05_08_191249_create_application_process_table',
                 'batch' => 1,
             ],
             45 => [
                 'id' => 46,
-                'migration' => '2021_05_08_191249_create_m_applications_table',
+                'migration' => '2021_05_08_191249_create_applications_table',
                 'batch' => 1,
             ],
             46 => [
@@ -449,7 +449,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             86 => [
                 'id' => 87,
-                'migration' => '2021_05_08_191251_add_foreign_keys_to_application_service_m_application_table',
+                'migration' => '2021_05_08_191251_add_foreign_keys_to_application_application_service_table',
                 'batch' => 1,
             ],
             87 => [
@@ -479,7 +479,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             92 => [
                 'id' => 93,
-                'migration' => '2021_05_08_191251_add_foreign_keys_to_database_m_application_table',
+                'migration' => '2021_05_08_191251_add_foreign_keys_to_application_database_table',
                 'batch' => 1,
             ],
             93 => [
@@ -494,7 +494,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             95 => [
                 'id' => 96,
-                'migration' => '2021_05_08_191251_add_foreign_keys_to_entity_m_application_table',
+                'migration' => '2021_05_08_191251_add_foreign_keys_to_application_entity_table',
                 'batch' => 1,
             ],
             96 => [
@@ -534,7 +534,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             103 => [
                 'id' => 104,
-                'migration' => '2021_05_08_191251_add_foreign_keys_to_logical_server_m_application_table',
+                'migration' => '2021_05_08_191251_add_foreign_keys_to_application_logical_server_table',
                 'batch' => 1,
             ],
             104 => [
@@ -544,12 +544,12 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             105 => [
                 'id' => 106,
-                'migration' => '2021_05_08_191251_add_foreign_keys_to_m_application_process_table',
+                'migration' => '2021_05_08_191251_add_foreign_keys_to_application_process_table',
                 'batch' => 1,
             ],
             106 => [
                 'id' => 107,
-                'migration' => '2021_05_08_191251_add_foreign_keys_to_m_applications_table',
+                'migration' => '2021_05_08_191251_add_foreign_keys_to_applications_table',
                 'batch' => 1,
             ],
             107 => [
@@ -729,7 +729,7 @@ class DemoMigrationsTableSeeder extends Seeder
             ],
             142 => [
                 'id' => 143,
-                'migration' => '2022_02_08_210603_create_cartographer_m_application_table',
+                'migration' => '2022_02_08_210603_create_application_cartographer_table',
                 'batch' => 1,
             ],
             143 => [

@@ -13,7 +13,7 @@ class MApplicationEvent extends Model
 {
     use HasFactory;
 
-    public $table = 'm_application_events';
+    public $table = 'application_events';
 
     protected array $dates = [
         'created_at',
@@ -22,7 +22,7 @@ class MApplicationEvent extends Model
 
     protected $fillable = [
         'user_id',
-        'm_application_id',
+        'application_id',
         'message',
         'created_at',
         'updated_at',
@@ -33,10 +33,10 @@ class MApplicationEvent extends Model
         return MApplicationEventFactory::new();
     }
 
-    /** @return BelongsTo<MApplication, $this> */
+    /** @return BelongsTo<Application, $this> */
     public function application(): BelongsTo
     {
-        return $this->belongsTo(MApplication::class, 'm_application_id');
+        return $this->belongsTo(Application::class, 'application_id');
     }
 
     /** @return BelongsTo<User, $this> */

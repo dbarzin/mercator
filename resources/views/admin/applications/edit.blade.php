@@ -798,7 +798,7 @@
                                     'Content-Type': 'application/json',
                                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                                 },
-                                body: JSON.stringify({ m_application_id: {{ $application->id }} })
+                                body: JSON.stringify({ application_id: {{ $application->id }} })
                             })
                             .then(resp => {
                                 if (!resp.ok) throw new Error();
@@ -828,7 +828,7 @@
 
                 if (message !== '' && user_id && app_id) {
                     $.post("{{ route('admin.application-events.store') }}", {
-                        m_application_id: app_id,
+                        application_id: app_id,
                         user_id: user_id,
                         message: message,
                         _token: "{{ csrf_token() }}"

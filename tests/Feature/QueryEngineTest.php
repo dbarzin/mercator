@@ -4,7 +4,7 @@
 
 use App\Models\Database as MercatorDatabase;
 use App\Models\LogicalServer;
-use App\Models\MApplication;
+use App\Models\Application;
 use App\Models\User;
 use App\Services\QueryEngine\GraphResult;
 use App\Services\QueryEngine\ListResult;
@@ -59,9 +59,9 @@ function makeServer(array $attrs = []): logicalServer
 /**
  * Crée une Application et l'associe au logical-servers via la relation pivot.
  */
-function makeApp(LogicalServer $server, array $appAttrs = []): MApplication
+function makeApp(LogicalServer $server, array $appAttrs = []): Application
 {
-    $app = MApplication::factory()->create(array_merge([
+    $app = Application::factory()->create(array_merge([
         'name' => 'app-' . uniqid(),
     ], $appAttrs));
 
@@ -73,7 +73,7 @@ function makeApp(LogicalServer $server, array $appAttrs = []): MApplication
 /**
  * Crée une base de données liée à une Application.
  */
-function makeDb(MApplication $app, array $attrs = []): MercatorDatabase
+function makeDb(Application $app, array $attrs = []): MercatorDatabase
 {
     $db = MercatorDatabase::factory()->create(array_merge([
         'name' => 'db-' . uniqid(),
@@ -96,10 +96,10 @@ describe('QueryEngineIntrospector', function () {
         expect($class)->toBe(LogicalServer::class);
     });
 
-    it('résout MApplication', function () {
+    it('résout Application', function () {
         $class = QueryEngineIntrospector::resolveModelClass('applications');
 
-        expect($class)->toBe(MApplication::class);
+        expect($class)->toBe(Application::class);
     });
 
     it('lève une exception HTTP 422 pour un modèle inconnu', function () {
@@ -121,7 +121,7 @@ describe('QueryEngineIntrospector', function () {
         expect($models)->toBe(collect($models)->sort()->values()->all());
     });
 
-    it('listModels inclut logical-servers et MApplication', function () {
+    it('listModels inclut logical-servers et Application', function () {
         $models = QueryEngineIntrospector::listModels();
 
         expect($models)
@@ -465,7 +465,7 @@ describe('execute – traversée de relations', function () {
 
         $edge = $result->edges->first();
         expect($edge['from'])->toBe("logical-servers_{$server->id}");
-        expect($edge['to'])->toBe("MApplication_{$app->id}");
+        expect($edge['to'])->toBe("Application_{$app->id}");
     });
 
     it('supporte la notation pointée sur 2 niveaux (applications.databases)', function () {
@@ -544,7 +544,7 @@ describe('Détection des cycles', function () {
     it('ne duplique pas un nœud Application partagé par plusieurs serveurs', function () {
         $server1 = makeServer(['name' => 'srv-1']);
         $server2 = makeServer(['name' => 'srv-2']);
-        $app     = MApplication::factory()->create(['name' => 'shared-app']);
+        $app     = Application::factory()->create(['name' => 'shared-app']);
 
         // La même application est associée aux deux serveurs
         $server1->applications()->syncWithoutDetaching([$app->id]);
@@ -557,7 +557,7 @@ describe('Détection des cycles', function () {
         ]);
 
         $appNodes = $result->nodes->filter(
-            fn ($n) => str_starts_with($n['id'], 'MApplication_')
+            fn ($n) => str_starts_with($n['id'], 'Application_')
         );
 
         // Le nœud partagé ne doit apparaître qu'une seule fois

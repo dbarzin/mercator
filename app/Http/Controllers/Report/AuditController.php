@@ -849,7 +849,7 @@ class AuditController extends HomeController
 
             'Applications' => ['index' => 38, 'title' => trans('cruds.menu.application.title_short')],
             'App\\Models\\ApplicationBlock' => ['index' => 39, 'title' => trans('cruds.applicationBlock.title')],
-            'App\\Models\\MApplication' => ['index' => 42, 'title' => trans('cruds.application.title')],
+            'App\\Models\\Application' => ['index' => 42, 'title' => trans('cruds.application.title')],
             'App\\Models\\ApplicationService' => ['index' => 45, 'title' => trans('cruds.applicationService.title')],
             'App\\Models\\ApplicationModule' => ['index' => 48, 'title' => trans('cruds.applicationModule.title')],
             'App\\Models\\Database' => ['index' => 51, 'title' => trans('cruds.database.title')],

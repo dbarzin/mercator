@@ -143,7 +143,7 @@
                                 class="menu-text">{{ trans('cruds.applicationBlock.title') }}</span>
                     </a>
                 @endcan
-                @can('m_application_access')
+                @can('application_access')
                     <a href="{{ route('admin.applications.index') }}"
                        class="ps-4 {{ request()->is('admin/applications*') ? 'active' : '' }}">
                         <i class="bi bi-list-columns"></i><span

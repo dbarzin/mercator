@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Report;
 
-use App\Models\MApplication;
+use App\Models\Application;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Support\Facades\DB;
@@ -19,18 +19,18 @@ class Directory extends ReportController
         $today = Carbon::today()->toDateString();
 
         $applications =
-            MApplication::query()
+            Application::query()
                 ->where(function ($query): void {
-                    $query->where('m_applications.security_need_c', '>=', 3)
-                        ->orWhere('m_applications.security_need_i', '>=', 3)
-                        ->orWhere('m_applications.security_need_a', '>=', 3)
-                        ->orWhere('m_applications.security_need_t', '>=', 3)
-                        ->orWhere('m_applications.security_need_auth', '>=', 3);
+                    $query->where('applications.security_need_c', '>=', 3)
+                        ->orWhere('applications.security_need_i', '>=', 3)
+                        ->orWhere('applications.security_need_a', '>=', 3)
+                        ->orWhere('applications.security_need_t', '>=', 3)
+                        ->orWhere('applications.security_need_auth', '>=', 3);
                 })
-                ->whereNull('m_applications.deleted_at')
+                ->whereNull('applications.deleted_at')
                 ->leftJoin('entities', function ($join): void {
                     $join->on(function ($on): void {
-                        $on->on('m_applications.entity_resp_id', '=', 'entities.id');
+                        $on->on('applications.entity_resp_id', '=', 'entities.id');
                     })
                         ->whereNull('entities.deleted_at');
                 })
@@ -49,16 +49,16 @@ class Directory extends ReportController
                         ->whereNull('relations.deleted_at');
                 })
                 ->select(
-                    'm_applications.id as application_id',
-                    'm_applications.name',
-                    'm_applications.description',
-                    'm_applications.responsible',
-                    'm_applications.security_need_c',
-                    'm_applications.security_need_i',
-                    'm_applications.security_need_a',
-                    'm_applications.security_need_t',
-                    'm_applications.rto',
-                    'm_applications.rpo',
+                    'applications.id as application_id',
+                    'applications.name',
+                    'applications.description',
+                    'applications.responsible',
+                    'applications.security_need_c',
+                    'applications.security_need_i',
+                    'applications.security_need_a',
+                    'applications.security_need_t',
+                    'applications.rto',
+                    'applications.rpo',
                     'entities.name as entity_name',
                     'entities.description as entity_description',
                     'entities.contact_point as entity_contact_point',
@@ -180,8 +180,8 @@ class Directory extends ReportController
                 $first->security_need_i.' - '.
                 $first->security_need_a.' - '.
                 $first->security_need_t));
-            $this->addTextRow($t1, 'RTO', MApplication::formatDelay($first->rto));
-            $this->addTextRow($t1, 'RPO', MApplication::formatDelay($first->rpo));
+            $this->addTextRow($t1, 'RTO', Application::formatDelay($first->rto));
+            $this->addTextRow($t1, 'RPO', Application::formatDelay($first->rpo));
 
             $section->addTextBreak(1);
 
@@ -251,9 +251,9 @@ class Directory extends ReportController
 
     private static function getApplicationProcessesNames(int $applicationId): string
     {
-        $names = DB::table('m_application_process')
-            ->join('processes', 'm_application_process.process_id', '=', 'processes.id')
-            ->where('m_application_process.m_application_id', $applicationId)
+        $names = DB::table('application_process')
+            ->join('processes', 'application_process.process_id', '=', 'processes.id')
+            ->where('application_process.application_id', $applicationId)
             ->pluck('processes.name');
 
         return $names->implode(', ');

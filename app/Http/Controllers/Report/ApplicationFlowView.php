@@ -11,7 +11,7 @@ use App\Models\ApplicationModule;
 use App\Models\ApplicationService;
 use App\Models\Database;
 use App\Models\Flux;
-use App\Models\MApplication;
+use App\Models\Application;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationFlowView extends Controller
@@ -60,22 +60,22 @@ class ApplicationFlowView extends Controller
         }
 
         // Get assets
-        $application_ids = DB::table('m_applications')
+        $application_ids = DB::table('applications')
             ->whereIn('application_block_id', $applicationBlocks)
             ->whereNull('deleted_at')
             ->orWhereIn('id', $applications)
             ->pluck('id');
 
-        $applicationservice_ids = DB::table('m_applications')
-            ->join('application_service_m_application', 'm_applications.id', '=', 'application_service_m_application.m_application_id')
+        $applicationservice_ids = DB::table('applications')
+            ->join('application_application_service', 'applications.id', '=', 'application_application_service.application_id')
             ->whereIn('application_block_id', $applicationBlocks)
             ->whereNull('deleted_at')
             ->pluck('application_service_id')
             ->unique();
 
-        $applicationmodule_ids = DB::table('m_applications')
-            ->join('application_service_m_application', 'm_applications.id', '=', 'application_service_m_application.m_application_id')
-            ->join('application_module_application_service', 'application_service_m_application.application_service_id', '=', 'application_module_application_service.application_service_id')
+        $applicationmodule_ids = DB::table('applications')
+            ->join('application_application_service', 'applications.id', '=', 'application_application_service.application_id')
+            ->join('application_module_application_service', 'application_application_service.application_service_id', '=', 'application_module_application_service.application_service_id')
             ->whereNull('deleted_at')
             ->whereIn('application_block_id', $applicationBlocks)
             ->pluck('application_module_id')
@@ -157,7 +157,7 @@ class ApplicationFlowView extends Controller
         }
 
         // get objects
-        $applications = MApplication::All()
+        $applications = Application::All()
             ->whereIn('id', $application_ids)
             ->sortBy('name');
         $applicationServices = ApplicationService::All()
@@ -172,7 +172,7 @@ class ApplicationFlowView extends Controller
 
         // update lists
         $all_applicationBlocks = ApplicationBlock::All()->sortBy('name')->pluck('name', 'id');
-        $all_applications = MApplication::All()->sortBy('name')->pluck('name', 'id');
+        $all_applications = Application::All()->sortBy('name')->pluck('name', 'id');
         $all_databases = Database::All()->sortBy('name')->pluck('name', 'id');
 
         // return

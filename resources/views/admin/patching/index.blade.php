@@ -165,7 +165,7 @@
                                         </a>
                                     @endcan
                                 @else
-                                @can('m_application_show')
+                                @can('application_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.patching.edit.application', $patch->id) }}">
                                         {{ trans('global.patch') }}
                                     </a>
