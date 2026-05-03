@@ -47,9 +47,7 @@ class AuditLog extends Model
         return AuditLog::url($this->subject_type, (string)$this->subject_id);
     }
 
-    public static function URL(string $subject_type, ?string $subject_id): string {
-        if ($subject_id===null)
-            return "";
+    public static function URL(string $subject_type, string $subject_id): string {
         return '/admin/'.
             ($subject_type === 'App\\Models\\MApplication' ?
                 'applications' :

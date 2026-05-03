@@ -80,9 +80,13 @@
                             <td>{{ $log->description }}</td>
                             <td>{{ Str::afterLast($log->subject_type, '\\') }}</td>
                             <td>
+                            @if($log->subject_id!==null)
                                 <a href="{{ \App\Models\AuditLog::URL($log->subject_type, $log->subject_id) }}">
                                     {{ $log->subject_id }}
                                 </a>
+                            @else
+                                N/A
+                            @endif
                             </td>
                             <td>
                                 <a href="{{ route('admin.users.show', $log->user_id) }}">
