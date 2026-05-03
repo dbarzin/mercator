@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
  * Gère la validation récursive des filtres (groupes imbriqués),
  * les opérateurs complets, et les valeurs nullables.
  */
-class QueryDslValidator
+final class QueryDslValidator
 {
     protected const ALLOWED_OPERATORS = [
         '=', '!=', '<', '>', '<=', '>=',
@@ -152,7 +152,7 @@ class QueryDslValidator
             return;
         }
 
-        if (! isset($segment['name']) || ! preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', (string) ($segment['name'] ?? ''))) {
+        if (! preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', (string) ($segment['name'] ?? ''))) {
             $this->errors["{$path}.name"][] = '"name" doit être un identifiant valide.';
         }
 

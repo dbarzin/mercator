@@ -80,9 +80,13 @@
                             <td>{{ $log->description }}</td>
                             <td>{{ Str::afterLast($log->subject_type, '\\') }}</td>
                             <td>
+                            @if($log->subject_id!==null)
                                 <a href="{{ \App\Models\AuditLog::URL($log->subject_type, $log->subject_id) }}">
                                     {{ $log->subject_id }}
                                 </a>
+                            @else
+                                N/A
+                            @endif
                             </td>
                             <td>
                                 <a href="{{ route('admin.users.show', $log->user_id) }}">
@@ -95,10 +99,12 @@
                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
                                     {{ trans('global.view') }}
                                 </a>
+                                @if($log->subject_id!==null)
                                 <a class="btn btn-xs btn-secondary"
                                    href="{{ route('admin.audit-logs.history', ['type' => $log->subject_type, 'id' => $log->subject_id]) }}">
                                     {{ trans('global.history') }}
                                 </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
