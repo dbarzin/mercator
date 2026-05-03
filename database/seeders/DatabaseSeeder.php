@@ -91,7 +91,6 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoLogicalServerApplicationTableSeeder::class);
             $this->call(DemoCertificateApplicationTableSeeder::class);
             $this->call(DemoCertificateLogicalServerTableSeeder::class);
-            $this->call(DemoCartographerApplicationTableSeeder::class);
             $this->call(DemoMApplicationEventsTableSeeder::class);
             $this->call(DemoApplicationWorkstationTableSeeder::class);
             $this->call(DemoDatabaseLogicalServerTableSeeder::class);

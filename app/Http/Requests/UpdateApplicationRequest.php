@@ -64,9 +64,6 @@ class UpdateApplicationRequest extends BaseFormRequest
             'logical_servers' => [
                 'array',
             ],
-            'cartographers' => [
-                'array',
-            ],
             'install_date' => [
                 'date',
                 'nullable',

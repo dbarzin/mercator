@@ -21,7 +21,6 @@ use App\Models\Entity;
 use App\Models\LogicalServer;
 use App\Models\Process;
 use App\Models\SecurityDevice;
-use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationController extends Controller
@@ -150,7 +149,6 @@ class ApplicationController extends Controller
 
         $referent_list = Application::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
         $editor_list = Application::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
-        $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         return compact(
             'entities',
@@ -171,7 +169,6 @@ class ApplicationController extends Controller
             'responsible_list',
             'referent_list',
             'editor_list',
-            'cartographers_list',
             'attributes_list'
         );
     }
@@ -267,7 +264,6 @@ class ApplicationController extends Controller
 
         $referent_list = Application::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
         $editor_list = Application::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
-        $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock');
 
@@ -293,7 +289,6 @@ class ApplicationController extends Controller
                 'responsible_list',
                 'referent_list',
                 'editor_list',
-                'cartographers_list',
                 'attributes_list'
             )
         );
