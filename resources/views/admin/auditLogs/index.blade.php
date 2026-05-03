@@ -99,10 +99,12 @@
                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
                                     {{ trans('global.view') }}
                                 </a>
+                                @if($log->subject_id!==null)
                                 <a class="btn btn-xs btn-secondary"
                                    href="{{ route('admin.audit-logs.history', ['type' => $log->subject_type, 'id' => $log->subject_id]) }}">
                                     {{ trans('global.history') }}
                                 </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
