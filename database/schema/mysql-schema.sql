@@ -2654,3 +2654,5 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (325,'2026_04_17_21
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (326,'2026_05_03_184011_rename_m_applications_to_applications',25);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (327,'2026_05_03_185943_rename_m_application_events_to_application_events',26);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (328,'2026_05_03_192017_rename_m_application_id_in_application_events',27);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (329,'2026_05_03_193002_rename_m_application_permissions',28);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (330,'2026_05_03_230714_consolidate_application_permissions',29);
