@@ -304,7 +304,7 @@ Liste les applications non rattachées à un serveur logique, symptôme possible
 
 ## Bonnes pratiques
 
-- **Limitez le `LIMIT`** à la valeur nécessaire : des requêtes trop larges peuvent être lentes sur de grands référentiels.
+- **Utilisez `LIMIT`** pour limiter le nombre de résultats à la valeur nécessaire : des requêtes trop larges peuvent être lentes sur de grands référentiels.
 - **Utilisez `OUTPUT graph`** uniquement lorsque les relations sont déclarées dans `WITH` ; un graphe sans relations ne sera composé que de nœuds isolés.
 - **Vérifiez les noms de champs** dans la [référence API](api.fr.md) — une faute de frappe dans un champ n'affiche simplement rien, sans message d'erreur.
 - **Avec `EXISTS`**, déclarez la relation dans `WITH` uniquement si vous avez besoin d'afficher ses champs dans `FIELDS` ; sinon, `EXISTS` seul suffit à filtrer sans surcharge.
