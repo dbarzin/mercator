@@ -119,7 +119,8 @@ class PhysicalInfrastructureGraphBuilder
 
         if (Cartographer::canAccess(StorageDevice::class)) {
             foreach ($storageDevices as $storageDevice) {
-                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $iconResolver(null, '/images/storage.png'), [e($storageDevice->name)], $this->href($storageDevice, $withHref));
+                $image = $iconResolver($storageDevice->icon_id, '/images/storage.png');
+                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $image, [e($storageDevice->name)], $this->href($storageDevice, $withHref));
                 $lines[] = $this->attachToLocation('SD'.$storageDevice->id, $storageDevice->bay, $storageDevice->building, $storageDevice->site, $bays, $buildings, $sites);
             }
         }
@@ -182,6 +183,7 @@ class PhysicalInfrastructureGraphBuilder
         Collection $sites,
         Collection $buildings,
         Collection $workstations,
+        Collection $storageDevices,
         Collection $peripherals,
         Collection $physicalSwitches,
         Collection $physicalSecurityDevices
@@ -200,6 +202,8 @@ class PhysicalInfrastructureGraphBuilder
         $this->appendCustomIcons($manifest, $workstations);
 
         $manifest[] = ['path' => '/images/storage.png', 'width' => '64px', 'height' => '64px'];
+        $this->appendCustomIcons($manifest, $storageDevices);
+
         $manifest[] = ['path' => '/images/peripheral.png', 'width' => '64px', 'height' => '64px'];
         $this->appendCustomIcons($manifest, $peripherals);
 
@@ -304,7 +308,8 @@ class PhysicalInfrastructureGraphBuilder
                     $lines[] = DotNode::withImage('PSERVER'.$pServer->id, $image, [e($pServer->name)], $this->href($pServer, true));
                 }
                 foreach ($storageDevices->where('bay_id', $bay->id) as $storageDevice) {
-                    $lines[] = DotNode::withImage('SD'.$storageDevice->id, $iconResolver(null, '/images/storage.png'), [e($storageDevice->name)], $this->href($storageDevice, true));
+                    $image = $iconResolver($storageDevice->icon_id, '/images/storage.png');
+                    $lines[] = DotNode::withImage('SD'.$storageDevice->id, $image, [e($storageDevice->name)], $this->href($storageDevice, true));
                 }
                 foreach ($peripherals->where('bay_id', $bay->id) as $peripheral) {
                     $image = $iconResolver($peripheral->icon_id, '/images/peripheral.png');
@@ -334,7 +339,8 @@ class PhysicalInfrastructureGraphBuilder
                 $lines[] = DotNode::withImage('WORK'.$workstation->id, $image, [e($workstation->name)], $this->href($workstation, true));
             }
             foreach ($storageDevices->where('site_id', $site->id)->whereNull('building_id')->whereNull('bay_id') as $storageDevice) {
-                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $iconResolver(null, '/images/storage.png'), [e($storageDevice->name)], $this->href($storageDevice, true));
+                $image = $iconResolver($storageDevice->icon_id, '/images/storage.png');
+                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $image, [e($storageDevice->name)], $this->href($storageDevice, true));
             }
             foreach ($peripherals->where('site_id', $site->id)->whereNull('building_id')->whereNull('bay_id') as $peripheral) {
                 $image = $iconResolver($peripheral->icon_id, '/images/peripheral.png');
@@ -404,6 +410,7 @@ class PhysicalInfrastructureGraphBuilder
     public function connectivityImageManifest(
         Collection $physicalServers,
         Collection $workstations,
+        Collection $storageDevices,
         Collection $peripherals,
         Collection $physicalSwitches,
         Collection $physicalSecurityDevices
@@ -420,6 +427,8 @@ class PhysicalInfrastructureGraphBuilder
         $this->appendCustomIcons($manifest, $workstations);
 
         $manifest[] = ['path' => '/images/storage.png', 'width' => '64px', 'height' => '64px'];
+        $this->appendCustomIcons($manifest, $storageDevices);
+
         $manifest[] = ['path' => '/images/peripheral.png', 'width' => '64px', 'height' => '64px'];
         $this->appendCustomIcons($manifest, $peripherals);
 
@@ -500,7 +509,8 @@ class PhysicalInfrastructureGraphBuilder
         }
         foreach ($building->storageDevices as $storageDevice) {
             if ($storageDevice->bay_id === null) {
-                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $iconResolver(null, '/images/storage.png'), [e($storageDevice->name)], $this->href($storageDevice, true));
+                $image = $iconResolver($storageDevice->icon_id, '/images/storage.png');
+                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $image, [e($storageDevice->name)], $this->href($storageDevice, true));
             }
         }
 
@@ -515,7 +525,8 @@ class PhysicalInfrastructureGraphBuilder
                 $lines[] = DotNode::withImage('PSERVER'.$pServer->id, $image, [e($pServer->name)], $this->href($pServer, true));
             }
             foreach ($bay->storageDevices as $storageDevice) {
-                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $iconResolver(null, '/images/storage.png'), [e($storageDevice->name)], $this->href($storageDevice, true));
+                $image = $iconResolver($storageDevice->icon_id, '/images/storage.png');
+                $lines[] = DotNode::withImage('SD'.$storageDevice->id, $image, [e($storageDevice->name)], $this->href($storageDevice, true));
             }
             foreach ($bay->physicalSwitches as $switch) {
                 $lines[] = DotNode::withImage('SWITCH'.$switch->id, $iconResolver(null, '/images/switch.png'), [e($switch->name)], $this->href($switch, true));

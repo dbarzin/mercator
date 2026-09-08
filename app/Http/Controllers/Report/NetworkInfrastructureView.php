@@ -656,7 +656,7 @@ class NetworkInfrastructureView extends Controller
             $physicalLinks,
             $showPorts
         );
-        $imageManifest = $graphBuilder->connectivityImageManifest($physicalServers, $workstations, $peripherals, $physicalSwitches, $physicalSecurityDevices);
+        $imageManifest = $graphBuilder->connectivityImageManifest($physicalServers, $workstations, $storageDevices, $peripherals, $physicalSwitches, $physicalSecurityDevices);
 
         return view('admin/reports/network_infrastructure')
             ->with('all_sites', $all_sites)
