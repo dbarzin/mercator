@@ -292,7 +292,8 @@ class LogicalInfrastructureGraphBuilder
 
         if (Cartographer::canAccess(StorageDevice::class)) {
             foreach ($storageDevices as $storageDevice) {
-                $lines[] = $this->nodeWithIp('STOR', $storageDevice->id, $storageDevice->name, $storageDevice->address_ip, $iconResolver(null, '/images/storagedev.png'), $storageDevice->getUID(), $showIp, $withHref);
+                $image = $iconResolver($storageDevice->icon_id, '/images/storagedev.png');
+                $lines[] = $this->nodeWithIp('STOR', $storageDevice->id, $storageDevice->name, $storageDevice->address_ip, $image, $storageDevice->getUID(), $showIp, $withHref);
 
                 $edge = $this->firstAddressOuterMatch($subnetworks, $storageDevice->address_ip, 'STOR'.$storageDevice->id);
                 if ($edge !== null) {
@@ -349,7 +350,8 @@ class LogicalInfrastructureGraphBuilder
         Collection $securityDevices,
         Collection $physicalSecurityDevices,
         Collection $peripherals,
-        Collection $workstations
+        Collection $workstations,
+        Collection $storageDevices
     ): array {
         $manifest = [
             ['path' => '/images/cloud.png', 'width' => '64px', 'height' => '64px'],
@@ -371,7 +373,7 @@ class LogicalInfrastructureGraphBuilder
             ['path' => '/images/vlan.png', 'width' => '64px', 'height' => '64px'],
         ];
 
-        foreach ([$containers, $logicalServers, $securityDevices, $physicalSecurityDevices, $peripherals, $workstations] as $collection) {
+        foreach ([$containers, $logicalServers, $securityDevices, $physicalSecurityDevices, $peripherals, $workstations, $storageDevices] as $collection) {
             foreach ($collection as $item) {
                 if ($item->icon_id !== null) {
                     $manifest[] = ['path' => route('admin.documents.show', $item->icon_id), 'width' => '64px', 'height' => '64px'];

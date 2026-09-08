@@ -22,7 +22,7 @@
             <th width="10%">
                 {{ trans('cruds.storageDevice.fields.type') }}
             </th>
-            <td width="40%" colspan="2">
+            <td width="40%" colspan="3">
                 {{ $storageDevice->type }}
             </td>
         </tr>
@@ -33,12 +33,20 @@
             <td colspan='5'>
                 {!! $storageDevice->description !!}
             </td>
+            <td width="10%" align="center">
+                @if ($storageDevice->icon_id === null)
+                    <img src='/images/storagedev.png' width='60' height='60'>
+                @else
+                    <img src='{{ route('admin.documents.show', $storageDevice->icon_id) }}' width='60'
+                         height='60'>
+                @endif
+            </td>
         </tr>
         <tr>
             <th>
                 {{ trans('cruds.storageDevice.fields.address_ip') }}
             </th>
-            <td colspan="5">
+            <td colspan="6">
                 {{ $storageDevice->address_ip }}
             </td>
         </tr>
@@ -75,7 +83,7 @@
             <th width="10%">
                 {{ trans('cruds.storageDevice.fields.bay') }}
             </th>
-            <td width="22%">
+            <td width="22%" colspan="2">
                 @if ($storageDevice->bay!=null)
                     @canShow($storageDevice->bay)
                         <a href="{{ route('admin.bays.show', $storageDevice->bay->id) }}">

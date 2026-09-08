@@ -396,7 +396,7 @@ class LogicalInfrastructureView extends Controller
             $storageDevices,
             $showIp
         );
-        $imageManifest = $graphBuilder->imageManifest($containers, $logicalServers, $securityDevices, $physicalSecurityDevices, $peripherals, $workstations);
+        $imageManifest = $graphBuilder->imageManifest($containers, $logicalServers, $securityDevices, $physicalSecurityDevices, $peripherals, $workstations, $storageDevices);
 
         return view(
             'admin/reports/logical_infrastructure',

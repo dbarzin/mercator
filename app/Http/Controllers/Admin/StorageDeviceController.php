@@ -13,6 +13,7 @@ use App\Models\Cartographer;
 use App\Models\LogicalServer;
 use App\Models\Site;
 use App\Models\StorageDevice;
+use App\Services\IconUploadService;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StorageDeviceController extends Controller
 {
+    public function __construct(private readonly IconUploadService $iconUploadService) {}
+
     public function index()
     {
         $user = auth()->user();
@@ -52,18 +55,23 @@ class StorageDeviceController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
         $bayBuildingMap = Bay::pluck('building_id', 'id');
         $logicalServers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $icons = StorageDevice::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $type_list = StorageDevice::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.storageDevices.create',
-            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'logicalServers')
+            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'logicalServers', 'icons')
         );
     }
 
     public function store(StoreStorageDeviceRequest $request)
     {
         $storageDevice = StorageDevice::create($request->all());
+
+        // Save icon
+        $this->iconUploadService->handle($request, $storageDevice);
+        $storageDevice->save();
 
         // Backups
         if (Auth::user()->can('backup_create')) {
@@ -83,6 +91,7 @@ class StorageDeviceController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
         $bayBuildingMap = Bay::pluck('building_id', 'id');
         $logicalServers = LogicalServer::query()->orderBy('name')->pluck('name', 'id');
+        $icons = StorageDevice::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $type_list = StorageDevice::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
@@ -90,13 +99,16 @@ class StorageDeviceController extends Controller
 
         return view(
             'admin.storageDevices.edit',
-            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'storageDevice', 'logicalServers')
+            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'storageDevice', 'logicalServers', 'icons')
         );
     }
 
     public function update(UpdateStorageDeviceRequest $request, StorageDevice $storageDevice)
     {
         abort_if(Gate::denies('edit-object', $storageDevice), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Save icon
+        $this->iconUploadService->handle($request, $storageDevice);
 
         $storageDevice->update($request->all());
 

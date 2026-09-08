@@ -319,7 +319,7 @@ class PhysicalInfrastructureView extends Controller
             $physicalSecurityDevices,
             $buildingId !== null
         );
-        $imageManifest = $graphBuilder->locationImageManifest($sites, $buildings, $workstations, $peripherals, $physicalSwitches, $physicalSecurityDevices);
+        $imageManifest = $graphBuilder->locationImageManifest($sites, $buildings, $workstations, $storageDevices, $peripherals, $physicalSwitches, $physicalSecurityDevices);
 
         return view('admin/reports/physical_infrastructure')
             ->with('all_sites', $all_sites)

@@ -509,7 +509,7 @@ class ExplorerController extends Controller
     {
         // Storage devices
         $storageDevices = Cartographer::scopedQuery(StorageDevice::query())
-            ->select('id', 'name', 'bay_id', 'building_id', 'site_id', 'address_ip')
+            ->select('id', 'name', 'icon_id', 'bay_id', 'building_id', 'site_id', 'address_ip')
             ->get();
 
         foreach ($storageDevices as $storageDevice) {
@@ -517,7 +517,7 @@ class ExplorerController extends Controller
                 6,
                 $this->formatId(StorageDevice::$prefix, $storageDevice->id),
                 $storageDevice->name,
-                '/images/storagedev.png',
+                $this->getIcon($storageDevice->icon_id, '/images/storagedev.png'),
                 'storage-devices',
                 635,
                 $storageDevice->address_ip);
