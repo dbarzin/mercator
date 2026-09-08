@@ -92,7 +92,7 @@ Un rappel périodique peut être configuré par l'administrateur pour inciter le
 - les objets dont le cartographe est responsable,
 - un lien direct vers chaque fiche dans Mercator.
 
-La fréquence des rappels (hebdomadaire, mensuelle…) et le contenu du message sont définis par l'administrateur dans **Administration → Configuration → Notifications**.
+La fréquence des rappels (hebdomadaire, mensuelle…) et le contenu du message sont définis par l'administrateur dans **Administration → Configuration → Notifications**. L'administrateur peut également renseigner une adresse de **copie cachée** : chaque rappel envoyé à un cartographe y est alors également transmis en copie cachée (Cci).
 
 !!! note "Pas de rappel si aucune configuration n'est définie"
     Les rappels ne sont envoyés que si l'administrateur a activé et configuré cette fonctionnalité. En l'absence de configuration, aucun e-mail n'est envoyé.

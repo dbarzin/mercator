@@ -432,12 +432,21 @@
                               class="{{ $notif_reminders_enabled ? '' : 'opacity-50' }}">
 
                         <div class="row">
-                        <div class="col-6">
+                        <div class="col-3">
                         <div class="form-group mb-3">
                             <label for="reminder_from">{{ trans('cruds.notifications.reminder_from') }}</label>
                             <input class="form-control" type="email"
                                    name="reminder_from" id="reminder_from"
                                    value="{{ $notif_reminder_from }}"/>
+                        </div>
+                        </div>
+
+                        <div class="col-3">
+                        <div class="form-group mb-3">
+                            <label for="reminder_to">{{ trans('cruds.notifications.reminder_to') }}</label>
+                            <input class="form-control" type="email"
+                                   name="reminder_to" id="reminder_to"
+                                   value="{{ $notif_reminder_to }}"/>
                         </div>
                         </div>
                         </div>

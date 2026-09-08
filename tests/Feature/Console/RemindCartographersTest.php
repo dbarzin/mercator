@@ -160,6 +160,34 @@ it('groups all outdated objects for the same cartographer into a single mail', f
     $this->artisan('mercator:remind-cartographers')->assertExitCode(0);
 });
 
+it('sends the reminder with the configured bcc address', function (): void {
+    Config::set('mercator.cartography.reminder_to', 'bcc@example.com');
+
+    $captured = null;
+
+    $mailer = Mockery::mock(MailerService::class);
+    $mailer->shouldReceive('send')
+        ->once()
+        ->withArgs(function (string $from, string $to, string $subject, string $body, string $bcc) use (&$captured) {
+            $captured = $bcc;
+            return true;
+        });
+    $this->app->instance(MailerService::class, $mailer);
+
+    $user = User::factory()->create(['email' => 'carto@example.com']);
+    $app  = Application::factory()->create(['updated_at' => now()->subMonths(7)]);
+
+    Cartographer::create([
+        'cartographiable_type' => Application::class,
+        'cartographiable_id'   => $app->id,
+        'user_id'              => $user->id,
+    ]);
+
+    $this->artisan('mercator:remind-cartographers')->assertExitCode(0);
+
+    expect($captured)->toBe('bcc@example.com');
+});
+
 it('updates reminder_last_sent after sending', function (): void {
     $mailer = Mockery::mock(MailerService::class);
     $mailer->shouldReceive('send')->once();

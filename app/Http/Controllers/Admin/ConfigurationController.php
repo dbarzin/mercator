@@ -50,6 +50,7 @@ class ConfigurationController extends Controller
             // Notifications
             'notif_reminders_enabled' => $cfg['cartography']['reminders_enabled'] ?? false,
             'notif_reminder_from' => $cfg['cartography']['reminder_from'] ?? 'mercator@localhost',
+            'notif_reminder_to' => $cfg['cartography']['reminder_to'] ?? 'mercator@localhost.com',
             'notif_reminder_subject' => $cfg['cartography']['reminder_subject'] ?? '[Mercator] Rappel de mise à jour',
             'notif_reminder_body' => $cfg['cartography']['reminder_body'] ?? '',
             'notif_reminder_months' => $cfg['cartography']['reminder_months'] ?? 6,
@@ -206,11 +207,10 @@ class ConfigurationController extends Controller
     private function handleReminders(string $action, Request $request): array
     {
         if ($action === 'test_reminder') {
-            return $this->sendTestMail(
-                $request->input('reminder_from'),
-                $request->input('reminder_from'),
-                $request->input('reminder_subject'),
-            );
+            $from = $request->input('reminder_from');
+            $to = $request->input('reminder_to') ?: $from;
+
+            return $this->sendTestMail($from, $to, $request->input('reminder_subject'));
         }
 
         $cfg = $this->readConfigFile();
@@ -220,6 +220,7 @@ class ConfigurationController extends Controller
 
         if ($remindersEnabled) {
             $cfg['cartography']['reminder_from'] = $request->input('reminder_from');
+            $cfg['cartography']['reminder_to'] = $request->input('reminder_to');
             $cfg['cartography']['reminder_subject'] = $request->input('reminder_subject');
             $cfg['cartography']['reminder_body'] = $request->input('reminder_body');
             $cfg['cartography']['reminder_months'] = (int) $request->input('reminder_months', 6);
