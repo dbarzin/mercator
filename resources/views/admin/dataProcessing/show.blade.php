@@ -255,11 +255,7 @@
 
 
     </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $dataProcessing->created_at ? $dataProcessing->created_at->format(trans('global.timestamp')) : '' }}
-            |
-            {{ trans('global.updated_at') }} {{ $dataProcessing->updated_at ? $dataProcessing->updated_at->format(trans('global.timestamp')) : '' }}
-        </div>
+        @include('admin._footer', ['model' => $dataProcessing])
     </div>
     <div class="form-group">
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.data-processings.index') }}">

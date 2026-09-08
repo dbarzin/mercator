@@ -46,10 +46,7 @@
             'withLink' => false,
         ])
     </div>
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $macroProcessus->created_at ? $macroProcessus->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $macroProcessus->updated_at ? $macroProcessus->updated_at->format(trans('global.timestamp')) : '' }}
-    </div>
+    @include('admin._footer', ['model' => $macroProcessus])
 </div>
 
 <div class="form-group">

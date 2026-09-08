@@ -47,11 +47,7 @@
                 'withLink' => false,
             ])
         </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $router->created_at ? $router->created_at->format(trans('global.timestamp')) : '' }}
-            |
-            {{ trans('global.updated_at') }} {{ $router->updated_at ? $router->updated_at->format(trans('global.timestamp')) : '' }}
-        </div>
+        @include('admin._footer', ['model' => $router])
     </div>
     <div class="form-group">
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.routers.index') }}">

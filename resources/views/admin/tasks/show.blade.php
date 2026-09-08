@@ -47,10 +47,7 @@
             'withLink' => false,
         ])
     </div>
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $task->created_at ? $task->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $task->updated_at ? $task->updated_at->format(trans('global.timestamp')) : '' }}
-    </div>
+    @include('admin._footer', ['model' => $task])
 </div>
 
     <div class="form-group">

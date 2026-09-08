@@ -45,9 +45,6 @@
         @include('admin.zones._details', ['zone' => $zone])
     </div>
 
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $zone->created_at ? $zone->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $zone->updated_at ? $zone->updated_at->format(trans('global.timestamp')) : '' }}
-    </div>
+    @include('admin._footer', ['model' => $zone])
 </div>
 @endsection

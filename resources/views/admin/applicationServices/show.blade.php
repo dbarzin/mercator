@@ -129,10 +129,7 @@
     </div>
 
 
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $applicationService->created_at ? $applicationService->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $applicationService->updated_at ? $applicationService->updated_at->format(trans('global.timestamp')) : '' }}
-    </div>
+    @include('admin._footer', ['model' => $applicationService])
 </div>
 <div class="form-group">
     <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.application-services.index') }}">

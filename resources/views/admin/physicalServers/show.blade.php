@@ -267,11 +267,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $physicalServer->created_at ? $physicalServer->created_at->format(trans('global.timestamp')) : '' }}
-            |
-            {{ trans('global.updated_at') }} {{ $physicalServer->updated_at ? $physicalServer->updated_at->format(trans('global.timestamp')) : '' }}
-        </div>
+        @include('admin._footer', ['model' => $physicalServer])
     </div>
 
     <div class="form-group">
