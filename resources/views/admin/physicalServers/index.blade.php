@@ -30,8 +30,11 @@
                         <th>
                             {{ trans('cruds.physicalServer.fields.name') }}
                         </th>
-                        <th>
+                        <th data-column="type">
                             {{ trans('cruds.physicalServer.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.physicalServer.fields.attributes') }}
                         </th>
                         <th>
                             {{ trans('cruds.physicalServer.fields.responsible') }}
@@ -78,6 +81,15 @@
                             </td>
                             <td>
                                 {{ $physicalServer->type ?? '' }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $physicalServer->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {{ $physicalServer->responsible }}
@@ -152,7 +164,7 @@
             'URL' => route('admin.physical-servers.massDestroy'),
             'canDelete' => auth()->user()->can('physical_server_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description', 'configuration', 'address_ip'],
+    'hiddenColumns' => ['type', 'attributes', 'description', 'configuration', 'address_ip'],
 ));
     </script>
 @endsection

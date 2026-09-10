@@ -48,15 +48,19 @@ class OperationController extends Controller
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Operation::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.operations.create',
-            compact('processes', 'actors', 'tasks', 'activities')
+            compact('processes', 'actors', 'tasks', 'activities', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreOperationRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $operation = Operation::create($request->all());
         $operation->actors()->sync($request->input('actors', []));
         $operation->tasks()->sync($request->input('tasks', []));
@@ -73,6 +77,8 @@ class OperationController extends Controller
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Operation::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $operation->load('actors', 'tasks', 'activities');
 
@@ -83,7 +89,9 @@ class OperationController extends Controller
                 'actors',
                 'tasks',
                 'operation',
-                'activities'
+                'activities',
+                'type_list',
+                'attributes_list'
             )
         );
     }
@@ -91,6 +99,8 @@ class OperationController extends Controller
     public function update(UpdateOperationRequest $request, Operation $operation)
     {
         abort_if(Gate::denies('edit-object', $operation), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $operation->update($request->all());
         $operation->actors()->sync($request->input('actors', []));
@@ -123,5 +133,24 @@ class OperationController extends Controller
         Operation::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Operation::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

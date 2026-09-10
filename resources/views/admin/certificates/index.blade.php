@@ -33,6 +33,9 @@
                         <th>
                             {{ trans('cruds.certificate.fields.type') }}
                         </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.certificate.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.certificate.fields.description') }}
                         </th>
@@ -71,6 +74,15 @@
                             </td>
                             <td>
                                 {!! $certificate->type ?? '' !!}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $certificate->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $certificate->description ?? '' !!}
@@ -132,7 +144,8 @@
     'title' => trans("cruds.certificate.title_singular"),
     'URL' => route('admin.certificates.massDestroy'),
     'canDelete' => auth()->user()->can('certificate_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['attributes'],
 ));
 </script>
 @endsection

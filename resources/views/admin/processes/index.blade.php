@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.process.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.process.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.process.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.process.fields.description') }}
                         </th>
@@ -79,6 +85,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$process" />
+                            </td>
+                            <td>
+                                {{ $process->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $process->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $process->description ?? '' !!}
@@ -154,7 +172,7 @@
     'URL' => route('admin.processes.massDestroy'),
     'canDelete' => auth()->user()->can('process_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['in_out'],
+    'hiddenColumns' => ['type', 'attributes', 'in_out'],
 ));
 </script>
 @endsection

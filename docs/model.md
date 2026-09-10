@@ -103,12 +103,11 @@ erDiagram
         string ext_refs
         string name
         int icon_id
-        string entity_type
+        string type
         string attributes
         text description
         string reference
         int parent_entity_id FK
-        boolean is_external
         text security_level
         text contact_point
         string external_ref_id
@@ -165,12 +164,11 @@ Entities are departments, suppliers, partners with whom information is exchanged
 | ext_refs | varchar(255) | External reference(s) to objects in other systems. Format: {ID_SOURCE}ID_OBJECT, multiple values separated by "\|" |
 | name             | varchar(255) | Name of entity                             |
 | icon_id          | int unsigned | Reference to a specific image              |
-| entity_type      | varchar(255) | Type of entity                             |
-| attributes       | varchar(255) | Attributes (#tag...)                       |
+| type             | varchar(255) | Type of entity                             |
+| attributes       | varchar(255) | Attributes (#tag...). An entity external to the organization carries the `extern` attribute |
 | description      | longtext     | Entity description                         |
 | reference        | varchar(255) | Reference the billing number of the entity |
 | parent_entity_id | int unsigned | Pointer to the parent entity               |
-| is_external      | boolean      | External entity                            |
 | security_level   | longtext     | Security level                             |
 | contact_point    | longtext     | Contact point                              |
 | external_ref_id  | varchar(255) | Link to connected external entities        |
@@ -794,6 +792,7 @@ erDiagram
         int database_dest_id FK
         boolean crypted
         boolean bidirectional
+        string type
         timestamp created_at
         timestamp updated_at
         timestamp deleted_at
@@ -1089,6 +1088,7 @@ For example, DNS or NTP requests should not be represented as flows.
 | ***device***_dest_id   | int unsigned | Link to the destination id              |
 | crypted                | tinyint(1)   | The flow is encrypted (1=yes, O=no)     |
 | bidirectional          | tinyint(1)   | The flow is bidirectional (1=yes, O=no) |
+| type                   | varchar(255) | Type of the application flow            |
 | created_at             | timestamp    | Date of creation                        |
 | updated_at             | timestamp    | Date of update                          |
 | deleted_at             | timestamp    | Date of deletion                        |

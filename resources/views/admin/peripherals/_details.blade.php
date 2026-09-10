@@ -40,6 +40,16 @@
             <td width="10%">
                 {{ $peripheral->type }}
             </td>
+            <th width="10%">
+                {{ trans('cruds.peripheral.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $peripheral->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>

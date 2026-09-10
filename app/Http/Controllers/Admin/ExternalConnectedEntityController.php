@@ -47,18 +47,21 @@ class ExternalConnectedEntityController extends Controller
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = ExternalConnectedEntity::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         // Clear documents from session
         session()->put('documents', []);
 
         return view(
             'admin.externalConnectedEntities.create',
-            compact('networks', 'subnetworks', 'entities', 'type_list')
+            compact('networks', 'subnetworks', 'entities', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreExternalConnectedEntityRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $externalConnectedEntity = ExternalConnectedEntity::create($request->all());
         $externalConnectedEntity->subnetworks()->sync($request->input('subnetworks', []));
 
@@ -78,6 +81,7 @@ class ExternalConnectedEntityController extends Controller
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = ExternalConnectedEntity::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         // Get Documents
         $documents = [];
@@ -88,13 +92,15 @@ class ExternalConnectedEntityController extends Controller
 
         return view(
             'admin.externalConnectedEntities.edit',
-            compact('externalConnectedEntity', 'networks', 'subnetworks', 'entities', 'type_list')
+            compact('externalConnectedEntity', 'networks', 'subnetworks', 'entities', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdateExternalConnectedEntityRequest $request, ExternalConnectedEntity $externalConnectedEntity)
     {
         abort_if(Gate::denies('edit-object', $externalConnectedEntity), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $externalConnectedEntity->update($request->all());
         $externalConnectedEntity->subnetworks()->sync($request->input('subnetworks', []));
@@ -126,5 +132,24 @@ class ExternalConnectedEntityController extends Controller
         ExternalConnectedEntity::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = ExternalConnectedEntity::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

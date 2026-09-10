@@ -45,6 +45,8 @@ class DhcpServer extends Model implements HasPrefix, HasIconContract, HasUniqueI
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'address_ip',
         'created_at',

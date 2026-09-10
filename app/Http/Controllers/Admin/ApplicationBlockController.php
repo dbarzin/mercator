@@ -45,12 +45,16 @@ class ApplicationBlockController extends Controller
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
+        $type_list = ApplicationBlock::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.applicationBlocks.create', compact('applications'));
+        return view('admin.applicationBlocks.create', compact('applications', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreApplicationBlockRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $applicationBlock = ApplicationBlock::create($request->all());
 
         Application::whereIn('id', $request->input('linkToApplications', []))
@@ -67,13 +71,17 @@ class ApplicationBlockController extends Controller
             ->select('id', 'name')
             ->orderBy('name')
             ->pluck('name', 'id');
+        $type_list = ApplicationBlock::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.applicationBlocks.edit', compact('applicationBlock', 'applications'));
+        return view('admin.applicationBlocks.edit', compact('applicationBlock', 'applications', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateApplicationBlockRequest $request, ApplicationBlock $applicationBlock)
     {
         abort_if(Gate::denies('edit-object', $applicationBlock), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $applicationBlock->update($request->all());
 
@@ -109,5 +117,24 @@ class ApplicationBlockController extends Controller
         ApplicationBlock::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = ApplicationBlock::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

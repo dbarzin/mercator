@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.dhcpServer.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.dhcpServer.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.dhcpServer.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.dhcpServer.fields.description') }}
                         </th>
@@ -49,6 +55,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$dhcpServer" />
+                            </td>
+                            <td>
+                                {{ $dhcpServer->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $dhcpServer->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $dhcpServer->description !!}
@@ -100,7 +118,8 @@
     'title' => trans("cruds.dhcpServer.title_singular"),
     'URL' => route('admin.dhcp-servers.massDestroy'),
     'canDelete' => auth()->user()->can('dhcp_server_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
 </script>
 @endsection

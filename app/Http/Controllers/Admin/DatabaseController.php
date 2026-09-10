@@ -64,6 +64,7 @@ class DatabaseController extends Controller
         $type_list = Database::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $external_list = Database::query()->select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = Database::query()->select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.databases.create',
@@ -77,13 +78,16 @@ class DatabaseController extends Controller
                 'containers',
                 'type_list',
                 'external_list',
-                'responsible_list'
+                'responsible_list',
+                'attributes_list'
             )
         );
     }
 
     public function store(StoreDatabaseRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $database = Database::create($request->all());
         $database->entities()->sync($request->input('entities', []));
         $database->informations()->sync($request->input('informations', []));
@@ -121,6 +125,7 @@ class DatabaseController extends Controller
         $type_list = Database::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $external_list = Database::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = Database::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $attributes_list = $this->getAttributes();
 
         $database->load('entities', 'entityResp', 'informations', 'applications');
 
@@ -137,7 +142,8 @@ class DatabaseController extends Controller
                 'database',
                 'type_list',
                 'external_list',
-                'responsible_list'
+                'responsible_list',
+                'attributes_list'
             )
         );
     }
@@ -145,6 +151,8 @@ class DatabaseController extends Controller
     public function update(UpdateDatabaseRequest $request, Database $database)
     {
         abort_if(Gate::denies('edit-object', $database), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Save request
         $database->update($request->all());
@@ -186,5 +194,24 @@ class DatabaseController extends Controller
         Database::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Database::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

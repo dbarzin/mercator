@@ -48,6 +48,7 @@ class WifiTerminal extends Model implements HasIconContract, HasPrefix, HasUniqu
         'name',
         'description',
         'type',
+        'attributes',
         'address_ip',
         'vendor',
         'product',

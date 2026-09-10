@@ -46,6 +46,8 @@ class NetworkSwitch extends Model implements HasPrefix, HasIconContract, HasUniq
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'ip',
         'created_at',

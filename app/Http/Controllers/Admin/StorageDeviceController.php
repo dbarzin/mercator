@@ -58,15 +58,18 @@ class StorageDeviceController extends Controller
         $icons = StorageDevice::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $type_list = StorageDevice::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.storageDevices.create',
-            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'logicalServers', 'icons')
+            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'logicalServers', 'icons', 'attributes_list')
         );
     }
 
     public function store(StoreStorageDeviceRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $storageDevice = StorageDevice::create($request->all());
 
         // Save icon
@@ -94,12 +97,13 @@ class StorageDeviceController extends Controller
         $icons = StorageDevice::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $type_list = StorageDevice::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $storageDevice->load('site', 'building', 'bay', 'backups.logicalServers');
 
         return view(
             'admin.storageDevices.edit',
-            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'storageDevice', 'logicalServers', 'icons')
+            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'type_list', 'storageDevice', 'logicalServers', 'icons', 'attributes_list')
         );
     }
 
@@ -109,6 +113,8 @@ class StorageDeviceController extends Controller
 
         // Save icon
         $this->iconUploadService->handle($request, $storageDevice);
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $storageDevice->update($request->all());
 
@@ -150,6 +156,25 @@ class StorageDeviceController extends Controller
         StorageDevice::query()->whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = StorageDevice::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 
     private function syncInlineBackupsForDevice(StorageDevice $storageDevice, Request $request): void

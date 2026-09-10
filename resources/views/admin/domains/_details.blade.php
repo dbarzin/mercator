@@ -19,12 +19,28 @@
                 {{ $domain->name }}
             @endif
             </td>
+            <th width="10%">
+                {{ trans('cruds.domain.fields.type') }}
+            </th>
+            <td width="20%">
+                {{ $domain->type }}
+            </td>
+            <th width="10%">
+                {{ trans('cruds.domain.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $domain->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>
                 {{ trans('cruds.domain.fields.description') }}
             </th>
-            <td>
+            <td colspan="5">
                 {!! $domain->description !!}
             </td>
         </tr>

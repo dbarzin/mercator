@@ -30,11 +30,14 @@
                         <th>
                             {{ trans('cruds.peripheral.fields.name') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.peripheral.fields.domain') }}
+                        <th data-column="type">
+                            {{ trans('cruds.peripheral.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.peripheral.fields.attributes') }}
                         </th>
                         <th>
-                            {{ trans('cruds.peripheral.fields.type') }}
+                            {{ trans('cruds.peripheral.fields.domain') }}
                         </th>
                         <th>
                             {{ trans('cruds.peripheral.fields.provider') }}
@@ -81,10 +84,19 @@
                                 <x-show-link :model="$peripheral" />
                             </td>
                             <td>
-                                {{ $peripheral->domain->name ?? '' }}
+                                {{ $peripheral->type ?? '' }}
                             </td>
                             <td>
-                                {{ $peripheral->type ?? '' }}
+                                <?php
+                                foreach (explode(" ", (string) $peripheral->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                {{ $peripheral->domain->name ?? '' }}
                             </td>
                             <td>
                                 {{ $peripheral->provider->name ?? '' }}
@@ -155,7 +167,7 @@
             'URL' => route('admin.peripherals.massDestroy'),
             'canDelete' => auth()->user()->can('peripheral_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description'],
+    'hiddenColumns' => ['type', 'attributes', 'description'],
 ));
     </script>
 @endsection

@@ -24,8 +24,18 @@
             </td>
             <th width="10%">{{ trans('cruds.workstation.fields.type') }}</th>
             <td >{{ $workstation->type }}</td>
+            <th width="10%">{{ trans('cruds.workstation.fields.attributes') }}</th>
+            <td>
+                @foreach(explode(" ", (string) $workstation->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+        <tr>
             <th width="10%">{{ trans('cruds.workstation.fields.status') }}</th>
-            <td colspan="2">{{ $workstation->status }}</td>
+            <td colspan="5">{{ $workstation->status }}</td>
         </tr>
         <tr>
             <td width="10%">{{ trans('cruds.workstation.fields.description') }}</td>

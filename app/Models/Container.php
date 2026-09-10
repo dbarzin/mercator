@@ -46,6 +46,7 @@ class Container extends Model implements HasIconContract, HasPrefix, HasUniqueId
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'icon_id',
         'description',
         'created_at',

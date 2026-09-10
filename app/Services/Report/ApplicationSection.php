@@ -479,7 +479,7 @@ class ApplicationSection implements ReportSection
             $helper->addBookmarkedTitle($section, $flow->getUID(), (string) $flow->name, 3);
             $table = $helper->addTable($section, (string) $flow->name);
 
-            $helper->addTextRow($table, trans('cruds.applicationFlow.fields.nature'), $flow->nature);
+            $helper->addTextRow($table, trans('cruds.applicationFlow.fields.type'), $flow->type);
             $helper->addTextRow($table, trans('cruds.applicationFlow.fields.attributes'), $this->formatAttributes($flow->attributes));
             $helper->addHTMLRow($table, trans('cruds.applicationFlow.fields.description'), $flow->description);
 
@@ -523,7 +523,7 @@ class ApplicationSection implements ReportSection
 
     /**
      * Renders the "flux" nested sub-table shared by Application/ApplicationService/ApplicationModule/Database:
-     * name/nature/attributes/source/dest/information, with the source/dest endpoint resolved from
+     * name/type/attributes/source/dest/information, with the source/dest endpoint resolved from
      * whichever of Application/Service/Module/Database is set (no type tag here, matching the
      * embedded rendering used by every parent's show.blade.php).
      *
@@ -545,7 +545,7 @@ class ApplicationSection implements ReportSection
         $nested->addRow();
         foreach ([
             trans('cruds.applicationFlow.fields.name'),
-            trans('cruds.applicationFlow.fields.nature'),
+            trans('cruds.applicationFlow.fields.type'),
             trans('cruds.applicationFlow.fields.attributes'),
             trans('cruds.applicationFlow.fields.module_source'),
             trans('cruds.applicationFlow.fields.module_dest'),
@@ -560,7 +560,7 @@ class ApplicationSection implements ReportSection
             $nameRun = $nested->addCell(1500)->addTextRun();
             $helper->linkOrText($nameRun, $flow, $selectedVues);
 
-            $nested->addCell(1500)->addText((string) $flow->nature);
+            $nested->addCell(1500)->addText((string) $flow->type);
             $nested->addCell(1500)->addText($this->formatAttributes($flow->attributes) ?? '');
 
             $sourceRun = $nested->addCell(1500)->addTextRun();

@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.annuaire.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.annuaire.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.annuaire.fields.attributes') }}
+                        </th>
                         <th data-column="description">
                             {{ trans('cruds.annuaire.fields.description') }}
                         </th>
@@ -66,6 +72,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$annuaire" />
+                            </td>
+                            <td>
+                                {{ $annuaire->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $annuaire->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $annuaire->description !!}
@@ -131,7 +149,7 @@
             'URL' => route('admin.annuaires.massDestroy'),
             'canDelete' => auth()->user()->can('annuaire_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description'],
+    'hiddenColumns' => ['type', 'attributes', 'description'],
 ));
     </script>
 @endsection

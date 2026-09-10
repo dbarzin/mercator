@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.operation.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.operation.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.operation.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.operation.fields.description') }}
                         </th>
@@ -59,6 +65,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$operation" />
+                            </td>
+                            <td>
+                                {{ $operation->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $operation->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $operation->description ?? '' !!}
@@ -127,7 +145,8 @@
     'title' => trans("cruds.operation.title_singular"),
     'URL' => route('admin.operations.massDestroy'),
     'canDelete' => auth()->user()->can('operation_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
 </script>
 @endsection

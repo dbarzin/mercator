@@ -59,14 +59,19 @@ class ActivityController extends Controller
             ->orderBy('impact_type')
             ->pluck('impact_type');
 
+        $type_list = Activity::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
         return view(
             'admin.activities.create',
-            compact('operations', 'processes', 'applications', 'types')
+            compact('operations', 'processes', 'applications', 'types', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreActivityRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $activity = Activity::create($request->all());
         $activity->operations()->sync($request->input('operations', []));
         $activity->processes()->sync($request->input('processes', []));
@@ -110,17 +115,22 @@ class ActivityController extends Controller
             ->orderBy('impact_type')
             ->pluck('impact_type');
 
+        $type_list = Activity::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
         $activity->load('operations', 'processes', 'applications', 'impacts');
 
         return view(
             'admin.activities.edit',
-            compact('operations', 'activity', 'processes', 'applications', 'types')
+            compact('operations', 'activity', 'processes', 'applications', 'types', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdateActivityRequest $request, Activity $activity)
     {
         abort_if(Gate::denies('edit-object', $activity), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $activity->update($request->all());
         $activity->operations()->sync($request->input('operations', []));
@@ -185,5 +195,24 @@ class ActivityController extends Controller
         Activity::query()->whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Activity::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

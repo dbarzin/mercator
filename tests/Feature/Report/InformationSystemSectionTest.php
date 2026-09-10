@@ -153,6 +153,24 @@ describe('InformationSystemSection content', function () {
             ->toContain($child->getUID());
     });
 
+    test('renders type and attributes for a fully populated Activity, Task and Actor', function () {
+        Activity::factory()->create(['name' => 'Onboard Employee', 'type' => 'RH', 'attributes' => 'critique urgent']);
+        Task::factory()->create(['name' => 'Sign Contract', 'type' => 'Administratif', 'attributes' => 'papier signature']);
+        Actor::factory()->create(['name' => 'HR Manager', 'type' => 'interne', 'attributes' => 'decideur valide']);
+
+        [$xml] = renderInformationSystemSectionXml();
+
+        expect($xml)
+            ->toContain(trans('cruds.activity.fields.type'))
+            ->toContain('RH')
+            ->toContain('critique, urgent')
+            ->toContain(trans('cruds.task.fields.type'))
+            ->toContain('Administratif')
+            ->toContain('papier, signature')
+            ->toContain(trans('cruds.actor.fields.attributes'))
+            ->toContain('decideur, valide');
+    });
+
     test('renders one graph per MacroProcessus that has processes, skipping macro-processus with none', function () {
         $macroProcessWithProcess = MacroProcessus::factory()->create(['name' => 'Order to Cash']);
         Process::factory()->create(['name' => 'Invoice Processing', 'macroprocess_id' => $macroProcessWithProcess->id]);

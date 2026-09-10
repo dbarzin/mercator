@@ -51,6 +51,7 @@ class Peripheral extends Model implements HasIconContract, HasPrefix, HasUniqueI
         'name',
         'domain_id',
         'type',
+        'attributes',
         'description',
         'icon_id',
         'provider_id',

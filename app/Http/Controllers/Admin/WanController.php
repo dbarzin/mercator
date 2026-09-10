@@ -39,6 +39,8 @@ class WanController extends Controller
 
     public function store(StoreWanRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $wan = Wan::create($request->all());
         $wan->mans()->sync($request->input('mans', []));
         $wan->lans()->sync($request->input('lans', []));
@@ -53,8 +55,10 @@ class WanController extends Controller
         $mans = Man::all()->sortBy('name')->pluck('name', 'id');
 
         $lans = Lan::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Wan::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.wans.create', compact('mans', 'lans'));
+        return view('admin.wans.create', compact('mans', 'lans', 'type_list', 'attributes_list'));
     }
 
     public function edit(Wan $wan)
@@ -64,13 +68,17 @@ class WanController extends Controller
         $mans = Man::all()->sortBy('name')->pluck('name', 'id');
         $lans = Lan::all()->sortBy('name')->pluck('name', 'id');
         $wan->load('mans', 'lans');
+        $type_list = Wan::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.wans.edit', compact('mans', 'lans', 'wan'));
+        return view('admin.wans.edit', compact('mans', 'lans', 'wan', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateWanRequest $request, Wan $wan)
     {
         abort_if(Gate::denies('edit-object', $wan), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $wan->update($request->all());
         $wan->mans()->sync($request->input('mans', []));
@@ -102,5 +110,24 @@ class WanController extends Controller
         Wan::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Wan::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

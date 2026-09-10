@@ -52,14 +52,12 @@ class EcosystemSection implements ReportSection
 
             $table = $helper->addTable($section, (string) $entity->name);
 
-            $helper->addTextRow($table, trans('cruds.entity.fields.entity_type'), $entity->entity_type);
+            $helper->addTextRow($table, trans('cruds.entity.fields.type'), $entity->type);
 
             if ($entity->parentEntity !== null) {
                 $run = $helper->addTextRunRow($table, trans('cruds.entity.fields.parent_entity'));
                 $helper->linkOrText($run, $entity->parentEntity, $selectedVues);
             }
-
-            $helper->addTextRow($table, trans('cruds.entity.fields.is_external'), $entity->is_external ? trans('global.yes') : trans('global.no'));
 
             if ($entity->entities->isNotEmpty()) {
                 $helper->addLinkListRow($table, trans('cruds.entity.fields.subsidiaries'), $entity->entities, $selectedVues);

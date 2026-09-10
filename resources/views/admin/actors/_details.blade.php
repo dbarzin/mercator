@@ -45,6 +45,18 @@
                 {{ $actor->type }}
             </td>
         </tr>
+        <tr>
+            <th>
+                {{ trans('cruds.actor.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $actor->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
+        </tr>
         @canAccess(App\Models\Operation::class)
         <tr>
             <th>

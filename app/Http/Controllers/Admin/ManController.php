@@ -45,13 +45,17 @@ class ManController extends Controller
         $lans = Lan::query()->orderBy('name')->pluck('name', 'id');
         $mans = Man::query()->orderBy('name')->pluck('name', 'id');
         $wans = Wan::query()->orderBy('name')->pluck('name', 'id');
+        $type_list = Man::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view('admin.mans.create',
-            compact('lans', 'mans', 'wans'));
+            compact('lans', 'mans', 'wans', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreManRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $man = Man::query()->create($request->all());
 
         $man->wans()->sync($request->input('wans', []));
@@ -70,14 +74,18 @@ class ManController extends Controller
             ->orderBy('name')->pluck('name', 'id');
 
         $man->load('lans');
+        $type_list = Man::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view('admin.mans.edit',
-            compact('lans', 'mans', 'wans', 'man'));
+            compact('lans', 'mans', 'wans', 'man', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateManRequest $request, Man $man)
     {
         abort_if(Gate::denies('edit-object', $man), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $man->update($request->all());
 
@@ -110,5 +118,24 @@ class ManController extends Controller
         Man::query()->whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Man::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

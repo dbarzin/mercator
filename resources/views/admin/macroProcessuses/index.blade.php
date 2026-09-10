@@ -29,6 +29,12 @@
                         <th>
                             {{ trans('cruds.macroProcessus.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.macroProcessus.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.macroProcessus.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.macroProcessus.fields.description') }}
                         </th>
@@ -72,6 +78,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$macroProcessus" />
+                            </td>
+                            <td>
+                                {{ $macroProcessus->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $macroProcessus->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $macroProcessus->description ?? '' !!}
@@ -138,7 +156,7 @@
     'URL' => route('admin.macro-processuses.massDestroy'),
     'canDelete' => auth()->user()->can('site_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['io_elements'],
+    'hiddenColumns' => ['type', 'attributes', 'io_elements'],
 ));
 </script>
 @endsection

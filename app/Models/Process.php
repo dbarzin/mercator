@@ -22,6 +22,9 @@ use Illuminate\Support\Collection;
 
 /**
  * App\Process
+ *
+ * @property string|null $type
+ * @property string|null $attributes
  */
 class Process extends Model implements HasIconContract, HasPrefix, HasUniqueIdentifierContract
 {
@@ -37,6 +40,8 @@ class Process extends Model implements HasIconContract, HasPrefix, HasUniqueIden
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'icon_id',
         'description',
         'in_out',

@@ -20,12 +20,28 @@
             {{ $man->name }}
             @endif
             </td>
+            <th width="10%">
+                {{ trans('cruds.man.fields.type') }}
+            </th>
+            <td width="20%">
+                {{ $man->type }}
+            </td>
+            <th width="10%">
+                {{ trans('cruds.man.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $man->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>
             {{ trans('cruds.man.fields.description') }}
             </th>
-            <td colspan="3">
+            <td colspan="7">
             {!! $man->description !!}
             </td>
         </tr>

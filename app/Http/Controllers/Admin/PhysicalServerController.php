@@ -66,6 +66,7 @@ class PhysicalServerController extends Controller
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.physicalServers.create',
@@ -81,7 +82,8 @@ class PhysicalServerController extends Controller
                 'operating_system_list',
                 'responsible_list',
                 'type_list',
-                'logical_server_list'
+                'logical_server_list',
+                'attributes_list'
             )
         );
     }
@@ -104,6 +106,7 @@ class PhysicalServerController extends Controller
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
+        $attributes_list = $this->getAttributes();
 
         // Get PhysicalServer
         $physicalServer = PhysicalServer::find($request['id']);
@@ -111,7 +114,12 @@ class PhysicalServerController extends Controller
         // PhysicalServer not found
         abort_if($physicalServer === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($physicalServer->only($physicalServer->getFillable()));
+        $data = $physicalServer->only($physicalServer->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->merge(['applications' => $physicalServer->applications()->pluck('id')->unique()->toArray()]);
         $request->merge(['logicalServers' => $physicalServer->logicalServers()->pluck('id')->unique()->toArray()]);
         $request->merge(['clusters' => $physicalServer->clusters()->pluck('id')->unique()->toArray()]);
@@ -131,13 +139,16 @@ class PhysicalServerController extends Controller
                 'operating_system_list',
                 'responsible_list',
                 'type_list',
-                'logical_server_list'
+                'logical_server_list',
+                'attributes_list'
             )
         );
     }
 
     public function store(StorePhysicalServerRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $physicalServer = PhysicalServer::query()->create($request->all());
 
         // Save icon
@@ -172,6 +183,7 @@ class PhysicalServerController extends Controller
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $application_list = Application::orderBy('name')->pluck('name', 'id');
         $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
+        $attributes_list = $this->getAttributes();
 
         $physicalServer->load('site', 'building', 'bay');
 
@@ -190,7 +202,8 @@ class PhysicalServerController extends Controller
                 'responsible_list',
                 'operating_system_list',
                 'type_list',
-                'physicalServer'
+                'physicalServer',
+                'attributes_list'
             )
         );
     }
@@ -201,6 +214,8 @@ class PhysicalServerController extends Controller
 
         // Save icon
         $this->iconUploadService->handle($request, $physicalServer);
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Update PhysicalServer
         $physicalServer->update($request->all());
@@ -236,5 +251,24 @@ class PhysicalServerController extends Controller
         PhysicalServer::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = PhysicalServer::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

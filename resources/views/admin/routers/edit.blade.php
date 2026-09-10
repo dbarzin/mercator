@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <label class="label-required" for="name">{{ trans('cruds.router.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
@@ -27,14 +27,17 @@
                             <span class="help-block">{{ trans('cruds.router.fields.name_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-sm-2">
 
                         <div class="form-group">
                             <label for="type">{{ trans('cruds.router.fields.type') }}</label>
                             <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     name="type" id="type">
+                                @if (!$type_list->contains(old('type', $router->type ?? '')))
+                                    <option>{{ old('type', $router->type ?? '') }}</option>
+                                @endif
                                 @foreach($type_list as $type)
-                                    <option {{ $router->type==$type ? 'selected' : '' }}>{{$type}}</option>
+                                    <option {{ old('type', $router->type) == $type ? 'selected' : '' }}>{{$type}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('type'))
@@ -45,6 +48,21 @@
                             <span class="help-block">{{ trans('cruds.router.fields.type_helper') }}</span>
                         </div>
 
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="attributes">{{ trans('cruds.router.fields.attributes') }}</label>
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
+                                @foreach($attributes_list as $a)
+                                    <option {{ in_array($a, old('attributes', array_filter(explode(' ', (string) $router->attributes)))) ? 'selected' : '' }}>{{ $a }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('attributes'))
+                                <div class="invalid-feedback">{{ $errors->first('attributes') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.router.fields.attributes_helper') }}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

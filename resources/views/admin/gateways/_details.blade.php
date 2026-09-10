@@ -7,12 +7,28 @@
             <td>
                 {{ $gateway->name }}
             </td>
+            <th width="10%">
+                {{ trans('cruds.gateway.fields.type') }}
+            </th>
+            <td width="20%">
+                {{ $gateway->type }}
+            </td>
+            <th width="10%">
+                {{ trans('cruds.gateway.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $gateway->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>
                 {{ trans('cruds.gateway.fields.description') }}
             </th>
-            <td>
+            <td colspan="5">
                 {!! $gateway->description !!}
             </td>
         </tr>

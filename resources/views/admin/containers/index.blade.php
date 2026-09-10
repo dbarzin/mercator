@@ -29,11 +29,14 @@
                         <th>
                             {{ trans('cruds.container.fields.name') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.container.fields.description') }}
+                        <th data-column="type">
+                            {{ trans('cruds.container.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.container.fields.attributes') }}
                         </th>
                         <th>
-                            {{ trans('cruds.container.fields.type') }}
+                            {{ trans('cruds.container.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.container.fields.logical_servers') }}
@@ -66,10 +69,19 @@
                                 <x-show-link :model="$container" />
                             </td>
                             <td>
-                                {!! $container->description ?? '' !!}
+                                {{ $container->type ?? '' }}
                             </td>
                             <td>
-                                {{ $container->type ?? '' }}
+                                <?php
+                                foreach (explode(" ", (string) $container->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                {!! $container->description ?? '' !!}
                             </td>
                             <td>
                               @foreach($container->logicalServers as $logicalServer)
@@ -134,7 +146,8 @@
     'title' => trans("cruds.container.title_singular"),
     'URL' => route('admin.containers.massDestroy'),
     'canDelete' => auth()->user()->can('site_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
 </script>
 @endsection

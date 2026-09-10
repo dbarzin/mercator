@@ -46,6 +46,8 @@ class Domain extends Model implements HasPrefix, HasIconContract, HasUniqueIdent
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'domain_ctrl_cnt',
         'user_count',

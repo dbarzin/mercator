@@ -14,16 +14,48 @@
             </div>
 
             <div class="card-body">
-                <div class="form-group">
-                    <label class="label-required" for="name">{{ trans('cruds.actor.fields.name') }}</label>
-                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
-                           id="name" value="{{ old('name', $actor->name) }}" maxlength="128" required autofocus/>
-                    @if($errors->has('name'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('name') }}
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="label-required" for="name">{{ trans('cruds.actor.fields.name') }}</label>
+                            <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
+                                   id="name" value="{{ old('name', $actor->name) }}" maxlength="128" required autofocus/>
+                            @if($errors->has('name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.actor.fields.name_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.actor.fields.name_helper') }}</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="label-maturity-2" for="type">{{ trans('cruds.actor.fields.type') }}</label>
+                            <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type"
+                                   id="type" value="{{ old('type', $actor->type) }}">
+                            @if($errors->has('type'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('type') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.actor.fields.type_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="attributes">{{ trans('cruds.actor.fields.attributes') }}</label>
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
+                                @foreach($attributes_list as $a)
+                                    <option {{ in_array($a, old('attributes', array_filter(explode(' ', (string) $actor->attributes)))) ? 'selected' : '' }}>{{ $a }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('attributes'))
+                                <div class="invalid-feedback">{{ $errors->first('attributes') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.actor.fields.attributes_helper') }}</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="label-maturity-2" for="contact">{{ trans('cruds.actor.fields.contact') }}</label>
@@ -46,17 +78,6 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.actor.fields.nature_helper') }}</span>
-                </div>
-                <div class="form-group">
-                    <label class="label-maturity-2" for="type">{{ trans('cruds.actor.fields.type') }}</label>
-                    <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type"
-                           id="type" value="{{ old('type', $actor->type) }}">
-                    @if($errors->has('type'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('type') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.actor.fields.type_helper') }}</span>
                 </div>
             </div>
         </div>

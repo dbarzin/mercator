@@ -30,8 +30,11 @@
                         <th>
                             {{ trans('cruds.workstation.fields.name') }}
                         </th>
-                        <th>
+                        <th data-column="type">
                             {{ trans('cruds.workstation.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.workstation.fields.attributes') }}
                         </th>
                         <th>
                             {{ trans('cruds.workstation.fields.status') }}
@@ -83,6 +86,15 @@
                             </td>
                             <td>
                                 {!! $workstation->type ?? '' !!}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $workstation->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $workstation->status ?? '' !!}
@@ -163,7 +175,7 @@
             'URL' => route('admin.workstations.massDestroy'),
             'canDelete' => auth()->user()->can('workstation_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description', 'manufacturer', 'model', 'address_ip'],
+    'hiddenColumns' => ['type', 'attributes', 'description', 'manufacturer', 'model', 'address_ip'],
 ));
     </script>
 @endsection

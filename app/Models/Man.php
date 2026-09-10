@@ -46,6 +46,8 @@ class Man extends Model implements HasPrefix, HasIconContract, HasUniqueIdentifi
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'parent_man_id',
         'created_at',

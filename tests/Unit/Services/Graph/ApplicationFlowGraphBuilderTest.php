@@ -28,7 +28,7 @@ test('buildDot draws a labeled, bidirectional edge between an application and a 
     $application = Application::factory()->create();
     $database = Database::factory()->create();
     $flow = ApplicationFlow::factory()->create([
-        'nature' => 'sync',
+        'type' => 'sync',
         'bidirectional' => true,
         'application_source_id' => $application->id,
         'database_dest_id' => $database->id,

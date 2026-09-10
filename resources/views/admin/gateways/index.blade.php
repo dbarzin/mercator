@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.gateway.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.gateway.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.gateway.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.gateway.fields.description') }}
                         </th>
@@ -60,6 +66,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$gateway" />
+                            </td>
+                            <td>
+                                {{ $gateway->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $gateway->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $gateway->description ?? '' !!}
@@ -115,7 +133,8 @@
             'title' => trans("cruds.gateway.title_singular"),
             'URL' => route('admin.gateways.massDestroy'),
             'canDelete' => auth()->user()->can('gateway_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

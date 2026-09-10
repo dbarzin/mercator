@@ -47,6 +47,7 @@ class Phone extends Model implements HasPrefix, HasUniqueIdentifierContract
         'name',
         'description',
         'type',
+        'attributes',
         'address_ip',
         'site_id',
         'building_id',

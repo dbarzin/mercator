@@ -30,11 +30,14 @@
                         <th>
                             {{ trans('cruds.physicalSwitch.fields.name') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.physicalSwitch.fields.description') }}
+                        <th data-column="type">
+                            {{ trans('cruds.physicalSwitch.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.physicalSwitch.fields.attributes') }}
                         </th>
                         <th>
-                            {{ trans('cruds.physicalSwitch.fields.type') }}
+                            {{ trans('cruds.physicalSwitch.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.physicalSwitch.fields.site') }}
@@ -71,10 +74,19 @@
                                 <x-show-link :model="$physicalSwitch" />
                             </td>
                             <td>
-                                {!! $physicalSwitch->description ?? '' !!}
+                                {!! $physicalSwitch->type ?? '' !!}
                             </td>
                             <td>
-                                {!! $physicalSwitch->type ?? '' !!}
+                                <?php
+                                foreach (explode(" ", (string) $physicalSwitch->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                {!! $physicalSwitch->description ?? '' !!}
                             </td>
                             <td>
                                 @if($physicalSwitch->site!=null)
@@ -146,7 +158,8 @@
             'title' => trans("cruds.physicalSwitch.title_singular"),
             'URL' => route('admin.physical-switches.massDestroy'),
             'canDelete' => auth()->user()->can('physical_switch_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

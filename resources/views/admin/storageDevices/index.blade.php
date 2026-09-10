@@ -33,6 +33,9 @@
                         <th>
                             {{ trans('cruds.storageDevice.fields.type') }}
                         </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.storageDevice.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.storageDevice.fields.address_ip') }}
                         </th>
@@ -72,6 +75,15 @@
                             </td>
                             <td>
                                 {!! $storageDevice->type ?? '' !!}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $storageDevice->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $storageDevice->address_ip ?? '' !!}
@@ -140,7 +152,7 @@
             'URL' => route('admin.storage-devices.massDestroy'),
             'canDelete' => auth()->user()->can('storage_device_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description'],
+    'hiddenColumns' => ['attributes', 'description'],
 ));
     </script>
 @endsection

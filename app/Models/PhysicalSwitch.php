@@ -36,6 +36,7 @@ class PhysicalSwitch extends Model implements HasIconContract, HasPrefix, HasUni
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'icon_id',
         'description',
         'site_id',

@@ -45,12 +45,16 @@ class MacroProcessusController extends Controller
         $processes = Process::orderBy('name')->pluck('name', 'id');
         // lists
         $owner_list = MacroProcessus::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
+        $type_list = MacroProcessus::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.macroProcessuses.create', compact('processes', 'owner_list'));
+        return view('admin.macroProcessuses.create', compact('processes', 'owner_list', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreMacroProcessusRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $macroProcessus = MacroProcessus::create($request->all());
 
         Process::where('macroprocess_id', $macroProcessus->id)
@@ -69,18 +73,22 @@ class MacroProcessusController extends Controller
         $processes = Process::orderBy('name')->pluck('name', 'id');
         // lists
         $owner_list = MacroProcessus::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
+        $type_list = MacroProcessus::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $macroProcessus->load('processes');
 
         return view(
             'admin.macroProcessuses.edit',
-            compact('processes', 'macroProcessus', 'owner_list')
+            compact('processes', 'macroProcessus', 'owner_list', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)
     {
         abort_if(Gate::denies('edit-object', $macroProcessus), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $macroProcessus->update($request->all());
 
@@ -117,5 +125,24 @@ class MacroProcessusController extends Controller
         MacroProcessus::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = MacroProcessus::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

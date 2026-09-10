@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.applicationBlock.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.applicationBlock.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.applicationBlock.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.applicationBlock.fields.description') }}
                         </th>
@@ -59,6 +65,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$applicationBlock" />
+                            </td>
+                            <td>
+                                {{ $applicationBlock->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $applicationBlock->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $applicationBlock->description ?? '' !!}
@@ -110,7 +128,8 @@
     'title' => trans("cruds.applicationBlock.title_singular"),
     'URL' => route('admin.application-blocks.massDestroy'),
     'canDelete' => auth()->user()->can('application_block_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
 </script>
 @endsection

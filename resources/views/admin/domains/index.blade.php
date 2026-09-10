@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.domain.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.domain.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.domain.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.domain.title') }}
                         </th>
@@ -71,6 +77,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$domain" />
+                            </td>
+                            <td>
+                                {{ $domain->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $domain->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 @foreach($domain->forestAds as $forestAd)
@@ -137,7 +155,7 @@
             'URL' => route('admin.domains.massDestroy'),
             'canDelete' => auth()->user()->can('domain_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description'],
+    'hiddenColumns' => ['type', 'attributes', 'description'],
 ));
     </script>
 @endsection

@@ -33,6 +33,8 @@ class Wan extends Model implements HasIconContract, HasPrefix, HasUniqueIdentifi
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'created_at',
         'updated_at',
         'deleted_at',

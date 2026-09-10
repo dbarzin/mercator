@@ -33,6 +33,9 @@
                         <th>
                             {{ trans('cruds.wifiTerminal.fields.type') }}
                         </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.wifiTerminal.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.wifiTerminal.fields.address_ip') }}
                         </th>
@@ -70,6 +73,15 @@
                             </td>
                             <td>
                                 {{ $wifiTerminal->type ?? '' }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $wifiTerminal->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {{ $wifiTerminal->address_ip }}
@@ -135,7 +147,7 @@
             'URL' => route('admin.wifi-terminals.massDestroy'),
             'canDelete' => auth()->user()->can('wifi_terminal_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description'],
+    'hiddenColumns' => ['attributes', 'description'],
 ));
     </script>
 @endsection

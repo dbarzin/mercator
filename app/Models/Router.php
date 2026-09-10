@@ -47,6 +47,7 @@ class Router extends Model implements HasPrefix, HasIconContract, HasUniqueIdent
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'description',
         'rules',
         'ip_addresses',

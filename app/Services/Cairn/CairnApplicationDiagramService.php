@@ -320,7 +320,7 @@ class CairnApplicationDiagramService
                 continue;
             }
 
-            $label = $this->label($flow->name !== '' ? $flow->name : ($flow->nature ?? ''));
+            $label = $this->label($flow->name !== '' ? $flow->name : ($flow->type ?? ''));
             $lines[] = $source.' -> '.$dest.' : '.$label;
 
             if ($flow->bidirectional) {
@@ -444,7 +444,7 @@ class CairnApplicationDiagramService
 
         $flows = Cartographer::scopedQuery(ApplicationFlow::query())
             ->select([
-                'id', 'name', 'nature', 'bidirectional',
+                'id', 'name', 'type', 'bidirectional',
                 'application_source_id', 'service_source_id', 'module_source_id', 'database_source_id',
                 'application_dest_id', 'service_dest_id', 'module_dest_id', 'database_dest_id',
             ])

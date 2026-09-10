@@ -58,15 +58,19 @@ class ProcessController extends Controller
             ->distinct()->orderBy('owner')->pluck('owner');
         // Select icons
         $icons = Process::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $type_list = Process::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.processes.create',
-            compact('activities', 'entities', 'informations', 'applications', 'macroProcessuses', 'owner_list', 'icons')
+            compact('activities', 'entities', 'informations', 'applications', 'macroProcessuses', 'owner_list', 'icons', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreProcessRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $process = Process::create($request->all());
         $process->activities()->sync($request->input('activities', []));
         $process->entities()->sync($request->input('entities', []));
@@ -94,6 +98,8 @@ class ProcessController extends Controller
         $icons = Process::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         // lists
         $owner_list = Process::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
+        $type_list = Process::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $process->load('activities', 'entities', 'information', 'applications');
 
@@ -107,7 +113,9 @@ class ProcessController extends Controller
                 'macroProcessuses',
                 'owner_list',
                 'applications',
-                'icons'
+                'icons',
+                'type_list',
+                'attributes_list'
             )
         );
     }
@@ -118,6 +126,8 @@ class ProcessController extends Controller
 
         // Save icon
         $this->iconUploadService->handle($request, $process);
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Update Process
         $process->update($request->all());
@@ -154,5 +164,24 @@ class ProcessController extends Controller
         Process::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Process::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

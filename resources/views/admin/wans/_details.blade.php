@@ -20,6 +20,22 @@
             {{ $wan->name }}
             @endif
             </td>
+            <th width="10%">
+                {{ trans('cruds.wan.fields.type') }}
+            </th>
+            <td width="20%">
+                {{ $wan->type }}
+            </td>
+            <th width="10%">
+                {{ trans('cruds.wan.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $wan->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         @canAccess(App\Models\Man::class)
         <tr>

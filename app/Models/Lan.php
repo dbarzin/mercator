@@ -45,6 +45,8 @@ class Lan extends Model implements HasPrefix, HasIconContract, HasUniqueIdentifi
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'created_at',
         'updated_at',

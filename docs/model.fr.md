@@ -148,12 +148,11 @@ erDiagram
         string ext_refs
         string name
         int icon_id
-        string entity_type
+        string type
         string attributes
         text description
         string reference
         int parent_entity_id FK
-        boolean is_external
         text security_level
         text contact_point
         string external_ref_id
@@ -211,12 +210,11 @@ travers de relations.
 | ext_refs | varchar(255) | Référence(s) externe(s) vers des objets d'autres systèmes. Format : {ID_SOURCE}ID_OBJET, valeurs multiples séparées par « \| » |
 | name             | varchar(255) | Nom de l'entité                               |
 | icon_id          | int unsigned | Référence vers une image spécifique           |
-| entity_type      | varchar(255) | Type d'entité                                 |
-| attributes       | varchar(255) | Attributs (#tag...)                           |
+| type             | varchar(255) | Type d'entité                                 |
+| attributes       | varchar(255) | Attributs (#tag...). Une entité externe à l'organisme porte l'attribut `extern` |
 | description      | longtext     | Description de l'entité                       |
 | reference        | varchar(255) | Numéro de référence de l'entité (facturation) |
 | parent_entity_id | int unsigned | Entité parente                                |
-| is_external      | boolean      | Entité externe                                |
 | security_level   | longtext     | Niveau de sécurité                            |
 | contact_point    | longtext     | Point de contact                              |
 | external_ref_id  | varchar(255) | Lien vers une entité extérieure connectée     |
@@ -835,6 +833,7 @@ erDiagram
         int database_dest_id FK
         boolean crypted
         boolean bidirectional
+        string type
         timestamp created_at
         timestamp updated_at
         timestamp deleted_at
@@ -1129,7 +1128,7 @@ Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comm
 | <span style="color: purple;">*device***_dest_id   | int unsigned | Lien vers l'actif destinataire            |
 | crypted                                           | tinyint(1)   | Le flux est chiffré (1=oui, O=non)        |
 | bidirectional                                     | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non) |
-| nature                                            | varchar(255) | Nature du flux applicatif                 |
+| type                                              | varchar(255) | Type du flux applicatif                   |
 | created_at                                        | timestamp    | Date de création                          |
 | updated_at                                        | timestamp    | Date de mise à jour                       |
 | deleted_at                                        | timestamp    | Date de suppression                       |

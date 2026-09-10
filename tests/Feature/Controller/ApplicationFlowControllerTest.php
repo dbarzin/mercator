@@ -54,7 +54,7 @@ describe('create', function () {
 
         $response->assertOk();
         $response->assertViewIs('admin.application-flows.create');
-        $response->assertViewHas(['items', 'nature_list', 'attributes_list']);
+        $response->assertViewHas(['items', 'type_list', 'attributes_list']);
     });
 
     test('denies access without permission', function () {
@@ -104,7 +104,7 @@ describe('edit', function () {
 
         $response->assertOk();
         $response->assertViewIs('admin.application-flows.edit');
-        $response->assertViewHas(['items', 'nature_list', 'attributes_list', 'flow']);
+        $response->assertViewHas(['items', 'type_list', 'attributes_list', 'flow']);
         $response->assertSee($name);
     });
 

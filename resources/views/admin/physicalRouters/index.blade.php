@@ -30,8 +30,11 @@
                         <th>
                             {{ trans('cruds.physicalRouter.fields.name') }}
                         </th>
-                        <th>
+                        <th data-column="type">
                             {{ trans('cruds.physicalRouter.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.physicalRouter.fields.attributes') }}
                         </th>
                         <th>
                             {{ trans('cruds.physicalRouter.fields.description') }}
@@ -72,6 +75,15 @@
                             </td>
                             <td>
                                 {{ $physicalRouter->type ?? '' }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $physicalRouter->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $physicalRouter->description ?? '' !!}
@@ -141,7 +153,8 @@
             'title' => trans("cruds.physicalRouter.title_singular"),
             'URL' => route('admin.physical-routers.massDestroy'),
             'canDelete' => auth()->user()->can('physical_router_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

@@ -21,7 +21,7 @@ use App\Traits\HasCartographers;
  *
  * @property int $id
  * @property string $name
- * @property string|null $nature
+ * @property string|null $type
  * @property string|null $description
  * @property string|null $attributes
  * @property int|null $application_source_id
@@ -61,7 +61,7 @@ class ApplicationFlow extends Model implements HasPrefix, HasUniqueIdentifierCon
     protected $fillable = [
         'ext_refs',
         'name',
-        'nature',
+        'type',
         'attributes',
         'description',
         'application_source_id',

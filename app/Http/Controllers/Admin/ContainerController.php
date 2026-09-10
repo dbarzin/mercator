@@ -52,12 +52,15 @@ class ContainerController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $applications = Application::all()->sortBy('name')->pluck('name', 'id');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.containers.create', compact('icons', 'type_list', 'logical_servers', 'applications', 'databases'));
+        return view('admin.containers.create', compact('icons', 'type_list', 'logical_servers', 'applications', 'databases', 'attributes_list'));
     }
 
     public function store(StoreContainerRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         // Create container
         $container = Container::create($request->all());
 
@@ -84,10 +87,11 @@ class ContainerController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applications = Application::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.containers.edit',
-            compact('container', 'icons', 'type_list', 'logical_servers', 'applications', 'databases')
+            compact('container', 'icons', 'type_list', 'logical_servers', 'applications', 'databases', 'attributes_list')
         );
     }
 
@@ -97,6 +101,8 @@ class ContainerController extends Controller
 
         // Save icon
         $this->iconUploadService->handle($request, $container);
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Update container
         $container->update($request->all());
@@ -132,5 +138,24 @@ class ContainerController extends Controller
         Container::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Container::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

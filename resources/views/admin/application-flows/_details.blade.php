@@ -20,10 +20,10 @@
         @endif
         </td>
         <th width="10%">
-            {{ trans('cruds.applicationFlow.fields.nature') }}
+            {{ trans('cruds.applicationFlow.fields.type') }}
         </th>
         <td width="20%">
-            {{ $flow->nature }}
+            {{ $flow->type }}
         </td>
         <th width="10%">
             {{ trans('cruds.applicationFlow.fields.attributes') }}

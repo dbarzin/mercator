@@ -47,10 +47,11 @@ class WifiTerminalController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
 
         $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.wifiTerminals.create',
-            compact('type_list', 'sites', 'buildings', 'buildingSiteMap')
+            compact('type_list', 'sites', 'buildings', 'buildingSiteMap', 'attributes_list')
         );
     }
 
@@ -63,6 +64,7 @@ class WifiTerminalController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
 
         $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         // Get WifiTerminal
         $wifiTerminal = WifiTerminal::find($request['id']);
@@ -70,17 +72,24 @@ class WifiTerminalController extends Controller
         // WifiTerminal not found
         abort_if($wifiTerminal === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($wifiTerminal->only($wifiTerminal->getFillable()));
+        $data = $wifiTerminal->only($wifiTerminal->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->flash();
 
         return view(
             'admin.wifiTerminals.create',
-            compact('type_list', 'sites', 'buildings', 'buildingSiteMap')
+            compact('type_list', 'sites', 'buildings', 'buildingSiteMap', 'attributes_list')
         );
     }
 
     public function store(StoreWifiTerminalRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         WifiTerminal::create($request->all());
 
         return redirect()->route('admin.wifi-terminals.index');
@@ -95,12 +104,13 @@ class WifiTerminalController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
 
         $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $wifiTerminal->load('site', 'building');
 
         return view(
             'admin.wifiTerminals.edit',
-            compact('sites', 'buildings', 'buildingSiteMap', 'wifiTerminal', 'type_list')
+            compact('sites', 'buildings', 'buildingSiteMap', 'wifiTerminal', 'type_list', 'attributes_list')
         );
     }
 
@@ -111,6 +121,8 @@ class WifiTerminalController extends Controller
         if (! $request->has('type')) {
             $request->merge(['type' => '']);
         }
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $wifiTerminal->update($request->all());
 
@@ -140,5 +152,24 @@ class WifiTerminalController extends Controller
         WifiTerminal::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = WifiTerminal::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

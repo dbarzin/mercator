@@ -36,6 +36,7 @@ class PhysicalServer extends Model implements HasIconContract, HasPrefix, HasUni
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'description',
         'configuration',
         'address_ip',

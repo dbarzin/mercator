@@ -36,6 +36,8 @@ describe('index', function () {
         $response->assertOk();
         $response->assertViewIs('admin.tasks.index');
         $response->assertViewHas('tasks');
+        $response->assertSee(trans('cruds.task.fields.type'));
+        $response->assertSee(trans('cruds.task.fields.attributes'));
     });
 
     test('denies access without permission', function () {
@@ -120,6 +122,25 @@ describe('edit', function () {
     });
 });
 
+describe('store', function () {
+    test('can create a Task with type and attributes', function () {
+        $data = [
+            'name' => 'Reconcile ledgers',
+            'type' => 'Comptabilité',
+            'attributes' => ['urgent', 'mensuel'],
+        ];
+
+        $response = $this->post(route('admin.tasks.store'), $data);
+
+        $response->assertRedirect(route('admin.tasks.index'));
+        $this->assertDatabaseHas('tasks', [
+            'name' => 'Reconcile ledgers',
+            'type' => 'Comptabilité',
+            'attributes' => 'urgent mensuel',
+        ]);
+    });
+});
+
 describe('update', function () {
     test('can update Task', function () {
         $name = fake()->word();
@@ -134,6 +155,25 @@ describe('update', function () {
 
         $response->assertRedirect(route('admin.tasks.index'));
         $this->assertDatabaseHas('tasks', ['name' => 'Updated Name']);
+    });
+
+    test('can update Task type and attributes', function () {
+        $Task = Task::factory()->create(['type' => 'Old', 'attributes' => 'old tag']);
+
+        $data = [
+            'name' => $Task->name,
+            'type' => 'Nouveau',
+            'attributes' => ['nouveau', 'tag'],
+        ];
+
+        $response = $this->put(route('admin.tasks.update', $Task), $data);
+
+        $response->assertRedirect(route('admin.tasks.index'));
+        $this->assertDatabaseHas('tasks', [
+            'id' => $Task->id,
+            'type' => 'Nouveau',
+            'attributes' => 'nouveau tag',
+        ]);
     });
 });
 

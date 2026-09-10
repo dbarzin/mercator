@@ -15,7 +15,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-5">
                         <div class="form-group">
                             <label class="label-required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
@@ -30,53 +30,34 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="entity_type">{{ trans('cruds.entity.fields.entity_type') }}</label>
-                            <select class="form-control select2-free {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
-                                    name="entity_type" id="entity_type">
-                                @if (!$entityTypes->contains(old('entity_type')))
-                                    <option> {{ old('entity_type') }}</option>
+                            <label for="type">{{ trans('cruds.entity.fields.type') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
+                                    name="type" id="type">
+                                @if (!$entityTypes->contains(old('type')))
+                                    <option> {{ old('type') }}</option>
                                 @endif
                                 @foreach($entityTypes as $t)
-                                    <option {{ (old('entity_type') ? old('entity_type') : $entity->entity_type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                                    <option {{ (old('type') ? old('type') : $entity->type) == $t ? 'selected' : '' }}>{{$t}}</option>
                                 @endforeach
                             </select>
-                            <span class="help-block">{{ trans('cruds.entity.fields.entity_type_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.entity.fields.type_helper') }}</span>
                         </div>
                     </div>
-
-                    <div class="col-md-3">
+                    <div class="col-5">
                         <div class="form-group">
-                            <label for="processes">{{ trans('cruds.entity.fields.parent_entity') }}</label>
-                            <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}"
-                                    name="parent_entity_id" id="parent_entity_id">
-                                <option></option>
-                                @foreach($entities as $id => $name)
-                                    <option value="{{ $id }}" {{ old('entity',$entity->parent_entity_id)==$id ? 'selected' : '' }}>{{ $name }}</option>
+                            <label for="attributes">{{ trans('cruds.entity.fields.attributes') }}</label>
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
+                                @foreach($attributes_list as $a)
+                                    <option {{ in_array($a, old('attributes', array_filter(explode(' ', (string) $entity->attributes)))) ? 'selected' : '' }}>{{ $a }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('processes'))
-                                <span class="text-danger">{{ $errors->first('parent_entity') }}</span>
+                            @if($errors->has('attributes'))
+                                <div class="invalid-feedback">{{ $errors->first('attributes') }}</div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.entity.fields.parent_entity_helper') }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-1">
-                        <br>
-                        <div class="form-group">
-                            <div class="form-check form-switch">
-                                <input name="is_external" id='is_external' type="checkbox"
-                                       class="form-check-input" {{ old('is_external',$entity->is_external) ? 'checked' : '' }}>
-                                <label for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
-                            </div>
-                            @if($errors->has('is_external'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('is_external') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.entity.fields.is_external_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.entity.fields.attributes_helper') }}</span>
                         </div>
                     </div>
                 </div>
@@ -113,6 +94,42 @@
                         </div>
                         <div class="form-group">
                             <input type="file" id="iconFile" name="iconFile" accept="image/png"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="processes">{{ trans('cruds.entity.fields.parent_entity') }}</label>
+                            <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}"
+                                    name="parent_entity_id" id="parent_entity_id">
+                                <option></option>
+                                @foreach($entities as $id => $name)
+                                    <option value="{{ $id }}" {{ old('entity',$entity->parent_entity_id)==$id ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('processes'))
+                                <span class="text-danger">{{ $errors->first('parent_entity') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.entity.fields.parent_entity_helper') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="childEntities">{{ trans('cruds.entity.fields.subsidiaries') }}</label>
+                            <select class="form-control select2 {{ $errors->has('childEntities') ? 'is-invalid' : '' }}"
+                                    name="childEntities[]" id="childEntities" multiple>
+                                @foreach($entities as $id => $name)
+                                    @continue($id == $entity->id)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('childEntities', [])) || $entity->entities->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('childEntities'))
+                                <div class="invalid-feedback">{{ $errors->first('childEntities') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.entity.fields.subsidiaries_helper') }}</span>
                         </div>
                     </div>
                 </div>

@@ -62,10 +62,11 @@ class PhysicalSwitchController extends Controller
 
         // Types
         $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.physicalSwitches.create',
-            compact('icons', 'sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'networkSwitches', 'type_list')
+            compact('icons', 'sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'networkSwitches', 'type_list', 'attributes_list')
         );
     }
 
@@ -88,6 +89,7 @@ class PhysicalSwitchController extends Controller
 
         // Types
         $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         // Get PhysicalSwitch
         $physicalSwitch = PhysicalSwitch::find($request['id']);
@@ -95,18 +97,25 @@ class PhysicalSwitchController extends Controller
         // Vlan not found
         abort_if($physicalSwitch === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($physicalSwitch->only($physicalSwitch->getFillable()));
+        $data = $physicalSwitch->only($physicalSwitch->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->merge(['networkSwitches' => $physicalSwitch->networkSwitches()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(
             'admin.physicalSwitches.create',
-            compact('icons', 'sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'networkSwitches', 'type_list')
+            compact('icons', 'sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'networkSwitches', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StorePhysicalSwitchRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $physicalSwitch = PhysicalSwitch::create($request->all());
 
         $physicalSwitch->networkSwitches()->sync($request->input('networkSwitches', []));
@@ -137,18 +146,21 @@ class PhysicalSwitchController extends Controller
 
         // Types
         $type_list = PhysicalSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $physicalSwitch->load('site', 'building', 'bay');
 
         return view(
             'admin.physicalSwitches.edit',
-            compact('icons', 'sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'physicalSwitch', 'networkSwitches', 'type_list')
+            compact('icons', 'sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'physicalSwitch', 'networkSwitches', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)
     {
         abort_if(Gate::denies('edit-object', $physicalSwitch), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $physicalSwitch->update($request->all());
 
@@ -184,5 +196,24 @@ class PhysicalSwitchController extends Controller
         PhysicalSwitch::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = PhysicalSwitch::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

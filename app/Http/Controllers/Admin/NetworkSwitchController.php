@@ -60,9 +60,11 @@ class NetworkSwitchController extends Controller
 
         $physicalSwitches = PhysicalSwitch::query()->orderBy('name')->pluck('name', 'id');
         $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id');
+        $type_list = NetworkSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view('admin.networkSwitches.create',
-            compact('physicalSwitches', 'vlans'));
+            compact('physicalSwitches', 'vlans', 'type_list', 'attributes_list'));
     }
 
     /**
@@ -73,6 +75,8 @@ class NetworkSwitchController extends Controller
      */
     public function store(StoreNetworkSwitchRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $networkSwitch = NetworkSwitch::create($request->all());
         $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
         $networkSwitch->vlans()->sync($request->input('vlans', []));
@@ -94,10 +98,12 @@ class NetworkSwitchController extends Controller
 
         $physicalSwitches = PhysicalSwitch::query()->orderBy('name')->pluck('name', 'id');
         $vlans = Vlan::query()->orderBy('name')->pluck('name', 'id');
+        $type_list = NetworkSwitch::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.networkSwitches.edit',
-            compact('networkSwitch', 'physicalSwitches', 'vlans')
+            compact('networkSwitch', 'physicalSwitches', 'vlans', 'type_list', 'attributes_list')
         );
     }
 
@@ -115,6 +121,8 @@ class NetworkSwitchController extends Controller
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('edit-object', $networkSwitch), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $networkSwitch->update($request->all());
         $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
@@ -150,5 +158,24 @@ class NetworkSwitchController extends Controller
         NetworkSwitch::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = NetworkSwitch::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

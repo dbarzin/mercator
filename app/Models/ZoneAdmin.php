@@ -31,6 +31,8 @@ class ZoneAdmin extends Model implements HasIconContract, HasPrefix, HasUniqueId
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'created_at',
         'updated_at',

@@ -55,10 +55,11 @@ class PhysicalRouterController extends Controller
         $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.physicalRouters.create',
-            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'routers', 'vlans', 'type_list')
+            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'routers', 'vlans', 'type_list', 'attributes_list')
         );
     }
 
@@ -76,6 +77,7 @@ class PhysicalRouterController extends Controller
         $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         // Get PhysicalRouter
         $physicalRouter = PhysicalRouter::find($request['id']);
@@ -83,19 +85,26 @@ class PhysicalRouterController extends Controller
         // PhysicalRouter not found
         abort_if($physicalRouter === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($physicalRouter->only($physicalRouter->getFillable()));
+        $data = $physicalRouter->only($physicalRouter->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->merge(['vlans' => $physicalRouter->vlans()->pluck('id')->unique()->toArray()]);
         $request->merge(['routers' => $physicalRouter->routers()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(
             'admin.physicalRouters.create',
-            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'routers', 'vlans', 'type_list')
+            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'routers', 'vlans', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StorePhysicalRouterRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $physicalRouter = PhysicalRouter::create($request->all());
         $physicalRouter->vlans()->sync($request->input('vlans', []));
         $physicalRouter->routers()->sync($request->input('routers', []));
@@ -116,18 +125,21 @@ class PhysicalRouterController extends Controller
         $bayBuildingMap = Bay::pluck('building_id', 'id');
 
         $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $physicalRouter->load('site', 'building', 'bay', 'vlans');
 
         return view(
             'admin.physicalRouters.edit',
-            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'vlans', 'physicalRouter', 'routers', 'type_list')
+            compact('sites', 'buildings', 'bays', 'buildingSiteMap', 'bayBuildingMap', 'vlans', 'physicalRouter', 'routers', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalRouter)
     {
         abort_if(Gate::denies('edit-object', $physicalRouter), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $physicalRouter->update($request->all());
         $physicalRouter->vlans()->sync($request->input('vlans', []));
@@ -159,5 +171,24 @@ class PhysicalRouterController extends Controller
         PhysicalRouter::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = PhysicalRouter::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

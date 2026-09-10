@@ -100,13 +100,20 @@ class WorkstationController extends Controller
             ->orderBy('network_port_type')
             ->pluck('network_port_type');
 
+        $attributes_list = $this->getAttributes();
+
         // Get Workstation
         $workstation = Workstation::find($request['id']);
 
         // Workstation not found
         abort_if($workstation === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($workstation->only($workstation->getFillable()));
+        $data = $workstation->only($workstation->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->flash();
 
         return view(
@@ -127,13 +134,16 @@ class WorkstationController extends Controller
                 'domains',
                 'users',
                 'networks',
-                'network_port_type_list'
+                'network_port_type_list',
+                'attributes_list'
             )
         );
     }
 
     public function store(StoreWorkstationRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $workstation = Workstation::create($request->all());
 
         // Save icon
@@ -204,6 +214,8 @@ class WorkstationController extends Controller
             ->orderBy('network_port_type')
             ->pluck('network_port_type');
 
+        $attributes_list = $this->getAttributes();
+
         return view(
             'admin.workstations.create',
             compact(
@@ -222,7 +234,8 @@ class WorkstationController extends Controller
                 'domains',
                 'users',
                 'networks',
-                'network_port_type_list'
+                'network_port_type_list',
+                'attributes_list'
             )
         );
     }
@@ -284,6 +297,8 @@ class WorkstationController extends Controller
             ->orderBy('network_port_type')
             ->pluck('network_port_type');
 
+        $attributes_list = $this->getAttributes();
+
         $workstation->load('site', 'building');
 
         return view(
@@ -305,7 +320,8 @@ class WorkstationController extends Controller
                 'domains',
                 'users',
                 'networks',
-                'network_port_type_list'
+                'network_port_type_list',
+                'attributes_list'
             )
         );
     }
@@ -316,6 +332,8 @@ class WorkstationController extends Controller
 
         // Save icon
         $this->iconUploadService->handle($request, $workstation);
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $workstation->update($request->all());
         $workstation->applications()->sync($request->input('applications', []));
@@ -346,5 +364,24 @@ class WorkstationController extends Controller
         Workstation::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Workstation::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

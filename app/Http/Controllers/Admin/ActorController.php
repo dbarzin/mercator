@@ -39,11 +39,15 @@ class ActorController extends Controller
     {
         abort_if(Gate::denies('actor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.actors.create');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.actors.create', compact('attributes_list'));
     }
 
     public function store(StoreActorRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         Actor::create($request->all());
 
         return redirect()->route('admin.actors.index');
@@ -53,12 +57,16 @@ class ActorController extends Controller
     {
         abort_if(Gate::denies('edit-object', $actor), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.actors.edit', compact('actor'));
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.actors.edit', compact('actor', 'attributes_list'));
     }
 
     public function update(UpdateActorRequest $request, Actor $actor)
     {
         abort_if(Gate::denies('edit-object', $actor), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $actor->update($request->all());
 
@@ -86,5 +94,24 @@ class ActorController extends Controller
         Actor::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Actor::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

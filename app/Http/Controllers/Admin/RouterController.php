@@ -45,15 +45,18 @@ class RouterController extends Controller
         $physical_routers = PhysicalRouter::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = Router::all()->sortBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.routers.create',
-            compact('network_switches', 'physical_routers', 'type_list')
+            compact('network_switches', 'physical_routers', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreRouterRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $router = Router::create($request->all());
         $router->physicalRouters()->sync($request->input('physicalRouters', []));
 
@@ -68,16 +71,19 @@ class RouterController extends Controller
         $physical_routers = PhysicalRouter::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = Router::all()->sortBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.routers.edit',
-            compact('router', 'network_switches', 'physical_routers', 'type_list')
+            compact('router', 'network_switches', 'physical_routers', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdateRouterRequest $request, Router $router)
     {
         abort_if(Gate::denies('edit-object', $router), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $router->update($request->all());
 
@@ -107,5 +113,24 @@ class RouterController extends Controller
         Router::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Router::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

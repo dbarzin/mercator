@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.bay.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.bay.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.bay.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.bay.fields.description') }}
                         </th>
@@ -60,6 +66,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$bay" />
+                            </td>
+                            <td>
+                                {{ $bay->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $bay->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $bay->description ?? '' !!}
@@ -117,7 +135,8 @@
             'title' => trans("cruds.bay.title_singular"),
             'URL' => route('admin.bays.massDestroy'),
             'canDelete' => auth()->user()->can('bay_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

@@ -1306,7 +1306,7 @@ class ExplorerController extends Controller
                 continue;
             }
 
-            $label = $useName ? $flow->name : $flow->nature;
+            $label = $useName ? $flow->name : $flow->type;
             $this->addFluxEdge($label, $flow->bidirectional ?? false, $src_id, $dest_id);
         }
     }

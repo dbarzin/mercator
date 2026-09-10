@@ -20,6 +20,9 @@ use App\Traits\HasCartographers;
 
 /**
  * App\Actor
+ *
+ * @property string|null $type
+ * @property string|null $attributes
  */
 class Actor extends Model implements HasPrefix, HasIconContract, HasUniqueIdentifierContract
 {
@@ -38,6 +41,7 @@ class Actor extends Model implements HasPrefix, HasIconContract, HasUniqueIdenti
         'contact',
         'nature',
         'type',
+        'attributes',
         'created_at',
         'updated_at',
         'deleted_at',

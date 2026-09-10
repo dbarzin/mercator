@@ -46,6 +46,8 @@ class ApplicationBlock extends Model implements HasPrefix, HasIconContract, HasU
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'responsible',
         'created_at',

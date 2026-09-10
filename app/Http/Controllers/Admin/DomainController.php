@@ -46,15 +46,19 @@ class DomainController extends Controller
 
         $forestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
         $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Domain::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.domains.create',
-            compact('forestAds', 'logicalServers')
+            compact('forestAds', 'logicalServers', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreDomainRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $domainAd = Domain::query()->create($request->all());
         $domainAd->forestAds()->sync($request->input('forestAds', []));
 
@@ -70,17 +74,21 @@ class DomainController extends Controller
 
         $forestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
         $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Domain::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
         $domain->load('forestAds');
 
         return view(
             'admin.domains.edit',
-            compact('domain', 'forestAds', 'logicalServers')
+            compact('domain', 'forestAds', 'logicalServers', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdateDomainRequest $request, Domain $domain)
     {
         abort_if(Gate::denies('edit-object', $domain), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $domain->update($request->all());
         $domain->forestAds()->sync($request->input('forestAds', []));
@@ -117,5 +125,24 @@ class DomainController extends Controller
         Domain::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Domain::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

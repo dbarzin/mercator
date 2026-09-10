@@ -30,11 +30,14 @@
                         <th>
                             {{ trans('cruds.database.fields.name') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.database.fields.description') }}
+                        <th data-column="type">
+                            {{ trans('cruds.database.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.database.fields.attributes') }}
                         </th>
                         <th>
-                            {{ trans('cruds.database.fields.type') }}
+                            {{ trans('cruds.database.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.database.fields.informations') }}
@@ -76,10 +79,19 @@
                                 <x-show-link :model="$database" />
                             </td>
                             <td>
-                                {!! $database->description ?? '' !!}
+                                {{ $database->type ?? '' }}
                             </td>
                             <td>
-                                {{ $database->type ?? '' }}
+                                <?php
+                                foreach (explode(" ", (string) $database->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                {!! $database->description ?? '' !!}
                             </td>
                             <td>
                                 @foreach($database->informations as $information)
@@ -142,7 +154,7 @@
     'URL' => route('admin.databases.massDestroy'),
     'canDelete' => auth()->user()->can('database_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['responsible'],
+    'hiddenColumns' => ['type', 'attributes', 'responsible'],
 ));
 </script>
 @endsection

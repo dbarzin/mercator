@@ -47,6 +47,8 @@ class ApplicationService extends Model implements HasPrefix, HasIconContract, Ha
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'exposition',
         'created_at',

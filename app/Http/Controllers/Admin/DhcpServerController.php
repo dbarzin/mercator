@@ -39,11 +39,16 @@ class DhcpServerController extends Controller
     {
         abort_if(Gate::denies('dhcp_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.dhcpServers.create');
+        $type_list = DhcpServer::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.dhcpServers.create', compact('type_list', 'attributes_list'));
     }
 
     public function store(StoreDhcpServerRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         DhcpServer::create($request->all());
 
         return redirect()->route('admin.dhcp-servers.index');
@@ -53,12 +58,17 @@ class DhcpServerController extends Controller
     {
         abort_if(Gate::denies('edit-object', $dhcpServer), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.dhcpServers.edit', compact('dhcpServer'));
+        $type_list = DhcpServer::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.dhcpServers.edit', compact('dhcpServer', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateDhcpServerRequest $request, DhcpServer $dhcpServer)
     {
         abort_if(Gate::denies('edit-object', $dhcpServer), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $dhcpServer->update($request->all());
 
@@ -86,5 +96,24 @@ class DhcpServerController extends Controller
         DhcpServer::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = DhcpServer::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

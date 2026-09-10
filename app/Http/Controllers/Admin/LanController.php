@@ -39,11 +39,16 @@ class LanController extends Controller
     {
         abort_if(Gate::denies('lan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.lans.create');
+        $type_list = Lan::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.lans.create', compact('type_list', 'attributes_list'));
     }
 
     public function store(StoreLanRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         Lan::create($request->all());
 
         return redirect()->route('admin.lans.index');
@@ -53,12 +58,17 @@ class LanController extends Controller
     {
         abort_if(Gate::denies('edit-object', $lan), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.lans.edit', compact('lan'));
+        $type_list = Lan::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.lans.edit', compact('lan', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateLanRequest $request, Lan $lan)
     {
         abort_if(Gate::denies('edit-object', $lan), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $lan->update($request->all());
 
@@ -88,5 +98,24 @@ class LanController extends Controller
         Lan::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Lan::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

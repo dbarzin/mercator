@@ -46,6 +46,8 @@ class ApplicationModule extends Model implements HasPrefix, HasIconContract, Has
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'vendor',
         'product',

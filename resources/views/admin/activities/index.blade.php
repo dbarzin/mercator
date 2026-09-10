@@ -43,6 +43,12 @@
                         <th>
                             {{ trans('cruds.activity.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.activity.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.activity.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.activity.fields.description') }}
                         </th>
@@ -74,6 +80,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$activity" />
+                            </td>
+                            <td>
+                                {{ $activity->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $activity->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $activity->description !!}
@@ -142,7 +160,7 @@
     'URL' => route('admin.activities.massDestroy'),
     'canDelete' => auth()->user()->can('activity_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['drp'],
+    'hiddenColumns' => ['type', 'attributes', 'drp'],
 ));
 </script>
 @endsection

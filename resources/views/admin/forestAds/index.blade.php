@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.forestAd.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.forestAd.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.forestAd.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.forestAd.fields.description') }}
                         </th>
@@ -59,6 +65,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$forestAd" />
+                            </td>
+                            <td>
+                                {{ $forestAd->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $forestAd->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $forestAd->description ?? '' !!}
@@ -122,7 +140,8 @@
             'title' => trans("cruds.forestAd.title_singular"),
             'URL' => route('admin.forest-ads.massDestroy'),
             'canDelete' => auth()->user()->can('forest_ad_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

@@ -35,6 +35,7 @@ class PhysicalRouter extends Model implements HasPrefix, HasUniqueIdentifierCont
         'name',
         'description',
         'type',
+        'attributes',
         'site_id',
         'building_id',
         'bay_id',

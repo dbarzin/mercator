@@ -27,6 +27,18 @@
         </td>
     </tr>
     <tr>
+        <th width="10%">
+            {{ trans('cruds.wifiTerminal.fields.attributes') }}
+        </th>
+        <td colspan="3">
+            @foreach(explode(" ", (string) $wifiTerminal->attributes) as $attribute)
+                @if(strlen(trim($attribute)) > 0)
+                    <span class="badge badge-info">{{ $attribute }}</span>
+                @endif
+            @endforeach
+        </td>
+    </tr>
+    <tr>
         <th>
             {{ trans('cruds.wifiTerminal.fields.description') }}
         </th>

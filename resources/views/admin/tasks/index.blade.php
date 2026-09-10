@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.task.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.task.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.task.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.task.fields.description') }}
                         </th>
@@ -48,6 +54,18 @@
                             <td></td>
                             <td>
                                 <x-show-link :model="$task" />
+                            </td>
+                            <td>
+                                {{ $task->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $task->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $task->description ?? '' !!}
@@ -101,7 +119,8 @@
     'title' => trans("cruds.task.title_singular"),
     'URL' => route('admin.tasks.massDestroy'),
     'canDelete' => auth()->user()->can('task_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
 </script>
 @endsection

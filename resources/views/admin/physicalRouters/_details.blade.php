@@ -25,6 +25,16 @@
             <td>
                 {{ $physicalRouter->type }}
             </td>
+            <th width="10%">
+                {{ trans('cruds.physicalRouter.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $physicalRouter->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>

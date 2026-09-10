@@ -33,6 +33,12 @@
                         <th>
                             {{ trans('cruds.vlan.fields.vlan_id') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.vlan.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.vlan.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.vlan.fields.description') }}
                         </th>
@@ -55,6 +61,18 @@
                             </td>
                             <td>
                                 {{ $vlan->vlan_id }}
+                            </td>
+                            <td>
+                                {{ $vlan->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $vlan->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $vlan->description ?? '' !!}
@@ -107,7 +125,8 @@
     'title' => trans("cruds.vlan.title_singular"),
     'URL' => route('admin.vlans.massDestroy'),
     'canDelete' => auth()->user()->can('vlan_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes']
 ));
 </script>
 @endsection

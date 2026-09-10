@@ -8,7 +8,7 @@
             <th width="10%">
                 {{ trans('cruds.entity.fields.name') }}
             </th>
-            <td>
+            <td width="15%">
             @if ($withLink)
             @canShow($entity)
             <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</a>
@@ -20,51 +20,22 @@
             @endif
             </td>
             <th width="10%">
-                {{ trans('cruds.entity.fields.entity_type') }}
+                {{ trans('cruds.entity.fields.type') }}
             </th>
-            <td>
-                {{ $entity->entity_type }}
+            <td width="15%">
+                {{ $entity->type }}
             </td>
             <th width="10%">
-                {{ trans('cruds.entity.fields.parent_entity') }}
+                {{ trans('cruds.entity.fields.attributes') }}
             </th>
-            <td>
-                @if ($entity->parentEntity!=null)
-                    @canShow($entity->parentEntity)
-                        <a href="{{ route('admin.entities.show', $entity->parentEntity->id) }}">{{ $entity->parentEntity->name }}</a>
-                    @elsecanShow
-                        {{ $entity->parentEntity->name }}
-                    @endcanShow
-                @endif
-            </td>
-            <th width="10%">
-                {{ trans('cruds.entity.fields.is_external') }}
-            </th>
-            <td>
-                {{ $entity->is_external ? trans('global.yes') : trans('global.no') }}
-            </td>
-        </tr>
-        @if ($entity->entities()->count()>0)
-        @canAccess(App\Models\Entity::class)
-        <tr>
-            <th>
-                {{ trans('cruds.entity.fields.subsidiaries') }}
-            </th>
-            <td colspan="7">
-                @foreach($entity->entities as $e)
-                    @canShow($e)
-                        <a href="{{ route('admin.entities.show', $e->id) }}">{{ $e->name }}</a>
-                    @elsecanShow
-                        {{ $e->name }}
-                    @endcanShow
-                    @if(!$loop->last)
-                    ,
+            <td colspan="3" width="20%">
+                @foreach(explode(" ", (string) $entity->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
                     @endif
                 @endforeach
             </td>
         </tr>
-        @endcanAccess
-        @endif
         <tr>
             <th>
                 {{ trans('cruds.entity.fields.description') }}
@@ -80,6 +51,37 @@
                 @endif
             </td>
         </tr>
+
+        <tr>
+            <th width="10%">
+                {{ trans('cruds.entity.fields.parent_entity') }}
+            </th>
+            <td colspan="1">
+                @if ($entity->parentEntity!=null)
+                    @canShow($entity->parentEntity)
+                        <a href="{{ route('admin.entities.show', $entity->parentEntity->id) }}">{{ $entity->parentEntity->name }}</a>
+                    @elsecanShow
+                        {{ $entity->parentEntity->name }}
+                    @endcanShow
+                @endif
+            </td>
+            <th width="10%">
+                {{ trans('cruds.entity.fields.subsidiaries') }}
+            </th>
+            <td colspan="7">
+                @foreach($entity->entities as $e)
+                    @canShow($e)
+                        <a href="{{ route('admin.entities.show', $e->id) }}">{{ $e->name }}</a>
+                    @elsecanShow
+                        {{ $e->name }}
+                    @endcanShow
+                    @if(!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+
         <tr>
             <th>
                 {{ trans('cruds.entity.fields.security_level') }}

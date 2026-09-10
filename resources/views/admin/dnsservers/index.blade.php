@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.dnsserver.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.dnsserver.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.dnsserver.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.dnsserver.fields.description') }}
                         </th>
@@ -53,6 +59,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$dnsserver" />
+                            </td>
+                            <td>
+                                {{ $dnsserver->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $dnsserver->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                               {!! $dnsserver->description !!}
@@ -104,7 +122,8 @@
     'title' => trans("cruds.dnsserver.title_singular"),
     'URL' => route('admin.dnsservers.massDestroy'),
     'canDelete' => auth()->user()->can('dnsserver_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
 </script>
 @endsection

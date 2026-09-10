@@ -49,11 +49,11 @@
                                 </select>
                             </td>
                             <td>
-                                <select name="entity_type" onchange="this.form.submit()"
+                                <select name="type" onchange="this.form.submit()"
                                         class="form-control select2">
-                                    <option value="All" {{ Session::get('entity_type')== null ? "selected" : "" }} >{{ trans('cruds.entity.filters.all_types') }}</option>
+                                    <option value="All" {{ Session::get('type')== null ? "selected" : "" }} >{{ trans('cruds.entity.filters.all_types') }}</option>
                                     @foreach ($entityTypes as $type)
-                                        <option value="{{ $type }}" {{ Session::get('entity_type')==$type? "selected" : "" }}>
+                                        <option value="{{ $type }}" {{ Session::get('type')==$type? "selected" : "" }}>
                                         {{ $type }}
                                         </option>
                                     @endforeach

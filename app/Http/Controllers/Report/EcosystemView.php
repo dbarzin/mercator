@@ -23,21 +23,21 @@ class EcosystemView extends Controller
     public function generate(Request $request)
     {
         $allowed = Gate::allows('explore_access') || Cartographer::canAccessAny([Entity::class, Relation::class]);
-        abort_if(!$allowed, Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(! $allowed, Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $perimeter = in_array($request->perimeter, $this::ALLOWED_PERIMETERS) ?
                    $request->perimeter : $this::SANITIZED_PERIMETER;
-        $typeFilter = $request->entity_type ??= 'All';
+        $typeFilter = $request->type ??= 'All';
 
-        $entitiesGroups = Cartographer::scopedQuery(Entity::query())->get()->groupBy('entity_type');
+        $entitiesGroups = Cartographer::scopedQuery(Entity::query())->get()->groupBy('type');
         $entities = collect([]);
         $entityTypes = collect([]);
-        $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités */
-        foreach ($entitiesGroups as $entity_type => $entOfGroup) {
+        $isTypeExists = false; /* sanitize type: si type inconnu pas d'entités */
+        foreach ($entitiesGroups as $type => $entOfGroup) {
             $entities = $entities->concat($entOfGroup);
-            if ($entity_type != null) {
-                $isTypeExists = $isTypeExists || ($entity_type === $typeFilter);
-                $entityTypes->push($entity_type);
+            if ($type != null) {
+                $isTypeExists = $isTypeExists || ($type === $typeFilter);
+                $entityTypes->push($type);
             }
         }
 
@@ -52,7 +52,7 @@ class EcosystemView extends Controller
             $entities = $entities
                 ->filter(function ($item) use ($perimeter) {
                     return $perimeter === 'Externes' ?
-                                       $item->is_external : ! $item->is_external;
+                                       $item->isExternal() : ! $item->isExternal();
                 });
         }
 
@@ -72,7 +72,7 @@ class EcosystemView extends Controller
         }
 
         $request->session()->put('perimeter', $perimeter);
-        $request->session()->put('entity_type', $typeFilter);
+        $request->session()->put('type', $typeFilter);
 
         $graphBuilder = new EcosystemGraphBuilder;
 

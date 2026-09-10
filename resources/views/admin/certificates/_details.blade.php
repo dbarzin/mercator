@@ -23,8 +23,18 @@
         <th width="10%">
             {{ trans('cruds.certificate.fields.type') }}
         </th>
-        <td width="60%" colspan="3">
+        <td width="20%">
             {{ $certificate->type }}
+        </td>
+        <th width="10%">
+            {{ trans('cruds.certificate.fields.attributes') }}
+        </th>
+        <td width="30%" colspan="2">
+            @foreach(explode(" ", (string) $certificate->attributes) as $attribute)
+                @if(strlen(trim($attribute)) > 0)
+                    <span class="badge badge-info">{{ $attribute }}</span>
+                @endif
+            @endforeach
         </td>
     </tr>
     <tr>

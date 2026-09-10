@@ -45,6 +45,8 @@ class Dnsserver extends Model implements HasPrefix, HasIconContract, HasUniqueId
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'address_ip',
         'created_at',

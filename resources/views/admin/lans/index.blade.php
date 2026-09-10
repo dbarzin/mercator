@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.lan.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.lan.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.lan.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.lan.fields.description') }}
                         </th>
@@ -52,6 +58,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$lan" />
+                            </td>
+                            <td>
+                                {{ $lan->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $lan->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $lan->description !!}
@@ -99,7 +117,8 @@
             'title' => trans("cruds.lan.title_singular"),
             'URL' => route('admin.lans.massDestroy'),
             'canDelete' => auth()->user()->can('lan_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

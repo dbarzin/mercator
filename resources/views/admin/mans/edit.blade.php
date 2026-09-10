@@ -16,8 +16,7 @@
         <div class="card-body">
 
                 <div class="row">
-                    <div class="col-4">
-
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <label class="label-required" for="name">{{ trans('cruds.man.fields.name') }}</label>
                             <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $man->name) }}" required autofocus/>
@@ -27,6 +26,39 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.man.fields.name_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="type">{{ trans('cruds.man.fields.type') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
+                                    name="type" id="type">
+                                @if (!$type_list->contains(old('type', $man->type ?? '')))
+                                    <option>{{ old('type', $man->type ?? '') }}</option>
+                                @endif
+                                @foreach($type_list as $type)
+                                    <option {{ old('type', $man->type ?? '') == $type ? 'selected' : '' }}>{{ $type }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('type'))
+                                <div class="invalid-feedback">{{ $errors->first('type') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.man.fields.type_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="attributes">{{ trans('cruds.man.fields.attributes') }}</label>
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
+                                @foreach($attributes_list as $a)
+                                    <option {{ in_array($a, old('attributes', array_filter(explode(' ', (string) $man->attributes)))) ? 'selected' : '' }}>{{ $a }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('attributes'))
+                                <div class="invalid-feedback">{{ $errors->first('attributes') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.man.fields.attributes_helper') }}</span>
                         </div>
                     </div>
                 </div>

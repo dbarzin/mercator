@@ -40,11 +40,16 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.tasks.create');
+        $type_list = Task::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.tasks.create', compact('type_list', 'attributes_list'));
     }
 
     public function store(StoreTaskRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         Task::create($request->all());
 
         return redirect()->route('admin.tasks.index');
@@ -54,12 +59,17 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('edit-object', $task), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.tasks.edit', compact('task'));
+        $type_list = Task::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.tasks.edit', compact('task', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
         abort_if(Gate::denies('edit-object', $task), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $task->update($request->all());
 
@@ -87,5 +97,24 @@ class TaskController extends Controller
         Task::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Task::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

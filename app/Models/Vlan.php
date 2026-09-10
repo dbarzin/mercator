@@ -35,6 +35,8 @@ class Vlan extends Model implements HasIconContract, HasPrefix, HasUniqueIdentif
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'vlan_id',
         'description',
         'created_at',

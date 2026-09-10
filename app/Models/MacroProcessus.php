@@ -19,6 +19,9 @@ use App\Traits\HasCartographers;
 
 /**
  * App\MacroProcessus
+ *
+ * @property string|null $type
+ * @property string|null $attributes
  */
 class MacroProcessus extends Model implements HasPrefix, HasIconContract, HasUniqueIdentifierContract
 {
@@ -34,6 +37,8 @@ class MacroProcessus extends Model implements HasPrefix, HasIconContract, HasUni
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'io_elements',
         'security_need_c',

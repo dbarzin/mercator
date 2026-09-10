@@ -41,12 +41,16 @@ class GatewayController extends Controller
         abort_if(Gate::denies('gateway_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Gateway::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.gateways.create', compact('subnetworks'));
+        return view('admin.gateways.create', compact('subnetworks', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreGatewayRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $gateway = Gateway::create($request->all());
 
         Subnetwork::whereIn('id', $request->input('subnetworks', []))
@@ -60,13 +64,17 @@ class GatewayController extends Controller
         abort_if(Gate::denies('edit-object', $gateway), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Gateway::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.gateways.edit', compact('gateway', 'subnetworks'));
+        return view('admin.gateways.edit', compact('gateway', 'subnetworks', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateGatewayRequest $request, Gateway $gateway)
     {
         abort_if(Gate::denies('edit-object', $gateway), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $gateway->update($request->all());
 
@@ -102,5 +110,24 @@ class GatewayController extends Controller
         Gateway::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Gateway::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

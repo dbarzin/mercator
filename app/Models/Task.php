@@ -20,6 +20,9 @@ use App\Traits\HasCartographers;
 
 /**
  * App\Task
+ *
+ * @property string|null $type
+ * @property string|null $attributes
  */
 class Task extends Model implements HasIconContract, HasPrefix, HasUniqueIdentifierContract
 {
@@ -35,6 +38,8 @@ class Task extends Model implements HasIconContract, HasPrefix, HasUniqueIdentif
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'created_at',
         'updated_at',

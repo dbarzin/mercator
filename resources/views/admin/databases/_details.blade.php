@@ -24,8 +24,18 @@
             <th style="width: 10%;">
                 {{ trans('cruds.database.fields.type') }}
             </th>
-            <td style="width: 30%;" colspan="2">
+            <td style="width: 30%;">
                 {{ $database->type }}
+            </td>
+            <th style="width: 10%;">
+                {{ trans('cruds.database.fields.attributes') }}
+            </th>
+            <td style="width: 20%;">
+                @foreach(explode(" ", (string) $database->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
             </td>
         </tr>
         <tr>

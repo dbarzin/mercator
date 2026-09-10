@@ -22,6 +22,22 @@
                 {{ $macroProcessus->name }}
             @endif
             </td>
+            <th width="10%">
+                {{ trans('cruds.macroProcessus.fields.type') }}
+            </th>
+            <td width="20%">
+                {{ $macroProcessus->type }}
+            </td>
+            <th width="10%">
+                {{ trans('cruds.macroProcessus.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $macroProcessus->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>

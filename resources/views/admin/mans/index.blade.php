@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.man.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.man.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.man.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.man.fields.description') }}
                         </th>
@@ -55,6 +61,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$man" />
+                            </td>
+                            <td>
+                                {{ $man->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $man->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                             {!! $man->description !!}
@@ -116,7 +134,8 @@
     'title' => trans("cruds.man.title_singular"),
     'URL' => route('admin.mans.massDestroy'),
     'canDelete' => auth()->user()->can('man_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes']
 ));
 </script>
 @endsection

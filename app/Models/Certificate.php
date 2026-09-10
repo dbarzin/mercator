@@ -45,6 +45,7 @@ class Certificate extends Model implements HasPrefix, HasIconContract, HasUnique
         'name',
         'description',
         'type',
+        'attributes',
         'start_validity',
         'end_validity',
         'status',

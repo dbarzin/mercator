@@ -34,23 +34,23 @@
                     <div class="col-sm-3">
 
                         <div class="form-group">
-                            <label for="name">{{ trans('cruds.applicationFlow.fields.nature') }}</label>
+                            <label for="name">{{ trans('cruds.applicationFlow.fields.type') }}</label>
 
-                            <select class="form-control select2-free {{ $errors->has('nature') ? 'is-invalid' : '' }}"
-                                    name="nature" id="nature">
-                                @if (!$nature_list->contains(old('nature')))
-                                    <option> {{ old('nature') }}</option>
+                            <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
+                                    name="type" id="type">
+                                @if (!$type_list->contains(old('type')))
+                                    <option> {{ old('type') }}</option>
                                 @endif
-                                @foreach($nature_list as $nature)
-                                    <option {{ (old('nature') ? old('nature') : $flow->nature) == $nature ? 'selected' : '' }}>{{$nature}}</option>
+                                @foreach($type_list as $type)
+                                    <option {{ (old('type') ? old('type') : $flow->type) == $type ? 'selected' : '' }}>{{$type}}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('nature'))
+                            @if($errors->has('type'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('nature') }}
+                                    {{ $errors->first('type') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.applicationFlow.fields.nature_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.applicationFlow.fields.type_helper') }}</span>
                         </div>
 
                     </div>

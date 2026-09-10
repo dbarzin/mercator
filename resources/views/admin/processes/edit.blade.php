@@ -53,6 +53,42 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="type">{{ trans('cruds.process.fields.type') }}</label>
+                            <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}"
+                                    name="type" id="type">
+                                @if (!$type_list->contains(old('type', $process->type ?? '')))
+                                    <option>{{ old('type', $process->type ?? '') }}</option>
+                                @endif
+                                @foreach($type_list as $type)
+                                    <option {{ old('type', $process->type ?? '') == $type ? 'selected' : '' }}>{{ $type }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('type'))
+                                <div class="invalid-feedback">{{ $errors->first('type') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.process.fields.type_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="attributes">{{ trans('cruds.process.fields.attributes') }}</label>
+                            <select class="form-control select2-free-tags {{ $errors->has('attributes') ? 'is-invalid' : '' }}"
+                                    name="attributes[]" id="attributes" multiple>
+                                @foreach($attributes_list as $a)
+                                    <option {{ in_array($a, old('attributes', array_filter(explode(' ', (string) $process->attributes)))) ? 'selected' : '' }}>{{ $a }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('attributes'))
+                                <div class="invalid-feedback">{{ $errors->first('attributes') }}</div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.process.fields.attributes_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-9">
                         <div class="form-group">
                             <label class="label-maturity-1"

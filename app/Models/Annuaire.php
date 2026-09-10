@@ -46,6 +46,8 @@ class Annuaire extends Model implements HasIconContract, HasPrefix, HasUniqueIde
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'solution',
         'zone_admin_id',

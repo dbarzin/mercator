@@ -37,6 +37,7 @@ class Workstation extends Model implements HasIconContract, HasPrefix, HasUnique
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'icon_id',
         'status',
         'description',

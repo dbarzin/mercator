@@ -47,10 +47,11 @@ class PhoneController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
 
         $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.phones.create',
-            compact('sites', 'buildings', 'buildingSiteMap', 'type_list')
+            compact('sites', 'buildings', 'buildingSiteMap', 'type_list', 'attributes_list')
         );
     }
 
@@ -63,6 +64,7 @@ class PhoneController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
 
         $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         // Get Phone
         $phone = Phone::find($request['id']);
@@ -70,17 +72,24 @@ class PhoneController extends Controller
         // Vlan not found
         abort_if($phone === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($phone->only($phone->getFillable()));
+        $data = $phone->only($phone->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->flash();
 
         return view(
             'admin.phones.create',
-            compact('sites', 'buildings', 'buildingSiteMap', 'type_list')
+            compact('sites', 'buildings', 'buildingSiteMap', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StorePhoneRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         Phone::create($request->all());
 
         return redirect()->route('admin.phones.index');
@@ -95,18 +104,21 @@ class PhoneController extends Controller
         $buildingSiteMap = Building::pluck('site_id', 'id');
 
         $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $phone->load('site', 'building');
 
         return view(
             'admin.phones.edit',
-            compact('sites', 'buildings', 'buildingSiteMap', 'type_list', 'phone')
+            compact('sites', 'buildings', 'buildingSiteMap', 'type_list', 'phone', 'attributes_list')
         );
     }
 
     public function update(UpdatePhoneRequest $request, Phone $phone)
     {
         abort_if(Gate::denies('edit-object', $phone), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $phone->update($request->all());
 
@@ -136,5 +148,24 @@ class PhoneController extends Controller
         Phone::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Phone::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.wan.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.wan.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.wan.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.wan.fields.mans') }}
                         </th>
@@ -49,6 +55,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$wan" />
+                            </td>
+                            <td>
+                                {{ $wan->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $wan->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 @foreach($wan->mans as $key => $item)
@@ -100,7 +118,8 @@
     'title' => trans("cruds.wan.title_singular"),
     'URL' => route('admin.wans.massDestroy'),
     'canDelete' => auth()->user()->can('wan_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes']
 ));
 </script>
 @endsection

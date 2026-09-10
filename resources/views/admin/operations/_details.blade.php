@@ -20,6 +20,22 @@
             {{ $operation->name }}
             @endif
             </td>
+            <th width="10%">
+                {{ trans('cruds.operation.fields.type') }}
+            </th>
+            <td width="20%">
+                {{ $operation->type }}
+            </td>
+            <th width="10%">
+                {{ trans('cruds.operation.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $operation->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>

@@ -60,7 +60,7 @@
                     {{ trans('cruds.applicationFlow.fields.name') }}
                 </th>
                 <th width="10%">
-                    {{ trans('cruds.applicationFlow.fields.nature') }}
+                    {{ trans('cruds.applicationFlow.fields.type') }}
                 </th>
                 <th width="10%">
                     {{ trans('cruds.applicationFlow.fields.attributes') }}
@@ -81,7 +81,7 @@
                     @canShow($flow)<a href="{{ route('admin.application-flows.show', $flow->id) }}">{{ $flow->name }}</a>@elsecanShow{{ $flow->name }}@endcanShow
                 </td>
                 <td>
-                   {{ $flow->nature }}
+                   {{ $flow->type }}
                 </td>
                 <td>
                     @foreach(explode(" ",$flow->attributes) as $attribute)

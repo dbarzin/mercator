@@ -69,7 +69,7 @@ class ApplicationFlowGraphBuilder
                     continue;
                 }
 
-                $edge = $source.' -> '.$dest.' [ label="'.e($flow->nature).'"';
+                $edge = $source.' -> '.$dest.' [ label="'.e($flow->type).'"';
                 if ($flow->bidirectional) {
                     $edge .= ' dir="both"';
                 }

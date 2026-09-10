@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.applicationService.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.applicationService.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.applicationService.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.applicationService.fields.description') }}
                         </th>
@@ -64,6 +70,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$applicationService" />
+                            </td>
+                            <td>
+                                {{ $applicationService->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $applicationService->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $applicationService->description !!}
@@ -131,7 +149,8 @@
     'title' => trans("cruds.applicationService.title_singular"),
     'URL' => route('admin.application-services.massDestroy'),
     'canDelete' => auth()->user()->can('application_service_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
 </script>
 @endsection

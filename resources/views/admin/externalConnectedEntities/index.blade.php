@@ -33,6 +33,9 @@
                         <th>
                             {{ trans('cruds.externalConnectedEntity.fields.type') }}
                         </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.externalConnectedEntity.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.externalConnectedEntity.fields.entity') }}
                         </th>
@@ -83,6 +86,15 @@
                             </td>
                             <td>
                                 {{ $externalConnectedEntity->type ?? '' }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $externalConnectedEntity->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 @if ($externalConnectedEntity->entity!=null)
@@ -166,7 +178,7 @@
             'URL' => route('admin.external-connected-entities.massDestroy'),
             'canDelete' => auth()->user()->can('external_connected_entity_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description'],
+    'hiddenColumns' => ['attributes', 'description'],
 ));
     </script>
 @endsection

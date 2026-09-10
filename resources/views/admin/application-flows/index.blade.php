@@ -31,7 +31,7 @@
                             {{ trans('cruds.applicationFlow.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.applicationFlow.fields.nature_short') }}
+                            {{ trans('cruds.applicationFlow.fields.type_short') }}
                         </th>
                         <th>
                             {{ trans('cruds.applicationFlow.fields.attributes') }}
@@ -87,7 +87,7 @@
                                 <x-show-link :model="$flow" />
                             </td>
                             <td>
-                                {{ $flow->nature }}
+                                {{ $flow->type }}
                             </td>
                             <td>
                                 @php

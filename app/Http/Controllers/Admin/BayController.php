@@ -62,8 +62,10 @@ class BayController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $buildingSiteMap = Building::pluck('site_id', 'id');
+        $type_list = Bay::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.bays.create', compact('sites', 'buildings', 'buildingSiteMap'));
+        return view('admin.bays.create', compact('sites', 'buildings', 'buildingSiteMap', 'type_list', 'attributes_list'));
     }
 
     /**
@@ -82,11 +84,18 @@ class BayController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $buildingSiteMap = Building::pluck('site_id', 'id');
+        $type_list = Bay::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        $request->merge($bay->only($bay->getFillable()));
+        $data = $bay->only($bay->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->flash();
 
-        return view('admin.bays.create', compact('sites', 'buildings', 'buildingSiteMap'));
+        return view('admin.bays.create', compact('sites', 'buildings', 'buildingSiteMap', 'type_list', 'attributes_list'));
     }
 
     /**
@@ -97,6 +106,8 @@ class BayController extends Controller
      */
     public function store(StoreBayRequest $request): RedirectResponse
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         Bay::create($request->all());
 
         return redirect()->route('admin.bays.index');
@@ -115,10 +126,12 @@ class BayController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $buildingSiteMap = Building::pluck('site_id', 'id');
+        $type_list = Bay::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $bay->load('site', 'building');
 
-        return view('admin.bays.edit', compact('sites', 'buildings', 'buildingSiteMap', 'bay'));
+        return view('admin.bays.edit', compact('sites', 'buildings', 'buildingSiteMap', 'bay', 'type_list', 'attributes_list'));
     }
 
     /**
@@ -131,6 +144,8 @@ class BayController extends Controller
     public function update(UpdateBayRequest $request, Bay $bay): RedirectResponse
     {
         abort_if(Gate::denies('edit-object', $bay), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $bay->update($request->all());
 
@@ -178,5 +193,24 @@ class BayController extends Controller
         Bay::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Bay::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

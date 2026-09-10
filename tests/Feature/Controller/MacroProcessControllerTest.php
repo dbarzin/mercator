@@ -36,6 +36,8 @@ describe('index', function () {
         $response->assertOk();
         $response->assertViewIs('admin.macroProcessuses.index');
         $response->assertViewHas('macroProcessuses');
+        $response->assertSee(trans('cruds.macroProcessus.fields.type'));
+        $response->assertSee(trans('cruds.macroProcessus.fields.attributes'));
     });
 
     test('denies access without permission', function () {
@@ -120,6 +122,25 @@ describe('edit', function () {
     });
 });
 
+describe('store', function () {
+    test('can create a MacroProcessus with type and attributes', function () {
+        $data = [
+            'name' => 'Order to Cash',
+            'type' => 'Support',
+            'attributes' => ['critique', 'transverse'],
+        ];
+
+        $response = $this->post(route('admin.macro-processuses.store'), $data);
+
+        $response->assertRedirect(route('admin.macro-processuses.index'));
+        $this->assertDatabaseHas('macro_processuses', [
+            'name' => 'Order to Cash',
+            'type' => 'Support',
+            'attributes' => 'critique transverse',
+        ]);
+    });
+});
+
 describe('update', function () {
     test('can update MacroProcessus', function () {
         $name = fake()->word();
@@ -136,6 +157,25 @@ describe('update', function () {
 
         $response->assertRedirect(route('admin.macro-processuses.index'));
         $this->assertDatabaseHas('macro_processuses', ['name' => 'Updated Name']);
+    });
+
+    test('can update MacroProcessus type and attributes', function () {
+        $macoProcessus = MacroProcessus::factory()->create(['type' => 'Old', 'attributes' => 'old tag']);
+
+        $data = [
+            'name' => 'Order to Cash',
+            'type' => 'Nouveau',
+            'attributes' => ['nouveau', 'tag'],
+        ];
+
+        $response = $this->put(route('admin.macro-processuses.update', $macoProcessus), $data);
+
+        $response->assertRedirect(route('admin.macro-processuses.index'));
+        $this->assertDatabaseHas('macro_processuses', [
+            'id' => $macoProcessus->id,
+            'type' => 'Nouveau',
+            'attributes' => 'nouveau tag',
+        ]);
     });
 });
 

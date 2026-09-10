@@ -35,6 +35,8 @@ describe('index', function () {
         $response->assertOk();
         $response->assertViewIs('admin.entities.index');
         $response->assertViewHas('entities');
+        $response->assertSee(trans('cruds.entity.fields.type'));
+        $response->assertSee(trans('cruds.entity.fields.attributes'));
     });
 
     test('denies access without permission', function () {
@@ -120,6 +122,25 @@ describe('edit', function () {
     });
 });
 
+describe('store', function () {
+    test('can create an Entity with type and attributes', function () {
+        $data = [
+            'name' => 'Subcontractor Corp',
+            'type' => 'Fournisseur',
+            'attributes' => ['externe', 'audite'],
+        ];
+
+        $response = $this->post(route('admin.entities.store'), $data);
+
+        $response->assertRedirect(route('admin.entities.index'));
+        $this->assertDatabaseHas('entities', [
+            'name' => 'Subcontractor Corp',
+            'type' => 'Fournisseur',
+            'attributes' => 'externe audite',
+        ]);
+    });
+});
+
 describe('update', function () {
     test('can update activity', function () {
         $name = fake()->word();
@@ -134,6 +155,25 @@ describe('update', function () {
 
         $response->assertRedirect(route('admin.entities.index'));
         $this->assertDatabaseHas('entities', ['name' => 'Updated Name']);
+    });
+
+    test('can update Entity type and attributes', function () {
+        $entity = Entity::factory()->create(['type' => 'Old', 'attributes' => 'old tag']);
+
+        $data = [
+            'name' => $entity->name,
+            'type' => 'Client',
+            'attributes' => ['nouveau', 'tag'],
+        ];
+
+        $response = $this->put(route('admin.entities.update', $entity), $data);
+
+        $response->assertRedirect(route('admin.entities.index'));
+        $this->assertDatabaseHas('entities', [
+            'id' => $entity->id,
+            'type' => 'Client',
+            'attributes' => 'nouveau tag',
+        ]);
     });
 });
 

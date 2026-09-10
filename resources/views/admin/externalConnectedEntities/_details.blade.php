@@ -29,6 +29,18 @@
     </tr>
     <tr>
         <th width="10%">
+            {{ trans('cruds.externalConnectedEntity.fields.attributes') }}
+        </th>
+        <td colspan="3">
+            @foreach(explode(" ", (string) $externalConnectedEntity->attributes) as $attribute)
+                @if(strlen(trim($attribute)) > 0)
+                    <span class="badge badge-info">{{ $attribute }}</span>
+                @endif
+            @endforeach
+        </td>
+    </tr>
+    <tr>
+        <th width="10%">
             {{ trans('cruds.externalConnectedEntity.fields.description') }}
         </th>
         <td colspan="3">

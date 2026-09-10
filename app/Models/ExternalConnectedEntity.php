@@ -50,6 +50,7 @@ class ExternalConnectedEntity extends Model implements HasIconContract, HasPrefi
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'entity_id',
         'contacts',
         'description',

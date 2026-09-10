@@ -17,6 +17,18 @@
         </td>
     </tr>
     <tr>
+        <th width="10%">
+            {{ trans('cruds.router.fields.attributes') }}
+        </th>
+        <td>
+            @foreach(explode(" ", (string) $router->attributes) as $attribute)
+                @if(strlen(trim($attribute)) > 0)
+                    <span class="badge badge-info">{{ $attribute }}</span>
+                @endif
+            @endforeach
+        </td>
+    </tr>
+    <tr>
         <th>
             {{ trans('cruds.router.fields.description') }}
         </th>

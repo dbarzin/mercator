@@ -48,6 +48,7 @@ class StorageDevice extends Model implements HasIconContract, HasPrefix, HasUniq
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'description',
         'address_ip',
         'site_id',

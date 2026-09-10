@@ -44,12 +44,16 @@ class ForestAdController extends Controller
         $zone_admins = ZoneAdmin::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $domains = Domain::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = ForestAd::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.forestAds.create', compact('zone_admins', 'domains'));
+        return view('admin.forestAds.create', compact('zone_admins', 'domains', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreForestAdRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $forestAd = ForestAd::create($request->all());
         $forestAd->domains()->sync($request->input('domains', []));
 
@@ -63,15 +67,19 @@ class ForestAdController extends Controller
         $zone_admins = ZoneAdmin::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $domains = Domain::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = ForestAd::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $forestAd->load('zoneAdmin', 'domains');
 
-        return view('admin.forestAds.edit', compact('zone_admins', 'domains', 'forestAd'));
+        return view('admin.forestAds.edit', compact('zone_admins', 'domains', 'forestAd', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateForestAdRequest $request, ForestAd $forestAd)
     {
         abort_if(Gate::denies('edit-object', $forestAd), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $forestAd->update($request->all());
         $forestAd->domains()->sync($request->input('domains', []));
@@ -102,5 +110,24 @@ class ForestAdController extends Controller
         ForestAd::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = ForestAd::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

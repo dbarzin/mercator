@@ -19,12 +19,28 @@
             {{ $applicationBlock->name }}
             @endif
             </td>
+            <th width="10%">
+                {{ trans('cruds.applicationBlock.fields.type') }}
+            </th>
+            <td width="20%">
+                {{ $applicationBlock->type }}
+            </td>
+            <th width="10%">
+                {{ trans('cruds.applicationBlock.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $applicationBlock->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>
                 {{ trans('cruds.applicationBlock.fields.description') }}
             </th>
-            <td>
+            <td colspan="5">
                 {!! $applicationBlock->description !!}
             </td>
         </tr>

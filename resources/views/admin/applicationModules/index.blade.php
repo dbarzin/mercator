@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.applicationModule.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.applicationModule.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.applicationModule.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.applicationModule.fields.description') }}
                         </th>
@@ -56,6 +62,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$applicationModule" />
+                            </td>
+                            <td>
+                                {{ $applicationModule->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $applicationModule->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $applicationModule->description !!}
@@ -120,7 +138,8 @@
             'title' => trans("cruds.applicationModule.title_singular"),
             'URL' => route('admin.application-modules.massDestroy'),
             'canDelete' => auth()->user()->can('application_module_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

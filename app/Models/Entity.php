@@ -7,24 +7,24 @@ use App\Contracts\HasPrefix;
 use App\Contracts\HasUniqueIdentifierContract;
 use App\Factories\EntityFactory;
 use App\Traits\Auditable;
+use App\Traits\HasCartographers;
 use App\Traits\HasIcon;
 use App\Traits\HasUniqueIdentifier;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasCartographers;
 
 /**
  * App\Entity
  */
 class Entity extends Model implements HasIconContract, HasPrefix, HasUniqueIdentifierContract
 {
-    use Auditable, HasIcon, HasUniqueIdentifier, HasFactory, SoftDeletes;
+    use Auditable, HasFactory, HasIcon, HasUniqueIdentifier, SoftDeletes;
     use HasCartographers;
 
     public $table = 'entities';
@@ -38,7 +38,7 @@ class Entity extends Model implements HasIconContract, HasPrefix, HasUniqueIdent
         'description',
         'security_level',
         'contact_point',
-        'entity_type',
+        'type',
     ];
 
     protected array $dates = [
@@ -50,12 +50,12 @@ class Entity extends Model implements HasIconContract, HasPrefix, HasUniqueIdent
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'icon_id',
         'description',
         'security_level',
         'contact_point',
-        'is_external',
-        'entity_type',
         'parent_entity_id',
     ];
 
@@ -110,6 +110,11 @@ class Entity extends Model implements HasIconContract, HasPrefix, HasUniqueIdent
     public function entities(): HasMany
     {
         return $this->hasMany(Entity::class, 'parent_entity_id', 'id')->orderBy('name');
+    }
+
+    public function isExternal(): bool
+    {
+        return in_array('extern', explode(' ', (string) $this->getAttribute('attributes')), true);
     }
 
     /** @param Builder<static> $query */

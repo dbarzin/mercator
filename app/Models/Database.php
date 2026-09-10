@@ -50,6 +50,7 @@ class Database extends Model implements HasIconContract, HasPrefix, HasUniqueIde
         'ext_refs',
         'name',
         'type',
+        'attributes',
         'icon_id',
         'description',
         'entity_resp_id',

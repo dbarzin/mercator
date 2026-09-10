@@ -33,6 +33,9 @@
                         <th>
                             {{ trans('cruds.phone.fields.type') }}
                         </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.phone.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.phone.fields.address_ip') }}
                         </th>
@@ -69,6 +72,15 @@
                             </td>
                             <td>
                                 {{ $phone->type ?? '' }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $phone->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {{ $phone->address_ip ?? '' }}
@@ -131,7 +143,7 @@
             'URL' => route('admin.phones.massDestroy'),
             'canDelete' => auth()->user()->can('phone_delete') ? true : false,
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description'],
+    'hiddenColumns' => ['attributes', 'description'],
 ));
     </script>
 @endsection

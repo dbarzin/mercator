@@ -52,15 +52,25 @@ class VlanController extends Controller
         // Vlan not found
         abort_if($vlan === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($vlan->only($vlan->getFillable()));
+        $data = $vlan->only($vlan->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->merge(['subnetworks' => $vlan->subnetworks()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
-        return view('admin.vlans.create', compact('subnetworks'));
+        $type_list = Vlan::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        return view('admin.vlans.create', compact('subnetworks', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreVlanRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $vlan = Vlan::create($request->all());
 
         DB::table('subnetworks')
@@ -79,13 +89,17 @@ class VlanController extends Controller
         abort_if(Gate::denies('vlan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Vlan::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.vlans.create', compact('subnetworks'));
+        return view('admin.vlans.create', compact('subnetworks', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateVlanRequest $request, Vlan $vlan)
     {
         abort_if(Gate::denies('edit-object', $vlan), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $vlan->update($request->all());
 
@@ -107,8 +121,10 @@ class VlanController extends Controller
         $vlan->load('subnetworks');
 
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
+        $type_list = Vlan::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.vlans.edit', compact('vlan', 'subnetworks'));
+        return view('admin.vlans.edit', compact('vlan', 'subnetworks', 'type_list', 'attributes_list'));
     }
 
     public function show(Vlan $vlan)
@@ -156,5 +172,24 @@ class VlanController extends Controller
         Vlan::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Vlan::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

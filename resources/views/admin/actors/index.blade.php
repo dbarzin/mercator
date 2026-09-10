@@ -39,6 +39,9 @@
                         <th>
                             {{ trans('cruds.actor.fields.type') }}
                         </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.actor.fields.attributes') }}
+                        </th>
                         <th>
                             &nbsp;
                         </th>
@@ -68,6 +71,15 @@
                             </td>
                             <td>
                                 {{ $actor->type ?? '' }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $actor->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td nowrap>
                                 @can('actor_show')
@@ -110,7 +122,8 @@
     'title' => trans("cruds.actor.title_singular"),
     'URL' => route('admin.actors.massDestroy'),
     'canDelete' => auth()->user()->can('actor_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['attributes'],
 ));
 </script>
 @endsection

@@ -47,15 +47,18 @@ class CertificateController extends Controller
 
         // List
         $type_list = Certificate::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.certificates.create',
-            compact('logicalServers', 'applications', 'type_list')
+            compact('logicalServers', 'applications', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreCertificateRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $certificate = Certificate::create($request->all());
         $certificate->logicalServers()->sync($request->input('logicalServers', []));
         $certificate->applications()->sync($request->input('applications', []));
@@ -72,16 +75,19 @@ class CertificateController extends Controller
 
         // List
         $type_list = Certificate::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.certificates.edit',
-            compact('certificate', 'logicalServers', 'type_list', 'applications')
+            compact('certificate', 'logicalServers', 'type_list', 'applications', 'attributes_list')
         );
     }
 
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
     {
         abort_if(Gate::denies('edit-object', $certificate), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $certificate->update($request->all());
         $certificate->logicalServers()->sync($request->input('logicalServers', []));
@@ -111,5 +117,24 @@ class CertificateController extends Controller
         Certificate::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Certificate::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

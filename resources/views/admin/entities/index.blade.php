@@ -30,11 +30,11 @@
                         <th>
                             {{ trans('cruds.entity.fields.name') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.entity.fields.entity_type') }}
+                        <th data-column="attributes">
+                            {{ trans('cruds.entity.fields.attributes') }}
                         </th>
                         <th>
-                            {{ trans('cruds.entity.fields.is_external') }}
+                            {{ trans('cruds.entity.fields.type') }}
                         </th>
                         <th>
                             {{ trans('cruds.entity.fields.contact_point') }}
@@ -72,10 +72,16 @@
                                 <x-show-link :model="$entity" />
                             </td>
                             <td>
-                                {{ $entity->entity_type }}
+                                <?php
+                                foreach (explode(" ", (string) $entity->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
-                                {!!  $entity->is_external  == null ? '' : trans('global.'.($entity->is_external ? 'yes' : 'no'))  !!}
+                                {{ $entity->type }}
                             </td>
                             <td>
                                 {!! $entity->contact_point  ?? '' !!}
@@ -133,7 +139,7 @@
     'URL' => route('admin.entities.massDestroy'),
     'canDelete' => auth()->user()->can('entity_delete'),
     'serverSidePagination' => true,
-    'hiddenColumns' => ['description', 'security_level'],
+    'hiddenColumns' => ['attributes', 'description', 'security_level'],
     )
 );
 </script>

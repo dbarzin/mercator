@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.zoneAdmin.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.zoneAdmin.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.zoneAdmin.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.zoneAdmin.fields.description') }}
                         </th>
@@ -58,6 +64,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$zoneAdmin" />
+                            </td>
+                            <td>
+                                {{ $zoneAdmin->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $zoneAdmin->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $zoneAdmin->description ?? '' !!}
@@ -118,7 +136,8 @@
             'title' => trans("cruds.zoneAdmin.title_singular"),
             'URL' => route('admin.zone-admins.massDestroy'),
             'canDelete' => auth()->user()->can('zone_admin_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

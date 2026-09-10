@@ -30,6 +30,18 @@
         </tr>
         <tr>
             <th>
+                {{ trans('cruds.phone.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $phone->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+        <tr>
+            <th>
                 {{ trans('cruds.phone.fields.description') }}
             </th>
             <td>

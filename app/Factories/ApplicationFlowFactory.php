@@ -17,7 +17,7 @@ class ApplicationFlowFactory extends Factory
             'description' => $this->faker->text(),
             'crypted' => $this->faker->boolean(),
             'bidirectional' => $this->faker->boolean(),
-            'nature' => $this->faker->word(),
+            'type' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'attributes' => $this->faker->words(3, true),

@@ -102,6 +102,8 @@ class InformationSystemSection implements ReportSection
 
             $table = $helper->addTable($section, (string) $macroProcess->name);
 
+            $helper->addTextRow($table, trans('cruds.macroProcessus.fields.type'), $macroProcess->type);
+            $helper->addTextRow($table, trans('cruds.macroProcessus.fields.attributes'), $this->formatAttributes($macroProcess->attributes));
             $helper->addHTMLRow($table, trans('cruds.macroProcessus.fields.description'), $macroProcess->description);
             $helper->addHTMLRow($table, trans('cruds.macroProcessus.fields.io_elements'), $macroProcess->io_elements);
             $helper->addSecurityNeedRow(
@@ -204,6 +206,8 @@ class InformationSystemSection implements ReportSection
                 $helper->linkOrText($run, $process->macroProcess, $selectedVues);
             }
 
+            $helper->addTextRow($table, trans('cruds.process.fields.type'), $process->type);
+            $helper->addTextRow($table, trans('cruds.process.fields.attributes'), $this->formatAttributes($process->attributes));
             $helper->addDescriptionCellWithIcon($table, trans('cruds.process.fields.description'), $process->description, $process, '/images/process.png');
             $helper->addHTMLRow($table, trans('cruds.process.fields.in_out'), $process->in_out);
             $helper->addSecurityNeedRow(
@@ -251,6 +255,8 @@ class InformationSystemSection implements ReportSection
             $helper->addBookmarkedTitle($section, $activity->getUID(), (string) $activity->name, 3);
             $table = $helper->addTable($section, (string) $activity->name);
 
+            $helper->addTextRow($table, trans('cruds.activity.fields.type'), $activity->type);
+            $helper->addTextRow($table, trans('cruds.activity.fields.attributes'), $this->formatAttributes($activity->attributes));
             $helper->addHTMLRow($table, trans('cruds.activity.fields.description'), $activity->description);
 
             if ($activity->processes->isNotEmpty()) {
@@ -303,6 +309,8 @@ class InformationSystemSection implements ReportSection
             $helper->addBookmarkedTitle($section, $operation->getUID(), (string) $operation->name, 3);
             $table = $helper->addTable($section, (string) $operation->name);
 
+            $helper->addTextRow($table, trans('cruds.operation.fields.type'), $operation->type);
+            $helper->addTextRow($table, trans('cruds.operation.fields.attributes'), $this->formatAttributes($operation->attributes));
             $helper->addHTMLRow($table, trans('cruds.operation.fields.description'), $operation->description);
 
             if ($operation->process !== null) {
@@ -340,6 +348,8 @@ class InformationSystemSection implements ReportSection
             $helper->addBookmarkedTitle($section, $task->getUID(), (string) $task->name, 3);
             $table = $helper->addTable($section, (string) $task->name);
 
+            $helper->addTextRow($table, trans('cruds.task.fields.type'), $task->type);
+            $helper->addTextRow($table, trans('cruds.task.fields.attributes'), $this->formatAttributes($task->attributes));
             $helper->addHTMLRow($table, trans('cruds.task.fields.description'), $task->description);
 
             if ($task->operations->isNotEmpty()) {
@@ -367,6 +377,7 @@ class InformationSystemSection implements ReportSection
             $helper->addTextRow($table, trans('cruds.actor.fields.contact'), $actor->contact);
             $helper->addTextRow($table, trans('cruds.actor.fields.nature'), $actor->nature);
             $helper->addTextRow($table, trans('cruds.actor.fields.type'), $actor->type);
+            $helper->addTextRow($table, trans('cruds.actor.fields.attributes'), $this->formatAttributes($actor->attributes));
 
             if ($actor->operations->isNotEmpty()) {
                 $helper->addLinkListRow($table, trans('cruds.actor.fields.operations'), $actor->operations, $selectedVues);

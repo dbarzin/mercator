@@ -30,6 +30,12 @@
                         <th>
                             {{ trans('cruds.networkSwitch.fields.name') }}
                         </th>
+                        <th data-column="type">
+                            {{ trans('cruds.networkSwitch.fields.type') }}
+                        </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.networkSwitch.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.networkSwitch.fields.description') }}
                         </th>
@@ -61,6 +67,18 @@
                             </td>
                             <td>
                                 <x-show-link :model="$networkSwitch" />
+                            </td>
+                            <td>
+                                {{ $networkSwitch->type }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $networkSwitch->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $networkSwitch->description ?? '' !!}
@@ -128,7 +146,8 @@
             'title' => trans("cruds.networkSwitch.title_singular"),
             'URL' => route('admin.network-switches.massDestroy'),
             'canDelete' => auth()->user()->can('network_switch_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['type', 'attributes'],
 ));
     </script>
 @endsection

@@ -48,15 +48,19 @@ class ApplicationServiceController extends Controller
 
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $exposition_list = ApplicationService::select('exposition')->where('exposition', '<>', null)->distinct()->orderBy('exposition')->pluck('exposition');
+        $type_list = ApplicationService::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.applicationServices.create',
-            compact('modules', 'applications', 'exposition_list')
+            compact('modules', 'applications', 'exposition_list', 'type_list', 'attributes_list')
         );
     }
 
     public function store(StoreApplicationServiceRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $applicationService = ApplicationService::create($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
         $applicationService->applications()->sync($request->input('applications', []));
@@ -75,18 +79,22 @@ class ApplicationServiceController extends Controller
 
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $exposition_list = ApplicationService::select('exposition')->where('exposition', '<>', null)->distinct()->orderBy('exposition')->pluck('exposition');
+        $type_list = ApplicationService::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         $applicationService->load('modules', 'applications');
 
         return view(
             'admin.applicationServices.edit',
-            compact('modules', 'applications', 'exposition_list', 'applicationService')
+            compact('modules', 'applications', 'exposition_list', 'applicationService', 'type_list', 'attributes_list')
         );
     }
 
     public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)
     {
         abort_if(Gate::denies('edit-object', $applicationService), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $applicationService->update($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
@@ -118,5 +126,24 @@ class ApplicationServiceController extends Controller
         ApplicationService::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = ApplicationService::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

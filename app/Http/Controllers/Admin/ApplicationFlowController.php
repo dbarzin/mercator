@@ -52,7 +52,7 @@ class ApplicationFlowController extends Controller
         $informations = Information::query()->orderBy('name')->pluck('name', 'id');
 
         // List
-        $nature_list = ApplicationFlow::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
+        $type_list = ApplicationFlow::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $attributes_list = $this->getAttributes();
 
         $items = Collection::make();
@@ -71,7 +71,7 @@ class ApplicationFlowController extends Controller
 
         return view(
             'admin.application-flows.create',
-            compact('items', 'nature_list', 'informations', 'attributes_list')
+            compact('items', 'type_list', 'informations', 'attributes_list')
         );
     }
 
@@ -79,7 +79,7 @@ class ApplicationFlowController extends Controller
     {
         $flow = new ApplicationFlow;
         $flow->name = $request->name;
-        $flow->nature = $request->nature;
+        $flow->type = $request->type;
         $flow->description = $request->description;
         $flow->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
@@ -153,7 +153,7 @@ class ApplicationFlowController extends Controller
         $informations = Information::query()->orderBy('name')->pluck('name', 'id');
 
         // List
-        $nature_list = ApplicationFlow::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
+        $type_list = ApplicationFlow::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $attributes_list = $this->getAttributes();
 
         $items = Collection::make();
@@ -172,7 +172,7 @@ class ApplicationFlowController extends Controller
 
         return view(
             'admin.application-flows.edit',
-            compact('items', 'nature_list', 'informations', 'attributes_list', 'flow')
+            compact('items', 'type_list', 'informations', 'attributes_list', 'flow')
         );
     }
 
@@ -181,7 +181,7 @@ class ApplicationFlowController extends Controller
         abort_if(Gate::denies('edit-object', $flow), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $flow->name = $request->get('name');
-        $flow->nature = $request->nature;
+        $flow->type = $request->type;
         $flow->description = $request->get('description');
         $flow->attributes = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 

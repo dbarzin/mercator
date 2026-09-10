@@ -33,6 +33,9 @@
                         <th>
                             {{ trans('cruds.router.fields.type') }}
                         </th>
+                        <th data-column="attributes">
+                            {{ trans('cruds.router.fields.attributes') }}
+                        </th>
                         <th>
                             {{ trans('cruds.router.fields.description') }}
                         </th>
@@ -61,6 +64,15 @@
                             </td>
                             <td>
                                 {{ $router->type ?? '' }}
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(" ", (string) $router->attributes) as $attribute) {
+                                    if (strlen(trim($attribute)) > 0) {
+                                        echo "<span class='badge badge-info'>" . e($attribute) . "</span> ";
+                                    }
+                                }
+                                ?>
                             </td>
                             <td>
                                 {!! $router->description ?? '' !!}
@@ -118,7 +130,8 @@
             'title' => trans("cruds.router.title_singular"),
             'URL' => route('admin.routers.massDestroy'),
             'canDelete' => auth()->user()->can('router_delete') ? true : false,
-    'serverSidePagination' => true
+    'serverSidePagination' => true,
+    'hiddenColumns' => ['attributes'],
 ));
     </script>
 @endsection

@@ -46,6 +46,8 @@ class Bay extends Model implements HasPrefix, HasIconContract, HasUniqueIdentifi
     protected $fillable = [
         'ext_refs',
         'name',
+        'type',
+        'attributes',
         'description',
         'building_id',
         'site_id',

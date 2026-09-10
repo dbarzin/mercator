@@ -44,13 +44,17 @@ class ApplicationModuleController extends Controller
 
         $services = ApplicationService::query()->pluck('name', 'id');
         $entities = Entity::query()->pluck('name', 'id');
+        $type_list = ApplicationModule::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view('admin.applicationModules.create',
-            compact('services', 'entities'));
+            compact('services', 'entities', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreApplicationModuleRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $applicationModule = ApplicationModule::query()->create($request->all());
 
         $applicationModule->applicationServices()->sync($request->input('services', []));
@@ -65,14 +69,18 @@ class ApplicationModuleController extends Controller
 
         $services = ApplicationService::query()->pluck('name', 'id');
         $entities = Entity::query()->pluck('name', 'id');
+        $type_list = ApplicationModule::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
 
         return view('admin.applicationModules.edit',
-            compact('applicationModule', 'services', 'entities'));
+            compact('applicationModule', 'services', 'entities', 'type_list', 'attributes_list'));
     }
 
     public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('edit-object', $applicationModule), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $applicationModule->update($request->all());
 
@@ -105,5 +113,24 @@ class ApplicationModuleController extends Controller
         ApplicationModule::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = ApplicationModule::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

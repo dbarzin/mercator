@@ -63,6 +63,7 @@ class PeripheralController extends Controller
         $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $domains = DB::table('domains')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.peripherals.create',
@@ -77,7 +78,8 @@ class PeripheralController extends Controller
                 'icons',
                 'type_list',
                 'domains',
-                'responsible_list'
+                'responsible_list',
+                'attributes_list'
             )
         );
     }
@@ -99,6 +101,7 @@ class PeripheralController extends Controller
         $type_list = Peripheral::query()->select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $domains = DB::table('domains')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $responsible_list = Peripheral::query()->select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $attributes_list = $this->getAttributes();
 
         // Get Peripheral
         $peripheral = Peripheral::find($request['id']);
@@ -106,7 +109,12 @@ class PeripheralController extends Controller
         // Vlan not found
         abort_if($peripheral === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        $request->merge($peripheral->only($peripheral->getFillable()));
+        $data = $peripheral->only($peripheral->getFillable());
+        if (isset($data['attributes']) && is_string($data['attributes'])) {
+            $data['attributes'] = array_filter(explode(' ', $data['attributes']));
+        }
+
+        $request->merge($data);
         $request->merge(['applications' => $peripheral->applications()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
@@ -123,13 +131,16 @@ class PeripheralController extends Controller
                 'icons',
                 'type_list',
                 'domains',
-                'responsible_list'
+                'responsible_list',
+                'attributes_list'
             )
         );
     }
 
     public function store(StorePeripheralRequest $request)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         // Get fields
         $peripheral = Peripheral::create($request->all());
 
@@ -163,6 +174,7 @@ class PeripheralController extends Controller
         $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $domains = DB::table('domains')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $attributes_list = $this->getAttributes();
 
         $peripheral->load('site', 'building', 'bay', 'domain');
 
@@ -180,7 +192,8 @@ class PeripheralController extends Controller
                 'peripheral',
                 'type_list',
                 'domains',
-                'responsible_list'
+                'responsible_list',
+                'attributes_list'
             )
         );
     }
@@ -191,6 +204,8 @@ class PeripheralController extends Controller
 
         // Save icon
         $this->iconUploadService->handle($request, $peripheral);
+
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         // Get fields
         $peripheral->update($request->all());
@@ -224,5 +239,24 @@ class PeripheralController extends Controller
         Peripheral::whereIn('id', request('ids'))->get()->each->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Peripheral::query()
+            ->select('attributes')
+            ->where('attributes', '<>', null)
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+
+        return array_unique($res);
     }
 }

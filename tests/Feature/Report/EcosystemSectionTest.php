@@ -73,11 +73,10 @@ function renderEcosystemSectionXml(array $selectedVues = ['1']): array
 
 describe('EcosystemSection content', function () {
     test('renders Entity fields and relations', function () {
-        $parent = Entity::factory()->create(['name' => 'Parent Holding', 'entity_type' => 'Group', 'is_external' => false]);
+        $parent = Entity::factory()->create(['name' => 'Parent Holding', 'type' => 'Group']);
         $child = Entity::factory()->create([
             'name' => 'Child Subsidiary',
             'parent_entity_id' => $parent->id,
-            'is_external' => true,
             'description' => '<p>Some description</p>',
         ]);
         $process = Process::factory()->create(['name' => 'Order Processing']);

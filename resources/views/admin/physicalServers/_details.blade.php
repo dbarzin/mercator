@@ -22,8 +22,18 @@
         <th width="10%">
             {{ trans('cruds.physicalServer.fields.type') }}
         </th>
-        <td width="30%" colspan="2">
+        <td width="30%">
             {{ $physicalServer->type }}
+        </td>
+        <th width="10%">
+            {{ trans('cruds.physicalServer.fields.attributes') }}
+        </th>
+        <td>
+            @foreach(explode(" ", (string) $physicalServer->attributes) as $attribute)
+                @if(strlen(trim($attribute)) > 0)
+                    <span class="badge badge-info">{{ $attribute }}</span>
+                @endif
+            @endforeach
         </td>
     </tr>
     <th>

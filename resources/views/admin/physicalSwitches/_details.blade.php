@@ -25,6 +25,16 @@
             <td>
                 {{ $physicalSwitch->type }}
             </td>
+            <th width="10%">
+                {{ trans('cruds.physicalSwitch.fields.attributes') }}
+            </th>
+            <td>
+                @foreach(explode(" ", (string) $physicalSwitch->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
         </tr>
         <tr>
             <th>

@@ -27,6 +27,18 @@
             </td>
         </tr>
         <tr>
+            <th width="10%">
+                {{ trans('cruds.storageDevice.fields.attributes') }}
+            </th>
+            <td colspan="6">
+                @foreach(explode(" ", (string) $storageDevice->attributes) as $attribute)
+                    @if(strlen(trim($attribute)) > 0)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+        <tr>
             <th>
                 {{ trans('cruds.storageDevice.fields.description') }}
             </th>
