@@ -92,7 +92,7 @@ A periodic reminder can be configured by the administrator to encourage cartogra
 - the objects for which the cartographer is responsible,
 - a direct link to each record in Mercator.
 
-The frequency of reminders (weekly, monthly…) and the content of the message are defined by the administrator in **Administration → Configuration → Notifications**.
+The frequency of reminders (weekly, monthly…) and the content of the message are defined by the administrator in **Administration → Configuration → Notifications**. The administrator can also set a **hidden copy** (Bcc) address: every reminder sent to a cartographer is then also sent as a blind carbon copy to that address.
 
 !!! note "No reminder if no configuration is set"
     Reminders are only sent if the administrator has enabled and configured this feature. In the absence of configuration, no email is sent.

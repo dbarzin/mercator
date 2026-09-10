@@ -31,6 +31,7 @@
   array (
     'reminders_enabled' => false,
     'reminder_from' => 'mercator@localhost.com',
+    'reminder_to' => 'mercator@localhost.com',
     'reminder_subject' => '[Mercator] Rappel',
     'reminder_body' => '<!DOCTYPE html>
 <html lang=\'fr\'>

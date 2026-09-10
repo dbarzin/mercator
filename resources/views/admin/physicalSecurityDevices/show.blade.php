@@ -44,11 +44,7 @@
                  'withLink' => false,
              ])
         </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $physicalSecurityDevice->created_at ? $physicalSecurityDevice->created_at->format(trans('global.timestamp')) : '' }}
-            |
-            {{ trans('global.updated_at') }} {{ $physicalSecurityDevice->updated_at ? $physicalSecurityDevice->updated_at->format(trans('global.timestamp')) : '' }}
-        </div>
+        @include('admin._footer', ['model' => $physicalSecurityDevice])
     </div>
     <div class="form-group">
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.physical-security-devices.index') }}">

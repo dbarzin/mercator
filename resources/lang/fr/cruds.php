@@ -2061,6 +2061,7 @@ return [
         'section_reminders' => 'Rappels cartographes',
         'reminders_enabled' => 'Activer les rappels',
         'reminder_from' => 'Expéditeur',
+        'reminder_to' => 'Copie cachée à',
         'reminder_subject' => 'Sujet du rappel',
         'reminder_body' => 'Corps du rappel',
         'reminder_months' => 'Pas de mise à jour depuis (mois)',

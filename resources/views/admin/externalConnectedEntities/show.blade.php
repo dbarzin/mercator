@@ -179,11 +179,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $externalConnectedEntity->created_at ? $externalConnectedEntity->created_at->format(trans('global.timestamp')) : '' }}
-            |
-            {{ trans('global.updated_at') }} {{ $externalConnectedEntity->updated_at ? $externalConnectedEntity->updated_at->format(trans('global.timestamp')) : '' }}
-        </div>
+        @include('admin._footer', ['model' => $externalConnectedEntity])
     </div>
     <div class="form-group">
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.external-connected-entities.index') }}">

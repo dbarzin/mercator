@@ -162,10 +162,7 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $relation->created_at ? $relation->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $relation->updated_at ? $relation->updated_at->format(trans('global.timestamp')) : '' }}
-    </div>
+    @include('admin._footer', ['model' => $relation])
 </div>
 
 <div class="form-group">

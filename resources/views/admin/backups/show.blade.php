@@ -37,11 +37,7 @@
         <div class="card-body">
             @include('admin.backups._details', ['backup' => $backup, 'withLink' => false])
         </div>
-        <div class="card-footer">
-            {{ trans('global.created_at') }} {{ $backup->created_at?->format(trans('global.timestamp')) }}
-            |
-            {{ trans('global.updated_at') }} {{ $backup->updated_at?->format(trans('global.timestamp')) }}
-        </div>
+        @include('admin._footer', ['model' => $backup])
     </div>
 
     <div class="form-group">

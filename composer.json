@@ -6,12 +6,6 @@
     "laravel",
     "framework"
   ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://composer.sourcentis.com"
-    }
-  ],
   "license": "GPL-3.0-or-later",
   "require": {
     "php": ">=8.4.1 <8.5",

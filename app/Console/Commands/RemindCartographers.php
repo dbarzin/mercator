@@ -47,6 +47,7 @@ class RemindCartographers extends Command
         $months    = (int) config('mercator.cartography.reminder_months', 6);
         $threshold = Carbon::now()->subMonths($months);
         $from      = (string) config('mercator.cartography.reminder_from', 'mercator@localhost');
+        $bcc       = (string) config('mercator.cartography.reminder_to', '');
         $subject   = (string) config('mercator.cartography.reminder_subject', '[Mercator] Rappel');
         $body      = (string) config('mercator.cartography.reminder_body', '');
 
@@ -109,7 +110,7 @@ class RemindCartographers extends Command
                 $body,
             );
 
-            $this->getLaravel()->make(MailerService::class)->send($from, $user->email, $subject, $mailBody);
+            $this->getLaravel()->make(MailerService::class)->send($from, $user->email, $subject, $mailBody, $bcc);
 
             Log::info("[mercator:remind-cartographers] Reminder sent to {$user->email} ({$count} objects)");
             $sent++;

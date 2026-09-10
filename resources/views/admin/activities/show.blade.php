@@ -227,10 +227,7 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $activity->created_at ? $activity->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $activity->updated_at ? $activity->updated_at->format(trans('global.timestamp')) : '' }}
-    </div>
+    @include('admin._footer', ['model' => $activity])
 </div>
 <div class="form-group">
     <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.activities.index') }}">

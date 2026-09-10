@@ -2023,6 +2023,7 @@ return [
         'section_reminders' => 'Cartographer reminders',
         'reminders_enabled' => 'Enable reminders',
         'reminder_from' => 'Sender',
+        'reminder_to' => 'Carbon copy to',
         'reminder_subject' => 'Reminder subject',
         'reminder_body' => 'Reminder body',
         'reminder_months' => 'No update since (months)',
